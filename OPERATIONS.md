@@ -10,9 +10,9 @@
 
 ## 重要: GitHub Pagesの公開方式
 
-GitHubリポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** に変更してください。従来の `Deploy from a branch` のままだと、GitHub Actionsの `GITHUB_TOKEN` で保存した記事の更新が自動的にPagesへ反映されません。
+**2026-11-10にGitHub Actionsの「Deploy reader website」実行が成功しています。** 現在の公開サイトが引き続き表示されることを確認してください。もし今後の配信が反映されない場合は、GitHubリポジトリの **Settings → Pages → Build and deployment → Source** が **GitHub Actions** になっているか確認してください。
 
-Source変更後、GitHub Actionsの **Deploy reader website** を手動実行するか、`index.html` の更新でデプロイを開始します。公開元の切り替えだけで公開サイトが正常に更新されたかどうかを必ず確認してください。
+従来の `Deploy from a branch` 方式では、GitHub Actionsの `GITHUB_TOKEN` が保存したコミットだけではPagesのビルドが始まりません。新しい配信号はこのリポジトリの **Publish approved news at night (JST)** がGitHub Pagesへの直接デプロイも実行する設計です。
 
 ## 毎日の流れ
 
