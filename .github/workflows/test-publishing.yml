@@ -7,6 +7,7 @@ on:
       - 'publish_approved.py'
       - 'build_site.py'
       - 'tests/**'
+      - 'data/approved/*.json'
       - '.github/workflows/test-publishing.yml'
   workflow_dispatch:
 
