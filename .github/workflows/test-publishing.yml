@@ -1,0 +1,30 @@
+name: Test publishing safety
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'publish_approved.py'
+      - 'build_site.py'
+      - 'tests/**'
+      - '.github/workflows/test-publishing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run publishing and privacy tests
+        run: python -m unittest discover -s tests -v
+      - name: Check public site build
+        run: |
+          python build_site.py
+          test -f _site/index.html
+          test ! -e _site/data/approved
