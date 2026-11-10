@@ -1,0 +1,19 @@
+{
+  "name": "よる9じの世界便り",
+  "short_name": "よる9じ",
+  "description": "ニュースは実話、ツッコミ担当はAI。世界の大失敗５連発。",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1528",
+  "theme_color": "#142139",
+  "lang": "ja",
+  "icons": [
+    {
+      "src": "./assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
