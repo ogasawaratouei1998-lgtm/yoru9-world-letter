@@ -32,7 +32,7 @@ class ReaderFrontendTest(unittest.TestCase):
         scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", page, flags=re.S)
         self.assertGreaterEqual(len(scripts), 2)
         editor_page = (ROOT / "editor.html").read_text(encoding="utf-8")
-        editor_scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", editor_page, flags=re.S)
+        editor_scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", editor_page, flags=re.S)
         self.assertGreaterEqual(len(editor_scripts), 2)
         sources = [("reader.js", scripts[-1]),
                    ("editor.js", editor_scripts[-1]),
