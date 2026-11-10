@@ -1,6 +1,10 @@
 name: Publish approved news at night (JST)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-nightly.yml'
   schedule:
     - cron: '7 21 * * *'
       timezone: 'Asia/Tokyo'
