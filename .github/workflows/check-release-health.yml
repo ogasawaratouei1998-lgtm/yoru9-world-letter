@@ -1,0 +1,24 @@
+name: Check nightly release health
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '27 22 * * *'
+      timezone: 'Asia/Tokyo'
+    - cron: '27 23 * * *'
+      timezone: 'Asia/Tokyo'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate approved issue publication and archive
+        run: python check_release_health.py
