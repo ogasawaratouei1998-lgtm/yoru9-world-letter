@@ -1,6 +1,10 @@
 name: Collect unverified news leads
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/collect-candidates.yml'
   workflow_dispatch:
   schedule:
     - cron: '37 16 * * *'
