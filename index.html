@@ -64,10 +64,10 @@ body{background:#0b1528}
 </style>
 </head>
 <body><div class="wrap">
-<header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag">創刊準備号 · 実話5本</div></header>
+<header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">創刊準備号 · 実話5本</div></header>
 <section class="hero"><div class="eyebrow"><span class="eyebrow-dot">●</span> よる9じの世界便り</div><div class="hero-stamp" aria-hidden="true"><span>OH!</span><span>NO!</span></div><p class="hero-audience">個人も、会社員も、企業も。</p><h1>うまくいかない日の、<br><em>世界の大失敗５連発。</em></h1><p class="hero-truth">ニュースは実話、<strong>ツッコミ担当はAI。</strong></p><div class="hero-note">世界中の「まさか」を５本。今夜は、ちょっと笑って寝よう。</div></section>
 <div class="status" role="status"><div class="statusline"><strong id="editionTitle">創刊準備号 · 過去の大失敗ニュース5本</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div><span id="clock">現地時刻を確認中</span></div>
-<main><div class="sectionhead"><h2>今夜の「それ、本当に!?」</h2><span class="small" id="progress">0 / 5 読んだ</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
+<main><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">0 / 5 読んだ</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
 <section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
@@ -92,6 +92,9 @@ let toastTimer;
 function toast(s){$('toast').textContent=s;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,2300)}
 function render(){const d=edition.stories; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
+ const currentIssue=!archive&&edition.editionDate===localDate(now);
+ $('editionTag').textContent=archive?'創刊準備号 · 実話5本':currentIssue?'今夜の配信号 · 実話5本':'過去の配信号 · 実話5本';
+ $('storyHeading').textContent=archive?'創刊準備号の「それ、本当に!?」':currentIssue?'今夜の「それ、本当に!?」':'過去号の「それ、本当に!?」';
  const reportedDates=d.map(s=>s.reported).filter(x=>/^\d{4}\.\d{2}\.\d{2}$/.test(x)).sort();
  const range=reportedDates.length?reportedDates[0]+(reportedDates.length>1?' 〜 '+reportedDates[reportedDates.length-1]:''):'記事中の出典を参照';
  $('editionMessage').textContent=archive?'過去に報道された実話を使った体験版':`${edition.editionDate} ${edition.editionDate===localDate(now)?'の最新配信号':'発行の過去号'}（報道日：${range}）`;
