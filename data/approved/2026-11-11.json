@@ -1,7 +1,7 @@
 {
   "status": "approved",
   "editionDate": "2026-11-11",
-  "title": "2026年11月11日の世界の大失敗５連発｜初回正式配信号",
+  "title": "創刊特集号｜世界の大失敗５連発（2026年11月11日）",
   "editorApproved": true,
   "factChecked": true,
   "humorReviewed": true,
@@ -114,5 +114,8 @@
     }
   ],
   "approvalMethod": "ChatGPTで5本すべてを明示承認。AIが2026-11-10に一次報道と別媒体の記述を照合。",
-  "approvedOn": "2026-11-10"
+  "approvedOn": "2026-11-10",
+  "editionType": "special",
+  "specialReason": "初回配信は創刊特集号として、2026年10月から11月に報道された過去の実話5本を紹介します。当日発生のニュースではありません。",
+  "editorialDateNote": "記事内の報道日は記事が報じられた日付であり、発生日時と一致するとは限りません。"
 }
