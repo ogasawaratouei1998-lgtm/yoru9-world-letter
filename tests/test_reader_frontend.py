@@ -18,12 +18,24 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_editor_can_prepare_regular_or_special_issue(self):
+        page = (ROOT / "editor.html").read_text(encoding="utf-8")
+        for token in ('id="editionType"', 'id="specialReason"',
+                      "kind==='regular'&&age>7", "editionType:kind",
+                      "specialReason:reason", "if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)"):
+            with self.subTest(token=token):
+                self.assertIn(token, page)
+
     @unittest.skipUnless(shutil.which("node"), "Node.js is required for JS syntax checks")
     def test_reader_and_worker_javascript_syntax(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", page, flags=re.S)
         self.assertGreaterEqual(len(scripts), 2)
+        editor_page = (ROOT / "editor.html").read_text(encoding="utf-8")
+        editor_scripts = re.findall(r"<script(?:\\s[^>]*)?>(.*?)</script>", editor_page, flags=re.S)
+        self.assertGreaterEqual(len(editor_scripts), 2)
         sources = [("reader.js", scripts[-1]),
+                   ("editor.js", editor_scripts[-1]),
                    ("service-worker.js", (ROOT / "service-worker.js").read_text(encoding="utf-8"))]
         for name, source in sources:
             with self.subTest(source=name), tempfile.TemporaryDirectory() as directory:
