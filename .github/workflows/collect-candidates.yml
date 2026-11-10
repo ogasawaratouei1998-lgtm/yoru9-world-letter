@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/collect-candidates.yml'
+      - 'collect_candidates.py'
   workflow_dispatch:
   schedule:
     - cron: '37 16 * * *'
