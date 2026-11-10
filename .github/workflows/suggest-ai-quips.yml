@@ -1,0 +1,48 @@
+name: Suggest AI quips for editor review (manual, paid API)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  suggest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm operator explicitly configured API access
+        shell: bash
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY secret is absent. This optional workflow will not call a paid API."
+            exit 1
+          fi
+      - name: Find latest successful research harvest
+        shell: bash
+        run: |
+          run_id="$(gh run list --workflow collect-candidates.yml --status success \
+            --limit 1 --json databaseId --jq '.[0].databaseId')"
+          if [ -z "$run_id" ] || [ "$run_id" = "null" ]; then
+            echo "::error::No successful candidate-harvest run found."
+            exit 1
+          fi
+          mkdir -p data
+          gh run download "$run_id" --name unverified-news-leads --dir data
+          test -f data/editorial-inbox.json
+      - name: Generate unverified AI joke proposals (never approve or publish)
+        run: python suggest_ai_quips.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AI-draft-ideas-UNVERIFIED
+          path: data/ai-ideas.json
+          retention-days: 3
+          if-no-files-found: error
