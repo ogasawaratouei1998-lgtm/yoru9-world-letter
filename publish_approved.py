@@ -59,6 +59,8 @@ def validate_approved(data, expected_date):
                 f'{i}本目は2件以上の検証用HTTPS URLが必要です')
         require(story['sourceUrl'] in urls, f'{i}本目の出典が検証用URLに含まれていません')
         require(len(set(urls)) == len(urls), f'{i}本目の検証用URLが重複しています')
+        domains = {urlsplit(u).hostname.lower().removeprefix('www.') for u in urls}
+        require(len(domains) >= 2, f'{i}本目は別の報道機関など独立したドメインでの裏付けが必要です')
         require(story['id'] not in ids and story['sourceUrl'] not in sources, '記事IDまたは出典URLが重複しています')
         ids.add(story['id'])
         sources.add(story['sourceUrl'])
