@@ -12,18 +12,18 @@ import time
 
 API = "https://api.gdeltproject.org/api/v2/doc/doc"
 QUERIES = [
-    '"accidentally ordered" OR "wrong order"',
-    '"wrong destination" OR "mistakenly sent"',
-    '"blunder" OR "mix-up"',
-    '"accidental email" OR "reply all"',
-    '"ordered by mistake" OR "wrong sign"',
+    '("accidentally ordered" OR "wrong order")',
+    '("wrong destination" OR "mistakenly sent")',
+    '("blunder" OR "mix-up")',
+    '("accidental email" OR "reply all")',
+    '("ordered by mistake" OR "wrong sign")',
 ]
 EXCLUDE = re.compile(r'\b(killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster)\b', re.I)
 
 def safe_url(raw):
     try:
         p = urlsplit(raw)
-        return p._replace(fragment="").geturl() if p.scheme in ("https", "http") and p.hostname and not p.username and not p.password and p.port in (None, 80, 443) else None
+        return p._replace(fragment="").geturl() if p.scheme == "https" and p.hostname and not p.username and not p.password and p.port in (None, 80, 443) else None
     except (ValueError, TypeError):
         return None
 
