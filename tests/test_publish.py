@@ -62,6 +62,30 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['editorApproved']=False
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+    def test_old_regular_story_is_rejected(self):
+        data=fixture()
+        data['stories'][0]['reported']='2026.10.13'
+        with self.assertRaisesRegex(ValueError, '8日以上古い'):
+            validate_approved(data,'2026-11-10')
+    def test_historical_special_requires_explanation(self):
+        data=fixture()
+        data['stories'][0]['reported']='2026.10.13'
+        data['editionType']='special'
+        data['title']='創刊特集号｜世界の大失敗５連発'
+        data['specialReason']='初回特集号で過去約一か月の話題を集めています。'
+        public=validate_approved(data,'2026-11-10')
+        self.assertEqual(public['editionType'],'special')
+        self.assertIn('specialReason',public)
+        del data['specialReason']
+        with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+    def test_future_report_date_is_rejected(self):
+        data=fixture()
+        data['stories'][0]['reported']='2026.11.11'
+        with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+    def test_hyphenated_reported_date_is_accepted(self):
+        data=fixture()
+        data['stories'][0]['reported']='2026-11-09'
+        self.assertEqual(validate_approved(data,'2026-11-10')['status'],'published')
     def test_build_excludes_approved_files(self):
         (self.root/'assets').mkdir()
         (self.root/'assets'/'icon.svg').write_text('<svg></svg>')
