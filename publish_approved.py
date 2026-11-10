@@ -2,7 +2,7 @@
 """Release only manually approved, fact-checked news editions after 21:00 JST."""
 from __future__ import annotations
 import argparse
-from datetime import datetime, time, timezone
+from datetime import date, datetime, time, timezone
 import json
 from pathlib import Path
 import re
@@ -36,6 +36,13 @@ def validate_approved(data, expected_date):
     require(data.get('status') == 'approved', 'status が approved ではありません')
     require(data.get('editionDate') == expected_date, '配信日が承認ファイル名と一致しません')
     require(bool(DATE.fullmatch(expected_date)), '配信日が正しくありません')
+    issue_day = date.fromisoformat(expected_date)
+    edition_type = data.get('editionType', 'regular')
+    require(edition_type in ('regular', 'special'), '配信号の種類が不正です')
+    if edition_type == 'special':
+        require('特集' in data.get('title', ''), '特集号のタイトルを明示してください')
+        require(isinstance(data.get('specialReason'), str) and len(data['specialReason'].strip()) >= 15,
+                '特集号には過去の報道を掲載する理由と説明が必要です')
     require(isinstance(data.get('title'), str) and 5 <= len(data['title'].strip()) <= 100, '配信号タイトルが必要です')
     require(data.get('editorApproved') is True and data.get('factChecked') is True and data.get('humorReviewed') is True,
             '編集承認・事実確認・ユーモア審査が未完了です')
@@ -51,6 +58,13 @@ def validate_approved(data, expected_date):
             require(isinstance(value, str) and bool(value.strip()), f'{i}本目の {key} が空です')
             require(len(value) <= (2000 if key == 'detail' else 600), f'{i}本目の {key} が長すぎます')
         require(story['category'] in CATEGORIES, f'{i}本目のcategoryが不正です')
+        reported = story['reported']
+        require(bool(re.fullmatch(r'\d{4}[-.]\d{2}[-.]\d{2}', reported)), f'{i}本目の報道日の形式が不正です')
+        reported_day = date.fromisoformat(reported.replace('.', '-'))
+        delta_days = (issue_day - reported_day).days
+        require(delta_days >= 0, f'{i}本目の報道日が配信予定日より未来です')
+        if edition_type == 'regular':
+            require(delta_days <= 7, f'{i}本目の報道が8日以上古いです。通常号には掲載せず特集号として明示してください')
         require(valid_url(story['sourceUrl']), f'{i}本目のsourceUrlが安全なHTTPS URLではありません')
         require(story.get('editorVerified') is True and story.get('humorSafe') is True,
                 f'{i}本目は個別の事実確認・危害配慮が未承認です')
@@ -67,7 +81,10 @@ def validate_approved(data, expected_date):
         # Editorial review metadata is kept in the repository, not public story JSON.
         public_stories.append({key: story[key].strip() for key in REQUIRED_STORY} |
                               ({'flag': story['flag']} if isinstance(story.get('flag'), str) else {}))
-    return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(), 'stories': public_stories,
+    return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(),
+            'editionType': edition_type,
+            **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
+            'stories': public_stories,
             'credits': 'Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.'}
 
 
