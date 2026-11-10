@@ -13,12 +13,19 @@ import sys
 import time
 import xml.etree.ElementTree as ET
 
-QUERIES = [
-    '"accidentally ordered" when:7d',
-    '"mix-up" OR "blunder" when:7d',
-    '"wrong destination" when:7d',
-    '"sent by mistake" when:7d',
-    '"mistaken for" when:7d',
+# Different search editions prevent US/English-only headlines from occupying all slots.
+# These links are only leads; article details and harm must be reviewed manually.
+SEARCHES = [
+    ('(手違い OR 誤発注 OR 間違えて) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('"mix-up" OR "blunder" when:7d', 'en', 'GB', 'GB:en'),
+    ('"Verwechslung" OR "aus Versehen" when:7d', 'de', 'DE', 'DE:de'),
+    ('"par erreur" OR "méprise" when:7d', 'fr', 'FR', 'FR:fr'),
+    ('"por error" OR "equivocación" when:7d', 'es', 'ES', 'ES:es'),
+    ('"por engano" OR "erro de pedido" when:7d', 'pt', 'BR', 'BR:pt-419'),
+    ('(실수 OR 착각) when:7d', 'ko', 'KR', 'KR:ko'),
+    ('"mistake" OR "mix-up" when:7d', 'en', 'IN', 'IN:en'),
+    ('"accidentally ordered" OR "wrong destination" when:7d', 'en', 'US', 'US:en'),
+    ('"mix-up" OR "wrong" when:7d', 'en', 'AU', 'AU:en'),
 ]
 BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/uk/rss.xml',
@@ -27,7 +34,7 @@ BBC_FEEDS = [
 ]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
-EXCLUDE = re.compile(r'\b(killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster|fire killed|crash killed)\b', re.I)
+EXCLUDE = re.compile(r'\b(killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster|fire killed|crash killed)\b|死亡|殺害|負傷|災害|殺人|自殺|銃撃|戦争|死者|犠牲者', re.I)
 BBC_RELEVANT = re.compile(r'\b(accidentally|mix.?up|blunder|mistake|wrong|error|apolog|embarrass|confus|fiasco|misprint|misplac|oversiz|typo|ordered|delivered)\w*\b', re.I)
 
 
@@ -74,10 +81,11 @@ def parse_rss(body, provider, relevant_only=False):
     return result
 
 
-def get_google(query):
-    params={'q':query,'hl':'en-US','gl':'US','ceid':'US:en'}
+def get_google(query, lang='en', country='US', ceid='US:en'):
+    params={'q':query,'hl':lang,'gl':country,'ceid':ceid}
     url=GOOGLE+'?'+urlencode(params)
-    return parse_rss(fetch_bytes(url),'Google News RSS (search)')
+    items=parse_rss(fetch_bytes(url),f'Google News RSS ({country})')
+    return [dict(item,sourcecountry=country,language=lang) for item in items]
 
 
 def get_gdelt():
@@ -98,17 +106,18 @@ def get_gdelt():
 
 def main():
     leads, errors, seen=[],[],set()
-    def keep(items):
+    def keep(items, limit=75):
+        added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<75:
-                seen.add(item['url']);leads.append(item)
-    for i,q in enumerate(QUERIES):
+            if item['url'] not in seen and len(leads)<75 and added<limit:
+                seen.add(item['url']);leads.append(item);added+=1
+    for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(1)
-        try: keep(get_google(q))
+        try: keep(get_google(q,lang,country,ceid),limit=8)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
-            errors.append(f'Google News query {i+1}: {type(e).__name__}: {e}')
+            errors.append(f'Google News {country}: {type(e).__name__}: {e}')
         if len(leads)>=75:break
-    if len(leads)<5:
+    if len(leads)<75:
         for url in BBC_FEEDS:
             try: keep(parse_rss(fetch_bytes(url),'BBC RSS (filtered)',relevant_only=True))
             except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
