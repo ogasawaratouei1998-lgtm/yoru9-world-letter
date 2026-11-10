@@ -102,8 +102,8 @@ $('stories').addEventListener('click',async e=>{const open=e.target.closest('[da
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`}updateClock();setInterval(updateClock,60000);
 loadState();render();
-async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length===5;const jt=japanTime(now);const releaseOk=x?.editionDate&&((jt.date>x.editionDate)||(jt.date===x.editionDate&&jt.hour>=21));if(published&&releaseOk){edition=x;filter='all';loadState();render()}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
-checkPublished().then(()=>{ newestPublished=edition.status==='published'?edition:null; });
+async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length===5;const jt=japanTime(now);const releaseOk=x?.editionDate&&((jt.date>x.editionDate)||(jt.date===x.editionDate&&jt.hour>=21));if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
+checkPublished();
 
 // The archive manifest contains *released* editions only; approval drafts are never copied to public/.
 const archiveMenu=$('archiveSelect');
@@ -139,6 +139,8 @@ archiveMenu.addEventListener('change',async()=>{
   }catch(_){archiveStatus.textContent='この配信号を読み込めませんでした。';}
 });
 loadArchives();
+// Check for a new editorially approved release without interrupting an open story.
+setInterval(checkPublished,180000);
 
 </script>
 </body></html>
