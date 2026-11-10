@@ -39,7 +39,7 @@ $('export').onclick=()=>{
  const kind=$('editionType').value;
  const reason=$('specialReason').value.trim();
  const message=$('exportMessage');
- if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(date)||!title||selected.length!==5||reviewer.length<2){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(date)||!title||selected.length!==5||reviewer.length<2){
   message.textContent='配信日、タイトル、承認者、記事5本を確認してください。';return;
  }
  if(kind==='special'&&(!title.includes('特集')||reason.length<15)){
@@ -48,7 +48,7 @@ $('export').onclick=()=>{
  for(let i=0;i<selected.length;i++){
   const s=selected[i];
   const reported=String(s.reported||'').replaceAll('.','-');
-  if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(reported)){
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(reported)){
    message.textContent=(i+1)+'本目の報道日を YYYY-MM-DD 形式で入力してください。';return;
   }
   const issueDay=new Date(date+'T12:00:00+09:00');
@@ -70,7 +70,7 @@ $('export').onclick=()=>{
   approvedBy:reviewer,approvedAt:new Date().toISOString(),
   credits:'Original reporting is credited in each article. AI one-liners are fictional humor.'
  };
- const blob=new Blob([JSON.stringify(payload,null,2)+'\\n'],{type:'application/json'});
+ const blob=new Blob([JSON.stringify(payload,null,2)+'\n'],{type:'application/json'});
  const url=URL.createObjectURL(blob);
  const a=document.createElement('a');a.href=url;a.download=date+'.json';a.click();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
