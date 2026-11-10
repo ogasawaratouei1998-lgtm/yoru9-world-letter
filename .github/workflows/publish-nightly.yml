@@ -7,7 +7,11 @@ on:
       - '.github/workflows/publish-nightly.yml'
       - 'data/approved/*.json'
   schedule:
-    - cron: '7 21 * * *'
+    - cron: '7,17,37,47 21 * * *'
+      timezone: 'Asia/Tokyo'
+    - cron: '7,37 22 * * *'
+      timezone: 'Asia/Tokyo'
+    - cron: '7,37 23 * * *'
       timezone: 'Asia/Tokyo'
   workflow_dispatch:
 
@@ -23,6 +27,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     environment: github-pages
     steps:
       - uses: actions/checkout@v4
