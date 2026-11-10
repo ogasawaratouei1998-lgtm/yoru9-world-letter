@@ -91,6 +91,7 @@ class PublishingTest(unittest.TestCase):
         (self.root/'assets'/'icon.svg').write_text('<svg></svg>')
         (self.root/'index.html').write_text('<html></html>')
         (self.root/'manifest.webmanifest').write_text('{}')
+        (self.root/'service-worker.js').write_text('/* test worker */')
         out=build(self.root,self.root/'_site')
         self.assertTrue((out/'index.html').exists())
         self.assertFalse((out/'data'/'approved').exists())
