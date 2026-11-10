@@ -50,6 +50,10 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['stories'][0]['verificationUrls']=data['stories'][0]['verificationUrls'][:1]
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+    def test_independent_domains_required(self):
+        data=fixture()
+        data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl'], 'https://news.example.com/mirror']
+        with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
     def test_fewer_than_five_blocked(self):
         data=fixture()
         data['stories']=data['stories'][:4]
