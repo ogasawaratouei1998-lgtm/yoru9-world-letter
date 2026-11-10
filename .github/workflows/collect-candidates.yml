@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/collect-candidates.yml'
       - 'collect_candidates.py'
+      - 'prepare_editorial.py'
   workflow_dispatch:
   schedule:
     - cron: '37 16 * * *'
@@ -24,9 +25,13 @@ jobs:
           python-version: '3.12'
       - name: Collect candidate headlines (not verified)
         run: python collect_candidates.py
+      - name: Prepare multi-country editorial inbox (never auto publish)
+        run: python prepare_editorial.py
       - uses: actions/upload-artifact@v4
         with:
           name: unverified-news-leads
-          path: data/candidates.json
+          path: |
+            data/candidates.json
+            data/editorial-inbox.json
           if-no-files-found: error
           retention-days: 7
