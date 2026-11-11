@@ -71,6 +71,17 @@ async function subscribe(req:Request,db:DB):Promise<Response> {
   if(!validSubscription(payload.subscription))return pub(req,{error:"invalid_push_subscription"},400);
   const sub=payload.subscription;
   const hash=await sha256(sub.endpoint);
+  // Do not accept more readers than this version can safely notify.
+  // Allow existing subscriptions to refresh keys even when at capacity.
+  const existing=await db.from("yoru9_push_subscriptions")
+    .select("endpoint_hash").eq("endpoint_hash",hash).maybeSingle();
+  if(existing.error)throw Error("subscription_lookup_failed");
+  if(!existing.data){
+    const count=await db.from("yoru9_push_subscriptions").select("endpoint_hash",{head:true,count:"exact"});
+    if(count.error)throw Error("subscription_count_failed");
+    if((count.count||0)>=MAX_SUBSCRIBERS_PER_DISPATCH)
+      return pub(req,{error:"subscription_capacity_reached"},503);
+  }
   const {error}=await db.from("yoru9_push_subscriptions").upsert({
     endpoint_hash:hash,endpoint:sub.endpoint,p256dh:sub.keys.p256dh,
     auth:sub.keys.auth,updated_at:new Date().toISOString()
