@@ -2,8 +2,8 @@
 """Optional PAID AI suggestions for unverified leads. Manual trigger only.
 
 Does not verify facts, create editor-approved JSON, or publish.
-Never automatically calls an API without the operator triggering the workflow
-and providing a private OPENAI_API_KEY in GitHub Actions Secrets.
+The operator must trigger the workflow and provide a private API secret.
+The free router can change models or rate-limit. Paid OpenAI calls are opt-in.
 """
 from __future__ import annotations
 from datetime import datetime,timezone
@@ -11,8 +11,10 @@ from pathlib import Path
 from urllib.request import Request,urlopen
 import argparse,json,os,sys
 
-API="https://api.openai.com/v1/responses"
-MODEL="gpt-5.4-mini"
+APIS={
+    "openrouter-free":("https://openrouter.ai/api/v1/responses","openrouter/free","OPENROUTER_API_KEY"),
+    "openai-paid":("https://api.openai.com/v1/responses","gpt-5.4-mini","OPENAI_API_KEY"),
+}
 
 def proposal_schema():
     item={
@@ -29,7 +31,7 @@ def proposal_schema():
             "properties":{"ideas":{"type":"array","items":item}},
             "required":["ideas"]}
 
-def request_payload(leads):
+def request_payload(leads,model='gpt-5.4-mini'):
     subset=[{"id":x["id"],"headline":x["headline"],"publisher":x.get("publisher",""),
              "link":x["candidateUrl"]} for x in leads[:12]]
     if not subset:
@@ -45,7 +47,7 @@ def request_payload(leads):
       "結果はあくまで編集者用の提案であり、公開はしてはいけない。"
     )
     return {
-      "model":MODEL,"store":False,
+      "model":model,"store":False,
       "max_output_tokens":3500,
       "instructions":instructions,
       "input":"未確認の見出し一覧。各項目を仮の候補として扱い、事実とみなさず JSON で回答してください:\n"+json.dumps(subset,ensure_ascii=False),
@@ -82,21 +84,25 @@ def main():
     p.add_argument("--input",default="data/editorial-inbox.json")
     p.add_argument("--output",default="data/ai-ideas.json")
     a=p.parse_args()
-    key=os.getenv("OPENAI_API_KEY","")
+    provider=os.getenv("AI_DRAFT_PROVIDER","openrouter-free")
+    if provider not in APIS:
+        raise ValueError("Unsupported AI provider")
+    api,model,secret_name=APIS[provider]
+    key=os.getenv(secret_name,"")
     if not key:
-        print("OPENAI_API_KEY is missing. No charges incurred; no AI request sent.",file=sys.stderr)
+        print(secret_name+" is missing. No AI request sent.",file=sys.stderr)
         return 2
     inbox=json.loads(Path(a.input).read_text(encoding="utf-8"))
     if inbox.get("status")!="EDITORIAL_LEADS_ONLY" or inbox.get("automaticVerification") is not False:
         raise ValueError("Input is not an unverified editorial inbox")
     leads=[x for x in inbox.get("leads",[]) if x.get("factStatus")=="NOT_VERIFIED" and x.get("id") and x.get("headline") and x.get("candidateUrl")][:12]
-    request=Request(API,json.dumps(request_payload(leads),ensure_ascii=False).encode("utf-8"),
+    request=Request(api,json.dumps(request_payload(leads,model),ensure_ascii=False).encode("utf-8"),
         {"Authorization":"Bearer "+key,"Content-Type":"application/json"},method="POST")
     with urlopen(request,timeout=120) as response:
         data=json.load(response)
     ideas=parse_api_result(data,[x["id"] for x in leads])
     output={"generatedAt":datetime.now(timezone.utc).isoformat(),"sourceEditionDate":inbox["editionDate"],
-            "status":"UNVERIFIED_AI_IDEAS_NOT_APPROVED","model":MODEL,
+            "status":"UNVERIFIED_AI_IDEAS_NOT_APPROVED","provider":provider,"model":model,
             "notice":"AI has NOT verified these headlines. Never publish this output. An editor must independently review sources and explicitly approve final text.",
             "ideas":ideas}
     dest=Path(a.output);dest.parent.mkdir(parents=True,exist_ok=True)
