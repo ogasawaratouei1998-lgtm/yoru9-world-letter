@@ -92,6 +92,8 @@ class PublishingTest(unittest.TestCase):
         (self.root/'index.html').write_text('<html></html>')
         (self.root/'manifest.webmanifest').write_text('{}')
         (self.root/'service-worker.js').write_text('/* test worker */')
+        (self.root/'notifications.js').write_text('/* test notifications */')
+        (self.root/'notification-config.json').write_text('{"enabled":false}')
         out=build(self.root,self.root/'_site')
         self.assertTrue((out/'index.html').exists())
         self.assertFalse((out/'data'/'approved').exists())
