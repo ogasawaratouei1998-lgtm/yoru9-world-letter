@@ -43,7 +43,7 @@ Deno.test("push readiness only when all six secret settings are well-formed",()=
   };
   expect(validPushSettings(values),"valid VAPID secrets should pass");
   expect(!validPushSettings({...values,subject:"mailto:editor.example.com"}),"contact email invalid");
-  expect(!validPushSettings({...values,subject:"mailto:someone@example\\.com"}),"escaped contact email blocked");
+  expect(!validPushSettings({...values,subject:String.raw`mailto:someone@example\.com`}),"escaped contact email blocked");
   expect(!validPushSettings({...values,privateKey:"short"}),"private key too short");
   expect(!validPushSettings({...values,token:"short"}),"dispatch token too short");
 });
