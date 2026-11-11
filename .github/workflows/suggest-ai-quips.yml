@@ -1,7 +1,15 @@
-name: Suggest AI quips for editor review (manual, paid API)
+name: Suggest AI quips for editor review (manual, free/paid choice)
 
 on:
   workflow_dispatch:
+    inputs:
+      provider:
+        description: AI API provider (manual action; free is selected by default)
+        type: choice
+        default: openrouter-free
+        options:
+          - openrouter-free
+          - openai-paid
 
 permissions:
   contents: read
@@ -14,6 +22,8 @@ jobs:
     env:
       GH_TOKEN: ${{ github.token }}
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      AI_DRAFT_PROVIDER: ${{ inputs.provider }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,8 +32,18 @@ jobs:
       - name: Confirm operator explicitly configured API access
         shell: bash
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "::error::OPENAI_API_KEY secret is absent. This optional workflow will not call a paid API."
+          if [ "$AI_DRAFT_PROVIDER" = "openrouter-free" ]; then
+            if [ -z "$OPENROUTER_API_KEY" ]; then
+              echo "::error::OPENROUTER_API_KEY secret is absent. No model API was called."
+              exit 1
+            fi
+          elif [ "$AI_DRAFT_PROVIDER" = "openai-paid" ]; then
+            if [ -z "$OPENAI_API_KEY" ]; then
+              echo "::error::OPENAI_API_KEY secret is absent. No paid API was called."
+              exit 1
+            fi
+          else
+            echo "::error::Unsupported model provider"
             exit 1
           fi
       - name: Find latest successful research harvest
