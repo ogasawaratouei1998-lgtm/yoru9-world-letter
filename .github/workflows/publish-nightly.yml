@@ -66,3 +66,9 @@ jobs:
           path: _site
       - uses: actions/deploy-pages@v4
         if: steps.release.outputs.changed == 'true'
+      - name: Dispatch optional release notification (server must be configured)
+        if: steps.release.outputs.changed == 'true'
+        env:
+          PUSH_DISPATCH_URL: ${{ secrets.PUSH_DISPATCH_URL }}
+          PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
+        run: python send_release_notice.py
