@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Optional PAID AI suggestions for unverified leads. Manual trigger only.
+"""Optional AI suggestions for unverified leads: free opt-in or paid manual.
 
 Does not verify facts, create editor-approved JSON, or publish.
-The operator must trigger the workflow and provide a private API secret.
+The operator must explicitly enable automation or manually trigger and configure a private API secret.
 The free router can change models or rate-limit. Paid OpenAI calls are opt-in.
 """
 from __future__ import annotations
