@@ -26,6 +26,13 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_unconfigured_push_does_not_display_subscription_button(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        cfg = __import__("json").loads((ROOT / "notification-config.json").read_text(encoding="utf-8"))
+        self.assertFalse(cfg["enabled"])
+        self.assertIn('id="notificationSection" hidden',page)
+        self.assertIn('notification-config.json', (ROOT / "notifications.js").read_text(encoding="utf-8"))
+
     @unittest.skipUnless(shutil.which("node"), "Node.js is required for JS syntax checks")
     def test_reader_and_worker_javascript_syntax(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -34,7 +41,9 @@ class ReaderFrontendTest(unittest.TestCase):
         editor_page = (ROOT / "editor.html").read_text(encoding="utf-8")
         editor_scripts = re.findall(r"<script(?:\s[^>]*)?>(.*?)</script>", editor_page, flags=re.S)
         self.assertGreaterEqual(len(editor_scripts), 2)
+        scripts = [item for item in scripts if item.strip()]
         sources = [("reader.js", scripts[-1]),
+                   ("notifications.js", (ROOT / "notifications.js").read_text(encoding="utf-8")),
                    ("editor.js", editor_scripts[-1]),
                    ("service-worker.js", (ROOT / "service-worker.js").read_text(encoding="utf-8"))]
         for name, source in sources:
