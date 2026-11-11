@@ -30,11 +30,13 @@ async function sha256(s:string):Promise<string> {
   const out=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
   return Array.from(new Uint8Array(out),b=>b.toString(16).padStart(2,"0")).join("");
 }
-type DB = ReturnType<typeof createClient>;
+// The dedicated table schema is installed by schema.sql at provision time.
+// Runtime data from clients is validated before any privileged write.
+type DB = ReturnType<typeof createClient<any>>;
 function database():DB|null {
   const url=Deno.env.get("SUPABASE_URL");
   const key=Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-  return url&&key?createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}}):null;
+  return url&&key?createClient<any>(url,key,{auth:{persistSession:false,autoRefreshToken:false}}):null;
 }
 function ready():boolean {
   return Boolean(database() && Deno.env.get("VAPID_PUBLIC_KEY") &&
