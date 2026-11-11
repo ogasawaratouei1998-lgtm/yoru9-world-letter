@@ -33,6 +33,19 @@
 - プッシュ受信はWebサイトの正式号が公開されてから行います。未承認記事は送信しません。
 - モデル料金など別サービスの課金は、自動的に有効化しません。
 
+## 秘密鍵設定後の安全な動作確認
+
+専用プロジェクトと GitHub Actions に秘密情報を登録したら、まず GitHub の [Verify push setup without sending notifications](https://github.com/ogasawaratouei1998-lgtm/yoru9-world-letter/actions/workflows/verify-push-setup.yml) を **Run workflow** で手動実行します。これは実際の配信や購読登録を行わず、以下を検査します。
+
+- Supabase の VAPID・トークンが形式どおりに読み込める
+- 端末登録の明示的なスイッチが有効になっている
+- GitHub Actions の送信トークンと Supabase 側の秘密トークンが**一致している**
+- 偽のトークンによる送信が拒否され、外部サイトからの購読要求も拒否される
+
+これらがすべて成功した**後に限り**、公開設定 `notification-config.json` に公開用VAPID鍵を転記して `enabled:true` にします。その後、対応するスマートフォンで実際の登録・受信・解除をテストしてください。公開する鍵は `VAPID_PUBLIC_KEY` のみです。**秘密鍵、購読エンドポイント、送信トークンをGitHubやチャットに書かないでください。**
+
+現在の `notification-config.json` は専用サーバーの公開URLのみを設定し、`enabled:false` のままです。通知機能は読者には表示されません。
+
 ## 検証
 
 GitHub Actionsの「Test isolated push backend」は、Denoの型検査、許可ホスト、SSRF防止、21時以降の配信日、購読データ、秘密トークンをテストします。
