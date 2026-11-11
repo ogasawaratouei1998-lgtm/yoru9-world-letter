@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "backendUrl": "",
+  "vapidPublicKey": "",
+  "note": "Push is not active until a dedicated subscription service is provisioned and configured. No reader receives notifications yet."
+}
