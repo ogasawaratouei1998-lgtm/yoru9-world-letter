@@ -54,3 +54,39 @@ self.addEventListener('fetch', event => {
     event.respondWith(caches.match(req).then(cached => cached || fetch(req)));
   }
 });
+
+
+/* Push messages are shown only for an actual dispatched edition.
+   Web Push is not active until a separate, private push backend is connected. */
+self.addEventListener('push', event => {
+  event.waitUntil((async()=>{
+    let payload={};
+    try{if(event.data)payload=event.data.json()}catch(_){payload={}}
+    const title=typeof payload.title==='string'?payload.title.slice(0,90):'よる9じの世界便り';
+    const body=typeof payload.body==='string'?payload.body.slice(0,180):'今夜の世界便りが届きました。';
+    const editionDate=typeof payload.editionDate==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(payload.editionDate)?payload.editionDate:'latest';
+    // Never follow URLs supplied in a remote push payload.
+    const url=new URL('index.html',SCOPE).href;
+    await self.registration.showNotification(title,{
+      body,tag:'yoru9-release-'+editionDate,renotify:false,
+      icon:new URL('assets/icon.svg',SCOPE).href,
+      data:{url},timestamp:Date.now()
+    });
+  })());
+});
+
+self.addEventListener('notificationclick',event=>{
+  event.notification.close();
+  event.waitUntil((async()=>{
+    const target=new URL('index.html',SCOPE).href;
+    const clientsList=await self.clients.matchAll({type:'window',includeUncontrolled:true});
+    for(const c of clientsList){
+      if(c.url.startsWith(SCOPE)&&'focus' in c){
+        await c.focus();
+        if('navigate' in c)await c.navigate(target);
+        return;
+      }
+    }
+    if(self.clients.openWindow)await self.clients.openWindow(target);
+  })());
+});
