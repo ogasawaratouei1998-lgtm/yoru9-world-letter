@@ -28,6 +28,13 @@ def main():
         raise RuntimeError("Supabase secrets or VAPID values missing. Push is intentionally disabled.")
     if status.get("signupsOpen") is not True:
         raise RuntimeError("Supabase PUSH_SIGNUPS_ENABLED is not true. Subscription is intentionally disabled.")
+    # Check that the GitHub secret and Supabase secret actually match without sending a push.
+    check_code,check_body=request_status(BASE+"/verify-auth","POST",b"{}",{
+        "Authorization":"Bearer "+secret,
+        "Content-Type":"application/json",
+    })
+    if check_code!=200 or json.loads(check_body).get("notificationSent") is not False:
+        raise RuntimeError("Supabase and GitHub dispatch secrets are not matched.")
     # An intentionally wrong token must be rejected before any dispatch or DB update.
     bad_code,_=request_status(BASE+"/dispatch","POST",b"{}",{
         "Authorization":"Bearer invalid-readiness-test-only",
