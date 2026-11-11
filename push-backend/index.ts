@@ -1,6 +1,6 @@
 import { createClient } from "npm:@supabase/supabase-js@2.119.0";
 import { sendPushNotification } from "npm:@mmmike/web-push@1.5.0/send";
-import { READER_ORIGIN, validEndpoint, validSubscription, safeEditionDate, fixedTimeEqual } from "./validation.ts";
+import { READER_ORIGIN, validEndpoint, validSubscription, safeEditionDate, fixedTimeEqual, validPushSettings } from "./validation.ts";
 
 const MAX_SUBSCRIBERS_PER_DISPATCH = 200; // Refuse partial broadcasts; scale with a queue before exceeding this.
 const MAX_BODY = 4600;
@@ -39,17 +39,13 @@ function database():DB|null {
   return url&&key?createClient<any>(url,key,{auth:{persistSession:false,autoRefreshToken:false}}):null;
 }
 function ready():boolean {
-  const pub=Deno.env.get("VAPID_PUBLIC_KEY")||"";
-  const priv=Deno.env.get("VAPID_PRIVATE_KEY")||"";
-  const subject=Deno.env.get("VAPID_SUBJECT")||"";
-  const token=Deno.env.get("PUSH_DISPATCH_TOKEN")||"";
-  const salt=Deno.env.get("PUSH_RATE_SALT")||"";
-  return Boolean(database() &&
-    /^[A-Za-z0-9_-]{87}$/.test(pub) &&
-    /^[A-Za-z0-9_-]{43}$/.test(priv) &&
-    /^mailto:[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(subject) &&
-    /^[A-Za-z0-9_-]{43,}$/.test(token) &&
-    /^[A-Za-z0-9_-]{43,}$/.test(salt));
+  return Boolean(database() && validPushSettings({
+    publicKey:Deno.env.get("VAPID_PUBLIC_KEY")||"",
+    privateKey:Deno.env.get("VAPID_PRIVATE_KEY")||"",
+    subject:Deno.env.get("VAPID_SUBJECT")||"",
+    token:Deno.env.get("PUSH_DISPATCH_TOKEN")||"",
+    salt:Deno.env.get("PUSH_RATE_SALT")||""
+  }));
 }
 async function allowedRate(req:Request,db:DB):Promise<boolean> {
   const salt=Deno.env.get("PUSH_RATE_SALT");
