@@ -1,0 +1,54 @@
+name: Optional automatic free AI draft after research (off by default)
+
+on:
+  workflow_run:
+    workflows:
+      - Collect unverified news leads
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  draft:
+    if: >-
+      ${{ vars.AI_AUTODRAFT_ENABLED == 'true' &&
+          github.event.workflow_run.conclusion == 'success' &&
+          github.event.workflow_run.head_branch == 'main' &&
+          github.event.workflow_run.head_repository.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GH_TOKEN: ${{ github.token }}
+      OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+      AI_DRAFT_PROVIDER: openrouter-free
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm free AI key is configured
+        shell: bash
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "::warning::OpenRouter free API not configured. No request sent."
+            exit 1
+          fi
+      - name: Read only a completed trusted research run's editorial inbox
+        shell: bash
+        run: |
+          mkdir -p data
+          gh run download "${{ github.event.workflow_run.id }}" --name unverified-news-leads --dir data
+          test -f data/editorial-inbox.json
+      - name: Suggest Japanese AI one-liners (unverified drafts only)
+        run: python suggest_ai_quips.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: AI-draft-ideas-UNVERIFIED
+          path: data/ai-ideas.json
+          retention-days: 3
+          if-no-files-found: error
