@@ -190,12 +190,19 @@ Deno.serve(async(req:Request)=>{
     service:"yoru9-push",ready:ready(),
     signupsOpen:Deno.env.get("PUSH_SIGNUPS_ENABLED")==="true"
   });
-  if(req.method!=="POST"||!["subscribe","unsubscribe","dispatch"].includes(operation))
+  if(req.method!=="POST"||!["subscribe","unsubscribe","dispatch","verify-auth"].includes(operation))
     return response({error:"not_found"},404);
   if(!ready())return response({error:"server_not_configured"},503);
   const db=database();
   if(!db)return response({error:"database_not_configured"},503);
   try{
+    if(operation==="verify-auth"){
+      const bearer=req.headers.get("authorization")||"";
+      const token=bearer.startsWith("Bearer ")?bearer.slice(7):"";
+      return fixedTimeEqual(token,Deno.env.get("PUSH_DISPATCH_TOKEN")||"")
+        ? response({ok:true,notificationSent:false})
+        : response({error:"unauthorized"},401);
+    }
     if(operation==="subscribe")return await subscribe(req,db);
     if(operation==="unsubscribe")return await unsubscribe(req,db);
     return await dispatch(req,db);
