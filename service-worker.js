@@ -2,7 +2,7 @@
 const SHELL_CACHE = 'yoru9-shell-v1';
 const ISSUE_CACHE = 'yoru9-released-issues-v1';
 const SCOPE = self.registration.scope;
-const SHELL = ['index.html', 'manifest.webmanifest', 'assets/icon.svg'];
+const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'assets/icon.svg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
