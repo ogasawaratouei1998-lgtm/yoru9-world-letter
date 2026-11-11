@@ -6,7 +6,7 @@
 |---|---|
 | 世界10地域のニュース候補収集 | 自動実行を確認済み |
 | 未確認候補の編集用整理 | 自動実行を確認済み。事実確認とは別 |
-| AIによる日本語ツッコミ案 | **手動実行用コードのみ**。別途API契約・秘密鍵が必要で、まだ動作していない |
+| AIによる日本語ツッコミ案 | **手動起動コード＋事前オプトイン型の自動実行コード**。無料モデル用APIキーは未登録・実行未確認 |
 | プッシュ通知の受信画面、Service Worker | GitHubに実装済み。バックエンド未接続のため通知ボタンは表示しない |
 | 読者への実際のプッシュ通知 | **未稼働**。安全なバックエンド・鍵・購読者データベースが必要 |
 | AI・人間による検証・公開 | 未確認記事は一切自動承認・自動公開しない。編集者による確認と承認が必要 |
@@ -25,11 +25,15 @@
 
 ## AIのツッコミ案を使う場合（任意・料金注意）
 
-[Actions → Suggest AI quips for editor review (manual, paid API)](https://github.com/ogasawaratouei1998-lgtm/yoru9-world-letter/actions/workflows/suggest-ai-quips.yml) に、運営者が明示的に操作したとき**だけ**実行するプログラムを配置しています。
+[Actions → Suggest AI quips for editor review (manual, free/paid choice)](https://github.com/ogasawaratouei1998-lgtm/yoru9-world-letter/actions/workflows/suggest-ai-quips.yml) に、運営者が明示的に操作したときだけ実行するプログラムを配置しています。
 
-利用前に必要なのは、別途のOpenAI API利用登録、料金・利用上限の確認、GitHub Actions Secretsへの `OPENAI_API_KEY` 登録です。**ChatGPT Plus等の契約とは別料金です。** APIキーをGitHubのコードやチャットに貼り付けないでください。
+**無料モデルの選択肢を追加しました。** OpenRouterでAPIキーを作成し、GitHub Secretsの `OPENROUTER_API_KEY` に保存すると、手動ワークフローで `openrouter-free` を選べます。現在の無料モデルのトークン価格は0ドルですが、モデルの品質・上限・提供状況は変わり得ます。APIに渡すのは公表済み見出しとURLのみで、機密情報は入力しないでください。
 
-本ワークフローは最新の候補を最大12件読み込み、`gpt-5.4-mini` で日本語の短いジョーク案・気を付ける点・追加調査の質問を生成し、`AI-draft-ideas-UNVERIFIED` 成果物に保存します。**自動実行されず、採用も公開もされません。** ニュース見出ししか確認していないため、AIの出力を「事実確認済み」と扱ってはいけません。生成物を使う場合、原文を読んだ編集者が修正してください。
+さらに、[Optional automatic free AI draft after research](https://github.com/ogasawaratouei1998-lgtm/yoru9-world-letter/actions/workflows/optional-ai-draft.yml) も用意しました。GitHub Secrets `OPENROUTER_API_KEY` を設定し、リポジトリの Actions Variables に `AI_AUTODRAFT_ENABLED=true` と明示的に登録したとき**だけ**、ニュース候補の収集成功後に無料モデルを自動呼び出しします。**現在はオフ**です。
+
+OpenAIの有料モデルを選ぶ場合は、別途OpenAI API利用登録、料金・利用上限の確認、GitHub Actions Secretsへの `OPENAI_API_KEY` 登録が必要です。**ChatGPT Plus等の契約とは別料金です。** 有料モデルは手動実行でのみ選択できます。APIキーをGitHubのコードやチャットに貼り付けないでください。
+
+本ワークフローは最新の候補を最大12件読み込み、無料モデル `openrouter/free` または任意の有料モデル `gpt-5.4-mini` で、日本語の短いジョーク案・気を付ける点・追加調査の質問を生成し、`AI-draft-ideas-UNVERIFIED` 成果物に保存します。**採用も公開も自動では行いません。** ニュース見出ししか確認していないため、AIの出力を「事実確認済み」と扱ってはいけません。生成物を使う場合、原文を読んだ編集者が修正してください。
 
 ## プッシュ通知：仕組みと必要な追加設定
 
@@ -61,4 +65,4 @@ iPhone/iPad（iOS/iPadOS 16.4以降）では、アプリをホーム画面に追
 - 端末ごとに許可と解除が可能です。通知購読URLは機微な識別子なので秘匿が必要です。
 - GitHub Actionsのリトライ時に同じ日付の通知を連投しないよう、送信側のバックエンドには必ず重複制御を実装してください。
 - AIの提案を受けても、`data/approved/` への**自動書き込みは行いません**。真偽・独立性・人への配慮の最終承認は人間が担当します。
-- 料金の発生する自動処理を実行するには、運営者による明示的なAPI設定と手動起動が必要です。
+- 有料APIは常に手動起動のみとし、自動実行は `openrouter/free` 限定かつ変数による明示的なオプトインでしか有効にしません。いずれも秘密鍵は公開リポジトリやクライアントへ送信しないでください。
