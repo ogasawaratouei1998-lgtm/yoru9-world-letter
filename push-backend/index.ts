@@ -47,7 +47,7 @@ function ready():boolean {
   return Boolean(database() &&
     /^[A-Za-z0-9_-]{87}$/.test(pub) &&
     /^[A-Za-z0-9_-]{43}$/.test(priv) &&
-    /^mailto:[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(subject) &&
+    /^mailto:[^\s@]+@[^\s@]+\\.[^\s@]+$/.test(subject) &&
     /^[A-Za-z0-9_-]{43,}$/.test(token) &&
     /^[A-Za-z0-9_-]{43,}$/.test(salt));
 }
