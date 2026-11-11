@@ -6,6 +6,9 @@ on:
     paths:
       - 'index.html'
       - 'manifest.webmanifest'
+      - 'notifications.js'
+      - 'notification-config.json'
+      - 'service-worker.js'
       - 'assets/**'
       - 'data/current.json'
       - 'data/archive/**'
