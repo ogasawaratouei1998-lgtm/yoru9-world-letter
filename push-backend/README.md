@@ -1,6 +1,6 @@
 # よる9じの世界便り — 通知バックエンド導入手順
 
-**2026年11月11日現在:** GitHubにソースコード、RLS付きDBスキーマ、セキュリティテストを登録しました。ただし、**専用Supabaseプロジェクトはまだ未作成、読者への通知は未稼働**です。既存の研究用DBには変更を加えていません。
+**2026年11月11日現在:** 専用Supabase Freeプロジェクト `yoru9-push` を東京リージョンに新規作成し、RLS付きDBスキーマとEdge Function `yoru9-push` を導入しました。プロジェクトIDは `kdvkbkdfnrwvrbugpnaq` です。[Supabaseダッシュボード](https://supabase.com/dashboard/project/kdvkbkdfnrwvrbugpnaq) で状態を確認できます。**VAPID秘密鍵・認証トークン・GitHub Actions Secretsは未登録で、読者への通知は未稼働です。** 既存の研究用DBには変更していません。
 
 ## 専用環境に配置するもの
 
@@ -10,10 +10,10 @@
 - push-backend/validation_test.ts：Denoで実行する基本セキュリティテスト
 - 通知送信のライブラリ：@mmmike/web-push 1.5.0、Supabase JS 2.119.0（固定バージョン）
 
-## 専用プロジェクト作成後の設定
+## 専用プロジェクトの設定
 
-1. 新しいSupabase Freeプロジェクトに schema.sql をマイグレーションとして適用します。**既存プロジェクトへ適用してはいけません**。
-2. Edge Function yoru9-push を verify_jwt=false でデプロイします。匿名端末が使う subscribe / unsubscribe は内部でOrigin、レート制限、データの正当性を検査し、配信のdispatchは最低32文字のBearerトークンで認証します。
+1. **完了:** 専用Supabase Freeプロジェクトに schema.sql をマイグレーションとして適用しました。3テーブルはRLS有効で匿名・通常認証ユーザーの権限はありません。
+2. **完了:** Edge Function yoru9-push を verify_jwt=false でデプロイしました。匿名端末が使う subscribe / unsubscribe は内部でOrigin、レート制限、データの正当性を検査し、配信のdispatchは最低32文字のBearerトークンで認証します。
 3. Edge FunctionのSecretsに VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT, PUSH_DISPATCH_TOKEN, PUSH_RATE_SALT を登録します。VAPID_SUBJECTは実際に運営者が確認できる mailto: のメールアドレスにしてください。
 4. PUSH_SIGNUPS_ENABLED=true を設定して初めて端末登録を受付けます。それまでは503を返します。
 5. GitHub Actions Secretsに PUSH_DISPATCH_URL と PUSH_DISPATCH_TOKEN を登録します。送信先URLは https://専用プロジェクトID.supabase.co/functions/v1/yoru9-push/dispatch です。
@@ -37,4 +37,4 @@
 
 GitHub Actionsの「Test isolated push backend」は、Denoの型検査、許可ホスト、SSRF防止、21時以降の配信日、購読データ、秘密トークンをテストします。
 
-端末への実際の通知送信とSupabaseデータベース接続は、専用無料プロジェクトを作成し、運営者の秘密鍵を設定するまで確認できません。
+端末への実際の通知送信は、運営者のVAPID鍵・秘密トークン・GitHub Actions Secretsを設定した後、実機による登録/解除/受信テストが必要です。現時点のEdge FunctionはSecrets不足の場合は503を返す構成です。
