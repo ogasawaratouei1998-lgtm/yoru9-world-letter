@@ -6,6 +6,12 @@ on:
     paths:
       - 'publish_approved.py'
       - 'build_site.py'
+      - 'prepare_editorial.py'
+      - 'suggest_ai_quips.py'
+      - 'send_release_notice.py'
+      - 'notifications.js'
+      - 'notification-config.json'
+      - 'service-worker.js'
       - 'tests/**'
       - 'data/approved/*.json'
       - '.github/workflows/test-publishing.yml'
