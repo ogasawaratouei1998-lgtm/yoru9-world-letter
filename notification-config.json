@@ -1,6 +1,6 @@
 {
   "enabled": false,
-  "backendUrl": "",
+  "backendUrl": "https://kdvkbkdfnrwvrbugpnaq.supabase.co/functions/v1/yoru9-push",
   "vapidPublicKey": "",
-  "note": "Push is not active until a dedicated subscription service is provisioned and configured. No reader receives notifications yet."
+  "note": "Dedicated Supabase backend installed, but push remains off until secrets, VAPID public key and device tests are complete."
 }
