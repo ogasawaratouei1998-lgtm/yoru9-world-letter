@@ -1,0 +1,22 @@
+name: Verify push setup without sending notifications
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      PUSH_DISPATCH_URL: ${{ secrets.PUSH_DISPATCH_URL }}
+      PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Check live Supabase push server and block unauthorized access
+        run: python verify_push_setup.py
