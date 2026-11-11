@@ -49,6 +49,12 @@ body{background:#0b1528}
 .reported{font-size:12px;color:#d3ddea;margin:3px 0 9px;line-height:1.7}
 .offlineNotice{background:#34425a;border:1px solid #cfac70;border-radius:12px;padding:11px 15px;margin:12px 0;font-size:12px;color:#fff1d6;line-height:1.6}
 .offlineNotice[hidden]{display:none}
+.notification-panel{border:1px solid #7b8ca6;border-radius:16px;padding:18px;margin:20px 0;color:#fff0d8}
+.notification-panel[hidden]{display:none}
+.notification-panel h2{font-size:19px}
+.notification-panel button{border-radius:10px;padding:12px 15px;font:inherit;font-weight:700;background:#f6dba7;color:#16233c;cursor:pointer}
+.notification-panel button:disabled{opacity:.55;cursor:default}
+.notification-panel p{font-size:13px;line-height:1.75}
 .date-guide{font-size:12px;color:#d3ddea;margin:5px 0 14px;line-height:1.8}
 .readbtn{padding-top:8px}
 .footerpanel{margin-top:24px}
@@ -74,6 +80,12 @@ body{background:#0b1528}
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
 <section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
+<section class="notification-panel" id="notificationSection" hidden>
+<h2>夜9時のお知らせ</h2>
+<p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
+<button id="notificationButton" type="button" disabled>通知の設定</button>
+<p role="status" aria-live="polite" id="notificationStatus"></p>
+</section>
 <section class="footerpanel"><div style="color:var(--gold);font-size:27px" aria-hidden="true">☾</div><h2>今日も世界のどこかで、<br>想定外の失敗が起きている。</h2><p>完璧じゃないのは、<br>世界も、自分も同じ。</p><p>だから今夜、そんなあれこれを<br>少し笑えたなら、</p><p class="message-last">それでいい。</p><p class="bye">おやすみなさい。また夜9時に。</p><div id="endprogress" class="small" aria-live="polite"></div></section>
 <aside class="note" id="disclosure"><strong>現在は創刊準備号です。</strong> 過去に報道された実話5本を掲載しています。毎日21時の自動更新や通知は未開始です。記事は出典に基づいて独自に短く紹介し、AIのひと言は創作の冗談です。</aside>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
@@ -165,4 +177,5 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
 setInterval(checkPublished,180000);
 
 </script>
+<script src="./notifications.js" defer></script>
 </body></html>
