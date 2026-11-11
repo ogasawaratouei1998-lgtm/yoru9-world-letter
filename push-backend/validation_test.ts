@@ -1,4 +1,4 @@
-import { acceptedHost, fixedTimeEqual, safeEditionDate, validEndpoint, validSubscription } from "./validation.ts";
+import { acceptedHost, fixedTimeEqual, safeEditionDate, validEndpoint, validSubscription, validPushSettings } from "./validation.ts";
 
 function expect(condition:boolean, message:string) {
   if (!condition) throw new Error(message);
@@ -33,4 +33,17 @@ Deno.test("dispatch tokens must be nontrivial and match",()=>{
   expect(fixedTimeEqual(token,token),"same valid token");
   expect(!fixedTimeEqual("short",token),"short token denied");
   expect(!fixedTimeEqual("y".repeat(48),token),"mismatch denied");
+});
+
+Deno.test("push readiness only when all six secret settings are well-formed",()=>{
+  const values={
+    publicKey:"A".repeat(87),privateKey:"B".repeat(43),
+    subject:"mailto:editor@example.com",
+    token:"C".repeat(64),salt:"D".repeat(64)
+  };
+  expect(validPushSettings(values),"valid VAPID secrets should pass");
+  expect(!validPushSettings({...values,subject:"mailto:editor.example.com"}),"contact email invalid");
+  expect(!validPushSettings({...values,subject:"mailto:someone@example\\.com"}),"escaped contact email blocked");
+  expect(!validPushSettings({...values,privateKey:"short"}),"private key too short");
+  expect(!validPushSettings({...values,token:"short"}),"dispatch token too short");
 });
