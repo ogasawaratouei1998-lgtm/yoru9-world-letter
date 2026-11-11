@@ -57,3 +57,14 @@ export function fixedTimeEqual(a: string,b: string): boolean {
   for(let i=0;i<n;i++) differences |= (a.charCodeAt(i%a.length)^b.charCodeAt(i%b.length));
   return differences===0;
 }
+
+
+export function validPushSettings(values:{
+  publicKey:string;privateKey:string;subject:string;token:string;salt:string;
+}):boolean {
+  return /^[A-Za-z0-9_-]{87}$/.test(values.publicKey) &&
+    /^[A-Za-z0-9_-]{43}$/.test(values.privateKey) &&
+    /^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.subject) &&
+    /^[A-Za-z0-9_-]{43,}$/.test(values.token) &&
+    /^[A-Za-z0-9_-]{43,}$/.test(values.salt);
+}
