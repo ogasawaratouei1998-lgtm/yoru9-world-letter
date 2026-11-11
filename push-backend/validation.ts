@@ -64,7 +64,7 @@ export function validPushSettings(values:{
 }):boolean {
   return /^[A-Za-z0-9_-]{87}$/.test(values.publicKey) &&
     /^[A-Za-z0-9_-]{43}$/.test(values.privateKey) &&
-    /^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.subject) &&
+    /^mailto:[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(values.subject) &&
     /^[A-Za-z0-9_-]{43,}$/.test(values.token) &&
     /^[A-Za-z0-9_-]{43,}$/.test(values.salt);
 }
