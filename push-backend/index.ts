@@ -39,11 +39,17 @@ function database():DB|null {
   return url&&key?createClient<any>(url,key,{auth:{persistSession:false,autoRefreshToken:false}}):null;
 }
 function ready():boolean {
-  return Boolean(database() && Deno.env.get("VAPID_PUBLIC_KEY") &&
-    Deno.env.get("VAPID_PRIVATE_KEY") &&
-    Deno.env.get("VAPID_SUBJECT") &&
-    Deno.env.get("PUSH_DISPATCH_TOKEN") &&
-    Deno.env.get("PUSH_RATE_SALT"));
+  const pub=Deno.env.get("VAPID_PUBLIC_KEY")||"";
+  const priv=Deno.env.get("VAPID_PRIVATE_KEY")||"";
+  const subject=Deno.env.get("VAPID_SUBJECT")||"";
+  const token=Deno.env.get("PUSH_DISPATCH_TOKEN")||"";
+  const salt=Deno.env.get("PUSH_RATE_SALT")||"";
+  return Boolean(database() &&
+    /^[A-Za-z0-9_-]{87}$/.test(pub) &&
+    /^[A-Za-z0-9_-]{43}$/.test(priv) &&
+    /^mailto:[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(subject) &&
+    /^[A-Za-z0-9_-]{43,}$/.test(token) &&
+    /^[A-Za-z0-9_-]{43,}$/.test(salt));
 }
 async function allowedRate(req:Request,db:DB):Promise<boolean> {
   const salt=Deno.env.get("PUSH_RATE_SALT");
