@@ -2,6 +2,16 @@ import unittest,json
 from suggest_ai_quips import request_payload,parse_api_result
 
 class QuipDraftTest(unittest.TestCase):
+    def test_free_model_is_selected_only_by_explicit_route(self):
+        from suggest_ai_quips import APIS
+        self.assertEqual(APIS["openrouter-free"][1],"openrouter/free")
+        self.assertEqual(APIS["openrouter-free"][2],"OPENROUTER_API_KEY")
+        self.assertEqual(APIS["openai-paid"][2],"OPENAI_API_KEY")
+    def test_free_payload_has_zero_retention_flag(self):
+        p=request_payload([{"id":"lead-001","headline":"Odd result","candidateUrl":"https://example.org/1"}],model="openrouter/free")
+        self.assertEqual(p["model"],"openrouter/free")
+        self.assertIs(p["store"],False)
+
     def test_payload_refuses_to_verify_or_publish(self):
         p=request_payload([{"id":"lead-001","headline":"Unexpected cake order","candidateUrl":"https://example.org","publisher":"Source"}])
         self.assertFalse(p["store"])
