@@ -1,0 +1,33 @@
+name: One-time authorized push delivery test
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/push-delivery-test-once.yml'
+permissions:
+  contents: read
+jobs:
+  test-delivery:
+    runs-on: ubuntu-latest
+    environment: github-pages
+    steps:
+      - name: Send one authorized test notification (deduplicated server-side)
+        env:
+          PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json,os,urllib.request
+          token=os.environ.get("PUSH_DISPATCH_TOKEN","")
+          if len(token)<32:
+              raise SystemExit("Dispatch token unavailable; test was not sent")
+          req=urllib.request.Request(
+              "https://kdvkbkdfnrwvrbugpnaq.supabase.co/functions/v1/yoru9-push/test-dispatch",
+              data=b"{}",
+              headers={"Authorization":"Bearer "+token,"Content-Type":"application/json"},
+              method="POST")
+          with urllib.request.urlopen(req,timeout=90) as res:
+              result=json.load(res)
+          print("Test dispatch result:",json.dumps(result,ensure_ascii=False))
+          if not result.get("ok") or result.get("failed",0):
+              raise SystemExit("Test delivery not fully successful")
+          PY
