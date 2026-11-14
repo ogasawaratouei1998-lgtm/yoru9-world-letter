@@ -1,0 +1,31 @@
+name: Free-tier AI editorial double-check (safe preview)
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 19 * * *'
+      timezone: 'Asia/Tokyo'
+permissions:
+  contents: read
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Collect same-day leads
+        run: python collect_candidates.py
+      - name: Independent AI double-check (no publication)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-2.5-flash
+        run: python auto_editorial.py
+      - name: Save approved preview privately in workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ai-reviewed-preview
+          path: data/approved/*.json
+          if-no-files-found: ignore
+          retention-days: 2
