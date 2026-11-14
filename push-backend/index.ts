@@ -91,13 +91,13 @@ async function unsubscribe(req:Request,db:DB):Promise<Response> {
   return pub(req,{ok:true});
 }
 type StoredRow = {endpoint_hash:string,endpoint:string,p256dh:string,auth:string};
-async function dispatch(req:Request,db:DB):Promise<Response> {
+async function dispatch(req:Request,db:DB,testMode=false):Promise<Response> {
   const authorization=req.headers.get("authorization")||"";
   const token=authorization.startsWith("Bearer ")?authorization.slice(7):"";
   if(!fixedTimeEqual(token,Deno.env.get("PUSH_DISPATCH_TOKEN")||"")) return response({error:"unauthorized"},401);
   const payload=await jsonBody(req);
-  if(!safeEditionDate(payload.editionDate)) return response({error:"edition_not_published_today_or_too_early"},422);
-  const day=payload.editionDate as string;
+  if(!testMode&&!safeEditionDate(payload.editionDate)) return response({error:"edition_not_published_today_or_too_early"},422);
+  const day=testMode?"2000-01-01":payload.editionDate as string;
   const countResult=await db.from("yoru9_push_subscriptions").select("endpoint_hash",{count:"exact",head:true});
   if(countResult.error)throw Error("subscription_count_failed");
   if((countResult.count||0)>MAX_SUBSCRIBERS_PER_DISPATCH) return response({error:"needs_queued_fanout",subscribers:countResult.count},503);
@@ -111,7 +111,7 @@ async function dispatch(req:Request,db:DB):Promise<Response> {
   const publicKey=Deno.env.get("VAPID_PUBLIC_KEY")||"";
   const privateKey=Deno.env.get("VAPID_PRIVATE_KEY")||"";
   const subject=Deno.env.get("VAPID_SUBJECT")||"";
-  const notification={title:"よる9じの世界便り",body:typeof payload.body==="string"?payload.body.slice(0,170):"今夜の世界便りが届きました。",url:"https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/"};
+  const notification={title:"よる9じの世界便り",body:testMode?"【通知テスト】よる9じの世界便りの通知が正常に届くか確認しています。ニュースの配信ではありません。":typeof payload.body==="string"?payload.body.slice(0,170):"今夜の世界便りが届きました。",url:"https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/"};
   const rows=(subscribers||[]) as StoredRow[];
   let delivered=0,gone=0,failed=0;
   const groups=[];
@@ -142,7 +142,7 @@ Deno.serve(async(req:Request)=>{
     service:"yoru9-push",ready:ready(),signupsOpen:Deno.env.get("PUSH_SIGNUPS_ENABLED")==="true",
     vapidPublicKey:Deno.env.get("VAPID_PUBLIC_KEY")||""
   });
-  if(req.method!=="POST"||!["subscribe","unsubscribe","dispatch","verify-auth"].includes(operation)) return response({error:"not_found"},404);
+  if(req.method!=="POST"||!["subscribe","unsubscribe","dispatch","test-dispatch","verify-auth"].includes(operation)) return response({error:"not_found"},404);
   if(!ready())return response({error:"server_not_configured"},503);
   const db=database();
   if(!db)return response({error:"database_not_configured"},503);
@@ -154,7 +154,7 @@ Deno.serve(async(req:Request)=>{
     }
     if(operation==="subscribe")return await subscribe(req,db);
     if(operation==="unsubscribe")return await unsubscribe(req,db);
-    return await dispatch(req,db);
+    return await dispatch(req,db,operation==="test-dispatch");
   }catch(error){
     const msg=error instanceof Error?error.message:"unknown";
     if(msg==="body_too_large"||msg==="invalid_body"||error instanceof SyntaxError) return operation==="dispatch"?response({error:"invalid_body"},400):pub(req,{error:"invalid_body"},400);
