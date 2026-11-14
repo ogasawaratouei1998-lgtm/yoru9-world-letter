@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key, no verified five, no publication."""
-import json, os, re, sys, hashlib
+import json, os, re, sys, ipaddress, socket
+from html.parser import HTMLParser
 from datetime import datetime
 from pathlib import Path
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
@@ -18,6 +20,46 @@ def host(url):
         p=urlsplit(url)
         return p.hostname.lower().removeprefix("www.") if p.scheme=="https" and p.hostname and not p.username else ""
     except ValueError:return ""
+
+class ArticleText(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.parts=[]
+        self.hidden=0
+    def handle_starttag(self,tag,attrs):
+        if tag in ("script","style","noscript","svg"):self.hidden+=1
+    def handle_endtag(self,tag):
+        if tag in ("script","style","noscript","svg"):self.hidden=max(0,self.hidden-1)
+    def handle_data(self,data):
+        if not self.hidden and data.strip():self.parts.append(data.strip())
+
+def public_host(url):
+    domain=host(url)
+    if not domain or domain in ("localhost",) or domain.endswith((".local",".internal")):return False
+    try:
+        addresses=socket.getaddrinfo(domain,443,type=socket.SOCK_STREAM)
+        return bool(addresses) and all(ipaddress.ip_address(x[4][0]).is_global for x in addresses)
+    except (OSError,ValueError):return False
+
+def source_text(url):
+    # Only URLs already found in the trusted lead list may be fetched.
+    if not public_host(url):return ""
+    class SafeRedirect(__import__("urllib.request",fromlist=["HTTPRedirectHandler"]).HTTPRedirectHandler):
+        def redirect_request(self,req,fp,code,msg,headers,newurl):
+            if not public_host(newurl):raise ValueError("unsafe_redirect")
+            return super().redirect_request(req,fp,code,msg,headers,newurl)
+    from urllib.request import build_opener
+    opener=build_opener(SafeRedirect)
+    req=Request(url,headers={"User-Agent":"Yoru9EditorialResearch/1.0","Accept":"text/html"})
+    try:
+        with opener.open(req,timeout=12) as response:
+            if "text/html" not in response.headers.get("Content-Type",""):return ""
+            raw=response.read(180000)
+        parser=ArticleText()
+        parser.feed(raw.decode("utf-8",errors="replace"))
+        text=" ".join(parser.parts)
+        return text[:13000] if len(text)>=600 else ""
+    except (OSError,ValueError,HTTPError,URLError):return ""
 
 def ai(prompt):
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
@@ -65,20 +107,30 @@ def main():
     if not isinstance(draft,list):return 0
     seen=previous_events()
     selected=[]
+    lead_urls={x["url"] for x in today}
+    cache={}
     for story in draft:
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):continue
         if story["reported"].replace(".","-")!=day or story["category"] not in ("person","work","company"):continue
         urls=story.get("verificationUrls",[])
         if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):continue
-        if story["sourceUrl"] not in urls or story["sourceUrl"] not in [x["url"] for x in today]:continue
+        if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):continue
         if story["sourceUrl"] in seen or story["id"] in seen or BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):continue
         event=story.get("eventKey")
         if not isinstance(event,str) or len(event)<12 or event in seen:continue
-        # Auditor B sees the original leads and all draft facts, not just editor A's verdict.
-        audit=ai("You are independent adversarial auditor B. Check the article against the source headlines provided; "
-          "do NOT claim you read source pages unless actually supplied. Since headlines alone cannot establish detailed facts, "
-          "return approved:false whenever independent source contents are unavailable. Output JSON {approved:boolean,reason:string}. "
-          "Source headlines: "+json.dumps(today[:65],ensure_ascii=False)+" Article: "+json.dumps(story,ensure_ascii=False))
+        # Both independent source pages must be actually retrieved, not merely named by AI.
+        evidence=[]
+        for url in urls[:3]:
+            if url not in cache:cache[url]=source_text(url)
+            if cache[url]:evidence.append({"url":url,"text":cache[url]})
+        if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:continue
+        audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
+          "claim in this Japanese article against the TWO separately fetched source article texts below. "
+          "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
+          "unsafe jokes, and repeated events. Reject if evidence is insufficient or unclear. "
+          "Output only JSON {approved:boolean,reason:string}. Article: "
+          +json.dumps(story,ensure_ascii=False)+" Independently fetched sources: "
+          +json.dumps(evidence,ensure_ascii=False))
         if audit.get("approved") is not True:continue
         story["editorVerified"]=True
         story["humorSafe"]=True
