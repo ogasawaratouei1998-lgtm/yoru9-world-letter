@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'tests/**'
       - 'index.html'
       - 'manifest.webmanifest'
       - 'notifications.js'
