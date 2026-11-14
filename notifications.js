@@ -9,7 +9,7 @@ const info=document.getElementById('notificationInfo');
 let configuration=null;
 const message=s=>{status.textContent=s};
 function validConfig(x){
-  if(!x||x.enabled!==true||!x.vapidPublicKey||!x.backendUrl)return false;
+  if(!x||x.enabled!==true||!x.backendUrl)return false;
   try{let u=new URL(x.backendUrl);return u.protocol==='https:'&&!u.username&&!u.password&&!u.search&&!u.hash}
   catch(_){return false}
 }
@@ -56,7 +56,6 @@ button.addEventListener('click',async()=>{
       await current.unsubscribe();
       message('通知を解除しました。');
     }else{
-      // Permission request must be initiated by a direct user click (not on page load).
       const permission=await Notification.requestPermission();
       if(permission!=='granted'){message('通知の許可はありません。端末の設定から変更できます。');return}
       const created=await reg.pushManager.subscribe({
@@ -70,7 +69,10 @@ button.addEventListener('click',async()=>{
   finally{await refresh().catch(()=>{button.disabled=false})}
 });
 fetch('./notification-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('disabled');return r.json()}).then(async x=>{
-  if(!validConfig(x))return; // Hide the button until a real service is configured.
+  if(!validConfig(x))return;
+  const health=await fetch(x.backendUrl.replace(/\/+$/,'')+'/health',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('health')));
+  if(!health.ready||!health.vapidPublicKey)throw Error('push_not_ready');
+  x.vapidPublicKey=health.vapidPublicKey;
   configuration=x;area.hidden=false;
   info.textContent='通知は任意です。iPhoneではホーム画面への追加が必要です。';
   await refresh();
