@@ -1,5 +1,9 @@
 name: Free-tier AI editorial double-check (safe preview)
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/ai-editorial-preview.yml'
   workflow_dispatch:
   schedule:
     - cron: '45 19 * * *'
