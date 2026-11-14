@@ -70,6 +70,15 @@ def ai(prompt):
     raw=response["candidates"][0]["content"]["parts"][0]["text"]
     return json.loads(raw)
 
+def archive_summaries():
+    result=[]
+    for file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            for story in json.loads(file.read_text()).get("stories",[]):
+                result.append({"title":story.get("title",""),"summary":story.get("summary",""),"country":story.get("country","")})
+        except (ValueError,OSError):continue
+    return result[-250:]
+
 def previous_events():
     seen=set()
     for file in Path("data/archive").glob("????-??-??.json"):
@@ -107,6 +116,8 @@ def main():
     if not isinstance(draft,list):return 0
     seen=previous_events()
     selected=[]
+    past=archive_summaries()
+    accepted_summaries=[]
     lead_urls={x["url"] for x in today}
     cache={}
     for story in draft:
@@ -127,15 +138,20 @@ def main():
         audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the TWO separately fetched source article texts below. "
           "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
-          "unsafe jokes, and repeated events. Reject if evidence is insufficient or unclear. "
+          "unsafe jokes, and repeated events. Compare against the prior published events and already selected events, "
+          "reject the same underlying incident even if the title, source, language or URL differs. "
+          "Reject if evidence is insufficient or unclear. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
-          +json.dumps(story,ensure_ascii=False)+" Independently fetched sources: "
+          +json.dumps(story,ensure_ascii=False)+" Previously published events: "
+          +json.dumps(past,ensure_ascii=False)+" Already selected today: "
+          +json.dumps(accepted_summaries,ensure_ascii=False)+" Independently fetched sources: "
           +json.dumps(evidence,ensure_ascii=False))
         if audit.get("approved") is not True:continue
         story["editorVerified"]=True
         story["humorSafe"]=True
         seen.update((story["sourceUrl"],story["id"],event))
         selected.append(story)
+        accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)==5:break
     if len(selected)!=5:
         print("Two-stage verification did not approve exactly five; no publication.");return 0
