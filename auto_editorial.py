@@ -102,7 +102,7 @@ def main():
             if stamp.date()!=now.date():continue
         except (KeyError,ValueError,TypeError):continue
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):today.append(lead)
-    if len(today)<10:
+    if len(today)<5:
         print("Not enough same-day leads; safe skip.");return 0
     # Independent verification cannot be inferred from the same syndicated RSS headline.
     # AI must provide two independent primary article URLs with evidence; audit separately.
@@ -111,7 +111,7 @@ def main():
       "If you cannot verify TWO independent original reports, omit the story. "
       "For each include required fields "+str(REQUIRED)+", verificationUrls (2 URLs), eventKey (stable normalized event identifier), "
       "evidence (brief exact facts supported by each source). No death, injuries, abuse or humiliation. "
-      "Today's JST reporting date is "+day+". Leads: "+json.dumps(today[:65],ensure_ascii=False))
+      "Today's JST reporting date is "+day+". Leads: "+json.dumps(today[:110],ensure_ascii=False))
     draft=ai(prompt).get("stories",[])
     if not isinstance(draft,list):return 0
     seen=previous_events()
