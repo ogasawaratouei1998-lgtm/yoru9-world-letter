@@ -1,6 +1,6 @@
 {
-  "enabled": false,
+  "enabled": true,
   "backendUrl": "https://kdvkbkdfnrwvrbugpnaq.supabase.co/functions/v1/yoru9-push",
   "vapidPublicKey": "",
-  "note": "Dedicated Supabase backend installed, but push remains off until secrets, VAPID public key and device tests are complete."
+  "note": "Public VAPID key is obtained safely from the backend health endpoint; private VAPID key and dispatch token remain server-side."
 }
