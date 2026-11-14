@@ -21,6 +21,14 @@ jobs:
           python-version: '3.12'
       - name: Run safety tests without API access
         run: python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
+      - name: Verify AI key is present (without exposing it)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo 'Gemini API key is not configured'; exit 1
+          fi
+          echo 'Gemini API key is configured'
       - name: Collect same-day leads
         run: python collect_candidates.py
       - name: Independent AI double-check (no publication)
