@@ -16,16 +16,16 @@ import xml.etree.ElementTree as ET
 # Different search editions prevent US/English-only headlines from occupying all slots.
 # These links are only leads; article details and harm must be reviewed manually.
 SEARCHES = [
-    ('(手違い OR 誤発注 OR 間違えて) when:7d', 'ja', 'JP', 'JP:ja'),
-    ('"mix-up" OR "blunder" when:7d', 'en', 'GB', 'GB:en'),
-    ('"Verwechslung" OR "aus Versehen" when:7d', 'de', 'DE', 'DE:de'),
-    ('"par erreur" OR "méprise" when:7d', 'fr', 'FR', 'FR:fr'),
-    ('"por error" OR "equivocación" when:7d', 'es', 'ES', 'ES:es'),
-    ('"por engano" OR "erro de pedido" when:7d', 'pt', 'BR', 'BR:pt-419'),
-    ('(실수 OR 착각) when:7d', 'ko', 'KR', 'KR:ko'),
-    ('"mistake" OR "mix-up" when:7d', 'en', 'IN', 'IN:en'),
-    ('"accidentally ordered" OR "wrong destination" when:7d', 'en', 'US', 'US:en'),
-    ('"mix-up" OR "wrong" when:7d', 'en', 'AU', 'AU:en'),
+    ('(手違い OR 誤発注 OR 間違えて) when:1d', 'ja', 'JP', 'JP:ja'),
+    ('"mix-up" OR "blunder" when:1d', 'en', 'GB', 'GB:en'),
+    ('"Verwechslung" OR "aus Versehen" when:1d', 'de', 'DE', 'DE:de'),
+    ('"par erreur" OR "méprise" when:1d', 'fr', 'FR', 'FR:fr'),
+    ('"por error" OR "equivocación" when:1d', 'es', 'ES', 'ES:es'),
+    ('"por engano" OR "erro de pedido" when:1d', 'pt', 'BR', 'BR:pt-419'),
+    ('(실수 OR 착각) when:1d', 'ko', 'KR', 'KR:ko'),
+    ('"mistake" OR "mix-up" when:1d', 'en', 'IN', 'IN:en'),
+    ('"accidentally ordered" OR "wrong destination" when:1d', 'en', 'US', 'US:en'),
+    ('"mix-up" OR "wrong" when:1d', 'en', 'AU', 'AU:en'),
 ]
 BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/uk/rss.xml',
@@ -109,15 +109,15 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<75 and added<limit:
+            if item['url'] not in seen and len(leads)<150 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(1)
-        try: keep(get_google(q,lang,country,ceid),limit=8)
+        try: keep(get_google(q,lang,country,ceid),limit=15)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=75:break
-    if len(leads)<75:
+        if len(leads)>=150:break
+    if len(leads)<150:
         for url in BBC_FEEDS:
             try: keep(parse_rss(fetch_bytes(url),'BBC RSS (filtered)',relevant_only=True))
             except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
