@@ -161,6 +161,32 @@ def corroboration_groups(items):
         unique[key]=group
     return list(unique.values())[:16]
 
+def semantic_corroboration_groups(items):
+    """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
+    if len(items)<2:return []
+    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:1800]} for x in items[:60]]
+    result=ai("Find pairs of articles about the SAME specific incident, not merely the same topic. "
+        "Compare concrete people, places, actions and dates in the supplied excerpts. "
+        "Two sources must be editorially independent, not syndicated rewrites. "
+        "When uncertain, omit the pair. Return JSON object with pairs array of objects "
+        "{urls:[exact_source_url_1,exact_source_url_2]}. No invented URLs. Evidence: "
+        +json.dumps(compact,ensure_ascii=False))
+    pairs=result.get("pairs",[])
+    if not isinstance(pairs,list):return []
+    by_url={x["url"]:x for x in items}
+    groups=[]
+    seen=set()
+    for pair in pairs[:30]:
+        if not isinstance(pair,dict):continue
+        urls=pair.get("urls")
+        if not isinstance(urls,list) or len(urls)!=2 or not all(isinstance(u,str) for u in urls):continue
+        if any(u not in by_url for u in urls) or len({host(u) for u in urls})!=2:continue
+        key=tuple(sorted(urls))
+        if key in seen:continue
+        seen.add(key)
+        groups.append([by_url[u] for u in urls])
+    return groups[:16]
+
 def main():
     now=datetime.now(JST)
     day=now.date().isoformat()
@@ -203,7 +229,11 @@ def main():
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
     if not groups:
-        print('No independent cross-publisher candidate groups; safe skip.');return 0
+        print('Trying AI semantic incident matching across independently fetched texts.',flush=True)
+        groups=semantic_corroboration_groups(source_leads)
+        print('AI-proposed cross-publisher groups:',len(groups),flush=True)
+    if not groups:
+        print('No independently sourced incident pairs; safe skip.');return 0
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
