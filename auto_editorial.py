@@ -107,8 +107,11 @@ def ai(prompt):
                 try:
                     err=json.loads(exc.read(4096).decode("utf-8"))
                     status=str(err.get("error",{}).get("status","UNKNOWN"))[:50]
-                except (ValueError,UnicodeError,AttributeError):status="UNKNOWN"
-                print("Gemini generation failed:",model,version,"HTTP",exc.code,status,flush=True)
+                    message=str(err.get("error",{}).get("message",""))[:320]
+                    message=re.sub(r"AIza[A-Za-z0-9_-]{20,}", "[REDACTED_KEY]", message)
+                    message=re.sub(r"key=[^&\\s]+", "key=[REDACTED]", message,flags=re.I)
+                except (ValueError,UnicodeError,AttributeError):status="UNKNOWN";message="unavailable"
+                print("Gemini generation failed:",model,version,"HTTP",exc.code,status,"reason:",message,flush=True)
                 last_error=exc.code
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
     raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
