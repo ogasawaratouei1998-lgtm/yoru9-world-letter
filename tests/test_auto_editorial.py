@@ -37,6 +37,24 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                {"title":"Airline sends travelers to wrong airport","url":"https://two.example/story"}]
         self.assertEqual(editorial.corroboration_groups(items),[])
 
+    def test_semantic_pairs_require_exact_distinct_source_urls(self):
+        items=[{"title":"Mayor sends invitation","url":"https://one.example/a","text":"Mayor sent invitations to residents"},
+               {"title":"Residents receive mistaken invitations","url":"https://two.example/b","text":"Invitations reached residents"}]
+        response={"pairs":[
+            {"urls":["https://one.example/a","https://two.example/b"]},
+            {"urls":["https://one.example/a","https://one.example/a"]},
+            {"urls":["https://one.example/a","https://evil.example/forged"]},
+            {"urls":["https://one.example/a","https://two.example/b"]}]}
+        with patch.object(editorial,"ai",return_value=response):
+            groups=editorial.semantic_corroboration_groups(items)
+        self.assertEqual(len(groups),1)
+        self.assertEqual({x["url"] for x in groups[0]},{items[0]["url"],items[1]["url"]})
+
+    def test_semantic_matching_empty_without_ai_call(self):
+        with patch.object(editorial,"ai") as mock_ai:
+            self.assertEqual(editorial.semantic_corroboration_groups([]),[])
+            mock_ai.assert_not_called()
+
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
             with patch.object(editorial,"ai") as mock_ai:
