@@ -39,6 +39,13 @@ INDEPENDENT_FEEDS = [
     ('https://www.theguardian.com/uk-news/rss', 'The Guardian RSS'),
     ('https://www.theguardian.com/business/rss', 'The Guardian RSS'),
     ('https://www.theguardian.com/technology/rss', 'The Guardian RSS'),
+    ('https://feeds.npr.org/1001/rss.xml', 'NPR RSS'),
+    ('https://www.cbsnews.com/latest/rss/main', 'CBS RSS'),
+    ('https://feeds.nbcnews.com/nbcnews/public/news', 'NBC RSS'),
+    ('https://rss.nytimes.com/services/xml/rss/nyt/World.xml', 'NYT RSS'),
+    ('https://www.abc.net.au/news/feed/45910/rss.xml', 'ABC Australia RSS'),
+    ('https://www.cbc.ca/webfeed/rss/rss-topstories', 'CBC RSS'),
+    ('https://www.france24.com/en/rss', 'France24 RSS'),
 ]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
@@ -117,21 +124,21 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<200 and added<limit:
+            if item['url'] not in seen and len(leads)<320 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(1)
         try: keep(get_google(q,lang,country,ceid),limit=7)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=200:break
+        if len(leads)>=320:break
     # Always include direct publisher URLs; Google News links frequently block article extraction.
     for url in BBC_FEEDS:
         try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=12)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
     for url,provider in INDEPENDENT_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=20)
+        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=14)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
     try:keep(get_gdelt(),limit=40)
@@ -142,7 +149,7 @@ def main():
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Google News RSS, BBC RSS, The Guardian RSS, GDELT (all attempted)',
+        'provider':'Google News RSS, BBC RSS, independent publisher RSS, GDELT (all attempted)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Read primary reporting and independent sources, check outcomes and harm, then approve manually. Never auto-publish.',
         'errors':errors,
         'candidates':leads,
