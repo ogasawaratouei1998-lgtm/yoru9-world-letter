@@ -1,0 +1,90 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-16",
+  "editionType": "regular",
+  "title": "2026-11-16｜本日の3大ニュース",
+  "editorApproved": true,
+  "factChecked": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "id": "faa-router-ground-stop-2026",
+      "country": "アメリカ合衆国",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "連邦航空局（FAA）",
+      "title": "ルーター交換作業が引き起こした全米フライト停止",
+      "summary": "連邦航空局（FAA）の遠隔地での古い回線から光ファイバーへの切り替えおよびルーター交換作業中、ルーターが過剰なトラフィックを発生させ、全米の航空管制通信ネットワークを麻痺させる前代未聞のシステム障害が発生した。これにより全米で数千便が欠航・遅延し、何十万人もの旅行者が足止めを食う事態となった。トランスポート長官はインフラの老朽化を前政権の責任として非難したものの、現場の些細な配線工事が巨大な社会インフラを数時間にわたって完全に沈黙させたことは、現代のハイテク依存社会における脆さを浮き彫りにした。",
+      "detail": "FAA contractor L3Harris was replacing a copper line with a fiber optic line and updating a router at a remote site when the new router malfunctioned and flooded the national telecommunications network with thousands of login attempts every few seconds, overwhelming the system and forcing a nationwide ground stop that lasted over four hours. For anyone currently staring at their own collapsed project or feeling like a single wrong click undid months of careful work, remember that even a multi-billion-dollar federal aviation agency can be brought to a complete standstill by something as mundane as swapping out a router. If the nation's air traffic can survive a total digital blackout and get back on schedule, your own catastrophic technical hiccup is entirely survivable.",
+      "quip": "配線を一本変えただけで全米の空がストップするとは、ルーターにも『自分がいかに影響力があるか』を誇示したい反抗期があったようです。",
+      "sourceName": "NBCニュース / CBSニュース",
+      "sourceUrl": "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+      "reported": "2026-11-15",
+      "verificationUrls": [
+        "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+        "https://www.cbsnews.com/news/faa-ground-stop-canceled-flights-travelers-what-we-know/"
+      ],
+      "eventKey": "faa_router_ground_stop_2026",
+      "evidence": [
+        "A national ground stop was issued on Friday after a router issue derailed air traffic control communications.",
+        "An L3Harris contractor was working at a remote site switching old copper wire to fiber while replacing a router, which then flooded other routers and overloaded the system.",
+        "The ground stop lasted more than four hours, resulting in thousands of flight cancellations and delays nationwide."
+      ],
+      "editorVerified": true,
+      "humorSafe": true
+    },
+    {
+      "id": "jensen-huang-nvidia-resignation-2026",
+      "country": "アメリカ合衆国",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "エヌビディア（Nvidia）",
+      "title": "Nvidiaのジェンスン・フアンCEO、スキャンダルによる電撃辞任",
+      "summary": "AIチップ市場で圧倒的な地位を築き、企業価値の頂点にあった半導体大手エヌビディアのジェンスン・フアンCEOが、中国のスパイ疑惑が持たれる女性との不倫関係を発端とした混乱の責任を取り、電撃的に辞任した。巨額の取引先企業と個人的な関係を持っていたことが国家安全保障上の懸念に発展し、株主からの訴訟や取締役会による調査を招いた末の失脚であった。世界経済の頭脳とも言える超巨大企業のトップが、私的な判断の誤りによってわずか数日のうちにその座を追われる結果となった。",
+      "detail": "Jensen Huang resigned as CEO of Nvidia following public revelations of an extramarital relationship with Alice Huang, a corporate executive at data center firm Megaspeed International who was suspected by U.S. officials of intelligence ties to China, leading to internal board investigations, shareholder lawsuits, and intense scrutiny over chip exports. If you are agonizing over a poor professional judgment or a personal misstep that feels career-defining, take heart in knowing that even the visionary leader of a four-trillion-dollar tech giant can spectacularly trip over his own personal life. Setbacks, no matter how public or embarrassing, mark an end to a chapter rather than the end of existence.",
+      "quip": "世界中のAIの未来を予測できる頭脳を持っていても、『怪しい人物からの甘い誘い』という最も古典的なバグにはパッチを当てられなかったようです。",
+      "sourceName": "ABCニュース / CBSニュース",
+      "sourceUrl": "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
+      "reported": "2026-11-16",
+      "verificationUrls": [
+        "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
+        "https://www.cbsnews.com/news/megaspeed-nvidia-china-ties/"
+      ],
+      "eventKey": "jensen_huang_nvidia_resignation_2026",
+      "evidence": [
+        "Jensen Huang resigned as CEO of Nvidia following public disclosure of his extramarital relationship with Alice Huang.",
+        "Alice Huang was a leader at Megaspeed International, a major Nvidia customer currently under U.S. and Singaporean scrutiny over alleged unauthorized chip transfers to China and intelligence ties.",
+        "Nvidia's board faced intense pressure, launched an independent investigation, and faced a shareholder class-action lawsuit over the undisclosed relationship."
+      ],
+      "editorVerified": true,
+      "humorSafe": true
+    },
+    {
+      "id": "spacex-starship-booster-failure-2026",
+      "country": "アメリカ合衆国",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "スペースX（SpaceX）",
+      "title": "スペースX、スターシップ本体の空中キャッチ成功の一方でブースターが爆発",
+      "summary": "イーロン・マスク率いるスペースXは、宇宙空間から帰還した超大型宇宙船「スターシップ」を巨大な機械アームで空中キャッチするという世界初の偉業を成し遂げた。しかしその一方で、打ち上げ時に下部を支えたスーパーヘビー・ブースターは帰還の際にエンジンの点火に失敗し、姿勢異常を感知してメキシコ湾で自爆・水没する結果となった。完全再利用型ロケットの実現に向けた歴史的快挙であると同時に、肝心のブースター回収を逃すという技術的課題を改めて露呈した。",
+      "detail": "While SpaceX successfully caught the returning upper-stage Starship spacecraft using mechanical 'chopstick' arms at its Texas launch pad after orbiting Earth, the Super Heavy booster failed to make a successful return, experiencing premature engine cutoff and self-destructing in the Gulf of Mexico. For anyone who has ever pulled off a brilliant presentation or major project milestone only to completely botch the final cleanup or introductory steps, this partial success offers a comforting mirror. Perfection is rarely achieved on the first synchronized try, and surviving a half-flawed outcome is simply part of the engineering of progress.",
+      "quip": "ロケットの上半分を見事にキャッチしたものの、下半分が勝手に海へダイブした姿は、『完璧に決めたと思った瞬間に靴紐を結び忘れていた』ような気まずさがあります。",
+      "sourceName": "ABCニュース / NPR",
+      "sourceUrl": "https://www.abc.net.au/news/2026-11-15/spacex-rocket-returns-to-launch-pad-after-orbitting-earth/107387168",
+      "reported": "2026-11-15",
+      "verificationUrls": [
+        "https://www.abc.net.au/news/2026-11-15/spacex-rocket-returns-to-launch-pad-after-orbitting-earth/107387168",
+        "https://www.npr.org/2026/11/14/g-s1-153786/spacex-successfully-catches-starship-and-makes-history"
+      ],
+      "eventKey": "spacex_starship_booster_failure_2026",
+      "evidence": [
+        "SpaceX successfully recovered the upper-stage Starship spacecraft using mechanical arms at the Texas launch tower following orbital flight.",
+        "The Super Heavy first-stage booster failed to make a successful return to the launch pad, experiencing early engine cutoff and initiating a self-destruct sequence in the Gulf of Mexico.",
+        "The mission demonstrated partial reusability while highlighting ongoing challenges in achieving a simultaneous double catch of both rocket stages."
+      ],
+      "editorVerified": true,
+      "humorSafe": true
+    }
+  ]
+}
