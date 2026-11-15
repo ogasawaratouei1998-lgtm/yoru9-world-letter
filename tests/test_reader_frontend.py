@@ -18,6 +18,14 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_read_progress_counts_visible_summaries(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("function observeStories()", page)
+        self.assertIn("new IntersectionObserver(", page)
+        self.assertIn("readObserver.observe(el)", page)
+        self.assertIn("markRead(i)", page)
+        self.assertIn("state.read.includes(i)", page)
+
     def test_editor_can_prepare_regular_or_special_issue(self):
         page = (ROOT / "editor.html").read_text(encoding="utf-8")
         for token in ('id="editionType"', 'id="specialReason"',
