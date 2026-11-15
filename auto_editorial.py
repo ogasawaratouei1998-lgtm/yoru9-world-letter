@@ -52,7 +52,7 @@ def source_text(url):
     opener=build_opener(SafeRedirect)
     req=Request(url,headers={"User-Agent":"Yoru9EditorialResearch/1.0","Accept":"text/html"})
     try:
-        with opener.open(req,timeout=12) as response:
+        with opener.open(req,timeout=7) as response:
             if "text/html" not in response.headers.get("Content-Type",""):return ""
             raw=response.read(180000)
         parser=ArticleText()
@@ -150,22 +150,28 @@ def main():
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):today.append(lead)
     if len(today)<5:
         print("Not enough same-day leads; safe skip.");return 0
-    # Independent verification cannot be inferred from the same syndicated RSS headline.
-    # AI must provide two independent primary article URLs with evidence; audit separately.
-    prompt=("You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. "
-      "Use ONLY supplied leads as starting points. Do not invent facts, citations or URLs. "
-      "If you cannot verify TWO independent original reports, omit the story. "
-      "For each include required fields "+str(REQUIRED)+", verificationUrls (2 URLs), eventKey (stable normalized event identifier), "
-      "evidence (brief exact facts supported by each source). No death, injuries, abuse or humiliation. "
-      "Today's JST reporting date is "+day+". Leads: "+json.dumps(today[:110],ensure_ascii=False))
+    # Collect actual article bodies before asking the model to draft.
+    cache={}
+    source_leads=[]
+    for lead in sorted(today,key=lambda x:x.get('provider','').startswith('Google'))[:36]:
+        url=lead['url']
+        if url not in cache:cache[url]=source_text(url)
+        if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
+    print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
+    if len(source_leads)<10:
+        print('Fewer than ten article bodies; safe skip before AI generation.');return 0
+    prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
+      'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
+      'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
+      'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
+      'No death, injuries, abuse or humiliation. Today JST: '+day+'. Original article bodies: '+json.dumps(source_leads,ensure_ascii=False))
     draft=ai(prompt).get("stories",[])
     if not isinstance(draft,list):return 0
     seen=previous_events()
     selected=[]
     past=archive_summaries()
     accepted_summaries=[]
-    lead_urls={x["url"] for x in today}
-    cache={}
+    lead_urls={x['url'] for x in source_leads}
     for story in draft:
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):continue
         if story["reported"].replace(".","-")!=day or story["category"] not in ("person","work","company"):continue
@@ -178,7 +184,6 @@ def main():
         # Both independent source pages must be actually retrieved, not merely named by AI.
         evidence=[]
         for url in urls[:3]:
-            if url not in cache:cache[url]=source_text(url)
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
         if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:continue
         audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
