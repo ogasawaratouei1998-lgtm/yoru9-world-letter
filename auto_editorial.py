@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key, no verified five, no publication."""
-import json, os, re, sys, ipaddress, socket
+import json, os, re, sys, ipaddress, socket, time
 from html.parser import HTMLParser
 from datetime import datetime
 from pathlib import Path
@@ -143,7 +143,9 @@ ACTIVE_MODEL=None
 def ai(prompt):
     global ACTIVE_MODEL
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
-    models=[ACTIVE_MODEL] if ACTIVE_MODEL else available_models()
+    models=available_models()
+    if ACTIVE_MODEL in models:
+        models=[ACTIVE_MODEL]+[model for model in models if model!=ACTIVE_MODEL]
     data={"contents":[{"parts":[{"text":prompt}]}],
           "generationConfig":{"responseMimeType":"application/json","temperature":0.1}}
     last_error=None
@@ -169,6 +171,22 @@ def ai(prompt):
                 except (ValueError,UnicodeError,AttributeError):status="UNKNOWN";message="unavailable"
                 print("Gemini generation failed:",model,version,"HTTP",exc.code,status,"reason:",message,flush=True)
                 last_error=exc.code
+                if exc.code in (429,500,502,503,504):
+                    # One bounded retry for temporary capacity failures; never bypass checks.
+                    time.sleep(3)
+                    try:
+                        with urlopen(req,timeout=90) as response:result=json.load(response)
+                        raw=result["candidates"][0]["content"]["parts"][0]["text"]
+                        ACTIVE_MODEL=model
+                        print("Gemini generation succeeded after transient retry:",model,version,flush=True)
+                        return json.loads(raw)
+                    except HTTPError as retry_exc:
+                        last_error=retry_exc.code
+                        print("Gemini transient retry failed:",model,version,"HTTP",retry_exc.code,flush=True)
+                        if retry_exc.code not in (400,404,429,500,502,503,504):raise RuntimeError("Gemini API HTTP "+str(retry_exc.code))
+                    except (URLError,TimeoutError) as retry_exc:
+                        print("Gemini transient retry failed:",type(retry_exc).__name__,flush=True)
+                    break
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
     raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
 
