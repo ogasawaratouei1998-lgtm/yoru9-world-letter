@@ -100,6 +100,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                  {"url":f"https://two.example/{i}"}] for i in range(30)]
         self.assertEqual(len(editorial.select_distinct_groups(groups,limit=5)),5)
 
+    def test_expanded_distinct_group_budget_preserves_30_independent_events(self):
+        groups=[[{"url":f"https://source-a.example/{i}"},
+                 {"url":f"https://source-b.example/{i}"}] for i in range(30)]
+        self.assertEqual(len(editorial.select_distinct_groups(groups,limit=36)),30)
+
     def test_distinct_group_selection_rejects_single_publisher(self):
         a={"url":"https://one.example/a"}
         b={"url":"https://one.example/b"}
