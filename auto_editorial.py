@@ -298,7 +298,7 @@ def main():
     # A single host (notably news.google.com) must never exhaust the fetch budget.
     # Preserve slots for independent publisher articles across multiple feeds.
     per_host={}
-    while buckets and len(ordered)<80:
+    while buckets and len(ordered)<120:
         progressed=False
         for domain in list(buckets):
             limit=5 if domain=="news.google.com" else 30
@@ -310,7 +310,7 @@ def main():
                 per_host[domain]=per_host.get(domain,0)+1
                 progressed=True
             if not buckets[domain]:del buckets[domain]
-            if len(ordered)>=80:break
+            if len(ordered)>=120:break
         if not progressed:break
     outcomes={}
     failure_reasons={}
