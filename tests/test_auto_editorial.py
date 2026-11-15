@@ -22,6 +22,16 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn('Menu',text)
         self.assertNotIn('More links',text)
 
+    def test_additional_publisher_article_containers(self):
+        for opening in ('<div class="article-content">', '<section class="story-body">',
+                        '<div itemprop="articleBody">', '<div data-testid="article-body">'):
+            with self.subTest(opening=opening):
+                html='<nav>Navigation</nav>'+opening+'Verified detail. '*60+'</div><footer>Links</footer>'
+                body=editorial.extracted_article_text(html)
+                self.assertIn('Verified detail.',body)
+                self.assertNotIn('Navigation',body)
+                self.assertNotIn('Links',body)
+
     def test_unscoped_html_is_not_treated_as_article_evidence(self):
         self.assertEqual(editorial.extracted_article_text(
             '<html><body><nav>Menu</nav><div>Unrelated headlines</div></body></html>'),'')
