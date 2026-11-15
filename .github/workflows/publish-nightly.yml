@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/publish-nightly.yml'
       - 'data/approved/*.json'
+      - 'auto_editorial.py'
+      - 'collect_candidates.py'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
@@ -27,7 +29,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     environment: github-pages
     steps:
       - uses: actions/checkout@v4
@@ -38,7 +40,31 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
-      - name: Release only today's verified and editor-approved five stories
+      - name: Check whether today's approved issue already exists
+        id: edition
+        shell: bash
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          if [ -f "data/approved/$DAY.json" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Collect fresh leads when no approved issue exists
+        if: steps.edition.outputs.exists == 'false'
+        run: python collect_candidates.py
+      - name: Generate and independently audit three stories
+        if: steps.edition.outputs.exists == 'false'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.5-flash-lite
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "No Gemini API key: keep current edition, never invent news."
+          else
+            python auto_editorial.py
+          fi
+      - name: Release only today's verified three-story edition
         run: python publish_approved.py
       - name: Commit the released edition
         id: release
