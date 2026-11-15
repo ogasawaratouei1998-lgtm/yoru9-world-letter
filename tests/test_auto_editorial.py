@@ -125,6 +125,13 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertFalse(editorial.valid_recent_reported("2026-11-16",now))
         self.assertFalse(editorial.valid_recent_reported("unverified",now))
 
+    def test_incident_relevance_ranking_is_not_fact_approval(self):
+        leads=[{"title":"World leaders meet at summit","url":"https://example.org/a"},
+               {"title":"Company accidentally sends wrong invoices","url":"https://example.org/b"}]
+        ranked=sorted(leads,key=editorial.incident_priority)
+        self.assertEqual(ranked[0]["url"],"https://example.org/b")
+        self.assertEqual(ranked[1]["url"],"https://example.org/a")
+
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
             with patch.object(editorial,"ai") as mock_ai:
