@@ -26,6 +26,19 @@ SEARCHES = [
     ('"mistake" OR "mix-up" when:7d', 'en', 'IN', 'IN:en'),
     ('"accidentally ordered" OR "wrong destination" when:7d', 'en', 'US', 'US:en'),
     ('"mix-up" OR "wrong" when:7d', 'en', 'AU', 'AU:en'),
+    # Broaden the search beyond the ten original editions; every result remains unverified.
+    ('"mistake" OR "blunder" when:7d', 'en', 'ZA', 'ZA:en'),
+    ('"error" OR "fracaso" when:7d', 'es', 'MX', 'MX:es'),
+    ('"error" OR "equivocación" when:7d', 'es', 'AR', 'AR:es'),
+    ('"error" OR "equivocación" when:7d', 'es', 'CO', 'CO:es'),
+    ('"mistake" OR "blunder" when:7d', 'en', 'NG', 'NG:en'),
+    ('"mistake" OR "blunder" when:7d', 'en', 'KE', 'KE:en'),
+    ('"mistake" OR "mix-up" when:7d', 'en', 'NZ', 'NZ:en'),
+    ('"mistake" OR "blunder" when:7d', 'en', 'PH', 'PH:en'),
+    ('"mistake" OR "blunder" when:7d', 'en', 'SG', 'SG:en'),
+    ('"خطأ" OR "بالخطأ" when:7d', 'ar', 'AE', 'AE:ar'),
+    ('"خطأ" OR "بالخطأ" when:7d', 'ar', 'SA', 'SA:ar'),
+    ('"kesalahan" OR "keliru" when:7d', 'id', 'ID', 'ID:id'),
 ]
 BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/uk/rss.xml',
@@ -124,14 +137,14 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<450 and added<limit:
+            if item['url'] not in seen and len(leads)<600 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
-        if i: time.sleep(1)
+        if i: time.sleep(0.5)
         try: keep(get_google(q,lang,country,ceid),limit=12)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=450:break
+        if len(leads)>=600:break
     # Always include direct publisher URLs; Google News links frequently block article extraction.
     for url in BBC_FEEDS:
         try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
