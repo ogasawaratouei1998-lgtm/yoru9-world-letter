@@ -21,6 +21,8 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim; "
     "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
     "Never replace a failure with generic surprising, uplifting or quirky news merely to fill three slots. "
+    "Search across continents and languages; prefer geographic variety when evidence and editorial quality are comparable. "
+    "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
     "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
 INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|par erreur|equivocaci[oó]n|por engano",re.I)
 
