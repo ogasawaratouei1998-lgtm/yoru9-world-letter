@@ -14,7 +14,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="editionTag"', 'id="storyHeading"', 'id="dateGuide"',
                       'id="offlineNotice"', 'serviceWorker.register',
-                      "edition.editionType==='special'", "'前回の配信号"):
+                      "edition.editionType==='special'", "`前回の配信号):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
