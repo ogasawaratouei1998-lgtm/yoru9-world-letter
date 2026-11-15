@@ -214,15 +214,27 @@ def main():
     for lead in sorted(today,key=lambda x: ('news.google.com' in host(x['url']), x.get('provider','').startswith('Google'))):
         buckets.setdefault(host(lead['url']),[]).append(lead)
     ordered=[]
-    while buckets and len(ordered)<60:
+    # A single host (notably news.google.com) must never exhaust the fetch budget.
+    # Preserve slots for independent publisher articles across multiple feeds.
+    per_host={}
+    while buckets and len(ordered)<80:
+        progressed=False
         for domain in list(buckets):
-            if buckets[domain]:ordered.append(buckets[domain].pop(0))
+            limit=5 if domain=="news.google.com" else 30
+            if per_host.get(domain,0)>=limit:
+                del buckets[domain]
+                continue
+            if buckets[domain]:
+                ordered.append(buckets[domain].pop(0))
+                per_host[domain]=per_host.get(domain,0)+1
+                progressed=True
             if not buckets[domain]:del buckets[domain]
-            if len(ordered)>=60:break
+            if len(ordered)>=80:break
+        if not progressed:break
     outcomes={}
     for lead in ordered:
         provider=lead.get('provider','unknown')
-        label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('GDELT' if provider.startswith('GDELT') else 'Other'))
+        label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('Guardian RSS' if provider.startswith('The Guardian') else ('GDELT' if provider.startswith('GDELT') else 'Other')))
         outcomes.setdefault(label,[0,0])
         outcomes[label][0]+=1
         url=lead['url']
