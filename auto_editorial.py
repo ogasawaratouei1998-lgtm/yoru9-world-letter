@@ -35,8 +35,14 @@ class ArticleText(HTMLParser):
         attributes=dict(attrs)
         classes=attributes.get("class","").split()
         guardian_body=attributes.get("data-gu-name")=="body"
+        # Publisher layouts vary; only explicitly article-scoped containers count.
         article_body=(tag=="article" or guardian_body or
-                      "article-body" in classes or "article__body" in classes)
+                      any(c in classes for c in ("article-body","article__body",
+                          "article-content","article__content","story-body",
+                          "story__body","story-content","entry-content",
+                          "articleBody","article-text","body-content")) or
+                      attributes.get("itemprop")=="articleBody" or
+                      attributes.get("data-testid") in ("article-body","article-content"))
         self.stack.append((tag,article_body))
         if article_body:
             self.article_depth+=1
