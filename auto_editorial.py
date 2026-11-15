@@ -334,12 +334,21 @@ def main():
         print('Fewer than two article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
-    if len(groups)<5:
-        print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
-        semantic=semantic_corroboration_groups(source_leads)
-        existing={tuple(sorted(x['url'] for x in group)) for group in groups}
-        groups.extend(group for group in semantic if tuple(sorted(x['url'] for x in group)) not in existing)
-        print('Combined cross-publisher groups:',len(groups),flush=True)
+    # Headline overlap is only a discovery heuristic. Even when it finds five
+    # candidates, semantic matching can find additional consequential incidents
+    # described with different wording by independent publishers.
+    # Keep the bounded candidate budget; final publication still requires
+    # two fetched sources and an independent adversarial AI audit.
+    print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
+    semantic=semantic_corroboration_groups(source_leads)
+    existing={tuple(sorted(x['url'] for x in group)) for group in groups}
+    for group in semantic:
+        key=tuple(sorted(x['url'] for x in group))
+        if key not in existing:
+            groups.append(group)
+            existing.add(key)
+        if len(groups)>=16:break
+    print('Combined cross-publisher groups:',len(groups),flush=True)
     if len(groups)<5:
         print('Fewer than five independently sourced incident groups; safe skip.');return 0
     # Preserve each hypothesized incident's exact article-to-article association.
