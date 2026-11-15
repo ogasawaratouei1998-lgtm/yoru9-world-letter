@@ -358,7 +358,7 @@ def main():
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
-      'insufficient_facts, sensitive_incident, not_a_lighthearted_mistake, other. '
+      'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and independent verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
     draft_response=ai(prompt)
@@ -371,7 +371,7 @@ def main():
     diagnostics=draft_response.get("diagnostics",[]) if isinstance(draft_response,dict) else []
     valid_codes={"same_incident_supported","unrelated_articles","syndicated_or_not_independent",
         "no_explicit_recent_report_date","insufficient_facts","sensitive_incident",
-        "not_a_lighthearted_mistake","other"}
+        "no_respectful_comic_angle","other"}
     group_reasons={}
     if isinstance(diagnostics,list):
         for item in diagnostics[:len(grouped_evidence)]:
@@ -438,7 +438,7 @@ def main():
         audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the TWO separately fetched source article texts below. "
           "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
-          "unsafe jokes, and repeated events. Compare against the prior published events and already selected events, "
+          unsafe jokes, and repeated events. A serious corporate or institutional failure is suitable when the humor targets bad decisions or overconfidence rather than victims. Do not reject solely because the consequences are financially or politically significant. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if evidence is insufficient or unclear. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
