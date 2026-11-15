@@ -135,6 +135,32 @@ def previous_events():
         except (ValueError,OSError):continue
     return seen
 
+# Similar headlines help discovery, but are not proof of corroboration.
+STOPWORDS=set("the a an and or of to in on for with from at by as is are was were after before new latest says say report reports news world today update video live how why what who where this that about into over under amid".split())
+
+def title_terms(title):
+    return {w for w in re.findall(r"[a-z0-9]{3,}",title.lower()) if w not in STOPWORDS}
+
+def corroboration_groups(items):
+    """Group potentially matching incidents across distinct publisher domains."""
+    groups=[]
+    for i,item in enumerate(items):
+        terms=title_terms(item["title"])
+        if len(terms)<3:continue
+        matches=[item]
+        for other in items[i+1:]:
+            if host(other["url"])==host(item["url"]):continue
+            other_terms=title_terms(other["title"])
+            shared=terms & other_terms
+            if len(shared)>=3 and len(shared)/max(1,min(len(terms),len(other_terms)))>=0.45:
+                matches.append(other)
+        if len(matches)>=2:groups.append(matches[:4])
+    unique={}
+    for group in groups:
+        key=tuple(sorted(x["url"] for x in group))
+        unique[key]=group
+    return list(unique.values())[:16]
+
 def main():
     now=datetime.now(JST)
     day=now.date().isoformat()
@@ -164,11 +190,17 @@ def main():
     print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     if len(source_leads)<10:
         print('Fewer than ten article bodies; safe skip before AI generation.');return 0
+    groups=corroboration_groups(source_leads)
+    print('Cross-publisher headline groups:',len(groups),flush=True)
+    if not groups:
+        print('No independent cross-publisher candidate groups; safe skip.');return 0
+    grouped_urls={item["url"] for group in groups for item in group}
+    grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
-      'No death, injuries, abuse or humiliation. Today JST: '+day+'. Original article bodies: '+json.dumps(source_leads,ensure_ascii=False))
+      'No death, injuries, abuse or humiliation. Today JST: '+day+'. Possible same-event headline groups (NOT proof): '+json.dumps([[x['url'] for x in group] for group in groups],ensure_ascii=False)+'. Original article bodies: '+json.dumps(grouped_sources,ensure_ascii=False))
     draft=ai(prompt).get("stories",[])
     if not isinstance(draft,list):return 0
     seen=previous_events()
