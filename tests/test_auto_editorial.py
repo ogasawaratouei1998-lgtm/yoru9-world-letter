@@ -13,6 +13,14 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         parser.feed("<html><body><p>Real article content</p><script>fake evidence</script></body></html>")
         self.assertIn("Real article content",parser.parts)
         self.assertNotIn("fake evidence",parser.parts)
+    def test_model_catalog_selects_supported_model(self):
+        import io
+        class FakeResponse:
+            def __enter__(self):return io.BytesIO(b'{"models":[{"name":"models/gemini-2.5-flash","supportedGenerationMethods":["generateContent"]}]}')
+            def __exit__(self,*args):return False
+        with patch.object(editorial,"KEY","test"):
+            with patch.object(editorial,"urlopen",return_value=FakeResponse()):
+                self.assertEqual(editorial.available_model(),"models/gemini-2.5-flash")
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
             with patch.object(editorial,"ai") as mock_ai:
