@@ -467,13 +467,16 @@ def main():
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
         # date, safety and second-AI verification gates still apply.
-        retry_candidates=[g for g in grouped_evidence
-            if group_reasons.get(g["groupId"]) in ("same_incident_supported","other")
-            or g["groupId"] not in group_reasons]
-        print("Supplementing insufficient editorial drafts in small evidence batches:",
+        # Diagnostics from the first model call are not a veto. In practice a
+        # diagnostics-heavy response can label every group "other" or reject
+        # viable stories without drafting them. Give each candidate a focused
+        # drafting chance; the deterministic and independent audit gates below
+        # remain unchanged.
+        retry_candidates=list(grouped_evidence)
+        print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),18),3):
-            batch=retry_candidates[start:start+3]
+        for start in range(0,min(len(retry_candidates),18)):
+            batch=retry_candidates[start:start+1]
             retry_prompt=(EDITORIAL_MISSION+
                 " You are editor A. Draft up to three Japanese news stories ONLY "
                 "when two independent publisher articles in the SAME input group "
