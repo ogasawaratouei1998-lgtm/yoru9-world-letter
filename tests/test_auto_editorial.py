@@ -3,6 +3,14 @@ from unittest.mock import patch
 import auto_editorial as editorial
 
 class AutoEditorialSafetyTests(unittest.TestCase):
+    def test_editorial_mission_requires_real_failure_and_reframing(self):
+        mission=editorial.EDITORIAL_MISSION
+        self.assertIn("real, consequential failures",mission)
+        self.assertIn("warm, witty AI quip",mission)
+        self.assertIn("concrete reframing",mission)
+        self.assertIn("Never replace a failure with generic",mission)
+        self.assertIn("Do not invent a happy ending",mission)
+
     def test_reject_private_hosts(self):
         with patch.object(editorial.socket,"getaddrinfo",return_value=[(None,None,None,None,("127.0.0.1",443))]):
             self.assertFalse(editorial.public_host("https://example.org/story"))
