@@ -34,6 +34,12 @@ BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/world/rss.xml',
     'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
 ]
+INDEPENDENT_FEEDS = [
+    ('https://www.theguardian.com/world/rss', 'The Guardian RSS'),
+    ('https://www.theguardian.com/uk-news/rss', 'The Guardian RSS'),
+    ('https://www.theguardian.com/business/rss', 'The Guardian RSS'),
+    ('https://www.theguardian.com/technology/rss', 'The Guardian RSS'),
+]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
 EXCLUDE = re.compile(r'\b(killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster|fire killed|crash killed)\b|死亡|殺害|負傷|災害|殺人|自殺|銃撃|戦争|死者|犠牲者', re.I)
@@ -124,6 +130,10 @@ def main():
         try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=25)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
+    for url,provider in INDEPENDENT_FEEDS:
+        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=20)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'{provider}: {type(e).__name__}: {e}')
     try:keep(get_gdelt(),limit=40)
     except (HTTPError, URLError, ValueError, TimeoutError) as e:
         errors.append(f'GDELT: {type(e).__name__}: {e}')
@@ -132,7 +142,7 @@ def main():
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Google News RSS, BBC RSS, GDELT (all attempted)',
+        'provider':'Google News RSS, BBC RSS, The Guardian RSS, GDELT (all attempted)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Read primary reporting and independent sources, check outcomes and harm, then approve manually. Never auto-publish.',
         'errors':errors,
         'candidates':leads,
