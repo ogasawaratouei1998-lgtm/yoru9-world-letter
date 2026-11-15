@@ -13,6 +13,19 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         parser.feed("<html><body><p>Real article content</p><script>fake evidence</script></body></html>")
         self.assertIn("Real article content",parser.parts)
         self.assertNotIn("fake evidence",parser.parts)
+    def test_guardian_article_body_excludes_site_navigation(self):
+        html=('<nav>'+'Menu '*300+'</nav>'
+              '<div data-gu-name="body"><p>'+'Verified article sentence. '*40+'</p></div>'
+              '<footer>'+'More links '*200+'</footer>')
+        text=editorial.extracted_article_text(html)
+        self.assertIn('Verified article sentence.',text)
+        self.assertNotIn('Menu',text)
+        self.assertNotIn('More links',text)
+
+    def test_unscoped_html_is_not_treated_as_article_evidence(self):
+        self.assertEqual(editorial.extracted_article_text(
+            '<html><body><nav>Menu</nav><div>Unrelated headlines</div></body></html>'),'')
+
     def test_model_catalog_selects_supported_model(self):
         import io
         class FakeResponse:
