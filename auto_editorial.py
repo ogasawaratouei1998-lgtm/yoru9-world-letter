@@ -480,7 +480,7 @@ def main():
                     allowed_pairs.add(frozenset((first["url"],second["url"])))
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Do not impose a fixed category quota or lower evidence standards to fill a category. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
+    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), and company (companies, governments and organizations) over successive editions. Prefer a mix of all three when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
@@ -640,10 +640,21 @@ def main():
         seen.update((story["sourceUrl"],story["id"],event))
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
-        if len(selected)==3:break
+        if len(selected)==12:break
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Two-stage verification approved no stories; no publication.");return 0
+    # Prefer distinct reader perspectives when independent verification permits.
+    # Never add an unverified story merely to fill a category.
+    balanced=[]
+    for category in ("work","person","company"):
+        match=next((story for story in selected if story["category"]==category),None)
+        if match is not None:
+            balanced.append(match)
+    for story in selected:
+        if len(balanced)>=3:break
+        if story not in balanced:balanced.append(story)
+    selected=balanced
     payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗ニュース" ,
       "editorApproved":True,"factChecked":True,"humorReviewed":True,"approvedBy":"automated-two-stage-review","stories":selected}
     target=Path("data/approved")/(day+".json")
