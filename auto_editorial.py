@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Free-tier AI editorial pipeline. Fail closed: no key, no verified five, no publication."""
+"""Free-tier AI editorial pipeline. Fail closed: no key, no verified three, no publication."""
 import json, os, re, sys, ipaddress, socket, time
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
@@ -400,8 +400,8 @@ def main():
     raw_group_count=len(groups)
     groups=select_distinct_groups(groups,limit=36)
     print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
-    if len(groups)<5:
-        print('Fewer than five independently sourced incident groups; safe skip.');return 0
+    if len(groups)<3:
+        print('Fewer than three independently sourced incident groups; safe skip.');return 0
     # Preserve each hypothesized incident's exact article-to-article association.
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
@@ -530,17 +530,17 @@ def main():
         seen.update((story["sourceUrl"],story["id"],event))
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
-        if len(selected)==5:break
+        if len(selected)==3:break
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
-    if len(selected)!=5:
-        print("Two-stage verification did not approve exactly five; no publication.");return 0
-    payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗５連発",
+    if len(selected)!=3:
+        print("Two-stage verification did not approve exactly three; no publication.");return 0
+    payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜本日の3大ニュース",
       "editorApproved":True,"factChecked":True,"humorReviewed":True,"approvedBy":"automated-two-stage-review","stories":selected}
     target=Path("data/approved")/(day+".json")
     if target.exists():return 0
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
-    print("Created five-stage-gated AI issue",day)
+    print("Created three-story AI issue",day)
     return 0
 
 if __name__=="__main__":
