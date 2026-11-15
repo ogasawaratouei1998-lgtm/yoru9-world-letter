@@ -1,4 +1,5 @@
 name: Publish approved news at night (JST)
+# Manual release retry requested; normal editorial validation and safeguards remain mandatory.
 
 on:
   push:
