@@ -31,6 +31,8 @@ BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/uk/rss.xml',
     'https://feeds.bbci.co.uk/news/business/rss.xml',
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
+    'https://feeds.bbci.co.uk/news/world/rss.xml',
+    'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
 ]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
@@ -119,10 +121,10 @@ def main():
         if len(leads)>=150:break
     if len(leads)<150:
         for url in BBC_FEEDS:
-            try: keep(parse_rss(fetch_bytes(url),'BBC RSS (filtered)',relevant_only=True))
+            try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=25)
             except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
                 errors.append(f'BBC RSS: {type(e).__name__}: {e}')
-    if len(leads)<150:
+    if len(leads)<10:
         try:keep(get_gdelt())
         except (HTTPError, URLError, ValueError, TimeoutError) as e:
             errors.append(f'GDELT: {type(e).__name__}: {e}')
