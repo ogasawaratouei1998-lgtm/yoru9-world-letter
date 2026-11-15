@@ -60,7 +60,7 @@ jobs:
           # same-day artifact, never overwrite it with a smaller edition.
           IDS=""
           if [ -n "$TRIGGER_RUN_ID" ]; then IDS="$TRIGGER_RUN_ID"; fi
-          RECENT=$(gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 15 --json databaseId --jq '.[].databaseId' || true)
+          RECENT=$(gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 50 --json databaseId --jq '.[].databaseId' || true)
           IDS=$(printf '%s\n%s\n' "$IDS" "$RECENT" | awk 'NF && !seen[$0]++')
           for RUN_ID in $IDS; do
             mkdir -p "/tmp/yoru9-reviewed/$RUN_ID"
@@ -70,7 +70,6 @@ jobs:
           done
           python - <<'PY'
           import json
-          import os
           from pathlib import Path
           from publish_approved import validate_approved
           from datetime import datetime
@@ -93,7 +92,7 @@ jobs:
               target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
               print(f"Selected same-day independently reviewed issue: {count} stories")
           else:
-              print("No valid reviewed issue available; normal generation may run.")
+              print(f"No valid reviewed issue for {day}; checked {len(candidates)} candidate files. Normal generation may run.")
           PY
       - name: Check whether today's approved issue already exists
         id: edition
