@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 JST=ZoneInfo("Asia/Tokyo")
-MODEL=os.getenv("GEMINI_MODEL","gemini-2.5-flash")
+MODEL=os.getenv("GEMINI_MODEL","gemini-3.5-flash-lite")
 KEY=os.getenv("GEMINI_API_KEY","")
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
@@ -70,7 +70,7 @@ def available_models():
     models=[m["name"] for m in catalog.get("models",[])
             if "generateContent" in m.get("supportedGenerationMethods",[])
             and m.get("name","").startswith("models/gemini-")]
-    preferred=[MODEL,"gemini-2.5-flash-lite","gemini-2.5-flash",
+    preferred=[MODEL,"gemini-3.5-flash-lite","gemini-3.5-flash","gemini-2.5-flash-lite","gemini-2.5-flash",
                "gemini-2.0-flash-lite","gemini-2.0-flash"]
     result=[]
     for name in preferred:
