@@ -22,7 +22,7 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
     "A gentle, dry observation about a verified contradiction counts as a quip; do not demand a laugh-out-loud punchline. "
     "Never replace a failure with generic surprising, uplifting or quirky news merely to fill three slots. "
-    "Search across continents and languages; prefer geographic variety when evidence and editorial quality are comparable. "
+    "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when independently verified stories are available; never lower evidence standards or fabricate coverage for geographic quotas. "
     "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
     "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
 # Editorial writing craft: keep verified reporting separate from compassionate interpretation.
@@ -644,17 +644,18 @@ def main():
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Two-stage verification approved no stories; no publication.");return 0
-    # Prefer distinct reader perspectives when independent verification permits.
-    # Never add an unverified story merely to fill a category.
-    balanced=[]
-    for category in ("work","person","company"):
-        match=next((story for story in selected if story["category"]==category),None)
-        if match is not None:
-            balanced.append(match)
-    for story in selected:
-        if len(balanced)>=3:break
-        if story not in balanced:balanced.append(story)
-    selected=balanced
+    # Balance reader perspectives AND countries among independently verified stories.
+    # Diversity is a preference, never a reason to lower fact-checking standards.
+    from itertools import combinations
+    pool=selected
+    choices=list(combinations(range(len(pool)),min(3,len(pool))))
+    def diversity_score(indices):
+        stories=[pool[i] for i in indices]
+        categories=len({story["category"] for story in stories})
+        countries=len({story["country"].strip() for story in stories})
+        return (categories+countries, categories, countries, -sum(indices))
+    best=max(choices,key=diversity_score)
+    selected=[pool[i] for i in best]
     payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗ニュース" ,
       "editorApproved":True,"factChecked":True,"humorReviewed":True,"approvedBy":"automated-two-stage-review","stories":selected}
     target=Path("data/approved")/(day+".json")
