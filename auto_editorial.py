@@ -93,7 +93,7 @@ def extracted_article_text(html):
     # Some publishers expose the article body as schema.org structured data,
     # without a conventional <article> element. Only articleBody is trusted;
     # generic page text and navigation are never promoted to evidence.
-    scripts=re.findall(r'<script\\b[^>]*type=["\\\']application/ld\\+json["\\\'][^>]*>(.*?)</script\\s*>',html,re.I|re.S)
+    scripts=re.findall(r'<script\b[^>]*type=["\x27]application/ld\+json["\x27][^>]*>(.*?)</script\s*>',html,re.I|re.S)
     def article_bodies(node):
         if isinstance(node,list):
             for part in node:yield from article_bodies(part)
@@ -108,7 +108,7 @@ def extracted_article_text(html):
     for script in scripts[:12]:
         try:
             for body in article_bodies(json.loads(script)):
-                return re.sub(r"\\s+"," ",__import__("html").unescape(body)).strip()
+                return re.sub(r"\s+"," ",__import__("html").unescape(body)).strip()
         except (ValueError,TypeError):continue
     return ""
 
