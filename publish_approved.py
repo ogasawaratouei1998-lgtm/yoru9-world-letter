@@ -48,7 +48,7 @@ def validate_approved(data, expected_date):
             '編集承認・事実確認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
-    require(isinstance(stories, list) and len(stories) == 5, '承認済みの記事が5本必要です')
+    require(isinstance(stories, list) and len(stories) == 3, '承認済みの記事が3本必要です')
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
@@ -103,7 +103,7 @@ def publish(root: Path, now: datetime):
         return False
     approved_path = root / 'data' / 'approved' / f'{date}.json'
     if not approved_path.is_file():
-        print(f'{date} の承認済み記事5本がありません。現在の公開号を保持します。')
+        print(f'{date} の承認済み記事3本がありません。現在の公開号を保持します。')
         return False
     data = json.loads(approved_path.read_text(encoding='utf-8'))
     public_issue = validate_approved(data, date)
@@ -126,7 +126,7 @@ def publish(root: Path, now: datetime):
     atomic_json(archive_path, public_issue)
     atomic_json(index_path, {'issues': issues, 'timeZone': 'Asia/Tokyo', 'releaseTime': '21:00'})
     atomic_json(current_path, public_issue)
-    print(f'{date} の承認済みニュース5本を公開データに反映しました。')
+    print(f'{date} の承認済みニュース3本を公開データに反映しました。')
     return True
 
 
