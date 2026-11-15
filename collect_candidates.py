@@ -127,7 +127,7 @@ def main():
         if len(leads)>=200:break
     # Always include direct publisher URLs; Google News links frequently block article extraction.
     for url in BBC_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=25)
+        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=12)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
     for url,provider in INDEPENDENT_FEEDS:
