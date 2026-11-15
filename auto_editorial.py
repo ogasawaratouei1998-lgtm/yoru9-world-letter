@@ -382,7 +382,11 @@ def main():
     while buckets and len(ordered)<240:
         progressed=False
         for domain in list(buckets):
-            limit=5 if domain=="news.google.com" else 30
+            # Google News RSS URLs are discovery links, not publisher article bodies.
+            # Repeated extraction failures should not consume scarce evidence slots.
+            # Keep a small Guardian sample for recovery detection while giving
+            # other independent local publishers more retrieval opportunities.
+            limit=0 if domain=="news.google.com" else (5 if domain in ("theguardian.com","guardian.co.uk") else 30)
             if per_host.get(domain,0)>=limit:
                 del buckets[domain]
                 continue
