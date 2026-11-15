@@ -95,10 +95,10 @@ def atomic_json(path, data):
     temporary.replace(path)
 
 
-def publish(root: Path, now: datetime):
+def publish(root: Path, now: datetime, allow_early: bool = False):
     now = now.astimezone(JST)
     date = now.date().isoformat()
-    if now.time() < time(21, 0):
+    if now.time() < time(21, 0) and not allow_early:
         print(f'まだ21時前です（日本時間 {now:%H:%M}）。公開しません。')
         return False
     approved_path = root / 'data' / 'approved' / f'{date}.json'
@@ -134,10 +134,11 @@ def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parent)
     parser.add_argument('--now', help='テスト用の日時。例: 2026-11-10T21:05:00+09:00')
+    parser.add_argument('--publish-now', action='store_true', help='明示的な即時公開指示がある場合に限り21時前の公開を許可')
     args = parser.parse_args(argv)
     now = datetime.fromisoformat(args.now) if args.now else datetime.now(timezone.utc)
     require(now.tzinfo is not None, '--now にはタイムゾーンが必要です')
-    publish(args.root, now)
+    publish(args.root, now, allow_early=args.publish_now)
     return 0
 
 
