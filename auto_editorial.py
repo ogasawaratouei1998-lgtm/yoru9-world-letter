@@ -349,8 +349,25 @@ def main():
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
       'No death, injuries, abuse or humiliation. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. Possible same-event headline groups (NOT proof): '+json.dumps([[x['url'] for x in group] for group in groups],ensure_ascii=False)+'. Original article bodies: '+json.dumps(grouped_sources,ensure_ascii=False))
-    draft=ai(prompt).get("stories",[])
-    if not isinstance(draft,list):return 0
+    draft_response=ai(prompt)
+    draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
+    if not isinstance(draft,list):
+        print("Editorial drafting diagnostic: malformed stories response; safe skip.",flush=True)
+        return 0
+    if not draft:
+        # A successful API call can legitimately return zero verifiable stories.
+        # Log only bounded metadata, not untrusted article text or AI prose.
+        print("Editorial drafting diagnostic:",json.dumps({
+            "candidate_groups":len(groups),
+            "group_domain_counts":[len({host(x["url"]) for x in group}) for group in groups[:16]],
+            "group_article_counts":[len(group) for group in groups[:16]],
+            "source_articles":len(grouped_sources),
+            "drafted":0,
+            "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
+            "has_model_explanation":any(k in draft_response for k in ("reason","reasons","diagnostics"))
+        },sort_keys=True),flush=True)
+        print("No draft stories generated; evidence must not be promoted to publication.",flush=True)
+        return 0
     seen=previous_events()
     selected=[]
     # Only aggregate rejection categories, never article text or model free-form reasons.
