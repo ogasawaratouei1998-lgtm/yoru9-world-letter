@@ -291,7 +291,7 @@ def semantic_corroboration_groups(items):
     by_url={x["url"]:x for x in items}
     groups=[]
     seen=set()
-    for pair in pairs[:30]:
+    for pair in pairs[:48]:
         if not isinstance(pair,dict):continue
         urls=pair.get("urls")
         if not isinstance(urls,list) or len(urls)!=2 or not all(isinstance(u,str) for u in urls):continue
@@ -300,7 +300,7 @@ def semantic_corroboration_groups(items):
         if key in seen:continue
         seen.add(key)
         groups.append([by_url[u] for u in urls])
-    return groups[:24]
+    return groups[:36]
 
 def valid_recent_reported(raw, now):
     """Allow only an explicit calendar date in the last seven days (JST)."""
@@ -339,7 +339,7 @@ def main():
     # A single host (notably news.google.com) must never exhaust the fetch budget.
     # Preserve slots for independent publisher articles across multiple feeds.
     per_host={}
-    while buckets and len(ordered)<180:
+    while buckets and len(ordered)<240:
         progressed=False
         for domain in list(buckets):
             limit=5 if domain=="news.google.com" else 30
@@ -351,7 +351,7 @@ def main():
                 per_host[domain]=per_host.get(domain,0)+1
                 progressed=True
             if not buckets[domain]:del buckets[domain]
-            if len(ordered)>=180:break
+            if len(ordered)>=240:break
         if not progressed:break
     outcomes={}
     failure_reasons={}
@@ -389,7 +389,7 @@ def main():
             groups.append(group)
             existing.add(key)
     raw_group_count=len(groups)
-    groups=select_distinct_groups(groups)
+    groups=select_distinct_groups(groups,limit=36)
     print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
     if len(groups)<5:
         print('Fewer than five independently sourced incident groups; safe skip.');return 0
@@ -400,7 +400,7 @@ def main():
         for i,group in enumerate(groups[:24])]
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
     allowed_pairs=set()
-    for group in groups[:24]:
+    for group in groups[:36]:
         for i,first in enumerate(group):
             for second in group[i+1:]:
                 if host(first["url"])!=host(second["url"]):
@@ -449,8 +449,8 @@ def main():
         # Log only bounded metadata, not untrusted article text or AI prose.
         print("Editorial drafting diagnostic:",json.dumps({
             "candidate_groups":len(groups),
-            "group_domain_counts":[len({host(x["url"]) for x in group}) for group in groups[:24]],
-            "group_article_counts":[len(group) for group in groups[:24]],
+            "group_domain_counts":[len({host(x["url"]) for x in group}) for group in groups[:36]],
+            "group_article_counts":[len(group) for group in groups[:36]],
             "source_articles":len(grouped_sources),
             "drafted":0,
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
