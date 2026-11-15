@@ -349,11 +349,11 @@ def main():
         for i,group in enumerate(groups[:16])]
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
+    prompt=('You are editor A. Return JSON object with stories array of up to 8 Japanese stories about CONSEQUENTIAL, well-documented failures by companies, institutions, governments or prominent decision-makers, including costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
-      'No death, injuries, abuse or humiliation. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. '
+      'Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. Aim humor at institutional overconfidence, flawed plans, contradictions and decisions, not at those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
