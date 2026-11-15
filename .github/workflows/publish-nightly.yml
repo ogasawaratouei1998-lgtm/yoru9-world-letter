@@ -48,7 +48,7 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
-      - name: Publish previously approved November 16 edition after its release time
+      - name: Immediately publish explicitly requested approved November 16 edition
         shell: bash
         run: |
           python - <<'PY'
@@ -62,8 +62,8 @@ jobs:
           approved = root / "data/approved/2026-11-16.json"
           current = root / "data/current.json"
           now = datetime.now(ZoneInfo("Asia/Tokyo"))
-          if not approved.is_file() or now < datetime.fromisoformat("2026-11-16T21:00:00+09:00"):
-              print("Historical approved issue is absent or its release time has not arrived.")
+          if not approved.is_file():
+              print("Previously approved November 16 issue is absent.")
           else:
               data = json.loads(approved.read_text(encoding="utf-8"))
               validate_approved(data, "2026-11-16")
