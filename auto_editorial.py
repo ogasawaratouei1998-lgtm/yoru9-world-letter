@@ -463,6 +463,47 @@ def main():
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
     if not draft:
+        # Separate diagnosis from drafting. A large all-groups request can
+        # return only diagnostics, even when some groups are draftable.
+        # Retry in small, independent batches; the same downstream source,
+        # date, safety and second-AI verification gates still apply.
+        retry_candidates=[g for g in grouped_evidence
+            if group_reasons.get(g["groupId"]) in ("same_incident_supported","other")
+            or g["groupId"] not in group_reasons]
+        print("Retrying empty editorial draft in small evidence batches:",
+              len(retry_candidates),flush=True)
+        for start in range(0,min(len(retry_candidates),12),3):
+            batch=retry_candidates[start:start+3]
+            retry_prompt=(EDITORIAL_MISSION+
+                " You are editor A. Draft up to three Japanese news stories ONLY "
+                "when two independent publisher articles in the SAME input group "
+                "corroborate the same specific real-world mistake. "
+                "Return JSON object with stories array. Do not return diagnostics. "
+                "If evidence is insufficient, return an empty stories array. "
+                "Each story must contain fields "+str(REQUIRED)+
+                ", verificationUrls (exact two supplied URLs from that group), "
+                "eventKey (specific incident identifier at least 12 characters), "
+                "and evidence (facts supported by both articles). "
+                "category must be exactly person, work, or company. "
+                "reported must be an explicit source-supported date within the "
+                "last seven days, formatted YYYY-MM-DD. "
+                "Use warm humor about the mistake, never victims or suffering; "
+                "give readers perspective without inventing outcomes. "
+                "Do not infer any fact absent from the supplied text. "
+                "Edition date JST: "+day+
+                ". Candidate groups (hypotheses, NOT proof): "+
+                json.dumps(batch,ensure_ascii=False))
+            try:
+                retry_result=ai(retry_prompt)
+                retry_stories=retry_result.get("stories",[]) if isinstance(retry_result,dict) else []
+                if isinstance(retry_stories,list):
+                    draft.extend(retry_stories[:3])
+                print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
+            except (RuntimeError,ValueError,KeyError,TypeError) as exc:
+                print("Small-batch draft failed:",type(exc).__name__,flush=True)
+            if len(draft)>=6:
+                break
+    if not draft:
         # A successful API call can legitimately return zero verifiable stories.
         # Log only bounded metadata, not untrusted article text or AI prose.
         print("Editorial drafting diagnostic:",json.dumps({
