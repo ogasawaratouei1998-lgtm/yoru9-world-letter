@@ -26,18 +26,18 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
-    def test_push_panel_visible_but_disabled_until_backend_ready(self):
+    def test_push_panel_hidden_until_backend_ready(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         cfg = __import__("json").loads((ROOT / "notification-config.json").read_text(encoding="utf-8"))
         script = (ROOT / "notifications.js").read_text(encoding="utf-8")
         self.assertTrue(cfg["enabled"])
         self.assertTrue(cfg["backendUrl"].startswith("https://"))
-        self.assertIn('id="notificationSection"', page)
-        self.assertNotIn('id="notificationSection" hidden', page)
+        self.assertIn('id="notificationSection" hidden', page)
         self.assertIn('id="notificationButton" type="button" disabled', page)
         self.assertIn('夜9時の通知を受け取る', page)
         self.assertIn('notification-config.json', script)
         self.assertIn("if(!health.ready||!health.vapidPublicKey)", script)
+        self.assertIn('area.hidden=false;', script)
         self.assertIn('button.disabled=false;', script)
 
     @unittest.skipUnless(shutil.which("node"), "Node.js is required for JS syntax checks")
