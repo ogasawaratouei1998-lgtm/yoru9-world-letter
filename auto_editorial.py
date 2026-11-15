@@ -218,9 +218,15 @@ def ai(prompt):
             try:
                 with urlopen(req,timeout=90) as response:result=json.load(response)
                 raw=result["candidates"][0]["content"]["parts"][0]["text"]
+                try:
+                    parsed=json.loads(raw)
+                except json.JSONDecodeError:
+                    print("Gemini malformed JSON; trying another model/version:",model,version,flush=True)
+                    last_error="invalid_json"
+                    continue
                 ACTIVE_MODEL=model
                 print("Gemini generation succeeded:",model,version,flush=True)
-                return json.loads(raw)
+                return parsed
             except HTTPError as exc:
                 # Print only status and sanitized provider reason, never headers or key.
                 try:
@@ -238,9 +244,15 @@ def ai(prompt):
                     try:
                         with urlopen(req,timeout=90) as response:result=json.load(response)
                         raw=result["candidates"][0]["content"]["parts"][0]["text"]
+                        try:
+                            parsed=json.loads(raw)
+                        except json.JSONDecodeError:
+                            print("Gemini transient retry returned malformed JSON:",model,version,flush=True)
+                            last_error="invalid_json"
+                            break
                         ACTIVE_MODEL=model
                         print("Gemini generation succeeded after transient retry:",model,version,flush=True)
-                        return json.loads(raw)
+                        return parsed
                     except HTTPError as retry_exc:
                         last_error=retry_exc.code
                         print("Gemini transient retry failed:",model,version,"HTTP",retry_exc.code,flush=True)
