@@ -41,25 +41,42 @@ def public_host(url):
         return bool(addresses) and all(ipaddress.ip_address(x[4][0]).is_global for x in addresses)
     except (OSError,ValueError):return False
 
-def source_text(url):
-    # Only URLs already found in the trusted lead list may be fetched.
-    if not public_host(url):return ""
+def source_text(url, diagnostics=None):
+    # Only public HTTPS URLs from the collected lead list may be fetched.
+    if not public_host(url):
+        if diagnostics is not None:diagnostics.append("blocked_host")
+        return ""
     class SafeRedirect(__import__("urllib.request",fromlist=["HTTPRedirectHandler"]).HTTPRedirectHandler):
         def redirect_request(self,req,fp,code,msg,headers,newurl):
             if not public_host(newurl):raise ValueError("unsafe_redirect")
             return super().redirect_request(req,fp,code,msg,headers,newurl)
     from urllib.request import build_opener
     opener=build_opener(SafeRedirect)
-    req=Request(url,headers={"User-Agent":"Yoru9EditorialResearch/1.0","Accept":"text/html"})
+    req=Request(url,headers={
+        "User-Agent":"Mozilla/5.0 (compatible; Yoru9EditorialResearch/1.0)",
+        "Accept":"text/html,application/xhtml+xml;q=0.9",
+        "Accept-Language":"en-GB,en;q=0.8",
+    })
     try:
         with opener.open(req,timeout=7) as response:
-            if "text/html" not in response.headers.get("Content-Type",""):return ""
+            if "text/html" not in response.headers.get("Content-Type",""):
+                if diagnostics is not None:diagnostics.append("non_html")
+                return ""
             raw=response.read(180000)
         parser=ArticleText()
         parser.feed(raw.decode("utf-8",errors="replace"))
         text=" ".join(parser.parts)
-        return text[:13000] if len(text)>=600 else ""
-    except (OSError,ValueError,HTTPError,URLError):return ""
+        if len(text)<600:
+            if diagnostics is not None:diagnostics.append("short_html")
+            return ""
+        if diagnostics is not None:diagnostics.append("fetched")
+        return text[:13000]
+    except HTTPError as exc:
+        if diagnostics is not None:diagnostics.append("http_"+str(exc.code))
+        return ""
+    except (OSError,ValueError,URLError) as exc:
+        if diagnostics is not None:diagnostics.append(type(exc).__name__)
+        return ""
 
 def available_models():
     """List supported models, with a bounded preference order and no paid fallback."""
@@ -232,17 +249,23 @@ def main():
             if len(ordered)>=80:break
         if not progressed:break
     outcomes={}
+    failure_reasons={}
     for lead in ordered:
         provider=lead.get('provider','unknown')
         label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('Guardian RSS' if provider.startswith('The Guardian') else ('GDELT' if provider.startswith('GDELT') else 'Other')))
         outcomes.setdefault(label,[0,0])
         outcomes[label][0]+=1
         url=lead['url']
-        if url not in cache:cache[url]=source_text(url)
+        if url not in cache:
+            diagnostics=[]
+            cache[url]=source_text(url,diagnostics)
+            reason=diagnostics[0] if diagnostics else 'unknown'
+            failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
         if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
     print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
+    print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
     if len(source_leads)<2:
         print('Fewer than two article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
