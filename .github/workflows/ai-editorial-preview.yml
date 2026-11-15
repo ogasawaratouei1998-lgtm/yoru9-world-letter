@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/ai-editorial-preview.yml'
+      - 'auto_editorial.py'
+      - 'tests/test_auto_editorial.py'
   workflow_dispatch:
   schedule:
     - cron: '45 19 * * *'
