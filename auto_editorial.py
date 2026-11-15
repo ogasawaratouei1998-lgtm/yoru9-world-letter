@@ -462,7 +462,7 @@ def main():
         "total":len(grouped_evidence),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if not draft:
+    if len(draft)<3:
         # Separate diagnosis from drafting. A large all-groups request can
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
@@ -470,9 +470,9 @@ def main():
         retry_candidates=[g for g in grouped_evidence
             if group_reasons.get(g["groupId"]) in ("same_incident_supported","other")
             or g["groupId"] not in group_reasons]
-        print("Retrying empty editorial draft in small evidence batches:",
+        print("Supplementing insufficient editorial drafts in small evidence batches:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),12),3):
+        for start in range(0,min(len(retry_candidates),18),3):
             batch=retry_candidates[start:start+3]
             retry_prompt=(EDITORIAL_MISSION+
                 " You are editor A. Draft up to three Japanese news stories ONLY "
