@@ -9,7 +9,7 @@ from build_site import build
 
 def fixture(date='2026-11-10'):
     stories=[]
-    for i in range(5):
+    for i in range(3):
         original = f'https://news.example.com/story-{i}'
         stories.append({'id': f'case-{i}', 'country': '日本', 'category': 'work', 'categoryLabel': '仕事の勘違い', 'label': '検証用', 'title': f'検証用タイトル {i}', 'summary': '検証用の短い紹介文です。', 'detail': '検証用の詳細記事です。', 'quip': 'ツッコミのサンプルです。', 'sourceName': '出典', 'sourceUrl': original, 'reported': '2026.11.10', 'flag': '🇯🇵', 'verificationUrls': [original, f'https://another.example.org/story-{i}'], 'editorVerified': True, 'humorSafe': True})
     return {'status':'approved', 'editionDate':date,'title':'今夜の世界の大失敗５連発','editorApproved':True,'factChecked':True,'humorReviewed':True,'approvedBy':'編集担当者','stories':stories}
@@ -34,7 +34,7 @@ class PublishingTest(unittest.TestCase):
         self.assertTrue(publish(self.root,datetime.fromisoformat('2026-11-10T21:08:00+09:00')))
         current=json.loads((self.root/'data'/'current.json').read_text())
         self.assertEqual(current['status'],'published')
-        self.assertEqual(len(current['stories']),5)
+        self.assertEqual(len(current['stories']),3)
         self.assertNotIn('editorVerified',current['stories'][0])
         self.assertEqual(len(json.loads((self.root/'data'/'archive'/'index.json').read_text())['issues']),1)
         self.assertFalse(publish(self.root,datetime.fromisoformat('2026-11-10T21:12:00+09:00')))
@@ -54,9 +54,13 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl'], 'https://news.example.com/mirror']
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
-    def test_fewer_than_five_blocked(self):
+    def test_more_than_three_regular_blocked(self):
         data=fixture()
-        data['stories']=data['stories'][:4]
+        data['stories'].append(dict(data['stories'][0], id='extra', sourceUrl='https://news.example.com/extra', verificationUrls=['https://news.example.com/extra', 'https://another.example.org/extra']))
+        with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+    def test_zero_regular_blocked(self):
+        data=fixture()
+        data['stories']=[]
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
     def test_unapproved_blocked(self):
         data=fixture()
@@ -71,6 +75,9 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['stories'][0]['reported']='2026.10.13'
         data['editionType']='special'
+        for i in (3, 4):
+            original=f'https://news.example.com/story-{i}'
+            data['stories'].append(dict(data['stories'][0], id=f'case-{i}', sourceUrl=original, verificationUrls=[original, f'https://another.example.org/story-{i}']))
         data['title']='創刊特集号｜世界の大失敗５連発'
         data['specialReason']='初回特集号で過去約一か月の話題を集めています。'
         public=validate_approved(data,'2026-11-10')
