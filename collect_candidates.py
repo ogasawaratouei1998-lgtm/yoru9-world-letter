@@ -90,7 +90,7 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
 
 def get_gdelt():
     q='("blunder" OR "mix-up")'
-    params={'query':q,'mode':'ArtList','format':'json','maxrecords':30,'timespan':'7d','sort':'DateDesc'}
+    params={'query':q,'mode':'ArtList','format':'json','maxrecords':75,'timespan':'1d','sort':'DateDesc'}
     obj=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
     articles=[]
     for a in obj.get('articles',[]):
@@ -122,7 +122,7 @@ def main():
             try: keep(parse_rss(fetch_bytes(url),'BBC RSS (filtered)',relevant_only=True))
             except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
                 errors.append(f'BBC RSS: {type(e).__name__}: {e}')
-    if not leads:
+    if len(leads)<150:
         try:keep(get_gdelt())
         except (HTTPError, URLError, ValueError, TimeoutError) as e:
             errors.append(f'GDELT: {type(e).__name__}: {e}')
