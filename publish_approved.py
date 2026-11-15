@@ -48,7 +48,8 @@ def validate_approved(data, expected_date):
             '編集承認・事実確認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
-    require(isinstance(stories, list) and 1 <= len(stories) <= 3, '承認済みの記事は1〜3本必要です')
+    require(isinstance(stories, list) and ((1 <= len(stories) <= 3) if edition_type == 'regular' else len(stories) == 5),
+            '通常号は1〜3本、特集号は5本の記事が必要です')
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
