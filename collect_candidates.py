@@ -16,7 +16,7 @@ import xml.etree.ElementTree as ET
 # Different search editions prevent US/English-only headlines from occupying all slots.
 # These links are only leads; article details and harm must be reviewed manually.
 SEARCHES = [
-    ('(手違い OR 誤発注 OR 間違えて) when:1d', 'ja', 'JP', 'JP:ja'),
+    ('(手違い OR 誤発注 OR 間違えて) when:7d', 'ja', 'JP', 'JP:ja'),
     ('"mix-up" OR "blunder" when:1d', 'en', 'GB', 'GB:en'),
     ('"Verwechslung" OR "aus Versehen" when:1d', 'de', 'DE', 'DE:de'),
     ('"par erreur" OR "méprise" when:1d', 'fr', 'FR', 'FR:fr'),
@@ -105,7 +105,7 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
 
 def get_gdelt():
     q='("blunder" OR "mix-up")'
-    params={'query':q,'mode':'ArtList','format':'json','maxrecords':75,'timespan':'1d','sort':'DateDesc'}
+    params={'query':q,'mode':'ArtList','format':'json','maxrecords':75,'timespan':'7d','sort':'DateDesc'}
     obj=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
     articles=[]
     for a in obj.get('articles',[]):
@@ -124,21 +124,21 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<320 and added<limit:
+            if item['url'] not in seen and len(leads)<450 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(1)
-        try: keep(get_google(q,lang,country,ceid),limit=7)
+        try: keep(get_google(q,lang,country,ceid),limit=12)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=320:break
+        if len(leads)>=450:break
     # Always include direct publisher URLs; Google News links frequently block article extraction.
     for url in BBC_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=12)
+        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
     for url,provider in INDEPENDENT_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=14)
+        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
     try:keep(get_gdelt(),limit=40)
@@ -150,7 +150,7 @@ def main():
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'provider':'Google News RSS, BBC RSS, independent publisher RSS, GDELT (all attempted)',
-        'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Read primary reporting and independent sources, check outcomes and harm, then approve manually. Never auto-publish.',
+        'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Automatic review must independently verify publisher article bodies before preparing any approved edition; never publish unverified leads.',
         'errors':errors,
         'candidates':leads,
     }
