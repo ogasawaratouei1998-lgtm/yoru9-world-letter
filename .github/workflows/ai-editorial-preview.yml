@@ -33,6 +33,8 @@ jobs:
           echo 'Gemini API key is configured'
       - name: Collect same-day leads
         run: python collect_candidates.py
+      # This preview never commits approved data or sends notifications.
+      # Provider error details are sanitized in auto_editorial.py.
       - name: Independent AI double-check (no publication)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
