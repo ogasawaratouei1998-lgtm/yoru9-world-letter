@@ -353,23 +353,40 @@ def main():
     if not isinstance(draft,list):return 0
     seen=previous_events()
     selected=[]
+    # Only aggregate rejection categories, never article text or model free-form reasons.
+    rejection_counts={}
+    def reject(reason):
+        rejection_counts[reason]=rejection_counts.get(reason,0)+1
     past=archive_summaries()
     accepted_summaries=[]
     lead_urls={x['url'] for x in source_leads}
     for story in draft:
-        if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):continue
-        if not valid_recent_reported(story["reported"],now) or story["category"] not in ("person","work","company"):continue
+        if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):
+            reject("missing_required_fields");continue
+        if not valid_recent_reported(story["reported"],now):
+            reject("invalid_reporting_date");continue
+        if story["category"] not in ("person","work","company"):
+            reject("invalid_category");continue
         urls=story.get("verificationUrls",[])
-        if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):continue
-        if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):continue
-        if story["sourceUrl"] in seen or story["id"] in seen or BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):continue
+        if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):
+            reject("insufficient_independent_urls");continue
+        if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
+            reject("urls_not_in_fetched_evidence");continue
+        if story["sourceUrl"] in seen or story["id"] in seen:
+            reject("previously_published");continue
+        if BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):
+            reject("sensitive_content");continue
         event=story.get("eventKey")
-        if not isinstance(event,str) or len(event)<12 or event in seen:continue
+        if not isinstance(event,str) or len(event)<12:
+            reject("invalid_event_key");continue
+        if event in seen:
+            reject("duplicate_event");continue
         # Both independent source pages must be actually retrieved, not merely named by AI.
         evidence=[]
         for url in urls[:3]:
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
-        if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:continue
+        if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:
+            reject("insufficient_fetched_articles");continue
         audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the TWO separately fetched source article texts below. "
           "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
@@ -381,13 +398,22 @@ def main():
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
           +json.dumps(accepted_summaries,ensure_ascii=False)+" Independently fetched sources: "
           +json.dumps(evidence,ensure_ascii=False))
-        if audit.get("approved") is not True:continue
+        if audit.get("approved") is not True:
+            # Free-form AI reasons are not logged; only bounded, diagnostic labels.
+            reason=str(audit.get("reason","")).lower()[:500]
+            if any(w in reason for w in ("date","time","old","recent")):category="audit_date"
+            elif any(w in reason for w in ("same incident","duplicate","repeat","previous","syndicat")):category="audit_duplicate_or_syndication"
+            elif any(w in reason for w in ("joke","humor","harm","unsafe","sensitive","victim")):category="audit_safety"
+            elif any(w in reason for w in ("source","evidence","corroborat","unsupported","fact","verify","claim")):category="audit_evidence"
+            else:category="audit_other_or_unspecified"
+            reject(category);continue
         story["editorVerified"]=True
         story["humorSafe"]=True
         seen.update((story["sourceUrl"],story["id"],event))
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)==5:break
+    print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if len(selected)!=5:
         print("Two-stage verification did not approve exactly five; no publication.");return 0
     payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗５連発",
