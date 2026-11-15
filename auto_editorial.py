@@ -209,9 +209,9 @@ def main():
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
-    # Interleave publishers instead of letting one feed dominate the 36 fetch slots.
+    # Prioritize direct publisher URLs; interleave domains to avoid source monopolies.
     buckets={}
-    for lead in today:
+    for lead in sorted(today,key=lambda x: ('news.google.com' in host(x['url']), x.get('provider','').startswith('Google'))):
         buckets.setdefault(host(lead['url']),[]).append(lead)
     ordered=[]
     while buckets and len(ordered)<60:
@@ -219,11 +219,18 @@ def main():
             if buckets[domain]:ordered.append(buckets[domain].pop(0))
             if not buckets[domain]:del buckets[domain]
             if len(ordered)>=60:break
+    outcomes={}
     for lead in ordered:
+        provider=lead.get('provider','unknown')
+        label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('GDELT' if provider.startswith('GDELT') else 'Other'))
+        outcomes.setdefault(label,[0,0])
+        outcomes[label][0]+=1
         url=lead['url']
         if url not in cache:cache[url]=source_text(url)
+        if cache[url]:outcomes[label][1]+=1
         if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
     print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
+    print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     if len(source_leads)<2:
         print('Fewer than two article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
