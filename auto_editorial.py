@@ -263,7 +263,7 @@ def semantic_corroboration_groups(items):
 
 def valid_recent_reported(raw, now):
     """Allow only an explicit calendar date in the last seven days (JST)."""
-    if not isinstance(raw,str) or not re.fullmatch(r"\\d{4}[-.]\\d{2}[-.]\\d{2}",raw):return False
+    if not isinstance(raw,str) or not re.fullmatch(r"\d{4}[-.]\d{2}[-.]\d{2}",raw):return False
     try:reported=datetime.strptime(raw.replace(".","-"),"%Y-%m-%d").date()
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
