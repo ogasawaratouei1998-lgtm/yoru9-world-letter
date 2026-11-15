@@ -171,7 +171,7 @@ def main():
     for lead in leads:
         try:
             raw=lead["seendate"]
-            if re.fullmatch(r"\\d{8}T\\d{6}Z",raw):
+            if re.fullmatch(r"\d{8}T\d{6}Z",raw):
                 stamp=datetime.strptime(raw,"%Y%m%dT%H%M%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(JST)
             else:
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
