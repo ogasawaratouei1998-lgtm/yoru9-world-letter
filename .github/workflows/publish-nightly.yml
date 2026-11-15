@@ -45,25 +45,56 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
-      - name: Retrieve independently reviewed issue from completed preview
-        if: github.event_name == 'workflow_run'
+      - name: Recover best reviewed issue from recent successful reviews
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
           GH_REPO: ${{ github.repository }}
+          TRIGGER_RUN_ID: ${{ github.event.workflow_run.id }}
         shell: bash
         run: |
+          set -euo pipefail
+          DAY=$(TZ=Asia/Tokyo date +%F)
           mkdir -p /tmp/yoru9-reviewed
-          if gh run download "$RUN_ID" --repo "$GH_REPO" --name ai-reviewed-preview --dir /tmp/yoru9-reviewed; then
-            DAY=$(TZ=Asia/Tokyo date +%F)
-            if [ -f "/tmp/yoru9-reviewed/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then
-              mkdir -p data/approved
-              cp "/tmp/yoru9-reviewed/$DAY.json" "data/approved/$DAY.json"
-              echo "Retrieved reviewed issue for $DAY"
+          # A previous review may have verified three stories while a newer
+          # retry verifies only two. Preserve the best independently audited
+          # same-day artifact, never overwrite it with a smaller edition.
+          IDS=""
+          if [ -n "$TRIGGER_RUN_ID" ]; then IDS="$TRIGGER_RUN_ID"; fi
+          RECENT=$(gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 15 --json databaseId --jq '.[].databaseId' || true)
+          IDS=$(printf '%s\n%s\n' "$IDS" "$RECENT" | awk 'NF && !seen[$0]++')
+          for RUN_ID in $IDS; do
+            mkdir -p "/tmp/yoru9-reviewed/$RUN_ID"
+            if gh run download "$RUN_ID" --repo "$GH_REPO" --name ai-reviewed-preview --dir "/tmp/yoru9-reviewed/$RUN_ID" >/dev/null 2>&1; then
+              echo "Recovered reviewed artifact from run $RUN_ID"
             fi
-          else
-            echo 'No reviewed preview artifact; normal safe generation fallback applies.'
-          fi
+          done
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from publish_approved import validate_approved
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          target=Path("data/approved")/(day+".json")
+          candidates=list(Path("/tmp/yoru9-reviewed").glob("*/"+day+".json"))
+          if target.exists(): candidates.append(target)
+          valid=[]
+          for candidate in candidates:
+              try:
+                  payload=json.loads(candidate.read_text(encoding="utf-8"))
+                  validate_approved(payload,day)
+                  valid.append((len(payload["stories"]),candidate,payload))
+              except (ValueError,KeyError,TypeError,OSError) as exc:
+                  print("Rejected invalid preview:",candidate.parent.name,type(exc).__name__)
+          if valid:
+              count,source,payload=max(valid,key=lambda item:item[0])
+              target.parent.mkdir(parents=True,exist_ok=True)
+              target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+              print(f"Selected same-day independently reviewed issue: {count} stories")
+          else:
+              print("No valid reviewed issue available; normal generation may run.")
+          PY
       - name: Check whether today's approved issue already exists
         id: edition
         shell: bash
