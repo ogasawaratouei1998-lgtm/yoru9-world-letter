@@ -48,6 +48,32 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
+      - name: Publish previously approved November 16 edition after its release time
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          from publish_approved import publish, validate_approved
+
+          root = Path.cwd()
+          approved = root / "data/approved/2026-11-16.json"
+          current = root / "data/current.json"
+          now = datetime.now(ZoneInfo("Asia/Tokyo"))
+          if not approved.is_file() or now < datetime.fromisoformat("2026-11-16T21:00:00+09:00"):
+              print("Historical approved issue is absent or its release time has not arrived.")
+          else:
+              data = json.loads(approved.read_text(encoding="utf-8"))
+              validate_approved(data, "2026-11-16")
+              previous = json.loads(current.read_text(encoding="utf-8")) if current.exists() else {}
+              if (previous.get("editionDate") or "") < "2026-11-16":
+                  publish(root, datetime.fromisoformat("2026-11-16T21:07:00+09:00"))
+                  print("Released previously approved November 16 issue; retained its original date.")
+              else:
+                  print("A November 16 or newer edition is already published; no rollback.")
+          PY
       - name: Recover best reviewed issue from recent successful reviews
         env:
           GH_TOKEN: ${{ github.token }}
