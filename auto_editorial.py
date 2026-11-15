@@ -22,16 +22,51 @@ def host(url):
     except ValueError:return ""
 
 class ArticleText(HTMLParser):
+    """Extract visible prose from a publisher article container, not navigation."""
     def __init__(self):
         super().__init__()
         self.parts=[]
         self.hidden=0
+        self.article_depth=0
+        self.article_parts=[]
+        self.article_containers=0
+        self.stack=[]
     def handle_starttag(self,tag,attrs):
-        if tag in ("script","style","noscript","svg"):self.hidden+=1
+        attributes=dict(attrs)
+        classes=attributes.get("class","").split()
+        guardian_body=attributes.get("data-gu-name")=="body"
+        article_body=(tag=="article" or guardian_body or
+                      "article-body" in classes or "article__body" in classes)
+        self.stack.append((tag,article_body))
+        if article_body:
+            self.article_depth+=1
+            self.article_containers+=1
+        if tag in ("script","style","noscript","svg","nav","footer","header","aside"):
+            self.hidden+=1
     def handle_endtag(self,tag):
-        if tag in ("script","style","noscript","svg"):self.hidden=max(0,self.hidden-1)
+        # HTML in the wild may be imperfect; only unwind matching open tags.
+        for i in range(len(self.stack)-1,-1,-1):
+            if self.stack[i][0]==tag:
+                popped=self.stack[i:]
+                self.stack=self.stack[:i]
+                for old_tag,is_article in popped:
+                    if is_article:self.article_depth=max(0,self.article_depth-1)
+                    if old_tag in ("script","style","noscript","svg","nav","footer","header","aside"):
+                        self.hidden=max(0,self.hidden-1)
+                break
     def handle_data(self,data):
-        if not self.hidden and data.strip():self.parts.append(data.strip())
+        if self.hidden or not data.strip():return
+        value=data.strip()
+        self.parts.append(value)
+        if self.article_depth:self.article_parts.append(value)
+
+def extracted_article_text(html):
+    parser=ArticleText()
+    parser.feed(html)
+    # Prefer the publisher's article container; reject generic site chrome.
+    if parser.article_containers:
+        return " ".join(parser.article_parts)
+    return ""
 
 def public_host(url):
     domain=host(url)
@@ -63,9 +98,7 @@ def source_text(url, diagnostics=None):
                 if diagnostics is not None:diagnostics.append("non_html")
                 return ""
             raw=response.read(180000)
-        parser=ArticleText()
-        parser.feed(raw.decode("utf-8",errors="replace"))
-        text=" ".join(parser.parts)
+        text=extracted_article_text(raw.decode("utf-8",errors="replace"))
         if len(text)<600:
             if diagnostics is not None:diagnostics.append("short_html")
             return ""
