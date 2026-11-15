@@ -233,12 +233,12 @@ def corroboration_groups(items):
     for group in groups:
         key=tuple(sorted(x["url"] for x in group))
         unique[key]=group
-    return list(unique.values())[:16]
+    return list(unique.values())[:24]
 
 def semantic_corroboration_groups(items):
     """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
     if len(items)<2:return []
-    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:1800]} for x in items[:90]]
+    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:2400]} for x in items[:120]]
     result=ai("Find pairs of articles about the SAME specific incident, not merely the same topic. Include independently reported individual mishaps and consequential personal decisions, not only corporate or government events. "
         "Compare concrete people, places, actions and dates in the supplied excerpts. "
         "Two sources must be editorially independent, not syndicated rewrites. "
@@ -354,8 +354,15 @@ def main():
     # Preserve each hypothesized incident's exact article-to-article association.
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
-        "url":item["url"],"text":item["text"]} for item in group]}
+        "url":item["url"],"text":item["text"][:4800]} for item in group]}
         for i,group in enumerate(groups[:24])]
+    # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
+    allowed_pairs=set()
+    for group in groups[:24]:
+        for i,first in enumerate(group):
+            for second in group[i+1:]:
+                if host(first["url"])!=host(second["url"]):
+                    allowed_pairs.add(frozenset((first["url"],second["url"])))
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=('You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Do not impose a fixed category quota or lower evidence standards to fill a category. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
@@ -428,6 +435,8 @@ def main():
         urls=story.get("verificationUrls",[])
         if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):
             reject("insufficient_independent_urls");continue
+        if not any(frozenset(pair) in allowed_pairs for pair in __import__("itertools").combinations(urls,2)):
+            reject("unmatched_source_pair");continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
             reject("urls_not_in_fetched_evidence");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
