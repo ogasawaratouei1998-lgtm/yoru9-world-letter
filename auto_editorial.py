@@ -144,7 +144,11 @@ def main():
     today=[]
     for lead in leads:
         try:
-            stamp=datetime.fromisoformat(lead["seendate"].replace("Z","+00:00")).astimezone(JST)
+            raw=lead["seendate"]
+            if re.fullmatch(r"\\d{8}T\\d{6}Z",raw):
+                stamp=datetime.strptime(raw,"%Y%m%dT%H%M%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(JST)
+            else:
+                stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
             if stamp.date()!=now.date():continue
         except (KeyError,ValueError,TypeError):continue
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):today.append(lead)
