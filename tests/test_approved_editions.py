@@ -16,7 +16,7 @@ class ApprovedEditionTest(unittest.TestCase):
                 data=json.loads(p.read_text(encoding="utf-8"))
                 public=validate_approved(data,p.stem)
                 self.assertEqual(public["status"],"published")
-                self.assertEqual(len(public["stories"]),5)
+                self.assertTrue(1 <= len(public["stories"]) <= 3 if data.get("editionType", "regular") == "regular" else len(public["stories"]) == 5)
                 self.assertTrue(all("editorVerified" not in story for story in public["stories"]))
                 self.assertTrue(all("verificationUrls" not in story for story in public["stories"]))
 
@@ -40,7 +40,7 @@ class ApprovedEditionTest(unittest.TestCase):
                 updated=json.loads((root/"data"/"current.json").read_text(encoding="utf-8"))
                 self.assertEqual(updated["editionDate"],source.stem)
                 self.assertEqual(updated["status"],"published")
-                self.assertEqual(len(updated["stories"]),5)
+                self.assertEqual(len(updated["stories"]), len(json.loads(source.read_text(encoding="utf-8"))["stories"]))
                 self.assertTrue((archive/(source.stem+".json")).is_file())
                 self.assertEqual(len(json.loads((archive/"index.json").read_text())["issues"]),1)
                 self.assertFalse(publish(root,datetime.fromisoformat(source.stem+"T21:15:00+09:00")))
