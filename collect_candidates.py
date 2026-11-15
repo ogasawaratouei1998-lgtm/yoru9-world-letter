@@ -111,29 +111,28 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<150 and added<limit:
+            if item['url'] not in seen and len(leads)<200 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(1)
-        try: keep(get_google(q,lang,country,ceid),limit=15)
+        try: keep(get_google(q,lang,country,ceid),limit=7)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=150:break
-    if len(leads)<150:
-        for url in BBC_FEEDS:
-            try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=25)
-            except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
-                errors.append(f'BBC RSS: {type(e).__name__}: {e}')
-    if len(leads)<10:
-        try:keep(get_gdelt())
-        except (HTTPError, URLError, ValueError, TimeoutError) as e:
-            errors.append(f'GDELT: {type(e).__name__}: {e}')
+        if len(leads)>=200:break
+    # Always include direct publisher URLs; Google News links frequently block article extraction.
+    for url in BBC_FEEDS:
+        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=25)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'BBC RSS: {type(e).__name__}: {e}')
+    try:keep(get_gdelt(),limit=40)
+    except (HTTPError, URLError, ValueError, TimeoutError) as e:
+        errors.append(f'GDELT: {type(e).__name__}: {e}')
     if not leads:
         print('Could not collect unverified leads: '+'; '.join(errors),file=sys.stderr)
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Google News RSS, BBC RSS, GDELT (fallback as available)',
+        'provider':'Google News RSS, BBC RSS, GDELT (all attempted)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Read primary reporting and independent sources, check outcomes and harm, then approve manually. Never auto-publish.',
         'errors':errors,
         'candidates':leads,
