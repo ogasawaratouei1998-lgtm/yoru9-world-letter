@@ -38,7 +38,7 @@ jobs:
       - name: Independent AI double-check (no publication)
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: gemini-2.5-flash
+          GEMINI_MODEL: gemini-3.5-flash-lite
         run: python auto_editorial.py
       - name: Save approved preview privately in workflow artifact
         uses: actions/upload-artifact@v4
