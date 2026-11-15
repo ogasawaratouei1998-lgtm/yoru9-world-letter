@@ -236,23 +236,45 @@ def corroboration_groups(items):
     return list(unique.values())[:48]
 
 def select_distinct_groups(groups, limit=24):
-    """Prioritize distinct incidents, not multiple overlapping source combinations."""
-    selected=[]
-    used_urls=set()
-    seen_pairs=set()
+    """Choose many non-overlapping source groups without first-match bias.
+
+    Candidate pairs are discovery hypotheses, not verified incidents. Keep
+    publisher independence and let the later editorial/audit stages decide
+    whether each group actually corroborates an event.
+    """
+    candidates=[]
+    seen=set()
     for group in groups:
-        urls={item["url"] for item in group}
-        key=tuple(sorted(urls))
-        if key in seen_pairs or len({host(url) for url in urls})<2:
+        urls=frozenset(item["url"] for item in group)
+        if len(urls)<2 or len({host(url) for url in urls})<2 or urls in seen:
             continue
-        seen_pairs.add(key)
-        if not urls.isdisjoint(used_urls):
-            continue
-        selected.append(group)
-        used_urls.update(urls)
-        if len(selected)>=limit:
-            break
-    return selected
+        seen.add(urls)
+        candidates.append((group,urls))
+    # Explore both taking and skipping a group. Bounded beam search prevents
+    # a large early group from suppressing several independent later pairs.
+    # Prefer groups with more independent sources when counts are tied.
+    states=[((),frozenset())]
+    for index,(_,urls) in enumerate(candidates):
+        next_states=list(states)
+        for chosen,used in states:
+            if len(chosen)<limit and used.isdisjoint(urls):
+                next_states.append((chosen+(index,),used|urls))
+        next_states.sort(key=lambda state:(
+            -len(state[0]),
+            sum(len(candidates[i][1]) for i in state[0]),
+            state[0]))
+        # Retain distinct used-URL sets to preserve alternate future choices.
+        unique={}
+        for state in next_states:
+            unique.setdefault(state[1],state)
+            if len(unique)>=128:
+                break
+        states=list(unique.values())
+    best=min(states,key=lambda state:(
+        -len(state[0]),
+        sum(len(candidates[i][1]) for i in state[0]),
+        state[0]))
+    return [candidates[i][0] for i in best[0]]
 
 def semantic_corroboration_groups(items):
     """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
