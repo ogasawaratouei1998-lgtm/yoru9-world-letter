@@ -61,9 +61,31 @@ def source_text(url):
         return text[:13000] if len(text)>=600 else ""
     except (OSError,ValueError,HTTPError,URLError):return ""
 
+def available_model():
+    """Choose an actually available text generation model for this API key."""
+    endpoint="https://generativelanguage.googleapis.com/v1beta/models?pageSize=100"
+    req=Request(endpoint,headers={"x-goog-api-key":KEY})
+    with urlopen(req,timeout=25) as response:
+        catalog=json.load(response)
+    models=[m for m in catalog.get("models",[])
+            if "generateContent" in m.get("supportedGenerationMethods",[])
+            and m.get("name","").startswith("models/gemini-")]
+    by_name={m["name"].removeprefix("models/"):m["name"] for m in models}
+    preferred=[MODEL,"gemini-2.5-flash","gemini-2.5-flash-lite",
+               "gemini-2.0-flash","gemini-2.0-flash-lite"]
+    for name in preferred:
+        if name in by_name:return by_name[name]
+    raise RuntimeError("No supported Gemini text model found for this API key; safe skip")
+
+ACTIVE_MODEL=None
+
 def ai(prompt):
+    global ACTIVE_MODEL
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
-    url="https://generativelanguage.googleapis.com/v1beta/models/"+MODEL+":generateContent"
+    if ACTIVE_MODEL is None:
+        ACTIVE_MODEL=available_model()
+        print("Using available model:",ACTIVE_MODEL,flush=True)
+    url="https://generativelanguage.googleapis.com/v1beta/"+ACTIVE_MODEL+":generateContent"
     data={"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json","temperature":0.1}}
     req=Request(url,data=json.dumps(data).encode(),headers={"Content-Type":"application/json","x-goog-api-key":KEY},method="POST")
     with urlopen(req,timeout=90) as r: response=json.load(r)
