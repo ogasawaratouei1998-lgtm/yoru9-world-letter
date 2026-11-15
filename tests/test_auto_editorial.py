@@ -84,6 +84,22 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(groups[0],[a,b])
         self.assertEqual(groups[1],[d,e])
 
+    def test_distinct_group_selection_avoids_first_match_trap(self):
+        a={"url":"https://one.example/a"}
+        b={"url":"https://two.example/b"}
+        c={"url":"https://three.example/c"}
+        d={"url":"https://four.example/d"}
+        # The first pair blocks both later pairs, but the later two
+        # independently corroborated pairs can coexist.
+        groups=editorial.select_distinct_groups([[a,b],[a,c],[b,d]])
+        self.assertEqual(len(groups),2)
+        self.assertEqual(groups,[[a,c],[b,d]])
+
+    def test_distinct_group_selection_is_bounded(self):
+        groups=[[{"url":f"https://one.example/{i}"},
+                 {"url":f"https://two.example/{i}"}] for i in range(30)]
+        self.assertEqual(len(editorial.select_distinct_groups(groups,limit=5)),5)
+
     def test_distinct_group_selection_rejects_single_publisher(self):
         a={"url":"https://one.example/a"}
         b={"url":"https://one.example/b"}
