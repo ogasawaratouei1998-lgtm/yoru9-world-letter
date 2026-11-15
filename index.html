@@ -112,7 +112,7 @@ function render(){const d=edition.stories; $('editionTitle').textContent=edition
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
  const datedPrevious=!archive&&!currentIssue;
  lastRenderedLocalDate=localDate(now);
- $('editionTag').textContent=archive?'創刊準備号 · 実話5本':datedPrevious?'前回の配信号 · ニュース':special?'創刊特集号 · 実話5本':'今夜の配信号 · 3大ニュース';
+ $('editionTag').textContent=archive?'創刊準備号 · 実話5本':datedPrevious?`前回の配信号 · 実話${edition.stories.length}本`:special?'創刊特集号 · 実話5本':'今夜の配信号 · 3大ニュース';
  $('storyHeading').textContent=archive?'創刊準備号の「それ、本当に!?」':currentIssue?(special?'創刊特集号の「それ、本当に!?」':'今夜の「それ、本当に!?」'):'前回・過去号の「それ、本当に!?」';
  const reportedDates=d.map(s=>String(s.reported||'').replaceAll('.','-')).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)).sort();
  const range=reportedDates.length?reportedDates[0]+(reportedDates.length>1?' 〜 '+reportedDates[reportedDates.length-1]:''):'記事中の出典を参照';
@@ -129,7 +129,7 @@ $('stories').addEventListener('click',async e=>{const open=e.target.closest('[da
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();
-async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length===3;const jt=japanTime(now);const releaseOk=x?.editionDate&&((jt.date>x.editionDate)||(jt.date===x.editionDate&&jt.hour>=21));if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
+async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&[3,5].includes(x.stories.length);const jt=japanTime(now);const releaseOk=x?.editionDate&&((jt.date>x.editionDate)||(jt.date===x.editionDate&&jt.hour>=21));if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
 checkPublished();
 
 // The archive manifest contains *released* editions only; approval drafts are never copied to public/.
