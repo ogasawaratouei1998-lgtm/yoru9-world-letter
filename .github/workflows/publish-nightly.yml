@@ -16,8 +16,12 @@ on:
     - cron: '7,37 23 * * *'
       timezone: 'Asia/Tokyo'
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Free-tier AI editorial double-check (safe preview)']
+    types: [completed]
 
 permissions:
+  actions: read
   contents: write
   pages: write
   id-token: write
@@ -31,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: github-pages
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
     steps:
       - uses: actions/checkout@v4
         with:
@@ -40,6 +45,25 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
+      - name: Retrieve independently reviewed issue from completed preview
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          mkdir -p /tmp/yoru9-reviewed
+          if gh run download "$RUN_ID" --repo "$GH_REPO" --name ai-reviewed-preview --dir /tmp/yoru9-reviewed; then
+            DAY=$(TZ=Asia/Tokyo date +%F)
+            if [ -f "/tmp/yoru9-reviewed/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then
+              mkdir -p data/approved
+              cp "/tmp/yoru9-reviewed/$DAY.json" "data/approved/$DAY.json"
+              echo "Retrieved reviewed issue for $DAY"
+            fi
+          else
+            echo 'No reviewed preview artifact; normal safe generation fallback applies.'
+          fi
       - name: Check whether today's approved issue already exists
         id: edition
         shell: bash
@@ -66,7 +90,7 @@ jobs:
           fi
       - name: Release today's verified one-to-three-story edition
         env:
-          ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now' }}
+          ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |
           if [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$(TZ=Asia/Tokyo date +%F)" = '2026-11-16' ]; then
             python publish_approved.py --publish-now
@@ -77,7 +101,7 @@ jobs:
         id: release
         shell: bash
         run: |
-          git add data/current.json data/archive/
+          git add data/current.json data/archive/ data/approved/
           if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No new approved edition; existing site stays unchanged."
