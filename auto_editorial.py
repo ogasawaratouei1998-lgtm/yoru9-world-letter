@@ -61,36 +61,57 @@ def source_text(url):
         return text[:13000] if len(text)>=600 else ""
     except (OSError,ValueError,HTTPError,URLError):return ""
 
-def available_model():
-    """Choose an actually available text generation model for this API key."""
+def available_models():
+    """List supported models, with a bounded preference order and no paid fallback."""
     endpoint="https://generativelanguage.googleapis.com/v1beta/models?pageSize=100"
     req=Request(endpoint,headers={"x-goog-api-key":KEY})
     with urlopen(req,timeout=25) as response:
         catalog=json.load(response)
-    models=[m for m in catalog.get("models",[])
+    models=[m["name"] for m in catalog.get("models",[])
             if "generateContent" in m.get("supportedGenerationMethods",[])
             and m.get("name","").startswith("models/gemini-")]
-    by_name={m["name"].removeprefix("models/"):m["name"] for m in models}
-    preferred=[MODEL,"gemini-2.5-flash","gemini-2.5-flash-lite",
-               "gemini-2.0-flash","gemini-2.0-flash-lite"]
+    preferred=[MODEL,"gemini-2.5-flash-lite","gemini-2.5-flash",
+               "gemini-2.0-flash-lite","gemini-2.0-flash"]
+    result=[]
     for name in preferred:
-        if name in by_name:return by_name[name]
-    raise RuntimeError("No supported Gemini text model found for this API key; safe skip")
+        full="models/"+name
+        if full in models and full not in result:result.append(full)
+    if not result:raise RuntimeError("No supported Gemini model found; safe stop")
+    return result[:3]
+
+def available_model():
+    return available_models()[0]
 
 ACTIVE_MODEL=None
 
 def ai(prompt):
     global ACTIVE_MODEL
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
-    if ACTIVE_MODEL is None:
-        ACTIVE_MODEL=available_model()
-        print("Using available model:",ACTIVE_MODEL,flush=True)
-    url="https://generativelanguage.googleapis.com/v1beta/"+ACTIVE_MODEL+":generateContent"
-    data={"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"responseMimeType":"application/json","temperature":0.1}}
-    req=Request(url,data=json.dumps(data).encode(),headers={"Content-Type":"application/json","x-goog-api-key":KEY},method="POST")
-    with urlopen(req,timeout=90) as r: response=json.load(r)
-    raw=response["candidates"][0]["content"]["parts"][0]["text"]
-    return json.loads(raw)
+    models=[ACTIVE_MODEL] if ACTIVE_MODEL else available_models()
+    data={"contents":[{"parts":[{"text":prompt}]}],
+          "generationConfig":{"responseMimeType":"application/json","temperature":0.1}}
+    last_error=None
+    for model in models:
+        for version in ("v1beta","v1"):
+            url="https://generativelanguage.googleapis.com/"+version+"/"+model+":generateContent"
+            req=Request(url,data=json.dumps(data).encode(),
+                        headers={"Content-Type":"application/json","x-goog-api-key":KEY},method="POST")
+            try:
+                with urlopen(req,timeout=90) as response:result=json.load(response)
+                raw=result["candidates"][0]["content"]["parts"][0]["text"]
+                ACTIVE_MODEL=model
+                print("Gemini generation succeeded:",model,version,flush=True)
+                return json.loads(raw)
+            except HTTPError as exc:
+                # Print only status and sanitized provider reason, never headers or key.
+                try:
+                    err=json.loads(exc.read(4096).decode("utf-8"))
+                    status=str(err.get("error",{}).get("status","UNKNOWN"))[:50]
+                except (ValueError,UnicodeError,AttributeError):status="UNKNOWN"
+                print("Gemini generation failed:",model,version,"HTTP",exc.code,status,flush=True)
+                last_error=exc.code
+                if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
+    raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
 
 def archive_summaries():
     result=[]
