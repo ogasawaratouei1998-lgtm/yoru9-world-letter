@@ -8,6 +8,8 @@ on:
       - 'data/approved/*.json'
       - 'auto_editorial.py'
       - 'collect_candidates.py'
+      - 'publish_approved.py'
+      - 'tests/**'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
