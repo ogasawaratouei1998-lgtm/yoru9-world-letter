@@ -2,7 +2,7 @@
 """Free-tier AI editorial pipeline. Fail closed: no key, no verified five, no publication."""
 import json, os, re, sys, ipaddress, socket, time
 from html.parser import HTMLParser
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
@@ -261,13 +261,20 @@ def semantic_corroboration_groups(items):
         groups.append([by_url[u] for u in urls])
     return groups[:16]
 
+def valid_recent_reported(raw, now):
+    """Allow only an explicit calendar date in the last seven days (JST)."""
+    if not isinstance(raw,str) or not re.fullmatch(r"\\d{4}[-.]\\d{2}[-.]\\d{2}",raw):return False
+    try:reported=datetime.strptime(raw.replace(".","-"),"%Y-%m-%d").date()
+    except ValueError:return False
+    return now.date()-timedelta(days=7)<=reported<=now.date()
+
 def main():
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY:
         print("No free-tier AI key configured. Safe skip.");return 0
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
-    today=[]
+    recent=[]
     for lead in leads:
         try:
             raw=lead["seendate"]
@@ -275,17 +282,17 @@ def main():
                 stamp=datetime.strptime(raw,"%Y%m%dT%H%M%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(JST)
             else:
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
-            if stamp.date()!=now.date():continue
+            if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
-        if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):today.append(lead)
-    if len(today)<5:
-        print("Not enough same-day leads; safe skip.");return 0
+        if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
+    if len(recent)<5:
+        print("Not enough recent leads within seven days; safe skip.");return 0
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
     # Prioritize direct publisher URLs; interleave domains to avoid source monopolies.
     buckets={}
-    for lead in sorted(today,key=lambda x: ('news.google.com' in host(x['url']), x.get('provider','').startswith('Google'))):
+    for lead in sorted(recent,key=lambda x: ('news.google.com' in host(x['url']), x.get('provider','').startswith('Google'))):
         buckets.setdefault(host(lead['url']),[]).append(lead)
     ordered=[]
     # A single host (notably news.google.com) must never exhaust the fetch budget.
@@ -320,26 +327,28 @@ def main():
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
         if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
-    print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
+    print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
     if len(source_leads)<2:
         print('Fewer than two article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
-    if not groups:
-        print('Trying AI semantic incident matching across independently fetched texts.',flush=True)
-        groups=semantic_corroboration_groups(source_leads)
-        print('AI-proposed cross-publisher groups:',len(groups),flush=True)
-    if not groups:
-        print('No independently sourced incident pairs; safe skip.');return 0
+    if len(groups)<5:
+        print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
+        semantic=semantic_corroboration_groups(source_leads)
+        existing={tuple(sorted(x['url'] for x in group)) for group in groups}
+        groups.extend(group for group in semantic if tuple(sorted(x['url'] for x in group)) not in existing)
+        print('Combined cross-publisher groups:',len(groups),flush=True)
+    if len(groups)<5:
+        print('Fewer than five independently sourced incident groups; safe skip.');return 0
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
-      'No death, injuries, abuse or humiliation. Today JST: '+day+'. Possible same-event headline groups (NOT proof): '+json.dumps([[x['url'] for x in group] for group in groups],ensure_ascii=False)+'. Original article bodies: '+json.dumps(grouped_sources,ensure_ascii=False))
+      'No death, injuries, abuse or humiliation. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. Possible same-event headline groups (NOT proof): '+json.dumps([[x['url'] for x in group] for group in groups],ensure_ascii=False)+'. Original article bodies: '+json.dumps(grouped_sources,ensure_ascii=False))
     draft=ai(prompt).get("stories",[])
     if not isinstance(draft,list):return 0
     seen=previous_events()
@@ -349,7 +358,7 @@ def main():
     lead_urls={x['url'] for x in source_leads}
     for story in draft:
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):continue
-        if story["reported"].replace(".","-")!=day or story["category"] not in ("person","work","company"):continue
+        if not valid_recent_reported(story["reported"],now) or story["category"] not in ("person","work","company"):continue
         urls=story.get("verificationUrls",[])
         if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):continue
