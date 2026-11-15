@@ -25,6 +25,28 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "Search across continents and languages; prefer geographic variety when evidence and editorial quality are comparable. "
     "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
     "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
+# Editorial writing craft: keep verified reporting separate from compassionate interpretation.
+WRITING_CRAFT=(
+    " Write for a tired Japanese reader at 9pm, not for a compliance committee. "
+    "Structure each story as (1) a concrete verified plan or expectation, "
+    "(2) the documented mistake and surprising contrast, (3) a humane shift in perspective. "
+    "The title should show the specific mismatch, not generic outrage or a vague 'big failure'. "
+    "summary: two crisp Japanese sentences describing only verified facts. "
+    "detail: first explain the verifiable sequence, then explicitly signal an editorial "
+    "reflection with 'ここからはAIの見方。' and offer one specific, non-preachy reframing. "
+    "quip: one memorable, original Japanese line (roughly 15-55 characters) about "
+    "the PLAN, ASSUMPTION or DECISION, never a victim. Prefer observational irony "
+    "over ridicule, platitudes, generic encouragement or forced puns. "
+    "Do not say 'your problems are nothing', dismiss the reader's pain, "
+    "invent a happy ending, or imply the subjects were secretly fine. "
+    "If the facts are sufficient but the first joke is weak, try three angles "
+    "internally: inflated ambition versus mundane reality; a reasonable assumption "
+    "that backfired; the tiny missed step behind a grand plan. Pick the kindest. "
+    "Do not include these internal options in the JSON. "
+    "A weak punchline is a writing problem to revise, not automatically a reason "
+    "to discard a verified, safely discussable incident. "
+)
+
 INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|par erreur|equivocaci[oó]n|por engano",re.I)
 
 def incident_priority(lead):
@@ -458,7 +480,7 @@ def main():
                     allowed_pairs.add(frozenset((first["url"],second["url"])))
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=(EDITORIAL_MISSION+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Do not impose a fixed category quota or lower evidence standards to fill a category. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
+    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Do not impose a fixed category quota or lower evidence standards to fill a category. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
@@ -511,7 +533,7 @@ def main():
               len(retry_candidates),flush=True)
         for start in range(0,min(len(retry_candidates),18)):
             batch=retry_candidates[start:start+1]
-            retry_prompt=(EDITORIAL_MISSION+
+            retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
                 " You are editor A. Draft up to three Japanese news stories ONLY "
                 "when two independent publisher articles in the SAME input group "
                 "corroborate the same specific real-world mistake. "
@@ -593,7 +615,7 @@ def main():
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
         if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:
             reject("insufficient_fetched_articles");continue
-        audit=ai(EDITORIAL_MISSION+" You are independent adversarial fact checker B. You must verify every concrete "
+        audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the TWO separately fetched source article texts below. "
           "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
