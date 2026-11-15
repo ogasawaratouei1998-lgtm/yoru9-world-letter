@@ -238,7 +238,7 @@ def corroboration_groups(items):
 def semantic_corroboration_groups(items):
     """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
     if len(items)<2:return []
-    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:1800]} for x in items[:60]]
+    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:1800]} for x in items[:90]]
     result=ai("Find pairs of articles about the SAME specific incident, not merely the same topic. "
         "Compare concrete people, places, actions and dates in the supplied excerpts. "
         "Two sources must be editorially independent, not syndicated rewrites. "
@@ -259,7 +259,7 @@ def semantic_corroboration_groups(items):
         if key in seen:continue
         seen.add(key)
         groups.append([by_url[u] for u in urls])
-    return groups[:16]
+    return groups[:24]
 
 def valid_recent_reported(raw, now):
     """Allow only an explicit calendar date in the last seven days (JST)."""
@@ -298,7 +298,7 @@ def main():
     # A single host (notably news.google.com) must never exhaust the fetch budget.
     # Preserve slots for independent publisher articles across multiple feeds.
     per_host={}
-    while buckets and len(ordered)<120:
+    while buckets and len(ordered)<180:
         progressed=False
         for domain in list(buckets):
             limit=5 if domain=="news.google.com" else 30
@@ -310,7 +310,7 @@ def main():
                 per_host[domain]=per_host.get(domain,0)+1
                 progressed=True
             if not buckets[domain]:del buckets[domain]
-            if len(ordered)>=120:break
+            if len(ordered)>=180:break
         if not progressed:break
     outcomes={}
     failure_reasons={}
@@ -326,7 +326,7 @@ def main():
             reason=diagnostics[0] if diagnostics else 'unknown'
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
-        if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
+        if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:8500]})
     print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
@@ -347,7 +347,7 @@ def main():
         if key not in existing:
             groups.append(group)
             existing.add(key)
-        if len(groups)>=16:break
+        if len(groups)>=24:break
     print('Combined cross-publisher groups:',len(groups),flush=True)
     if len(groups)<5:
         print('Fewer than five independently sourced incident groups; safe skip.');return 0
@@ -355,10 +355,10 @@ def main():
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
         "url":item["url"],"text":item["text"]} for item in group]}
-        for i,group in enumerate(groups[:16])]
+        for i,group in enumerate(groups[:24])]
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=('You are editor A. Return JSON object with stories array of up to 8 Japanese stories about CONSEQUENTIAL, well-documented failures by companies, institutions, governments or prominent decision-makers, including costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. '
+    prompt=('You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by companies, institutions, governments or prominent decision-makers, including costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
@@ -400,8 +400,8 @@ def main():
         # Log only bounded metadata, not untrusted article text or AI prose.
         print("Editorial drafting diagnostic:",json.dumps({
             "candidate_groups":len(groups),
-            "group_domain_counts":[len({host(x["url"]) for x in group}) for group in groups[:16]],
-            "group_article_counts":[len(group) for group in groups[:16]],
+            "group_domain_counts":[len({host(x["url"]) for x in group}) for group in groups[:24]],
+            "group_article_counts":[len(group) for group in groups[:24]],
             "source_articles":len(grouped_sources),
             "drafted":0,
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
