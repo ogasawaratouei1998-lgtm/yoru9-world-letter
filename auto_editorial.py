@@ -183,13 +183,23 @@ def main():
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
-    for lead in sorted(today,key=lambda x:x.get('provider','').startswith('Google'))[:36]:
+    # Interleave publishers instead of letting one feed dominate the 36 fetch slots.
+    buckets={}
+    for lead in today:
+        buckets.setdefault(host(lead['url']),[]).append(lead)
+    ordered=[]
+    while buckets and len(ordered)<60:
+        for domain in list(buckets):
+            if buckets[domain]:ordered.append(buckets[domain].pop(0))
+            if not buckets[domain]:del buckets[domain]
+            if len(ordered)>=60:break
+    for lead in ordered:
         url=lead['url']
         if url not in cache:cache[url]=source_text(url)
         if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:6500]})
     print('Evidence collection:',len(today),'same-day leads,',len(source_leads),'fetchable article bodies',flush=True)
-    if len(source_leads)<10:
-        print('Fewer than ten article bodies; safe skip before AI generation.');return 0
+    if len(source_leads)<2:
+        print('Fewer than two article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
     if not groups:
