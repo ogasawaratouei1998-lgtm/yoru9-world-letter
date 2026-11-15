@@ -73,6 +73,22 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(len(groups),1)
         self.assertEqual({x["url"] for x in groups[0]},{items[0]["url"],items[1]["url"]})
 
+    def test_distinct_group_selection_removes_overlapping_incidents(self):
+        a={"title":"Event A","url":"https://one.example/a"}
+        b={"title":"Event A corroboration","url":"https://two.example/b"}
+        c={"title":"Event A alternate","url":"https://three.example/c"}
+        d={"title":"Event B","url":"https://four.example/d"}
+        e={"title":"Event B corroboration","url":"https://five.example/e"}
+        groups=editorial.select_distinct_groups([[a,b],[a,c],[d,e]])
+        self.assertEqual(len(groups),2)
+        self.assertEqual(groups[0],[a,b])
+        self.assertEqual(groups[1],[d,e])
+
+    def test_distinct_group_selection_rejects_single_publisher(self):
+        a={"url":"https://one.example/a"}
+        b={"url":"https://one.example/b"}
+        self.assertEqual(editorial.select_distinct_groups([[a,b]]),[])
+
     def test_semantic_matching_empty_without_ai_call(self):
         with patch.object(editorial,"ai") as mock_ai:
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
