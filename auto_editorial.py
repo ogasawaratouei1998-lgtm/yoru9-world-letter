@@ -233,7 +233,26 @@ def corroboration_groups(items):
     for group in groups:
         key=tuple(sorted(x["url"] for x in group))
         unique[key]=group
-    return list(unique.values())[:24]
+    return list(unique.values())[:48]
+
+def select_distinct_groups(groups, limit=24):
+    """Prioritize distinct incidents, not multiple overlapping source combinations."""
+    selected=[]
+    used_urls=set()
+    seen_pairs=set()
+    for group in groups:
+        urls={item["url"] for item in group}
+        key=tuple(sorted(urls))
+        if key in seen_pairs or len({host(url) for url in urls})<2:
+            continue
+        seen_pairs.add(key)
+        if not urls.isdisjoint(used_urls):
+            continue
+        selected.append(group)
+        used_urls.update(urls)
+        if len(selected)>=limit:
+            break
+    return selected
 
 def semantic_corroboration_groups(items):
     """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
@@ -347,8 +366,9 @@ def main():
         if key not in existing:
             groups.append(group)
             existing.add(key)
-        if len(groups)>=24:break
-    print('Combined cross-publisher groups:',len(groups),flush=True)
+    raw_group_count=len(groups)
+    groups=select_distinct_groups(groups)
+    print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
     if len(groups)<5:
         print('Fewer than five independently sourced incident groups; safe skip.');return 0
     # Preserve each hypothesized incident's exact article-to-article association.
