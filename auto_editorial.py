@@ -88,7 +88,28 @@ def extracted_article_text(html):
     parser.feed(html)
     # Prefer the publisher's article container; reject generic site chrome.
     if parser.article_containers:
-        return " ".join(parser.article_parts)
+        body=" ".join(parser.article_parts)
+        if len(body)>=600:return body
+    # Some publishers expose the article body as schema.org structured data,
+    # without a conventional <article> element. Only articleBody is trusted;
+    # generic page text and navigation are never promoted to evidence.
+    scripts=re.findall(r'<script\\b[^>]*type=["\\\']application/ld\\+json["\\\'][^>]*>(.*?)</script\\s*>',html,re.I|re.S)
+    def article_bodies(node):
+        if isinstance(node,list):
+            for part in node:yield from article_bodies(part)
+        elif isinstance(node,dict):
+            kind=node.get("@type",[])
+            kinds=kind if isinstance(kind,list) else [kind]
+            if any(isinstance(k,str) and k.lower() in ("article","newsarticle","reportagearticle","blogposting") for k in kinds):
+                body=node.get("articleBody")
+                if isinstance(body,str) and len(body)>=600:yield body
+            for key in ("@graph","mainEntity"):
+                if key in node:yield from article_bodies(node[key])
+    for script in scripts[:12]:
+        try:
+            for body in article_bodies(json.loads(script)):
+                return re.sub(r"\\s+"," ",__import__("html").unescape(body)).strip()
+        except (ValueError,TypeError):continue
     return ""
 
 def public_host(url):
@@ -296,7 +317,9 @@ def select_distinct_groups(groups, limit=24):
 def semantic_corroboration_groups(items):
     """AI proposes pairs, but exact source URLs and distinct hosts are enforced locally."""
     if len(items)<2:return []
-    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:2400]} for x in items[:120]]
+    # Rotate through all fetched publishers rather than silently dropping
+    # every article after the first 120. Keep prompts bounded in size.
+    compact=[{"title":x["title"],"url":x["url"],"excerpt":x["text"][:1800]} for x in items[:120]]
     result=ai("Find pairs of articles about the SAME specific incident, not merely the same topic. Include independently reported individual mishaps and consequential personal decisions, not only corporate or government events. "
         "Compare concrete people, places, actions and dates in the supplied excerpts. "
         "Two sources must be editorially independent, not syndicated rewrites. "
@@ -398,7 +421,13 @@ def main():
     # Keep the bounded candidate budget; final publication still requires
     # two fetched sources and an independent adversarial AI audit.
     print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
-    semantic=semantic_corroboration_groups(source_leads)
+    # Overlapping windows allow semantic matching across the full fetched set.
+    # Headline groups are still included; AI proposals remain unverified.
+    semantic=[]
+    for start in range(0,len(source_leads),90):
+        window=source_leads[max(0,start-30):start+120]
+        if len(window)<2:continue
+        semantic.extend(semantic_corroboration_groups(window))
     existing={tuple(sorted(x['url'] for x in group)) for group in groups}
     for group in semantic:
         key=tuple(sorted(x['url'] for x in group))
