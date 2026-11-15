@@ -342,18 +342,49 @@ def main():
         print('Combined cross-publisher groups:',len(groups),flush=True)
     if len(groups)<5:
         print('Fewer than five independently sourced incident groups; safe skip.');return 0
+    # Preserve each hypothesized incident's exact article-to-article association.
+    # A flat article list can hide which sources are meant to corroborate one another.
+    grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
+        "url":item["url"],"text":item["text"]} for item in group]}
+        for i,group in enumerate(groups[:16])]
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=('You are editor A. Return JSON object with stories array of up to 8 candidate Japanese lighthearted mistake news stories. '
       'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
       'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
-      'No death, injuries, abuse or humiliation. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. Possible same-event headline groups (NOT proof): '+json.dumps([[x['url'] for x in group] for group in groups],ensure_ascii=False)+'. Original article bodies: '+json.dumps(grouped_sources,ensure_ascii=False))
+      'No death, injuries, abuse or humiliation. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. '
+      'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
+      'Return JSON with stories array AND diagnostics array containing one object for every input group: '
+      '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
+      'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
+      'insufficient_facts, sensitive_incident, not_a_lighthearted_mistake, other. '
+      'A group marked eligible still needs all story fields and independent verification; do not fill gaps by inference. '
+      'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
     draft_response=ai(prompt)
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
     if not isinstance(draft,list):
         print("Editorial drafting diagnostic: malformed stories response; safe skip.",flush=True)
         return 0
+    # Diagnostics are model assessments, not factual verification. Never use them
+    # to approve an article or to weaken any subsequent independent check.
+    diagnostics=draft_response.get("diagnostics",[]) if isinstance(draft_response,dict) else []
+    valid_codes={"same_incident_supported","unrelated_articles","syndicated_or_not_independent",
+        "no_explicit_recent_report_date","insufficient_facts","sensitive_incident",
+        "not_a_lighthearted_mistake","other"}
+    group_reasons={}
+    if isinstance(diagnostics,list):
+        for item in diagnostics[:len(grouped_evidence)]:
+            if not isinstance(item,dict):continue
+            group_id=item.get("groupId")
+            code=item.get("reasonCode")
+            if type(group_id) is int and 1<=group_id<=len(grouped_evidence) and code in valid_codes:
+                group_reasons[group_id]=code
+    print("AI candidate group assessment:",json.dumps({
+        "assessed":len(group_reasons),
+        "total":len(grouped_evidence),
+        "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
+    },sort_keys=True),flush=True)
     if not draft:
         # A successful API call can legitimately return zero verifiable stories.
         # Log only bounded metadata, not untrusted article text or AI prose.
