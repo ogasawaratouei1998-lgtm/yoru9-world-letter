@@ -438,7 +438,7 @@ def main():
         audit=ai("You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the TWO separately fetched source article texts below. "
           "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
-          unsafe jokes, and repeated events. A serious corporate or institutional failure is suitable when the humor targets bad decisions or overconfidence rather than victims. Do not reject solely because the consequences are financially or politically significant. Compare against the prior published events and already selected events, "
+          "unsafe jokes, and repeated events. A serious corporate or institutional failure is suitable when the humor targets bad decisions or overconfidence rather than victims. Do not reject solely because the consequences are financially or politically significant. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if evidence is insufficient or unclear. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
