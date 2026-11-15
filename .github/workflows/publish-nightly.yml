@@ -65,7 +65,14 @@ jobs:
             python auto_editorial.py
           fi
       - name: Release today's verified one-to-three-story edition
-        run: python publish_approved.py
+        env:
+          ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now' }}
+        run: |
+          if [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$(TZ=Asia/Tokyo date +%F)" = '2026-11-16' ]; then
+            python publish_approved.py --publish-now
+          else
+            python publish_approved.py
+          fi
       - name: Commit the released edition
         id: release
         shell: bash
