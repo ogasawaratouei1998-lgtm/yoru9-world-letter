@@ -37,15 +37,13 @@ body{background:#0b1528}
 .filters{margin-bottom:15px}
 .list{gap:13px}
 .story{position:relative;padding:16px 17px;border-color:#51678c}
-.story:first-child{border:2px solid #e1b970;background:linear-gradient(145deg,#293d5b,#192940);box-shadow:0 10px 30px #0003}
-.story:first-child:before{content:"今夜の１本目";position:absolute;right:15px;top:-13px;background:#f4ce8b;color:#172439;font-weight:900;font-size:11px;padding:2px 10px;border-radius:15px;box-shadow:0 2px 4px #0003}
 .story h3{font-size:clamp(19px,4.3vw,24px);line-height:1.5;margin:6px 0}
 .story .summary{font-size:13px;line-height:1.8;margin:0 0 5px}
 .story .label{margin-top:7px}
 .teaserquip{margin:12px 0 8px;padding:10px 12px;border-radius:9px;background:#f6dba7;color:#1d2940;font-weight:750;font-size:13px;line-height:1.65}
 .teaserquip span{display:block;font-size:10px;letter-spacing:.04em;margin-bottom:2px;color:#5b4932}
-.story:not(:first-child) .teaserquip{background:#2e405e;color:#f5ebdb;border-left:3px solid #d8b676}
-.story:not(:first-child) .teaserquip span{color:#f4ce8b}
+.story .teaserquip{background:#2e405e;color:#f5ebdb;border-left:3px solid #d8b676}
+.story .teaserquip span{color:#f4ce8b}
 .reported{font-size:12px;color:#d3ddea;margin:3px 0 9px;line-height:1.7}
 .offlineNotice{background:#34425a;border:1px solid #cfac70;border-radius:12px;padding:11px 15px;margin:12px 0;font-size:12px;color:#fff1d6;line-height:1.6}
 .offlineNotice[hidden]{display:none}
@@ -75,7 +73,7 @@ body{background:#0b1528}
 .editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
 .reader-extras{margin:22px 0;border:1px solid #667b98;border-radius:13px;padding:12px;background:#182a42}.reader-extras>summary{color:#f5d8a1;font-weight:750;cursor:pointer;padding:5px 2px}.reader-extras[open]>summary{margin-bottom:15px}.release-status{border-left:3px solid #d5ae67;padding:8px 12px;margin:8px 0 14px;background:#1b2e47;color:#f4e4c8;font-size:13px;line-height:1.65}
 
-.lead-award{display:inline-block;border-radius:100px;padding:3px 8px;background:#f6dba7;color:#17243b;font-size:10px;font-weight:900}.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight #spotlightRead{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
+.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight #spotlightRead{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
 @media(max-width:520px){.spotlight{padding:15px 16px;margin:8px 0 14px}.spotlight h2{margin:7px 0 12px}}
 .second-quip{margin:18px 0;padding:16px 17px;background:#243956;border-left:4px solid #ffd89e;border-radius:10px}.second-quip span{display:block;color:#ffd89e;font-size:12px;font-weight:900;margin-bottom:7px}.second-quip p{font-size:clamp(17px,4.5vw,21px);font-weight:900;line-height:1.55;margin:0;color:#fff}
 /* Editorial cover: faithful to the award-first navy-and-gold mockup. */
