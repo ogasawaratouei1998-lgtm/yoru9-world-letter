@@ -169,12 +169,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
-    def test_seven_day_reporting_window(self):
+    def test_same_day_reporting_with_timezone_buffer(self):
         from datetime import datetime
         from zoneinfo import ZoneInfo
         now=datetime(2026,11,15,21,0,tzinfo=ZoneInfo("Asia/Tokyo"))
         self.assertTrue(editorial.valid_recent_reported("2026-11-15",now))
-        self.assertTrue(editorial.valid_recent_reported("2026-11-08",now))
+        self.assertTrue(editorial.valid_recent_reported("2026-11-14",now))\n        self.assertFalse(editorial.valid_recent_reported("2026-11-13",now))
         self.assertFalse(editorial.valid_recent_reported("2026-11-07",now))
         self.assertFalse(editorial.valid_recent_reported("2026-11-16",now))
         self.assertFalse(editorial.valid_recent_reported("unverified",now))
