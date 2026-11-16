@@ -220,7 +220,7 @@ function renderEditorialDashboard(issues,failed=0){
   dates.add(issue.editionDate);
   for(const story of issue.stories){
    articles++;
-   const country=String(story.country||'').trim();
+   const country=countryKey(story.country);
    if(country)counts.set(country,(counts.get(country)||0)+1);
    const region=editorialRegion(country);
    if(region)regions.set(region,regions.get(region)+1);else unknown++;
