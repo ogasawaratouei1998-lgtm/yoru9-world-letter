@@ -66,6 +66,12 @@ class PublishingTest(unittest.TestCase):
         self.path.unlink()
         self.assertFalse(publish(self.root,datetime.fromisoformat('2026-11-10T21:15:00+09:00')))
         self.assertEqual(json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
+    def test_english_only_detail_is_rejected(self):
+        data=fixture()
+        data['stories'][0]['detail']='An English-only expanded article.'
+        with self.assertRaisesRegex(ValueError, 'detailが日本語ではありません'):
+            validate_approved(data,'2026-11-10')
+
     def test_unverified_story_blocked(self):
         data=fixture()
         data['stories'][2]['editorVerified']=False
