@@ -159,10 +159,12 @@ def validate_approved(data, expected_date):
             public_story['flag'] = story['flag']
         if 'quipSecond' in story:
             second = story['quipSecond']
-            require(isinstance(second, str) and 15 <= len(second.strip()) <= 160,
-                    f'{i}本目のquipSecondは15〜160文字で指定してください')
+            require(isinstance(second, str),
+                    f'{i}本目のquipSecondは文章で指定してください')
             require(second.strip() != story['quip'].strip(),
                     f'{i}本目のquipSecondが最初のツッコミと重複しています')
+            require(15 <= len(second.strip()) <= 160,
+                    f'{i}本目のquipSecondは15〜160文字で指定してください')
             require(not any(ch in second for ch in '<>\r\n'),
                     f'{i}本目のquipSecondに不正な制御文字またはHTML記号があります')
             public_story['quipSecond'] = second.strip()
