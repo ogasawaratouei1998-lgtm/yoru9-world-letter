@@ -26,6 +26,13 @@ class ReaderFrontendTest(unittest.TestCase):
                       "first.quip", "first.title", "first.scrollIntoView"):
             self.assertIn(token, page)
 
+    def test_mishap_award_is_dynamic_and_archive_aware(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in ('id="spotlightAward"', "今夜のやらかし大賞",
+                      "前回のやらかし大賞", "体験版のやらかし大賞",
+                      "★ やらかし大賞", "i===0"):
+            self.assertIn(token, page)
+
     def test_sports_filter_is_available(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-filter="sports"', page)
