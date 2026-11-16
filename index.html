@@ -77,6 +77,21 @@ body{background:#0b1528}
 
 .lead-award{display:inline-block;border-radius:100px;padding:3px 8px;background:#f6dba7;color:#17243b;font-size:10px;font-weight:900}.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight button{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
 @media(max-width:520px){.spotlight{padding:15px 16px;margin:8px 0 14px}.spotlight h2{margin:7px 0 12px}}
+/* Lead-story-first layout: the changing story, not the fixed slogan, owns the first screen. */
+.hero{padding:8px 0 9px!important;text-align:left!important}
+.hero .hero-stamp,.hero .hero-audience,.hero .hero-truth{display:none}
+.hero h1{font-size:clamp(18px,4.5vw,24px)!important;line-height:1.35!important;margin:4px 0!important;letter-spacing:0!important}
+.hero .hero-description{font-size:11px!important;line-height:1.5!important;margin:3px 0 0!important;color:#c8d5e6!important}
+.hero .eyebrow{font-size:10px!important}
+.spotlight{position:relative;overflow:hidden;margin:9px 0 18px;padding:26px 23px 22px;border:1px solid #d6ae6c;border-radius:23px;background:radial-gradient(circle at 92% 2%,#526b8e 0,transparent 40%),linear-gradient(145deg,#304764,#101d33 76%);box-shadow:0 15px 35px #0005}
+.spotlight:before{content:"★";position:absolute;right:-10px;top:-46px;font-size:175px;line-height:1;color:#ffd89e;opacity:.065;pointer-events:none}
+.spotlight-kicker{display:flex;align-items:center;gap:8px;color:#ffe0a5;font-size:13px;font-weight:900;letter-spacing:.06em}
+.spotlight-kicker>span:first-child{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#ffd89e;color:#17243b;font-size:20px}
+.spotlight h2{position:relative;font-size:clamp(26px,6.8vw,40px);line-height:1.38;letter-spacing:-.025em;margin:19px 0 23px;font-weight:950;text-wrap:pretty}
+.spotlight-quip-label{border-top:1px solid #7c8ca566;padding-top:16px;color:#ffe0a5;font-size:12px;font-weight:900;letter-spacing:.05em}
+.spotlight-quip{font-size:clamp(19px,5.2vw,27px);line-height:1.5;font-weight:900;margin:7px 0 22px;text-wrap:pretty}
+.spotlight button{display:block;width:100%;min-height:52px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-size:15px;font-weight:950;box-shadow:0 5px 0 #aa8653}
+@media(max-width:520px){.nav{padding:12px 0 6px}.spotlight{padding:20px 17px 21px;margin:9px 0 15px}.spotlight h2{margin:16px 0 20px}.hero .hero-description{max-width:100%}}
 /* iPhone-first reading layout: bring the first story forward and keep touch targets generous. */
 .reader-extras{display:grid;gap:10px;margin:22px 0;padding:0;border:0;background:transparent}
 .reader-tool{border:1px solid #667b98;border-radius:14px;background:#182a42;padding:12px 15px}
