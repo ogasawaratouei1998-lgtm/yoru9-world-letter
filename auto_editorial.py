@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key or no verified story means no publication."""
 import json, os, re, sys, ipaddress, socket, time
+from country_codes import country_key
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -291,7 +292,7 @@ def recent_diversity_counts(today, days=30):
             if issue.get("status")!="published":
                 continue
             for story in issue.get("stories",[]):
-                country=str(story.get("country","")).strip()
+                country=country_key(story.get("country",""))
                 category=str(story.get("category","")).strip()
                 if country:country_counts[country]+=1
                 if category in ("work","person","company"):category_counts[category]+=1
@@ -692,10 +693,10 @@ def main():
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
         categories=len({story["category"] for story in stories})
-        countries=len({story["country"].strip() for story in stories})
+        countries=len({country_key(story["country"]) for story in stories})
         # First protect diversity within the edition; then favor countries
         # and reader perspectives underrepresented over the previous 30 days.
-        country_repeat=sum(country_history[story["country"].strip()] for story in stories)
+        country_repeat=sum(country_history[country_key(story["country"])] for story in stories)
         category_repeat=sum(category_history[story["category"]] for story in stories)
         return (categories+countries, categories, countries,
                 -country_repeat, -category_repeat, -sum(indices))
@@ -703,7 +704,7 @@ def main():
     selected=[pool[i] for i in best]
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
-        "selected_countries":len({story["country"].strip() for story in selected}),
+        "selected_countries":len({country_key(story["country"]) for story in selected}),
         "selected_categories":len({story["category"] for story in selected}),
         "history_articles":sum(country_history.values())
     },sort_keys=True),flush=True)
