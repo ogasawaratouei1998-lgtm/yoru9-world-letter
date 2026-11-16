@@ -107,7 +107,8 @@ function loadState(){try{const x=JSON.parse(localStorage.getItem(editionKey())||
 function saveState(){try{localStorage.setItem(editionKey(),JSON.stringify(state))}catch(_){}}
 let toastTimer;
 function toast(s){$('toast').textContent=s;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,2300)}
-function render(){const d=edition.stories; $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'失敗したのは、あなただけじゃない。世界も今日、いろいろありました。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
+function render(){const d=edition.stories;
+ $('nightQuoteText').textContent=typeof edition.nightQuote==='string'&&edition.nightQuote.trim()?edition.nightQuote:'失敗したのは、あなただけじゃない。世界も今日、いろいろありました。'; $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'失敗したのは、あなただけじゃない。世界も今日、いろいろありました。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
