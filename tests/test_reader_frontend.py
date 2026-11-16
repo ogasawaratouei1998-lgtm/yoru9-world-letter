@@ -26,6 +26,18 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
+    def test_editor_dashboard_has_30_day_country_and_region_coverage(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in ('id="editorDashboard"', 'id="editorStats"',
+                      'id="editorMapPins"', 'id="editorRegionStats"',
+                      'id="editorCountryStats"', 'function editorialRegion(country)',
+                      'function renderEditorialDashboard(issues,failed=0)',
+                      'if(age<0||age>=30)continue',
+                      "issue?.status!=='published'",
+                      'renderEditorialDashboard(all.filter(Boolean)'):
+            with self.subTest(token=token):
+                self.assertIn(token, page)
+
     def test_world_map_and_country_archive(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="worldMap"', 'id="mapPins"', 'id="countrySelect"',
