@@ -121,6 +121,10 @@ def validate_approved(data, expected_date):
             value = story.get(key)
             require(isinstance(value, str) and bool(value.strip()), f'{i}本目の {key} が空です')
             require(len(value) <= (2000 if key == 'detail' else 600), f'{i}本目の {key} が長すぎます')
+        # A Japanese-language reader must not publish an English-only expanded article.
+        # This is a script check, not a substitute for human translation/fact review.
+        require(bool(re.search(r'[ぁ-んァ-ヶ一-龯々]', story['detail'])),
+                f'{i}本目のdetailが日本語ではありません。日本語で事実確認してから承認してください')
         require(story['category'] in CATEGORIES, f'{i}本目のcategoryが不正です')
         reported = story['reported']
         require(bool(re.fullmatch(r'\d{4}[-.]\d{2}[-.]\d{2}', reported)), f'{i}本目の報道日の形式が不正です')
