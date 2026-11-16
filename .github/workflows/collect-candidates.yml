@@ -25,6 +25,29 @@ jobs:
           python-version: '3.12'
       - name: Collect candidate headlines (not verified)
         run: python collect_candidates.py
+      - name: Summarize local-language publisher results
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from collections import Counter
+          from pathlib import Path
+
+          data = json.loads(Path('data/candidates.json').read_text(encoding='utf-8'))
+          counts = Counter(item.get('provider', '') for item in data.get('candidates', []))
+          providers = ['Le Monde RSS', 'Deutsche Welle Deutsch RSS', 'El País RSS']
+          lines = ['## Local-language RSS collection', '', '| Publisher | Candidate links |', '| --- | ---: |']
+          for name in providers:
+              lines.append(f'| {name} | {counts[name]} |')
+          errors = [e for e in data.get('errors', []) if any(name in e for name in providers)]
+          lines.extend(['', '### Fetch errors', ''])
+          lines.extend(f'- {e}' for e in errors) if errors else lines.append('None reported.')
+          lines.extend(['', 'Candidate links are unverified and may be unrelated to the editorial theme.'])
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
+              out.write('\\n'.join(lines) + '\\n')
+          print('Local-language feed counts:', {name: counts[name] for name in providers})
+          print('Local-language feed errors:', errors)
+          PY
       - name: Prepare multi-country editorial inbox (never auto publish)
         run: python prepare_editorial.py
       - uses: actions/upload-artifact@v4
