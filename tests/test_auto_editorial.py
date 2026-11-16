@@ -45,7 +45,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 countries,categories=editorial.recent_diversity_counts(date(2026,11,16))
             finally:
                 os.chdir(previous)
-            self.assertEqual(countries["日本"],2)
+            self.assertEqual(countries["JP"],2)
             self.assertEqual(sum(countries.values()),2)
             self.assertEqual(categories["work"],2)
 
