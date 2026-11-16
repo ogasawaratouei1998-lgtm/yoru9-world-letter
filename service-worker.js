@@ -1,6 +1,6 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v1';
-const ISSUE_CACHE = 'yoru9-released-issues-v1';
+const SHELL_CACHE = 'yoru9-shell-v2';
+const ISSUE_CACHE = 'yoru9-released-issues-v2';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'assets/icon.svg'];
 
@@ -51,7 +51,14 @@ self.addEventListener('fetch', event => {
   }
 
   if (SHELL.some(name => relative === name)) {
-    event.respondWith(caches.match(req).then(cached => cached || fetch(req)));
+    // Prefer fresh app assets; fall back to offline copies only when disconnected.
+    event.respondWith(fetch(req).then(response => {
+      if (response.ok) {
+        const copy = response.clone();
+        event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(req, copy)));
+      }
+      return response;
+    }).catch(async () => (await caches.match(req)) || Response.error()));
   }
 });
 
