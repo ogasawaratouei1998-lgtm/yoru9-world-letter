@@ -1,0 +1,628 @@
+[
+  {
+    "code": "JP",
+    "name": "日本",
+    "region": "アジア",
+    "lon": 138,
+    "lat": 37,
+    "aliases": [
+      "japan"
+    ]
+  },
+  {
+    "code": "US",
+    "name": "アメリカ合衆国",
+    "region": "北アメリカ",
+    "lon": -98,
+    "lat": 39,
+    "aliases": [
+      "アメリカ",
+      "米国",
+      "米",
+      "usa",
+      "united states",
+      "united states of america",
+      "u.s.",
+      "us"
+    ]
+  },
+  {
+    "code": "GB",
+    "name": "イギリス",
+    "region": "ヨーロッパ",
+    "lon": -3,
+    "lat": 55,
+    "aliases": [
+      "英国",
+      "イングランド",
+      "スコットランド",
+      "ウェールズ",
+      "北アイルランド",
+      "uk",
+      "united kingdom",
+      "england",
+      "scotland",
+      "wales",
+      "great britain"
+    ]
+  },
+  {
+    "code": "DE",
+    "name": "ドイツ",
+    "region": "ヨーロッパ",
+    "lon": 10,
+    "lat": 51,
+    "aliases": [
+      "germany"
+    ]
+  },
+  {
+    "code": "FR",
+    "name": "フランス",
+    "region": "ヨーロッパ",
+    "lon": 2,
+    "lat": 47,
+    "aliases": [
+      "france"
+    ]
+  },
+  {
+    "code": "ES",
+    "name": "スペイン",
+    "region": "ヨーロッパ",
+    "lon": -4,
+    "lat": 40,
+    "aliases": [
+      "spain"
+    ]
+  },
+  {
+    "code": "IT",
+    "name": "イタリア",
+    "region": "ヨーロッパ",
+    "lon": 12,
+    "lat": 43,
+    "aliases": [
+      "italy"
+    ]
+  },
+  {
+    "code": "CA",
+    "name": "カナダ",
+    "region": "北アメリカ",
+    "lon": -106,
+    "lat": 56,
+    "aliases": [
+      "canada"
+    ]
+  },
+  {
+    "code": "MX",
+    "name": "メキシコ",
+    "region": "北アメリカ",
+    "lon": -102,
+    "lat": 24,
+    "aliases": [
+      "mexico"
+    ]
+  },
+  {
+    "code": "BR",
+    "name": "ブラジル",
+    "region": "南アメリカ",
+    "lon": -52,
+    "lat": -12,
+    "aliases": [
+      "brazil"
+    ]
+  },
+  {
+    "code": "AR",
+    "name": "アルゼンチン",
+    "region": "南アメリカ",
+    "lon": -64,
+    "lat": -35,
+    "aliases": [
+      "argentina"
+    ]
+  },
+  {
+    "code": "CL",
+    "name": "チリ",
+    "region": "南アメリカ",
+    "lon": -71,
+    "lat": -33,
+    "aliases": [
+      "chile"
+    ]
+  },
+  {
+    "code": "PE",
+    "name": "ペルー",
+    "region": "南アメリカ",
+    "lon": -75,
+    "lat": -10,
+    "aliases": [
+      "peru"
+    ]
+  },
+  {
+    "code": "CO",
+    "name": "コロンビア",
+    "region": "南アメリカ",
+    "lon": -74,
+    "lat": 4,
+    "aliases": [
+      "colombia"
+    ]
+  },
+  {
+    "code": "IN",
+    "name": "インド",
+    "region": "アジア",
+    "lon": 79,
+    "lat": 22,
+    "aliases": [
+      "india"
+    ]
+  },
+  {
+    "code": "CN",
+    "name": "中国",
+    "region": "アジア",
+    "lon": 104,
+    "lat": 35,
+    "aliases": [
+      "china"
+    ]
+  },
+  {
+    "code": "KR",
+    "name": "韓国",
+    "region": "アジア",
+    "lon": 127,
+    "lat": 36,
+    "aliases": [
+      "大韓民国",
+      "south korea",
+      "republic of korea",
+      "korea"
+    ]
+  },
+  {
+    "code": "TW",
+    "name": "台湾",
+    "region": "アジア",
+    "lon": 121,
+    "lat": 24,
+    "aliases": [
+      "taiwan"
+    ]
+  },
+  {
+    "code": "TH",
+    "name": "タイ",
+    "region": "アジア",
+    "lon": 101,
+    "lat": 15,
+    "aliases": [
+      "thailand"
+    ]
+  },
+  {
+    "code": "VN",
+    "name": "ベトナム",
+    "region": "アジア",
+    "lon": 108,
+    "lat": 16,
+    "aliases": [
+      "vietnam"
+    ]
+  },
+  {
+    "code": "ID",
+    "name": "インドネシア",
+    "region": "アジア",
+    "lon": 118,
+    "lat": -3,
+    "aliases": [
+      "indonesia"
+    ]
+  },
+  {
+    "code": "PH",
+    "name": "フィリピン",
+    "region": "アジア",
+    "lon": 122,
+    "lat": 13,
+    "aliases": [
+      "philippines"
+    ]
+  },
+  {
+    "code": "AU",
+    "name": "オーストラリア",
+    "region": "オセアニア",
+    "lon": 134,
+    "lat": -25,
+    "aliases": [
+      "australia"
+    ]
+  },
+  {
+    "code": "NZ",
+    "name": "ニュージーランド",
+    "region": "オセアニア",
+    "lon": 172,
+    "lat": -41,
+    "aliases": [
+      "new zealand"
+    ]
+  },
+  {
+    "code": "ZA",
+    "name": "南アフリカ",
+    "region": "アフリカ",
+    "lon": 25,
+    "lat": -29,
+    "aliases": [
+      "南アフリカ共和国",
+      "south africa"
+    ]
+  },
+  {
+    "code": "KE",
+    "name": "ケニア",
+    "region": "アフリカ",
+    "lon": 38,
+    "lat": 0,
+    "aliases": [
+      "kenya"
+    ]
+  },
+  {
+    "code": "NG",
+    "name": "ナイジェリア",
+    "region": "アフリカ",
+    "lon": 8,
+    "lat": 9,
+    "aliases": [
+      "nigeria"
+    ]
+  },
+  {
+    "code": "EG",
+    "name": "エジプト",
+    "region": "アフリカ",
+    "lon": 30,
+    "lat": 27,
+    "aliases": [
+      "egypt"
+    ]
+  },
+  {
+    "code": "MA",
+    "name": "モロッコ",
+    "region": "アフリカ",
+    "lon": -7,
+    "lat": 32,
+    "aliases": [
+      "morocco"
+    ]
+  },
+  {
+    "code": "GH",
+    "name": "ガーナ",
+    "region": "アフリカ",
+    "lon": -2,
+    "lat": 8,
+    "aliases": [
+      "ghana"
+    ]
+  },
+  {
+    "code": "TR",
+    "name": "トルコ",
+    "region": "アジア",
+    "lon": 35,
+    "lat": 39,
+    "aliases": [
+      "turkey",
+      "türkiye",
+      "turkiye"
+    ]
+  },
+  {
+    "code": "RU",
+    "name": "ロシア",
+    "region": "ヨーロッパ",
+    "lon": 95,
+    "lat": 60,
+    "aliases": [
+      "ロシア連邦",
+      "russia"
+    ]
+  },
+  {
+    "code": "UA",
+    "name": "ウクライナ",
+    "region": "ヨーロッパ",
+    "lon": 32,
+    "lat": 49,
+    "aliases": [
+      "ukraine"
+    ]
+  },
+  {
+    "code": "SE",
+    "name": "スウェーデン",
+    "region": "ヨーロッパ",
+    "lon": 15,
+    "lat": 62,
+    "aliases": [
+      "sweden"
+    ]
+  },
+  {
+    "code": "NO",
+    "name": "ノルウェー",
+    "region": "ヨーロッパ",
+    "lon": 9,
+    "lat": 61,
+    "aliases": [
+      "norway"
+    ]
+  },
+  {
+    "code": "NL",
+    "name": "オランダ",
+    "region": "ヨーロッパ",
+    "lon": 5,
+    "lat": 52,
+    "aliases": [
+      "netherlands"
+    ]
+  },
+  {
+    "code": "BE",
+    "name": "ベルギー",
+    "region": "ヨーロッパ",
+    "lon": 4,
+    "lat": 51,
+    "aliases": [
+      "belgium"
+    ]
+  },
+  {
+    "code": "CH",
+    "name": "スイス",
+    "region": "ヨーロッパ",
+    "lon": 8,
+    "lat": 47,
+    "aliases": [
+      "switzerland"
+    ]
+  },
+  {
+    "code": "PL",
+    "name": "ポーランド",
+    "region": "ヨーロッパ",
+    "lon": 19,
+    "lat": 52,
+    "aliases": [
+      "poland"
+    ]
+  },
+  {
+    "code": "GR",
+    "name": "ギリシャ",
+    "region": "ヨーロッパ",
+    "lon": 23,
+    "lat": 39,
+    "aliases": [
+      "greece"
+    ]
+  },
+  {
+    "code": "PT",
+    "name": "ポルトガル",
+    "region": "ヨーロッパ",
+    "lon": -8,
+    "lat": 40,
+    "aliases": [
+      "portugal"
+    ]
+  },
+  {
+    "code": "SA",
+    "name": "サウジアラビア",
+    "region": "アジア",
+    "lon": 45,
+    "lat": 24,
+    "aliases": [
+      "saudi arabia"
+    ]
+  },
+  {
+    "code": "AE",
+    "name": "アラブ首長国連邦",
+    "region": "アジア",
+    "lon": 54,
+    "lat": 24,
+    "aliases": [
+      "uae",
+      "united arab emirates"
+    ]
+  },
+  {
+    "code": "SG",
+    "name": "シンガポール",
+    "region": "アジア",
+    "lon": 104,
+    "lat": 1.3,
+    "aliases": [
+      "singapore"
+    ]
+  },
+  {
+    "code": "MY",
+    "name": "マレーシア",
+    "region": "アジア",
+    "lon": 102,
+    "lat": 4,
+    "aliases": [
+      "malaysia"
+    ]
+  },
+  {
+    "code": "PK",
+    "name": "パキスタン",
+    "region": "アジア",
+    "lon": 69,
+    "lat": 30,
+    "aliases": [
+      "pakistan"
+    ]
+  },
+  {
+    "code": "BD",
+    "name": "バングラデシュ",
+    "region": "アジア",
+    "lon": 90,
+    "lat": 24,
+    "aliases": [
+      "bangladesh"
+    ]
+  },
+  {
+    "code": "IL",
+    "name": "イスラエル",
+    "region": "アジア",
+    "lon": 35,
+    "lat": 31,
+    "aliases": [
+      "israel"
+    ]
+  },
+  {
+    "code": "IE",
+    "name": "アイルランド",
+    "region": "ヨーロッパ",
+    "lon": -8,
+    "lat": 53,
+    "aliases": [
+      "ireland"
+    ]
+  },
+  {
+    "code": "DK",
+    "name": "デンマーク",
+    "region": "ヨーロッパ",
+    "lon": 10,
+    "lat": 56,
+    "aliases": [
+      "denmark"
+    ]
+  },
+  {
+    "code": "FI",
+    "name": "フィンランド",
+    "region": "ヨーロッパ",
+    "lon": 26,
+    "lat": 64,
+    "aliases": [
+      "finland"
+    ]
+  },
+  {
+    "code": "AT",
+    "name": "オーストリア",
+    "region": "ヨーロッパ",
+    "lon": 14,
+    "lat": 48,
+    "aliases": [
+      "austria"
+    ]
+  },
+  {
+    "code": "CZ",
+    "name": "チェコ",
+    "region": "ヨーロッパ",
+    "lon": 15,
+    "lat": 50,
+    "aliases": [
+      "czechia",
+      "czech republic"
+    ]
+  },
+  {
+    "code": "HU",
+    "name": "ハンガリー",
+    "region": "ヨーロッパ",
+    "lon": 19,
+    "lat": 47,
+    "aliases": [
+      "hungary"
+    ]
+  },
+  {
+    "code": "RO",
+    "name": "ルーマニア",
+    "region": "ヨーロッパ",
+    "lon": 25,
+    "lat": 46,
+    "aliases": [
+      "romania"
+    ]
+  },
+  {
+    "code": "EC",
+    "name": "エクアドル",
+    "region": "南アメリカ",
+    "lon": -78,
+    "lat": -2,
+    "aliases": [
+      "ecuador"
+    ]
+  },
+  {
+    "code": "UY",
+    "name": "ウルグアイ",
+    "region": "南アメリカ",
+    "lon": -56,
+    "lat": -33,
+    "aliases": [
+      "uruguay"
+    ]
+  },
+  {
+    "code": "ET",
+    "name": "エチオピア",
+    "region": "アフリカ",
+    "lon": 40,
+    "lat": 9,
+    "aliases": [
+      "ethiopia"
+    ]
+  },
+  {
+    "code": "TN",
+    "name": "チュニジア",
+    "region": "アフリカ",
+    "lon": 10,
+    "lat": 34,
+    "aliases": [
+      "tunisia"
+    ]
+  },
+  {
+    "code": "FJ",
+    "name": "フィジー",
+    "region": "オセアニア",
+    "lon": 178,
+    "lat": -18,
+    "aliases": [
+      "fiji"
+    ]
+  }
+]
