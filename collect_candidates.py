@@ -92,7 +92,7 @@ def fetch_bytes(url, timeout=20):
 
 def parse_rss(body, provider, relevant_only=False, language='en', sourcecountry='未確認'):
     root=ET.fromstring(body)
-    if root.tag not in ('rss', '{http://www.w3.org/2005/Atom}feed', '{http://purl.org/rss/1.0/}RDF'):
+    if root.tag not in ('rss', '{http://www.w3.org/2005/Atom}feed', '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF'):
         raise ValueError('Not an RSS feed')
     result=[]
     items=root.findall('./channel/item')
