@@ -34,6 +34,21 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('本日分が公開され次第、自動で切り替わります。',page)
         self.assertIn('<summary>過去の配信号・世界地図を見る</summary>',page)
 
+    def test_iso_country_catalog_is_used_across_reader(self):
+        import json
+        catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
+        codes=[row["code"] for row in catalog]
+        self.assertEqual(len(codes),len(set(codes)))
+        usa=next(row for row in catalog if row["code"]=="US")
+        self.assertIn("米国",usa["aliases"])
+        self.assertIn("アメリカ",usa["aliases"])
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        for token in ("function countryKey(name)","function countryRecord(name)",
+                      "const country=countryKey(story.country);","country-catalog.json"):
+            self.assertIn(token,page)
+        build=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        self.assertIn("'country-catalog.json'",build)
+
     def test_app_refreshes_on_resume_and_updates_offline_cache(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
@@ -41,7 +56,7 @@ class ReaderFrontendTest(unittest.TestCase):
                       "pageshow", "reg.update()", "controllerchange"):
             with self.subTest(token=token):
                 self.assertIn(token, page)
-        self.assertIn("yoru9-shell-v2", worker)
+        self.assertIn("yoru9-shell-v3", worker)
         self.assertIn("yoru9-released-issues-v2", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
 
