@@ -95,16 +95,22 @@ def parse_rss(body, provider, relevant_only=False, language='en', sourcecountry=
     if root.tag not in ('rss', '{http://www.w3.org/2005/Atom}feed', '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF'):
         raise ValueError('Not an RSS feed')
     result=[]
-    items=root.findall('./channel/item')
-    if root.tag == '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF':
-        items=root.findall('{http://purl.org/rss/1.0/}item')
-    if root.tag == '{http://www.w3.org/2005/Atom}feed':
-        items=root.findall('{http://www.w3.org/2005/Atom}entry')
+    rdf_feed = root.tag == '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF'
+    atom_feed = root.tag == '{http://www.w3.org/2005/Atom}feed'
+    if rdf_feed:
+        # RSS 1.0 places items directly below rdf:RDF, in the RSS 1.0 namespace.
+        items = root.findall('./{http://purl.org/rss/1.0/}item')
+        ns = '{http://purl.org/rss/1.0/}'
+    elif atom_feed:
+        items = root.findall('./{http://www.w3.org/2005/Atom}entry')
+        ns = '{http://www.w3.org/2005/Atom}'
+    else:
+        items = root.findall('./channel/item')
+        ns = ''
     for item in items:
-        ns='{http://purl.org/rss/1.0/}' if root.tag.endswith('}RDF') else ('{http://www.w3.org/2005/Atom}' if root.tag.endswith('}feed') else '')
         title=(item.findtext(ns+'title') or '').strip()
         raw_link=item.findtext(ns+'link') or ''
-        if root.tag.endswith('}feed'):
+        if atom_feed:
             link_tag=item.find(ns+'link')
             raw_link=link_tag.get('href','') if link_tag is not None else ''
         link=safe_url(raw_link)
