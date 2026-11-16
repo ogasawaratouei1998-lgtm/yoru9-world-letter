@@ -24,6 +24,15 @@ class NightlyQuoteTest(unittest.TestCase):
         self.assertIn(first, [line for group in NIGHT_LINES.values() for line in group])
         self.assertGreater(len({nightly_line(f'2026-11-{day:02d}',stories) for day in range(1,29)}),1)
 
+    def test_nightly_message_rejects_newlines_but_accepts_plain_letters(self):
+        approved=fixture()
+        approved['nightlyMessage']='A warm reminder for tonight: a small mistake does not define the whole day.'
+        public=validate_approved(approved,'2026-11-10')
+        self.assertEqual(public['nightlyMessage'],approved['nightlyMessage'])
+        approved['nightlyMessage']='ひと息ついて、今夜は休みましょう。\\n明日はまた明日。'
+        public=validate_approved(approved,'2026-11-10')
+        self.assertNotEqual(public['nightlyMessage'],approved['nightlyMessage'])
+
     def test_published_issue_contains_nightly_quote(self):
         public=validate_approved(fixture(),'2026-11-10')
         self.assertTrue(public['nightQuote'])
