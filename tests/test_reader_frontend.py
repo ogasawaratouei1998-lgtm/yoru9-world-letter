@@ -26,6 +26,15 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
+    def test_world_map_and_country_archive(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in ('id="worldMap"', 'id="mapPins"', 'id="countrySelect"',
+                      'id="countryResults"', 'function renderWorld()',
+                      'async function loadCountryIndex(issues)', 'showCountryResults()',
+                      "data.status==='published'", 'renderWorld();'):
+            with self.subTest(token=token):
+                self.assertIn(token, page)
+
     def test_nightly_message_is_rendered_and_shared(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
