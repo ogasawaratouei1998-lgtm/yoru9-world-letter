@@ -73,6 +73,7 @@ body{background:#0b1528}
 .worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.world-coastlines{position:absolute;inset:0;width:100%;height:100%;display:block}.world-coastlines path{fill:#527b79;stroke:#93b4ae;stroke-width:.24;vector-effect:non-scaling-stroke}.map-fallback{position:absolute;left:10px;bottom:7px;z-index:1;background:#14243dcc;border-radius:7px;padding:4px 7px;font-size:11px;color:#fff0d8;pointer-events:none}
 .map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
 .editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
+.reader-extras{margin:22px 0;border:1px solid #667b98;border-radius:13px;padding:12px;background:#182a42}.reader-extras>summary{color:#f5d8a1;font-weight:750;cursor:pointer;padding:5px 2px}.reader-extras[open]>summary{margin-bottom:15px}.release-status{border-left:3px solid #d5ae67;padding:8px 12px;margin:8px 0 14px;background:#1b2e47;color:#f4e4c8;font-size:13px;line-height:1.65}
 </style>
 </head>
 <body><div class="wrap">
@@ -80,11 +81,12 @@ body{background:#0b1528}
 <section class="hero"><div class="eyebrow"><span class="eyebrow-dot">●</span> よる9じの世界便り</div><div class="hero-stamp" aria-hidden="true"><span>OH!</span><span>NO!</span></div><p class="hero-audience">今日も一日、おつかれさま。</p><h1>世界の「まさか」を、<br><em>今夜も。</em></h1><p class="hero-truth">ニュースは実話、<strong>ツッコミ担当はAI。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="status" role="status"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div><span id="clock">現地時刻を確認中</span></div>
-<main><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
+<main><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
-<section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
-<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・直近30日の掲載状況</summary><p class="small">公開済み配信号のみを集計。未掲載とは、この30日間に掲載記録がない地域を指します。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
+<details class="reader-extras" id="exploreExtras"><summary>過去の配信号・世界地図を見る</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
+<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・直近30日の掲載状況</summary><p class="small">公開済み配信号のみを集計。未掲載とは、この30日間に掲載記録がない地域を指します。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
+</details>
 <section class="notification-panel" id="notificationSection" hidden>
 <h2>夜9時のお知らせ</h2>
 <p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
@@ -258,6 +260,15 @@ async function loadCountryIndex(issues){
  refreshCountryChoices();
 }
 $('countrySelect').addEventListener('change',showCountryResults);
+function setReleaseStatus(message){$('releaseStatus').textContent=message}
+function displayReleaseStatus(){
+ const today=localDate(new Date());
+ if(edition.status==='demo'){setReleaseStatus('公開号を確認できないため、体験版を表示しています。');return}
+ const date=edition.editionDate||'日付不明';
+ if(archiveMenu.value!=='current'){setReleaseStatus(date+'発行の過去号を閲覧中です。');return}
+ if(date===today){setReleaseStatus('本日 '+date+' の公開号を表示中です。次回の更新は公開後に自動確認します。');return}
+ setReleaseStatus('前回の公開号（'+date+'）を表示中です。本日分が公開され次第、自動で切り替わります。');
+}
 function render(){const d=edition.stories;
  $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'失敗したのは、あなただけじゃない。世界も今日、いろいろありました。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
@@ -265,6 +276,7 @@ function render(){const d=edition.stories;
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
  const datedPrevious=!archive&&!currentIssue;
  lastRenderedLocalDate=localDate(now);
+ displayReleaseStatus();
  $('editionTag').textContent=archive?`保存済みの体験版 · 実話${d.length}本`:datedPrevious?`前回の配信号 · 実話${d.length}本`:special?`創刊特集号 · 実話${d.length}本`:`今夜の配信号 · 実話${d.length}本`;
  $('storyHeading').textContent=archive?'創刊準備号の「それ、本当に!?」':currentIssue?(special?'創刊特集号の「それ、本当に!?」':'今夜の「それ、本当に!?」'):'前回・過去号の「それ、本当に!?」';
  const reportedDates=d.map(s=>String(s.reported||'').replaceAll('.','-')).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)).sort();
@@ -314,7 +326,7 @@ $('shareNightQuote').addEventListener('click',async()=>{
  }catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}
 });
 loadState();render();
-async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length>=1&&x.stories.length<=5;const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
+async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length>=1&&x.stories.length<=5;const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}else if(archiveMenu.value==='current'){displayReleaseStatus()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
 checkPublished();
 
 // The archive manifest contains *released* editions only; approval drafts are never copied to public/.
