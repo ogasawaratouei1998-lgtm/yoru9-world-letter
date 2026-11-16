@@ -22,6 +22,23 @@ class CollectionTest(unittest.TestCase):
         self.assertEqual(len(result),1)
         self.assertEqual(result[0]['language'],'de')
 
+    def test_direct_publisher_sources_span_undercovered_regions(self):
+        from collect_candidates import LOCAL_LANGUAGE_FEEDS
+        from country_codes import country_region
+        countries={country for _,_,_,country in LOCAL_LANGUAGE_FEEDS}
+        for code in ("JP","IN","BR","NG","PH"):
+            self.assertIn(code,countries)
+        regions={country_region(code) for code in countries}
+        self.assertTrue({"アジア","アフリカ","南アメリカ","ヨーロッパ"} <= regions)
+        self.assertTrue(all(url.startswith("https://") for url,_,_,_ in LOCAL_LANGUAGE_FEEDS))
+
+    def test_direct_feeds_collected_before_google_aggregator(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"collect_candidates.py").read_text(encoding="utf-8")
+        self.assertLess(code.index("for url,provider,language,country in LOCAL_LANGUAGE_FEEDS:"),
+                        code.index("for i,(q,lang,country,ceid) in enumerate(SEARCHES):"))
+        self.assertIn("sourcecountry is the publisher/search market",code)
+
     def test_tragedy_filter(self):
         rss=b'<rss><channel><item><title>Two killed in error</title><link>https://news.google.com/articles/abc</link></item></channel></rss>'
         self.assertEqual(parse_rss(rss,'Google News RSS'),[])
