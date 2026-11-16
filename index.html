@@ -275,7 +275,7 @@ function displayReleaseStatus(){
  const today=localDate(new Date());
  if(edition.status==='demo'){setReleaseStatus('公開号を確認できないため、体験版を表示しています。');return}
  const date=edition.editionDate||'日付不明';
- if(archiveMenu.value!=='current'){setReleaseStatus(date+'発行の過去号を閲覧中です。');return}
+ if($('archiveSelect').value!=='current'){setReleaseStatus(date+'発行の過去号を閲覧中です。');return}
  if(date===today){setReleaseStatus('本日 '+date+' の公開号を表示中です。次回の更新は公開後に自動確認します。');return}
  setReleaseStatus('前回の公開号（'+date+'）を表示中です。本日分が公開され次第、自動で切り替わります。');
 }
