@@ -1,0 +1,86 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-16",
+  "editionType": "regular",
+  "title": "2026-11-16｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "factChecked": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "id": "faa-router-ground-stop-2026",
+      "country": "アメリカ合衆国",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "インフラ・運航停止",
+      "title": "たった1本の古い回線工事が全米の空を止めた",
+      "summary": "連邦航空局（FAA）の委託業者が遠隔地で古い銅線を光ファイバーに切り替える作業を行った際、ルーターの異常データがネットワーク全体に氾濫し、全米規模のフライト停止を引き起こした。運輸長官は記者団に対し、老朽化したインフラの刷新には多額の追加予算が必要だと訴えた。",
+      "detail": "FAAのインフラ近代化の一環として、契約業者L3Harrisがアーカンソー州の遠隔地施設で銅線を光ファイバーへ移行する作業を実施した。その際、ルーターの切り替え作業が予期せぬデータ氾濫を引き起こし、国家FAA通信ネットワーク全体を過負荷に陥らせたため、FAAは異例の全米地上待機命令を出さざるを得なくなった。この混乱で何十万人もの旅行者が足止めを食らい、週末にかけて大規模な欠航が相次いだ。\n\nここからはAIの見方。1本の小さな通信回線をアップグレードしようとした日常的な保守作業が、想定外の連鎖反応を起こして巨大システム全体の足を引っ張る形となりました。自分の計画通りに進まないとき、私たちはすべてが崩壊したように感じがちですが、国家レベルのインフラですさえ些細な部品の不整合で立ち往生することがあります。個人のプロジェクトで予期せぬ足止めを食らったとしても、それはシステムが複雑である証拠であり、立ち直る余地は十分にあります。",
+      "quip": "地味なルーターの交換が、国家の空を強制的に休暇へ送り出した。",
+      "sourceName": "NBCニュース",
+      "sourceUrl": "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+      "reported": "2026-11-15",
+      "verificationUrls": [
+        "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+        "https://www.cbsnews.com/news/ground-stop-faa-telecom-network-sean-duffy-face-the-nation/"
+      ],
+      "eventKey": "faa-router-ground-stop-2026",
+      "editorVerified": true,
+      "humorSafe": true
+    },
+    {
+      "id": "dc-golf-course-redevelopment-2026",
+      "country": "United States",
+      "category": "work",
+      "categoryLabel": "行政・計画",
+      "label": "裁判所命令による計画停止",
+      "title": "早急な閉鎖と樹木伐採の矛盾を突かれ、トランプ政権のゴルフ場改修計画が一時差し止めに",
+      "summary": "トランプ政権はワシントンのイースト・ポトマック・パークとゴルフ場を安全上の理由から即日閉鎖し再開発する計画を進めていたが、連邦地裁は安全対策の矛盾を指摘し閉鎖を一時差し止める命令を出した。裁判所は、過去に短期間で大量の樹木を伐採できた行政が安全対策を怠っていたと指摘し、公園の閉鎖は公共の利益に反すると判断した。",
+      "detail": "トランプ政権は、ワシントンにあるイースト・ポトマック・パークのゴルフ場を「世界最高の公共施設」に生まれ変わらせるとして、11月15日に敷地全体を閉鎖し大規模な改修工事を開始する予定だった。政府側は老朽化した防潮堤などの修繕が「差し迫った安全上の脅威」であると主張し、閉鎖の正当性を訴えていた。しかし、DCプレザベーション・リーグなどの原告団が提起した訴訟において、アナ・レイズ連邦地判事は政権側の主張に疑問を呈した。判事は、国立公園局（NPS）がわずか10日間で400本以上の健全な木を伐採できる機動力を持っていながら、安全上の理由を急に持ち出して公園全体を閉鎖するのは不自然であると指摘。結果として、訴訟が継続する間、歩行者や自転車道を含む公園の一般開放を維持する一時差し止め命令が下された。ここからはAIの見方。手続きのスピード感や目的のすり替えは裁判所に見抜かれやすいものですが、一度動き出した巨大な再開発の計画も、足元の矛盾を一つ突かれるだけで足止めを食らう好例です。思い通りにいかない日があっても、計画の綻びを修正する時間と捉えれば、焦る必要はありません。\n\n",
+      "quip": "安全対策のつもりがいの一番に切り倒されたのは、木々のほうでした。",
+      "sourceName": "NBC News & NPR",
+      "sourceUrl": "https://www.nbcnews.com/politics/trump-administration/judge-temporarily-blocks-trumps-plan-redevelop-east-potomac-golf-cours-rcna609366",
+      "reported": "2026-11-14",
+      "verificationUrls": [
+        "https://www.nbcnews.com/politics/trump-administration/judge-temporarily-blocks-trumps-plan-redevelop-east-potomac-golf-cours-rcna609366",
+        "https://www.npr.org/2026/11/14/nx-s1-6041152/judge-trump-golf-course-blocks"
+      ],
+      "eventKey": "east-potomac-park-golf-course-redevelopment-halt-2026",
+      "evidence": [
+        "A federal judge in Washington ordered a two-week delay to any work at the East Potomac public golf course.",
+        "The administration planned to close the entire area of East Potomac and Hains Point starting Sunday.",
+        "U.S. District Judge Ana Reyes issued a temporary restraining order blocking the closure while litigation moves forward.",
+        "The government argued safety factors and a needed seawall repair required the closure, but the judge expressed skepticism due to past quick actions like felling 400 trees."
+      ],
+      "editorVerified": true,
+      "humorSafe": true
+    },
+    {
+      "id": "megaspeed-nvidia-investigation-2026",
+      "country": "Singapore",
+      "category": "company",
+      "categoryLabel": "企業",
+      "label": "コーポレート・ガバナンス",
+      "title": "巨大なAIチップ供給網の陰で見過ごされた経営の透明性と内部統制の欠如",
+      "summary": "シンガポールのクラウド企業メガスピードは、米国による輸出規制やチーフの疑惑を巡る巨額の資産急増への対応に追われています。同社は外部の法律顧問を起用し、事業運営やサプライチェーンに関する徹底的な内部調査を開始したと発表しました。",
+      "detail": "メガスピードインターナショナルは、中国籍の実業家アリス・ホアンが2025年8月に退社し、現在は役職に就いていないと発表しました。米国の輸出規制を回避して中国企業へ高度なAIチップを転送した疑いや、エヌビディアの元最高経営責任者ジェンスン・フアンとの関係を巡る調査が進む中、同社の資産は2023年末から2024年にかけて約90倍に急増していました。シンガポール政府や米当局による監視が強まるなか、同社は適法な事業を行っていると主張しつつ、外部の法律事務所による内部調査の実施を余儀なくされました。ここからはAIの見方。書類上の所有権変更と現場の実際の間にあるギャップを見落とすと、組織は複雑な外部調査という思わぬ代償を支払うことになります。",
+      "quip": "書類から名前を消しても、巨大な波及効果までは消せないようです。",
+      "sourceName": "ABC News & BBC News",
+      "sourceUrl": "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
+      "reported": "2026-11-16",
+      "verificationUrls": [
+        "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
+        "https://www.bbc.co.uk/news/articles/cmdx1vpprk9vo?at_medium=RSS&at_campaign=rss"
+      ],
+      "eventKey": "megaspeed-alice-huang-departure-investigation-2026",
+      "evidence": [
+        "Megaspeed announced that Alice Huang left the company effective August 30, 2025, and currently has no role with the company.",
+        "Megaspeed has retained external legal counsel to conduct a thorough internal investigation amid scrutiny over its business, supply chain, and chip transfers.",
+        "Singapore corporate records showed its total assets rose roughly 90-fold from the end of 2023 to 2024, reaching almost $US3 billion."
+      ],
+      "editorVerified": true,
+      "humorSafe": true
+    }
+  ]
+}
