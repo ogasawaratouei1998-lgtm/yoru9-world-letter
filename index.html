@@ -103,14 +103,14 @@ body{background:#0b1528}
  .release-status{margin:5px 0 12px;padding:7px 10px}
 }
 @media(prefers-reduced-motion:reduce){.reader-tool{scroll-behavior:auto}}
-</style>
+.edition-context{margin:0 0 15px;border-bottom:1px solid #40516f;padding:0 0 6px;color:#d3ddea;font-size:12px}.edition-context summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;color:#e8c891}.edition-context p{margin:6px 0;line-height:1.7}.status{margin-bottom:8px;padding:9px 12px}.status .statusline{gap:0}.status #editionMessage{font-size:11px}.release-status{margin:4px 0 10px;padding:7px 10px}.intro{margin:6px 0 10px}.story .summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.story.expanded .summary{display:block}.story .teaserquip{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.story.expanded .teaserquip{display:block}@media(max-width:520px){.status{margin:7px 0 8px}.release-status{margin:4px 0 7px}.edition-context{margin-bottom:10px}.story .summary{font-size:14px;line-height:1.75}}\n</style>
 </head>
 <body><div class="wrap">
 <header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <section class="hero"><div class="eyebrow"><span class="eyebrow-dot">●</span> よる9じの世界便り</div><div class="hero-stamp" aria-hidden="true"><span>OH!</span><span>NO!</span></div><p class="hero-audience">今日も一日、おつかれさま。</p><h1>世界の「まさか」を、<br><em>今夜も。</em></h1><p class="hero-truth">ニュースは実話、<strong>ツッコミ担当はAI。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
-<div class="status" role="status"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div><span id="clock">現地時刻を確認中</span></div>
-<main><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
+<div class="status" role="status"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div></div>
+<main><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIのツッコミで。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 <div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
@@ -305,8 +305,8 @@ function displayReleaseStatus(){
  if(edition.status==='demo'){setReleaseStatus('公開号を確認できないため、体験版を表示しています。');return}
  const date=edition.editionDate||'日付不明';
  if($('archiveSelect').value!=='current'){setReleaseStatus(date+'発行の過去号を閲覧中です。');return}
- if(date===today){setReleaseStatus('本日 '+date+' の公開号を表示中です。次回の更新は公開後に自動確認します。');return}
- setReleaseStatus('前回の公開号（'+date+'）を表示中です。本日分が公開され次第、自動で切り替わります。');
+ if(date===today){setReleaseStatus('本日 '+date+' 公開 · '+edition.stories.length+'本。公開後の更新を自動確認します。');return}
+ setReleaseStatus('前回の公開号 '+date+' · '+edition.stories.length+'本。本日分の公開後に自動更新します。');
 }
 function render(){const d=edition.stories;
  $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'今日の反省会は閉会。続きは、また明日。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
@@ -320,7 +320,7 @@ function render(){const d=edition.stories;
  $('storyHeading').textContent=archive?'創刊準備号の「それ、本当に!?」':currentIssue?(special?'創刊特集号の「それ、本当に!?」':'今夜の「それ、本当に!?」'):'前回・過去号の「それ、本当に!?」';
  const reportedDates=d.map(s=>String(s.reported||'').replaceAll('.','-')).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)).sort();
  const range=reportedDates.length?reportedDates[0]+(reportedDates.length>1?' 〜 '+reportedDates[reportedDates.length-1]:''):'記事中の出典を参照';
- $('editionMessage').textContent=archive?'過去に報道された実話を使った体験版':`${edition.editionDate} ${datedPrevious?'発行の前回・過去号':special?'の創刊特集号':'の最新配信号'}（報道日：${range}）`;
+ $('editionMessage').textContent=archive?'過去の実話を使った体験版':`${edition.editionDate} 発行 · ${d.length}本${special?'（特集）':''}`;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIのひと言は創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.map((s,i)=>`<li class="story" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p><p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIのひと言</span>${escapeHtml(s.quip)}</div>`:""}<button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}"><p class="detailtext">${escapeHtml(s.detail)}</p><p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p><div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`).join('');
@@ -351,7 +351,7 @@ function observeStories(){
  document.querySelectorAll('.story .summary').forEach((el,i)=>{el.dataset.readIndex=i;readObserver.observe(el)});
 }
 function applyFilter(){let count=0;document.querySelectorAll('.story').forEach(el=>{const show=filter==='all'||el.dataset.type===filter;el.hidden=!show;if(show)count++});$('empty').hidden=count!==0;document.querySelectorAll('[data-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.filter===filter)))}
-$('stories').addEventListener('click',async e=>{const open=e.target.closest('[data-open]');if(open){const i=Number(open.dataset.open),details=$('details-'+i),show=details.hidden;details.hidden=!show;open.textContent=show?'閉じる ↑':'詳しく読む ↓';open.setAttribute('aria-expanded',String(show));if(show&&!state.read.includes(i)){markRead(i)}return}
+$('stories').addEventListener('click',async e=>{const open=e.target.closest('[data-open]');if(open){const i=Number(open.dataset.open),details=$('details-'+i),show=details.hidden;details.hidden=!show;open.closest('.story').classList.toggle('expanded',show);open.textContent=show?'閉じる ↑':'詳しく読む ↓';open.setAttribute('aria-expanded',String(show));if(show&&!state.read.includes(i)){markRead(i)}return}
  const smile=e.target.closest('[data-smile]');if(smile){const i=Number(smile.dataset.smile);state.smiles=state.smiles.includes(i)?state.smiles.filter(x=>x!==i):[...state.smiles,i];saveState();update();return}
  const share=e.target.closest('[data-share]');if(share){const s=edition.stories[Number(share.dataset.share)];const txt=`${s.title}\n出典：${s.sourceUrl}\nよる9じの世界便り`;try{if(navigator.share)await navigator.share({title:s.title,text:txt});else if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('記事の情報をコピーしました')}else toast('共有できない環境です')}catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}}});
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
