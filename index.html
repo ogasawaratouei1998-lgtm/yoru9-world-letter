@@ -357,9 +357,34 @@ window.addEventListener('online',()=>{updateOnlineState();checkPublished()});
 window.addEventListener('offline',updateOnlineState);
 updateOnlineState();
 if('serviceWorker' in navigator&&location.protocol==='https:'){
- navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).catch(err=>console.info('オフライン保存は現在利用できません',err));
+ navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).then(reg=>{
+  // iOS standalone apps often resume an existing page rather than navigating.
+  // Ask for updated app shell code when returning to the foreground.
+  reg.update().catch(()=>{});
+  let refreshing=false;
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{
+   if(refreshing)return;
+   refreshing=true;
+   location.reload();
+  });
+ }).catch(err=>console.info('オフライン保存は現在利用できません',err));
 }
-// Check for a new editorially approved release without interrupting an open story.
+let lastForegroundCheck=0;
+async function refreshOnForeground(){
+ if(document.visibilityState==='hidden'||!navigator.onLine)return;
+ const now=Date.now();
+ if(now-lastForegroundCheck<15000)return;
+ lastForegroundCheck=now;
+ await checkPublished();
+ loadArchives();
+ if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});
+ }
+}
+document.addEventListener('visibilitychange',refreshOnForeground);
+window.addEventListener('pageshow',refreshOnForeground);
+window.addEventListener('focus',refreshOnForeground);
+// Also check periodically while the reader remains open.
 setInterval(checkPublished,180000);
 
 </script>
