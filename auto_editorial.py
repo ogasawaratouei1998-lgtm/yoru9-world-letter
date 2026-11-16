@@ -22,7 +22,7 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim; "
     "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
     "The quip must deliver a sharp, surprising payoff rather than merely restating the facts; aim for a vivid, quotable contrast between plan and reality without exaggerating evidence. "
-    "Never replace a failure with generic surprising, uplifting or quirky news merely to fill three slots. "
+    "Never replace a failure with generic surprising, uplifting or quirky news merely to fill a quota. "
     "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when independently verified stories are available; never lower evidence standards or fabricate coverage for geographic quotas. "
     "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
     "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
@@ -581,7 +581,7 @@ def main():
         for start in range(0,min(len(retry_candidates),18)):
             batch=retry_candidates[start:start+1]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
-                " You are editor A. Draft up to three Japanese news stories ONLY "
+                " You are editor A. Draft up to five Japanese news stories ONLY "
                 "when at least one retrieved publisher article in the input group "
                 "supports the same specific real-world mistake. "
                 "Return JSON object with stories array. Do not return diagnostics. "
@@ -696,7 +696,7 @@ def main():
     from itertools import combinations
     pool=selected
     country_history,category_history=recent_diversity_counts(now.date())
-    choices=list(combinations(range(len(pool)),min(3,len(pool))))
+    choices=list(combinations(range(len(pool)),min(5,len(pool))))
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
         categories=len({story["category"] for story in stories})
