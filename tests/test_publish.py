@@ -29,7 +29,7 @@ class NightlyQuoteTest(unittest.TestCase):
         approved['nightlyMessage']='A warm reminder for tonight: a small mistake does not define the whole day.'
         public=validate_approved(approved,'2026-11-10')
         self.assertEqual(public['nightlyMessage'],approved['nightlyMessage'])
-        approved['nightlyMessage']='ひと息ついて、今夜は休みましょう。\\n明日はまた明日。'
+        approved['nightlyMessage']='ひと息ついて、今夜は休みましょう。\n明日はまた明日。'
         public=validate_approved(approved,'2026-11-10')
         self.assertNotEqual(public['nightlyMessage'],approved['nightlyMessage'])
 
