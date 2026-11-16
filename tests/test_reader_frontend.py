@@ -31,10 +31,21 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="stories"'),page.index('id="exploreExtras"'))
         self.assertLess(page.index('id="releaseStatus"'),page.index('id="stories"'))
         self.assertIn('function displayReleaseStatus()',page)
-        self.assertIn('本日分が公開され次第、自動で切り替わります。',page)
+        self.assertIn('本日分の公開後に自動更新します。',page)
         self.assertIn('<summary>過去の配信を読む</summary>',page)
         self.assertIn('<summary>世界地図を見る</summary>',page)
         self.assertLess(page.index('id="archiveExtras"'),page.index('id="mapExtras"'))
+
+    def test_compact_mobile_edition_and_expandable_previews(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertEqual(page.count('id="dateGuide"'), 1)
+        self.assertEqual(page.count('id="clock"'), 1)
+        self.assertIn('<details class="edition-context">', page)
+        self.assertIn('配信日・報道期間について', page)
+        self.assertIn('-webkit-line-clamp:4', page)
+        self.assertIn("classList.toggle('expanded',show)", page)
+        self.assertIn('.story.expanded .summary{display:block}', page)
+        self.assertIn('.story.expanded .teaserquip{display:block}', page)
 
     def test_mobile_reader_actions_and_nightly_quote_layout(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
