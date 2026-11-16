@@ -26,6 +26,12 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
+    def test_nightly_message_is_rendered_and_shared(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="nightlyMessage"', page)
+        self.assertIn("edition.nightlyMessage", page)
+        self.assertIn("const message=$('nightlyMessage').textContent", page)
+
     def test_editor_can_prepare_regular_or_special_issue(self):
         page = (ROOT / "editor.html").read_text(encoding="utf-8")
         for token in ('id="editionType"', 'id="specialReason"',
