@@ -31,6 +31,8 @@ WRITING_CRAFT=(
     " Write for a tired Japanese reader at 9pm, not for a compliance committee. "
     "Structure each story as (1) a concrete verified plan or expectation, "
     "(2) the documented mistake and surprising contrast, (3) a humane shift in perspective. "
+    "Write a factual, curiosity-provoking Japanese headline: put the concrete plan and unexpected outcome in sharp contrast; favor vivid specifics over abstract labels. Never invent numbers, quotes, consequences or a stronger failure than sources establish. "
+    "The first selected story is the nightly lead and must be the most immediately surprising, clearly verified, humane-to-laugh-at incident; do not rank by human suffering or severity. "
     "The title should show the specific mismatch, not generic outrage or a vague 'big failure'. "
     "summary: two crisp Japanese sentences describing only verified facts. "
     "MANDATORY: write title, summary, detail, label, categoryLabel and quip in natural Japanese. "
