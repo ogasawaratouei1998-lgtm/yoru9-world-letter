@@ -11,6 +11,10 @@ on:
       - 'collect_candidates.py'
       - 'publish_approved.py'
       - 'tests/**'
+      - 'index.html'
+      - 'notifications.js'
+      - 'service-worker.js'
+      - 'assets/**'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
@@ -151,7 +155,10 @@ jobs:
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |
-          if [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$(TZ=Asia/Tokyo date +%F)" = '2026-11-16' ]; then
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          if [ -f "data/archive/$DAY.json" ]; then
+            echo "Today's edition is already published; preserve its immutable archive and skip replacement."
+          elif [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$DAY" = '2026-11-16' ]; then
             python publish_approved.py --publish-now
           else
             python publish_approved.py
@@ -172,18 +179,18 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Assemble public reader site (exclude approval data)
-        if: steps.release.outputs.changed == 'true'
+        if: success()
         run: python build_site.py
       - uses: actions/configure-pages@v5
-        if: steps.release.outputs.changed == 'true'
+        if: success()
       - uses: actions/upload-pages-artifact@v3
-        if: steps.release.outputs.changed == 'true'
+        if: success()
         with:
           path: _site
       - uses: actions/deploy-pages@v4
-        if: steps.release.outputs.changed == 'true'
+        if: success()
       - name: Dispatch optional release notification (server must be configured)
-        if: steps.release.outputs.changed == 'true'
+        if: success()
         env:
           PUSH_DISPATCH_URL: ${{ secrets.PUSH_DISPATCH_URL }}
           PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
