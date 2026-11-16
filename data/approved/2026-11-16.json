@@ -15,15 +15,15 @@
       "categoryLabel": "企業・組織",
       "label": "連邦航空局（FAA）",
       "title": "ルーター交換作業が引き起こした全米フライト停止",
-      "summary": "連邦航空局（FAA）の遠隔地での古い回線から光ファイバーへの切り替えおよびルーター交換作業中、ルーターが過剰なトラフィックを発生させ、全米の航空管制通信ネットワークを麻痺させる前代未聞のシステム障害が発生した。これにより全米で数千便が欠航・遅延し、何十万人もの旅行者が足止めを食う事態となった。トランスポート長官はインフラの老朽化を前政権の責任として非難したものの、現場の些細な配線工事が巨大な社会インフラを数時間にわたって完全に沈黙させたことは、現代のハイテク依存社会における脆さを浮き彫りにした。",
-      "detail": "FAA contractor L3Harris was replacing a copper line with a fiber optic line and updating a router at a remote site when the new router malfunctioned and flooded the national telecommunications network with thousands of login attempts every few seconds, overwhelming the system and forcing a nationwide ground stop that lasted over four hours. For anyone currently staring at their own collapsed project or feeling like a single wrong click undid months of careful work, remember that even a multi-billion-dollar federal aviation agency can be brought to a complete standstill by something as mundane as swapping out a router. If the nation's air traffic can survive a total digital blackout and get back on schedule, your own catastrophic technical hiccup is entirely survivable.",
+      "summary": "米連邦航空局（FAA）の通信ネットワークで11月13日に障害が起き、全米の航空機に一時的な地上待機指示が出された。FAAによると数秒ごとに大量の接続要求が流れ込み、管制施設の通信やレーダー情報が不安定になった。委託先が新しいルーターを設置していた施設などが調査対象となったが、当局は原因の調査を続けている。",
+      "detail": "2026年11月13日、米連邦航空局（FAA）の通信網で異常なデータ流入が起き、航空機の出発を一時的に止める全米規模の措置が取られました。FAAは約4〜5秒ごとに1,000件の接続要求が発生し、22か所の航空路管制センターのうち17か所でシステムが不安定になったと説明しています。委託先L3Harrisがルーターの設置作業を行っていたアーカンソー州の施設などが調査対象となり、関連機器の通信機能を停止する対策が取られました。ただし通信・レーダーが全面的に失われたわけではなく、飛行中の航空機は安全に着陸したとFAAは説明しています。根本原因は引き続き調査中です。",
       "quip": "配線を一本変えただけで全米の空がストップするとは、ルーターにも『自分がいかに影響力があるか』を誇示したい反抗期があったようです。",
-      "sourceName": "NBCニュース / CBSニュース",
-      "sourceUrl": "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+      "sourceName": "米連邦航空局（FAA、2026年11月15日）",
+      "sourceUrl": "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers",
       "reported": "2026-11-15",
       "verificationUrls": [
-        "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
-        "https://www.cbsnews.com/news/faa-ground-stop-canceled-flights-travelers-what-we-know/"
+        "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers",
+        "https://abcnews.com/Politics/transportation-secretary-duffy-atc-routers-ability-broadcast-data/story?id=138155545"
       ],
       "eventKey": "faa_router_ground_stop_2026",
       "evidence": [
@@ -41,15 +41,15 @@
       "categoryLabel": "企業・組織",
       "label": "エヌビディア（Nvidia）",
       "title": "Nvidiaのジェンスン・フアンCEO、スキャンダルによる電撃辞任",
-      "summary": "AIチップ市場で圧倒的な地位を築き、企業価値の頂点にあった半導体大手エヌビディアのジェンスン・フアンCEOが、中国のスパイ疑惑が持たれる女性との不倫関係を発端とした混乱の責任を取り、電撃的に辞任した。巨額の取引先企業と個人的な関係を持っていたことが国家安全保障上の懸念に発展し、株主からの訴訟や取締役会による調査を招いた末の失脚であった。世界経済の頭脳とも言える超巨大企業のトップが、私的な判断の誤りによってわずか数日のうちにその座を追われる結果となった。",
-      "detail": "Jensen Huang resigned as CEO of Nvidia following public revelations of an extramarital relationship with Alice Huang, a corporate executive at data center firm Megaspeed International who was suspected by U.S. officials of intelligence ties to China, leading to internal board investigations, shareholder lawsuits, and intense scrutiny over chip exports. If you are agonizing over a poor professional judgment or a personal misstep that feels career-defining, take heart in knowing that even the visionary leader of a four-trillion-dollar tech giant can spectacularly trip over his own personal life. Setbacks, no matter how public or embarrassing, mark an end to a chapter rather than the end of existence.",
+      "summary": "米半導体大手NVIDIAは11月12日、ジェンスン・フアン氏がCEOと取締役を退任したと発表した。暫定CEOには最高財務責任者のコレット・クレス氏が就任。辞任をめぐっては私生活や企業関係について報道が出ているが、報じられた疑惑と公式に確認された事実は区別する必要がある。",
+      "detail": "NVIDIAは2026年11月12日、ジェンスン・フアン氏が社長、最高経営責任者（CEO）、取締役を退任したと正式に発表しました。暫定CEOには最高財務責任者のコレット・クレス氏が就き、後任の選定が進められています。報道では、フアン氏とデータセンター関連企業の元幹部アリス・フアン氏との私的な関係や安全保障上の懸念が取り上げられています。一方、関係企業Megaspeed Internationalは同氏が2025年に退職したと説明し、不正行為を否定しています。辞任そのものは会社発表で確認できますが、報道された疑惑のすべてが確定した事実というわけではありません。",
       "quip": "世界中のAIの未来を予測できる頭脳を持っていても、『怪しい人物からの甘い誘い』という最も古典的なバグにはパッチを当てられなかったようです。",
-      "sourceName": "ABCニュース / CBSニュース",
-      "sourceUrl": "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
+      "sourceName": "NVIDIA公式発表（2026年11月12日）",
+      "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
       "reported": "2026-11-16",
       "verificationUrls": [
-        "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
-        "https://www.cbsnews.com/news/megaspeed-nvidia-china-ties/"
+        "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
+        "https://www.cbsnews.com/news/nvidia-alice-huang-jensen-ai-china-singapore-megaspeed/"
       ],
       "eventKey": "jensen_huang_nvidia_resignation_2026",
       "evidence": [
@@ -67,15 +67,15 @@
       "categoryLabel": "企業・組織",
       "label": "スペースX（SpaceX）",
       "title": "スペースX、スターシップ本体の空中キャッチ成功の一方でブースターが爆発",
-      "summary": "イーロン・マスク率いるスペースXは、宇宙空間から帰還した超大型宇宙船「スターシップ」を巨大な機械アームで空中キャッチするという世界初の偉業を成し遂げた。しかしその一方で、打ち上げ時に下部を支えたスーパーヘビー・ブースターは帰還の際にエンジンの点火に失敗し、姿勢異常を感知してメキシコ湾で自爆・水没する結果となった。完全再利用型ロケットの実現に向けた歴史的快挙であると同時に、肝心のブースター回収を逃すという技術的課題を改めて露呈した。",
-      "detail": "While SpaceX successfully caught the returning upper-stage Starship spacecraft using mechanical 'chopstick' arms at its Texas launch pad after orbiting Earth, the Super Heavy booster failed to make a successful return, experiencing premature engine cutoff and self-destructing in the Gulf of Mexico. For anyone who has ever pulled off a brilliant presentation or major project milestone only to completely botch the final cleanup or introductory steps, this partial success offers a comforting mirror. Perfection is rarely achieved on the first synchronized try, and surviving a half-flawed outcome is simply part of the engineering of progress.",
+      "summary": "スペースXは11月14日、宇宙飛行から帰還したスターシップ上段機体を発射塔の巨大アームで初めて捕獲した。一方、前日に打ち上げた下段のスーパーヘビー・ブースターは帰還時の捕獲を断念し、メキシコ湾上で爆発した。上段の回収成功と下段の回収失敗が同じ試験飛行で起きた。",
+      "detail": "2026年11月13日に打ち上げられたスペースXのスターシップ第15回試験飛行では、上段機体が地球を周回した後、翌14日にテキサス州の発射場へ帰還しました。発射塔に備えた「チョップスティック」と呼ばれる機械アームが上段機体を空中で捕獲し、初めての成功となりました。一方、下段のスーパーヘビー・ブースターは帰還中に予定の捕獲を中止し、メキシコ湾へ向かって爆発しました。報道では燃料残量に関する警報などが説明されていますが、失敗の詳しい原因は調査中です。上段の回収という大きな成果があった一方、ロケット全体を再利用するにはなお課題が残る試験となりました。",
       "quip": "ロケットの上半分を見事にキャッチしたものの、下半分が勝手に海へダイブした姿は、『完璧に決めたと思った瞬間に靴紐を結び忘れていた』ような気まずさがあります。",
-      "sourceName": "ABCニュース / NPR",
-      "sourceUrl": "https://www.abc.net.au/news/2026-11-15/spacex-rocket-returns-to-launch-pad-after-orbitting-earth/107387168",
+      "sourceName": "AP通信（2026年11月15日）",
+      "sourceUrl": "https://apnews.com/article/df394c1b5a0f85e11194f9ff7db9ee6b",
       "reported": "2026-11-15",
       "verificationUrls": [
-        "https://www.abc.net.au/news/2026-11-15/spacex-rocket-returns-to-launch-pad-after-orbitting-earth/107387168",
-        "https://www.npr.org/2026/11/14/g-s1-153786/spacex-successfully-catches-starship-and-makes-history"
+        "https://apnews.com/article/df394c1b5a0f85e11194f9ff7db9ee6b",
+        "https://www.space.com/news/live/spacex-starship-flight-15-live-updates-nov-14-2026-starship-first-double-landing-attempt"
       ],
       "eventKey": "spacex_starship_booster_failure_2026",
       "evidence": [
