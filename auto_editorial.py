@@ -409,11 +409,11 @@ def semantic_corroboration_groups(items):
     return groups[:36]
 
 def valid_recent_reported(raw, now):
-    """Allow only an explicit calendar date in the last seven days (JST)."""
+    """Allow reporting dated today or yesterday in Japan (time-zone buffer)."""
     if not isinstance(raw,str) or not re.fullmatch(r"\d{4}[-.]\d{2}[-.]\d{2}",raw):return False
     try:reported=datetime.strptime(raw.replace(".","-"),"%Y-%m-%d").date()
     except ValueError:return False
-    return now.date()-timedelta(days=7)<=reported<=now.date()
+    return now.date()-timedelta(days=1)<=reported<=now.date()
 
 def main():
     now=datetime.now(JST)
@@ -429,11 +429,11 @@ def main():
                 stamp=datetime.strptime(raw,"%Y%m%dT%H%M%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(JST)
             else:
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
-            if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
+            if not (now - timedelta(hours=36) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
     if len(recent)<5:
-        print("Not enough recent leads within seven days; safe skip.");return 0
+        print("Not enough fresh leads within 36 hours; safe skip.");return 0
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
@@ -529,7 +529,7 @@ def main():
       'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
-      'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reported date within the preceding seven days; do not confuse edition date with reporting date. '
+      'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
@@ -589,7 +589,7 @@ def main():
                 "and evidence (facts supported by both articles). "
                 "category must be exactly person, work, company, or sports. "
                 "reported must be an explicit source-supported date within the "
-                "last seven days, formatted YYYY-MM-DD. "
+                "edition day or previous day (JST), formatted YYYY-MM-DD. "
                 "Use warm humor about the mistake, never victims or suffering; "
                 "give readers perspective without inventing outcomes. "
                 "Do not infer any fact absent from the supplied text. "
