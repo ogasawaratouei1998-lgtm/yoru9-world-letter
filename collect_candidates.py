@@ -96,7 +96,7 @@ def parse_rss(body, provider, relevant_only=False, language='en', sourcecountry=
         raise ValueError('Not an RSS feed')
     result=[]
     items=root.findall('./channel/item')
-    if root.tag == '{http://purl.org/rss/1.0/}RDF':
+    if root.tag == '{http://www.w3.org/1999/02/22-rdf-syntax-ns#}RDF':
         items=root.findall('{http://purl.org/rss/1.0/}item')
     if root.tag == '{http://www.w3.org/2005/Atom}feed':
         items=root.findall('{http://www.w3.org/2005/Atom}entry')
