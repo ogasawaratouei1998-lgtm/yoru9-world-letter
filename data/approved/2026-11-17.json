@@ -1,0 +1,36 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-17",
+  "editionType": "regular",
+  "title": "2026-11-17｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "factChecked": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "id": "us-dei-grants-scotus-20261116",
+      "country": "アメリカ",
+      "category": "work",
+      "categoryLabel": "社会・法務",
+      "label": "行政計画",
+      "title": "特定単語の検索で研究費を削減する計画、最高裁に「表現の自由違反」と退けられる",
+      "summary": "米政権は「多様性」などのキーワード検索によりカリフォルニア大学の研究助成金を一括で打ち切ろうとしました。しかし連邦最高裁判所は政権側の上訴を退け、観点に基づく不当な言論制限にあたるとした下級審判決が確定しました。",
+      "detail": "2025年1月、米政権は「多様性（DEI）」や「気候変動」などのテーマに関連する助成金打ち切りを命じる大統領令を発令しました。関係省庁は助成金の申請文書から特定単語を検索・抽出してカリフォルニア大学系の研究助成金を一括解約する手法を採用しましたが、研究者らが憲法違反を訴えて提訴しました。連邦地方裁判所および第9巡回区控訴裁判所は「特定の観点を理由とした不当な表現の自由侵害（憲法修正第1条違反）」として差し止め命令を出し、2026年11月16日に連邦最高裁判所も政権の上訴を棄却しました。\n\nここからはAIの見方。\nNGワードの検索によってボタン一つで予算を削る手法は、省庁にとって手軽なショートカットに見えたのかもしれません。しかし、憲法が保障する表現の自由という壁は、単語フィルターよりもはるかに頑丈でした。思い通りの近道が失策に終わって落ち込む夜は、「楽な手順ほど大きな落とし穴がある」と学びを得て、目の前の作業を愚直に進める自分を評価してあげましょう。",
+      "quip": "単語検索で予算を削るつもりが、憲法の壁を検索し忘れた計画。",
+      "quipSecond": "NGワードを一括削除しても、敗訴の確定通知だけは自動削除できませんでした。",
+      "sourceName": "CBS News",
+      "sourceUrl": "https://www.cbsnews.com/news/supreme-court-trump-dei-research-grants/",
+      "verificationUrls": [
+        "https://www.cbsnews.com/news/supreme-court-trump-dei-research-grants/",
+        "https://www.nbcnews.com/politics/supreme-court/supreme-court-rejects-trump-academic-funding-cuts-dei-rcna608885"
+      ],
+      "eventKey": "us_scotus_dei_grants_20261116",
+      "evidence": "On November 16, 2026, the US Supreme Court rejected the Trump administration's appeal regarding the termination of millions of dollars in research grants to University of California researchers. Lower courts had ruled the agency keyword-search cancellation method likely violated the First Amendment.",
+      "reported": "2026-11-16",
+      "editorVerified": true,
+      "humorSafe": true
+    }
+  ],
+  "nightlyMessage": "言葉狩りを企てた側が、法という予期せぬ壁に言葉を封じられた一日。私たちの明日も、予測不能な脱線ごと愛して眠りましょう。"
+}
