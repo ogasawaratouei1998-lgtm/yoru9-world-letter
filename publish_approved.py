@@ -12,7 +12,7 @@ from zoneinfo import ZoneInfo
 
 JST = ZoneInfo('Asia/Tokyo')
 DATE = re.compile(r'^\d{4}-\d{2}-\d{2}$')
-CATEGORIES = {'person', 'work', 'company'}
+CATEGORIES = {'person', 'work', 'company', 'sports'}
 REQUIRED_STORY = ('id', 'country', 'category', 'categoryLabel', 'label', 'title', 'summary', 'detail', 'quip', 'sourceName', 'sourceUrl', 'reported')
 
 
@@ -32,6 +32,11 @@ def valid_url(url):
 
 
 NIGHT_MESSAGES = {
+    'sports': [
+        '勝負にも予定外はつきもの。今夜は自分への採点を少し休みましょう。',
+        '思いどおりにならない一日も、最後まで過ごしたことに意味があります。',
+        '世界の競技場でも予想外は起きる。あなたも今夜はひと休み。',
+    ],
     'work': [
         '予定がひとつ狂った日も、今日をやり切ったことまで消えたりしません。',
         '思いどおりに進まない仕事は、あなたひとりの物語ではありません。',
@@ -164,6 +169,11 @@ def validate_approved(data, expected_date):
 # Editorially curated closing lines. A stable date/story-based choice gives
 # each released edition its own warm message without a new unverified AI call.
 NIGHT_LINES = {
+    'sports': [
+        '思いどおりにならない日もある。今夜は自分にやさしく。',
+        '勝敗のつかない悩みは、今夜のうちに決めなくてもいい。',
+        '世界の競技場にも想定外がある。あなたもひと休み。',
+    ],
     'work': [
         '仕事でつまずく日もある。世界のどこかでも、きっと同じ。',
         '予定どおりにいかない日も、今日を終えたなら十分です。',
