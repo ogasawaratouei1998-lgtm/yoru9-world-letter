@@ -162,6 +162,27 @@ function renderWorld(){
  counts.forEach((count,country)=>{const point=mapPoint(country);if(!point)return;const btn=document.createElement('button');btn.type='button';btn.className='map-pin';btn.style.left=point[0]+'%';btn.style.top=point[1]+'%';btn.textContent=String(count);btn.title=country+'：'+count+'本';btn.setAttribute('aria-label',btn.title);btn.addEventListener('click',()=>{const opt=[...$('countrySelect').options].find(o=>o.value===country);if(opt){$('countrySelect').value=country;showCountryResults();$('countrySelect').scrollIntoView({behavior:'smooth',block:'center'})}});pins.append(btn)});
  $('mapCaption').textContent='掲載国：'+([...counts.keys()].join('、')||'取得中')+'。点は国のおおよその位置です。';
 }
+function includeCurrentCountries(){
+ if(!edition||edition.status==='demo'||!Array.isArray(edition.stories))return;
+ for(const story of edition.stories){
+  const country=String(story.country||'').trim();if(!country)continue;
+  if(!countryIndex.has(country))countryIndex.set(country,[]);
+  const list=countryIndex.get(country);
+  if(!list.some(item=>item.date===edition.editionDate&&item.title===story.title))
+   list.push({date:edition.editionDate,title:story.title});
+ }
+}
+function refreshCountryChoices(){
+ includeCurrentCountries();
+ const menu=$('countrySelect'),previous=menu.value;
+ menu.innerHTML='<option value="">すべての国・地域</option>';
+ [...countryIndex.keys()].sort((a,b)=>a.localeCompare(b,'ja')).forEach(country=>{
+  const option=document.createElement('option');option.value=country;
+  option.textContent=country+' ('+countryIndex.get(country).length+')';menu.append(option);
+ });
+ if(countryIndex.has(previous))menu.value=previous;
+ showCountryResults();
+}
 function showCountryResults(){
  const country=$('countrySelect').value;
  const result=$('countryResults');result.replaceChildren();
@@ -171,14 +192,11 @@ function showCountryResults(){
  matches.forEach(item=>{const row=document.createElement('div');row.className='country-result';const button=document.createElement('button');button.type='button';button.textContent=item.title;button.addEventListener('click',()=>{if(item.date==='current'){archiveMenu.value='current';archiveMenu.dispatchEvent(new Event('change'))}else{archiveMenu.value=item.date;archiveMenu.dispatchEvent(new Event('change'))}window.scrollTo({top:0,behavior:'smooth'})});row.append(button,document.createTextNode(' · '+item.date));result.append(row)})
 }
 async function loadCountryIndex(issues){
- const editions=[...issues].filter(x=>/^\\d{4}-\\d{2}-\\d{2}$/.test(x.date)).slice(0,90);
+ const editions=[...issues].filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,90);
  const all=await Promise.all(editions.map(async issue=>{try{const r=await fetch('./data/archive/'+issue.date+'.json',{cache:'no-store'});if(!r.ok)return null;const data=await r.json();return data.status==='published'&&data.editionDate===issue.date?data:null}catch(_){return null}}));
  countryIndex=new Map();
  all.filter(Boolean).forEach(issue=>issue.stories.forEach(story=>{const country=String(story.country||'').trim();if(!country)return;if(!countryIndex.has(country))countryIndex.set(country,[]);countryIndex.get(country).push({date:issue.editionDate,title:story.title})}));
- const menu=$('countrySelect'),previous=menu.value;menu.innerHTML='<option value="">すべての国・地域</option>';
- [...countryIndex.keys()].sort((a,b)=>a.localeCompare(b,'ja')).forEach(country=>{const option=document.createElement('option');option.value=country;option.textContent=country+' ('+countryIndex.get(country).length+')';menu.append(option)});
- if(countryIndex.has(previous))menu.value=previous;
- showCountryResults();
+ refreshCountryChoices();
 }
 $('countrySelect').addEventListener('change',showCountryResults);
 function render(){const d=edition.stories;
@@ -196,7 +214,7 @@ function render(){const d=edition.stories;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIのひと言は創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.map((s,i)=>`<li class="story" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p><p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIのひと言</span>${escapeHtml(s.quip)}</div>`:""}<button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">補足文を見る（英語） ↓</button><div class="details" hidden id="details-${i}"><p class="detailtext">${escapeHtml(s.detail)}</p><p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p><div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`).join('');
- update(); applyFilter();observeStories();renderWorld();}
+ update(); applyFilter();observeStories();renderWorld();refreshCountryChoices();}
 function update(){$('progress').textContent=`${state.read.length} / ${edition.stories.length} 読んだ`;$('endprogress').textContent=state.smiles.length?`${edition.editionDate===localDate(new Date())?'今夜は':'この号では'}${state.smiles.length}本でちょっと笑えた。`:'無理に笑わなくても、大丈夫。';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ちょっと笑えた':'☺ ちょっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
