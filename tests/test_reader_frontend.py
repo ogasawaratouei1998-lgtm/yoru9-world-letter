@@ -26,6 +26,14 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
+    def test_stories_before_collapsed_exploration_and_release_status(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertLess(page.index('id="stories"'),page.index('id="exploreExtras"'))
+        self.assertLess(page.index('id="releaseStatus"'),page.index('id="stories"'))
+        self.assertIn('function displayReleaseStatus()',page)
+        self.assertIn('本日分が公開され次第、自動で切り替わります。',page)
+        self.assertIn('<summary>過去の配信号・世界地図を見る</summary>',page)
+
     def test_app_refreshes_on_resume_and_updates_offline_cache(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
