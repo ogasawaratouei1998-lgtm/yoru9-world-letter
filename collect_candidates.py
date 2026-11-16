@@ -70,12 +70,19 @@ INDEPENDENT_FEEDS = [
     ('https://www.cbc.ca/webfeed/rss/rss-topstories', 'CBC RSS'),
     ('https://www.france24.com/en/rss', 'France24 RSS'),
 ]
-# Direct local-language publisher feeds complement search aggregators.
+# Direct local/regional publisher feeds complement aggregators across continents.
+# sourcecountry is the publisher/search market, NOT the country where an
+# incident happened. Only audited article facts may determine story.country.
 # A failing or changed feed is reported in diagnostics, never treated as evidence.
 LOCAL_LANGUAGE_FEEDS = [
     ('https://www.lemonde.fr/rss/une.xml', 'Le Monde RSS', 'fr', 'FR'),
     ('https://rss.dw.com/rdf/rss-de-all', 'Deutsche Welle Deutsch RSS', 'de', 'DE'),
     ('https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada', 'El País RSS', 'es', 'ES'),
+    ('https://www.japantimes.co.jp/feed/', 'Japan Times RSS', 'en', 'JP'),
+    ('https://www.thehindu.com/news/national/feeder/default.rss', 'The Hindu India RSS', 'en', 'IN'),
+    ('https://g1.globo.com/rss/g1/', 'G1 Brazil RSS', 'pt', 'BR'),
+    ('https://www.premiumtimesng.com/feed', 'Premium Times Nigeria RSS', 'en', 'NG'),
+    ('https://www.inquirer.net/feed/', 'Inquirer Philippines RSS', 'en', 'PH'),
 ]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
@@ -170,31 +177,33 @@ def main():
     def keep(items, limit=75):
         added=0
         for item in items:
-            if item['url'] not in seen and len(leads)<600 and added<limit:
+            if item['url'] not in seen and len(leads)<750 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
-    for i,(q,lang,country,ceid) in enumerate(SEARCHES):
-        if i: time.sleep(0.5)
-        try: keep(get_google(q,lang,country,ceid),limit=12)
-        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
-            errors.append(f'Google News {country}: {type(e).__name__}: {e}')
-        if len(leads)>=600:break
-    # Always include direct publisher URLs; Google News links frequently block article extraction.
-    for url in BBC_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
-        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
-            errors.append(f'BBC RSS: {type(e).__name__}: {e}')
-    for url,provider in INDEPENDENT_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
-        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
-            errors.append(f'{provider}: {type(e).__name__}: {e}')
+    # Direct publisher URLs must be collected before aggregator search URLs.
+    # Google RSS often resolves to news.google.com, which cannot be used as
+    # article-body evidence. Reserving room for local outlets is essential.
     for url,provider,language,country in LOCAL_LANGUAGE_FEEDS:
         try:
             keep(parse_rss(fetch_bytes(url),provider,language=language,sourcecountry=country),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
+    for url,provider in INDEPENDENT_FEEDS:
+        try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'{provider}: {type(e).__name__}: {e}')
+    for url in BBC_FEEDS:
+        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'BBC RSS: {type(e).__name__}: {e}')
     try:keep(get_gdelt(),limit=40)
     except (HTTPError, URLError, ValueError, TimeoutError) as e:
         errors.append(f'GDELT: {type(e).__name__}: {e}')
+    for i,(q,lang,country,ceid) in enumerate(SEARCHES):
+        if i: time.sleep(0.5)
+        try: keep(get_google(q,lang,country,ceid),limit=8)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'Google News {country}: {type(e).__name__}: {e}')
+        if len(leads)>=750:break
     if not leads:
         print('Could not collect unverified leads: '+'; '.join(errors),file=sys.stderr)
         return 1
@@ -208,6 +217,10 @@ def main():
     dest=Path('data/candidates.json')
     dest.parent.mkdir(parents=True,exist_ok=True)
     dest.write_text(json.dumps(data,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    from collections import Counter
+    markets=Counter(x.get('sourcecountry','未確認') for x in leads)
+    print('Unverified discovery-source markets (NOT incident countries):',
+          json.dumps(dict(markets.most_common()),ensure_ascii=False),flush=True)
     print(f'Collected {len(leads)} UNVERIFIED links, from {sorted(set(x["provider"] for x in leads))}. Saved for editor review.')
     return 0
 
