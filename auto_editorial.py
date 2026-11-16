@@ -710,6 +710,17 @@ def main():
     },sort_keys=True),flush=True)
     # A fresh closing line is generated from this edition's verified summaries.
     # Never use AI-generated text as an additional factual news claim.
+    recent_lines=[]
+    for archive_file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            previous=json.loads(archive_file.read_text(encoding="utf-8"))
+            previous_date=datetime.strptime(previous.get("editionDate",""),"%Y-%m-%d").date()
+            if previous.get("status")=="published" and 0<(now.date()-previous_date).days<=60:
+                line=previous.get("nightlyMessage")
+                if isinstance(line,str) and line.strip():recent_lines.append(line.strip())
+        except (ValueError,OSError,TypeError,KeyError):
+            continue
+    recent_lines=recent_lines[-60:]
     nightly_text=None
     try:
         response=ai(
@@ -717,13 +728,14 @@ def main():
             "この日の読後に合う、毎回新しく考えた温かい『今夜のひと言』を日本語で一つだけ作成してください。"
             "40〜95文字。ニュースの具体的な事実・固有名詞・数字を追加しない。被害者を笑わない。"
             "決まり文句の繰り返しを避け、疲れた読者を労い、説教や断定をしない。"
-            "JSONオブジェクトでキー nightlyMessage に文章を入れて返してください。"
+            "以下の過去のひと言と似た言い回しを避けてください："+json.dumps(recent_lines[-20:],ensure_ascii=False)
+            +"JSONオブジェクトでキー nightlyMessage に文章を入れて返してください。"
             +json.dumps([{"title":story["title"],"summary":story["summary"],"category":story["category"]} for story in selected],ensure_ascii=False)
         )
         candidate=response.get("nightlyMessage") if isinstance(response,dict) else None
         if isinstance(candidate,str):
             candidate=candidate.strip()
-            if 20<=len(candidate)<=110 and chr(10) not in candidate and chr(13) not in candidate and not re.search(r"https?://|[<>]",candidate):
+            if 20<=len(candidate)<=110 and chr(10) not in candidate and chr(13) not in candidate and not re.search(r"https?://|[<>]",candidate) and all(__import__("difflib").SequenceMatcher(None,candidate,old).ratio()<0.72 for old in recent_lines):
                 nightly_text=candidate
     except (RuntimeError,ValueError,KeyError,TypeError) as exc:
         print("Nightly line unavailable; safe publisher fallback:",type(exc).__name__)
