@@ -44,7 +44,7 @@ jobs:
           lines.extend(f'- {e}' for e in errors) if errors else lines.append('None reported.')
           lines.extend(['', 'Candidate links are unverified and may be unrelated to the editorial theme.'])
           with open(os.environ['GITHUB_STEP_SUMMARY'], 'a', encoding='utf-8') as out:
-              out.write('\\n'.join(lines) + '\\n')
+              out.write(chr(10).join(lines) + chr(10))
           print('Local-language feed counts:', {name: counts[name] for name in providers})
           print('Local-language feed errors:', errors)
           PY
