@@ -40,6 +40,7 @@ WRITING_CRAFT=(
     "Keep factual reporting and the explicitly labeled AI reflection separate; never translate unverified claims as facts. "
     "detail: first explain the verifiable sequence, then explicitly signal an editorial "
     "reflection with 'ここからはAIの見方。' and offer one specific, non-preachy reframing. "
+    "Generate TWO distinct jokes for each article: quip is the sharp opening punchline, and quipSecond is the follow-up punchline revealed only after opening the full story. The second must add a genuinely different comic angle, not paraphrase the first; both must be supported by the verified situation and must not invent facts. "
     "quip: one punchy, memorable, original Japanese line (roughly 15-45 characters) with a surprising turn or vivid image about "
     "the PLAN, ASSUMPTION or DECISION, never a victim. Prefer observational irony "
     "over ridicule, platitudes, generic encouragement or forced puns. "
@@ -532,7 +533,7 @@ def main():
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
       'verificationUrls must be exact URLs present in evidence (one is sufficient; two distinct publishers are preferred when available). Do not invent facts, URLs or unsupported details. '
-      'For each include required fields '+str(REQUIRED)+', verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
+      'For each include required fields '+str(REQUIRED)+', quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
@@ -589,7 +590,7 @@ def main():
                 "Return JSON object with stories array. Do not return diagnostics. "
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
-                "Each story must contain fields "+str(REQUIRED)+
+                "Each story must contain fields "+str(REQUIRED)+", quipSecond (distinct second punchline), "
                 ", verificationUrls (one or two exact supplied URLs from that group), "
                 "eventKey (specific incident identifier at least 12 characters), "
                 "and evidence (facts supported by the supplied source text). "
@@ -687,6 +688,13 @@ def main():
         story["editorVerified"]=True
         story["humorSafe"]=True
         seen.update((story["sourceUrl"],story["id"],event))
+        second=story.get("quipSecond")
+        if not (isinstance(second,str) and 12<=len(second.strip())<=100
+                and second.strip()!=story["quip"].strip()
+                and not BLOCK.search(second)):
+            story.pop("quipSecond",None)
+        else:
+            story["quipSecond"]=second.strip()
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)==12:break
@@ -734,9 +742,9 @@ def main():
     try:
         response=ai(
             "あなたは日本語の夜のニュース便りの編集者です。以下は独立した情報源で検証済みのニュースの要約です。"
-            "この日の読後に合う、毎回新しく考えた温かい『今夜のひと言』を日本語で一つだけ作成してください。"
+            "この日のニュース全体を振り返る『今夜のオチ』を、日本語で一つだけ作成してください。最後にふっと笑えて、安心して眠れる短い締めです。"
             "40〜95文字。ニュースの具体的な事実・固有名詞・数字を追加しない。被害者を笑わない。"
-            "決まり文句の繰り返しを避け、疲れた読者を労い、説教や断定をしない。"
+            "記事に共通する計画と現実のズレを軽くひねり、決まり文句・説教・単なる慰めは避けてください。"
             "以下の過去のひと言と似た言い回しを避けてください："+json.dumps(recent_lines[-20:],ensure_ascii=False)
             +"JSONオブジェクトでキー nightlyMessage に文章を入れて返してください。"
             +json.dumps([{"title":story["title"],"summary":story["summary"],"category":story["category"]} for story in selected],ensure_ascii=False)
