@@ -42,6 +42,16 @@ class ReaderFrontendTest(unittest.TestCase):
                       "★ やらかし大賞", "i===0"):
             self.assertIn(token, page)
 
+    def test_two_stage_ai_joke_and_nightly_payoff(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in ('AIツッコミ・追撃', 's.quipSecond',
+                      'class="second-quip"', '今夜のオチ',
+                      'id="nightlyMessage"'):
+            self.assertIn(token, page)
+        editor = (ROOT / "auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn('quipSecond', editor)
+        self.assertIn('distinct', editor)
+
     def test_sports_filter_is_available(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-filter="sports"', page)
