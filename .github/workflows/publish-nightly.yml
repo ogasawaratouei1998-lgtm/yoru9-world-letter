@@ -90,6 +90,12 @@ jobs:
         run: |
           set -euo pipefail
           DAY=$(TZ=Asia/Tokyo date +%F)
+          # A released edition is immutable. Do not resurrect an older review
+          # artifact and overwrite its approved source on later push/retry runs.
+          if [ -f "data/archive/$DAY.json" ]; then
+            echo "Today's edition is already published; skip reviewed-artifact recovery."
+            exit 0
+          fi
           mkdir -p /tmp/yoru9-reviewed
           # A previous review may have verified three stories while a newer
           # retry verifies only two. Preserve the best independently audited
@@ -113,7 +119,9 @@ jobs:
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
           target=Path("data/approved")/(day+".json")
           candidates=list(Path("/tmp/yoru9-reviewed").glob("*/"+day+".json"))
-          if target.exists(): candidates.append(target)
+          # Keep the local approved edition on equal story counts; a stale
+          # artifact must not undo a newer editorial correction.
+          if target.exists(): candidates.insert(0,target)
           valid=[]
           for candidate in candidates:
               try:
