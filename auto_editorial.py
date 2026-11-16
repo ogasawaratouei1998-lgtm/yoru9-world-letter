@@ -504,7 +504,11 @@ def main():
         if key not in existing:
             groups.append(group)
             existing.add(key)
-    # Single-source reporting is eligible when the original article is retrievable.\n    # Keep independent corroboration pairs where available.\n    paired_urls={item['url'] for group in groups for item in group}\n    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls])\n    raw_group_count=len(groups)
+    # Single-source reporting is eligible when the original article is retrievable.
+    # Keep independent corroboration pairs where available.
+    paired_urls={item['url'] for group in groups for item in group}
+    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls])
+    raw_group_count=len(groups)
     groups=select_distinct_groups(groups,limit=36)
     print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
     if len(groups)<1:
