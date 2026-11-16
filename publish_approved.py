@@ -31,6 +31,36 @@ def valid_url(url):
         return False
 
 
+NIGHT_MESSAGES = {
+    'work': [
+        '仕事の予定がずれても、今日のあなたの頑張りは消えません。',
+        '世界の職場も試行錯誤中。今日の失敗だけで自分を決めなくていい。',
+        '思い通りに進まない日もある。今夜は少し肩の力を抜こう。',
+    ],
+    'person': [
+        '誰にだって、思いがけない一日はある。今夜はゆっくり休もう。',
+        '今日の勘違いも、いつか笑い話になるかもしれない。',
+        '完璧な一日じゃなくても、ここまで来た。それで十分。',
+    ],
+    'company': [
+        '大きな組織だって予定どおりにはいかない。焦らず、また明日。',
+        '世界規模の計画にも想定外はある。あなたの今日にも、おつかれさま。',
+        '失敗は大きさを競うものじゃない。今夜は自分をいたわろう。',
+    ],
+}
+
+
+def nightly_message(edition_date, stories):
+    """Deterministic Japanese closing line, based on the released edition."""
+    from hashlib import sha256
+    categories = [story['category'] for story in stories]
+    # Choose a featured category from this edition; stable across rebuilds.
+    seed = int.from_bytes(sha256(edition_date.encode('ascii')).digest()[:8], 'big')
+    category = categories[seed % len(categories)]
+    options = NIGHT_MESSAGES[category]
+    return options[(seed // len(categories)) % len(options)]
+
+
 def validate_approved(data, expected_date):
     require(isinstance(data, dict), '配信号がJSONオブジェクトではありません')
     require(data.get('status') == 'approved', 'status が approved ではありません')
@@ -84,6 +114,7 @@ def validate_approved(data, expected_date):
                               ({'flag': story['flag']} if isinstance(story.get('flag'), str) else {}))
     return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(),
             'editionType': edition_type,
+            'nightlyMessage': nightly_message(expected_date, public_stories),
             **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
             'stories': public_stories,
             'credits': 'Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.'}
