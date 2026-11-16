@@ -87,7 +87,7 @@ body{background:#0b1528}
 <button id="notificationButton" type="button" disabled>夜9時の通知を受け取る</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p>
 </section>
-<section class="footerpanel"><div style="color:var(--gold);font-size:27px" aria-hidden="true">☾</div><h2>今日も世界のどこかで、<br>想定外の失敗が起きている。</h2><p>完璧じゃないのは、<br>世界も、自分も同じ。</p><p>だから今夜、そんなあれこれを<br>少し笑えたなら、</p><p class="message-last">それでいい。</p><div class="night-quote"><span>今夜のひと言</span><p>失敗したのは、あなただけじゃない。<br>世界も今日、いろいろありました。</p><button type="button" id="shareNightQuote">この言葉を共有</button></div><p class="bye">おやすみなさい。また夜9時に。</p><div id="endprogress" class="small" aria-live="polite"></div></section>
+<section class="footerpanel"><div style="color:var(--gold);font-size:27px" aria-hidden="true">☾</div><h2>今日も世界のどこかで、<br>想定外の失敗が起きている。</h2><p>完璧じゃないのは、<br>世界も、自分も同じ。</p><p>だから今夜、そんなあれこれを<br>少し笑えたなら、</p><p class="message-last">それでいい。</p><div class="night-quote"><span>今夜のひと言</span><p id="nightlyMessage">失敗したのは、あなただけじゃない。世界も今日、いろいろありました。</p><button type="button" id="shareNightQuote">この言葉を共有</button></div><p class="bye">おやすみなさい。また夜9時に。</p><div id="endprogress" class="small" aria-live="polite"></div></section>
 <aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIのひと言は創作の冗談です。</aside>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -107,7 +107,7 @@ function loadState(){try{const x=JSON.parse(localStorage.getItem(editionKey())||
 function saveState(){try{localStorage.setItem(editionKey(),JSON.stringify(state))}catch(_){}}
 let toastTimer;
 function toast(s){$('toast').textContent=s;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,2300)}
-function render(){const d=edition.stories; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
+function render(){const d=edition.stories; $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'失敗したのは、あなただけじゃない。世界も今日、いろいろありました。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
@@ -154,7 +154,7 @@ $('stories').addEventListener('click',async e=>{const open=e.target.closest('[da
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 $('shareNightQuote').addEventListener('click',async()=>{
- const message='失敗したのは、あなただけじゃない。世界も今日、いろいろありました。\nよる9じの世界便り\n'+location.href;
+ const message=$('nightlyMessage').textContent+'\nよる9じの世界便り\n'+location.href;
  try{
   if(navigator.share)await navigator.share({title:'今夜のひと言｜よる9じの世界便り',text:message});
   else if(navigator.clipboard){await navigator.clipboard.writeText(message);toast('今夜のひと言をコピーしました')}
