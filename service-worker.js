@@ -1,8 +1,8 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v2';
+const SHELL_CACHE = 'yoru9-shell-v3';
 const ISSUE_CACHE = 'yoru9-released-issues-v2';
 const SCOPE = self.registration.scope;
-const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'assets/icon.svg'];
+const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'assets/icon.svg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
