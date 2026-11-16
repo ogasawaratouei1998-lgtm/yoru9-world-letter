@@ -33,33 +33,66 @@ def valid_url(url):
 
 NIGHT_MESSAGES = {
     'work': [
-        '仕事の予定がずれても、今日のあなたの頑張りは消えません。',
-        '世界の職場も試行錯誤中。今日の失敗だけで自分を決めなくていい。',
-        '思い通りに進まない日もある。今夜は少し肩の力を抜こう。',
+        '予定がひとつ狂った日も、今日をやり切ったことまで消えたりしません。',
+        '思いどおりに進まない仕事は、あなたひとりの物語ではありません。',
+        '机の上に残った仕事は、明日の自分と相談しても大丈夫。',
+        '今日の反省会はここまで。温かい飲み物に、次の出番を譲りましょう。',
+        '世界にも計画どおりにいかない日がある。今夜は少し力を抜いて。',
+        '失敗を数えるより、今日ここまで来たことをひとつ覚えておこう。',
+        'うまくできなかった場面だけが、今日のあなたのすべてではありません。',
+        '仕事の続きを考えるのは、ひと晩眠ってからでも遅くありません。',
     ],
     'person': [
-        '誰にだって、思いがけない一日はある。今夜はゆっくり休もう。',
-        '今日の勘違いも、いつか笑い話になるかもしれない。',
-        '完璧な一日じゃなくても、ここまで来た。それで十分。',
+        '今日の勘違いも、いつか少し笑える思い出になるかもしれません。',
+        'まちがえた自分にまで、厳しい採点をしなくていい夜です。',
+        '思わぬ展開に出会った一日。まずは無事に帰ってきた自分におつかれさま。',
+        'きれいにまとまらない日もあります。今夜はそのまま、おやすみなさい。',
+        '誰かの失敗談を読んだあと、自分にも少し優しくなれますように。',
+        '今日の小さなつまずきは、あなたの明日を決める判決ではありません。',
+        '世界は予想外でいっぱい。あなたの今日も、きっとその一ページ。',
+        '何もかも正解にしなくていい。夜は休むためにもあります。',
     ],
     'company': [
-        '大きな組織だって予定どおりにはいかない。焦らず、また明日。',
-        '世界規模の計画にも想定外はある。あなたの今日にも、おつかれさま。',
-        '失敗は大きさを競うものじゃない。今夜は自分をいたわろう。',
+        '大きな組織でも予定が外れるのだから、今夜は自分を責めすぎずに。',
+        '立派な計画にも「まさか」はあります。あなたの今日にも、おつかれさま。',
+        '世界があちこちで試行錯誤している夜。焦らず眠っていいのです。',
+        '大きな失敗を知ると、今日の小さな失敗を少し遠くから眺められます。',
+        '想定外は世界共通。今夜のあなたには、静かな時間が似合います。',
+        '明日の予定は明日のもの。今夜は心の会議を閉じましょう。',
+        '世界の仕組みも完璧ではありません。あなたも完璧でなくて大丈夫。',
+        '何事も計画どおりとはいかないから、今夜くらいは余白を残して。',
     ],
 }
 
-
-def nightly_message(edition_date, stories):
-    """Deterministic Japanese closing line, based on the released edition."""
+def nightly_message(edition_date, stories, recent_messages=()):
+    """Pick a stable, non-repeating editorial line when AI text is unavailable."""
     from hashlib import sha256
+    from difflib import SequenceMatcher
     categories = [story['category'] for story in stories]
-    # Choose a featured category from this edition; stable across rebuilds.
     seed = int.from_bytes(sha256(edition_date.encode('ascii')).digest()[:8], 'big')
     category = categories[seed % len(categories)]
     options = NIGHT_MESSAGES[category]
-    return options[(seed // len(categories)) % len(options)]
+    ordered = options[seed % len(options):] + options[:seed % len(options)]
+    for line in ordered:
+        if all(SequenceMatcher(None,line,old).ratio() < 0.72 for old in recent_messages):
+            return line
+    return ordered[0]
 
+def recent_nightly_messages(root, edition_date, days=60):
+    from datetime import timedelta
+    today=date.fromisoformat(edition_date)
+    messages=[]
+    for file in (root/'data'/'archive').glob('????-??-??.json'):
+        try:
+            issue=json.loads(file.read_text(encoding='utf-8'))
+            issue_date=date.fromisoformat(issue.get('editionDate',''))
+            if issue.get('status')!='published' or not (today-timedelta(days=days)<=issue_date<today):
+                continue
+            line=issue.get('nightlyMessage')
+            if isinstance(line,str) and line.strip():messages.append(line.strip())
+        except (OSError,ValueError,TypeError):
+            continue
+    return messages
 
 def validate_approved(data, expected_date):
     require(isinstance(data, dict), '配信号がJSONオブジェクトではありません')
@@ -172,6 +205,11 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
         return False
     data = json.loads(approved_path.read_text(encoding='utf-8'))
     public_issue = validate_approved(data, date)
+    from difflib import SequenceMatcher
+    recent = recent_nightly_messages(root, date)
+    proposed = public_issue['nightlyMessage']
+    if any(SequenceMatcher(None, proposed, old).ratio() >= 0.72 for old in recent):
+        public_issue['nightlyMessage'] = nightly_message(date, public_issue['stories'], recent)
     current_path = root / 'data' / 'current.json'
     current = json.loads(current_path.read_text(encoding='utf-8')) if current_path.exists() else {}
     old_date = current.get('editionDate') or ''
