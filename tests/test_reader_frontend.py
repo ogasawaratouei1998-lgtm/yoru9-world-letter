@@ -23,7 +23,7 @@ class ReaderFrontendTest(unittest.TestCase):
         for token in ('id="spotlight"', 'id="spotlightTitle"',
                       'id="spotlightQuip"', 'id="spotlightRead"',
                       "function updateSpotlight()", "updateSpotlight();",
-                      "first.quip", "first.title", "first.scrollIntoView"):
+                      "first.quip", "first.title", "panel.scrollIntoView"):
             self.assertIn(token, page)
 
     def test_cover_matches_award_first_layout(self):
@@ -39,8 +39,41 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlightAward"', "今夜のやらかし大賞",
                       "前回のやらかし大賞", "体験版のやらかし大賞",
-                      "★ やらかし大賞", "i===0"):
+                      "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
+
+    def test_lead_story_is_not_duplicated_and_can_expand_in_place(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('id="spotlightBody" class="spotlight-body" hidden', page)
+        self.assertIn('id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody"', page)
+        self.assertIn("body.innerHTML=", page)
+        self.assertIn("storyDetailHtml(first)", page)
+        self.assertIn("if(show){markRead(0);panel.scrollIntoView(", page)
+        self.assertIn("d.slice(1).map((s,offset)", page)
+        self.assertIn("data-story-index=", page)
+        self.assertIn("el.closest('.story').dataset.storyIndex", page)
+        self.assertNotIn("first.scrollIntoView", page)
+        self.assertIn("$('spotlightBody').addEventListener('click',handleStoryAction)", page)
+        self.assertIn("data-share=\"0\"", page)
+
+    def test_filter_buttons_match_available_secondary_categories(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("function updateFilters()", page)
+        self.assertIn("edition.stories.slice(1).map(s=>s.category)", page)
+        self.assertIn("controls.hidden=available.size<=1", page)
+        self.assertIn("button.hidden=button.dataset.filter!=='all'&&!available.has(", page)
+        self.assertIn(".filters[hidden],.filter[hidden]", page)
+        self.assertIn("updateSpotlight();updateFilters();applyFilter();", page)
+        self.assertIn("document.querySelector('.sectionhead').hidden=d.length<=1", page)
+        self.assertIn("$('intro').hidden=d.length<=1", page)
+
+    def test_mobile_reader_typography_is_legible(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn(".status #editionMessage,.edition-context,.note,.source,.storytop,.small{font-size:13px}", page)
+        self.assertIn(".hero .hero-description,.hero .hero-truth{font-size:13px}", page)
+        self.assertIn(".spotlight-body .summary{font-size:15px", page)
+        self.assertIn(".spotlight #spotlightRead{", page)
+        self.assertNotIn(".spotlight button{", page)
 
     def test_two_stage_ai_joke_and_nightly_payoff(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
