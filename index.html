@@ -140,6 +140,65 @@ body{background:#0b1528}
 }
 @media(prefers-reduced-motion:reduce){.reader-tool{scroll-behavior:auto}}
 .edition-context{margin:0 0 15px;border-bottom:1px solid #40516f;padding:0 0 6px;color:#d3ddea;font-size:12px}.edition-context summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;color:#e8c891}.edition-context p{margin:6px 0;line-height:1.7}.status{margin-bottom:8px;padding:9px 12px}.status .statusline{gap:0}.status #editionMessage{font-size:11px}.release-status{margin:4px 0 10px;padding:7px 10px}.intro{margin:6px 0 10px}.story .summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.story.expanded .summary{display:block}.story .teaserquip{display:block;overflow-wrap:anywhere}.story.expanded .teaserquip{display:block}@media(max-width:520px){.status{margin:7px 0 8px}.release-status{margin:4px 0 7px}.edition-context{margin-bottom:10px}.story .summary{font-size:14px;line-height:1.75}}\n.detail-language-note{font-size:13px;line-height:1.8;color:#f5d8a1;margin:0 0 12px}.original-detail{border-top:1px dashed #657590;padding:12px 0;margin:12px 0}.original-detail>summary{cursor:pointer;color:var(--gold);font-weight:750;min-height:44px;align-content:center}.original-warning{font-size:12px;color:#cdd8e7;line-height:1.7}.original-detail .detailtext{overflow-wrap:anywhere}
+
+/* Reader typography v7 — iPhone screenshots revealed 10–13px metadata.
+   Keep news titles expressive, but give ordinary text and controls a legible floor.
+   Use rem so browser text-size preferences can scale the interface. */
+.nav .logo{font-size:1rem;line-height:1.5}
+.nav .tag{font-size:.875rem;line-height:1.45;padding:5px 9px}
+.status strong{font-size:1rem;line-height:1.55}
+.status #editionMessage{font-size:.875rem;line-height:1.65}
+.release-status{font-size:.9375rem;line-height:1.7;overflow-wrap:anywhere}
+.edition-context{font-size:.9375rem}
+.edition-context summary{font-size:.9375rem;font-weight:700}
+.edition-context p{font-size:.875rem;line-height:1.75}
+.hero .hero-description,.hero .hero-truth{font-size:1rem;line-height:1.7}
+.sectionhead .small{font-size:.9375rem}
+.intro{font-size:.9375rem;line-height:1.7}
+.filter{font-size:.9375rem;line-height:1.5}
+.storytop{font-size:.875rem;line-height:1.5}
+.storytop .type{font-size:.875rem;line-height:1.5}
+.story .number{font-size:.875rem;min-width:32px;width:32px;height:32px}
+.story .label{font-size:.9375rem;line-height:1.55}
+.story .summary{font-size:clamp(1rem,4.25vw,1.125rem);line-height:1.82}
+.reported,.story .reported{font-size:.875rem;line-height:1.75}
+.teaserquip,.story .teaserquip{font-size:1rem;line-height:1.75}
+.teaserquip span,.story .teaserquip span{font-size:.875rem;line-height:1.5}
+.readbtn{font-size:1rem;line-height:1.5;font-weight:800}
+.details .detailtext,.spotlight-body .detailtext{font-size:1rem;line-height:1.95}
+.detail-language-note,.original-warning{font-size:.9375rem;line-height:1.8}
+.source,.spotlight-body .source,.spotlight-body .reported{font-size:.875rem;line-height:1.8}
+.actions .smile,.spotlight-body .smile{font-size:.9375rem;line-height:1.5}
+.actions .share,.spotlight-body .share{font-size:.9375rem;line-height:1.5}
+.spotlight-kicker{font-size:1rem;line-height:1.5}
+.spotlight-quip-label{font-size:.9375rem;line-height:1.5}
+.spotlight #spotlightRead{font-size:1.0625rem;line-height:1.55}
+.spotlight-body .summary{font-size:1rem;line-height:1.85}
+.second-quip span{font-size:.9375rem}
+.reader-tool>summary{font-size:1rem;line-height:1.6}
+.archivepanel label,.worldpanel label{font-size:.9375rem}
+.archivepanel .small{font-size:.875rem}
+.archivepanel select,.worldpanel select{font-size:1rem;min-height:44px}
+.worldpanel .small,.map-fallback,.country-result{font-size:.875rem;line-height:1.7}
+.country-result button{font-size:.9375rem;line-height:1.65;min-height:44px}
+.editor-dashboard summary,.editor-stats,.editor-regions{font-size:.875rem;line-height:1.7}
+.notification-panel p,.offlineNotice{font-size:.9375rem;line-height:1.8}
+.notification-panel button{font-size:1rem;min-height:44px}
+.night-quote span{font-size:.9375rem;line-height:1.6}
+.footerpanel>p:not(.bye){font-size:1rem;line-height:1.9}
+.footerpanel .bye{font-size:.9375rem;line-height:1.8}
+.footerpanel #endprogress{font-size:.875rem;line-height:1.7}
+.note{font-size:.9375rem;line-height:1.85}
+footer{font-size:.8125rem;line-height:1.7}
+@media(max-width:520px){
+ .nav{flex-wrap:wrap;row-gap:6px}
+ .nav .logo{font-size:.9375rem}
+ .nav .tag{max-width:50%;font-size:.8125rem;overflow-wrap:anywhere}
+ .story .summary{font-size:1rem;line-height:1.85}
+ .sectionhead{gap:12px}
+ .sectionhead .small{flex-shrink:0}
+ .spotlight-body{overflow-wrap:anywhere}
+}
 </style>
 </head>
 <body><div class="wrap">

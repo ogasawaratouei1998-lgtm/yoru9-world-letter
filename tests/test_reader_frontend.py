@@ -164,6 +164,32 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("$('archiveSelect').value", status)
         self.assertNotIn("archiveMenu.value", status)
 
+    def test_final_mobile_typography_has_legible_reading_sizes(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = page[page.index("/* Reader typography v7"):page.index("</style>")]
+        self.assertIn(".status #editionMessage{font-size:.875rem", css)
+        self.assertIn(".release-status{font-size:.9375rem", css)
+        self.assertIn(".edition-context{font-size:.9375rem", css)
+        self.assertIn(".hero .hero-description,.hero .hero-truth{font-size:1rem", css)
+        self.assertIn(".story .summary{font-size:1rem;line-height:1.85}", css)
+        self.assertIn(".reported,.story .reported{font-size:.875rem", css)
+        self.assertIn(".teaserquip,.story .teaserquip{font-size:1rem", css)
+        self.assertIn(".readbtn{font-size:1rem", css)
+        self.assertIn(".night-quote span{font-size:.9375rem", css)
+        self.assertIn(".note{font-size:.9375rem", css)
+        self.assertIn(".footerpanel .bye{font-size:.9375rem", css)
+        self.assertGreater(page.index("/* Reader typography v7"),
+                           page.index(".status #editionMessage{font-size:11px}"))
+
+    def test_long_mobile_metadata_wraps_without_cutting_off_text(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = page[page.index("/* Reader typography v7"):page.index("</style>")]
+        self.assertIn(".nav{flex-wrap:wrap;row-gap:6px}", css)
+        self.assertIn(".nav .tag{max-width:50%;font-size:.8125rem;overflow-wrap:anywhere}", css)
+        self.assertIn(".release-status{font-size:.9375rem;line-height:1.7;overflow-wrap:anywhere}", css)
+        self.assertIn(".sectionhead .small{flex-shrink:0}", css)
+        self.assertIn(".archivepanel select,.worldpanel select{font-size:1rem;min-height:44px}", css)
+
     def test_nightly_closing_has_single_primary_message(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         closing = page[page.index('<section class="footerpanel">'):page.index('</section>', page.index('<section class="footerpanel">'))]
