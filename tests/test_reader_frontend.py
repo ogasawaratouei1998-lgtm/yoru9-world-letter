@@ -10,6 +10,14 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReaderFrontendTest(unittest.TestCase):
+    def test_homepage_explains_the_editorial_concept(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("今日も世界は、", page)
+        self.assertIn("ちょっとやらかした。", page)
+        self.assertIn("世界の失敗・勘違い・まさかのニュースを、毎晩9時に3本。", page)
+        self.assertIn("あなたも自分に優しく。", page)
+        self.assertIn('class="hero-description"', page)
+
     def test_sports_filter_is_available(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-filter="sports"', page)
