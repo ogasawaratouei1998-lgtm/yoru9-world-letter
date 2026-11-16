@@ -278,6 +278,27 @@ def archive_summaries():
         except (ValueError,OSError):continue
     return result[-250:]
 
+def recent_diversity_counts(today, days=30):
+    """Count published country/category exposure during the preceding 30 days."""
+    from collections import Counter
+    country_counts, category_counts = Counter(), Counter()
+    for file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            issue=json.loads(file.read_text(encoding="utf-8"))
+            issue_date=datetime.strptime(issue.get("editionDate",""),"%Y-%m-%d").date()
+            if not (today-timedelta(days=days) <= issue_date < today):
+                continue
+            if issue.get("status")!="published":
+                continue
+            for story in issue.get("stories",[]):
+                country=str(story.get("country","")).strip()
+                category=str(story.get("category","")).strip()
+                if country:country_counts[country]+=1
+                if category in ("work","person","company"):category_counts[category]+=1
+        except (ValueError,OSError,TypeError,KeyError):
+            continue
+    return country_counts,category_counts
+
 def previous_events():
     seen=set()
     for file in Path("data/archive").glob("????-??-??.json"):
@@ -666,14 +687,26 @@ def main():
     # Diversity is a preference, never a reason to lower fact-checking standards.
     from itertools import combinations
     pool=selected
+    country_history,category_history=recent_diversity_counts(now.date())
     choices=list(combinations(range(len(pool)),min(3,len(pool))))
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
         categories=len({story["category"] for story in stories})
         countries=len({story["country"].strip() for story in stories})
-        return (categories+countries, categories, countries, -sum(indices))
+        # First protect diversity within the edition; then favor countries
+        # and reader perspectives underrepresented over the previous 30 days.
+        country_repeat=sum(country_history[story["country"].strip()] for story in stories)
+        category_repeat=sum(category_history[story["category"]] for story in stories)
+        return (categories+countries, categories, countries,
+                -country_repeat, -category_repeat, -sum(indices))
     best=max(choices,key=diversity_score)
     selected=[pool[i] for i in best]
+    print("30-day editorial diversity:",json.dumps({
+        "historical_countries":len(country_history),
+        "selected_countries":len({story["country"].strip() for story in selected}),
+        "selected_categories":len({story["category"] for story in selected}),
+        "history_articles":sum(country_history.values())
+    },sort_keys=True),flush=True)
     # A fresh closing line is generated from this edition's verified summaries.
     # Never use AI-generated text as an additional factual news claim.
     nightly_text=None
