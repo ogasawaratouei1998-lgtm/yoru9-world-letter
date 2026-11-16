@@ -3,6 +3,22 @@ from unittest.mock import patch
 import auto_editorial as editorial
 
 class AutoEditorialSafetyTests(unittest.TestCase):
+    def test_country_aliases_share_iso_code(self):
+        from country_codes import country_code, country_key
+        for label in ("米国","アメリカ","アメリカ合衆国","USA"):
+            self.assertEqual(country_code(label),"US")
+            self.assertEqual(country_key(label),"US")
+        self.assertEqual(country_code("南アフリカ"),"ZA")
+        self.assertIsNone(country_code("不明な国"))
+
+    def test_nightly_fallback_avoids_recent_repetition(self):
+        from publish_approved import nightly_message, NIGHT_MESSAGES
+        stories=[{"category":"work","id":"one"}]
+        first=nightly_message("2026-11-17",stories)
+        self.assertIn(first,NIGHT_MESSAGES["work"])
+        second=nightly_message("2026-11-17",stories,[first])
+        self.assertNotEqual(first,second)
+
     def test_recent_diversity_counts_only_published_last_30_days(self):
         import json
         import tempfile
