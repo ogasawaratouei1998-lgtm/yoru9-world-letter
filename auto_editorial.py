@@ -227,6 +227,12 @@ def ai(prompt):
                 ACTIVE_MODEL=model
                 print("Gemini generation succeeded:",model,version,flush=True)
                 return parsed
+            except (URLError, TimeoutError, ConnectionError, OSError) as exc:
+                # Network timeouts are not editorial rejections. Try the next
+                # supported model/version; do not approve an unverified story.
+                print("Gemini request unavailable:",model,version,type(exc).__name__,flush=True)
+                last_error=type(exc).__name__
+                continue
             except HTTPError as exc:
                 # Print only status and sanitized provider reason, never headers or key.
                 try:
