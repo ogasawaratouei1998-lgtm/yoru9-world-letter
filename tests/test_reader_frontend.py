@@ -18,6 +18,14 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("あなたも自分に優しく。", page)
         self.assertIn('class="hero-description"', page)
 
+    def test_lead_story_spotlight_is_dynamic_and_readable(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        for token in ('id="spotlight"', 'id="spotlightTitle"',
+                      'id="spotlightQuip"', 'id="spotlightRead"',
+                      "function updateSpotlight()", "updateSpotlight();",
+                      "first.quip", "first.title", "first.scrollIntoView"):
+            self.assertIn(token, page)
+
     def test_sports_filter_is_available(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('data-filter="sports"', page)
