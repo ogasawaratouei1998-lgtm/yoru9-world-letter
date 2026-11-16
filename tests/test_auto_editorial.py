@@ -169,6 +169,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
+    def test_single_source_editorial_path_preserves_source_audit(self):
+        from pathlib import Path
+        pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("groups.extend([[item] for item in source_leads", pipeline)
+        self.assertIn("not (1<=len(urls)<=3)", pipeline)
+        self.assertIn("if len(evidence)<1:", pipeline)
+        self.assertIn("A single credible original publisher is sufficient", pipeline)
+        self.assertIn("if not valid_recent_reported(story[\"reported\"],now):", pipeline)
+
     def test_same_day_reporting_with_timezone_buffer(self):
         from datetime import datetime
         from zoneinfo import ZoneInfo
