@@ -26,6 +26,17 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
+    def test_app_refreshes_on_resume_and_updates_offline_cache(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
+        for token in ("function refreshOnForeground()", "visibilitychange",
+                      "pageshow", "reg.update()", "controllerchange"):
+            with self.subTest(token=token):
+                self.assertIn(token, page)
+        self.assertIn("yoru9-shell-v2", worker)
+        self.assertIn("yoru9-released-issues-v2", worker)
+        self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
+
     def test_editor_dashboard_has_30_day_country_and_region_coverage(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="editorDashboard"', 'id="editorStats"',
