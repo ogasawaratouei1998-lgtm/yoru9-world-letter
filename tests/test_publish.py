@@ -68,9 +68,16 @@ class PublishingTest(unittest.TestCase):
         self.assertEqual(json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
     def test_english_only_detail_is_rejected(self):
         data=fixture()
+        data['editionDate']='2026-11-17'
         data['stories'][0]['detail']='An English-only expanded article.'
         with self.assertRaisesRegex(ValueError, 'detailが日本語ではありません'):
-            validate_approved(data,'2026-11-10')
+            validate_approved(data,'2026-11-17')
+
+    def test_legacy_approved_english_detail_is_not_retroactively_blocked(self):
+        data=fixture()
+        data['stories'][0]['detail']='An English-only expanded article.'
+        public=validate_approved(data,'2026-11-10')
+        self.assertEqual(public['stories'][0]['detail'],data['stories'][0]['detail'])
 
     def test_unverified_story_blocked(self):
         data=fixture()
