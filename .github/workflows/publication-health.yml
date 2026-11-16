@@ -1,0 +1,88 @@
+name: Nightly publication health check
+
+on:
+  schedule:
+    - cron: '15 15 * * *' # 00:15 JST (UTC), after the evening publication window
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check latest publication workflow and live Pages data
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PAGES_URL: https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/data/current.json
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, urllib.request
+          from datetime import datetime, timedelta, timezone
+          from zoneinfo import ZoneInfo
+
+          repo=os.environ['GH_REPO']
+          now=datetime.now(timezone.utc)
+          jst=now.astimezone(ZoneInfo('Asia/Tokyo'))
+          warnings=[]
+          failures=[]
+          details=[]
+          def gh(args):
+              return json.loads(subprocess.check_output(['gh','api',*args],text=True))
+          try:
+              data=gh([f'repos/{repo}/actions/workflows/publish-nightly.yml/runs?per_page=30'])
+              runs=[r for r in data.get('workflow_runs',[]) if r.get('status')=='completed']
+              recent=[r for r in runs if datetime.fromisoformat(r['created_at'].replace('Z','+00:00')) >= now-timedelta(hours=36)]
+              if not recent:
+                  warnings.append('No completed publication workflow in the last 36 hours')
+              else:
+                  newest=recent[0]
+                  details.append('Latest workflow: '+str(newest.get('html_url','')))
+                  if newest.get('conclusion')!='success':
+                      failures.append('Latest completed publication workflow: '+str(newest.get('conclusion')))
+          except Exception as exc:
+              failures.append('Unable to inspect publication workflow: '+type(exc).__name__)
+          try:
+              request=urllib.request.Request(os.environ['PAGES_URL']+'?health='+str(int(now.timestamp())),
+                                             headers={'Cache-Control':'no-cache','User-Agent':'yoru9-health-check'})
+              with urllib.request.urlopen(request,timeout=20) as response:
+                  issue=json.load(response)
+              date=issue.get('editionDate','')
+              if issue.get('status')!='published' or not isinstance(issue.get('stories'),list) or not issue['stories']:
+                  failures.append('Live Pages data is not a valid published edition')
+              else:
+                  issue_date=datetime.strptime(date,'%Y-%m-%d').date()
+                  age=(jst.date()-issue_date).days
+                  details.append(f'Live edition: {date}, age: {age} day(s)')
+                  if age>2:
+                      warnings.append('No new published edition for more than two days; verify editorial approval and publishing')
+                  if age<0:
+                      failures.append('Live edition date is in the future')
+          except Exception as exc:
+              failures.append('Unable to retrieve live published edition: '+type(exc).__name__)
+          lines=['## Publication health — '+jst.strftime('%Y-%m-%d %H:%M JST'),
+                 *details,
+                 'Failures: '+('; '.join(failures) if failures else 'none'),
+                 'Warnings: '+('; '.join(warnings) if warnings else 'none')]
+          with open(os.environ['GITHUB_STEP_SUMMARY'],'a',encoding='utf-8') as f:
+              f.write('\n\n'.join(lines)+'\n')
+          if failures or warnings:
+              title='[運用確認] よる9じの世界便り・配信状況'
+              body='\n'.join(lines)+'\n\nこの通知は監視結果です。未配信は事実確認未完了の可能性もあり、記事を自動で捏造・強制公開しません。'
+              existing=gh([f'repos/{repo}/issues?state=open&per_page=100'])
+              issue=next((i for i in existing if i.get('title')==title and 'pull_request' not in i),None)
+              if issue:
+                  subprocess.run(['gh','api',f'repos/{repo}/issues/{issue["number"]}/comments',
+                                  '-f','body='+body],check=True,stdout=subprocess.DEVNULL)
+              else:
+                  subprocess.run(['gh','api',f'repos/{repo}/issues','-f','title='+title,
+                                  '-f','body='+body],check=True,stdout=subprocess.DEVNULL)
+          if failures:
+              raise SystemExit('Health check detected failures')
+          PY
