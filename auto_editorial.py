@@ -668,8 +668,30 @@ def main():
         return (categories+countries, categories, countries, -sum(indices))
     best=max(choices,key=diversity_score)
     selected=[pool[i] for i in best]
+    # A fresh closing line is generated from this edition's verified summaries.
+    # Never use AI-generated text as an additional factual news claim.
+    nightly_text=None
+    try:
+        response=ai(
+            "あなたは日本語の夜のニュース便りの編集者です。以下は独立した情報源で検証済みのニュースの要約です。"
+            "この日の読後に合う、毎回新しく考えた温かい『今夜のひと言』を日本語で一つだけ作成してください。"
+            "40〜95文字。ニュースの具体的な事実・固有名詞・数字を追加しない。被害者を笑わない。"
+            "決まり文句の繰り返しを避け、疲れた読者を労い、説教や断定をしない。"
+            "JSONオブジェクト {\\\"nightlyMessage\\\":\\\"文章\\\"} だけを返してください。\\n"
+            +json.dumps([{"title":story["title"],"summary":story["summary"],"category":story["category"]} for story in selected],ensure_ascii=False)
+        )
+        candidate=response.get("nightlyMessage") if isinstance(response,dict) else None
+        if isinstance(candidate,str):
+            candidate=candidate.strip()
+            if 20<=len(candidate)<=110 and "\\n" not in candidate and not re.search(r"https?://|[<>]",candidate):
+                nightly_text=candidate
+    except (RuntimeError,ValueError,KeyError,TypeError) as exc:
+        print("Nightly line unavailable; safe publisher fallback:",type(exc).__name__)
+    if nightly_text is None:
+        print("Nightly line generation did not pass validation; using safe publisher fallback.")
     payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗ニュース" ,
       "editorApproved":True,"factChecked":True,"humorReviewed":True,"approvedBy":"automated-two-stage-review","stories":selected}
+    if nightly_text is not None:payload["nightlyMessage"]=nightly_text
     target=Path("data/approved")/(day+".json")
     if target.exists():return 0
     target.parent.mkdir(parents=True,exist_ok=True)
