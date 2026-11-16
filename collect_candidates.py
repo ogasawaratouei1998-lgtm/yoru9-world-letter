@@ -60,6 +60,13 @@ INDEPENDENT_FEEDS = [
     ('https://www.cbc.ca/webfeed/rss/rss-topstories', 'CBC RSS'),
     ('https://www.france24.com/en/rss', 'France24 RSS'),
 ]
+# Direct local-language publisher feeds complement search aggregators.
+# A failing or changed feed is reported in diagnostics, never treated as evidence.
+LOCAL_LANGUAGE_FEEDS = [
+    ('https://www.lemonde.fr/rss/une.xml', 'Le Monde RSS', 'fr', 'FR'),
+    ('https://rss.dw.com/rdf/rss-de-all', 'Deutsche Welle Deutsch RSS', 'de', 'DE'),
+    ('https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/portada', 'El País RSS', 'es', 'ES'),
+]
 GOOGLE = 'https://news.google.com/rss/search'
 GDELT = 'https://api.gdeltproject.org/api/v2/doc/doc'
 EXCLUDE = re.compile(r'\b(killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster|fire killed|crash killed)\b|死亡|殺害|負傷|災害|殺人|自殺|銃撃|戦争|死者|犠牲者', re.I)
@@ -83,19 +90,29 @@ def fetch_bytes(url, timeout=20):
         return response.read(2_000_000)
 
 
-def parse_rss(body, provider, relevant_only=False):
+def parse_rss(body, provider, relevant_only=False, language='en', sourcecountry='未確認'):
     root=ET.fromstring(body)
-    if root.tag not in ('rss', '{http://www.w3.org/2005/Atom}feed'):
+    if root.tag not in ('rss', '{http://www.w3.org/2005/Atom}feed', '{http://purl.org/rss/1.0/}RDF'):
         raise ValueError('Not an RSS feed')
     result=[]
-    for item in root.findall('./channel/item'):
-        title=(item.findtext('title') or '').strip()
-        link=safe_url(item.findtext('link') or '')
+    items=root.findall('./channel/item')
+    if root.tag == '{http://purl.org/rss/1.0/}RDF':
+        items=root.findall('{http://purl.org/rss/1.0/}item')
+    if root.tag == '{http://www.w3.org/2005/Atom}feed':
+        items=root.findall('{http://www.w3.org/2005/Atom}entry')
+    for item in items:
+        ns='{http://purl.org/rss/1.0/}' if root.tag.endswith('}RDF') else ('{http://www.w3.org/2005/Atom}' if root.tag.endswith('}feed') else '')
+        title=(item.findtext(ns+'title') or '').strip()
+        raw_link=item.findtext(ns+'link') or ''
+        if root.tag.endswith('}feed'):
+            link_tag=item.find(ns+'link')
+            raw_link=link_tag.get('href','') if link_tag is not None else ''
+        link=safe_url(raw_link)
         if not title or not link or EXCLUDE.search(title):
             continue
         if relevant_only and not BBC_RELEVANT.search(title):
             continue
-        pubdate=(item.findtext('pubDate') or '').strip()
+        pubdate=(item.findtext('pubDate') or item.findtext(ns+'date') or item.findtext(ns+'updated') or '').strip()
         if pubdate:
             try: pubdate=parsedate_to_datetime(pubdate).astimezone(timezone.utc).isoformat(timespec='seconds')
             except (ValueError, TypeError): pass
@@ -103,7 +120,7 @@ def parse_rss(body, provider, relevant_only=False):
         publisher=source.text.strip() if source is not None and source.text else urlsplit(link).hostname
         result.append({
             'title':title[:400], 'url':link, 'domain':publisher[:120],
-            'seendate':pubdate[:30], 'sourcecountry':'未確認', 'language':'en',
+            'seendate':pubdate[:30], 'sourcecountry':sourcecountry, 'language':language,
             'status':'unverified', 'provider':provider,
         })
     return result
@@ -154,6 +171,11 @@ def main():
         try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
+    for url,provider,language,country in LOCAL_LANGUAGE_FEEDS:
+        try:
+            keep(parse_rss(fetch_bytes(url),provider,language=language,sourcecountry=country),limit=18)
+        except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
+            errors.append(f'{provider}: {type(e).__name__}: {e}')
     try:keep(get_gdelt(),limit=40)
     except (HTTPError, URLError, ValueError, TimeoutError) as e:
         errors.append(f'GDELT: {type(e).__name__}: {e}')
@@ -162,7 +184,7 @@ def main():
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Google News RSS, BBC RSS, independent publisher RSS, GDELT (all attempted)',
+        'provider':'Google News RSS, BBC RSS, independent publisher RSS, local-language RSS, GDELT (all attempted)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Automatic review must independently verify publisher article bodies before preparing any approved edition; never publish unverified leads.',
         'errors':errors,
         'candidates':leads,
