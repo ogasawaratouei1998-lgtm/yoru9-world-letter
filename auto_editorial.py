@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key or no verified story means no publication."""
 import json, os, re, sys, ipaddress, socket, time
-from country_codes import country_key
+from country_codes import country_code, country_key, country_region
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -54,7 +54,7 @@ WRITING_CRAFT=(
     "to discard a verified, safely discussable incident. "
 )
 
-INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|par erreur|equivocaci[oó]n|por engano",re.I)
+INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|Fehler|Panne|par erreur|erreur|confusion|equivocaci[oó]n|por engano|equívoco|confusão|erro|falha",re.I)
 
 def incident_priority(lead):
     title=lead.get("title","")
@@ -67,6 +67,52 @@ def host(url):
         p=urlsplit(url)
         return p.hostname.lower().removeprefix("www.") if p.scheme=="https" and p.hostname and not p.username else ""
     except ValueError:return ""
+
+def balanced_source_retrieval(leads, limit=240):
+    """Fairly sample fetchable publisher sources across discovery markets.
+
+    sourcecountry describes a search locale or publisher, never incident
+    geography. It must not become an article's reported country.
+    """
+    from collections import deque
+    regions={}
+    for lead in sorted(leads,key=incident_priority):
+        domain=host(lead.get("url",""))
+        if not domain or domain=="news.google.com":
+            # Google RSS results are discovery URLs, not retrievable evidence.
+            continue
+        region=country_region(lead.get("sourcecountry")) or "unattributed"
+        hosts=regions.setdefault(region,{})
+        hosts.setdefault(domain,deque()).append(lead)
+    per_host={}
+    ordered=[]
+    while regions and len(ordered)<limit:
+        progressed=False
+        for region in list(regions):
+            hosts=regions[region]
+            # Round-robin publishers within each region; one article per
+            # region per turn prevents large English-language feeds from
+            # consuming the entire article-fetch budget.
+            for domain in list(hosts):
+                host_cap=5 if domain in ("theguardian.com","guardian.co.uk") else 30
+                if per_host.get(domain,0)>=host_cap:
+                    del hosts[domain]
+                    continue
+                group=hosts.pop(domain)
+                ordered.append(group.popleft())
+                per_host[domain]=per_host.get(domain,0)+1
+                if group:
+                    hosts[domain]=group
+                progressed=True
+                break
+            if not hosts:
+                del regions[region]
+            if len(ordered)>=limit:
+                break
+        if not progressed:
+            break
+    return ordered
+
 
 class ArticleText(HTMLParser):
     """Extract visible prose from a publisher article container, not navigation."""
@@ -276,6 +322,41 @@ def ai(prompt,temperature=0.1):
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
     raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
 
+def select_diverse_verified_stories(pool, country_history, category_history):
+    """Select up to five ALREADY audited stories, with regional fairness.
+
+    Country is the fact-checked event country, not the RSS feed locale.
+    Unknown event countries receive no fictitious diversity credit.
+    """
+    from collections import Counter
+    from itertools import combinations
+    if not pool:
+        return []
+    region_history=Counter()
+    for country,count in country_history.items():
+        region=country_region(country)
+        if region:
+            region_history[region]+=count
+    choices=list(combinations(range(len(pool)),min(5,len(pool))))
+    def diversity_score(indices):
+        stories=[pool[i] for i in indices]
+        countries=[country_code(story.get("country")) for story in stories]
+        regions=[country_region(story.get("country")) for story in stories]
+        known_countries=[country for country in countries if country]
+        known_regions=[region for region in regions if region]
+        categories={story["category"] for story in stories}
+        # Only approved stories compete. Prefer distinct world regions, then
+        # countries, then editorial perspectives; break ties by 30-day history
+        # and original verified editorial ranking.
+        return (len(set(known_regions)),len(set(known_countries)),len(categories),
+                -sum(region_history[region] for region in known_regions),
+                -sum(country_history[country] for country in known_countries),
+                -sum(category_history[story["category"]] for story in stories),
+                -sum(indices))
+    best=max(choices,key=diversity_score)
+    return [pool[i] for i in best]
+
+
 def archive_summaries():
     result=[]
     for file in Path("data/archive").glob("????-??-??.json"):
@@ -440,32 +521,14 @@ def main():
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
-    # Prioritize direct publisher URLs; interleave domains to avoid source monopolies.
-    buckets={}
-    for lead in sorted(recent,key=incident_priority):
-        buckets.setdefault(host(lead['url']),[]).append(lead)
-    ordered=[]
-    # A single host (notably news.google.com) must never exhaust the fetch budget.
-    # Preserve slots for independent publisher articles across multiple feeds.
-    per_host={}
-    while buckets and len(ordered)<240:
-        progressed=False
-        for domain in list(buckets):
-            # Google News RSS URLs are discovery links, not publisher article bodies.
-            # Repeated extraction failures should not consume scarce evidence slots.
-            # Keep a small Guardian sample for recovery detection while giving
-            # other independent local publishers more retrieval opportunities.
-            limit=0 if domain=="news.google.com" else (5 if domain in ("theguardian.com","guardian.co.uk") else 30)
-            if per_host.get(domain,0)>=limit:
-                del buckets[domain]
-                continue
-            if buckets[domain]:
-                ordered.append(buckets[domain].pop(0))
-                per_host[domain]=per_host.get(domain,0)+1
-                progressed=True
-            if not buckets[domain]:del buckets[domain]
-            if len(ordered)>=240:break
-        if not progressed:break
+    # Share scarce article-fetch slots across source markets, not just hosts.
+    # Publisher country is only a retrieval hint, NEVER proof of event country.
+    ordered=balanced_source_retrieval(recent,limit=240)
+    from collections import Counter
+    retrieval_regions=Counter(country_region(lead.get("sourcecountry")) or "unattributed"
+                              for lead in ordered)
+    print("Article retrieval by discovery-source region (not event country):",
+          json.dumps(dict(retrieval_regions),ensure_ascii=False,sort_keys=True),flush=True)
     outcomes={}
     failure_reasons={}
     for lead in ordered:
@@ -701,27 +764,15 @@ def main():
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Source-text verification approved no stories; no publication.");return 0
-    # Balance reader perspectives AND countries among independently verified stories.
-    # Diversity is a preference, never a reason to lower fact-checking standards.
-    from itertools import combinations
-    pool=selected
+    # Geographic diversity applies ONLY after source-text and AI fact review.
     country_history,category_history=recent_diversity_counts(now.date())
-    choices=list(combinations(range(len(pool)),min(5,len(pool))))
-    def diversity_score(indices):
-        stories=[pool[i] for i in indices]
-        categories=len({story["category"] for story in stories})
-        countries=len({country_key(story["country"]) for story in stories})
-        # First protect diversity within the edition; then favor countries
-        # and reader perspectives underrepresented over the previous 30 days.
-        country_repeat=sum(country_history[country_key(story["country"])] for story in stories)
-        category_repeat=sum(category_history[story["category"]] for story in stories)
-        return (categories+countries, categories, countries,
-                -country_repeat, -category_repeat, -sum(indices))
-    best=max(choices,key=diversity_score)
-    selected=[pool[i] for i in best]
+    selected=select_diverse_verified_stories(selected,country_history,category_history)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
-        "selected_countries":len({country_key(story["country"]) for story in selected}),
+        "selected_countries":len({country_code(story["country"]) for story in selected
+                                  if country_code(story["country"])}),
+        "selected_regions":len({country_region(story["country"]) for story in selected
+                                if country_region(story["country"])}),
         "selected_categories":len({story["category"] for story in selected}),
         "history_articles":sum(country_history.values())
     },sort_keys=True),flush=True)
