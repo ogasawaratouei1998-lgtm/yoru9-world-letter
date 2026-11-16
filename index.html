@@ -229,7 +229,7 @@ archiveMenu.addEventListener('change',async()=>{
     const response=await fetch(`./data/archive/${chosen}.json`,{cache:'no-store'});
     if(!response.ok)throw Error('HTTP '+response.status);
     const item=await response.json();
-    if(item.status!=='published'||item.editionDate!==chosen||!Array.isArray(item.stories)||![3,5].includes(item.stories.length))throw Error('invalid issue');
+    if(item.status!=='published'||item.editionDate!==chosen||!Array.isArray(item.stories)||item.stories.length<1||item.stories.length>5)throw Error('invalid issue');
     edition=item;filter='all';loadState();render();window.scrollTo({top:0,behavior:'smooth'});
   }catch(_){archiveStatus.textContent='この配信号を読み込めませんでした。';}
 });
