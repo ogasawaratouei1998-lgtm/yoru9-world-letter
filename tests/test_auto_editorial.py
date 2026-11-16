@@ -11,6 +11,62 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(country_code("南アフリカ"),"ZA")
         self.assertIsNone(country_code("不明な国"))
 
+    def test_region_catalog_requires_a_recognized_country(self):
+        from country_codes import country_region
+        self.assertEqual(country_region("日本"),"アジア")
+        self.assertEqual(country_region("BR"),"南アメリカ")
+        self.assertEqual(country_region("USA"),"北アメリカ")
+        self.assertIsNone(country_region("未確認"))
+        self.assertIsNone(country_region("架空の国"))
+
+    def test_evidence_retrieval_rotates_geographic_source_markets(self):
+        leads=[{"title":"Company error","url":f"https://us{i}.example/story",
+                "sourcecountry":"US"} for i in range(20)]
+        for market in ("FR","BR","NG","IN"):
+            leads.extend({"title":"Workplace mistake",
+                          "url":f"https://{market.lower()}{i}.example/story",
+                          "sourcecountry":market} for i in range(3))
+        leads.append({"title":"Google result","url":"https://news.google.com/articles/abc",
+                      "sourcecountry":"US"})
+        ordered=editorial.balanced_source_retrieval(leads,limit=5)
+        from country_codes import country_region
+        regions={country_region(lead["sourcecountry"]) for lead in ordered}
+        self.assertEqual(len(ordered),5)
+        self.assertEqual(len(regions),5)
+        self.assertTrue(all("news.google.com" not in lead["url"] for lead in ordered))
+        self.assertEqual(leads[0]["sourcecountry"],"US")
+
+    def test_evidence_retrieval_keeps_per_host_limit(self):
+        leads=[{"title":"Mistake","url":f"https://www.theguardian.com/article-{i}",
+                "sourcecountry":"GB"} for i in range(15)]
+        leads.extend({"title":"Mistake","url":f"https://local{i}.example/story",
+                      "sourcecountry":"NG"} for i in range(30))
+        ordered=editorial.balanced_source_retrieval(leads,limit=50)
+        self.assertEqual(sum("theguardian.com" in lead["url"] for lead in ordered),5)
+        self.assertEqual(len(ordered),35)
+
+    def test_verified_selection_favors_distinct_regions(self):
+        from collections import Counter
+        pool=[{"id":f"usa{i}","country":"米国","category":"company"} for i in range(5)]
+        for code in ("BR","FR","IN","NG"):
+            pool.append({"id":code,"country":code,"category":"company"})
+        selected=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
+        self.assertEqual(len(selected),5)
+        self.assertEqual({story["country"] for story in selected if story["country"]!="米国"},
+                         {"BR","FR","IN","NG"})
+        self.assertEqual(sum(story["country"]=="米国" for story in selected),1)
+
+    def test_verified_selection_uses_30_day_tiebreaker(self):
+        from collections import Counter
+        pool=([{"id":f"us{i}","country":"US","category":"work"} for i in range(2)]
+              +[{"id":f"ca{i}","country":"CA","category":"work"} for i in range(2)]
+              +[{"id":f"fr{i}","country":"FR","category":"work"} for i in range(2)])
+        selected=editorial.select_diverse_verified_stories(
+            pool,Counter({"US":18,"CA":1,"FR":1}),Counter())
+        self.assertEqual(len(selected),5)
+        self.assertEqual(sum(story["country"]=="US" for story in selected),1)
+        self.assertEqual(sum(story["country"]=="CA" for story in selected),2)
+
     def test_nightly_fallback_avoids_recent_repetition(self):
         from publish_approved import nightly_message, NIGHT_MESSAGES
         stories=[{"category":"work","id":"one"}]
