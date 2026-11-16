@@ -108,7 +108,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('詳しく読む ↓', page)
         self.assertIn('閉じる ↑', page)
         self.assertNotIn('補足文を見る（英語）', page)
-        self.assertIn('.filter,.readbtn,.smile,.share,.night-quote button{min-height:44px', page)
+        self.assertIn('.filter,.readbtn,.smile,.share{min-height:44px', page)
         self.assertIn('.night-quote p{font-size:clamp(19px', page)
         self.assertIn('.hero .eyebrow,.hero-audience{display:none}', page)
 
@@ -175,11 +175,17 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
-    def test_nightly_message_is_rendered_and_shared(self):
+    def test_nightly_message_is_rendered_without_share_button(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
         self.assertIn("edition.nightlyMessage", page)
-        self.assertIn("const message=$('nightlyMessage').textContent", page)
+        self.assertIn('今夜のオチ', page)
+        self.assertNotIn('shareNightQuote', page)
+        self.assertNotIn('この言葉を共有', page)
+        self.assertNotIn(".night-quote button{", page)
+        # Article-level sharing remains available for source-attributed news.
+        self.assertIn("data-share", page)
+        self.assertIn("navigator.share({title:s.title,text:txt})", page)
 
     def test_editor_can_prepare_regular_or_special_issue(self):
         page = (ROOT / "editor.html").read_text(encoding="utf-8")
