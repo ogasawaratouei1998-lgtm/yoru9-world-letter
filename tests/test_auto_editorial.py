@@ -3,6 +3,36 @@ from unittest.mock import patch
 import auto_editorial as editorial
 
 class AutoEditorialSafetyTests(unittest.TestCase):
+    def test_recent_diversity_counts_only_published_last_30_days(self):
+        import json
+        import tempfile
+        from pathlib import Path
+        from datetime import date
+        with tempfile.TemporaryDirectory() as directory:
+            archive=Path(directory)/"data"/"archive"
+            archive.mkdir(parents=True)
+            for day,status,country in [
+                ("2026-11-15","published","日本"),
+                ("2026-11-14","published","日本"),
+                ("2026-11-13","draft","フランス"),
+                ("2026-09-01","published","米国"),
+                ("2026-11-16","published","カナダ"),
+            ]:
+                (archive/(day+".json")).write_text(json.dumps({
+                    "status":status,"editionDate":day,
+                    "stories":[{"country":country,"category":"work"}]
+                },ensure_ascii=False),encoding="utf-8")
+            import os
+            previous=os.getcwd()
+            try:
+                os.chdir(directory)
+                countries,categories=editorial.recent_diversity_counts(date(2026,11,16))
+            finally:
+                os.chdir(previous)
+            self.assertEqual(countries["日本"],2)
+            self.assertEqual(sum(countries.values()),2)
+            self.assertEqual(categories["work"],2)
+
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
         self.assertIn("real, consequential failures",mission)
