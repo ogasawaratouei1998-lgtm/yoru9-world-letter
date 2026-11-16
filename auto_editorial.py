@@ -40,13 +40,13 @@ WRITING_CRAFT=(
     "Keep factual reporting and the explicitly labeled AI reflection separate; never translate unverified claims as facts. "
     "detail: first explain the verifiable sequence, then explicitly signal an editorial "
     "reflection with 'ここからはAIの見方。' and offer one specific, non-preachy reframing. "
-    "Generate TWO distinct jokes for each article: quip is the sharp opening punchline, and quipSecond is the follow-up punchline revealed only after opening the full story. The second must add a genuinely different comic angle, not paraphrase the first; both must be supported by the verified situation and must not invent facts. "
-    "quip: one punchy, memorable, original Japanese line (roughly 15-45 characters) with a surprising turn or vivid image about "
+    "Generate TWO original, distinct Japanese punchlines for each article. The first quip must strike immediately (aim for 18-45 Japanese characters). quipSecond is the follow-up only after opening the story (aim for 18-55 characters), and must switch the comic lens, never paraphrase the first. Both must be grounded in verified facts; never invent causes, outcomes or private wrongdoing. "
+    "quip: one quotable, tight Japanese line (roughly 18-45 characters) that lands its twist on the final words about "
     "the PLAN, ASSUMPTION or DECISION, never a victim. Prefer observational irony "
     "over ridicule, platitudes, generic encouragement or forced puns. "
     "Do not say 'your problems are nothing', dismiss the reader's pain, "
     "invent a happy ending, or imply the subjects were secretly fine. "
-    "If the facts are sufficient but the first joke is weak, try three angles "
+    "Before outputting JSON, privately draft three alternative first-hit jokes and two different second-hit angles. Pick the shortest unexpected verified contrast that ends with a crisp punch, not an explanation. Avoid long similes, recaps, generic cheering, forced AI/reboot metaphors, or hedged endings like \"ようです\". If unproven causes or personal allegations are the only funny angle, do not joke about them. "    "If the facts are sufficient but the first joke is weak, try three angles "
     "internally: inflated ambition versus mundane reality; a reasonable assumption "
     "that backfired; the tiny missed step behind a grand plan. Pick the kindest. "
     "Do not include these internal options in the JSON. "
@@ -208,14 +208,14 @@ def available_model():
 
 ACTIVE_MODEL=None
 
-def ai(prompt):
+def ai(prompt,temperature=0.1):
     global ACTIVE_MODEL
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
     models=available_models()
     if ACTIVE_MODEL in models:
         models=[ACTIVE_MODEL]+[model for model in models if model!=ACTIVE_MODEL]
     data={"contents":[{"parts":[{"text":prompt}]}],
-          "generationConfig":{"responseMimeType":"application/json","temperature":0.1}}
+          "generationConfig":{"responseMimeType":"application/json","temperature":temperature}}
     last_error=None
     for model in models:
         for version in ("v1beta","v1"):
@@ -535,7 +535,7 @@ def main():
       'verificationUrls must be exact URLs present in evidence (one is sufficient; two distinct publishers are preferred when available). Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
-      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
+      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
@@ -544,7 +544,7 @@ def main():
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
-    draft_response=ai(prompt)
+    draft_response=ai(prompt,temperature=0.65)
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
     if not isinstance(draft,list):
         print("Editorial drafting diagnostic: malformed stories response; safe skip.",flush=True)
@@ -599,12 +599,12 @@ def main():
                 "edition day or previous day (JST), formatted YYYY-MM-DD. "
                 "Use warm humor about the mistake, never victims or suffering; "
                 "give readers perspective without inventing outcomes. "
-                "Do not infer any fact absent from the supplied text. "
+                "Do not infer any fact absent from the supplied text. Sharpen the first hit through three private alternatives, and aim the second hit at a DIFFERENT verified contrast; avoid long explanations or rumors. "
                 "Edition date JST: "+day+
                 ". Candidate groups (hypotheses, NOT proof): "+
                 json.dumps(batch,ensure_ascii=False))
             try:
-                retry_result=ai(retry_prompt)
+                retry_result=ai(retry_prompt,temperature=0.65)
                 retry_stories=retry_result.get("stories",[]) if isinstance(retry_result,dict) else []
                 if isinstance(retry_stories,list):
                     draft.extend(retry_stories[:3])
@@ -670,7 +670,7 @@ def main():
           "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
-          "Reject if evidence is insufficient or unclear. "
+          "Reject if evidence is insufficient or unclear. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
