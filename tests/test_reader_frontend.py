@@ -34,6 +34,22 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('本日分が公開され次第、自動で切り替わります。',page)
         self.assertIn('<summary>過去の配信号・世界地図を見る</summary>',page)
 
+    def test_initial_render_does_not_read_uninitialized_archive_menu(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        startup = page.index("loadState();render();")
+        declaration = page.index("const archiveMenu=$('archiveSelect');")
+        self.assertLess(startup, declaration)
+        status = page[page.index("function displayReleaseStatus(){"):page.index("function render(){")]
+        self.assertIn("$('archiveSelect').value", status)
+        self.assertNotIn("archiveMenu.value", status)
+
+    def test_nightly_closing_has_single_primary_message(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        closing = page[page.index('<section class="footerpanel">'):page.index('</section>', page.index('<section class="footerpanel">'))]
+        self.assertEqual(closing.count('id="nightlyMessage"'), 1)
+        self.assertIn('今日の便りは、ここまでです。', closing)
+        self.assertNotIn('完璧じゃないのは', closing)
+
     def test_iso_country_catalog_is_used_across_reader(self):
         import json
         catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
