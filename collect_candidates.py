@@ -17,6 +17,16 @@ import xml.etree.ElementTree as ET
 # These links are only leads; article details and harm must be reviewed manually.
 SEARCHES = [
     ('(手違い OR 誤発注 OR 間違えて) when:7d', 'ja', 'JP', 'JP:ja'),
+    # Additional leads for underrepresented people, workplaces and sports.
+    ('(職場 OR 店員 OR 従業員) (手違い OR 勘違い OR 失敗) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('(個人 OR 住民 OR 客) (間違い OR 勘違い) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('(スポーツ OR 試合 OR 審判) (珍事 OR 勘違い OR 手違い) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('(workplace OR employee) (mix-up OR mistake) when:7d', 'en', 'GB', 'GB:en'),
+    ('(sports OR referee OR match) (mix-up OR blunder) when:7d', 'en', 'GB', 'GB:en'),
+    ('(Sport OR Schiedsrichter) (Panne OR Verwechslung) when:7d', 'de', 'DE', 'DE:de'),
+    ('(sport OR arbitre) (erreur OR confusion) when:7d', 'fr', 'FR', 'FR:fr'),
+    ('(deporte OR árbitro) (error OR confusión) when:7d', 'es', 'ES', 'ES:es'),
+    ('(esporte OR árbitro) (erro OR confusão) when:7d', 'pt', 'BR', 'BR:pt-419'),
     ('"mix-up" OR "blunder" when:7d', 'en', 'GB', 'GB:en'),
     ('"Verwechslung" OR "aus Versehen" when:7d', 'de', 'DE', 'DE:de'),
     ('"par erreur" OR "méprise" when:7d', 'fr', 'FR', 'FR:fr'),
