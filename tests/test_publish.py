@@ -91,6 +91,27 @@ class PublishingTest(unittest.TestCase):
         public=validate_approved(data,'2026-11-10')
         self.assertEqual(public['stories'][0]['detail'],data['stories'][0]['detail'])
 
+    def test_second_ai_quip_survives_publication_and_archive(self):
+        data=fixture()
+        second='最初と違う角度から、あとで笑える追撃ツッコミを届けます。'
+        data['stories'][0]['quipSecond']=second
+        self.path.write_text(json.dumps(data,ensure_ascii=False),encoding='utf-8')
+        self.assertTrue(publish(self.root,datetime.fromisoformat('2026-11-10T21:08:00+09:00')))
+        current=json.loads((self.root/'data'/'current.json').read_text(encoding='utf-8'))
+        archive=json.loads((self.root/'data'/'archive'/'2026-11-10.json').read_text(encoding='utf-8'))
+        self.assertEqual(current['stories'][0]['quipSecond'],second)
+        self.assertEqual(archive['stories'][0]['quipSecond'],second)
+        self.assertNotIn('editorVerified',current['stories'][0])
+
+    def test_second_ai_quip_must_be_distinct_and_valid(self):
+        data=fixture()
+        data['stories'][0]['quipSecond']=data['stories'][0]['quip']
+        with self.assertRaisesRegex(ValueError,'重複'):
+            validate_approved(data,'2026-11-10')
+        data['stories'][0]['quipSecond']='短い'
+        with self.assertRaisesRegex(ValueError,'15'):
+            validate_approved(data,'2026-11-10')
+
     def test_unverified_story_blocked(self):
         data=fixture()
         data['stories'][2]['editorVerified']=False

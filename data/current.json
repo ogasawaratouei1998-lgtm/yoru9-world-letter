@@ -16,7 +16,8 @@
       "quip": "配線を一本変えただけで全米の空がストップするとは、ルーターにも『自分がいかに影響力があるか』を誇示したい反抗期があったようです。",
       "sourceName": "米連邦航空局（FAA、2026年11月15日）",
       "sourceUrl": "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers",
-      "reported": "2026-11-15"
+      "reported": "2026-11-15",
+      "quipSecond": "空のルートは秒単位で管理するのに、今回はルーターのご機嫌取りで全米が足踏み。名前は似ていても、仕事のスケールが違いすぎる。"
     },
     {
       "id": "jensen-huang-nvidia-resignation-2026",
@@ -30,7 +31,8 @@
       "quip": "世界中のAIの未来を予測できる頭脳を持っていても、『怪しい人物からの甘い誘い』という最も古典的なバグにはパッチを当てられなかったようです。",
       "sourceName": "NVIDIA公式発表（2026年11月12日）",
       "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
-      "reported": "2026-11-16"
+      "reported": "2026-11-16",
+      "quipSecond": "GPUには大量の計算を並列処理できても、企業の信頼回復に『再起動』ボタンは付いていないらしい。"
     },
     {
       "id": "spacex-starship-booster-failure-2026",
@@ -44,8 +46,10 @@
       "quip": "ロケットの上半分を見事にキャッチしたものの、下半分が勝手に海へダイブした姿は、『完璧に決めたと思った瞬間に靴紐を結び忘れていた』ような気まずさがあります。",
       "sourceName": "AP通信（2026年11月15日）",
       "sourceUrl": "https://apnews.com/article/df394c1b5a0f85e11194f9ff7db9ee6b",
-      "reported": "2026-11-15"
+      "reported": "2026-11-15",
+      "quipSecond": "上段は華麗に『ただいま』、下段は海へ別行動。宇宙規模の遠足でも、全員そろって帰るのは難しい。"
     }
   ],
-  "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts."
+  "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.",
+  "nightlyMessage": "空も、巨大企業も、宇宙開発も、予定表どおりには進まない夜。今日の自分の「まさか」にも、少しだけ寛大でいよう。"
 }

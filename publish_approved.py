@@ -154,8 +154,19 @@ def validate_approved(data, expected_date):
         ids.add(story['id'])
         sources.add(story['sourceUrl'])
         # Editorial review metadata is kept in the repository, not public story JSON.
-        public_stories.append({key: story[key].strip() for key in REQUIRED_STORY} |
-                              ({'flag': story['flag']} if isinstance(story.get('flag'), str) else {}))
+        public_story = {key: story[key].strip() for key in REQUIRED_STORY}
+        if isinstance(story.get('flag'), str):
+            public_story['flag'] = story['flag']
+        if 'quipSecond' in story:
+            second = story['quipSecond']
+            require(isinstance(second, str) and 15 <= len(second.strip()) <= 160,
+                    f'{i}本目のquipSecondは15〜160文字で指定してください')
+            require(second.strip() != story['quip'].strip(),
+                    f'{i}本目のquipSecondが最初のツッコミと重複しています')
+            require(not any(ch in second for ch in '<>\r\n'),
+                    f'{i}本目のquipSecondに不正な制御文字またはHTML記号があります')
+            public_story['quipSecond'] = second.strip()
+        public_stories.append(public_story)
     return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(),
             'editionType': edition_type,
             'nightlyMessage': data.get('nightlyMessage', '').strip() if isinstance(data.get('nightlyMessage'),str) and 20 <= len(data['nightlyMessage'].strip()) <= 110 and not any(ch in data['nightlyMessage'] for ch in '<>\r\n') and not re.search(r'\\[rn]', data['nightlyMessage']) else nightly_message(expected_date, public_stories),
