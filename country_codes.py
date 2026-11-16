@@ -18,3 +18,11 @@ def country_code(name):
 
 def country_key(name):
     return country_code(name) or str(name or "").strip()
+
+
+def country_region(name):
+    """Region of a recognized event/source country; unknown names stay unknown."""
+    code = country_code(name)
+    if code is None:
+        return None
+    return next((item["region"] for item in catalog() if item["code"] == code), None)
