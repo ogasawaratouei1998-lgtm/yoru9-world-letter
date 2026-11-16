@@ -14,7 +14,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("今日も世界は、", page)
         self.assertIn("ちょっとやらかした。", page)
-        self.assertIn("世界の失敗・勘違い・まさかのニュースを、毎晩9時に3本。", page)
+        self.assertIn("世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。", page)
         self.assertIn("あなたも自分に優しく。", page)
         self.assertIn('class="hero-description"', page)
 
