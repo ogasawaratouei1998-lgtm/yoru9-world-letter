@@ -123,6 +123,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         parser.feed("<html><body><p>Real article content</p><script>fake evidence</script></body></html>")
         self.assertIn("Real article content",parser.parts)
         self.assertNotIn("fake evidence",parser.parts)
+    def test_valueless_class_attribute_does_not_crash_article_parser(self):
+        html = '<article class><p>' + 'Verified article sentence. ' * 40 + '</p></article>'
+        body=editorial.extracted_article_text(html)
+        self.assertIn('Verified article sentence.',body)
+
     def test_guardian_article_body_excludes_site_navigation(self):
         html=('<nav>'+'Menu '*300+'</nav>'
               '<div data-gu-name="body"><p>'+'Verified article sentence. '*40+'</p></div>'

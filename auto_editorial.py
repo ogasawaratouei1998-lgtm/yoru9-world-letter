@@ -126,7 +126,7 @@ class ArticleText(HTMLParser):
         self.stack=[]
     def handle_starttag(self,tag,attrs):
         attributes=dict(attrs)
-        classes=attributes.get("class","").split()
+        classes=(attributes.get("class") or "").split()
         guardian_body=attributes.get("data-gu-name")=="body"
         # Publisher layouts vary; only explicitly article-scoped containers count.
         article_body=(tag=="article" or guardian_body or
