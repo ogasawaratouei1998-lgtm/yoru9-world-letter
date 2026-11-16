@@ -10,6 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ReaderFrontendTest(unittest.TestCase):
+    def test_sports_filter_is_available(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('data-filter="sports"', page)
+        self.assertIn('>スポーツ</button>', page)
+
     def test_reader_ids_and_offline_honesty(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="editionTag"', 'id="storyHeading"', 'id="dateGuide"',
