@@ -47,6 +47,15 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('.story.expanded .summary{display:block}', page)
         self.assertIn('.story.expanded .teaserquip{display:block}', page)
 
+    def test_english_only_detail_is_collapsed_below_japanese_overview(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn("function storyDetailHtml(story)", page)
+        self.assertIn("if(isJapaneseText(detail))", page)
+        self.assertIn("日本語の詳しい本文は準備中です。", page)
+        self.assertIn("英語の補足文を表示", page)
+        self.assertIn('lang="en"', page)
+        self.assertIn("${storyDetailHtml(s)}", page)
+
     def test_mobile_reader_actions_and_nightly_quote_layout(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('詳しく読む ↓', page)
