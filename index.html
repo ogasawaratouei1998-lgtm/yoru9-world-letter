@@ -70,7 +70,8 @@ body{background:#0b1528}
 .hero-truth strong{color:#ffd89e}
 @media(max-width:520px){.hero-audience{font-size:12px}.hero h1{font-size:clamp(24px,6.5vw,30px)}.hero-truth{font-size:13px}}
 .night-quote{margin:22px auto 0;padding:16px 12px;border-top:1px solid #536786;max-width:490px}.night-quote span{font-size:11px;color:var(--gold);font-weight:750}.night-quote p{font-size:15px;line-height:1.8;margin:7px 0 12px}.night-quote button{border:1px solid #b5c6dc;border-radius:100px;background:transparent;color:#f8f4ed;padding:6px 17px;font-size:12px}
-.worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.map-land{position:absolute;background:#597d79;opacity:.55;border-radius:45% 30% 48% 35%;transform:rotate(-18deg)}.map-americas{left:11%;top:12%;width:18%;height:67%}.map-europe{left:47%;top:19%;width:13%;height:19%}.map-asia{left:57%;top:12%;width:32%;height:42%;transform:rotate(8deg)}.map-africa{left:48%;top:43%;width:17%;height:42%;transform:rotate(9deg)}.map-oceania{left:81%;top:72%;width:12%;height:17%}.map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
+.worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.world-coastlines{position:absolute;inset:0;width:100%;height:100%;display:block}.world-coastlines path{fill:#527b79;stroke:#93b4ae;stroke-width:.24;vector-effect:non-scaling-stroke}.map-fallback{position:absolute;left:10px;bottom:7px;z-index:1;background:#14243dcc;border-radius:7px;padding:4px 7px;font-size:11px;color:#fff0d8;pointer-events:none}
+.map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
 </style>
 </head>
 <body><div class="wrap">
@@ -81,7 +82,7 @@ body{background:#0b1528}
 <main><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
 <section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
-<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><div class="map-land map-americas"></div><div class="map-land map-europe"></div><div class="map-land map-asia"></div><div class="map-land map-africa"></div><div class="map-land map-oceania"></div><div id="mapPins"></div></div><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
+<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 <section class="notification-panel" id="notificationSection" hidden>
 <h2>夜9時のお知らせ</h2>
@@ -115,6 +116,46 @@ const COUNTRY_POINTS=[
 ];
 let countryIndex=new Map();
 function mapPoint(country){const match=COUNTRY_POINTS.find(([pattern])=>pattern.test(country));return match?[((match[1]+180)/360)*100,((90-match[2])/180)*100]:null}
+// Natural Earth-derived country boundaries are loaded as GeoJSON.
+// Drawn with an equirectangular projection matching the country marker positions.
+async function loadWorldBoundaries(){
+ const svg=$('worldCoastlines'),status=$('mapLoading');
+ try{
+  const response=await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',{cache:'force-cache'});
+  if(!response.ok)throw Error('Map HTTP '+response.status);
+  const geo=await response.json();
+  if(!Array.isArray(geo.features))throw Error('Invalid geography');
+  const ns='http://www.w3.org/2000/svg';
+  const fragment=document.createDocumentFragment();
+  function polygonPath(rings){
+   let path='';
+   for(const ring of rings){
+    let segment=[],lastLon=null;
+    function flush(){if(segment.length>2)path+='M'+segment.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join('L')+'Z';segment=[]}
+    for(const coord of ring){
+     const lon=Number(coord[0]),lat=Number(coord[1]);
+     if(!Number.isFinite(lon)||!Number.isFinite(lat))continue;
+     if(lastLon!==null&&Math.abs(lon-lastLon)>180)flush();
+     segment.push([lon+180,90-lat]);lastLon=lon;
+    }
+    flush();
+   }
+   return path;
+  }
+  for(const feature of geo.features){
+   const geometry=feature.geometry;if(!geometry)continue;
+   const polygons=geometry.type==='Polygon'?[geometry.coordinates]:geometry.type==='MultiPolygon'?geometry.coordinates:[];
+   for(const rings of polygons){
+    const d=polygonPath(rings);if(!d)continue;
+    const path=document.createElementNS(ns,'path');path.setAttribute('d',d);fragment.append(path);
+   }
+  }
+  svg.replaceChildren(fragment);status.hidden=true;
+ }catch(err){
+  status.textContent='地図の形を取得できません。国別アーカイブは利用できます。';
+ }
+}
+loadWorldBoundaries();
 function renderWorld(){
  const counts=new Map();edition.stories.forEach(story=>{const country=String(story.country||'').trim();if(country)counts.set(country,(counts.get(country)||0)+1)});
  const pins=$('mapPins');pins.replaceChildren();
