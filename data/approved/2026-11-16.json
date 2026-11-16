@@ -32,8 +32,7 @@
         "The ground stop lasted more than four hours, resulting in thousands of flight cancellations and delays nationwide."
       ],
       "editorVerified": true,
-      "humorSafe": true,
-      "quipSecond": "空のルートは秒単位で管理するのに、今回はルーターのご機嫌取りで全米が足踏み。名前は似ていても、仕事のスケールが違いすぎる。"
+      "humorSafe": true
     },
     {
       "id": "jensen-huang-nvidia-resignation-2026",
@@ -59,8 +58,7 @@
         "Nvidia's board faced intense pressure, launched an independent investigation, and faced a shareholder class-action lawsuit over the undisclosed relationship."
       ],
       "editorVerified": true,
-      "humorSafe": true,
-      "quipSecond": "GPUには大量の計算を並列処理できても、企業の信頼回復に『再起動』ボタンは付いていないらしい。"
+      "humorSafe": true
     },
     {
       "id": "spacex-starship-booster-failure-2026",
@@ -86,9 +84,7 @@
         "The mission demonstrated partial reusability while highlighting ongoing challenges in achieving a simultaneous double catch of both rocket stages."
       ],
       "editorVerified": true,
-      "humorSafe": true,
-      "quipSecond": "上段は華麗に『ただいま』、下段は海へ別行動。宇宙規模の遠足でも、全員そろって帰るのは難しい。"
+      "humorSafe": true
     }
-  ],
-  "nightlyMessage": "空も、巨大企業も、宇宙開発も、予定表どおりには進まない夜。今日の自分の「まさか」にも、少しだけ寛大でいよう。"
+  ]
 }
