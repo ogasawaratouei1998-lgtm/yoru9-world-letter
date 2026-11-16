@@ -117,8 +117,41 @@ def validate_approved(data, expected_date):
             'nightlyMessage': nightly_message(expected_date, public_stories),
             **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
             'stories': public_stories,
+            'nightQuote': nightly_line(expected_date, public_stories),
             'credits': 'Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.'}
 
+
+
+# Editorially curated closing lines. A stable date/story-based choice gives
+# each released edition its own warm message without a new unverified AI call.
+NIGHT_LINES = {
+    'work': [
+        '仕事でつまずく日もある。世界のどこかでも、きっと同じ。',
+        '予定どおりにいかない日も、今日を終えたなら十分です。',
+        'ひとつの失敗で、今日のあなた全部は決まりません。',
+        'うまくいかなかったことも、明日には少し違って見えるかも。',
+    ],
+    'person': [
+        '思い違いは、誰にでもある。今夜は自分にもやさしく。',
+        '今日の小さな失敗が、いつか笑い話になりますように。',
+        '完璧じゃない一日にも、おやすみなさい。',
+        '世界には、思いどおりにならない話がたくさんある。',
+    ],
+    'company': [
+        '大きな組織だって、想定外に出会う。あなたも焦らなくていい。',
+        '立派な計画にも、まさかは起こる。今夜はひと休み。',
+        '世界が思いどおりにいかない夜も、眠っていい。',
+        '失敗の規模は違っても、明日はまた始められる。',
+    ],
+}
+
+def nightly_line(edition_date, stories):
+    import hashlib
+    key = edition_date + '|' + '|'.join(story['id'] for story in stories)
+    digest = hashlib.sha256(key.encode('utf-8')).digest()
+    category = stories[digest[0] % len(stories)]['category']
+    lines = NIGHT_LINES[category]
+    return lines[digest[1] % len(lines)]
 
 def atomic_json(path, data):
     path.parent.mkdir(parents=True, exist_ok=True)
