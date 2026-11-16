@@ -103,10 +103,17 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl'], 'https://news.example.com/mirror']
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
-    def test_more_than_three_regular_blocked(self):
+    def test_more_than_five_regular_blocked(self):
         data=fixture()
-        data['stories'].append(dict(data['stories'][0], id='extra', sourceUrl='https://news.example.com/extra', verificationUrls=['https://news.example.com/extra', 'https://another.example.org/extra']))
-        with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+        for n in range(2,7):
+            story=dict(data['stories'][0])
+            story['id']=f'extra-{n}'
+            story['sourceUrl']=f'https://news{n}.example.com/extra'
+            story['verificationUrls']=[story['sourceUrl'], f'https://another{n}.example.org/extra']
+            data['stories'].append(story)
+        with self.assertRaises(ValueError):
+            validate_approved(data,'2026-11-10')
+
     def test_zero_regular_blocked(self):
         data=fixture()
         data['stories']=[]
