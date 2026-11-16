@@ -147,7 +147,7 @@ def validate_approved(data, expected_date):
                               ({'flag': story['flag']} if isinstance(story.get('flag'), str) else {}))
     return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(),
             'editionType': edition_type,
-            'nightlyMessage': data.get('nightlyMessage', '').strip() if isinstance(data.get('nightlyMessage'),str) and 20 <= len(data['nightlyMessage'].strip()) <= 110 and not re.search(r'[<>\\r\\n]',data['nightlyMessage']) else nightly_message(expected_date, public_stories),
+            'nightlyMessage': data.get('nightlyMessage', '').strip() if isinstance(data.get('nightlyMessage'),str) and 20 <= len(data['nightlyMessage'].strip()) <= 110 and not any(ch in data['nightlyMessage'] for ch in '<>\r\n') else nightly_message(expected_date, public_stories),
             **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
             'stories': public_stories,
             'nightQuote': nightly_line(expected_date, public_stories),
