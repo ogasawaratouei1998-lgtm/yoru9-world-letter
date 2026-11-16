@@ -51,6 +51,16 @@ class PublishingTest(unittest.TestCase):
         (self.root/'data'/'archive'/'index.json').write_text('{"issues":[]}',encoding='utf-8')
     def tearDown(self):
         self.tmp.cleanup()
+    def test_sports_category_is_valid_and_has_closing_lines(self):
+        from publish_approved import NIGHT_MESSAGES, NIGHT_LINES
+        data=fixture()
+        data['stories'][0]['category']='sports'
+        data['stories'][0]['categoryLabel']='スポーツ'
+        result=validate_approved(data,'2026-11-10')
+        self.assertEqual(result['stories'][0]['category'],'sports')
+        self.assertTrue(NIGHT_MESSAGES['sports'])
+        self.assertTrue(NIGHT_LINES['sports'])
+
     def test_before_nine_does_not_publish(self):
         self.assertFalse(publish(self.root,datetime.fromisoformat('2026-11-10T20:59:00+09:00')))
         self.assertFalse((self.root/'data'/'archive'/'2026-11-10.json').exists())
