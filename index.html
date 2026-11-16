@@ -72,6 +72,7 @@ body{background:#0b1528}
 .night-quote{margin:22px auto 0;padding:16px 12px;border-top:1px solid #536786;max-width:490px}.night-quote span{font-size:11px;color:var(--gold);font-weight:750}.night-quote p{font-size:15px;line-height:1.8;margin:7px 0 12px}.night-quote button{border:1px solid #b5c6dc;border-radius:100px;background:transparent;color:#f8f4ed;padding:6px 17px;font-size:12px}
 .worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.world-coastlines{position:absolute;inset:0;width:100%;height:100%;display:block}.world-coastlines path{fill:#527b79;stroke:#93b4ae;stroke-width:.24;vector-effect:non-scaling-stroke}.map-fallback{position:absolute;left:10px;bottom:7px;z-index:1;background:#14243dcc;border-radius:7px;padding:4px 7px;font-size:11px;color:#fff0d8;pointer-events:none}
 .map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
+.editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
 </style>
 </head>
 <body><div class="wrap">
@@ -82,7 +83,7 @@ body{background:#0b1528}
 <main><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">思わず「そんなことある!?」と言いたくなる実話を集めました。報道された事実と、AIの冗談は分けてお届けします。</p><p class="date-guide" id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button></div>
 <section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section>
-<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
+<section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>編集者向け｜直近30日の掲載バランス</summary><p class="small">公開済み配信号のみを集計。未掲載とは、この30日間に掲載記録がない地域を指します。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 <section class="notification-panel" id="notificationSection" hidden>
 <h2>夜9時のお知らせ</h2>
@@ -150,7 +151,7 @@ async function loadWorldBoundaries(){
     const path=document.createElementNS(ns,'path');path.setAttribute('d',d);fragment.append(path);
    }
   }
-  svg.replaceChildren(fragment);status.hidden=true;
+  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
  }catch(err){
   status.textContent='地図の形を取得できません。国別アーカイブは利用できます。';
  }
@@ -183,6 +184,63 @@ function refreshCountryChoices(){
  if(countryIndex.has(previous))menu.value=previous;
  showCountryResults();
 }
+const EDITOR_REGIONS=['アジア','ヨーロッパ','北アメリカ','南アメリカ','アフリカ','オセアニア'];
+function editorialRegion(country){
+ const c=String(country||'').toLowerCase();
+ const rules=[
+ ['北アメリカ',/アメリカ|米国|カナダ|メキシコ|united states|usa|canada|mexico/],
+ ['南アメリカ',/ブラジル|アルゼンチン|チリ|ペルー|コロンビア|brazil|argentina|chile|peru|colombia/],
+ ['アフリカ',/南アフリカ|ケニア|ナイジェリア|エジプト|モロッコ|ガーナ|south africa|kenya|nigeria|egypt|morocco|ghana/],
+ ['オセアニア',/オーストラリア|ニュージーランド|australia|new zealand/],
+ ['ヨーロッパ',/イギリス|英国|ウェールズ|スコットランド|ドイツ|フランス|スペイン|イタリア|オランダ|ベルギー|スイス|ポーランド|ギリシャ|ポルトガル|スウェーデン|ノルウェー|ウクライナ|ロシア|united kingdom|england|wales|germany|france|spain|italy|netherlands|belgium|switzerland|poland|greece|portugal|sweden|norway|ukraine|russia/],
+ ['アジア',/日本|中国|韓国|台湾|インド|タイ|ベトナム|インドネシア|フィリピン|トルコ|サウジアラビア|アラブ首長国連邦|japan|china|korea|taiwan|india|thailand|vietnam|indonesia|philippines|turkey|saudi arabia|uae/]
+ ];
+ return rules.find(([region,pattern])=>pattern.test(c))?.[0]||null;
+}
+function renderEditorialDashboard(issues,failed=0){
+ const now=localDate(new Date()),end=new Date(now+'T00:00:00+09:00');
+ const counts=new Map(),regions=new Map(EDITOR_REGIONS.map(x=>[x,0]));
+ let articles=0,unknown=0,dates=new Set();
+ for(const issue of issues){
+  if(issue?.status!=='published'||!Array.isArray(issue.stories)||!/^\d{4}-\d{2}-\d{2}$/.test(issue.editionDate||''))continue;
+  const date=new Date(issue.editionDate+'T00:00:00+09:00');
+  const age=(end-date)/86400000;
+  if(age<0||age>=30)continue;
+  dates.add(issue.editionDate);
+  for(const story of issue.stories){
+   articles++;
+   const country=String(story.country||'').trim();
+   if(country)counts.set(country,(counts.get(country)||0)+1);
+   const region=editorialRegion(country);
+   if(region)regions.set(region,regions.get(region)+1);else unknown++;
+  }
+ }
+ const missing=[...regions].filter(([,n])=>n===0).map(([name])=>name);
+ $('editorStats').textContent='直近30日：'+dates.size+'配信号／'+articles+'記事／'+counts.size+'か国・地域。未掲載地域：'+missing.length+'。'+(failed?'取得できなかった配信号：'+failed+'件。':'')+(unknown?'地域を判定できない記事：'+unknown+'件。':'');
+ const pins=$('editorMapPins');pins.replaceChildren();
+ for(const [country,count] of counts){
+  const point=mapPoint(country);if(!point)continue;
+  const pin=document.createElement('button');pin.type='button';pin.disabled=true;pin.className='map-pin';
+  pin.style.left=point[0]+'%';pin.style.top=point[1]+'%';pin.textContent=String(count);
+  pin.title=country+'：30日間で'+count+'本';pin.setAttribute('aria-label',pin.title);pins.append(pin);
+ }
+ const regionBox=$('editorRegionStats');regionBox.replaceChildren();
+ for(const [region,count] of regions){
+  const line=document.createElement('div');line.className='editor-region'+(count===0?' missing':'');
+  const name=document.createElement('span');name.textContent=region;
+  const value=document.createElement('span');value.textContent=count===0?'未掲載':'掲載 '+count+'本';
+  line.append(name,value);regionBox.append(line);
+ }
+ const countryBox=$('editorCountryStats');countryBox.replaceChildren();
+ const title=document.createElement('strong');title.textContent='国・地域別の掲載数';countryBox.append(title);
+ for(const [country,count] of [...counts].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'ja'))){
+  const line=document.createElement('div');line.className='editor-region';
+  const name=document.createElement('span');name.textContent=country;
+  const value=document.createElement('span');value.textContent=count+'本';
+  line.append(name,value);countryBox.append(line);
+ }
+ if(!counts.size){const p=document.createElement('p');p.textContent='対象期間に掲載記録がありません。';countryBox.append(p)}
+}
 function showCountryResults(){
  const country=$('countrySelect').value;
  const result=$('countryResults');result.replaceChildren();
@@ -194,6 +252,7 @@ function showCountryResults(){
 async function loadCountryIndex(issues){
  const editions=[...issues].filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,90);
  const all=await Promise.all(editions.map(async issue=>{try{const r=await fetch('./data/archive/'+issue.date+'.json',{cache:'no-store'});if(!r.ok)return null;const data=await r.json();return data.status==='published'&&data.editionDate===issue.date?data:null}catch(_){return null}}));
+ renderEditorialDashboard(all.filter(Boolean),all.filter(x=>!x).length);
  countryIndex=new Map();
  all.filter(Boolean).forEach(issue=>issue.stories.forEach(story=>{const country=String(story.country||'').trim();if(!country)return;if(!countryIndex.has(country))countryIndex.set(country,[]);countryIndex.get(country).push({date:issue.editionDate,title:story.title})}));
  refreshCountryChoices();
