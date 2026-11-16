@@ -9,6 +9,19 @@ class CollectionTest(unittest.TestCase):
         self.assertEqual(len(result),1)
         self.assertEqual(result[0]['status'],'unverified')
         self.assertEqual(result[0]['domain'],'NewsOutlet')
+    def test_local_language_rss_preserves_language_and_country(self):
+        rss='<rss><channel><item><title>Une erreur de livraison</title><link>https://www.lemonde.fr/example</link></item></channel></rss>'.encode('utf-8')
+        result=parse_rss(rss,'Le Monde RSS',language='fr',sourcecountry='FR')
+        self.assertEqual(result[0]['language'],'fr')
+        self.assertEqual(result[0]['sourcecountry'],'FR')
+        self.assertEqual(result[0]['status'],'unverified')
+
+    def test_german_rdf_feed_is_supported(self):
+        rdf='''<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://purl.org/rss/1.0/"><item><title>Fehler bei Lieferung</title><link>https://www.dw.com/de/story</link></item></rdf:RDF>'''.encode('utf-8')
+        result=parse_rss(rdf,'DW Deutsch',language='de',sourcecountry='DE')
+        self.assertEqual(len(result),1)
+        self.assertEqual(result[0]['language'],'de')
+
     def test_tragedy_filter(self):
         rss=b'<rss><channel><item><title>Two killed in error</title><link>https://news.google.com/articles/abc</link></item></channel></rss>'
         self.assertEqual(parse_rss(rss,'Google News RSS'),[])
