@@ -75,7 +75,7 @@ body{background:#0b1528}
 .editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
 .reader-extras{margin:22px 0;border:1px solid #667b98;border-radius:13px;padding:12px;background:#182a42}.reader-extras>summary{color:#f5d8a1;font-weight:750;cursor:pointer;padding:5px 2px}.reader-extras[open]>summary{margin-bottom:15px}.release-status{border-left:3px solid #d5ae67;padding:8px 12px;margin:8px 0 14px;background:#1b2e47;color:#f4e4c8;font-size:13px;line-height:1.65}
 
-.lead-award{display:inline-block;border-radius:100px;padding:3px 8px;background:#f6dba7;color:#17243b;font-size:10px;font-weight:900}.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight button{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
+.lead-award{display:inline-block;border-radius:100px;padding:3px 8px;background:#f6dba7;color:#17243b;font-size:10px;font-weight:900}.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight #spotlightRead{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
 @media(max-width:520px){.spotlight{padding:15px 16px;margin:8px 0 14px}.spotlight h2{margin:7px 0 12px}}
 .second-quip{margin:18px 0;padding:16px 17px;background:#243956;border-left:4px solid #ffd89e;border-radius:10px}.second-quip span{display:block;color:#ffd89e;font-size:12px;font-weight:900;margin-bottom:7px}.second-quip p{font-size:clamp(17px,4.5vw,21px);font-weight:900;line-height:1.55;margin:0;color:#fff}
 /* Editorial cover: faithful to the award-first navy-and-gold mockup. */
@@ -87,7 +87,7 @@ body{background:#0b1528}
 .spotlight-divider{height:1px;background:#526480;margin:0 0 17px;width:100%}
 .spotlight-quip-label{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.03em;margin:0 0 6px}
 .spotlight-quip{color:#fff;font-size:clamp(20px,5.1vw,28px);font-weight:900;line-height:1.52;margin:0 0 24px;text-wrap:pretty;overflow-wrap:anywhere}
-.spotlight button{display:block;width:100%;min-height:53px;background:#ffd89e;border:0;border-radius:100px;color:#17243b;font-size:15px;font-weight:950;padding:12px 15px}
+.spotlight #spotlightRead{display:block;width:100%;min-height:53px;background:#ffd89e;border:0;border-radius:100px;color:#17243b;font-size:15px;font-weight:950;padding:12px 15px}
 .hero{padding:9px 3px 15px;text-align:center;overflow:visible}.hero:before{display:none}.hero .eyebrow{font-size:12px;letter-spacing:0;color:#ffd89e}.hero .hero-description{font-size:11px;line-height:1.6;margin:5px auto;color:#c7d4e8}.hero .hero-truth{display:block;float:none;font-size:12px;line-height:1.6;margin:6px auto;color:#e8e0d2}
 @media(max-width:520px){.wrap{padding:0 16px}.nav{padding:10px 0 7px}.spotlight{margin:9px 0 9px;padding:21px 18px 22px}.spotlight h1{margin-bottom:21px}.spotlight-quip{margin-bottom:22px}.hero{padding:8px 2px 13px}}
 /* iPhone-first reading layout: bring the first story forward and keep touch targets generous. */
@@ -117,6 +117,29 @@ body{background:#0b1528}
  .story h3{line-height:1.5}
  .release-status{margin:5px 0 12px;padding:7px 10px}
 }
+/* Clean, accessible lead-story cover: details expand in place, not duplicated below. */
+.spotlight-body{width:100%;margin-top:17px;padding:16px 0 2px;border-top:1px solid #526480;text-align:left}
+.spotlight-body[hidden],.filters[hidden],.filter[hidden],.sectionhead[hidden],.intro[hidden]{display:none}
+.spotlight-body .summary{font-size:15px;line-height:1.85;color:#e9eff8}
+.spotlight-body .reported,.spotlight-body .source{font-size:13px;color:#d6e2f3}
+.spotlight-body .detailtext{font-size:14px}
+.spotlight-body .actions{margin-top:12px}
+.spotlight-body .smile{width:auto;background:transparent;color:#fff;border:1px solid #8493ac;padding:8px 16px;font-size:13px;min-height:44px}
+.spotlight-body .smile[aria-pressed="true"]{background:#284f45;border-color:var(--mint)}
+.spotlight-body .share{width:auto;min-height:44px;background:transparent;color:#f1e2ba;text-decoration:underline;font-size:13px;padding:8px}
+.hero{padding:6px 0 7px}
+.hero .hero-description{font-size:13px;line-height:1.55;margin:2px auto}
+.hero .hero-truth{font-size:13px;line-height:1.55;margin:2px auto}
+.status{margin:5px 0 6px;padding:8px 12px}
+.status #editionMessage,.edition-context,.note,.source,.storytop,.small{font-size:13px}
+.intro{font-size:13px}
+.nav .tag{font-size:11px;line-height:1.4}
+@media(max-width:520px){
+ .nav .tag{max-width:47%;white-space:normal;text-align:right}
+ .hero{padding:4px 0 7px}
+ .hero .hero-description,.hero .hero-truth{font-size:13px}
+ .spotlight-body{padding-top:13px}
+}
 @media(prefers-reduced-motion:reduce){.reader-tool{scroll-behavior:auto}}
 .edition-context{margin:0 0 15px;border-bottom:1px solid #40516f;padding:0 0 6px;color:#d3ddea;font-size:12px}.edition-context summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;color:#e8c891}.edition-context p{margin:6px 0;line-height:1.7}.status{margin-bottom:8px;padding:9px 12px}.status .statusline{gap:0}.status #editionMessage{font-size:11px}.release-status{margin:4px 0 10px;padding:7px 10px}.intro{margin:6px 0 10px}.story .summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.story.expanded .summary{display:block}.story .teaserquip{display:block;overflow-wrap:anywhere}.story.expanded .teaserquip{display:block}@media(max-width:520px){.status{margin:7px 0 8px}.release-status{margin:4px 0 7px}.edition-context{margin-bottom:10px}.story .summary{font-size:14px;line-height:1.75}}\n.detail-language-note{font-size:13px;line-height:1.8;color:#f5d8a1;margin:0 0 12px}.original-detail{border-top:1px dashed #657590;padding:12px 0;margin:12px 0}.original-detail>summary{cursor:pointer;color:var(--gold);font-weight:750;min-height:44px;align-content:center}.original-warning{font-size:12px;color:#cdd8e7;line-height:1.7}.original-detail .detailtext{overflow-wrap:anywhere}
 </style>
@@ -130,7 +153,7 @@ body{background:#0b1528}
  <div class="spotlight-divider" aria-hidden="true"></div>
  <p class="spotlight-quip-label">AIツッコミ</p>
  <p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p>
- <button type="button" id="spotlightRead">この話の続きへ ↓</button>
+ <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button><div id="spotlightBody" class="spotlight-body" hidden></div>
 </section>
 <section class="hero"><div class="eyebrow">今日も世界は、ちょっとやらかした。</div><p class="hero-description">世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。</p><p class="hero-truth">世界も完璧じゃない。だから今夜は、<strong>あなたも自分に優しく。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
@@ -351,12 +374,29 @@ function updateSpotlight(){
  $('spotlightTitle').textContent=first.title||'今夜のやらかし';
  $('spotlightQuip').textContent=first.quip||'予定どおりにいかないのが、世界の通常運転。';
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
+ $('spotlightRead').setAttribute('aria-expanded','false');
+ const body=$('spotlightBody');
+ body.hidden=true;
+ const second=first.quipSecond&&first.quipSecond.trim()&&first.quipSecond.trim()!==first.quip?.trim()
+  ?`<div class="second-quip"><span>AIツッコミ・追撃</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
+ body.innerHTML=`<p class="summary">${escapeHtml(first.summary||'')}</p><p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p><div class="actions"><button type="button" class="smile" data-smile="0" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="0">この記事を共有</button></div>`;
 }
 $('spotlightRead').addEventListener('click',()=>{
- filter='all';applyFilter();
- const first=document.querySelector('#stories .story');
- if(first){first.scrollIntoView({behavior:'smooth',block:'start'});const btn=first.querySelector('[data-open]');if(btn&&btn.getAttribute('aria-expanded')==='false')btn.click()}
+ const panel=$('spotlightBody'),show=panel.hidden;
+ panel.hidden=!show;
+ $('spotlightRead').setAttribute('aria-expanded',String(show));
+ $('spotlightRead').textContent=show?'閉じる ↑':(edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓');
+ if(show){markRead(0);panel.scrollIntoView({behavior:'smooth',block:'nearest'})}
 });
+function updateFilters(){
+ const available=new Set(edition.stories.slice(1).map(s=>s.category));
+ const controls=document.querySelector('.filters');
+ controls.hidden=available.size<=1;
+ controls.querySelectorAll('[data-filter]').forEach(button=>{
+  button.hidden=button.dataset.filter!=='all'&&!available.has(button.dataset.filter);
+ });
+ if(filter!=='all'&&!available.has(filter))filter='all';
+}
 function render(){const d=edition.stories;
  $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'今日の反省会は閉会。続きは、また明日。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
