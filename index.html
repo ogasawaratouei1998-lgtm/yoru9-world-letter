@@ -77,21 +77,18 @@ body{background:#0b1528}
 
 .lead-award{display:inline-block;border-radius:100px;padding:3px 8px;background:#f6dba7;color:#17243b;font-size:10px;font-weight:900}.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight button{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
 @media(max-width:520px){.spotlight{padding:15px 16px;margin:8px 0 14px}.spotlight h2{margin:7px 0 12px}}
-/* Lead-story-first layout: the changing story, not the fixed slogan, owns the first screen. */
-.hero{padding:8px 0 9px!important;text-align:left!important}
-.hero .hero-stamp,.hero .hero-audience,.hero .hero-truth{display:none}
-.hero h1{font-size:clamp(18px,4.5vw,24px)!important;line-height:1.35!important;margin:4px 0!important;letter-spacing:0!important}
-.hero .hero-description{font-size:11px!important;line-height:1.5!important;margin:3px 0 0!important;color:#c8d5e6!important}
-.hero .eyebrow{font-size:10px!important}
-.spotlight{position:relative;overflow:hidden;margin:9px 0 18px;padding:26px 23px 22px;border:1px solid #d6ae6c;border-radius:23px;background:radial-gradient(circle at 92% 2%,#526b8e 0,transparent 40%),linear-gradient(145deg,#304764,#101d33 76%);box-shadow:0 15px 35px #0005}
-.spotlight:before{content:"★";position:absolute;right:-10px;top:-46px;font-size:175px;line-height:1;color:#ffd89e;opacity:.065;pointer-events:none}
-.spotlight-kicker{display:flex;align-items:center;gap:8px;color:#ffe0a5;font-size:13px;font-weight:900;letter-spacing:.06em}
-.spotlight-kicker>span:first-child{display:grid;place-items:center;width:35px;height:35px;border-radius:50%;background:#ffd89e;color:#17243b;font-size:20px}
-.spotlight h2{position:relative;font-size:clamp(26px,6.8vw,40px);line-height:1.38;letter-spacing:-.025em;margin:19px 0 23px;font-weight:950;text-wrap:pretty}
-.spotlight-quip-label{border-top:1px solid #7c8ca566;padding-top:16px;color:#ffe0a5;font-size:12px;font-weight:900;letter-spacing:.05em}
-.spotlight-quip{font-size:clamp(19px,5.2vw,27px);line-height:1.5;font-weight:900;margin:7px 0 22px;text-wrap:pretty}
-.spotlight button{display:block;width:100%;min-height:52px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-size:15px;font-weight:950;box-shadow:0 5px 0 #aa8653}
-@media(max-width:520px){.nav{padding:12px 0 6px}.spotlight{padding:20px 17px 21px;margin:9px 0 15px}.spotlight h2{margin:16px 0 20px}.hero .hero-description{max-width:100%}}
+/* Editorial cover: faithful to the award-first navy-and-gold mockup. */
+.nav{padding:14px 0 9px;gap:6px}.nav .logo{font-size:13px}.nav .logo .icon{width:28px;height:28px;font-size:18px;margin-right:5px}.nav .tag{font-size:10px;padding:3px 7px}
+.spotlight{display:flex;flex-direction:column;align-items:stretch;text-align:left;position:relative;isolation:isolate;overflow:hidden;margin:13px 0 10px;padding:25px 23px 24px;border:1px solid #53627b;border-radius:19px;background:#17243b;box-shadow:0 12px 32px #0004}
+.spotlight[hidden]{display:none}.spotlight-award{display:flex;justify-content:center;margin:3px 0 3px}.spotlight-award svg{width:57px;height:57px}
+.spotlight-kicker{text-align:center;color:#ffd89e;font-size:13px;font-weight:900;letter-spacing:.05em;margin-bottom:14px}
+.spotlight h1{color:#fff;font-size:clamp(27px,6.7vw,43px);line-height:1.43;letter-spacing:-.025em;font-weight:950;margin:0 0 23px;text-wrap:pretty;overflow-wrap:anywhere}
+.spotlight-divider{height:1px;background:#526480;margin:0 0 17px;width:100%}
+.spotlight-quip-label{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.03em;margin:0 0 6px}
+.spotlight-quip{color:#fff;font-size:clamp(20px,5.1vw,28px);font-weight:900;line-height:1.52;margin:0 0 24px;text-wrap:pretty;overflow-wrap:anywhere}
+.spotlight button{display:block;width:100%;min-height:53px;background:#ffd89e;border:0;border-radius:100px;color:#17243b;font-size:15px;font-weight:950;padding:12px 15px}
+.hero{padding:9px 3px 15px;text-align:center;overflow:visible}.hero:before{display:none}.hero .eyebrow{font-size:12px;letter-spacing:0;color:#ffd89e}.hero .hero-description{font-size:11px;line-height:1.6;margin:5px auto;color:#c7d4e8}.hero .hero-truth{display:block;float:none;font-size:12px;line-height:1.6;margin:6px auto;color:#e8e0d2}
+@media(max-width:520px){.wrap{padding:0 16px}.nav{padding:10px 0 7px}.spotlight{margin:9px 0 9px;padding:21px 18px 22px}.spotlight h1{margin-bottom:21px}.spotlight-quip{margin-bottom:22px}.hero{padding:8px 2px 13px}}
 /* iPhone-first reading layout: bring the first story forward and keep touch targets generous. */
 .reader-extras{display:grid;gap:10px;margin:22px 0;padding:0;border:0;background:transparent}
 .reader-tool{border:1px solid #667b98;border-radius:14px;background:#182a42;padding:12px 15px}
@@ -125,8 +122,16 @@ body{background:#0b1528}
 </head>
 <body><div class="wrap">
 <header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
-<section class="hero"><div class="eyebrow"><span class="eyebrow-dot">●</span> よる9じの世界便り</div><div class="hero-stamp" aria-hidden="true"><span>OH!</span><span>NO!</span></div><p class="hero-audience">今日も一日、おつかれさま。</p><h1>今日も世界は、<br><em>ちょっとやらかした。</em></h1><p class="hero-description">世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。</p><p class="hero-truth">世界も完璧じゃない。だから今夜は、<strong>あなたも自分に優しく。</strong></p></section>
-<section class="spotlight" id="spotlight" aria-label="今夜の主役"><div class="spotlight-kicker"><span aria-hidden="true">★</span> <span id="spotlightAward">今夜のやらかし大賞</span></div><h2 id="spotlightTitle">今夜のやらかしを準備中…</h2><p class="spotlight-quip-label">AIツッコミ</p><p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p><button type="button" id="spotlightRead">この話を読む ↓</button></section>
+<section class="spotlight" id="spotlight" aria-label="今夜の主役">
+ <div class="spotlight-award" aria-hidden="true"><svg viewBox="0 0 64 64" width="54" height="54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 10h26v13c0 11-5 18-13 18S19 34 19 23V10Z" fill="#FFD89E"/><path d="M19 16H9v7c0 9 6 13 15 13M45 16h10v7c0 9-6 13-15 13" stroke="#FFD89E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 42v10M21 55h22" stroke="#FFD89E" stroke-width="5" stroke-linecap="round"/><path d="m32 16 2.3 4.7 5.2.7-3.7 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.7-3.7 5.2-.7L32 16Z" fill="#17243B"/></svg></div>
+ <div class="spotlight-kicker"><span id="spotlightAward">今夜のやらかし大賞</span></div>
+ <h1 id="spotlightTitle">今夜のやらかしを準備中…</h1>
+ <div class="spotlight-divider" aria-hidden="true"></div>
+ <p class="spotlight-quip-label">AIツッコミ</p>
+ <p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p>
+ <button type="button" id="spotlightRead">この話の続きへ ↓</button>
+</section>
+<section class="hero"><div class="eyebrow">今日も世界は、ちょっとやらかした。</div><p class="hero-description">世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。</p><p class="hero-truth">世界も完璧じゃない。だから今夜は、<strong>あなたも自分に優しく。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="status" role="status"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div></div>
 <main><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
@@ -344,7 +349,7 @@ function updateSpotlight(){
  $('spotlightAward').textContent=edition.status==='demo'?'体験版のやらかし大賞':edition.editionDate!==localDate(new Date())?'前回のやらかし大賞':'今夜のやらかし大賞';
  $('spotlightTitle').textContent=first.title||'今夜のやらかし';
  $('spotlightQuip').textContent=first.quip||'予定どおりにいかないのが、世界の通常運転。';
- $('spotlightRead').textContent=edition.status==='demo'?'体験版の話を読む ↓':'この話を読む ↓';
+ $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
 }
 $('spotlightRead').addEventListener('click',()=>{
  filter='all';applyFilter();
