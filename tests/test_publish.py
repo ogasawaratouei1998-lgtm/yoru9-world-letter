@@ -15,6 +15,21 @@ def fixture(date='2026-11-10'):
     return {'status':'approved', 'editionDate':date,'title':'今夜の世界の大失敗５連発','editorApproved':True,'factChecked':True,'humorReviewed':True,'approvedBy':'編集担当者','stories':stories}
 
 
+class NightlyQuoteTest(unittest.TestCase):
+    def test_closing_line_is_stable_and_depends_on_edition(self):
+        from publish_approved import nightly_line, NIGHT_LINES
+        stories=[{'id':'story-a','category':'work'}, {'id':'story-b','category':'person'}]
+        first=nightly_line('2026-11-16', stories)
+        self.assertEqual(first,nightly_line('2026-11-16',stories))
+        self.assertIn(first, [line for group in NIGHT_LINES.values() for line in group])
+        self.assertGreater(len({nightly_line(f'2026-11-{day:02d}',stories) for day in range(1,29)}),1)
+
+    def test_published_issue_contains_nightly_quote(self):
+        public=validate_approved(fixture(),'2026-11-10')
+        self.assertTrue(public['nightQuote'])
+        self.assertEqual(public['nightQuote'], __import__('publish_approved').nightly_line('2026-11-10',public['stories']))
+
+
 class PublishingTest(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory()
