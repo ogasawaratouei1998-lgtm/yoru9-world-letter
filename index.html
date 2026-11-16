@@ -146,7 +146,7 @@ body{background:#0b1528}
 </head>
 <body><div class="wrap">
 <header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
-<section class="spotlight" id="spotlight" aria-label="今夜の主役">
+<main><section class="spotlight" id="spotlight" aria-label="今夜の主役">
  <div class="spotlight-award" aria-hidden="true"><svg viewBox="0 0 64 64" width="54" height="54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 10h26v13c0 11-5 18-13 18S19 34 19 23V10Z" fill="#FFD89E"/><path d="M19 16H9v7c0 9 6 13 15 13M45 16h10v7c0 9-6 13-15 13" stroke="#FFD89E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 42v10M21 55h22" stroke="#FFD89E" stroke-width="5" stroke-linecap="round"/><path d="m32 16 2.3 4.7 5.2.7-3.7 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.7-3.7 5.2-.7L32 16Z" fill="#17243B"/></svg></div>
  <div class="spotlight-kicker"><span id="spotlightAward">今夜のやらかし大賞</span></div>
  <h1 id="spotlightTitle">今夜のやらかしを準備中…</h1>
@@ -158,7 +158,7 @@ body{background:#0b1528}
 <section class="hero"><div class="eyebrow">今日も世界は、ちょっとやらかした。</div><p class="hero-description">世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。</p><p class="hero-truth">世界も完璧じゃない。だから今夜は、<strong>あなたも自分に優しく。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="status" role="status"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage">事実確認済みの記事を準備中です</span></div></div>
-<main><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
+<p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 <div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
@@ -379,7 +379,7 @@ function updateSpotlight(){
  body.hidden=true;
  const second=first.quipSecond&&first.quipSecond.trim()&&first.quipSecond.trim()!==first.quip?.trim()
   ?`<div class="second-quip"><span>AIツッコミ・追撃</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
- body.innerHTML=`<p class="summary">${escapeHtml(first.summary||'')}</p><p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p><div class="actions"><button type="button" class="smile" data-smile="0" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="0">この記事を共有</button></div>`;
+ body.innerHTML=`${isJapaneseText(first.detail)?'<p class="summary">'+escapeHtml(first.summary||'')+'</p>':''}<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p><div class="actions"><button type="button" class="smile" data-smile="0" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="0">この記事を共有</button></div>`;
 }
 $('spotlightRead').addEventListener('click',()=>{
  const panel=$('spotlightBody'),show=panel.hidden;

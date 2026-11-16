@@ -42,6 +42,13 @@ class ReaderFrontendTest(unittest.TestCase):
                       "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
 
+    def test_lead_story_is_inside_main_landmark_and_summary_not_repeated(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('</header>\\n<main><section class="spotlight"', page)
+        self.assertNotIn('<main><p class="release-status"', page)
+        self.assertIn("isJapaneseText(first.detail)?'<p class=\\\"summary\\\">'", page)
+        self.assertIn("storyDetailHtml(first)", page)
+
     def test_lead_story_is_not_duplicated_and_can_expand_in_place(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightBody" class="spotlight-body" hidden', page)
