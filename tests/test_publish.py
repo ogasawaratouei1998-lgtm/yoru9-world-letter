@@ -69,6 +69,8 @@ class PublishingTest(unittest.TestCase):
     def test_english_only_detail_is_rejected(self):
         data=fixture()
         data['editionDate']='2026-11-17'
+        for story in data['stories']:
+            story['reported']='2026.11.17'
         data['stories'][0]['detail']='An English-only expanded article.'
         with self.assertRaisesRegex(ValueError, 'detailが日本語ではありません'):
             validate_approved(data,'2026-11-17')
