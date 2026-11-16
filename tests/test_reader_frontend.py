@@ -26,6 +26,15 @@ class ReaderFrontendTest(unittest.TestCase):
                       "first.quip", "first.title", "first.scrollIntoView"):
             self.assertIn(token, page)
 
+    def test_cover_matches_award_first_layout(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        cover = page[page.index('<header class="nav">'):page.index('<div id="offlineNotice"')]
+        self.assertLess(cover.index('class="spotlight"'), cover.index('class="hero"'))
+        for token in ('class="spotlight-award"', '<svg', 'id="spotlightTitle"',
+                      'class="spotlight-divider"', 'AIツッコミ',
+                      'id="spotlightQuip"', 'この話の続きへ ↓'):
+            self.assertIn(token, cover)
+
     def test_mishap_award_is_dynamic_and_archive_aware(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlightAward"', "今夜のやらかし大賞",
