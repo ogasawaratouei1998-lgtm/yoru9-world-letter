@@ -32,7 +32,18 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="releaseStatus"'),page.index('id="stories"'))
         self.assertIn('function displayReleaseStatus()',page)
         self.assertIn('本日分が公開され次第、自動で切り替わります。',page)
-        self.assertIn('<summary>過去の配信号・世界地図を見る</summary>',page)
+        self.assertIn('<summary>過去の配信を読む</summary>',page)
+        self.assertIn('<summary>世界地図を見る</summary>',page)
+        self.assertLess(page.index('id="archiveExtras"'),page.index('id="mapExtras"'))
+
+    def test_mobile_reader_actions_and_nightly_quote_layout(self):
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('詳しく読む ↓', page)
+        self.assertIn('閉じる ↑', page)
+        self.assertNotIn('補足文を見る（英語）', page)
+        self.assertIn('.filter,.readbtn,.smile,.share,.night-quote button{min-height:44px', page)
+        self.assertIn('.night-quote p{font-size:clamp(19px', page)
+        self.assertIn('.hero .eyebrow,.hero-audience{display:none}', page)
 
     def test_initial_render_does_not_read_uninitialized_archive_menu(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
