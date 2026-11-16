@@ -169,6 +169,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
+    def test_regular_edition_supports_five_without_forcing_five(self):
+        from pathlib import Path
+        root = Path(__file__).resolve().parents[1]
+        editorial = (root / "auto_editorial.py").read_text(encoding="utf-8")
+        publisher = (root / "publish_approved.py").read_text(encoding="utf-8")
+        self.assertIn("min(5,len(pool))", editorial)
+        self.assertIn("1 <= len(stories) <= 5", publisher)
+        self.assertIn("if not selected:", editorial)
+
     def test_single_source_editorial_path_preserves_source_audit(self):
         from pathlib import Path
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
