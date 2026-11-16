@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 import unittest
 from auto_editorial import WRITING_CRAFT
+from publish_approved import validate_approved
 
 ROOT=Path(__file__).resolve().parents[1]
 DAY="2026-11-16"
@@ -12,12 +13,10 @@ class EditorialQuipQualityTest(unittest.TestCase):
         current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
         archive=json.loads((ROOT/"data/archive"/(DAY+".json")).read_text(encoding="utf-8"))
         approved=json.loads((ROOT/"data/approved"/(DAY+".json")).read_text(encoding="utf-8"))
-        for first,second in ((archive,approved),):
-            reference={story["id"]:story for story in second["stories"]}
-            for story in first["stories"]:
-                for key in ("quip","quipSecond","title"):
-                    with self.subTest(story=story["id"],field=key):
-                        self.assertEqual(story[key],reference[story["id"]][key])
+        # The approved source must reproduce exactly the public edition, not
+        # merely have matching headlines. Catch stale workflow overwrites of
+        # summaries, sources, jokes, closings and computed quote as well.
+        self.assertEqual(validate_approved(approved,DAY),archive)
         if current["editionDate"]==DAY:
             self.assertEqual(current,archive)
 
