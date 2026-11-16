@@ -18,7 +18,7 @@ BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死�
 # Rank incident-specific reporting ahead of generic world-news headlines.
 # Ranking only changes retrieval order; it never certifies a fact or relaxes review.
 EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and plans that backfired. "
-    "Every story must have three inseparable parts: independently supported facts about a failure; "
+    "Every story must have three inseparable parts: source-supported facts about a failure; "
     "a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim; "
     "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
     "The quip must deliver a sharp, surprising payoff rather than merely restating the facts; aim for a vivid, quotable contrast between plan and reality without exaggerating evidence. "
@@ -481,8 +481,8 @@ def main():
     print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
-    if len(source_leads)<2:
-        print('Fewer than two article bodies; safe skip before AI generation.');return 0
+    if len(source_leads)<1:
+        print('No retrieved article bodies; safe skip before AI generation.');return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
     # Headline overlap is only a discovery heuristic. Even when it finds five
@@ -504,11 +504,11 @@ def main():
         if key not in existing:
             groups.append(group)
             existing.add(key)
-    raw_group_count=len(groups)
+    # Single-source reporting is eligible when the original article is retrievable.\n    # Keep independent corroboration pairs where available.\n    paired_urls={item['url'] for group in groups for item in group}\n    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls])\n    raw_group_count=len(groups)
     groups=select_distinct_groups(groups,limit=36)
     print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
     if len(groups)<1:
-        print('No independently sourced incident groups; safe skip.');return 0
+        print('No retrieved candidate articles; safe skip.');return 0
     # Preserve each hypothesized incident's exact article-to-article association.
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
@@ -524,9 +524,9 @@ def main():
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
-      'Use ONLY supplied fetched article texts, never external knowledge. Only draft stories corroborated by TWO independent publisher articles describing the SAME incident. '
-      'verificationUrls must be exact URLs present in evidence, on distinct domains. Do not invent facts, URLs or unsupported details. '
-      'For each include required fields '+str(REQUIRED)+', verificationUrls (2 URLs), eventKey (normalized incident identifier), evidence (facts corroborated by both). '
+      'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
+      'verificationUrls must be exact URLs present in evidence (one is sufficient; two distinct publishers are preferred when available). Do not invent facts, URLs or unsupported details. '
+      'For each include required fields '+str(REQUIRED)+', verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
@@ -535,7 +535,7 @@ def main():
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
-      'A group marked eligible still needs all story fields and independent verification; do not fill gaps by inference. '
+      'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
     draft_response=ai(prompt)
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
@@ -578,15 +578,15 @@ def main():
             batch=retry_candidates[start:start+1]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
                 " You are editor A. Draft up to three Japanese news stories ONLY "
-                "when two independent publisher articles in the SAME input group "
-                "corroborate the same specific real-world mistake. "
+                "when at least one retrieved publisher article in the input group "
+                "supports the same specific real-world mistake. "
                 "Return JSON object with stories array. Do not return diagnostics. "
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
                 "Each story must contain fields "+str(REQUIRED)+
-                ", verificationUrls (exact two supplied URLs from that group), "
+                ", verificationUrls (one or two exact supplied URLs from that group), "
                 "eventKey (specific incident identifier at least 12 characters), "
-                "and evidence (facts supported by both articles). "
+                "and evidence (facts supported by the supplied source text). "
                 "category must be exactly person, work, company, or sports. "
                 "reported must be an explicit source-supported date within the "
                 "edition day or previous day (JST), formatted YYYY-MM-DD. "
@@ -637,9 +637,9 @@ def main():
         if story["category"] not in ("person","work","company","sports"):
             reject("invalid_category");continue
         urls=story.get("verificationUrls",[])
-        if not isinstance(urls,list) or len(urls)<2 or len(set(host(u) for u in urls))<2 or not all(host(u) for u in urls):
+        if not isinstance(urls,list) or not (1<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
             reject("insufficient_independent_urls");continue
-        if not any(frozenset(pair) in allowed_pairs for pair in __import__("itertools").combinations(urls,2)):
+        if len(urls)>1 and not any(frozenset(pair) in allowed_pairs for pair in __import__("itertools").combinations(urls,2)):
             reject("unmatched_source_pair");continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
             reject("urls_not_in_fetched_evidence");continue
@@ -656,18 +656,18 @@ def main():
         evidence=[]
         for url in urls[:3]:
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
-        if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:
+        if len(evidence)<1:
             reject("insufficient_fetched_articles");continue
         audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
-          "claim in this Japanese article against the TWO separately fetched source article texts below. "
-          "Reject unsupported claims, syndicated duplicate reporting, mismatched dates, invented quotes, "
+          "claim in this Japanese article against the fetched original source article text(s) below. "
+          "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if evidence is insufficient or unclear. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
-          +json.dumps(accepted_summaries,ensure_ascii=False)+" Independently fetched sources: "
+          +json.dumps(accepted_summaries,ensure_ascii=False)+" Fetched original source text(s): "
           +json.dumps(evidence,ensure_ascii=False))
         if audit.get("approved") is not True:
             # Free-form AI reasons are not logged; only bounded, diagnostic labels.
@@ -686,7 +686,7 @@ def main():
         if len(selected)==12:break
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
-        print("Two-stage verification approved no stories; no publication.");return 0
+        print("Source-text verification approved no stories; no publication.");return 0
     # Balance reader perspectives AND countries among independently verified stories.
     # Diversity is a preference, never a reason to lower fact-checking standards.
     from itertools import combinations
