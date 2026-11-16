@@ -591,7 +591,7 @@ def main():
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
                 "Each story must contain fields "+str(REQUIRED)+", quipSecond (distinct second punchline), "
-                ", verificationUrls (one or two exact supplied URLs from that group), "
+                "verificationUrls (one or two exact supplied URLs from that group), "
                 "eventKey (specific incident identifier at least 12 characters), "
                 "and evidence (facts supported by the supplied source text). "
                 "category must be exactly person, work, company, or sports. "
