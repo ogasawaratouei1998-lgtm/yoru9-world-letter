@@ -173,15 +173,23 @@ def get_gdelt():
 
 
 def main():
+    from news_sources import fetch_registry_feeds, source_registry
     leads, errors, seen=[],[],set()
     def keep(items, limit=75):
         added=0
         for item in items:
             if item['url'] not in seen and len(leads)<750 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
-    # Direct publisher URLs must be collected before aggregator search URLs.
-    # Google RSS often resolves to news.google.com, which cannot be used as
-    # article-body evidence. Reserving room for local outlets is essential.
+    # Direct publishers come before Google News aggregator links, which are
+    # unsuitable as evidence without an original publisher article body.
+    # Feed failures are isolated and never treated as proof that news occurred.
+    try:
+        registered=fetch_registry_feeds(
+            sources=source_registry(),fetch=fetch_bytes,parse=parse_rss,
+            max_workers=10,per_feed=18)
+        keep(registered,limit=285)
+    except (OSError,ValueError,TypeError,KeyError) as exc:
+        errors.append("Publisher RSS catalog: "+type(exc).__name__)
     for url,provider,language,country in LOCAL_LANGUAGE_FEEDS:
         try:
             keep(parse_rss(fetch_bytes(url),provider,language=language,sourcecountry=country),limit=18)
@@ -209,7 +217,7 @@ def main():
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Google News RSS, BBC RSS, independent publisher RSS, local-language RSS, GDELT (all attempted)',
+        'provider':'Reviewed global publisher RSS registry, Google News RSS, BBC RSS, independent publisher RSS, local-language RSS, GDELT (all attempted)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Automatic review must independently verify publisher article bodies before preparing any approved edition; never publish unverified leads.',
         'errors':errors,
         'candidates':leads,
