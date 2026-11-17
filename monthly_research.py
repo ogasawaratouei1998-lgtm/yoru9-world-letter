@@ -299,10 +299,12 @@ def candidate_pairs(leads, ask_ai=editorial.ai):
             print("Monthly pairing unavailable:", type(exc).__name__, flush=True)
     # One strong original report can be eligible even when another outlet
     # never covered the small local mishap. The later audit is mandatory.
-    paired={item["url"] for group in found for item in group}
+    # Keep independent one-source review even if an attempted two-source
+    # match fails later as unrelated, syndicated or missing an article body.
+    # The single-source route must pass its OWN firsthand-reporting audit.
     for item in leads:
         if len(found)>=18:break
-        if item["url"] in paired or not trusted_original_url(item["url"]):
+        if not trusted_original_url(item["url"]):
             continue
         found.append([item])
     return found[:18]
