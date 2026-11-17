@@ -47,6 +47,14 @@ jobs:
           GEMINI_MODEL: gemini-3.5-flash-lite
         run: |
           python monthly_research.py
+      - name: Store RSS source health for diagnosis (not public)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: monthly-publisher-feed-health
+          path: data/source-health.json
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Commit only published, audited daily monthly collections
         id: release
         shell: bash
