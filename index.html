@@ -216,20 +216,45 @@ footer{font-size:.8125rem;line-height:1.7}
 .source-evidence summary{color:#f5d8a1;cursor:pointer;min-height:44px;align-content:center;font-weight:700}
 .source-evidence ul{padding-left:21px;margin:4px 0 8px}
 .source-evidence li{overflow-wrap:anywhere;margin-bottom:6px}
+
+/* A quiet invitation to read, not a task to complete. */
+.evening-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 12px;flex-wrap:wrap}
+.evening-entry p{font-size:1rem;font-weight:750;letter-spacing:.02em;color:#f3e9d9;margin:0;line-height:1.7}
+.evening-entry a{font-size:.9375rem;line-height:1.55;color:#d4e3f3;text-decoration:underline;text-underline-offset:4px;padding:7px 0;min-height:44px;display:inline-flex;align-items:center}
+.spotlight-award{margin:0 0 6px}
+.evening-moon{font-family:Georgia,serif;font-size:3.1rem;line-height:1.05;color:var(--gold)}
+.spotlight{padding-top:18px}
+.spotlight-kicker{font-size:1rem;letter-spacing:.015em;margin-bottom:10px}
+.hero .hero-description,.hero .hero-truth{font-size:.9375rem;line-height:1.75}
+.hero .hero-truth strong{color:#f4d9a5}
+.footerpanel{padding:25px 19px 22px;scroll-margin-top:16px}
+.footerpanel h2{font-size:clamp(1.25rem,5vw,1.5rem);margin:6px 0 8px}
+.closing-moon{color:var(--gold);font-size:1.8rem;line-height:1.2}
+.night-quote{margin-top:12px;padding:17px 12px 0}
+.night-quote p{font-size:clamp(1.0625rem,4.5vw,1.35rem);line-height:1.8;font-weight:650}
+.footerpanel .bye{font-size:.9375rem;line-height:1.7;margin-top:16px}
+@media(max-width:520px){
+ .evening-entry{gap:3px;margin:2px 0 10px}
+ .evening-entry p{flex-basis:100%}
+ .evening-entry a{font-size:.875rem;padding:5px 0}
+ .spotlight{padding-top:16px}
+ .evening-moon{font-size:2.7rem}
+ .hero{padding:6px 0 8px}
+}
 </style>
 </head>
 <body><div class="wrap">
 <header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
-<main><section class="spotlight" id="spotlight" aria-label="今夜の主役">
- <div class="spotlight-award" aria-hidden="true"><svg viewBox="0 0 64 64" width="54" height="54" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M19 10h26v13c0 11-5 18-13 18S19 34 19 23V10Z" fill="#FFD89E"/><path d="M19 16H9v7c0 9 6 13 15 13M45 16h10v7c0 9-6 13-15 13" stroke="#FFD89E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M32 42v10M21 55h22" stroke="#FFD89E" stroke-width="5" stroke-linecap="round"/><path d="m32 16 2.3 4.7 5.2.7-3.7 3.7.9 5.2-4.7-2.5-4.7 2.5.9-5.2-3.7-3.7 5.2-.7L32 16Z" fill="#17243B"/></svg></div>
- <div class="spotlight-kicker"><span id="spotlightAward">今夜のやらかし大賞</span></div>
+<main><section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a href="#closing">今夜は、ひと言だけ読む</a></section><section class="spotlight" id="spotlight" aria-label="今夜のひと話">
+ <div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div>
+ <div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div>
  <h1 id="spotlightTitle">今夜のやらかしを準備中…</h1>
  <div class="spotlight-divider" aria-hidden="true"></div>
  <p class="spotlight-quip-label">AIツッコミ</p>
  <p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p>
  <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button><div id="spotlightBody" class="spotlight-body" hidden></div>
 </section>
-<section class="hero"><div class="eyebrow">今日も世界は、ちょっとやらかした。</div><p class="hero-description">世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。</p><p class="hero-truth">世界も完璧じゃない。だから今夜は、<strong>あなたも自分に優しく。</strong></p></section>
+<section class="hero"><div class="eyebrow">世界の「まさか」に、ふっとひと息。</div><p class="hero-description">思いがけない実話と、小さなユーモアを夜9時に。</p><p class="hero-truth">気が向いた話だけ、どうぞ。<strong>読み切る必要はありません。</strong></p></section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details><div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
@@ -243,7 +268,7 @@ footer{font-size:.8125rem;line-height:1.7}
 <button id="notificationButton" type="button" disabled>夜9時の通知を受け取る</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
-<section class="footerpanel"><div style="color:var(--gold);font-size:27px" aria-hidden="true">☾</div><h2>世界の「まさか」を、今夜もひとつ。</h2><p>今日の便りは、ここまでです。</p><div class="night-quote"><span>今夜のオチ</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また夜9時に。</p><div id="endprogress" class="small" aria-live="polite"></div></section>
+<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
 <aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -455,7 +480,7 @@ function updateSpotlight(){
  const first=Array.isArray(edition.stories)?edition.stories[0]:null;
  $('spotlight').hidden=!first;
  if(!first)return;
- $('spotlightAward').textContent=edition.status==='demo'?'体験版のやらかし大賞':edition.editionDate!==localDate(new Date())?'前回のやらかし大賞':'今夜のやらかし大賞';
+ $('spotlightAward').textContent=edition.status==='demo'?'体験版のひと話':edition.editionDate!==localDate(new Date())?'前回のひと話':'今夜のひと話';
  $('spotlightTitle').textContent=first.title||'今夜のやらかし';
  $('spotlightQuip').textContent=first.quip||'予定どおりにいかないのが、世界の通常運転。';
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
@@ -463,8 +488,8 @@ function updateSpotlight(){
  const body=$('spotlightBody');
  body.hidden=true;
  const second=first.quipSecond&&first.quipSecond.trim()&&first.quipSecond.trim()!==first.quip?.trim()
-  ?`<div class="second-quip"><span>AIツッコミ・追撃</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
- body.innerHTML=`${isJapaneseText(first.detail)?'<p class="summary">'+escapeHtml(first.summary||'')+'</p>':''}<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="0" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="0">この記事を共有</button></div>`;
+  ?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
+ body.innerHTML=`${isJapaneseText(first.detail)?'<p class="summary">'+escapeHtml(first.summary||'')+'</p>':''}<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="0" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="0">この記事を共有</button></div>`;
 }
 $('spotlightRead').addEventListener('click',()=>{
  const panel=$('spotlightBody'),show=panel.hidden;
@@ -500,9 +525,9 @@ function render(){const d=edition.stories;
  $('editionMessage').textContent=archive?'過去の実話を使った体験版':`${edition.editionDate} 発行 · ${d.length}本${special?'（特集）':''}`;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
- $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>AIツッコミ・追撃</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ちょっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
+ $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
  updateSpotlight();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();}
-function update(){$('progress').textContent=`${state.read.length} / ${edition.stories.length} 読んだ`;$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ちょっと笑えた':'☺ ちょっと笑えた'})}
+function update(){$('progress').textContent=`ほかに${Math.max(0,edition.stories.length-1)}本`;$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
 const readTimers=new Map();
