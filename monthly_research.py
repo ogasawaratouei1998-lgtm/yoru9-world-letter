@@ -43,12 +43,12 @@ GDELT_QUERIES = (
 # Bing News RSS keeps a verifiable publisher address in the "url" parameter.
 # It is a DISCOVERY source only; original publisher bodies must still be fetched.
 BING_QUERIES = (
-    ("mix-up mistake unusual", "en-US"),
-    ("accidentally delivered wrong address", "en-US"),
-    ("typo apology funny", "en-GB"),
-    ("sports unexpected blunder", "en-GB"),
-    ("勘違い 誤配達 珍事", "ja-JP"),
-    ("うっかり ミス ニュース", "ja-JP"),
+    ('"mix-up"', "en-US"),
+    ('"wrong delivery"', "en-US"),
+    ('"typo"', "en-GB"),
+    ('"blunder"', "en-GB"),
+    ("誤配達", "ja-JP"),
+    ("勘違い", "ja-JP"),
 )
 REQUIRED = ("id", "country", "category", "categoryLabel", "label",
             "title", "summary", "detail", "quip", "quipSecond",
@@ -100,8 +100,11 @@ def bing_publisher_url(raw):
     """
     try:
         parts = urlsplit(str(raw))
-        if (parts.scheme != "https" or parts.hostname not in ("bing.com", "www.bing.com")
-                or parts.path != "/news/apiclick.aspx"):
+        if (parts.scheme != "https"):
+            return None
+        if parts.hostname not in ("bing.com", "www.bing.com"):
+            return raw if safe_url(raw) == raw and editorial.public_host(raw) else None
+        if parts.path != "/news/apiclick.aspx":
             return None
         candidates = parse_qs(parts.query).get("url", [])
         if len(candidates) != 1:
@@ -149,12 +152,15 @@ def discover(now, fetch=fetch_bytes):
         seen.add(url)
         candidates.append(lead)
 
+    gdelt_rows = 0
     for query in GDELT_QUERIES:
         params = {"query": query, "mode": "ArtList", "format": "json",
                   "maxrecords": "125", "timespan": "30d", "sort": "DateDesc"}
         try:
             data = json.loads(fetch(GDELT + "?" + urlencode(params)).decode("utf-8"))
-            for item in data.get("articles", []):
+            articles = data.get("articles", [])
+            gdelt_rows += len(articles) if isinstance(articles, list) else 0
+            for item in articles:
                 add({"title": str(item.get("title", ""))[:400],
                      "url": str(item.get("url", "")),
                      "seendate": str(item.get("seendate", "")),
@@ -165,21 +171,26 @@ def discover(now, fetch=fetch_bytes):
 
     # A second keyless discovery source helps when GDELT is rate-limited.
     # The apiclick wrapper is never stored as a source or publisher URL.
-    bing_added = 0
+    bing_added, bing_rows, bing_resolved = 0, 0, 0
     for query, market in BING_QUERIES:
-        params = {"q": query, "format": "rss", "mkt": market}
+        params = {"q": query, "format": "rss", "setmkt": market}
         try:
             rss = parse_rss(fetch("https://www.bing.com/news/search?" + urlencode(params)),
                             "Bing News RSS", sourcecountry="未確認")
+            bing_rows += len(rss)
             for item in rss:
                 publisher = bing_publisher_url(item["url"])
                 if publisher:
+                    bing_resolved += 1
                     before = len(candidates)
                     add({**item, "url": publisher, "provider": "Bing News publisher discovery"})
                     bing_added += len(candidates) - before
         except (OSError, ValueError, TypeError, KeyError) as exc:
             problems.append(type(exc).__name__)
-    print("Monthly Bing direct publisher leads:", bing_added, flush=True)
+    print("Monthly GDELT raw rows:", gdelt_rows,
+          "Bing RSS rows:", bing_rows,
+          "decoded publisher URLs:", bing_resolved,
+          "Bing dated relevant leads:", bing_added, flush=True)
     # Direct editorial publishers broaden geography and provide real bodies.
     for url, provider, language, country in LOCAL_LANGUAGE_FEEDS[:8]:
         try:
