@@ -47,10 +47,12 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertFalse(m.MISHAP.search("Sea lion visits nursery"))
         self.assertTrue(m.MISHAP.search("Worker accidentally emailed wrong customer"))
         story=sample_story()
-        self.assertTrue(m.validate_story(story,URLS,TODAY))
-        self.assertFalse(m.validate_story({**story,"title":"野生のサルが保護された"},URLS,TODAY))
-        self.assertFalse(m.validate_story({**story,"humanActor":"サル"},URLS,TODAY))
-        self.assertFalse(m.validate_story({**story,"humanMistake":"珍しい生物を見つけた"},URLS,TODAY))
+        # Test the editorial criterion separately from network/DNS validity.
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertTrue(m.validate_story(story,URLS,TODAY))
+            self.assertFalse(m.validate_story({**story,"title":"野生のサルが保護された"},URLS,TODAY))
+            self.assertFalse(m.validate_story({**story,"humanActor":"サル"},URLS,TODAY))
+            self.assertFalse(m.validate_story({**story,"humanMistake":"珍しい生物を見つけた"},URLS,TODAY))
         self.assertIn("COMEDY COLUMN ABOUT HUMAN BLUNDERS",m.MONTHLY_BRIEF)
         self.assertTrue(identity.animal_novelty_headline("アシカが植物園に入った"))
         self.assertFalse(identity.animal_novelty_headline("ワニと見間違えて駆けつけた職員"))
