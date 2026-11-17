@@ -228,6 +228,23 @@ class MonthlyResearchTest(unittest.TestCase):
         with patch.object(m.editorial,"public_host",return_value=True):
             self.assertEqual(m.candidate_pairs([original],ask_ai=prohibited),[[original]])
 
+    def test_monthly_short_article_threshold_does_not_affect_nightly(self):
+        with patch.object(m.editorial,"source_text",return_value="documented body") as read:
+            self.assertEqual(m.monthly_source_text(ORIGINAL),"documented body")
+            read.assert_called_once_with(ORIGINAL,min_chars=350)
+        # Normal nightly source_text(url) continues to require 600 chars.
+        html="<article>"+("Local report confirmed an unexpected mix-up. "*9)+"</article>"
+        self.assertEqual(m.editorial.extracted_article_text(html),"")
+        self.assertGreater(len(m.editorial.extracted_article_text(html,min_chars=350)),350)
+
+    def test_optional_second_quip_is_still_safety_checked(self):
+        story={**sample_story(),"quipSecond":"これは必ず元気になる。そんな励ましは不要です。"}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertFalse(m.validate_story(story,URLS,TODAY))
+        story.pop("quipSecond")
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertTrue(m.validate_story(story,URLS,TODAY))
+
     def test_no_key_is_safe_skip_with_no_public_file(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(m.editorial, "KEY", ""):
