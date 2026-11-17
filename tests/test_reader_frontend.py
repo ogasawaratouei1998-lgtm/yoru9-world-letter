@@ -255,13 +255,13 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_mishap_award_is_dynamic_and_archive_aware(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlightAward"', "今夜のひと話",
-                      "前回のひと話", "体験版のひと話",
+                      "公開済みの便りから", "体験版の実話",
                       "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
 
     def test_lead_story_is_inside_main_landmark_and_summary_not_repeated(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('</header>\n<main><section class="evening-entry"', page)
+        self.assertIn('</header>\n<main>\n<section class="evening-entry"', page)
         self.assertLess(page.index('class="evening-entry"'),page.index('class="spotlight"'))
         self.assertNotIn('<main><p class="release-status"', page)
         self.assertIn("isJapaneseText(first.detail)?'<p class=\"summary\">'", page)
