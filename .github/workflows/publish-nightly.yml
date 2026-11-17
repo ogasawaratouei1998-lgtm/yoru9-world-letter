@@ -7,17 +7,6 @@ on:
     paths:
       - '.github/workflows/publish-nightly.yml'
       - 'data/approved/*.json'
-      - 'auto_editorial.py'
-      - 'country_codes.py'
-      - 'country-catalog.json'
-      - 'build_site.py'
-      - 'collect_candidates.py'
-      - 'publish_approved.py'
-      - 'tests/**'
-      - 'index.html'
-      - 'notifications.js'
-      - 'service-worker.js'
-      - 'assets/**'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
@@ -45,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     environment: github-pages
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'push')
     steps:
       - uses: actions/checkout@v4
         with:

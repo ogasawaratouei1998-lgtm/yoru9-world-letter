@@ -1,17 +1,6 @@
 name: Independently verify and publish 30-day surprises
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/monthly-editorial.yml'
-      - 'monthly_research.py'
-      - 'auto_editorial.py'
-      - 'data/news-source-registry.json'
-      - 'news_sources.py'
-      - 'tests/test_news_sources.py'
-      - 'collect_candidates.py'
-      - 'tests/test_monthly_research.py'
   workflow_dispatch:
   schedule:
     - cron: '15 14 * * *'

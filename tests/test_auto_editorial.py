@@ -289,6 +289,23 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(mocked.call_count,3)
             self.assertEqual([c.args[0] for c in pause.call_args_list],[2,6])
 
+    def test_live_editorial_workflows_are_not_triggered_by_code_push(self):
+        from pathlib import Path
+        root=Path(__file__).resolve().parents[1]
+        preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        monthly=(root/".github/workflows/monthly-editorial.yml").read_text(encoding="utf-8")
+        nightly=(root/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
+        for name,text in (("preview",preview),("monthly",monthly)):
+            with self.subTest(workflow=name):
+                self.assertNotIn("\n  push:\n",text)
+                self.assertIn("workflow_dispatch:",text)
+                self.assertIn("schedule:",text)
+        self.assertIn("workflow_run:",nightly)
+        self.assertIn("github.event.workflow_run.event != 'push'",nightly)
+        self.assertIn("- 'data/approved/*.json'",nightly)
+        self.assertNotIn("- 'auto_editorial.py'",nightly)
+        self.assertNotIn("- 'tests/**'",nightly)
+
     def test_model_catalog_selects_supported_model(self):
         import io
         class FakeResponse:

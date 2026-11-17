@@ -1,11 +1,5 @@
 name: Free-tier AI editorial double-check (safe preview)
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/ai-editorial-preview.yml'
-      - 'auto_editorial.py'
-      - 'tests/test_auto_editorial.py'
   workflow_dispatch:
   schedule:
     - cron: '45 19 * * *'
@@ -24,7 +18,6 @@ jobs:
       - name: Run safety tests without API access
         run: python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
       - name: Verify AI key is present (without exposing it)
-        if: github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -33,21 +26,18 @@ jobs:
           fi
           echo 'Gemini API key is configured'
       - name: Collect same-day leads
-        if: github.event_name != 'push'
         run: python collect_candidates.py
-      # Push events perform local regression tests only: no Gemini calls or quota use.
-      # Scheduled and manually dispatched runs retain the live independent AI review.
+      # This workflow runs a real AI review only on schedule/manual dispatch.
+      # Code pushes are tested by the separate publishing safety workflow.
       # This job never publishes directly. A separate release workflow retrieves its verified artifact,
       # revalidates it, and publishes only when the release timing rule permits.
       # Provider error details are sanitized in auto_editorial.py.
       - name: Independent AI double-check (no publication)
-        if: github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
         run: python auto_editorial.py
       - name: Save approved preview privately in workflow artifact
-        if: github.event_name != 'push'
         uses: actions/upload-artifact@v4
         with:
           name: ai-reviewed-preview
