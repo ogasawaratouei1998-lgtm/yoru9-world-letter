@@ -6,6 +6,7 @@ on:
     paths:
       - 'publish_approved.py'
       - 'build_site.py'
+      - 'travel-stops.json'
       - 'prepare_editorial.py'
       - 'suggest_ai_quips.py'
       - 'send_release_notice.py'

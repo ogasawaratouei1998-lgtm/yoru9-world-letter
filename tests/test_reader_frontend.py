@@ -117,6 +117,12 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("stop.country===story.country",(ROOT/"index.html").read_text(encoding="utf-8"))
 
+    def test_travel_data_changes_trigger_validation_and_site_deploy(self):
+        deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
+        check=(ROOT/".github/workflows/test-publishing.yml").read_text(encoding="utf-8")
+        self.assertIn("      - 'travel-stops.json'",deploy)
+        self.assertIn("      - 'travel-stops.json'",check)
+
     def test_published_travel_guide_is_offline_safe(self):
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
