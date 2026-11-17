@@ -69,6 +69,31 @@ NIGHT_MESSAGES = {
     ],
 }
 
+# Short comic fallbacks for future editions when the AI comedy editor cannot
+# approve a line. Historical editions retain their original deterministic text.
+COMIC_NIGHT_MESSAGES={
+    'work': [
+        '手順書の最後に「ただし、現実はアドリブ」と書き足したい。',
+        '仕事の担当欄、たまに「その他、予想外」が勝手に増える。',
+        '予定表に書き忘れた「まさか」が、今日も一番働いていた。',
+    ],
+    'company': [
+        '計画書は完璧。でも現実は、勝手に別の台本を持ってくる。',
+        '世界のマニュアル、最後のページは「そんなはずでは」に空けておこう。',
+        '会議で決めた筋書きほど、現場のアドリブに弱かったりする。',
+    ],
+    'person': [
+        '予定どおりならニュースにならない。今日も現実が台本を破った。',
+        '世の中の予定表には、ときどき「番外編」が紛れ込む。',
+        '「そんな予定はない」が、いちばん予定どおりに起こる。',
+    ],
+    'sports': [
+        '作戦会議にいなかった「まさか」が、試合でいちばん目立っている。',
+        '今日の試合、台本にない一行が一番の見せ場だった。',
+        'きっちり組んだ作戦に限って、現実がアドリブを入れてくる。',
+    ],
+}
+
 def nightly_message(edition_date, stories, recent_messages=()):
     """Pick a stable, non-repeating editorial line when AI text is unavailable."""
     from hashlib import sha256
@@ -76,7 +101,7 @@ def nightly_message(edition_date, stories, recent_messages=()):
     categories = [story['category'] for story in stories]
     seed = int.from_bytes(sha256(edition_date.encode('ascii')).digest()[:8], 'big')
     category = categories[seed % len(categories)]
-    options = NIGHT_MESSAGES[category]
+    options = (COMIC_NIGHT_MESSAGES if edition_date >= '2026-11-18' else NIGHT_MESSAGES)[category]
     ordered = options[seed % len(options):] + options[:seed % len(options)]
     for line in ordered:
         if all(SequenceMatcher(None,line,old).ratio() < 0.72 for old in recent_messages):

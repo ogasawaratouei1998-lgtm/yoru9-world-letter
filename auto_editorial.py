@@ -90,13 +90,80 @@ WRITING_CRAFT=(
     "Never write moral lessons, productivity advice, prescriptive coping steps or motivational slogans; favor a soft, unforced observation. "
     "Do not say 'your problems are nothing', dismiss the reader's pain, "
     "invent a happy ending, or imply the subjects were secretly fine. "
-    "Before outputting JSON, privately draft three alternative first-hit jokes and two different second-hit angles. Pick the shortest unexpected verified contrast that ends with a crisp punch, not an explanation. Avoid long similes, recaps, generic cheering, forced AI/reboot metaphors, or hedged endings like \"ようです\". If unproven causes or personal allegations are the only funny angle, do not joke about them. "    "If the facts are sufficient but the first joke is weak, try three angles "
+    "Before outputting JSON, privately draft three alternative first-hit jokes and two different second-hit angles. Pick the shortest unexpected verified contrast that ends with a crisp punch, not an explanation. Apply the comic editor's test: SETUP must contain a source-verified concrete fact, PAYOFF must invert the expectation in one understandable beat. The follow-up must have a new premise, not a synonym for the first. Do not call a simple recap a joke. Favor natural spoken Japanese over stock phrases like '情報量が多い' or a string of 'まさか'. Avoid long similes, recaps, generic cheering, forced AI/reboot metaphors, or hedged endings like \"ようです\". If unproven causes or personal allegations are the only funny angle, do not joke about them. "    "If the facts are sufficient but the first joke is weak, try three angles "
     "internally: inflated ambition versus mundane reality; a reasonable assumption "
     "that backfired; the tiny missed step behind a grand plan. Pick the kindest. "
     "Do not include these internal options in the JSON. "
     "A weak punchline is a writing problem to revise, not automatically a reason "
     "to discard a verified, safely discussable incident. "
 )
+
+# Two-stage comedy editing keeps the final line distinct from a news recap.
+# The independent reviewer may choose only from the drafted, locally screened options.
+NIGHTLY_COMEDY_CRAFT=(
+    "あなたは『よる9じの世界便り』の放送作家です。 "
+    "その日の検証済み記事を、仕事や予定が思わぬ方向に転ぶという共通の視点から見直してください。 "
+    "今夜のひと言はニュース3本の要約や固有名詞の羅列ではなく、読了後にだけ効く独立したオチです。 "
+    "20〜60文字の自然な日本語を4案作ってください。"
+    "構造は『短いフリ→予想外の着地』。一度読めば伝わり、最後の一語が笑いの芯になること。 "
+    "題材が1〜2本の日は無理に共通点を捏造せず、確認された範囲の小さな皮肉でよい。 "
+    "本文にない発言、事実、固有名詞、数字、被害や結果を追加しない。誰かの不運や弱さを笑わない。 "
+    "よくある励まし、精神論、抽象的な『世界は自由』、記事の順番どおりのおさらい、語尾だけの『まさか』は禁止。 "
+    "読者の感情や行動を指示せず、説教しない。創作的な比喩は事実の断定に見えないようにする。 "
+    "JSON {\\\"candidates\\\":[\\\"案1\\\",\\\"案2\\\",\\\"案3\\\",\\\"案4\\\"]} のみ返してください。"
+)
+
+def valid_nightly_comedy_line(line, recent_lines=()):
+    """Lightweight structural guard; editorial humor itself still needs review."""
+    from difflib import SequenceMatcher
+    if not isinstance(line,str):
+        return False
+    line=line.strip()
+    if not (20<=len(line)<=60) or any(ch in line for ch in "<>\\r\\n"):
+        return False
+    if re.search(r"https?://|\\\\[rn]",line) or line.count("。")>2 or line.count("、")>2:
+        return False
+    if any(phrase in line for phrase in (
+        "世界の「まさか」は予想以上に自由", "世界は予想以上に自由",
+        "おやすみなさい", "無理しないで", "元気を出して", "あなたの失敗",
+        "今夜は自分に", "今夜は少し力を抜いて")):
+        return False
+    return all(SequenceMatcher(None,line,previous).ratio()<0.72
+               for previous in recent_lines if isinstance(previous,str))
+
+def compose_nightly_comedy(stories,recent_lines=()):
+    """Draft multiple closings, then require a separate comedy/fact review."""
+    if not stories:return None
+    payload=[{"title":s["title"],"summary":s["summary"],
+              "category":s["category"]} for s in stories]
+    draft=ai(NIGHTLY_COMEDY_CRAFT+"過去の締め:"+json.dumps(list(recent_lines)[-20:],ensure_ascii=False)
+             +"今日の検証済み記事:"+json.dumps(payload,ensure_ascii=False),temperature=0.65)
+    proposed=draft.get("candidates") if isinstance(draft,dict) else None
+    if not isinstance(proposed,list) or not (3<=len(proposed)<=5):
+        return None
+    candidates=[]
+    for item in proposed:
+        if valid_nightly_comedy_line(item,recent_lines) and item.strip() not in candidates:
+            candidates.append(item.strip())
+    if not candidates:
+        return None
+    review=ai(
+        "あなたは執筆者とは独立した日本語のお笑い編集者兼事実監査者です。"
+        "次の候補から『フリ→意外なオチ』『一読で分かる』『自然な日本語』『読後感』『事実に基づく』の"
+        "5軸で最も良い1案のみを選んでください。確認済みのニュースにない事実を含む候補は不可。"
+        "複数記事の内容をただ列挙する総集編、精神論、説教、平凡な『想定外』『自由です』、"
+        "無理なダジャレ、記事本文と重複する説明は不合格。"
+        "どれも弱ければ approved:false にしてください。"
+        "JSON {\\\"approved\\\":true/false,\\\"bestIndex\\\":0,\\\"reason\\\":\\\"短い理由\\\"} のみ。"
+        "検証済み記事:"+json.dumps(payload,ensure_ascii=False)+
+        "候補:"+json.dumps(candidates,ensure_ascii=False),
+        temperature=0.1)
+    if not isinstance(review,dict) or review.get("approved") is not True:
+        return None
+    index=review.get("bestIndex")
+    if type(index) is not int or not 0<=index<len(candidates):
+        return None
+    return candidates[index]
 
 INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|Fehler|Panne|par erreur|erreur|confusion|equivocaci[oó]n|por engano|equívoco|confusão|erro|falha",re.I)
 
@@ -784,7 +851,7 @@ def main():
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
           "Reject location claims inferred from the feed's language or edition instead of the actual article text, invented customs, national stereotypes, or jokes comparing the reader's troubles with someone else's troubles. "
-          "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
+          "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Also perform a comedy-editor check on EACH quip: concrete setup supported by sources, short reversal or fresh payoff, first-read clarity in natural Japanese, and a distinctly new premise for quipSecond. Reject generic recap disguised as a punchline, overlong commentary, forced wordplay and recycled 'unexpected!' endings, even when factual; ask the writer to sharpen before publication. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
@@ -844,22 +911,9 @@ def main():
     recent_lines=recent_lines[-60:]
     nightly_text=None
     try:
-        response=ai(
-            "あなたは日本語の夜のニュース便りの編集者です。以下は独立した情報源で検証済みのニュースの要約です。"
-            "この日の実話全体をそっと振り返る『今夜のひと言』を、日本語で一つだけ作成してください。気が向かなければ笑わなくてもよい読者のための、軽くて自然な余韻です。"
-            "40〜95文字。ニュースの具体的な事実・固有名詞・数字を追加しない。被害者を笑わない。"
-            "記事に共通する計画と現実のズレを軽くひねり、決まり文句・説教・精神論・元気を強いる表現・苦しみの比較・救済を約束する表現を避けてください。"
-            "以下の過去のひと言と似た言い回しを避けてください："+json.dumps(recent_lines[-20:],ensure_ascii=False)
-            +"JSONオブジェクトでキー nightlyMessage に文章を入れて返してください。"
-            +json.dumps([{"title":story["title"],"summary":story["summary"],"category":story["category"]} for story in selected],ensure_ascii=False)
-        )
-        candidate=response.get("nightlyMessage") if isinstance(response,dict) else None
-        if isinstance(candidate,str):
-            candidate=candidate.strip()
-            if 20<=len(candidate)<=110 and chr(10) not in candidate and chr(13) not in candidate and not re.search(r"https?://|[<>]",candidate) and all(__import__("difflib").SequenceMatcher(None,candidate,old).ratio()<0.72 for old in recent_lines):
-                nightly_text=candidate
+        nightly_text=compose_nightly_comedy(selected,recent_lines)
     except (RuntimeError,ValueError,KeyError,TypeError) as exc:
-        print("Nightly line unavailable; safe publisher fallback:",type(exc).__name__)
+        print("Nightly comedy editorial review unavailable:",type(exc).__name__)
     if nightly_text is None:
         print("Nightly line generation did not pass validation; using safe publisher fallback.")
     payload={"status":"approved","editionDate":day,"editionType":"regular","title":day+"｜世界の大失敗ニュース" ,

@@ -63,6 +63,61 @@ class EditorialQuipQualityTest(unittest.TestCase):
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn("Reject a quip that a Japanese reader cannot understand on the first read after the summary",code)
 
+    def test_november_17_all_six_quips_and_closing_have_editorial_quality(self):
+        day="2026-11-17"
+        approved=json.loads((ROOT/"data/approved"/(day+".json")).read_text(encoding="utf-8"))
+        archive=json.loads((ROOT/"data/archive"/(day+".json")).read_text(encoding="utf-8"))
+        self.assertEqual(validate_approved(approved,day),archive)
+        current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        if current.get("editionDate")==day:self.assertEqual(current,archive)
+        expected={
+            "cheonan-painters-coffee-rescue-2026":(
+                "コーヒー4杯の注文メモが、まさかのSOS欄。配達アプリ、守備範囲が広い。",
+                "コーヒーを注文したら、配達員が救助隊まで兼任してくれた。"),
+            "guaira-degavar-road-marking-2026":(
+                "「ゆっくり」のつづりは間違えた。でも目立つ仕事だけは大成功。",
+                "市は誤字を塗り直し、その失敗談を交通安全係にスカウト。"),
+            "albert-lea-mcnugget-monkey-diaper-police-2026":(
+                "「不審者」の正体は、おむつ姿のサル。しかも名前がマックナゲット。",
+                "警察の冗談は「弁護士とバナナを要求」。ボケ役、まさかの警察側。"),
+        }
+        self.assertEqual(set(expected),{s["id"] for s in archive["stories"]})
+        for story in archive["stories"]:
+            with self.subTest(id=story["id"]):
+                self.assertEqual((story["quip"],story["quipSecond"]),expected[story["id"]])
+                self.assertTrue(15<=len(story["quip"])<=45)
+                self.assertTrue(15<=len(story["quipSecond"])<=55)
+                self.assertIn("correctionNote",story)
+                self.assertNotEqual(story["quip"],story["quipSecond"])
+        self.assertEqual(archive["nightlyMessage"],
+                         "仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。")
+
+    def test_closing_comedy_requires_concrete_payoff_and_independent_review(self):
+        from unittest.mock import patch
+        from auto_editorial import valid_nightly_comedy_line,compose_nightly_comedy,NIGHTLY_COMEDY_CRAFT
+        good="仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。"
+        old="コーヒーの配達が出口になり、誤字が安全の呼びかけに。警察が保護したのは、おむつ姿のサル。世界の「まさか」は予想以上に自由です。"
+        self.assertTrue(valid_nightly_comedy_line(good))
+        self.assertFalse(valid_nightly_comedy_line(old))
+        self.assertFalse(valid_nightly_comedy_line("おやすみなさい。元気を出してください。"))
+        self.assertFalse(valid_nightly_comedy_line(good,[good]))
+        self.assertIn("20〜60文字",NIGHTLY_COMEDY_CRAFT)
+        stories=[{"title":"現実は予定外","summary":"事実だけの短い説明です。","category":"work"}]
+        drafts={"candidates":["短すぎる",good,"予定どおりならニュースにならない。今日も現実が台本を破った。"]}
+        verdict={"approved":True,"bestIndex":0,"reason":"一読で意味が伝わる"}
+        with patch("auto_editorial.ai",side_effect=[drafts,verdict]) as mocked:
+            self.assertEqual(compose_nightly_comedy(stories),good)
+            self.assertEqual(mocked.call_count,2)
+        with patch("auto_editorial.ai",side_effect=[drafts,{"approved":False,"bestIndex":0}]):
+            self.assertIsNone(compose_nightly_comedy(stories))
+
+    def test_legacy_closing_fallback_preserved_and_future_fallback_short(self):
+        from publish_approved import nightly_message,COMIC_NIGHT_MESSAGES,NIGHT_MESSAGES
+        stories=[{"category":"work"}]
+        self.assertTrue(NIGHT_MESSAGES["work"])
+        self.assertIn(nightly_message("2026-11-18",stories),COMIC_NIGHT_MESSAGES["work"])
+        self.assertNotIn(nightly_message("2026-11-17",stories),COMIC_NIGHT_MESSAGES["work"])
+
     def test_generator_creativity_and_fact_checker_remain_separate(self):
         self.assertIn("three alternative first-hit jokes",WRITING_CRAFT)
         self.assertIn("unproven causes",WRITING_CRAFT)
