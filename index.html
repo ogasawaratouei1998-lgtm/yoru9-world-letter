@@ -314,7 +314,8 @@ footer{font-size:.8125rem;line-height:1.7}
 .travel-figure{margin:0 0 12px}
 .travel-photo{display:block;width:100%;height:auto;max-height:255px;object-fit:cover;
  aspect-ratio:16/9;border-radius:11px;background:#1a2b40}
-.travel-figure figcaption{color:#e1e6ef;font-size:.8125rem;line-height:1.6;margin:7px 0 0}
+.travel-figure figcaption{color:#f2efe8;font-size:.9375rem;line-height:1.85;margin:12px 0 0}
+.travel-caption-label{display:block;color:#f8dfb1;font-size:.75rem;font-weight:850;margin-bottom:4px}
 .travel-photo-error,.travel-empty{font-size:.9375rem;line-height:1.75;padding:12px;
  border:1px dashed #6d8098;border-radius:10px;color:#e5e7ee}
 .travel-note{font-size:.9375rem;line-height:1.7;margin:12px 0}
@@ -325,7 +326,7 @@ footer{font-size:.8125rem;line-height:1.7}
 @media(max-width:520px){
  .travel-card{padding:14px 13px}
  .travel-photo{max-height:220px}
- .travel-note,.travel-country{font-size:1rem}
+ .travel-note,.travel-figure figcaption{font-size:1rem}
 }
 
 /* Quiet, opt-in, historical reading shelf. Never label as today's issue. */
@@ -990,15 +991,15 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
  return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
-  (showIntro?'<p class="travel-disclaimer">このコーナーの写真は、その国や地域の名所・風景です。ニュース現場の写真ではありません。</p>':'')+
+  (showIntro?'<p class="travel-disclaimer">※このコーナーでは、ニュースとは別の旅先をご紹介します。</p>':'')+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
-  '<p class="travel-country">'+escapeHtml(country)+'で、少しだけ旅気分。</p>'+
+  // The location header identifies the destination; no generic boilerplate before the photograph.
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。下の撮影元リンクから写真をご覧いただけます。</p>'+
-   '<figcaption>'+escapeHtml(stop.photoCaption)+'</figcaption></figure>':
-   '<p class="travel-empty">この国の旅先写真は準備中です。地図から景色をのぞいてみませんか。</p>')+
-  (known?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':'')+
+   '<figcaption><span class="travel-caption-label">写真の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
+   '<p class="travel-empty">旅先の写真を準備中です。地図から場所をのぞいてみませんか。</p>'+ 
+   (known&&stop.note?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':''))+
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
