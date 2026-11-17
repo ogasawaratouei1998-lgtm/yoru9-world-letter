@@ -103,6 +103,9 @@ def bing_publisher_url(raw):
         if (parts.scheme != "https"):
             return None
         if parts.hostname not in ("bing.com", "www.bing.com"):
+            # Never accept a lookalike apiclick wrapper on an untrusted host.
+            if parts.path.endswith("/news/apiclick.aspx") or "url" in parse_qs(parts.query):
+                return None
             return raw if safe_url(raw) == raw and editorial.public_host(raw) else None
         if parts.path != "/news/apiclick.aspx":
             return None
