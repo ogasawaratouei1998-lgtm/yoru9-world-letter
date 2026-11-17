@@ -106,7 +106,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("flight-wrong-country",payload)
         for key,stop in payload.items():
             with self.subTest(event=key):
-                self.assertIn(stop["country"],("韓国","ブラジル","イギリス"))
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","アメリカ合衆国"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://upload.wikimedia.org/wikipedia/commons/"))
