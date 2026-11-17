@@ -197,7 +197,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
 
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
-        self.assertIn("real, consequential failures",mission)
+        self.assertIn("source-supported HUMAN mistakes",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
         self.assertIn("Never replace a failure with generic",mission)
@@ -607,6 +607,31 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ranked=sorted(leads,key=editorial.incident_priority)
         self.assertEqual(ranked[0]["url"],"https://example.org/b")
         self.assertEqual(ranked[1]["url"],"https://example.org/a")
+
+    def test_comic_groups_outweigh_serious_two_source_conflicts(self):
+        comic={"title":"Cafe accidentally delivers wrong order",
+               "url":"https://local.example/typo"}
+        serious_a={"title":"Minister faces protest and student discipline",
+                   "url":"https://daily.example/protest"}
+        serious_b={"title":"Suspended students in minister row",
+                   "url":"https://second.example/protest"}
+        animal={"title":"Rare monkey visits village",
+                "url":"https://wildlife.example/monkey"}
+        groups=[[serious_a,serious_b],[animal],[comic]]
+        ranked=editorial.prioritize_comic_groups(groups,limit=2)
+        self.assertEqual(ranked[0],[comic])
+        self.assertEqual(ranked[1],[serious_a,serious_b])
+        self.assertEqual(len(groups),3)  # ranking does not change the evidence
+        self.assertEqual(editorial.prioritize_comic_groups([],limit=24),[])
+
+    def test_editorial_prompt_prioritizes_safe_human_comedy(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("Small, verified mistakes are FIRST-CLASS story candidates",code)
+        self.assertNotIn("Do not prioritize trivial typos or harmless oddities",code)
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=24)",code)
+        self.assertIn("if len(draft)<4:",code)
+        self.assertIn("independent_editorial_quality_passed(audit)",code)
 
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
