@@ -29,6 +29,44 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("window.matchMedia('(prefers-reduced-motion: reduce)')",page)
         self.assertIn(".world-invitation:focus-visible",page)
 
+    def test_world_countries_are_readable_before_the_first_story(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('class="issue-countries" id="issueCountries"',page)
+        self.assertLess(page.index('id="issueCountries"'),page.index('id="spotlightTitle"'))
+        self.assertIn("function renderIssueCountries()",page)
+        self.assertIn("const names=new Map()",page)
+        self.assertIn("countryKey(country)",page)
+        self.assertIn("countryLabel(country)",page)
+        self.assertIn("if(country&&key&&!names.has(key))",page)
+        self.assertIn("renderWorld();renderIssueCountries();",page)
+        self.assertIn("renderIssueCountries();updateSpotlight();updateFilters();",page)
+        self.assertIn("edition.status==='demo'?'体験版の舞台は'",page)
+        self.assertNotIn("sourcecountry",page)
+
+    def test_reading_flow_prioritizes_stories_over_release_metadata(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertLess(page.index('id="issueCountries"'),page.index('id="spotlight"'))
+        self.assertLess(page.index('id="spotlight"'),page.index('id="stories"'))
+        self.assertLess(page.index('id="stories"'),page.index('class="issue-details"'))
+        self.assertLess(page.index('class="issue-details"'),page.index('id="exploreExtras"'))
+        self.assertLess(page.index('id="exploreExtras"'),page.index('id="closing"'))
+        self.assertIn('もうひとつ、世界のどこかから',page)
+        self.assertIn('id="worldInvitation" href="#mapExtras"',page)
+        self.assertIn("map.open=true;",page)
+        self.assertIn('id="releaseStatus"',page)
+        self.assertIn('id="dateGuide"',page)
+
+    def test_muted_lead_styles_remain_accessible_on_mobile(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        css=page[page.index("/* Nightly geography-first reading"):]
+        self.assertIn('.country-chip{display:inline-flex',css)
+        self.assertIn('font-size:1rem;font-weight:740',css)
+        self.assertIn('.spotlight h1{font-size:clamp(1.5rem',css)
+        self.assertIn('.spotlight-quip{font-size:clamp(1.125rem',css)
+        self.assertIn('background:linear-gradient(155deg,#1c2c45,#16243b)',css)
+        self.assertIn('.issue-details .status{margin:0',css)
+        self.assertIn('@media(max-width:520px)',css)
+
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlight"', 'id="spotlightTitle"',
@@ -40,7 +78,7 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_cover_matches_award_first_layout(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         cover = page[page.index('<header class="nav">'):page.index('<div id="offlineNotice"')]
-        self.assertLess(cover.index('class="spotlight"'), cover.index('class="hero"'))
+        self.assertLess(cover.index('class="hero"'), cover.index('class="spotlight"'))
         for token in ('class="spotlight-award"', 'class="evening-moon"', 'id="spotlightTitle"',
                       'class="spotlight-divider"', 'AIツッコミ',
                       'id="spotlightQuip"', 'この話の続きへ ↓'):
@@ -131,7 +169,7 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_stories_before_collapsed_exploration_and_release_status(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertLess(page.index('id="stories"'),page.index('id="exploreExtras"'))
-        self.assertLess(page.index('id="releaseStatus"'),page.index('id="stories"'))
+        self.assertLess(page.index('id="stories"'),page.index('id="releaseStatus"'))
         self.assertIn('function displayReleaseStatus()',page)
         self.assertIn('本日分の公開後に自動更新します。',page)
         self.assertIn('<summary>過去の配信を読む</summary>',page)
