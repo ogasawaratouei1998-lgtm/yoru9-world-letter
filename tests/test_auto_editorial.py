@@ -253,6 +253,42 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.ai("return JSON"),{"ok":True})
             self.assertEqual(requests.call_count,2)
 
+    def test_model_fallback_prefers_current_flash_models_before_legacy(self):
+        import io
+        import json
+        names=["gemini-2.5-flash-lite","gemini-3.5-flash-lite","gemini-3.8-flash",
+               "gemini-3.6-flash","gemini-3.5-flash","gemini-3.7-flash"]
+        payload={"models":[{"name":"models/"+name,"supportedGenerationMethods":["generateContent"]}
+                          for name in names]}
+        class FakeResponse:
+            def __enter__(self):return io.BytesIO(json.dumps(payload).encode())
+            def __exit__(self,*args):return False
+        with patch.object(editorial,"urlopen",return_value=FakeResponse()), \
+             patch.object(editorial,"MODEL","gemini-3.5-flash-lite"):
+            selected=editorial.available_models()
+        self.assertEqual(selected[0],"models/gemini-3.5-flash-lite")
+        self.assertIn("models/gemini-3.8-flash",selected)
+        self.assertIn("models/gemini-3.7-flash",selected)
+        self.assertNotIn("models/gemini-2.5-flash-lite",selected)
+
+    def test_503_provider_overload_uses_bounded_backoff(self):
+        import io
+        from urllib.error import HTTPError
+        def provider(req,timeout=None):
+            if provider.count<2:
+                provider.count+=1
+                raise HTTPError(req.full_url,503,"unavailable",{},
+                                io.BytesIO(b'{"error":{"status":"UNAVAILABLE"}}'))
+            return io.BytesIO(b'{"candidates":[{"content":{"parts":[{"text":"{\\\"ok\\\":true}"}]}}]}')
+        provider.count=0
+        with patch.object(editorial,"KEY","test-key"), \
+             patch.object(editorial,"available_models",return_value=["models/gemini-3.5-flash-lite"]), \
+             patch.object(editorial,"urlopen",side_effect=provider) as mocked, \
+             patch.object(editorial.time,"sleep") as pause:
+            self.assertEqual(editorial.ai("Return valid JSON"),{"ok":True})
+            self.assertEqual(mocked.call_count,3)
+            self.assertEqual([c.args[0] for c in pause.call_args_list],[2,6])
+
     def test_model_catalog_selects_supported_model(self):
         import io
         class FakeResponse:

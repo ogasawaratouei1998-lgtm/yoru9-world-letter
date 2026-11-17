@@ -355,14 +355,17 @@ def available_models():
     models=[m["name"] for m in catalog.get("models",[])
             if "generateContent" in m.get("supportedGenerationMethods",[])
             and m.get("name","").startswith("models/gemini-")]
-    preferred=[MODEL,"gemini-3.5-flash-lite","gemini-3.5-flash","gemini-2.5-flash-lite","gemini-2.5-flash",
-               "gemini-2.0-flash-lite","gemini-2.0-flash"]
+    # Prefer currently supported models from the live catalog, and avoid
+    # retired/eligibility-limited 2.5 models as early automatic fallbacks.
+    preferred=[MODEL,"gemini-3.5-flash-lite","gemini-3.8-flash",
+               "gemini-3.7-flash","gemini-3.6-flash","gemini-3.5-flash",
+               "gemini-3.1-flash-lite","gemini-2.5-flash-lite","gemini-2.5-flash"]
     result=[]
     for name in preferred:
         full="models/"+name
         if full in models and full not in result:result.append(full)
     if not result:raise RuntimeError("No supported Gemini model found; safe stop")
-    return result[:3]
+    return result[:5]
 
 def available_model():
     return available_models()[0]
@@ -413,27 +416,30 @@ def ai(prompt,temperature=0.1):
                 if exc.code in (401,403,429):
                     # Key-level denial and quota limits must not fan out across models.
                     raise RuntimeError("Gemini API stopped: HTTP "+str(exc.code)+" "+status+" "+category) from None
-                if exc.code in (429,500,502,503,504):
-                    # One bounded retry for temporary capacity failures; never bypass checks.
-                    time.sleep(3)
-                    try:
-                        with urlopen(req,timeout=90) as response:result=json.load(response)
-                        raw=result["candidates"][0]["content"]["parts"][0]["text"]
+                if exc.code in (500,502,503,504):
+                    # Bounded exponential backoff for provider overload,
+                    # then try another catalog-supported model. Do not
+                    # silently approve when all attempts fail.
+                    for delay in (2,6):
+                        time.sleep(delay)
                         try:
+                            with urlopen(req,timeout=90) as response:result=json.load(response)
+                            raw=result["candidates"][0]["content"]["parts"][0]["text"]
                             parsed=json.loads(raw)
-                        except json.JSONDecodeError:
-                            print("Gemini transient retry returned malformed JSON:",model,version,flush=True)
-                            last_error="invalid_json"
+                            if not isinstance(parsed,dict):raise ValueError("non-object JSON")
+                            ACTIVE_MODEL=model
+                            print("Gemini generation succeeded after transient retry:",model,version,flush=True)
+                            return parsed
+                        except HTTPError as retry_exc:
+                            last_error=retry_exc.code
+                            print("Gemini transient retry failed:",model,version,"HTTP",retry_exc.code,flush=True)
+                            if retry_exc.code in (401,403,429):
+                                raise RuntimeError("Gemini retry blocked: HTTP "+str(retry_exc.code)) from None
+                            if retry_exc.code not in (500,502,503,504):break
+                        except (URLError,TimeoutError,OSError,ValueError,KeyError,IndexError,TypeError) as retry_exc:
+                            last_error=type(retry_exc).__name__
+                            print("Gemini transient retry unavailable:",last_error,flush=True)
                             break
-                        ACTIVE_MODEL=model
-                        print("Gemini generation succeeded after transient retry:",model,version,flush=True)
-                        return parsed
-                    except HTTPError as retry_exc:
-                        last_error=retry_exc.code
-                        print("Gemini transient retry failed:",model,version,"HTTP",retry_exc.code,flush=True)
-                        if retry_exc.code not in (400,404,429,500,502,503,504):raise RuntimeError("Gemini API HTTP "+str(retry_exc.code))
-                    except (URLError,TimeoutError) as retry_exc:
-                        print("Gemini transient retry failed:",type(retry_exc).__name__,flush=True)
                     break
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
             except (URLError, TimeoutError, ConnectionError, OSError) as exc:
