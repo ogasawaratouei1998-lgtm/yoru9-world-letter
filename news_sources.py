@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from collections import Counter, deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 import json
@@ -64,7 +65,7 @@ def source_registry(path=REGISTRY_PATH):
     return result
 
 
-def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed=35):
+def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed=35, report_path=None):
     """Fetch distinct publisher feeds concurrently with per-source isolation.
 
     Handles unavailable/retired feeds without excluding good publications.
@@ -110,6 +111,22 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
             i=futures[future]
             results[i],health[i]=future.result()
     counts=Counter(health)
+    if report_path is not None:
+        # Diagnostic artifact, never part of the public site or article data.
+        # Feed errors are descriptive only and must never authorize a story.
+        report={"status":"unverified-feed-health",
+                "checkedAt":datetime.now(timezone.utc).isoformat(),
+                "attempted":len(sources),
+                "usable":counts.get("ok",0),
+                "feeds":[{"id":src["id"],"name":src["name"],
+                          "market":src["market"],"focus":src["focus"],
+                          "status":health[i],
+                          "rawPublisherLeads":len(results[i])}
+                         for i,src in enumerate(sources)]}
+        dest=Path(report_path)
+        dest.parent.mkdir(parents=True,exist_ok=True)
+        dest.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",
+                        encoding="utf-8")
     print("Publisher RSS registry:",len(sources),"attempted,",
           counts.get("ok",0),"usable,",
           counts.get("empty_or_unusable",0),"empty/stale/unusable,",
