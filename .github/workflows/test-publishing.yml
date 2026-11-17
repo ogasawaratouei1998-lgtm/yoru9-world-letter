@@ -6,6 +6,10 @@ on:
     paths:
       - 'publish_approved.py'
       - 'auto_editorial.py'
+      - 'editorial_identity.py'
+      - 'editorial_quality.py'
+      - 'trusted_originals.py'
+      - 'collect_candidates.py'
       - 'stage_review.py'
       - '.github/workflows/ai-editorial-preview.yml'
       - '.github/workflows/publish-nightly.yml'
