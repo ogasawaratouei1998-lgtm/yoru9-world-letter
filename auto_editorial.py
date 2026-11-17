@@ -203,13 +203,13 @@ class ArticleText(HTMLParser):
         self.parts.append(value)
         if self.article_depth:self.article_parts.append(value)
 
-def extracted_article_text(html):
+def extracted_article_text(html, min_chars=600):
     parser=ArticleText()
     parser.feed(html)
     # Prefer the publisher's article container; reject generic site chrome.
     if parser.article_containers:
         body=" ".join(parser.article_parts)
-        if len(body)>=600:return body
+        if len(body)>=min_chars:return body
     # Some publishers expose the article body as schema.org structured data,
     # without a conventional <article> element. Only articleBody is trusted;
     # generic page text and navigation are never promoted to evidence.
@@ -222,7 +222,7 @@ def extracted_article_text(html):
             kinds=kind if isinstance(kind,list) else [kind]
             if any(isinstance(k,str) and k.lower() in ("article","newsarticle","reportagearticle","blogposting") for k in kinds):
                 body=node.get("articleBody")
-                if isinstance(body,str) and len(body)>=600:yield body
+                if isinstance(body,str) and len(body)>=min_chars:yield body
             for key in ("@graph","mainEntity"):
                 if key in node:yield from article_bodies(node[key])
     for script in scripts[:12]:
@@ -240,7 +240,7 @@ def public_host(url):
         return bool(addresses) and all(ipaddress.ip_address(x[4][0]).is_global for x in addresses)
     except (OSError,ValueError):return False
 
-def source_text(url, diagnostics=None):
+def source_text(url, diagnostics=None, min_chars=600):
     # Only public HTTPS URLs from the collected lead list may be fetched.
     if not public_host(url):
         if diagnostics is not None:diagnostics.append("blocked_host")
@@ -262,8 +262,8 @@ def source_text(url, diagnostics=None):
                 if diagnostics is not None:diagnostics.append("non_html")
                 return ""
             raw=response.read(180000)
-        text=extracted_article_text(raw.decode("utf-8",errors="replace"))
-        if len(text)<600:
+        text=extracted_article_text(raw.decode("utf-8",errors="replace"),min_chars=min_chars)
+        if len(text)<min_chars:
             if diagnostics is not None:diagnostics.append("short_html")
             return ""
         if diagnostics is not None:diagnostics.append("fetched")
