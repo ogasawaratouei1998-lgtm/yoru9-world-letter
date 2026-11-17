@@ -958,6 +958,10 @@ $('worldInvitation').addEventListener('click',event=>{
    Curated locations belong to incident IDs, not the publisher's country. */
 let travelStopsPromise=null;
 let travelExplainerShown=false;
+// Reserve one different postcard per article in the current reading session.
+const travelSelections=new Map();
+const travelUsedPhotos=new Set();
+const travelFailedPhotos=new Set();
 function loadTravelStops(){
  if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
@@ -975,11 +979,72 @@ function renderTravelSlots(){
    '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
  });
 }
+function travelCountryNames(raw){
+ const text=String(raw||'');
+ // Country aliases and combined reported locations must not make photos disappear.
+ if(text.includes('イギリス')&&text.includes('アメリカ'))return ['イギリス','アメリカ合衆国'];
+ if(text.includes('アメリカ'))return ['アメリカ合衆国'];
+ if(text.includes('イギリス')||text.includes('ウェールズ'))return ['イギリス'];
+ if(text.includes('韓国'))return ['韓国'];
+ if(text.includes('ブラジル'))return ['ブラジル'];
+ if(text.includes('日本'))return ['日本'];
+ if(text.includes('スペイン'))return ['スペイン'];
+ if(text.includes('アンティグア'))return ['アンティグア・バーブーダ'];
+ return text?[text]:[];
+}
+function travelPhotoOptions(stops){
+ // Several article IDs can refer to the same photograph; never count it twice.
+ const seen=new Set();
+ return Object.values(stops||{}).filter(stop=>{
+  if(!stop||typeof stop!=='object'||typeof stop.country!=='string'||
+     typeof stop.place!=='string'||!Number.isFinite(stop.latitude)||
+     !Number.isFinite(stop.longitude)||Math.abs(stop.latitude)>90||
+     Math.abs(stop.longitude)>180||
+     typeof stop.photo!=='string'||
+     !stop.photo.startsWith('https://thumb.wikimedia.org/wikipedia/commons/thumb/')||
+     typeof stop.photoAsset!=='string'||
+     !/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)||
+     typeof stop.photoPage!=='string'||
+     !stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')||
+     typeof stop.licenseUrl!=='string'||
+     !stop.licenseUrl.startsWith('https://creativecommons.org/')||
+     seen.has(stop.photoAsset))return false;
+  seen.add(stop.photoAsset);
+  return true;
+ });
+}
+function travelStoryKey(story){
+ return String(story.id||story.title||'')+'|'+String(story.country||'');
+}
+function chooseTravelPhoto(story,stops){
+ const key=travelStoryKey(story),prior=travelSelections.get(key);
+ if(prior&&!travelFailedPhotos.has(prior.photoAsset))return prior;
+ const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset));
+ if(!available.length)return null;
+ const countries=travelCountryNames(story.country);
+ let sameCountry=available.filter(s=>countries.includes(s.country));
+ // Specific Welsh destination first for Welsh articles, if it has not been used.
+ if(String(story.country||'').includes('ウェールズ')){
+  const welsh=sameCountry.filter(s=>String(s.region).includes('ウェールズ')&&!travelUsedPhotos.has(s.photoAsset));
+  if(welsh.length)sameCountry=welsh;
+ }
+ // Prefer a destination in the story's country. If none remains, offer a
+ // different, explicitly labelled country rather than a repeated photo.
+ let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
+ if(!pool.length)pool=available.filter(s=>!travelUsedPhotos.has(s.photoAsset));
+ if(!pool.length)pool=sameCountry.length?sameCountry:available;
+ // Only the choice within the unused pool is randomized. Reopening the same
+ // article keeps its photo, while other articles receive distinct photos.
+ const picked=pool[Math.floor(Math.random()*pool.length)];
+ travelSelections.set(key,picked);
+ travelUsedPhotos.add(picked.photoAsset);
+ return picked;
+}
 function travelPostcardHtml(story,stop,showIntro=false){
- const country=countryLabel(story.country||'');
- const known=stop&&stop.country===story.country&&Number.isFinite(stop.latitude)&&
-  Number.isFinite(stop.longitude)&&Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
- const place=known?stop.place:country;
+ const known=stop&&Number.isFinite(stop.latitude)&&Number.isFinite(stop.longitude)&&
+  Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
+ const sameCountry=known&&travelCountryNames(story.country).includes(stop.country);
+ const place=known?stop.place:countryLabel(story.country||'');
  const locator=known?{lat:stop.latitude,lon:stop.longitude,zoom:11}:countryRecord(story.country)
   ?{lat:countryRecord(story.country).lat,lon:countryRecord(story.country).lon,zoom:4}:null;
  const mapUrl=locator?'https://www.openstreetmap.org/?mlat='+locator.lat+'&mlon='+locator.lon+
@@ -991,15 +1056,13 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
  return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
-  (showIntro?'<p class="travel-disclaimer">※このコーナーでは、ニュースとは別の旅先をご紹介します。</p>':'')+
-  '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
-  // The location header identifies the destination; no generic boilerplate before the photograph.
+  (showIntro?'<p class="travel-disclaimer">※ここではニュースとは別の旅先をご紹介します。</p>':'')+
+  '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region)+(sameCountry?'':' · '+escapeHtml(stop.country)):'')+'</h4>'+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
-   '<p class="travel-photo-error" hidden>写真を表示できませんでした。下の撮影元リンクから写真をご覧いただけます。</p>'+
+   '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
    '<figcaption><span class="travel-caption-label">写真の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
-   '<p class="travel-empty">旅先の写真を準備中です。地図から場所をのぞいてみませんか。</p>'+ 
-   (known&&stop.note?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':''))+
+   '<p class="travel-empty">写真を読み込めませんでした。地図から場所をのぞいてみませんか。</p>')+
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
@@ -1024,39 +1087,40 @@ document.querySelector('main').addEventListener('click',async event=>{
  if(!opening)return;
  panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
  const stops=await loadTravelStops();
- // Switching issues, re-rendering the month or closing the card cancels stale inserts.
+ // Never insert a postcard into a card that has already been closed/replaced.
  if(!panel.isConnected||panel.hidden||
     (!isMonth&&edition.stories[i]!==story)||
     (isMonth&&!visibleMonthStories.includes(story)))return;
- // The article's destination takes priority; a famous landmark in the
- // same country is used if the specific image cannot load.
- const countryStop=Object.values(stops).find(s=>s.country===story.country&&s.countryOnly===true);
- const exact=stops[story.id];
- const candidate=exact&&exact.country===story.country?exact:countryStop;
  const firstIntro=!travelExplainerShown;
- panel.innerHTML=travelPostcardHtml(story,candidate,firstIntro);
  travelExplainerShown=true;
- function wireTravelPhoto(retryStop){
+ const maxRetries=travelPhotoOptions(stops).length;
+ function mountPhoto(stop,attempt=0){
+  panel.innerHTML=travelPostcardHtml(story,stop,firstIntro);
   const img=panel.querySelector('.travel-photo');
   if(!img)return;
   img.addEventListener('error',()=>{
-   // Start with the bundled photo; Wikimedia is the secondary source.
+   if(!panel.isConnected||panel.hidden)return;
+   // Try the original Commons thumbnail if the bundled copy cannot load.
    if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
     img.dataset.remoteTried='true';
     img.src=img.dataset.remotePhoto;
     return;
    }
-   if(retryStop&&retryStop.photoAsset!==candidate?.photoAsset){
-    panel.innerHTML=travelPostcardHtml(story,retryStop,firstIntro);
-    wireTravelPhoto(null);
-    return;
+   // If both URLs failed, pick a *different* photo, not the same fallback.
+   travelFailedPhotos.add(stop.photoAsset);
+   travelSelections.delete(travelStoryKey(story));
+   travelUsedPhotos.delete(stop.photoAsset);
+   const next=chooseTravelPhoto(story,stops);
+   if(next&&attempt+1<maxRetries&&next.photoAsset!==stop.photoAsset){
+    mountPhoto(next,attempt+1);
+   }else{
+    img.hidden=true;
+    const errorText=panel.querySelector('.travel-photo-error');
+    if(errorText)errorText.hidden=false;
    }
-   img.hidden=true;
-   const fallback=panel.querySelector('.travel-photo-error');
-   if(fallback)fallback.hidden=false;
   });
  }
- wireTravelPhoto(countryStop&&countryStop!==candidate?countryStop:null);
+ mountPhoto(chooseTravelPhoto(story,stops));
 });
 function updateFilters(){
  const available=new Set(edition.stories.slice(1).map(s=>s.category));
