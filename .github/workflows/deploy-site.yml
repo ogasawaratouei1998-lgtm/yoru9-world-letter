@@ -17,6 +17,8 @@ on:
       - 'data/current.json'
       - 'data/archive/**'
       - 'data/retrospective/**'
+      - 'data/monthly/**'
+      - 'monthly_research.py'
   workflow_dispatch:
 
 permissions:
