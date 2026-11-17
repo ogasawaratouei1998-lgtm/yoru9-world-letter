@@ -1,1 +1,19 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512"><rect width="512" height="512" rx="112" fill="#142139"/><circle cx="256" cy="235" r="122" fill="#FFD89E"/><circle cx="312" cy="184" r="118" fill="#142139"/><text x="255" y="418" text-anchor="middle" fill="#FFD89E" font-size="124" font-weight="800" font-family="sans-serif">9</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+<title id="title">よる9じの世界便り — 月と手紙</title>
+<defs>
+  <linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1D3856"/><stop offset="1" stop-color="#101C32"/></linearGradient>
+  <linearGradient id="letter" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF7E8"/><stop offset="1" stop-color="#EFE0C4"/></linearGradient>
+</defs>
+<rect width="512" height="512" rx="110" fill="url(#night)"/>
+<circle cx="226" cy="194" r="126" fill="#FFD38C"/>
+<circle cx="286" cy="134" r="118" fill="#172A43"/>
+<circle cx="362" cy="112" r="7" fill="#FFF0D0"/>
+<circle cx="406" cy="198" r="4" fill="#F5D7A5"/>
+<path d="M116 223c54 13 87 3 112-14" fill="none" stroke="#E3AE63" stroke-width="8" stroke-linecap="round" opacity=".65"/>
+<!-- A letter is the center of the icon: three simple folds stay legible at iOS scale. -->
+<rect x="119" y="262" width="274" height="157" rx="22" fill="url(#letter)" stroke="#E1B976" stroke-width="8"/>
+<path d="M126 279L256 363L386 279" fill="none" stroke="#24415B" stroke-width="14" stroke-linejoin="round" stroke-linecap="round"/>
+<path d="M129 407l91-79M383 407l-91-79" fill="none" stroke="#9CABC0" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+<circle cx="358" cy="369" r="37" fill="#FFD38C" stroke="#24415B" stroke-width="8"/>
+<text x="358" y="393" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="70" font-weight="900" fill="#172A43">9</text>
+</svg>
