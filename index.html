@@ -1002,8 +1002,8 @@ function renderMonthRetrospective(){
   target.append(card);
  }
 }
-// Monthly photos appear as soon as readers expand an article.
-// Loading remains lazy: collapsed articles do not fetch photos.
+// Expanding a monthly article must not automatically open its optional travel panel.
+// Travel remains collapsed until the reader explicitly taps its button.
 $('monthCards').addEventListener('toggle',event=>{
  const details=event.target;
  if(!details.matches?.('.month-story > details'))return;
@@ -1012,9 +1012,6 @@ $('monthCards').addEventListener('toggle',event=>{
   if(details.open)monthlyExpandedStories.add(storyId);
   else monthlyExpandedStories.delete(storyId);
  }
- if(!details.open)return;
- const button=details.querySelector('[data-month-travel]');
- if(button&&button.getAttribute('aria-expanded')==='false')button.click();
 },true);
 async function updateMonthFromArchives(issues){
  // Only completed public releases listed in the archive manifest are eligible.
