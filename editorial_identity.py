@@ -27,7 +27,7 @@ HUMAN_FAILURE_MISSION=(
 )
 
 ANIMAL_TOPIC=re.compile(
-    r"サル|猿|シカ|鹿|アシカ|トド|カニ|蟹|ワニ|鰐|ヘビ|蛇|"
+    r"サル|ザル|猿|シカ|鹿|アシカ|トド|カニ|蟹|ワニ|鰐|ヘビ|蛇|"
     r"ペンギン|アライグマ|ネコ|猫|イヌ|犬|ユニコーン|"
     r"monkey|sea.?lion|deer|crab|alligator|crocodile|"
     r"snake|penguin|unicorn|raccoon|otter|lion cub",

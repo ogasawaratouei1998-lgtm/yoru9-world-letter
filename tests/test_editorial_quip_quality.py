@@ -123,7 +123,7 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertNotIn(nightly_message("2026-11-17",stories),COMIC_NIGHT_MESSAGES["work"])
 
     def test_generator_creativity_and_fact_checker_remain_separate(self):
-        self.assertIn("three alternative first-hit jokes",WRITING_CRAFT)
+        self.assertIn("four sharply different one-liners",WRITING_CRAFT)
         self.assertIn("unproven causes",WRITING_CRAFT)
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn('def ai(prompt,temperature=0.1):',code)
