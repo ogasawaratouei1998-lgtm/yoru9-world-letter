@@ -6,7 +6,7 @@ body, check attribution and dates, and pass its editorial safeguards.
 """
 from __future__ import annotations
 
-from collections import Counter
+from collections import Counter, deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -117,6 +117,19 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
           "fetch/parser failures,",
           sum(len(group) for group in results),"raw publisher leads",
           flush=True)
-    # Source order stays deterministic despite parallel fetching. Keeping the
-    # curated odd-news feeds first improves gentle-mishap recall.
-    return [item for group in results for item in group]
+    # Round-robin the source markets so one busy US/English feed cannot fill
+    # the first N slots and exclude New Zealand, Latin America or Asia.
+    # Order within a market still favors the curated odd-news sections.
+    markets={}
+    for source,group in zip(sources,results):
+        bucket=markets.setdefault(source["market"],deque())
+        bucket.extend(group)
+    ordered=[]
+    while markets:
+        for market in list(markets):
+            group=markets[market]
+            if group:
+                ordered.append(group.popleft())
+            if not group:
+                del markets[market]
+    return ordered
