@@ -788,7 +788,9 @@ def main():
         "total":len(grouped_evidence),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if len(draft)<3:
+    if len(draft)<2:
+        # Reserve API quota for independent reviewer B as soon as two draft
+        # candidates exist. A big batch of unreviewed prose is not progress.
         # Separate diagnosis from drafting. A large all-groups request can
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
@@ -804,7 +806,7 @@ def main():
             g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),18)):
+        for start in range(0,min(len(retry_candidates),4)):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
@@ -837,7 +839,8 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if len(draft)>=6:
+            if len(draft)>=2:
+                print("Draft reserve reached: moving directly to independent fact review.",flush=True)
                 break
     if AI_QUOTA_BLOCKED:
         print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)

@@ -347,7 +347,9 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<150",source)
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
-        self.assertIn("if len(draft)>=6:",source)
+        self.assertIn("if len(draft)>=2:",source)
+        self.assertIn("for start in range(0,min(len(retry_candidates),4)):",source)
+        self.assertIn("Draft reserve reached: moving directly to independent fact review.",source)
 
     def test_model_catalog_selects_supported_model(self):
         import io
