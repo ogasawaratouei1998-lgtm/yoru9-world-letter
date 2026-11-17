@@ -1023,6 +1023,12 @@ function chooseTravelPhoto(story,stops){
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
  let sameCountry=available.filter(s=>countries.includes(s.country));
+ // When two countries are named, prefer the first. This preserves the
+ // limited supply of US photos for articles located only in the United States.
+ if(countries.length>1){
+  const primary=available.filter(s=>s.country===countries[0]&&!travelUsedPhotos.has(s.photoAsset));
+  if(primary.length)sameCountry=primary;
+ }
  // Specific Welsh destination first for Welsh articles, if it has not been used.
  if(String(story.country||'').includes('ウェールズ')){
   const welsh=sameCountry.filter(s=>String(s.region).includes('ウェールズ')&&!travelUsedPhotos.has(s.photoAsset));
