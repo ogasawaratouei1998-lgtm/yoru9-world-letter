@@ -1,7 +1,7 @@
 {
   "name": "よる9じの世界便り",
   "short_name": "よる9じ",
-  "description": "世界の思いがけない実話とAIのひと言。夜9時に、心が少し軽くなる世界便り。",
+  "description": "世界のちょっと意外な実話と、くすっと笑えるAIのひと言。夜9時の世界便り。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -9,6 +9,18 @@
   "theme_color": "#142139",
   "lang": "ja",
   "icons": [
+    {
+      "src": "./assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
     {
       "src": "./assets/icon.svg",
       "sizes": "any",
