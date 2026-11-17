@@ -193,7 +193,7 @@ class ReaderFrontendTest(unittest.TestCase):
 
     def test_nightly_closing_has_single_primary_message(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        closing = page[page.index('<section class="footerpanel">'):page.index('</section>', page.index('<section class="footerpanel">'))]
+        closing = page[page.index('<section class="footerpanel" id="closing">'):page.index('</section>', page.index('<section class="footerpanel" id="closing">'))]
         self.assertEqual(closing.count('id="nightlyMessage"'), 1)
         self.assertIn('今日の便りは、ここまでです。', closing)
         self.assertNotIn('完璧じゃないのは', closing)
