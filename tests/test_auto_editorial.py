@@ -306,6 +306,39 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn("- 'auto_editorial.py'",nightly)
         self.assertNotIn("- 'tests/**'",nightly)
 
+    def test_quota_circuit_prevents_repeat_api_requests(self):
+        from urllib.error import HTTPError
+        from io import BytesIO
+        def quota(*args,**kwargs):
+            raise HTTPError("https://example.test",429,"quota",{},
+                            BytesIO(b'{"error":{"status":"RESOURCE_EXHAUSTED"}}'))
+        with patch.object(editorial,"KEY","test-key"), \
+             patch.object(editorial,"RUN_DEADLINE",None), \
+             patch.object(editorial,"AI_QUOTA_BLOCKED",False), \
+             patch.object(editorial,"available_models",return_value=["models/gemini-3.5-flash-lite"]), \
+             patch.object(editorial,"urlopen",side_effect=quota) as api:
+            with self.assertRaisesRegex(RuntimeError,"HTTP 429"):editorial.ai("first")
+            self.assertTrue(editorial.AI_QUOTA_BLOCKED)
+            with self.assertRaisesRegex(RuntimeError,"circuit open"):editorial.ai("second")
+            self.assertEqual(api.call_count,1)
+
+    def test_editorial_deadline_stops_api_before_call(self):
+        with patch.object(editorial,"KEY","test-key"), \
+             patch.object(editorial,"AI_QUOTA_BLOCKED",False), \
+             patch.object(editorial,"RUN_DEADLINE",editorial.time.monotonic()-1), \
+             patch.object(editorial,"available_models") as model:
+            with self.assertRaisesRegex(RuntimeError,"time budget exhausted"):
+                editorial.ai("Return JSON")
+            model.assert_not_called()
+
+    def test_editorial_drafting_keeps_time_for_fact_checking(self):
+        from pathlib import Path
+        source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("editorial_seconds_remaining()<150",source)
+        self.assertIn("editorial_seconds_remaining()<45",source)
+        self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
+        self.assertIn("if len(draft)>=6:",source)
+
     def test_model_catalog_selects_supported_model(self):
         import io
         class FakeResponse:

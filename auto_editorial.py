@@ -371,10 +371,22 @@ def available_model():
     return available_models()[0]
 
 ACTIVE_MODEL=None
+AI_QUOTA_BLOCKED=False
+RUN_DEADLINE=None
+
+def editorial_seconds_remaining():
+    return float("inf") if RUN_DEADLINE is None else max(0.0,RUN_DEADLINE-time.monotonic())
 
 def ai(prompt,temperature=0.1):
-    global ACTIVE_MODEL
+    global ACTIVE_MODEL, AI_QUOTA_BLOCKED
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
+    if AI_QUOTA_BLOCKED:raise RuntimeError("Gemini API quota/permission circuit open; no publication")
+    if editorial_seconds_remaining()<=5:
+        raise RuntimeError("Editorial run time budget exhausted; no publication")
+    call_deadline=time.monotonic()+75
+    if RUN_DEADLINE is not None:call_deadline=min(call_deadline,RUN_DEADLINE)
+    def bounded_timeout():
+        return min(40,max(1,call_deadline-time.monotonic()))
     models=available_models()
     if ACTIVE_MODEL in models:
         models=[ACTIVE_MODEL]+[model for model in models if model!=ACTIVE_MODEL]
@@ -383,11 +395,13 @@ def ai(prompt,temperature=0.1):
     last_error=None
     for model in models:
         for version in ("v1beta","v1"):
+            if time.monotonic()>=call_deadline:
+                raise RuntimeError("Gemini per-call time budget exhausted; no publication")
             url="https://generativelanguage.googleapis.com/"+version+"/"+model+":generateContent"
             req=Request(url,data=json.dumps(data).encode(),
                         headers={"Content-Type":"application/json","x-goog-api-key":KEY},method="POST")
             try:
-                with urlopen(req,timeout=90) as response:result=json.load(response)
+                with urlopen(req,timeout=bounded_timeout()) as response:result=json.load(response)
                 raw=result["candidates"][0]["content"]["parts"][0]["text"]
                 try:
                     parsed=json.loads(raw)
@@ -414,16 +428,18 @@ def ai(prompt,temperature=0.1):
                 print("Gemini generation failed:",model,version,"HTTP",exc.code,status,"category:",category,flush=True)
                 last_error=exc.code
                 if exc.code in (401,403,429):
-                    # Key-level denial and quota limits must not fan out across models.
+                    # Global circuit prevents the next story batch retrying the same exhausted key.
+                    AI_QUOTA_BLOCKED=True
                     raise RuntimeError("Gemini API stopped: HTTP "+str(exc.code)+" "+status+" "+category) from None
                 if exc.code in (500,502,503,504):
                     # Bounded exponential backoff for provider overload,
                     # then try another catalog-supported model. Do not
                     # silently approve when all attempts fail.
                     for delay in (2,6):
+                        if time.monotonic()+delay>=call_deadline:break
                         time.sleep(delay)
                         try:
-                            with urlopen(req,timeout=90) as response:result=json.load(response)
+                            with urlopen(req,timeout=bounded_timeout()) as response:result=json.load(response)
                             raw=result["candidates"][0]["content"]["parts"][0]["text"]
                             parsed=json.loads(raw)
                             if not isinstance(parsed,dict):raise ValueError("non-object JSON")
@@ -434,6 +450,7 @@ def ai(prompt,temperature=0.1):
                             last_error=retry_exc.code
                             print("Gemini transient retry failed:",model,version,"HTTP",retry_exc.code,flush=True)
                             if retry_exc.code in (401,403,429):
+                                AI_QUOTA_BLOCKED=True
                                 raise RuntimeError("Gemini retry blocked: HTTP "+str(retry_exc.code)) from None
                             if retry_exc.code not in (500,502,503,504):break
                         except (URLError,TimeoutError,OSError,ValueError,KeyError,IndexError,TypeError) as retry_exc:
@@ -628,10 +645,14 @@ def valid_recent_reported(raw, now):
     return now.date()-timedelta(days=1)<=reported<=now.date()
 
 def main():
+    global RUN_DEADLINE, AI_QUOTA_BLOCKED
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY:
         print("No free-tier AI key configured. Safe skip.");return 0
+    # Leave headroom before GitHub's 12-minute limit to fail closed, not get cancelled.
+    RUN_DEADLINE=time.monotonic()+540
+    AI_QUOTA_BLOCKED=False
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
     recent=[]
     for lead in leads:
@@ -689,6 +710,9 @@ def main():
     # Headline groups are still included; AI proposals remain unverified.
     semantic=[]
     for start in range(0,len(source_leads),90):
+        if editorial_seconds_remaining()<220:
+            print("Skipping remaining semantic matching to reserve time for independent review.",flush=True)
+            break
         window=source_leads[max(0,start-30):start+120]
         if len(window)<2:continue
         semantic.extend(semantic_corroboration_groups(window))
@@ -736,6 +760,9 @@ def main():
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
+    if editorial_seconds_remaining()<100:
+        print("Editorial budget too low for safe independent review; no new publication.",flush=True)
+        return 0
     draft_response=ai(prompt,temperature=0.65)
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
     if not isinstance(draft,list):
@@ -770,10 +797,16 @@ def main():
         # viable stories without drafting them. Give each candidate a focused
         # drafting chance; the deterministic and independent audit gates below
         # remain unchanged.
-        retry_candidates=list(grouped_evidence)
+        # Use model diagnostics only for ordering, NEVER as an acceptance veto.
+        retry_candidates=sorted(grouped_evidence,key=lambda g:(
+            0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
+            g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
         for start in range(0,min(len(retry_candidates),18)):
+            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
+                print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
+                break
             batch=retry_candidates[start:start+1]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
                 " You are editor A. Draft up to five Japanese news stories ONLY "
@@ -803,8 +836,11 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if len(draft)>=12:
+            if len(draft)>=6:
                 break
+    if AI_QUOTA_BLOCKED:
+        print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)
+        return 0
     if not draft:
         # A successful API call can legitimately return zero verifiable stories.
         # Log only bounded metadata, not untrusted article text or AI prose.
@@ -861,7 +897,11 @@ def main():
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
         if len(evidence)<1:
             reject("insufficient_fetched_articles");continue
-        audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
+        if editorial_seconds_remaining()<45:
+            print("Independent review stopped at editorial time budget; only prior verified articles remain.",flush=True)
+            break
+        try:
+            audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the fetched original source article text(s) below. "
           "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, prescriptive or humiliating reader commentary, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
@@ -874,6 +914,10 @@ def main():
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
           +json.dumps(accepted_summaries,ensure_ascii=False)+" Fetched original source text(s): "
           +json.dumps(evidence,ensure_ascii=False))
+        except RuntimeError as exc:
+            print("Independent review paused safely:",type(exc).__name__,flush=True)
+            # Previously audited stories remain eligible, but never accept the interrupted draft.
+            break
         if audit.get("approved") is not True:
             # Free-form AI reasons are not logged; only bounded, diagnostic labels.
             reason=str(audit.get("reason","")).lower()[:500]
@@ -895,7 +939,7 @@ def main():
             story["quipSecond"]=second.strip()
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
-        if len(selected)==12:break
+        if len(selected)>=6:break
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Source-text verification approved no stories; no publication.");return 0
@@ -928,7 +972,8 @@ def main():
     recent_lines=recent_lines[-60:]
     nightly_text=None
     try:
-        nightly_text=compose_nightly_comedy(selected,recent_lines)
+        if editorial_seconds_remaining()>75 and not AI_QUOTA_BLOCKED:
+            nightly_text=compose_nightly_comedy(selected,recent_lines)
     except (RuntimeError,ValueError,KeyError,TypeError) as exc:
         print("Nightly comedy editorial review unavailable:",type(exc).__name__)
     if nightly_text is None:
