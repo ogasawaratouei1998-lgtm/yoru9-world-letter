@@ -4,6 +4,7 @@ from pathlib import Path
 import shutil
 import json
 import re
+from datetime import date
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
@@ -83,6 +84,38 @@ def build(root, output):
         shutil.copy2(source, target)
     for source in (root / 'data' / 'archive').glob('????-??-??.json'):
         shutil.copy2(source, output / 'data' / 'archive' / source.name)
+    # Only publish explicitly audited monthly collections. Immutable source
+    # files stay in Git, while the reader sees only recent collections.
+    monthly_index = root / 'data/monthly/index.json'
+    if monthly_index.exists():
+        from monthly_research import safe_day, validate_story
+        manifest = json.loads(monthly_index.read_text(encoding='utf-8'))
+        if (manifest.get('status') != 'published-monthly-index'
+                or not isinstance(manifest.get('issues'), list)):
+            raise ValueError('invalid published monthly index')
+        index_dest = output / 'data/monthly/index.json'
+        index_dest.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(monthly_index, index_dest)
+        for record in manifest['issues']:
+            date_str = record.get('date') if isinstance(record, dict) else None
+            day = safe_day(date_str)
+            if day is None or (date.today() - day).days > 400:
+                continue
+            source = root / 'data/monthly' / (date_str + '.json')
+            if not source.is_file():
+                raise FileNotFoundError('missing published monthly collection')
+            document = json.loads(source.read_text(encoding='utf-8'))
+            stories = document.get('stories')
+            if (document.get('status') != 'published-monthly'
+                    or document.get('collectionDate') != date_str
+                    or document.get('reviewMethod') != 'two-source-two-stage-AI'
+                    or not isinstance(stories, list) or not stories
+                    or len(stories) > 3):
+                raise ValueError('invalid monthly public collection')
+            if any(not validate_story(story, story.get('verificationUrls', []), day)
+                   for story in stories):
+                raise ValueError('monthly collection failed independent-source validation')
+            shutil.copy2(source, output / 'data/monthly' / source.name)
     bundle_travel_photos(root, output)
     print('公開用サイトを生成しました: ' + str(output))
     return output
