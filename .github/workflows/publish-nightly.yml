@@ -152,10 +152,10 @@ jobs:
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
       - name: Collect fresh leads when no approved issue exists
-        if: steps.edition.outputs.exists == 'false' && github.event_name != 'workflow_run'
+        if: steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         run: python collect_candidates.py
       - name: Aim for three independently audited stories (publish one or two if verified)
-        if: steps.edition.outputs.exists == 'false' && github.event_name != 'workflow_run'
+        if: steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite

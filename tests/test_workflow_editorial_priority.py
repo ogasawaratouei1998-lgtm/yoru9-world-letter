@@ -23,7 +23,7 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
 
     def test_preview_handoff_never_runs_duplicate_ai_or_premature_pages(self):
         self.assertEqual(WORKFLOW.count(
-            "steps.edition.outputs.exists == 'false' && github.event_name != 'workflow_run'"),2)
+            "steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')"),2)
         self.assertEqual(WORKFLOW.count(
             "steps.release.outputs.published == 'true' && success()"),5)
         self.assertIn('echo "published=true" >> "$GITHUB_OUTPUT"',WORKFLOW)
