@@ -54,6 +54,21 @@ ANIMAL_ONLY_ACTOR=re.compile(
 )
 
 
+# Serious intimidation of emergency responders is not a lighthearted
+# human mistake. Do not turn a real public-safety dispute into a comedy beat.
+# This narrowly targets harassment/abuse, not innocent mistaken callouts
+# (such as reporting an inflatable toy as a real alligator).
+EMERGENCY_RESPONSE=re.compile(
+    r"消防|消防団|消防士|救急|救命|緊急出動|消防車|救急車|"
+    r"firefighters?|emergency (?:service|responder)|ambulance",
+    re.I,
+)
+RESPONDER_HARASSMENT=re.compile(
+    r"嫌がらせ|ハラスメント|暴言|罵倒|脅迫|威嚇|"
+    r"abuse|harass|threat|intimidat",
+    re.I,
+)
+
 def human_failure_rejection(story):
     """Require the source-checkable identity of a person's actual mistake."""
     if not isinstance(story,dict):
@@ -75,6 +90,10 @@ def human_failure_rejection(story):
         return "missing_human_error_headline"
     if ANIMAL_TOPIC.search(title) and not ANIMAL_MISTAKE_HEADLINE.search(title):
         return "animal_novelty_not_human_failure"
+    situation=" ".join(str(story.get(field,"")) for field in
+                       ("title","summary","detail","humanMistake","observedOutcome"))
+    if EMERGENCY_RESPONSE.search(situation) and RESPONDER_HARASSMENT.search(situation):
+        return "emergency_responder_harassment_not_comic_blunder"
     return None
 
 

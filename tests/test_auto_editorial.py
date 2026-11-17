@@ -396,6 +396,24 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(comic_line_rejection("世界は予想外です。"),
                          "no_usable_first_punchline")
 
+    def test_emergency_responder_harassment_is_not_a_comedy_story(self):
+        from editorial_identity import human_failure_rejection
+        emergency={"humanActor":"地元の住民たち",
+                   "humanMistake":"消防団への嫌がらせを続けて緊急対応を妨害した",
+                   "title":"救急出動中の消防士へ嫌がらせが続いた",
+                   "summary":"サイレンを鳴らした消防団員が住民から暴言を受けた"}
+        self.assertEqual(human_failure_rejection(emergency),
+                         "emergency_responder_harassment_not_comic_blunder")
+        harmless={"humanActor":"動物管理担当の職員",
+                  "humanMistake":"ワニの浮き輪を本物だと勘違いして出動した",
+                  "title":"ワニを本物と見間違えて出動、正体は浮き輪"}
+        self.assertIsNone(human_failure_rejection(harmless))
+        # An ordinary workplace blunder stays eligible.
+        self.assertIsNone(human_failure_rejection({
+            "humanActor":"配送担当者",
+            "humanMistake":"宛名と異なる住所へ商品を配送してしまった",
+            "title":"配送担当が荷物の宛先を取り違えた"}))
+
     def test_editorial_requires_human_error_and_earned_comic_punch(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")

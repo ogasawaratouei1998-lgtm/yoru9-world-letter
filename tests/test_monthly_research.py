@@ -59,6 +59,14 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertTrue(identity.animal_novelty_headline("アシカが植物園に入った"))
         self.assertFalse(identity.animal_novelty_headline("ワニと見間違えて駆けつけた職員"))
 
+    def test_monthly_editor_excludes_emergency_worker_harassment(self):
+        story=sample_story()
+        story["title"]="消防団員への暴言と嫌がらせ"
+        story["summary"]="救急出動中の消防団員に、住民が暴言を浴びせた。"
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertFalse(m.validate_story(story,URLS,TODAY))
+            self.assertTrue(m.validate_story(sample_story(),URLS,TODAY))
+
     def test_window_is_jst_thirty_calendar_dates(self):
         start, end = m.date_window(TODAY)
         self.assertEqual(start.isoformat(), "2026-10-19")

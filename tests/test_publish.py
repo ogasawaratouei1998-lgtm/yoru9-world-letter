@@ -249,6 +249,21 @@ class PublishingTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_approved(data,"2026-11-18")
 
+    def test_automated_editor_cannot_publish_emergency_harassment_as_comedy(self):
+        data=fixture("2026-11-17")
+        data["editionDate"]="2026-11-18"
+        data["approvedBy"]="automated-two-stage-review"
+        for item in data["stories"]:
+            item["reported"]="2026-11-17"
+            item["editorQualityVerified"]=True
+            item["humanFailureVerified"]=True
+            item["humanActor"]="配送担当者"
+            item["humanMistake"]="商品を宛先とは異なる住所へ配送してしまった"
+        data["stories"][0]["title"]="救急出動中の消防士に嫌がらせが続く"
+        data["stories"][0]["summary"]="住民が消防団員に暴言を浴びせた。"
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
+
     def test_current_regular_zero_sources_is_rejected(self):
         data=fixture('2026-11-17')
         for story in data['stories']:
