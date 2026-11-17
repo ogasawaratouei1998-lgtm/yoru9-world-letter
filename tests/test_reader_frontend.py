@@ -91,7 +91,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("firstIntro=!travelExplainerShown",page)
         self.assertIn("function mountPhoto(stop,attempt=0)",page)
         self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
-        self.assertIn("※ここではニュースとは別の旅先をご紹介します。",page)
+        self.assertIn("写真はニュース現場ではなく、旅先の風景です。",page)
         self.assertNotIn("観光案内ではなく、実際の場所へ視線を向ける短い寄り道",page)
         self.assertIn("if(!img.dataset.remoteTried&&img.dataset.remotePhoto)",page)
         self.assertIn("(!isMonth&&edition.stories[i]!==story)",page)
