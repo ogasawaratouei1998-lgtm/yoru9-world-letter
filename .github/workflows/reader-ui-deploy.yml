@@ -6,6 +6,7 @@ on:
     paths:
       - 'index.html'
       - 'service-worker.js'
+      - 'tests/test_travel_collapsed.py'
       - 'build_site.py'
       - 'travel-stops.json'
       - 'assets/**'
