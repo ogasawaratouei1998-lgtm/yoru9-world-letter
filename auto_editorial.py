@@ -50,12 +50,16 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "Exclude salacious private-life allegations and romantic rumors even about public figures, whether reported elsewhere or not. "
     "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when independently verified stories are available; never lower evidence standards or fabricate coverage for geographic quotas. "
     "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
-    "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
+    "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting. "
+    "Our reader may have spent a long day carrying responsibilities at work and home and have little energy left. The newsletter is a quiet place to find one surprising real story and, if it happens naturally, a small laugh. "
+    "Do not diagnose the reader, give mental-health advice, demand gratitude or optimism, promise that tomorrow will be better, compare anyone's suffering, or force a takeaway. "
+    "Even a genuinely funny story is enough; the reader owes us no smile, reading streak or response. "
+    "Do not sensationalize fear, humiliation, private hardship or collateral suffering for punchlines.")
 # Editorial writing craft: keep verified reporting separate from compassionate interpretation.
 WRITING_CRAFT=(
     " Write for a tired Japanese reader at 9pm, not for a compliance committee. "
     "Structure each story as (1) a concrete verified plan or expectation, "
-    "(2) the documented mistake and surprising contrast, (3) a humane shift in perspective. "
+    "(2) the documented mistake and surprising contrast, (3) optionally a small humane aftertaste, never a compulsory lesson. "
     "Write a factual, curiosity-provoking Japanese headline: put the concrete plan and unexpected outcome in sharp contrast; favor vivid specifics over abstract labels. Never invent numbers, quotes, consequences or a stronger failure than sources establish. "
     "The first selected story is the nightly lead and must be the most immediately surprising, clearly verified, humane-to-laugh-at incident; do not rank by human suffering or severity. "
     "The title should show the specific mismatch, not generic outrage or a vague 'big failure'. "
@@ -63,12 +67,14 @@ WRITING_CRAFT=(
     "MANDATORY: write title, summary, detail, label, categoryLabel and quip in natural Japanese. "
     "The entire detail must be Japanese, not an English source paraphrase or an English pep talk. "
     "Keep factual reporting and the explicitly labeled AI reflection separate; never translate unverified claims as facts. "
-    "detail: first explain the verifiable sequence, then explicitly signal an editorial "
-    "reflection with 'ここからはAIの見方。' and offer one specific, non-preachy reframing. "
+    "detail: first explain the verifiable sequence in plain Japanese. If a gentle interpretive line genuinely adds value, clearly separate it from news facts with 'ここからはAIの見方。'; a joke can stand without any advice. "
+    "Keep reflections to one or two concise sentences; never address the reader as a patient, student or person who needs fixing. "
     "Generate TWO original, distinct Japanese punchlines for each article. The first quip must strike immediately (aim for 18-45 Japanese characters). quipSecond is the follow-up only after opening the story (aim for 18-55 characters), and must switch the comic lens, never paraphrase the first. Both must be grounded in verified facts; never invent causes, outcomes or private wrongdoing. "
     "quip: one quotable, tight Japanese line (roughly 18-45 characters) that lands its twist on the final words about "
     "the PLAN, ASSUMPTION or DECISION, never a victim. Prefer observational irony "
     "over ridicule, platitudes, generic encouragement or forced puns. "
+    "The reader may be exhausted and may not laugh today. They must feel welcome even if they only read one paragraph and leave. "
+    "Never write moral lessons, productivity advice, prescriptive coping steps or motivational slogans; favor a soft, unforced observation. "
     "Do not say 'your problems are nothing', dismiss the reader's pain, "
     "invent a happy ending, or imply the subjects were secretly fine. "
     "Before outputting JSON, privately draft three alternative first-hit jokes and two different second-hit angles. Pick the shortest unexpected verified contrast that ends with a crisp punch, not an explanation. Avoid long similes, recaps, generic cheering, forced AI/reboot metaphors, or hedged endings like \"ようです\". If unproven causes or personal allegations are the only funny angle, do not joke about them. "    "If the facts are sufficient but the first joke is weak, try three angles "
@@ -762,6 +768,7 @@ def main():
           "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
+          "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
           "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
@@ -822,9 +829,9 @@ def main():
     try:
         response=ai(
             "あなたは日本語の夜のニュース便りの編集者です。以下は独立した情報源で検証済みのニュースの要約です。"
-            "この日のニュース全体を振り返る『今夜のオチ』を、日本語で一つだけ作成してください。最後にふっと笑えて、安心して眠れる短い締めです。"
+            "この日の実話全体をそっと振り返る『今夜のひと言』を、日本語で一つだけ作成してください。気が向かなければ笑わなくてもよい読者のための、軽くて自然な余韻です。"
             "40〜95文字。ニュースの具体的な事実・固有名詞・数字を追加しない。被害者を笑わない。"
-            "記事に共通する計画と現実のズレを軽くひねり、決まり文句・説教・単なる慰めは避けてください。"
+            "記事に共通する計画と現実のズレを軽くひねり、決まり文句・説教・精神論・元気を強いる表現・苦しみの比較・救済を約束する表現を避けてください。"
             "以下の過去のひと言と似た言い回しを避けてください："+json.dumps(recent_lines[-20:],ensure_ascii=False)
             +"JSONオブジェクトでキー nightlyMessage に文章を入れて返してください。"
             +json.dumps([{"title":story["title"],"summary":story["summary"],"category":story["category"]} for story in selected],ensure_ascii=False)
