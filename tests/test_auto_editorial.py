@@ -425,6 +425,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("quipSecond (OPTIONAL",code)
         self.assertIn("HUMAN_FAILURE_MISSION",code)
 
+    def test_serious_incident_veto_checks_original_source_before_comedy(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("noncomic_incident_rejection(story,evidence)",code)
+        self.assertIn("harassment of firefighters or emergency responders",code)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")

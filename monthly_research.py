@@ -385,6 +385,7 @@ def validate_story(story, urls, today):
                 not 10 <= len(story["quipSecond"].strip()) <= 100 or
                 story["quip"].strip() == story["quipSecond"].strip())) or
             editorial.editorial_fit_rejection(story) or
+            editorial.noncomic_incident_rejection(story) or
             editorial.human_failure_rejection(story) or
             editorial.comic_line_rejection(story["quip"])):
         return False
@@ -430,6 +431,10 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         evidence.append({"url": item["url"], "headline": item["title"],
                          "published": str(lead_day(item)),
                          "body": text[:10000]})
+    # Reject distress/harassment from the original, even when editor A would
+    # soften the headline into a superficially ironic comedy anecdote.
+    if editorial.noncomic_incident_rejection({},evidence):
+        return None
     evidence_rule = (
         "ONE vetted news publisher's firsthand original reporting is available. "
         "The original BODY must contain concrete, firsthand-reported facts, not "
@@ -452,7 +457,7 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         "each supported by the SOURCE TEXT, even for small everyday blunders. "
         "Never fabricate a mistake to repurpose wildlife news. "
         "The title must center the human error and its ironic outcome. "
-        "Reject emergencies, fear, harm, unverified personal anecdotes, "
+        "Reject emergencies, harassment of volunteer responders, serious conflict, fear, harm, unverified personal anecdotes, "
         "private allegations, and corporate crises. A headline, search snippet, "
         "or publisher reputation cannot establish a claim. Every fact, incident "
         "country, expectedPlan, observedOutcome and the reporting date must "
@@ -486,6 +491,8 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
     if not story.get("quipSecond"):
         story.pop("quipSecond",None)
     if not validate_story(story, urls, today):
+        return None
+    if editorial.noncomic_incident_rejection(story,evidence):
         return None
     try:
         verdict = ask_ai(

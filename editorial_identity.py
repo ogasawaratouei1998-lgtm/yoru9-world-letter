@@ -114,3 +114,43 @@ def comic_line_rejection(quip):
                  quip.strip()):
         return "surprise_recapped_without_joke"
     return None
+
+# Intentional intimidation or harassment of emergency responders is not
+# a harmless mix-up, even if an AI can invent an ironic "lesson" about it.
+# Check the full publisher text as well as the selected Japanese headline.
+EMERGENCY_WORK=re.compile(
+    r"消防|救急|消防団|救命|緊急出動|emergency|fire.?fighter|paramedic|ambulance",
+    re.I
+)
+HARASSMENT=re.compile(
+    r"嫌がらせ|罵倒|暴言|脅迫|威嚇|harass|abus(?:e|ed|ive)|threat|intimidat",
+    re.I
+)
+SERVICE_PROTEST=re.compile(
+    r"消防|救急|消防団|緊急出動|サイレン|fire.?fighter|emergency|siren",
+    re.I
+)
+PROTEST_PATTERN=re.compile(r"苦情|抗議|クレーム|complain|protest",re.I)
+
+
+def noncomic_incident_rejection(story, fetched_articles=()):
+    """Veto real harassment of emergency workers, not routine comic blunders.
+
+    Fetched evidence is used to detect serious incidents even if the drafted
+    Japanese headline softens the original report. This is not an exhaustive
+    moderation mechanism, so independent editorial judgment remains mandatory.
+    """
+    if not isinstance(story,dict):
+        return "invalid_story"
+    fields=("title","summary","detail","humanMistake")
+    surface=" ".join(str(story.get(key,"")) for key in fields)
+    bodies=" ".join(str(item.get("text",item.get("body","")))
+                    for item in fetched_articles if isinstance(item,dict))
+    if ((EMERGENCY_WORK.search(surface) and HARASSMENT.search(surface)) or
+            (EMERGENCY_WORK.search(bodies) and HARASSMENT.search(bodies))):
+        return "harassment_of_emergency_responders"
+    if (SERVICE_PROTEST.search(surface) and PROTEST_PATTERN.search(surface)
+            and (re.search(r"救急|消防|消防団|緊急出動|救命",surface)
+                 or (EMERGENCY_WORK.search(bodies) and HARASSMENT.search(bodies)))):
+        return "emergency_service_protest_not_comic_mixup"
+    return None
