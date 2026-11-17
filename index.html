@@ -794,7 +794,7 @@ function storyCorrectionHtml(story){
 }
 /* Archived research collection is not a fake old daily edition. */
 /* History shelf: 30 JST dates by actual release/collection, not reporting date. */
-let monthStories=[],monthPublishedStories=[],visibleMonthStories=[];
+let monthStories=[],monthPublishedStories=[],monthRollingStories=[],visibleMonthStories=[];
 // Preserve expanded monthly articles when live archive updates re-render this shelf.
 const monthlyExpandedStories=new Set();
 function monthWindow(){
@@ -805,7 +805,7 @@ function isMonthDate(date,start,end){
  return /^\d{4}-\d{2}-\d{2}$/.test(date||'')&&date>=start&&date<=end;
 }
 function monthRetentionDate(s){
- return s.monthOrigin==='curated'?s.collectionDate:s.publishedAt;
+ return s.monthOrigin==='monthly'?s.collectionDate:s.monthOrigin==='curated'?s.collectionDate:s.publishedAt;
 }
 function validMonthStory(s){
  if(!s||!s.id||!/^[a-zA-Z0-9-]+$/.test(s.id)||!s.country||!s.title||!s.summary||
@@ -843,7 +843,7 @@ function renderMonthRetrospective(){
  const {start,end}=monthWindow();
  const seen=new Set(edition.stories.map(s=>s.id));
  const seenSources=new Set(edition.stories.flatMap(monthSourceKeys));
- const stories=[...monthPublishedStories,...monthStories]
+ const stories=[...monthRollingStories,...monthPublishedStories,...monthStories]
   .filter(s=>validMonthStory(s)&&isMonthDate(monthRetentionDate(s),start,end))
   .sort((a,b)=>monthRetentionDate(b).localeCompare(monthRetentionDate(a))||
    b.reported.replaceAll('.','-').localeCompare(a.reported.replaceAll('.','-')))
@@ -862,7 +862,7 @@ function renderMonthRetrospective(){
  $('monthIntro').textContent='過去に報道された実話です。今日起きた出来事ではありません。'+start+'〜'+end+'の配信・特集収録から30日間表示します。報道日と配信日は異なります。新しく確認された公開記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。';
  for(const s of stories){
   const card=document.createElement('article');card.className='month-story';card.dataset.monthStoryId=s.id;
-  const recorded=s.monthOrigin==='curated'?'特集収録日 ':'配信日 ';
+  const recorded=(s.monthOrigin==='curated'||s.monthOrigin==='monthly')?'特集収録日 ':'配信日 ';
   card.innerHTML='<details><summary><span class="month-country">'+escapeHtml(countryLabel(s.country))+
    ' · '+recorded+escapeHtml(monthRetentionDate(s))+' · 報道日 '+escapeHtml(s.reported.replaceAll('.','-'))+
    '</span><strong>'+escapeHtml(s.title)+'</strong><span class="month-preview">'+escapeHtml(s.summary)+
@@ -928,6 +928,36 @@ async function loadMonthRetrospective(){
    .filter(validMonthStory);
   renderMonthRetrospective();
  }catch(error){console.info('過去1か月の特集を読み込めませんでした',error);}
+}
+async function loadMonthlyVerified(){
+ // A separate editorial workflow publishes only audited two-publisher stories.
+ // Unverified candidates, private previews and drafts are never fetched here.
+ const {start,end}=monthWindow();
+ try{
+  const response=await fetch('./data/monthly/index.json',{cache:'no-store'});
+  if(!response.ok)throw Error('monthly index unavailable');
+  const index=await response.json();
+  if(index.status!=='published-monthly-index'||!Array.isArray(index.issues))return;
+  const dates=[...new Set(index.issues.map(i=>i&&i.date))]
+   .filter(day=>isMonthDate(day,start,end)).sort().reverse().slice(0,30);
+  const verified=await Promise.all(dates.map(async date=>{
+   try{
+    const res=await fetch('./data/monthly/'+date+'.json',{cache:'no-store'});
+    if(!res.ok)return [];
+    const document=await res.json();
+    if(document.status!=='published-monthly'||document.collectionDate!==date||
+       document.reviewMethod!=='two-source-two-stage-AI'||
+       !Array.isArray(document.stories))return [];
+    return document.stories.map(story=>({...story,monthOrigin:'monthly',collectionDate:date}))
+     .filter(validMonthStory);
+   }catch(_){return [];}
+  }));
+  monthRollingStories=verified.flat();
+  renderMonthRetrospective();
+ }catch(_){
+  // Keep previously displayed verified stories during an intermittent outage.
+  // The 30-day filter still applies at render time.
+ }
 }
 function renderIssueCountries(){
  const target=$('issueCountries');
@@ -1226,7 +1256,7 @@ $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
-loadState();render();loadMonthRetrospective();
+loadState();render();loadMonthRetrospective();loadMonthlyVerified();
 async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length>=1&&x.stories.length<=5;const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}else if(archiveMenu.value==='current'){displayReleaseStatus()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
 checkPublished();
 
@@ -1291,6 +1321,7 @@ async function refreshOnForeground(){
  lastForegroundCheck=now;
  await checkPublished();
  loadArchives();
+ loadMonthlyVerified();
  if('serviceWorker' in navigator){
   navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});
  }
