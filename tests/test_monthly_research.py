@@ -245,6 +245,19 @@ class MonthlyResearchTest(unittest.TestCase):
         with patch.object(m.editorial,"public_host",return_value=True):
             self.assertTrue(m.validate_story(story,URLS,TODAY))
 
+    def test_malformed_bing_and_rss_do_not_stop_monthly_discovery(self):
+        now=datetime(2026,11,17,19,0,tzinfo=ZoneInfo("Asia/Tokyo"))
+        bad=b"<not-a-valid-feed><tag\x00>"
+        with patch.object(m,"source_registry",return_value=[]), \
+             patch.object(m,"fetch_registry_feeds",return_value=[]), \
+             patch.object(m,"GDELT_QUERIES",()), \
+             patch.object(m,"BING_QUERIES",(("mixup","en-US"),)), \
+             patch.object(m,"LOCAL_LANGUAGE_FEEDS",(("https://source.example/rss",
+                 "Example","en","JP"),)), \
+             patch.object(m,"INDEPENDENT_FEEDS",()), \
+             patch.object(m,"BBC_FEEDS",()):
+            self.assertEqual(m.discover(now,fetch=lambda url:bad),[])
+
     def test_no_key_is_safe_skip_with_no_public_file(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(m.editorial, "KEY", ""):
