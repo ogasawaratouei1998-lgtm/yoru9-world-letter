@@ -1,0 +1,118 @@
+{
+  "status": "published-retrospective",
+  "collectionDate": "2026-11-17",
+  "windowStart": "2026-10-17",
+  "windowEnd": "2026-11-17",
+  "title": "この1か月の世界の「まさか」",
+  "description": "2026年10月17日〜11月17日に報じられた過去の実話から、複数の報道で経緯を確認できた5本を紹介します。過去に実際の配信があったように見せるものではなく、11月17日にまとめた特集です。",
+  "stories": [
+    {
+      "id": "korea-dog-clothes-misdelivery-2026",
+      "country": "韓国",
+      "category": "work",
+      "categoryLabel": "職場",
+      "label": "過去1か月の実話",
+      "title": "誤配達された犬の服、回収に行ったらもう犬が着ていた",
+      "summary": "韓国で配達員が犬用の服を隣家に誤配達。住人のおじいさんは贈り物と勘違いして愛犬に着せていました。事情を聞いた販売店は、その服を贈ることにしました。",
+      "detail": "2026年11月、韓国の配達員とされる人がSNSに投稿した出来事を、ニューシスやSBSなどが報じました。11月10日、犬の服が本来の注文者ではなく隣家に届けられ、住人のおじいさんは自分への贈り物と思い、愛犬に着せていました。配達員は注文者に事情を話し、服の代金を自分で負担するつもりで販売店に再発送を依頼。すると販売店は服をおじいさんへ無償で贈り、注文者にも商品を再送すると返答しました。経緯は配達員とされる人のSNS投稿に基づく報道で、独立した現地取材で全過程が確認されたわけではありません。",
+      "quip": "配送先は間違えたのに、犬のサイズはなぜか正解だった。",
+      "quipSecond": "回収するはずの服が、思いがけず贈り物に。",
+      "reported": "2026-11-12",
+      "sourceName": "ニューシス（2026年11月12日）",
+      "sourceUrl": "https://nwww.newsis.com/view/NISX20261112_0003866250",
+      "verificationUrls": [
+        "https://nwww.newsis.com/view/NISX20261112_0003866250",
+        "https://news.sbs.co.kr/news/endPage.do?cooper=SBSNEWSAMP&news_id=N1008843951&plink=ORI",
+        "https://www.fnnews.com/news/202611120738063361"
+      ],
+      "expectedPlan": "注文者の家に犬の服を届ける予定だった。",
+      "observedOutcome": "隣家に誤配達し、愛犬が着たあと、販売店が贈り物にした。",
+      "attributionNote": "SNS投稿者の説明に基づく複数媒体の報道です。"
+    },
+    {
+      "id": "brazil-norris-champagne-podium-2026",
+      "country": "ブラジル",
+      "category": "sports",
+      "categoryLabel": "スポーツ",
+      "label": "過去1か月の実話",
+      "title": "F1の優勝表彰台、開けるはずのシャンパン瓶が割れた",
+      "summary": "ブラジル・サンパウロのF1表彰式。優勝したランド・ノリス選手がシャンパン瓶を床に打ちつけて開けようとすると、栓より先に瓶が割れました。",
+      "detail": "2026年11月8日のF1サンパウロGPで、マクラーレンのランド・ノリス選手が優勝しました。表彰式でいつものようにシャンパン瓶の底を床に打ちつけ、勢いよく泡を出そうとしましたが、瓶が砕けてしまいました。AFPとロイター通信は、その後の花火の演出にも驚かされる場面があったと報じています。チーム代表はノリス選手が無事だとの認識を示しました。レースの結果ではなく、勝利を祝う場面での想定外の出来事を紹介します。",
+      "quip": "レースは制したのに、最後の一本に一本取られた。",
+      "quipSecond": "乾杯の準備、最初に必要だったのは瓶との作戦会議。",
+      "reported": "2026-11-08",
+      "sourceName": "AFP（2026年11月8日）",
+      "sourceUrl": "https://www.afp.com/pt/node/3851942",
+      "verificationUrls": [
+        "https://www.afp.com/pt/node/3851942",
+        "https://www.reuters.com/sports/formula1/norris-unscathed-after-bottle-fireworks-mishaps-2026-11-08/",
+        "https://ge.globo.com/motor/formula-1/noticia/2026/11/08/lando-norris-se-empolga-no-podio-e-quebra-garrafa-de-champagne-video.ghtml"
+      ],
+      "expectedPlan": "シャンパンの瓶を開けて優勝を祝う予定だった。",
+      "observedOutcome": "瓶を打ちつけたらガラスが砕け、予定した乾杯にならなかった。"
+    },
+    {
+      "id": "japan-shoten-too-early-closing-2026",
+      "country": "日本",
+      "category": "person",
+      "categoryLabel": "個人",
+      "label": "過去1か月の実話",
+      "title": "まだ3問目があるのに「また来週」。司会者が早すぎる締め",
+      "summary": "11月1日放送の『笑点』で、司会の春風亭昇太さんが3問目を忘れ、2問目の後に番組を締めようとしました。共演者の指摘に気づいて謝り、進行を戻しました。",
+      "detail": "2026年11月1日に日本テレビ系で放送された『笑点』の大喜利で、2問目が終わったところで司会の春風亭昇太さんが番組の締めの挨拶を始めました。しかし実際には3問目が残っており、共演者から声が上がって勘違いが発覚。昇太さんは謝り、そのまま3問目を続けました。ORICON NEWSとSmart FLASHがこの一幕を伝えています。大事件ではなく、番組内での軽いやり取りで収まった話として紹介します。",
+      "quip": "司会だけが、誰よりも早く来週に到着。",
+      "quipSecond": "終わりの挨拶にも、取り消しボタンがあった日。",
+      "reported": "2026-11-01",
+      "sourceName": "ORICON NEWS（2026年11月1日）",
+      "sourceUrl": "https://www.oricon.co.jp/news/2490220/",
+      "verificationUrls": [
+        "https://www.oricon.co.jp/news/2490220/",
+        "https://smart-flash.jp/entertainment/entertainment-news/437048/"
+      ],
+      "expectedPlan": "大喜利の3問目を行ってから番組を締める予定だった。",
+      "observedOutcome": "2問目の後に締めの挨拶をしてしまい、指摘を受けて進行を戻した。"
+    },
+    {
+      "id": "uk-penrith-church-sign-typo-2026",
+      "country": "イギリス",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "過去1か月の実話",
+      "title": "観光案内の新標識、教会名の「r」が行方不明に",
+      "summary": "英国ペンリスの新しい案内標識で、St Andrew's Churchのつづりが間違っていました。町議会は誤記を認め、修正すると説明しました。",
+      "detail": "2026年10月、英国カンブリア地方のペンリスで、観光客向けの案内標識に誤字が見つかりました。地元の教会名「St Andrew's Church」が、一部で「St Andew's Church」と表示され、Andrewのrが一文字抜けていました。町の名所や歴史を紹介するために設置されたもので、事業費は約17万ポンドと報じられています。ペンリス町議会は誤りを認め、修正を手配すると説明。修正の費用負担や完了時期は10月23日の報道時点では明らかにされていませんでした。地元紙Cumberland and Westmorland HeraldとCumbria Crackが伝えています。",
+      "quip": "人は道案内できても、教会の名前だけ迷子になった。",
+      "quipSecond": "この案内板に必要だった最初の案内先は、校正係だった。",
+      "reported": "2026-10-23",
+      "sourceName": "Cumberland and Westmorland Herald（2026年10月23日）",
+      "sourceUrl": "https://cwherald.com/news/penrith-town-council-apologises-over-signs-spelling-errors/",
+      "verificationUrls": [
+        "https://cwherald.com/news/penrith-town-council-apologises-over-signs-spelling-errors/",
+        "https://cumbriacrack.com/2026/10/23/penrith-town-council-apologises-for-signs-spelling-mistakes/"
+      ],
+      "expectedPlan": "教会名を正しく載せ、観光客に道を案内する予定だった。",
+      "observedOutcome": "教会名のrが抜けた標識が作られ、町議会が訂正を手配した。"
+    },
+    {
+      "id": "japan-kanken-ai-kanji-typo-2026",
+      "country": "日本",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "過去1か月の実話",
+      "title": "漢字検定のAI告知画像、肝心の「祭」の字が間違っていた",
+      "summary": "漢字検定を運営する協会がAI生成の告知画像を投稿したところ、「祭」の字に誤りが。10月20日に謝罪し、その後、よくある間違いの例を紹介しました。",
+      "detail": "2026年10月18日、日本漢字能力検定協会は、「漢検自己採点祭り」を知らせる画像を公式SNSに投稿しました。画像には生成AIを利用した旨の表示があり、肝心の「祭」の字に余分な点画が入っていました。利用者からの指摘を受け、協会は20日に誤字を謝罪。その後、実際の検定でよく見られる「祭」の書き間違いも紹介しました。漢字を扱う団体で起きた珍しい確認漏れとして、ITmediaとデイリースポーツが10月22日に報じています。企画そのものと画像の文字の誤りは区別して紹介します。",
+      "quip": "「祭」の字が、ひと足先にお祭り気分になっていた。",
+      "quipSecond": "漢字を確かめる企画で、最初に確かめる字が見つかった。",
+      "reported": "2026-10-22",
+      "sourceName": "ITmedia AI＋（2026年10月22日）",
+      "sourceUrl": "https://www.itmedia.co.jp/aiplus/article/2610/22/2000002494/",
+      "verificationUrls": [
+        "https://www.itmedia.co.jp/aiplus/article/2610/22/2000002494/",
+        "https://origin.daily.co.jp/society/life/2026/10/22/0020956400.shtml"
+      ],
+      "expectedPlan": "漢検の自己採点企画を正しい漢字で告知する予定だった。",
+      "observedOutcome": "生成AIの画像に「祭」の誤字があり、指摘を受けて謝罪した。"
+    }
+  ]
+}
