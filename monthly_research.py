@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Independent 30-day research for the monthly shelf. Never publish raw leads.
 
-Only stories independently supported by two fetched publisher article bodies,
-drafted by editor A and approved by adversarial fact-checker B, reach the
-published monthly data. The 9pm release and historical curated collection are
+Only verified firsthand reporting from a vetted publisher, or independently
+corroborated articles from two publishers, can pass editor A and adversarial
+fact-checker B before joining the published monthly data. The 9pm release and historical curated collection are
 deliberately untouched.
 """
 from __future__ import annotations
@@ -30,7 +30,7 @@ MONTH_ROOT = Path("data/monthly")
 DAY_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 SLUG_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{8,95}$")
 CATEGORIES = {"person", "work", "company", "sports"}
-# This preference filters retrieval, NOT evidence. Factual claims need two bodies.
+# This preference filters retrieval, NOT evidence. All factual claims need fetched original article bodies.
 MISHAP = re.compile(
     r"mistak|mix.?up|blunder|typo|accidental|misprint|wrong|error|mishap|"
     r"mistaken|confus|apolog|fail|backfir|oops|embarrass|misstep|oddity|"
@@ -61,6 +61,19 @@ SAME_PUBLISHER = (
     {"bbc.co.uk", "bbc.com"},
     {"theguardian.com", "guardian.co.uk"},
 )
+# A one-source story must be an original news report on a known publisher's
+# domain. These domains are reviewed in code, not inferred from RSS names or AI
+# assertions. Other sites may still qualify when TWO independent reports agree.
+TRUSTED_ORIGINAL_PUBLISHERS = (
+    "bbc.com", "bbc.co.uk", "theguardian.com", "guardian.co.uk",
+    "npr.org", "cbsnews.com", "nbcnews.com", "nytimes.com",
+    "abc.net.au", "cbc.ca", "france24.com", "lemonde.fr",
+    "dw.com", "elpais.com", "japantimes.co.jp", "thehindu.com",
+    "globo.com", "premiumtimesng.com", "inquirer.net",
+    "reuters.com", "apnews.com", "nhk.or.jp", "kyodonews.net",
+)
+REVIEW_METHOD = "source-quality-two-stage-AI"
+LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
 
 
 def date_window(today):
@@ -132,6 +145,27 @@ def publisher_pair(urls):
     if any(set(hosts).issubset(group) for group in SAME_PUBLISHER):
         return False
     return all(safe_url(u) == u and editorial.public_host(u) for u in urls)
+
+
+def trusted_original_url(url):
+    """Allow a single original publisher report only on an explicitly vetted host.
+
+    Domain presence alone NEVER proves firsthand reporting. The original
+    publisher body and adversarial audit must establish that separately.
+    """
+    if safe_url(url) != url or not editorial.public_host(url):
+        return False
+    host = editorial.host(url)
+    return any(host == domain or host.endswith("." + domain)
+               for domain in TRUSTED_ORIGINAL_PUBLISHERS)
+
+
+def source_urls_ok(urls):
+    if not isinstance(urls, list):
+        return False
+    if len(urls) == 1:
+        return trusted_original_url(urls[0])
+    return publisher_pair(urls)
 
 
 def discover(now, fetch=fetch_bytes):
@@ -222,7 +256,7 @@ def discover(now, fetch=fetch_bytes):
 
 
 def candidate_pairs(leads, ask_ai=editorial.ai):
-    """AI headline pairs are hypotheses; two original texts + audit are mandatory."""
+    """Prefer corroborated pairs, then credible original reports without a pair."""
     allowed = {x["url"]: x for x in leads}
     found, seen = [], set()
     def add(urls):
@@ -263,7 +297,15 @@ def candidate_pairs(leads, ask_ai=editorial.ai):
                         add([leads[a]["url"], leads[b]["url"]])
         except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
             print("Monthly pairing unavailable:", type(exc).__name__, flush=True)
-    return found[:12]
+    # One strong original report can be eligible even when another outlet
+    # never covered the small local mishap. The later audit is mandatory.
+    paired={item["url"] for group in found for item in group}
+    for item in leads:
+        if len(found)>=18:break
+        if item["url"] in paired or not trusted_original_url(item["url"]):
+            continue
+        found.append([item])
+    return found[:18]
 
 
 def existing_articles(root=ROOT):
@@ -326,7 +368,10 @@ def validate_story(story, urls, today):
     if reported is None or not date_window(today)[0] <= reported <= today:
         return False
     verification = story.get("verificationUrls")
-    if not publisher_pair(verification) or set(verification) != set(urls):
+    if not source_urls_ok(verification) or not source_urls_ok(urls) or verification != urls:
+        return False
+    basis = "original-report" if len(verification)==1 else "independent-reports"
+    if story.get("sourceBasis")!=basis:
         return False
     if story["sourceUrl"] not in verification:
         return False
@@ -342,73 +387,119 @@ def validate_story(story, urls, today):
 def make_story(group, today, old_summaries, ask_ai=editorial.ai,
                source_reader=editorial.source_text):
     urls = [item["url"] for item in group]
-    if not publisher_pair(urls):
+    if not source_urls_ok(urls):
         return None
+    single = len(urls)==1
     evidence = []
     for item in group:
         text = source_reader(item["url"])
-        if not isinstance(text, str) or len(text) < 600:
+        if not isinstance(text, str) or len(text)<600:
             return None
         evidence.append({"url": item["url"], "headline": item["title"],
                          "published": str(lead_day(item)),
-                         "body": text[:8000]})
+                         "body": text[:10000]})
+    evidence_rule = (
+        "ONE vetted news publisher's firsthand original reporting is available. "
+        "The original BODY must contain concrete, firsthand-reported facts, not "
+        "just a press release, social media post, alleged anecdote, viral claim, "
+        "rewritten wire report or third-party attribution. A trustworthy domain "
+        "alone is NOT evidence. If you cannot confirm original reporting in "
+        "the actual retrieved body, return null. Do not claim a second source. "
+        if single else
+        "TWO independent publishers' article BODIES must confirm the same "
+        "specific incident. Reject syndicated rewrites, common wire copy, "
+        "or different events."
+    )
     directive = (
         editorial.EDITORIAL_MISSION + editorial.WRITING_CRAFT +
-        " You are monthly editor A. Produce at most ONE verified Japanese story "
-        "only if both independent publisher article bodies demonstrably describe "
-        "the exact same harmless human-scale surprising mishap. Reject any "
-        "syndicated rewrite or distinct incidents, injury, fear, or corporate "
-        "crisis. Source headlines and publication metadata are NOT themselves "
-        "evidence for factual assertions. Every claim, expectedPlan and "
-        "observedOutcome must be substantiated in the actual bodies. "
-        "The reporting date must appear in the source material or be reliably "
-        "supported by the dated publisher metadata. The date is bounded between "
-        + str(date_window(today)[0]) + " and " + str(today) + ". "
-        "Write natural Japanese and a warm, short observational quip, never "
-        "inventing an incident country based on publisher location. "
-        "Fields: " + str(REQUIRED) + ", verificationUrls (both exact input URLs). "
-        "category must be person, work, company or sports. "
-        "SourceName should accurately name one of the two publishers. "
-        "Return JSON {story:object|null}. If in doubt return null. "
-        "Existing released stories for duplicate avoidance: "
-        + json.dumps(old_summaries[-60:], ensure_ascii=False) +
-        " Two independent evidence bodies: " + json.dumps(evidence, ensure_ascii=False)
+        " You are monthly editor A. Draft at most ONE Japanese news story "
+        "only when the evidence meets this source rule: " + evidence_rule +
+        " The article must describe a real harmless, specific, human-scale "
+        "surprising mismatch between an intended plan and the observed outcome. "
+        "Reject emergencies, fear, harm, unverified personal anecdotes, "
+        "private allegations, and corporate crises. A headline, search snippet, "
+        "or publisher reputation cannot establish a claim. Every fact, incident "
+        "country, expectedPlan, observedOutcome and the reporting date must "
+        "be supported directly by the retrieved original article text. "
+        "Do not invent quotes, motives or a happy ending. "
+        "The date must be between " + str(date_window(today)[0]) +
+        " and " + str(today) + ". "
+        "Return JSON {story:object|null} using fields " + str(REQUIRED) +
+        " plus verificationUrls containing the EXACT supplied URLs in order. "
+        "Do not invent a second URL or an official statement. "
+        "The story's sourceName must accurately identify its original outlet. "
+        "Return null on uncertainty. Previously released stories: " +
+        json.dumps(old_summaries[-70:], ensure_ascii=False) +
+        " Retrieved article bodies: " + json.dumps(evidence, ensure_ascii=False)
     )
     try:
-        draft = ask_ai(directive, temperature=0.5)
+        draft = ask_ai(directive, temperature=0.4)
     except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
         print("Monthly draft unavailable:", type(exc).__name__, flush=True)
         return None
     story = draft.get("story") if isinstance(draft, dict) else None
+    if not isinstance(story, dict):
+        return None
+    # The AI cannot self-assert which verification tier it belongs to.
+    story["sourceBasis"] = "original-report" if single else "independent-reports"
     if not validate_story(story, urls, today):
         return None
     try:
         verdict = ask_ai(
             editorial.EDITORIAL_MISSION +
-            " You are adversarial fact checker B, independent of editor A. "
-            "Review ALL reported facts and each date against BOTH article "
-            "bodies. Verify that they independently report the SAME incident "
-            "and are not simply syndicated rewrites. Confirm the two distinct "
-            "original sources explicitly support the event, expectation, "
-            "outcome, country, Japanese reporting date, title, summary and "
-            "detail. Reject invented quotes, embellishment, unverified "
-            "attributions, harmful jokes, tragedies, distressing disasters or "
-            "duplicates. Fail closed on uncertainty. "
-            "Return JSON {approved:boolean,independent:boolean,"
-            "bothSourcesSupport:boolean,reasonCode:string}. Draft: "
-            + json.dumps(story, ensure_ascii=False) +
-            " Original publisher bodies: " + json.dumps(evidence, ensure_ascii=False),
+            " You are adversarial fact checker B, INDEPENDENT of editor A. "
+            "Check every substantive factual statement in the Japanese title, "
+            "summary, detail, expectedPlan, observedOutcome, reported date and "
+            "event country against the actual retrieved article body or bodies. "
+            "Reject vague anecdotes, unsupported motives, harmful jokes, "
+            "syndicated PR, stale news, uncertainty, omissions that change "
+            "meaning, and misleading certainty. For a ONE-PUBLISHER submission, "
+            "you MUST verify firsthand original publisher reporting rather "
+            "than a summary of SNS posts, rumors or other outlets; do not demand "
+            "another publisher or claim corroboration. For a TWO-PUBLISHER "
+            "submission, verify distinct independent reporting of the SAME "
+            "incident, not identical syndicated copy. A title and RSS date "
+            "alone NEVER verify a story. Reject if a source is incomplete, "
+            "does not explicitly support the precise expectation and outcome, "
+            "or fails to establish a reliable reported date. "
+            "Be conservative. Only approve entirely substantiated, "
+            "non-tragic, respectful stories. Return JSON with EXACT fields "
+            "{approved:boolean,factsVerified:boolean,originalReporting:boolean,"
+            "dateVerified:boolean,safeTone:boolean,"
+            "independent:boolean,bothSourcesSupport:boolean,reasonCode:string}. "
+            "For ONE source, independent and bothSourcesSupport should be false; "
+            "for TWO sources, both must be true. Draft: " +
+            json.dumps(story, ensure_ascii=False) +
+            " Retrieved original article body or bodies: " +
+            json.dumps(evidence, ensure_ascii=False),
             temperature=0.1
         )
     except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
         print("Monthly fact check unavailable:", type(exc).__name__, flush=True)
         return None
-    if not (isinstance(verdict, dict) and verdict.get("approved") is True
-            and verdict.get("independent") is True
-            and verdict.get("bothSourcesSupport") is True):
+    if not isinstance(verdict, dict) or any(
+        verdict.get(field) is not True
+        for field in ("approved", "factsVerified", "originalReporting",
+                      "dateVerified", "safeTone")
+    ):
         return None
+    if not single and not (verdict.get("independent") is True
+                           and verdict.get("bothSourcesSupport") is True):
+        return None
+    if single and (verdict.get("independent") is True
+                   or verdict.get("bothSourcesSupport") is True):
+        return None
+    if single:
+        story["attributionNote"] = (
+            "報道機関1社の独自取材記事を確認しています。"
+            "別媒体による独立した裏付けは確認できていません。"
+        )
+    else:
+        # Never claim independent reporting beyond the two audited original texts.
+        story.pop("attributionNote", None)
     return {key: value for key, value in story.items()
-            if key in (*REQUIRED, "verificationUrls", "attributionNote", "correctionNote")}
+            if key in (*REQUIRED, "verificationUrls", "sourceBasis",
+                       "attributionNote", "correctionNote")}
 
 
 def publish_monthly(stories, today, root=ROOT):
@@ -425,7 +516,7 @@ def publish_monthly(stories, today, root=ROOT):
             raise ValueError("Story failed monthly release validation")
     obj = {"status": "published-monthly",
            "collectionDate": today.isoformat(),
-           "reviewMethod": "two-source-two-stage-AI",
+           "reviewMethod": REVIEW_METHOD,
            "stories": stories}
     # Never re-date older verified articles as if they had been published today:
     # collectionDate means first inclusion in this monthly shelf.
@@ -468,7 +559,7 @@ def run(now=None, root=ROOT):
         return False
     groups = candidate_pairs(leads)
     if not groups:
-        print("No two-publisher incident candidates; no publication.")
+        print("No verified-publisher source candidates; no publication.")
         return False
     known = existing_articles(root)
     accepted = []
@@ -481,6 +572,8 @@ def run(now=None, root=ROOT):
         story = make_story(group, today, known[0] + accepted)
         if not story or not plausible_new(story, known):
             continue
+        known[0].append({"title":story["title"],"summary":story["summary"],
+                         "country":story["country"]})
         known[1].add(story["id"])
         known[2].update(story["verificationUrls"])
         known[3].add(story["eventKey"])
