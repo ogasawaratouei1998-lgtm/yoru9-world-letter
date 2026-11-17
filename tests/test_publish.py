@@ -76,6 +76,46 @@ class PublishingTest(unittest.TestCase):
         self.path.unlink()
         self.assertFalse(publish(self.root,datetime.fromisoformat('2026-11-10T21:15:00+09:00')))
         self.assertEqual(json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
+    def test_november_17_and_later_regular_editions_require_exactly_three(self):
+        data=fixture('2026-11-17')
+        for story in data['stories']:
+            story['reported']='2026-11-17'
+        self.assertEqual(len(validate_approved(data,'2026-11-17')['stories']),3)
+        for missing in (1,2,0):
+            with self.subTest(missing=missing):
+                insufficient={**data,'stories':data['stories'][:missing]}
+                with self.assertRaisesRegex(ValueError,'3本が必須'):
+                    validate_approved(insufficient,'2026-11-17')
+        data['stories'].append({
+            **data['stories'][0],
+            'id':'fourth-unique-event',
+            'sourceUrl':'https://third.example.com/unique',
+            'verificationUrls':['https://third.example.com/unique','https://other.example.org/unique']
+        })
+        with self.assertRaisesRegex(ValueError,'3本が必須'):
+            validate_approved(data,'2026-11-17')
+
+    def test_insufficient_nightly_issue_cannot_replace_existing_publication(self):
+        # Publishing any two-story future edition would violate the hard
+        # three-story policy; no archive or current publication is changed.
+        today='2026-11-17'
+        incomplete=fixture(today)
+        incomplete['stories']=incomplete['stories'][:2]
+        for story in incomplete['stories']:
+            story['reported']=today
+        path=self.root/'data'/'approved'/f'{today}.json'
+        path.write_text(json.dumps(incomplete,ensure_ascii=False),encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'3本が必須'):
+            publish(self.root,datetime.fromisoformat('2026-11-17T21:07:00+09:00'))
+        self.assertFalse((self.root/'data'/'archive'/f'{today}.json').exists())
+        self.assertEqual(
+            json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
+
+    def test_historical_regular_editions_keep_original_rules(self):
+        old=fixture('2026-11-10')
+        self.assertEqual(len(validate_approved(
+            {**old,'stories':old['stories'][:1]},'2026-11-10')['stories']),1)
+
     def test_english_only_detail_is_rejected(self):
         data=fixture()
         data['editionDate']='2026-11-17'
