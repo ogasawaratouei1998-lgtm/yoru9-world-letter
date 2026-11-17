@@ -96,10 +96,26 @@ jobs:
             echo "Today's edition is already published; skip reviewed-artifact recovery."
             exit 0
           fi
+          # An editor-approved file in main has priority over every cached AI
+          # preview regardless of story count. A bigger edition is not always
+          # a better one. Fail closed if that file is malformed.
+          if [ -f "data/approved/$DAY.json" ]; then
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          from publish_approved import validate_approved
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          data=json.loads((Path("data/approved")/(day+".json")).read_text(encoding="utf-8"))
+          validate_approved(data,day)
+          print("Preserving previously approved editorial issue:",day,len(data["stories"]),"stories")
+          PY
+            exit 0
+          fi
           mkdir -p /tmp/yoru9-reviewed
-          # A previous review may have verified three stories while a newer
-          # retry verifies only two. Preserve the best independently audited
-          # same-day artifact, never overwrite it with a smaller edition.
+          # If no approved file exists, review artifacts are merely candidates.
+          # Choose the most recent valid reviewed artifact, not the largest.
           IDS=""
           if [ -n "$TRIGGER_RUN_ID" ]; then IDS="$TRIGGER_RUN_ID"; fi
           RECENT=$(gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 50 --json databaseId --jq '.[].databaseId' || true)
@@ -118,10 +134,8 @@ jobs:
           from zoneinfo import ZoneInfo
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
           target=Path("data/approved")/(day+".json")
-          candidates=list(Path("/tmp/yoru9-reviewed").glob("*/"+day+".json"))
-          # Keep the local approved edition on equal story counts; a stale
-          # artifact must not undo a newer editorial correction.
-          if target.exists(): candidates.insert(0,target)
+          candidates=sorted(Path("/tmp/yoru9-reviewed").glob("*/"+day+".json"),
+                            key=lambda p:int(p.parent.name),reverse=True)
           valid=[]
           for candidate in candidates:
               try:
@@ -131,10 +145,10 @@ jobs:
               except (ValueError,KeyError,TypeError,OSError) as exc:
                   print("Rejected invalid preview:",candidate.parent.name,type(exc).__name__)
           if valid:
-              count,source,payload=max(valid,key=lambda item:item[0])
+              count,source,payload=valid[0]
               target.parent.mkdir(parents=True,exist_ok=True)
               target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
-              print(f"Selected same-day independently reviewed issue: {count} stories")
+              print(f"Selected latest verified review {source.parent.name}: {count} stories")
           else:
               print(f"No valid reviewed issue for {day}; checked {len(candidates)} candidate files. Normal generation may run.")
           PY
