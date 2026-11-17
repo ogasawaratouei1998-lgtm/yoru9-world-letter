@@ -1,6 +1,10 @@
-name: Manual current news discovery and publication eligibility proof
+name: One-time human-blunder comedy verification (read-only)
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-current-news-once.yml'
   workflow_dispatch:
 
 permissions:
@@ -80,7 +84,8 @@ jobs:
           if status=="PASS":
             for s in obj["stories"]:
               print("VERIFIED_STORY",json.dumps({
-                "id":s["id"],"title":s["title"],"sourceName":s["sourceName"],
+                "id":s["id"],"title":s["title"],"quip":s["quip"],
+                "quipSecond":s.get("quipSecond"),"sourceName":s["sourceName"],
                 "sourceUrl":s["sourceUrl"],"reported":s["reported"],
                 "sourceBasis":s.get("sourceBasis","independent-reports"),
                 "verificationUrls":s["verificationUrls"]
