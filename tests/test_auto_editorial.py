@@ -102,7 +102,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn("1<=len(urls)<=3",code)
-        self.assertIn('if len(urls)>1 and len({host(u) for u in urls})<2',code)
+        self.assertIn("trusted_original_domain(urls[0])",code)
+        self.assertIn("single_original_not_verified",code)
         self.assertIn("if len(evidence)<1",code)
         self.assertIn("validate_approved(payload,day)",code)
         self.assertIn("a syndicated copy, social media repost",code)
@@ -464,7 +465,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("groups.extend([[item] for item in source_leads",pipeline)
         self.assertIn("not (1<=len(urls)<=3)",pipeline)
         self.assertIn("if len(evidence)<1",pipeline)
-        self.assertIn("One credible ORIGINAL reporter",pipeline)
+        self.assertIn("originalReportingVerified",pipeline)
         self.assertIn('validate_approved(payload,day)',pipeline)
         self.assertIn('if not valid_recent_reported(story["reported"],now):',pipeline)
 

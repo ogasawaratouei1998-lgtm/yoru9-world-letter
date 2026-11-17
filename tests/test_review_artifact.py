@@ -62,7 +62,13 @@ class ReviewStageTest(unittest.TestCase):
 
     def test_single_verified_original_is_stageable(self):
         item=json.loads(self.source.read_text(encoding="utf-8"))
-        item["stories"][0]["verificationUrls"]=[item["stories"][0]["sourceUrl"]]
+        from trusted_originals import SINGLE_SOURCE_NOTE
+        story=item["stories"][0]
+        story["sourceUrl"]="https://www.bbc.com/news/articles/verified-local-report"
+        story["verificationUrls"]=[story["sourceUrl"]]
+        story["sourceBasis"]="original-report"
+        story["originalReportingVerified"]=True
+        story["attributionNote"]=SINGLE_SOURCE_NOTE
         self.source.write_text(json.dumps(item,ensure_ascii=False),encoding="utf-8")
         staged=stage_review(self.root,DAY,self.destination)
         self.assertIsNotNone(staged)

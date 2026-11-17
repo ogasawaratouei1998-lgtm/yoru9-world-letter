@@ -178,12 +178,38 @@ class PublishingTest(unittest.TestCase):
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
 
     def test_current_regular_one_source_is_publishable(self):
+        from trusted_originals import SINGLE_SOURCE_NOTE
         data=fixture('2026-11-17')
         for story in data['stories']:
             story['reported']='2026-11-17'
-        data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl']]
+        story=data['stories'][0]
+        story['sourceUrl']='https://www.bbc.com/news/articles/verified-local-report'
+        story['verificationUrls']=[story['sourceUrl']]
+        story['sourceBasis']='original-report'
+        story['originalReportingVerified']=True
+        story['attributionNote']=SINGLE_SOURCE_NOTE
         public=validate_approved(data,'2026-11-17')
-        self.assertEqual(public['stories'][0]['verificationUrls'],[data['stories'][0]['sourceUrl']])
+        self.assertEqual(public['stories'][0]['verificationUrls'],[story['sourceUrl']])
+        self.assertEqual(public['stories'][0]['attributionNote'],SINGLE_SOURCE_NOTE)
+        self.assertNotIn('originalReportingVerified',public['stories'][0])
+
+    def test_one_source_requires_preapproved_publisher_and_fact_review(self):
+        from trusted_originals import SINGLE_SOURCE_NOTE
+        data=fixture('2026-11-17')
+        for story in data['stories']:
+            story['reported']='2026-11-17'
+        story=data['stories'][0]
+        story['verificationUrls']=[story['sourceUrl']]
+        story['sourceBasis']='original-report'
+        story['originalReportingVerified']=True
+        story['attributionNote']=SINGLE_SOURCE_NOTE
+        with self.assertRaises(ValueError):
+            validate_approved(data,'2026-11-17')
+        story['sourceUrl']='https://www.bbc.com/news/articles/verified-local-report'
+        story['verificationUrls']=[story['sourceUrl']]
+        story['originalReportingVerified']=False
+        with self.assertRaises(ValueError):
+            validate_approved(data,'2026-11-17')
 
     def test_current_regular_zero_sources_is_rejected(self):
         data=fixture('2026-11-17')
