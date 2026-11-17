@@ -22,11 +22,20 @@ def notice_for(issue,now=None):
     if not isinstance(day,str) or day!=now.date().isoformat():
         return None
     stories=issue.get("stories")
-    if not isinstance(stories,list) or len(stories)!=5:
+    kind=issue.get("editionType","regular")
+    if (not isinstance(stories,list)
+            or (kind=="regular" and not 1<=len(stories)<=3)
+            or (kind=="special" and len(stories)!=5)
+            or kind not in ("regular","special")):
         return None
+    # Same rule as the public nightly publisher: never notify before 21:00 JST.
+    if now.hour<21:
+        return None
+    count=len(stories)
     title="よる9じの世界便り"
-    kind=issue.get("editionType")
-    body="創刊特集号が届きました。世界の大失敗、実話5本。今夜はちょっと笑って寝よう。" if kind=="special" else "今夜の世界の大失敗5本を公開しました。ニュースは実話、ツッコミ担当はAI。"
+    body=("創刊特集号が届きました。世界の大失敗、実話5本。今夜はちょっと笑って寝よう。"
+          if kind=="special"
+          else f"今夜の世界の「まさか」{count}本が届きました。ニュースは実話、ツッコミはAIから。")
     return {"editionDate":day,"title":title,"body":body,"url":"./"}
 
 def dispatch(config,secret,payload):

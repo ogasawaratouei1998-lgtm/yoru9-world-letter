@@ -16,6 +16,29 @@ class PushDispatchTest(unittest.TestCase):
                      datetime(2026,11,11,21,40,tzinfo=JST))
         self.assertEqual(p["editionDate"],"2026-11-11")
         self.assertIn("特集",p["body"])
+    def test_regular_one_to_three_published_stories_are_eligible(self):
+        for count in (1,2,3):
+            with self.subTest(stories=count):
+                issue={"status":"published","editionDate":"2026-11-17",
+                       "editionType":"regular","stories":[{}]*count}
+                payload=notice_for(issue,datetime(2026,11,17,21,25,tzinfo=JST))
+                self.assertIsNotNone(payload)
+                self.assertIn(str(count)+"本",payload["body"])
+                self.assertEqual(payload["editionDate"],"2026-11-17")
+
+    def test_legacy_regular_four_or_five_and_empty_do_not_notify(self):
+        for count in (0,4,5):
+            with self.subTest(stories=count):
+                self.assertIsNone(notice_for(
+                    {"status":"published","editionDate":"2026-11-17",
+                     "stories":[{}]*count},
+                    datetime(2026,11,17,21,25,tzinfo=JST)))
+
+    def test_push_notification_is_not_sent_before_nine_jst(self):
+        self.assertIsNone(notice_for(
+            {"status":"published","editionDate":"2026-11-17","stories":[{}]*3},
+            datetime(2026,11,17,20,59,tzinfo=JST)))
+
     def test_missing_backend_does_not_send(self):
         self.assertFalse(dispatch("","",{"editionDate":"2026-11-11"}))
     def test_insecure_dispatch_endpoint_is_rejected(self):
