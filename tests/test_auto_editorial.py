@@ -455,14 +455,17 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("1 <= len(stories) <= 5", publisher)
         self.assertIn("if not selected:", editorial)
 
-    def test_single_source_editorial_path_preserves_source_audit(self):
+    def test_single_source_discovery_is_preserved_but_publication_needs_two_sources(self):
         from pathlib import Path
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("groups.extend([[item] for item in source_leads", pipeline)
-        self.assertIn("not (1<=len(urls)<=3)", pipeline)
-        self.assertIn("if len(evidence)<1:", pipeline)
-        self.assertIn("A single credible original publisher is sufficient", pipeline)
-        self.assertIn("if not valid_recent_reported(story[\"reported\"],now):", pipeline)
+        # Single-source leads are valuable for discovery, but cannot be
+        # approved until a second independent, actually fetched report agrees.
+        self.assertIn("groups.extend([[item] for item in source_leads",pipeline)
+        self.assertIn("not (2<=len(urls)<=3)",pipeline)
+        self.assertIn("if len(evidence)<2",pipeline)
+        self.assertIn("Require two independently retrieved publishers",pipeline)
+        self.assertIn('validate_approved(payload,day)',pipeline)
+        self.assertIn('if not valid_recent_reported(story["reported"],now):',pipeline)
 
     def test_same_day_reporting_with_timezone_buffer(self):
         from datetime import datetime

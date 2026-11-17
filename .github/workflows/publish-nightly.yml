@@ -188,7 +188,7 @@ jobs:
             echo "No new approved edition; existing site stays unchanged."
           else
             # An approved file staged before 21:00 is not a public edition.
-            if git diff --cached --name-only | grep -Eq '^(data/current\\.json|data/archive/[^/]+\\.json)$'; then
+            if git diff --cached --name-only | grep -Eq '^(data/current[.]json|data/archive/[^/]+[.]json)$'; then
               echo "published=true" >> "$GITHUB_OUTPUT"
             else
               echo "published=false" >> "$GITHUB_OUTPUT"
