@@ -1,8 +1,31 @@
 import unittest
 from collect_candidates import parse_rss, safe_url
+import collect_candidates as c
 
 
 class CollectionTest(unittest.TestCase):
+    def test_gdelt_discovers_human_errors_from_several_searches(self):
+        import json
+        from urllib.parse import parse_qs, urlsplit
+        from unittest.mock import patch
+        queries=[]
+        def fetch(url):
+            query=parse_qs(urlsplit(url).query)["query"][0]
+            queries.append(query)
+            i=len(queries)
+            return json.dumps({"articles":[{
+                "title":"Worker's wrong order leads to surprise",
+                "url":f"https://report{i}.example.com/mistake",
+                "seendate":"20261118T010000Z",
+                "domain":f"report{i}.example.com",
+                "sourcecountry":"GB","language":"English",
+            }]}).encode()
+        with patch.object(c,"fetch_bytes",side_effect=fetch):
+            leads=c.get_gdelt()
+        self.assertEqual(len(queries),3)
+        self.assertEqual(len(leads),3)
+        self.assertTrue(any("wrong recipient" in item for item in queries))
+
     def test_google_news_rss_parses(self):
         rss=b'''<rss version="2.0"><channel><item><title>Shocking mix-up at a bakery</title><link>https://news.google.com/articles/abc</link><source>NewsOutlet</source><pubDate>Tue, 10 Nov 2026 03:00:00 GMT</pubDate></item></channel></rss>'''
         result=parse_rss(rss,'Google News RSS')

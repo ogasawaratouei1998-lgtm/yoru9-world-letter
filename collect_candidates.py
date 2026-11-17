@@ -164,20 +164,39 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
 
 
 def get_gdelt():
-    q='("blunder" OR "mix-up")'
-    params={'query':q,'mode':'ArtList','format':'json','maxrecords':75,'timespan':'7d','sort':'DateDesc'}
-    obj=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
-    articles=[]
-    for a in obj.get('articles',[]):
-        title=str(a.get('title','')).strip()
-        link=safe_url(a.get('url',''))
-        if not link or not title or EXCLUDE.search(title):
+    """Find original publisher leads for different forms of HUMAN mistakes."""
+    searches=(
+        '("blunder" OR "mix-up" OR "by mistake")',
+        '("wrong recipient" OR "accidentally ordered" OR "sent by mistake")',
+        '("mistaken identity" OR "wrong delivery" OR "typo")',
+    )
+    articles,seen=[],set()
+    for query in searches:
+        params={'query':query,'mode':'ArtList','format':'json','maxrecords':60,
+                'timespan':'7d','sort':'DateDesc'}
+        try:
+            data=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
+        except (HTTPError,URLError,OSError,ValueError,TimeoutError):
             continue
-        articles.append({'title':title[:400],'url':link,'domain':str(a.get('domain',''))[:120],
-          'seendate':str(a.get('seendate',''))[:30],'sourcecountry':str(a.get('sourcecountry',''))[:100],
-          'language':str(a.get('language',''))[:40],'status':'unverified','provider':'GDELT DOC API'})
+        added=0
+        for item in data.get('articles',[]):
+            if not isinstance(item,dict):continue
+            title=str(item.get('title','')).strip()
+            link=safe_url(item.get('url',''))
+            if not link or link in seen or not title or EXCLUDE.search(title):
+                continue
+            if added>=20:break
+            seen.add(link)
+            added+=1
+            articles.append({
+                'title':title[:400],'url':link,
+                'domain':str(item.get('domain',''))[:120],
+                'seendate':str(item.get('seendate',''))[:30],
+                'sourcecountry':str(item.get('sourcecountry',''))[:100],
+                'language':str(item.get('language',''))[:40],
+                'status':'unverified','provider':'GDELT DOC API',
+            })
     return articles
-
 
 def main():
     from news_sources import fetch_registry_feeds, source_registry
@@ -207,13 +226,15 @@ def main():
         try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
+    # Discover original publisher links for human errors before broad world feeds
+    # exhaust the 750-link budget.
+    try:keep(get_gdelt(),limit=60)
+    except (HTTPError, URLError, ValueError, TimeoutError) as e:
+        errors.append(f'GDELT: {type(e).__name__}: {e}')
     for url in BBC_FEEDS:
         try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
-    try:keep(get_gdelt(),limit=40)
-    except (HTTPError, URLError, ValueError, TimeoutError) as e:
-        errors.append(f'GDELT: {type(e).__name__}: {e}')
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
         if i: time.sleep(0.5)
         try: keep(get_google(q,lang,country,ceid),limit=8)
