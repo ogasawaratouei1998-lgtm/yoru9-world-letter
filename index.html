@@ -309,15 +309,16 @@ footer{font-size:.8125rem;line-height:1.7}
  border-radius:16px;padding:16px;margin:7px 0 16px;color:#f3efe7;overflow-wrap:anywhere}
 .travel-kicker{color:#f8dfb1;font-size:.875rem;font-weight:750;margin:0 0 4px}
 .travel-card h4{font-size:clamp(1.25rem,5vw,1.55rem);margin:0 0 5px;line-height:1.5}
-.travel-country{font-size:1rem;line-height:1.8;margin:0 0 12px}
+.travel-country{font-size:.9375rem;line-height:1.7;margin:0 0 10px;color:#e0e8f2}
+.travel-disclaimer{font-size:.8125rem;line-height:1.65;color:#d5e2ee;margin:4px 0 12px;padding:8px 10px;border-left:2px solid #f5d8a1;background:#ffffff08}
 .travel-figure{margin:0 0 12px}
 .travel-photo{display:block;width:100%;height:auto;max-height:255px;object-fit:cover;
  aspect-ratio:16/9;border-radius:11px;background:#1a2b40}
-.travel-figure figcaption{color:#e1e6ef;font-size:.875rem;line-height:1.7;margin:7px 0 0}
+.travel-figure figcaption{color:#e1e6ef;font-size:.8125rem;line-height:1.6;margin:7px 0 0}
 .travel-photo-error,.travel-empty{font-size:.9375rem;line-height:1.75;padding:12px;
  border:1px dashed #6d8098;border-radius:10px;color:#e5e7ee}
-.travel-note{font-size:1rem;line-height:1.85;margin:12px 0}
-.travel-small,.travel-credit,.travel-loading{font-size:.875rem;line-height:1.75;color:#d8e2eb;margin:9px 0}
+.travel-note{font-size:.9375rem;line-height:1.7;margin:12px 0}
+.travel-small,.travel-credit,.travel-loading{font-size:.75rem;line-height:1.65;color:#ced9e7;margin:9px 0}
 .travel-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0}
 .travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
 .travel-credit a{color:#d2eadd}
@@ -955,6 +956,7 @@ $('worldInvitation').addEventListener('click',event=>{
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
 let travelStopsPromise=null;
+let travelExplainerShown=false;
 function loadTravelStops(){
  if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
@@ -972,7 +974,7 @@ function renderTravelSlots(){
    '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
  });
 }
-function travelPostcardHtml(story,stop){
+function travelPostcardHtml(story,stop,showIntro=false){
  const country=countryLabel(story.country||'');
  const known=stop&&stop.country===story.country&&Number.isFinite(stop.latitude)&&
   Number.isFinite(stop.longitude)&&Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
@@ -986,25 +988,23 @@ function travelPostcardHtml(story,stop){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
- const countryOnly=known&&stop.countryOnly===true;
- const description=countryOnly?'この記事が伝える国の、別の風景に立ち寄ります。ニュースの現場ではありません。':
-  'この記事が伝える場所の景色に、ちょっと寄り道します。';
  return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
+  (showIntro?'<p class="travel-disclaimer">このコーナーの写真は、その国や地域の名所・風景です。ニュース現場の写真ではありません。</p>':'')+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
-  '<p class="travel-country">'+escapeHtml(country)+'からの便り。'+escapeHtml(description)+'</p>'+
+  '<p class="travel-country">'+escapeHtml(country)+'で、少しだけ旅気分。</p>'+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
-   '<p class="travel-photo-error" hidden>写真を読み込めませんでした。地図や撮影元の資料は開けます。</p>'+
-   '<figcaption>'+escapeHtml(stop.photoCaption)+'</figcaption></figure>':'<p class="travel-empty">この場所の確認済みの写真は準備中です。地図から、遠くの場所に思いを巡らせてみませんか。</p>')+
+   '<p class="travel-photo-error" hidden>写真を表示できませんでした。下の撮影元リンクから写真をご覧いただけます。</p>'+
+   '<figcaption>'+escapeHtml(stop.photoCaption)+'</figcaption></figure>':
+   '<p class="travel-empty">この国の旅先写真は準備中です。地図から景色をのぞいてみませんか。</p>')+
   (known?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':'')+
-  '<p class="travel-small">観光案内ではなく、実際の場所へ視線を向ける短い寄り道です。滞在時間も、感じ方も自由です。</p>'+
   '<div class="travel-links">'+
-   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を確かめる ↗</a>':'')+
+   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
   '</div>'+
   (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
-   '" target="_blank" rel="noopener noreferrer">'+escapeHtml(stop.license)+'</a>（画面に合わせて表示範囲を調整）</p>':'')+
+   '" target="_blank" rel="noopener noreferrer">'+escapeHtml(stop.license)+'</a>（表示範囲を調整）</p>':'')+
   '</section>';
 }
 document.querySelector('main').addEventListener('click',async event=>{
@@ -1027,23 +1027,35 @@ document.querySelector('main').addEventListener('click',async event=>{
  if(!panel.isConnected||panel.hidden||
     (!isMonth&&edition.stories[i]!==story)||
     (isMonth&&!visibleMonthStories.includes(story)))return;
- // The current issue gets its exact curated stop. A country-only postcard
- // may serve as a clearly labelled fallback when a fresh story has no photo yet.
- const candidate=stops[story.id]||Object.values(stops).find(s=>s.country===story.country&&s.countryOnly===true);
- panel.innerHTML=travelPostcardHtml(story,candidate);
- const img=panel.querySelector('.travel-photo');
- if(img)img.addEventListener('error',()=>{
-  // The website-hosted image is preferred. If it is unavailable, try Wikimedia
-  // directly once, then show a usable source link instead of a broken picture.
-  if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
-   img.dataset.remoteTried='true';
-   img.src=img.dataset.remotePhoto;
-   return;
-  }
-  img.hidden=true;
-  const fallback=panel.querySelector('.travel-photo-error');
-  if(fallback)fallback.hidden=false;
- });
+ // The article's destination takes priority; a famous landmark in the
+ // same country is used if the specific image cannot load.
+ const countryStop=Object.values(stops).find(s=>s.country===story.country&&s.countryOnly===true);
+ const exact=stops[story.id];
+ const candidate=exact&&exact.country===story.country?exact:countryStop;
+ const firstIntro=!travelExplainerShown;
+ panel.innerHTML=travelPostcardHtml(story,candidate,firstIntro);
+ travelExplainerShown=true;
+ function wireTravelPhoto(retryStop){
+  const img=panel.querySelector('.travel-photo');
+  if(!img)return;
+  img.addEventListener('error',()=>{
+   // Start with the bundled photo; Wikimedia is the secondary source.
+   if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
+    img.dataset.remoteTried='true';
+    img.src=img.dataset.remotePhoto;
+    return;
+   }
+   if(retryStop&&retryStop.photoAsset!==candidate?.photoAsset){
+    panel.innerHTML=travelPostcardHtml(story,retryStop,firstIntro);
+    wireTravelPhoto(null);
+    return;
+   }
+   img.hidden=true;
+   const fallback=panel.querySelector('.travel-photo-error');
+   if(fallback)fallback.hidden=false;
+  });
+ }
+ wireTravelPhoto(countryStop&&countryStop!==candidate?countryStop:null);
 });
 function updateFilters(){
  const available=new Set(edition.stories.slice(1).map(s=>s.category));
