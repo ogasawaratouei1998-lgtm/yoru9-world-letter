@@ -89,9 +89,9 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("let travelExplainerShown=false",page)
         self.assertIn("travelExplainerShown=true",page)
         self.assertIn("firstIntro=!travelExplainerShown",page)
-        self.assertIn("function wireTravelPhoto(retryStop)",page)
-        self.assertIn("const countryStop=Object.values(stops)",page)
-        self.assertIn("ニュース現場の写真ではありません。",page)
+        self.assertIn("function mountPhoto(stop,attempt=0)",page)
+        self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
+        self.assertIn("※ここではニュースとは別の旅先をご紹介します。",page)
         self.assertNotIn("観光案内ではなく、実際の場所へ視線を向ける短い寄り道",page)
         self.assertIn("if(!img.dataset.remoteTried&&img.dataset.remotePhoto)",page)
         self.assertIn("(!isMonth&&edition.stories[i]!==story)",page)
@@ -113,7 +113,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("flight-wrong-country",payload)
         for key,stop in payload.items():
             with self.subTest(event=key):
-                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国"))
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
@@ -133,7 +133,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertEqual("天安・独立記念館",payload["cheonan-painters-coffee-rescue-2026"]["place"])
         self.assertEqual("エディンバラ城",payload["flight-wrong-country"]["place"])
         self.assertIn("(!isMonth&&edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
-        self.assertIn("stop.country===story.country",(ROOT/"index.html").read_text(encoding="utf-8"))
+        self.assertIn("travelCountryNames(story.country).includes(stop.country)",(ROOT/"index.html").read_text(encoding="utf-8"))
 
     def test_travel_data_changes_trigger_validation_and_site_deploy(self):
         deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
@@ -146,7 +146,7 @@ class ReaderFrontendTest(unittest.TestCase):
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
         self.assertIn("'travel-stops.json'",build)
         self.assertIn("'travel-stops.json'",worker)
-        self.assertIn("'yoru9-shell-v3'",worker)
+        self.assertRegex(worker,r"const SHELL_CACHE = 'yoru9-shell-v[3-9][0-9]*';")
         self.assertIn("travel-photo-error", (ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("bundle_travel_photos(root, output)",build)
         self.assertIn("data-remote-photo=", (ROOT/"index.html").read_text(encoding="utf-8"))
@@ -202,11 +202,30 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('id="month-travel-',page)
         self.assertIn("control.nextElementSibling",page)
         self.assertIn("visibleMonthStories.find(s=>s.id===control.dataset.monthTravel)",page)
-        self.assertIn("panel.innerHTML=travelPostcardHtml(story,candidate,firstIntro)",page)
+        self.assertIn("panel.innerHTML=travelPostcardHtml(story,stop,firstIntro)",page)
         self.assertIn("const stops=await loadTravelStops()",page)
         self.assertIn("isMonth?'この国へ30秒だけ寄り道 '",page)
         self.assertIn("(isMonth&&!visibleMonthStories.includes(story))",page)
         self.assertIn('aria-expanded="false"',page)
+
+    def test_monthly_articles_auto_show_photo_on_expand(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn("addEventListener('toggle',event=>{",page)
+        self.assertIn("details.matches?.('.month-story > details')",page)
+        self.assertIn("if(button&&button.getAttribute('aria-expanded')==='false')button.click()",page)
+        self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
+        self.assertIn("travelFailedPhotos.add(stop.photoAsset)",page)
+
+    def test_monthly_countries_have_photographic_coverage(self):
+        import json
+        stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        curated=json.loads((ROOT/"data/retrospective/2026-11-17.json").read_text(encoding="utf-8"))
+        needed={story["country"] for story in curated["stories"]}
+        covered={stop["country"] for stop in stops.values() if stop.get("countryOnly")}
+        self.assertTrue(needed.issubset(covered),needed-covered)
+        photos={stop["photoAsset"] for stop in stops.values()}
+        self.assertGreaterEqual(len(photos),len(curated["stories"]))
+        self.assertEqual(len(photos),len({stop["photo"] for stop in stops.values()}))
 
     def test_monthly_retention_uses_actual_publish_or_collection_date(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -453,7 +472,7 @@ class ReaderFrontendTest(unittest.TestCase):
                       "pageshow", "reg.update()", "controllerchange"):
             with self.subTest(token=token):
                 self.assertIn(token, page)
-        self.assertIn("yoru9-shell-v3", worker)
+        self.assertRegex(worker,r"yoru9-shell-v[3-9][0-9]*")
         self.assertIn("yoru9-released-issues-v2", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
 
