@@ -1,7 +1,7 @@
 {
   "name": "よる9じの世界便り",
   "short_name": "よる9じ",
-  "description": "世界のちょっと意外な実話と、くすっと笑えるAIのひと言。夜9時の世界便り。",
+  "description": "世界の人間の失敗と勘違いに、鋭いAIツッコミ。夜9時の笑える実話便り。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

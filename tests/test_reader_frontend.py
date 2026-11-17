@@ -13,16 +13,25 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_homepage_explains_the_editorial_concept(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("今日も一日、おつかれさま。", page)
-        self.assertIn("世界の「まさか」を、実話で。",page)
+        self.assertIn("世界の「やらかし」に、AIが本気でツッコむ。",page)
         self.assertIn('class="spotlight-topline"',page)
         self.assertIn('id="spotlightBrief"',page)
         self.assertIn('id="spotlightQuip"',page)
+
+    def test_homepage_and_pwa_description_define_human_blunder_comedy(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        manifest=(ROOT/"manifest.webmanifest").read_text(encoding="utf-8")
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
+        self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
+        self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
+        self.assertIn("yoru9-shell-v11",worker)
 
     def test_global_perspective_is_visible_and_grounded_in_incident_country(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightLocation"',page)
         self.assertIn("first.country?'舞台：'+countryLabel(first.country)",page)
-        self.assertIn("世界の「まさか」を、実話で。",page)
+        self.assertIn("世界の「やらかし」に、AIが本気でツッコむ。",page)
         self.assertIn('id="worldInvitation" href="#mapExtras"',page)
         self.assertIn("$('worldInvitation').addEventListener('click',event=>{",page)
         self.assertIn("map.open=true;",page)
