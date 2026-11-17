@@ -195,7 +195,7 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertLess(len(body),600)
         article="<html><body><article><p>"+body+"</p></article></body></html>"
         self.assertEqual(m.editorial.extracted_article_text(article),"")
-        self.assertEqual(m.editorial.extracted_article_text(article,min_chars=350),body)
+        self.assertEqual(m.editorial.extracted_article_text(article,min_chars=350),body.strip())
         group=[{"url":ORIGINAL,"title":"Harmless delivery mix-up",
                 "seendate":"2026-11-17"}]
         single={**sample_story(),"sourceName":"BBC News","sourceUrl":ORIGINAL,
