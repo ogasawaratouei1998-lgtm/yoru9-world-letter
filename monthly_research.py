@@ -37,7 +37,11 @@ MISHAP = re.compile(
     r"mistaken|confus|apolog|fail|backfir|oops|embarrass|misstep|oddity|"
     r"unusual|unexpected|odd |weird|mixing up|changed plans|"
     r"手違い|誤配達|間違|勘違い|失敗|珍事|誤記|謝罪|撤回|おわび|予想外|"
-    r"Verwechslung|Panne|méprise|equivocación|실수|착각|por engano", re.I
+    r"Verwechslung|Panne|aus Versehen|méprise|par erreur|équivoque|"
+    r"equivocación|por error|sin querer|confusión|"
+    r"engano|por engano|erro|confusão|sem querer|"
+    r"실수|착각|잘못|بالخطأ|خطأ|keliru|kesalahan|"
+    r"うっかり|まさか|珍しい出来事", re.I
 )
 GDELT_QUERIES = (
     '("mix-up" OR "blunder" OR "typo")',
@@ -80,6 +84,10 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
     "pbs.org", "axios.com", "time.com", "foxnews.com",
     "abcnews.go.com", "nypost.com", "phys.org",
     "mashable.com", "quantamagazine.org", "newscientist.com",
+    "propublica.org", "theatlantic.com", "newyorker.com",
+    "vox.com", "skysports.com", "espn.com", "formula1.com",
+    "arstechnica.com", "gizmodo.com", "engadget.com",
+    "scientificamerican.com", "rnz.co.nz",
 )
 REVIEW_METHOD = "source-quality-two-stage-AI"
 LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
