@@ -231,7 +231,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         month=page.split("function renderMonthRetrospective(){",1)[1].split(
             "async function updateMonthFromArchives(issues)",1)[0]
-        self.assertLess(month.index("'<p class=\"month-quip\"'"),
+        self.assertLess(month.index("'<p class=\"month-quip\">"),
                         month.index("class=\"travel-slot month-travel-slot"))
         self.assertLess(month.index("class=\"travel-slot month-travel-slot"),
                         month.index("storyDetailHtml(s)+"))
@@ -266,7 +266,7 @@ class ReaderFrontendTest(unittest.TestCase):
                   "licenseUrl":"https://creativecommons.org/licenses/by/4.0/"}
         }
         import json
-        script=logic+"\\nconst stops="+json.dumps(payload,ensure_ascii=False)+";\\n"+(
+        script=logic+chr(10)+"const stops="+json.dumps(payload,ensure_ascii=False)+";"+chr(10)+(
             "const first=chooseTravelPhoto({id:'first',country:'アメリカ'},stops);"
             "const second=chooseTravelPhoto({id:'second',country:'アメリカ'},stops);"
             "if(!first||!second||first.country!=='アメリカ合衆国'||"
