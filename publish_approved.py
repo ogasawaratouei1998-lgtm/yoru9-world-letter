@@ -182,6 +182,15 @@ def validate_approved(data, expected_date):
                 data.get('approvedBy') == 'automated-two-stage-review'):
             require(story.get('editorQualityVerified') is True,
                     f'{i}本目は見出しの事実性・翻訳・法的表現・ユーモアの独立審査が未完了です')
+            require(story.get('humanFailureVerified') is True and
+                    isinstance(story.get('humanActor'), str) and
+                    isinstance(story.get('humanMistake'), str),
+                    f'{i}本目は人間の具体的な失敗が確認されていません')
+            from editorial_identity import human_failure_rejection, comic_line_rejection
+            require(human_failure_rejection(story) is None,
+                    f'{i}本目は人間の失敗中心のニュースではありません')
+            require(comic_line_rejection(story['quip']) is None,
+                    f'{i}本目はツッコミとして成立していません')
         urls = story.get('verificationUrls')
         # Existing historical/special records retain their original two-source
         # contract. New regular issues may use ONE verified original publisher

@@ -357,6 +357,43 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertFalse(semantic_matching_needed(2))
         self.assertFalse(semantic_matching_needed(3))
 
+    def test_human_failure_must_be_central_not_animal_novelty(self):
+        from editorial_identity import human_failure_rejection, comic_line_rejection
+        base={"humanActor":"道路工事の作業員",
+              "humanMistake":"道路に書く指示のつづりを間違えてしまった",
+              "title":"道路標示を誤記し市が看板を直した"}
+        self.assertIsNone(human_failure_rejection(base))
+        for title in ("森に珍しいユニコーンのような鹿が出現",
+                      "クモザルが逃げて警察に保護された",
+                      "アシカが植物の育苗施設に入り込んだ",
+                      "クリスマス島でカニ専用の橋が活躍"):
+            with self.subTest(title=title):
+                self.assertEqual(human_failure_rejection({**base,"title":title}),
+                                 "animal_novelty_not_human_failure")
+        self.assertEqual(human_failure_rejection({**base,"humanActor":"サル"}),
+                         "missing_human_mistake_actor")
+        self.assertEqual(human_failure_rejection({**base,"humanMistake":"ただ見かけた"}),
+                         "missing_concrete_human_error")
+        self.assertIsNone(human_failure_rejection({
+            **base,"humanActor":"動物管理局の担当者",
+            "humanMistake":"ワニだと見間違えて救助に出動した",
+            "title":"担当者がワニと勘違いして出動、実は浮き輪"}))
+        self.assertIsNone(comic_line_rejection(
+            "配達員、コーヒーの注文を受けたら救助まで兼任することに。"))
+        self.assertEqual(comic_line_rejection("世界は予想外です。"),
+                         "no_usable_first_punchline")
+
+    def test_editorial_requires_human_error_and_earned_comic_punch(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("human_failure_rejection(story)",code)
+        self.assertIn("comic_line_rejection(story",code)
+        self.assertIn('story["humanFailureVerified"]=True',code)
+        self.assertIn("humanFailureConfirmed:boolean",code)
+        self.assertIn("comicPunchlineWorks:boolean",code)
+        self.assertIn("quipSecond (OPTIONAL",code)
+        self.assertIn("HUMAN_FAILURE_MISSION",code)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")

@@ -221,9 +221,33 @@ class PublishingTest(unittest.TestCase):
             validate_approved(data,"2026-11-18")
         for story in data["stories"]:
             story["editorQualityVerified"]=True
+            story["humanFailureVerified"]=True
+            story["humanActor"]="行政の事務担当者"
+            story["humanMistake"]="指示された書類の内容を間違えて処理してしまった"
         published=validate_approved(data,"2026-11-18")
         self.assertEqual(len(published["stories"]),len(data["stories"]))
         self.assertNotIn("editorQualityVerified",published["stories"][0])
+
+    def test_automated_daily_news_cannot_publish_animal_novelty(self):
+        data=fixture("2026-11-17")
+        data["editionDate"]="2026-11-18"
+        data["approvedBy"]="automated-two-stage-review"
+        for item in data["stories"]:
+            item["reported"]="2026-11-17"
+            item["editorQualityVerified"]=True
+            item["humanFailureVerified"]=True
+            item["humanActor"]="市役所の担当者"
+            item["humanMistake"]="申請用紙の数字を間違えて発注してしまった"
+        published=validate_approved(data,"2026-11-18")
+        self.assertEqual(len(published["stories"]),3)
+        self.assertNotIn("humanFailureVerified",published["stories"][0])
+        data["stories"][0]["title"]="珍しいシカが現れた"
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
+        data["stories"][0]["title"]="誤発注してしまった市役所"
+        data["stories"][0]["humanFailureVerified"]=False
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
 
     def test_current_regular_zero_sources_is_rejected(self):
         data=fixture('2026-11-17')

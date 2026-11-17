@@ -13,6 +13,8 @@ REVIEW_FIELDS=(
     "legalStatusAccurate",
     "humorRespectful",
     "jokeClear",
+    "humanFailureConfirmed",
+    "comicPunchlineWorks",
 )
 
 
