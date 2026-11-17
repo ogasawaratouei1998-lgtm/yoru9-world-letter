@@ -52,7 +52,7 @@ def build(root, output):
         shutil.rmtree(output)
     output.mkdir(parents=True)
     for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'notification-config.json', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg',
-                     'data/current.json', 'data/archive/index.json'):
+                     'data/current.json', 'data/archive/index.json', 'data/retrospective/2026-11-17.json'):
         source = root / relative
         if not source.is_file():
             raise FileNotFoundError(relative)

@@ -16,6 +16,7 @@ on:
       - 'assets/**'
       - 'data/current.json'
       - 'data/archive/**'
+      - 'data/retrospective/**'
   workflow_dispatch:
 
 permissions:

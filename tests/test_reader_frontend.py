@@ -135,6 +135,22 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("bundle_travel_photos(root, output)",build)
         self.assertIn("data-remote-photo=", (ROOT/"index.html").read_text(encoding="utf-8"))
 
+    def test_monthly_special_is_separate_from_the_nightly_issue(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('id="monthRetrospective" hidden',page)
+        self.assertIn('id="monthCards"',page)
+        self.assertLess(page.index('id="stories"'),page.index('id="monthRetrospective"'))
+        self.assertLess(page.index('id="monthRetrospective"'),page.index('id="releaseStatus"'))
+        self.assertIn("function validMonthStory(s,start,end)",page)
+        self.assertIn("function renderMonthRetrospective()",page)
+        self.assertIn("function loadMonthRetrospective()",page)
+        self.assertIn("loadState();render();loadMonthRetrospective();",page)
+        self.assertIn("s.reported<start||s.reported>end",page)
+        self.assertIn("!edition.stories.some(current=>current.id===s.id)",page)
+        self.assertIn("過去に報道された実話です。今日起きた出来事ではありません。",page)
+        self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"build_site.py").read_text(encoding="utf-8"))
+        self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"service-worker.js").read_text(encoding="utf-8"))
+
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlight"', 'id="spotlightTitle"',

@@ -27,6 +27,7 @@ self.addEventListener('fetch', event => {
       relative === 'editor.html') return;
 
   if (relative === 'data/current.json' || relative === 'data/archive/index.json' ||
+      relative === 'data/retrospective/2026-11-17.json' ||
       /^data\/archive\/\d{4}-\d{2}-\d{2}\.json$/.test(relative)) {
     const canonical = new URL(relative, SCOPE).href;
     event.respondWith(fetch(req).then(response => {

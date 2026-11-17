@@ -15,6 +15,7 @@ on:
       - 'service-worker.js'
       - 'tests/**'
       - 'data/approved/*.json'
+      - 'data/retrospective/**'
       - '.github/workflows/test-publishing.yml'
   workflow_dispatch:
 
