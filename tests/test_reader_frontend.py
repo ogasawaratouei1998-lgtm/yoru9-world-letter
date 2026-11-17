@@ -151,6 +151,33 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"build_site.py").read_text(encoding="utf-8"))
         self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"service-worker.js").read_text(encoding="utf-8"))
 
+    def test_monthly_expanders_explicitly_show_open_and_close(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        for text in ('month-closed-label','month-open-label',
+                     'month-story-closed','month-story-opened',
+                     'month-chevron','month-story-chevron','記事を開く','記事を閉じる'):
+            self.assertIn(text,page)
+        self.assertIn('.month-story>details[open] .month-story-opened',page)
+        self.assertIn('.month-retrospective>details[open] .month-open-label',page)
+        self.assertIn('transform:rotate(180deg)',page)
+        self.assertIn(':focus-visible',page)
+        self.assertIn('prefers-reduced-motion:reduce',page)
+
+    def test_monthly_collection_updates_only_from_published_archives(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('function monthWindow()',page)
+        self.assertIn('now.getTime()-30*86400000',page)
+        self.assertIn('async function updateMonthFromArchives(issues)',page)
+        self.assertIn("issue.status!=='published'",page)
+        self.assertIn('issue.editionDate!==item.date',page)
+        self.assertIn('item.stories.filter(s=>validMonthStory(s,start,end))',page)
+        self.assertIn('updateMonthFromArchives(m.issues)',page)
+        self.assertIn('...monthPublishedStories,...monthStories',page)
+        self.assertIn('if(seen.has(s.id))return false',page)
+        self.assertIn('直近30日 · ',page)
+        self.assertIn('公開号がない日には記事は増えません',page)
+        self.assertIn("cache:'no-store'",page)
+
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlight"', 'id="spotlightTitle"',

@@ -355,6 +355,30 @@ footer{font-size:.8125rem;line-height:1.7}
  .month-story>details>summary{padding:13px 12px}
  .month-story-body{padding:2px 12px 16px}
 }
+
+/* Native details: clearly distinguish opened vs closed states on mobile. */
+.month-summary-right{display:inline-flex;align-items:center;justify-content:flex-end;gap:11px;flex-wrap:wrap}
+.month-disclosure,.month-story-disclosure{display:inline-flex;align-items:center;gap:7px;
+ border:1px solid #9baec5;border-radius:9px;padding:6px 10px;
+ color:#f8e3ba;background:#283c58;font-size:.9375rem;font-weight:800;line-height:1.5}
+.month-chevron,.month-story-chevron{display:inline-block;font-size:1.1875rem;line-height:1;
+ transition:transform .18s ease}
+.month-open-label,.month-story-opened{display:none}
+.month-retrospective>details[open] .month-open-label,
+.month-story>details[open] .month-story-opened{display:inline}
+.month-retrospective>details[open] .month-closed-label,
+.month-story>details[open] .month-story-closed{display:none}
+.month-retrospective>details[open] .month-chevron,
+.month-story>details[open] .month-story-chevron{transform:rotate(180deg)}
+.month-story>details>summary{position:relative}
+.month-story-disclosure{align-self:flex-end;margin-top:6px}
+.month-retrospective>details>summary:focus-visible,
+.month-story>details>summary:focus-visible{outline:3px solid #ffdf9e;outline-offset:3px}
+.month-story>details[open]{border-left:3px solid #efcc8c}
+@media(prefers-reduced-motion:reduce){.month-chevron,.month-story-chevron{transition:none}}
+@media(max-width:520px){.month-summary-right{width:100%;justify-content:space-between;gap:7px}
+ .month-story-disclosure{margin-top:4px}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -374,7 +398,7 @@ footer{font-size:.8125rem;line-height:1.7}
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 <section class="month-retrospective" id="monthRetrospective" hidden aria-label="過去1か月の特集">
- <details id="monthDetails"><summary><span>この1か月の世界の「まさか」</span><span id="monthCount">記事を準備中</span></summary>
+ <details id="monthDetails"><summary><span class="month-title">この1か月の世界の「まさか」</span><span class="month-summary-right"><span id="monthCount">記事を準備中</span><span class="month-disclosure" aria-hidden="true"><span class="month-closed-label">開く</span><span class="month-open-label">閉じる</span><span class="month-chevron">⌄</span></span></span></summary>
  <p class="month-intro" id="monthIntro">過去1か月の実話をまとめています。今夜起きたニュースではありません。</p>
  <div class="month-cards" id="monthCards"></div></details>
 </section>
@@ -598,6 +622,11 @@ function storyCorrectionHtml(story){
 }
 /* Archived research collection is not a fake old daily edition. */
 let monthStories=[];
+let monthPublishedStories=[];
+function monthWindow(){
+ const now=new Date();
+ return {start:localDate(new Date(now.getTime()-30*86400000)),end:localDate(now)};
+}
 function validMonthStory(s,start,end){
  if(!s||!s.id||!s.country||!s.title||!s.summary||!s.detail||!isJapaneseText(s.detail)||
     !/^\d{4}-\d{2}-\d{2}$/.test(s.reported||'')||s.reported<start||s.reported>end||
@@ -615,17 +644,25 @@ function monthCountryMapUrl(country){
 }
 function renderMonthRetrospective(){
  const target=$('monthCards');target.replaceChildren();
- const stories=monthStories.filter(s=>!edition.stories.some(current=>current.id===s.id));
+ const {start,end}=monthWindow();
+ const seen=new Set(edition.stories.map(s=>s.id));
+ // Daily additions only inherit previously published, independently sourced
+ // stories. The original hand-reviewed special remains a separate collection.
+ const stories=[...monthPublishedStories,...monthStories]
+  .filter(s=>validMonthStory(s,start,end))
+  .sort((a,b)=>b.reported.localeCompare(a.reported))
+  .filter(s=>{if(seen.has(s.id))return false;seen.add(s.id);return true;});
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
- $('monthCount').textContent=stories.length+'本の寄り道';
+ $('monthCount').textContent='直近30日 · '+stories.length+'本';
+ $('monthIntro').textContent=start+'〜'+end+'に報道された実話を紹介しています。新しく公開された確認済みのニュースは、ここにも自動で追加します。公開号がない日には記事は増えません。過去の話題を、今日起きたニュースとして紹介することはありません。';
  for(const s of stories){
   const card=document.createElement('article');card.className='month-story';
   const source=safeUrl(s.sourceUrl),map=monthCountryMapUrl(s.country);
   card.innerHTML='<details><summary><span class="month-country">'+escapeHtml(countryLabel(s.country))+
    ' · 報道日 '+escapeHtml(s.reported)+'</span><strong>'+escapeHtml(s.title)+
    '</strong><span class="month-preview">'+escapeHtml(s.summary)+'</span>'+
-   '<span class="month-more">記事とツッコミを読む ↓</span></summary>'+
+   '<span class="month-story-disclosure" aria-hidden="true"><span class="month-story-closed">記事を開く</span><span class="month-story-opened">記事を閉じる</span><span class="month-story-chevron">⌄</span></span></summary>'+
    '<div class="month-story-body"><p class="month-quip-label">AIツッコミ</p>'+
    '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+storyDetailHtml(s)+
    (s.quipSecond?'<p class="month-second">'+escapeHtml(s.quipSecond)+'</p>':'')+
@@ -638,6 +675,25 @@ function renderMonthRetrospective(){
   target.append(card);
  }
 }
+async function updateMonthFromArchives(issues){
+ // Only the public archive index is trusted as a list of released editions.
+ // No raw RSS candidates, editor drafts or approved-but-unpublished stories.
+ const {start,end}=monthWindow();
+ const recent=issues.filter(item=>item&&/^\d{4}-\d{2}-\d{2}$/.test(item.date)&&
+  item.date>=start&&item.date<=end).slice(0,31);
+ const entries=await Promise.all(recent.map(async item=>{
+  try{
+   const response=await fetch('./data/archive/'+item.date+'.json',{cache:'no-store'});
+   if(!response.ok)return null;
+   const issue=await response.json();
+   if(issue.status!=='published'||issue.editionDate!==item.date||!Array.isArray(issue.stories))return null;
+   return issue;
+  }catch(_){return null;}
+ }));
+ monthPublishedStories=entries.filter(Boolean).flatMap(item=>
+  item.stories.filter(s=>validMonthStory(s,start,end)));
+ renderMonthRetrospective();
+}
 async function loadMonthRetrospective(){
  try{
   const response=await fetch('./data/retrospective/2026-11-17.json',{cache:'no-store'});
@@ -647,7 +703,6 @@ async function loadMonthRetrospective(){
      !Array.isArray(data.stories)||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowStart||'')||
      !/^\d{4}-\d{2}-\d{2}$/.test(data.windowEnd||''))return;
   monthStories=data.stories.filter(s=>validMonthStory(s,data.windowStart,data.windowEnd));
-  $('monthIntro').textContent=data.description;
   renderMonthRetrospective();
  }catch(error){console.info('過去1か月の特集を読み込めませんでした',error);}
 }
@@ -821,7 +876,7 @@ function render(){const d=edition.stories;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
- renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length)renderMonthRetrospective();}
+ renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
 function update(){$('progress').textContent=`ほかに${Math.max(0,edition.stories.length-1)}本`;$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
@@ -876,6 +931,7 @@ async function loadArchives(){
       const o=document.createElement('option');o.value=issue.date;o.textContent=issue.date+' — '+String(issue.title||'世界のニュース').slice(0,45);archiveMenu.append(o);
     });
     loadCountryIndex(m.issues);
+    updateMonthFromArchives(m.issues).catch(err=>console.info('特集の配信済み記事を取得できませんでした',err));
     archiveStatus.textContent=m.issues.length?`${m.issues.length}日分の公開号から選べます。`:'まだ過去の公開号はありません。';
   }catch(_){ archiveStatus.textContent='アーカイブは公開後に利用できます。'; }
 }
