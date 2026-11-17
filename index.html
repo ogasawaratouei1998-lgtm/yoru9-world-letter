@@ -303,10 +303,13 @@ footer{font-size:.8125rem;line-height:1.7}
 
 /* Opt-in micro-travel: no auto-playing media, no forced progression. */
 .travel-slot{margin:11px 0 8px}
-.travel-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;
- min-height:44px;padding:7px 2px;border:0;background:transparent;color:#f5d8a1;
- text-decoration:underline;text-underline-offset:4px;font-size:.9375rem;font-weight:750;line-height:1.6}
-.travel-open span{font-size:1rem;opacity:.85}
+.travel-open{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;
+ max-width:100%;min-height:48px;padding:10px 14px;border:1px solid #9b845f;
+ border-radius:13px;background:linear-gradient(105deg,#354968,#263852);color:#ffe2b0;
+ text-align:left;text-decoration:none;font-size:.9375rem;font-weight:800;line-height:1.6;
+ box-shadow:0 3px 12px #0002}
+.travel-open:hover{background:linear-gradient(105deg,#40567a,#2c425f)}
+.travel-open span{font-size:1.125rem;opacity:.9;flex:none}
 .travel-panel[hidden],.travel-photo[hidden],.travel-photo-error[hidden]{display:none}
 .travel-card{border:1px solid #677c92;background:linear-gradient(150deg,#21334c,#192b43);
  border-radius:16px;padding:16px;margin:7px 0 16px;color:#f3efe7;overflow-wrap:anywhere}
@@ -985,7 +988,7 @@ function renderMonthRetrospective(){
    '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+
    '<div class="travel-slot month-travel-slot"><button type="button" class="travel-open" data-month-travel="'+
      escapeHtml(s.id)+'" aria-expanded="false" aria-controls="month-travel-'+escapeHtml(s.id)+
-     '">ニュースとは別の旅先へ（30秒） <span aria-hidden="true">↗</span></button>'+
+     '">ニュースの余韻で、30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
    '<div class="travel-panel" id="month-travel-'+escapeHtml(s.id)+'" hidden></div></div>'+
    storyDetailHtml(s)+
    (s.quipSecond?'<p class="month-second">'+escapeHtml(s.quipSecond)+'</p>':'')+
@@ -1152,7 +1155,7 @@ function renderTravelSlots(){
   if(!Number.isInteger(i)||!edition.stories[i])return;
   slot.innerHTML='<button type="button" class="travel-open" data-travel="'+i+
    '" aria-expanded="false" aria-controls="travel-panel-'+i+
-   '">ニュースとは別の旅先へ（30秒） <span aria-hidden="true">↗</span></button>'+
+   '">ニュースの余韻で、30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
    '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
  });
 }
@@ -1240,21 +1243,19 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
- return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
-  '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
-  // This notice appears on EVERY postcard; showing it only the first time
-  // misrepresents subsequent destination photos as incident-site evidence.
-  '<p class="travel-disclaimer">ニュースの現場を紹介するページではありません。'+
-  (photo?'この写真はニュース現場のものではなく、旅先の風景です。':'別の旅先を紹介しています。')+'</p>'+
+ return '<section class="travel-card" aria-label="世界の街角への30秒小旅行">'+
+  '<p class="travel-kicker">今夜の寄り道先</p>'+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region)+(sameCountry?'':' · '+escapeHtml(stop.country)):'')+'</h4>'+
-  (known&&!sameCountry?'<p class="travel-elsewhere">この国の写真を準備中のため、今日は別の国の景色へ寄り道します。</p>':'')+
+  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、世界の街角へ。'+
+   (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'ここはニュース現場そのものの紹介ではありません。')+'</p>':'')+
+  (known&&!sameCountry?'<p class="travel-elsewhere">記事の国から少し足をのばして、今日は'+escapeHtml(stop.country)+'の景色へ。</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
-   '<figcaption><span class="travel-caption-label">写真の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
+   '<figcaption><span class="travel-caption-label">この景色の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
    '<p class="travel-empty">写真を読み込めませんでした。地図から場所をのぞいてみませんか。</p>')+
   '<div class="travel-links">'+
-   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を見る ↗</a>':'')+
+   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で旅先をのぞく ↗</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
   '</div>'+
   (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
@@ -1272,7 +1273,9 @@ document.querySelector('main').addEventListener('click',async event=>{
  const opening=panel.hidden;
  panel.hidden=!opening;
  control.setAttribute('aria-expanded',String(opening));
- control.firstChild.textContent=opening?'寄り道を閉じる ':'ニュースとは別の旅先へ（30秒） ';
+ control.firstChild.textContent=opening?'小旅行を閉じる ':'ニュースの余韻で、30秒の小旅行 ';
+ const arrow=control.querySelector('span[aria-hidden="true"]');
+ if(arrow)arrow.textContent=opening?'⌃':'⌄';
  if(!opening)return;
  panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
  const stops=await loadTravelStops();
