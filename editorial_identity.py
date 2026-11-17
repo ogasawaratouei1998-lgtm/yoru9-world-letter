@@ -166,6 +166,13 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     surface=" ".join(str(story.get(key,"")) for key in fields)
     bodies=" ".join(str(item.get("text",item.get("body","")))
                     for item in fetched_articles if isinstance(item,dict))
+    # Source-text veto also catches a confrontational student/minister story
+    # when an AI rewrites its Japanese headline as harmless entertainment.
+    if ((FORMAL_CONFLICT_CONTEXT.search(surface)
+         and DELIBERATE_CONFLICT_ACTION.search(surface))
+        or (FORMAL_CONFLICT_CONTEXT.search(bodies)
+            and DELIBERATE_CONFLICT_ACTION.search(bodies))):
+        return "disciplinary_confrontation_not_comic_error"
     if ((EMERGENCY_WORK.search(surface) and HARASSMENT.search(surface)) or
             (EMERGENCY_WORK.search(bodies) and HARASSMENT.search(bodies))):
         return "harassment_of_emergency_responders"
