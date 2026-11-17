@@ -60,7 +60,7 @@ def editorial_fit_rejection(story):
     return None
 # Rank incident-specific reporting ahead of generic world-news headlines.
 # Ranking only changes retrieval order; it never certifies a fact or relaxes review.
-EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and plans that backfired. "
+EDITORIAL_MISSION=("Publish only real, source-supported HUMAN mistakes with an observable, funny plan-versus-reality reversal. "
     "Every story must have two essential parts: source-supported facts about a failure; "
     "and a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim. "
     "A humane aftertaste is optional, not a compulsory lesson or an instruction for the reader to feel better. "
@@ -214,6 +214,23 @@ def incident_priority(lead):
     else:
         rank=2
     return (rank,1 if host(lead.get("url",""))=="news.google.com" else 0)
+
+
+def prioritize_comic_groups(groups, limit=24):
+    """Expose small human errors to editor A before serious paired disputes.
+
+    This ranks unverified publisher evidence; independent fact and humor review
+    still decides publication. A vetted original article does not need a
+    corroborating publisher to be eligible for the shortlist.
+    """
+    return sorted(
+        (group for group in groups if group),
+        key=lambda group: (
+            min(incident_priority(item)[0] for item in group),
+            0 if len(group) >= 2 else 1,
+            min(incident_priority(item)[1] for item in group),
+        ),
+    )[:limit]
 
 
 def host(url):
@@ -804,7 +821,12 @@ def main():
     raw_group_count=len(groups)
     groups=select_distinct_groups(groups,limit=18)
     paired_urls={item['url'] for group in groups for item in group}
-    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls][:max(0,36-len(groups))])
+    unpaired=sorted((item for item in source_leads if item['url'] not in paired_urls),
+                    key=lambda item:(incident_priority(item)[0],
+                                     0 if trusted_original_domain(item['url']) else 1,
+                                     incident_priority(item)[1]))
+    groups.extend([[item] for item in unpaired[:max(0,36-len(groups))]])
+    groups=prioritize_comic_groups(groups,limit=24)
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
         print('No retrieved candidate articles; safe skip.');return 0
@@ -828,7 +850,7 @@ def main():
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
-      'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
+      'Do not select a merely verifiable incident when its actual human mistake lacks a clear, safe, incident-specific comic reversal. Rewrite weak jokes with a new angle; do not replace comedy with vague encouragement or a lesson. Serious stakes are NOT a selection advantage. NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have an original source-supported publication date within the preceding seven days including the edition day in Japan; keep that ACTUAL date intact and never relabel old reporting as new. Prioritize same-day reporting when otherwise comparable. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
