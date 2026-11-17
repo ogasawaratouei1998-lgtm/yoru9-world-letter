@@ -1,0 +1,436 @@
+#!/usr/bin/env python3
+"""Independent 30-day research for the monthly shelf. Never publish raw leads.
+
+Only stories independently supported by two fetched publisher article bodies,
+drafted by editor A and approved by adversarial fact-checker B, reach the
+published monthly data. The 9pm release and historical curated collection are
+deliberately untouched.
+"""
+from __future__ import annotations
+
+from datetime import datetime, timedelta, timezone
+from difflib import SequenceMatcher
+from pathlib import Path
+from urllib.parse import urlencode, urlsplit
+from zoneinfo import ZoneInfo
+import json
+import os
+import re
+import sys
+
+import auto_editorial as editorial
+from collect_candidates import (
+    BBC_FEEDS, GDELT, INDEPENDENT_FEEDS, LOCAL_LANGUAGE_FEEDS,
+    fetch_bytes, parse_rss, safe_url,
+)
+
+JST = ZoneInfo("Asia/Tokyo")
+ROOT = Path(__file__).resolve().parent
+MONTH_ROOT = Path("data/monthly")
+DAY_PATTERN = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+SLUG_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{8,95}$")
+CATEGORIES = {"person", "work", "company", "sports"}
+# This preference filters retrieval, NOT evidence. Factual claims need two bodies.
+MISHAP = re.compile(
+    r"mistake|mix.?up|blunder|typo|accidental|misprint|wrong |error|mishap|"
+    r"mistaken|confusion|手違い|誤配達|間違い|勘違い|失敗|珍事|誤記|"
+    r"Verwechslung|Panne|méprise|equivocación|실수|착각|por engano", re.I
+)
+GDELT_QUERIES = (
+    '("mix-up" OR "blunder" OR "typo")',
+    '("accidentally" OR "by mistake" OR "mishap")',
+)
+REQUIRED = ("id", "country", "category", "categoryLabel", "label",
+            "title", "summary", "detail", "quip", "quipSecond",
+            "sourceName", "sourceUrl", "reported", "expectedPlan",
+            "observedOutcome", "eventKey")
+# Distinct domains are required, but this list catches some obvious same-owner mirrors.
+SAME_PUBLISHER = (
+    {"bbc.co.uk", "bbc.com"},
+    {"theguardian.com", "guardian.co.uk"},
+)
+
+
+def date_window(today):
+    return today - timedelta(days=29), today
+
+
+def safe_day(value):
+    if not isinstance(value, str) or not DAY_PATTERN.fullmatch(value):
+        return None
+    try:
+        return datetime.strptime(value, "%Y-%m-%d").date()
+    except ValueError:
+        return None
+
+
+def lead_day(lead):
+    raw = str(lead.get("seendate", ""))
+    if not raw:
+        return None
+    try:
+        if re.fullmatch(r"\d{8}T\d{6}Z", raw):
+            date = datetime.strptime(raw, "%Y%m%dT%H%M%SZ").replace(tzinfo=timezone.utc)
+        elif DAY_PATTERN.fullmatch(raw):
+            date = datetime.strptime(raw, "%Y-%m-%d").replace(tzinfo=JST)
+        else:
+            date = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+            if not date.tzinfo:
+                return None
+        return date.astimezone(JST).date()
+    except ValueError:
+        return None
+
+
+def publisher_pair(urls):
+    if (not isinstance(urls, list) or len(urls) != 2 or
+            len(set(urls)) != 2):
+        return False
+    hosts = [editorial.host(u) for u in urls]
+    if not all(hosts) or hosts[0] == hosts[1]:
+        return False
+    if any(set(hosts).issubset(group) for group in SAME_PUBLISHER):
+        return False
+    return all(safe_url(u) == u and editorial.public_host(u) for u in urls)
+
+
+def discover(now, fetch=fetch_bytes):
+    """Collect direct publisher URLs seen within 30 JST calendar days.
+
+    The locale/sourcecountry of the publisher is never the incident country.
+    A date on an RSS/GDELT lead is only a retrieval filter, NOT verification.
+    """
+    start, end = date_window(now.date())
+    candidates, seen, problems = [], set(), []
+    def add(lead):
+        if len(candidates) >= 150:
+            return
+        url = lead.get("url", "")
+        if (url in seen or safe_url(url) != url or
+                not editorial.public_host(url) or
+                not MISHAP.search(str(lead.get("title", ""))) or
+                editorial.BLOCK.search(str(lead.get("title", "")))):
+            return
+        seen_day = lead_day(lead)
+        if seen_day is None or not start <= seen_day <= end:
+            return
+        seen.add(url)
+        candidates.append(lead)
+
+    for query in GDELT_QUERIES:
+        params = {"query": query, "mode": "ArtList", "format": "json",
+                  "maxrecords": "125", "timespan": "30d", "sort": "DateDesc"}
+        try:
+            data = json.loads(fetch(GDELT + "?" + urlencode(params)).decode("utf-8"))
+            for item in data.get("articles", []):
+                add({"title": str(item.get("title", ""))[:400],
+                     "url": str(item.get("url", "")),
+                     "seendate": str(item.get("seendate", "")),
+                     "sourcecountry": str(item.get("sourcecountry", "")),
+                     "provider": "GDELT 30-day research"})
+        except (OSError, ValueError, KeyError, TypeError) as exc:
+            problems.append(type(exc).__name__)
+
+    # Direct editorial publishers broaden geography and provide real bodies.
+    for url, provider, language, country in LOCAL_LANGUAGE_FEEDS[:8]:
+        try:
+            for lead in parse_rss(fetch(url), provider, language=language,
+                                  sourcecountry=country)[:35]:
+                add(lead)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            problems.append(type(exc).__name__)
+    for url, provider in INDEPENDENT_FEEDS[:8]:
+        try:
+            for lead in parse_rss(fetch(url), provider)[:35]:
+                add(lead)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            problems.append(type(exc).__name__)
+    for url in BBC_FEEDS[:2]:
+        try:
+            for lead in parse_rss(fetch(url), "BBC RSS", relevant_only=True)[:35]:
+                add(lead)
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            problems.append(type(exc).__name__)
+    print("Monthly discovery:", len(candidates), "dated direct leads;",
+          len(problems), "feed failures", flush=True)
+    return candidates
+
+
+def candidate_pairs(leads, ask_ai=editorial.ai):
+    """AI headline pairs are hypotheses; two original texts + audit are mandatory."""
+    allowed = {x["url"]: x for x in leads}
+    found, seen = [], set()
+    def add(urls):
+        if not publisher_pair(urls) or any(u not in allowed for u in urls):
+            return
+        key = tuple(sorted(urls))
+        if key not in seen:
+            seen.add(key)
+            found.append([allowed[u] for u in urls])
+
+    for group in editorial.corroboration_groups(leads):
+        if len(group) >= 2:
+            add([group[0]["url"], group[1]["url"]])
+
+    # Explicit, bounded pairing expands beyond English-identical headlines.
+    prompts = [{"index": i, "headline": x["title"], "url": x["url"],
+                "published": str(lead_day(x))}
+               for i, x in enumerate(leads[:100])]
+    if len(prompts) >= 2:
+        try:
+            result = ask_ai(
+                "You are a multilingual news researcher. Pair two distinct "
+                "original publisher articles about the SAME concrete harmless "
+                "mistake from the following HEADLINES. Different publishers "
+                "and dates are common. Do NOT invent or infer any facts. "
+                "These are merely hypotheses and cannot authorize publication. "
+                "Return JSON {pairs:[{first:integer,second:integer}]} with up to "
+                "12 pairs. Pair only titles that clearly concern the exact same "
+                "incident; no generic topical similarity. Headlines: "
+                + json.dumps(prompts, ensure_ascii=False), temperature=0.1)
+            if isinstance(result, dict) and isinstance(result.get("pairs"), list):
+                for pair in result["pairs"][:12]:
+                    if not isinstance(pair, dict):
+                        continue
+                    a, b = pair.get("first"), pair.get("second")
+                    if (type(a) is int and type(b) is int and a != b
+                            and 0 <= a < len(prompts) and 0 <= b < len(prompts)):
+                        add([leads[a]["url"], leads[b]["url"]])
+        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
+            print("Monthly pairing unavailable:", type(exc).__name__, flush=True)
+    return found[:12]
+
+
+def existing_articles(root=ROOT):
+    """All public issued/curated monthly items, not drafts or raw candidates."""
+    files = [root / "data/current.json"]
+    files += sorted((root / "data/archive").glob("????-??-??.json"))
+    files += sorted((root / "data/retrospective").glob("????-??-??.json"))
+    files += sorted((root / "data/monthly").glob("????-??-??.json"))
+    result, by_id, by_url, by_event = [], set(), set(), set()
+    for file in files:
+        try:
+            document = json.loads(file.read_text(encoding="utf-8"))
+            if document.get("status") not in ("published", "published-retrospective", "published-monthly"):
+                continue
+            for item in document.get("stories", []):
+                if not isinstance(item, dict):
+                    continue
+                by_id.add(item.get("id"))
+                by_event.add(item.get("eventKey"))
+                by_url.update(item.get("verificationUrls", []) if isinstance(item.get("verificationUrls"), list) else [])
+                by_url.add(item.get("sourceUrl"))
+                result.append({"title": item.get("title", ""),
+                               "summary": str(item.get("summary", ""))[:240],
+                               "country": item.get("country", "")})
+        except (OSError, ValueError, TypeError):
+            continue
+    return result[-150:], by_id, by_url, by_event
+
+
+def plausible_new(story, existing):
+    summaries, ids, urls, events = existing
+    if (story["id"] in ids or story["eventKey"] in events or
+            any(u in urls for u in story["verificationUrls"])):
+        return False
+    title = story["title"]
+    return not any(
+        old["country"] == story["country"] and
+        SequenceMatcher(None, title, str(old["title"])).ratio() >= 0.75
+        for old in summaries
+    )
+
+
+def validate_story(story, urls, today):
+    if not isinstance(story, dict) or any(
+        not isinstance(story.get(k), str) or not story[k].strip() for k in REQUIRED
+    ):
+        return False
+    if (not SLUG_PATTERN.fullmatch(story["id"]) or
+            not 12 <= len(story["eventKey"]) <= 150 or
+            story["category"] not in CATEGORIES or
+            not editorial.country_code(story["country"]) or
+            not (35 <= len(story["summary"]) <= 650 and
+                 100 <= len(story["detail"]) <= 2100) or
+            not (12 <= len(story["quip"]) <= 90 and
+                 12 <= len(story["quipSecond"]) <= 100) or
+            story["quip"].strip() == story["quipSecond"].strip() or
+            editorial.editorial_fit_rejection(story)):
+        return False
+    reported = safe_day(story["reported"])
+    if reported is None or not date_window(today)[0] <= reported <= today:
+        return False
+    verification = story.get("verificationUrls")
+    if not publisher_pair(verification) or set(verification) != set(urls):
+        return False
+    if story["sourceUrl"] not in verification:
+        return False
+    narrative = " ".join(str(story[k]) for k in REQUIRED if k not in
+                         ("id", "sourceUrl", "reported", "eventKey"))
+    if editorial.BLOCK.search(narrative) or editorial.PRIVATE_GOSSIP.search(narrative):
+        return False
+    if editorial.READER_PRESSURE.search(narrative):
+        return False
+    return True
+
+
+def make_story(group, today, old_summaries, ask_ai=editorial.ai,
+               source_reader=editorial.source_text):
+    urls = [item["url"] for item in group]
+    if not publisher_pair(urls):
+        return None
+    evidence = []
+    for item in group:
+        text = source_reader(item["url"])
+        if not isinstance(text, str) or len(text) < 600:
+            return None
+        evidence.append({"url": item["url"], "headline": item["title"],
+                         "published": str(lead_day(item)),
+                         "body": text[:8000]})
+    directive = (
+        editorial.EDITORIAL_MISSION + editorial.WRITING_CRAFT +
+        " You are monthly editor A. Produce at most ONE verified Japanese story "
+        "only if both independent publisher article bodies demonstrably describe "
+        "the exact same harmless human-scale surprising mishap. Reject any "
+        "syndicated rewrite or distinct incidents, injury, fear, or corporate "
+        "crisis. Source headlines and publication metadata are NOT themselves "
+        "evidence for factual assertions. Every claim, expectedPlan and "
+        "observedOutcome must be substantiated in the actual bodies. "
+        "The reporting date must appear in the source material or be reliably "
+        "supported by the dated publisher metadata. The date is bounded between "
+        + str(date_window(today)[0]) + " and " + str(today) + ". "
+        "Write natural Japanese and a warm, short observational quip, never "
+        "inventing an incident country based on publisher location. "
+        "Fields: " + str(REQUIRED) + ", verificationUrls (both exact input URLs). "
+        "category must be person, work, company or sports. "
+        "SourceName should accurately name one of the two publishers. "
+        "Return JSON {story:object|null}. If in doubt return null. "
+        "Existing released stories for duplicate avoidance: "
+        + json.dumps(old_summaries[-60:], ensure_ascii=False) +
+        " Two independent evidence bodies: " + json.dumps(evidence, ensure_ascii=False)
+    )
+    try:
+        draft = ask_ai(directive, temperature=0.5)
+    except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
+        print("Monthly draft unavailable:", type(exc).__name__, flush=True)
+        return None
+    story = draft.get("story") if isinstance(draft, dict) else None
+    if not validate_story(story, urls, today):
+        return None
+    try:
+        verdict = ask_ai(
+            editorial.EDITORIAL_MISSION +
+            " You are adversarial fact checker B, independent of editor A. "
+            "Review ALL reported facts and each date against BOTH article "
+            "bodies. Verify that they independently report the SAME incident "
+            "and are not simply syndicated rewrites. Confirm the two distinct "
+            "original sources explicitly support the event, expectation, "
+            "outcome, country, Japanese reporting date, title, summary and "
+            "detail. Reject invented quotes, embellishment, unverified "
+            "attributions, harmful jokes, tragedies, distressing disasters or "
+            "duplicates. Fail closed on uncertainty. "
+            "Return JSON {approved:boolean,independent:boolean,"
+            "bothSourcesSupport:boolean,reasonCode:string}. Draft: "
+            + json.dumps(story, ensure_ascii=False) +
+            " Original publisher bodies: " + json.dumps(evidence, ensure_ascii=False),
+            temperature=0.1
+        )
+    except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
+        print("Monthly fact check unavailable:", type(exc).__name__, flush=True)
+        return None
+    if not (isinstance(verdict, dict) and verdict.get("approved") is True
+            and verdict.get("independent") is True
+            and verdict.get("bothSourcesSupport") is True):
+        return None
+    return {key: value for key, value in story.items()
+            if key in (*REQUIRED, "verificationUrls", "attributionNote", "correctionNote")}
+
+
+def publish_monthly(stories, today, root=ROOT):
+    """Write immutable daily monthly collections and an index; no empty release."""
+    if not stories:
+        return False
+    folder = root / MONTH_ROOT
+    file = folder / (today.isoformat() + ".json")
+    if file.exists():
+        return False
+    folder.mkdir(parents=True, exist_ok=True)
+    for story in stories:
+        if not validate_story(story, story.get("verificationUrls", []), today):
+            raise ValueError("Story failed monthly release validation")
+    obj = {"status": "published-monthly",
+           "collectionDate": today.isoformat(),
+           "reviewMethod": "two-source-two-stage-AI",
+           "stories": stories}
+    # Never re-date older verified articles as if they had been published today:
+    # collectionDate means first inclusion in this monthly shelf.
+    file.write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n",
+                    encoding="utf-8")
+    index = folder / "index.json"
+    issues = []
+    if index.exists():
+        doc = json.loads(index.read_text(encoding="utf-8"))
+        issues = doc.get("issues", []) if isinstance(doc.get("issues"), list) else []
+    dates = {x.get("date") for x in issues if isinstance(x, dict)}
+    if today.isoformat() not in dates:
+        issues.append({"date": today.isoformat(), "count": len(stories)})
+    issues = sorted(
+        (item for item in issues if isinstance(item, dict) and
+         safe_day(item.get("date")) is not None),
+        key=lambda x: x["date"], reverse=True
+    )
+    index.write_text(json.dumps({"status": "published-monthly-index",
+                                  "issues": issues}, ensure_ascii=False, indent=2) + "\n",
+                     encoding="utf-8")
+    return True
+
+
+def run(now=None, root=ROOT):
+    now = now or datetime.now(JST)
+    today = now.astimezone(JST).date()
+    if not editorial.KEY:
+        print("Monthly review has no AI key; no changes and no empty publication.")
+        return False
+    if (root / MONTH_ROOT / (today.isoformat() + ".json")).exists():
+        print("Today's monthly collection already committed; immutable safe skip.")
+        return False
+    leads = discover(now)
+    if len(leads) < 2:
+        print("Not enough 30-day source leads; no publication.")
+        return False
+    groups = candidate_pairs(leads)
+    if not groups:
+        print("No two-publisher incident candidates; no publication.")
+        return False
+    known = existing_articles(root)
+    accepted = []
+    for group in groups:
+        if len(accepted) >= 2:
+            break
+        urls = [item["url"] for item in group]
+        if any(u in known[2] for u in urls):
+            continue
+        story = make_story(group, today, known[0] + accepted)
+        if not story or not plausible_new(story, known):
+            continue
+        known[1].add(story["id"])
+        known[2].update(story["verificationUrls"])
+        known[3].add(story["eventKey"])
+        accepted.append(story)
+    if not accepted:
+        print("No independently verified new monthly articles; existing shelf preserved.")
+        return False
+    wrote = publish_monthly(accepted, today, root)
+    print("Verified monthly articles saved:", len(accepted) if wrote else 0,
+          "collection date:", today.isoformat())
+    return wrote
+
+
+if __name__ == "__main__":
+    try:
+        run()
+    except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
+        # Fail closed. Do not print page HTML, URLs, or untrusted model content.
+        print("Monthly research stopped without publication:", type(exc).__name__,
+              file=sys.stderr)
+        sys.exit(1)
