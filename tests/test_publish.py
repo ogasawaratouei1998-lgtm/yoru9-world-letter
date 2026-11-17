@@ -76,37 +76,53 @@ class PublishingTest(unittest.TestCase):
         self.path.unlink()
         self.assertFalse(publish(self.root,datetime.fromisoformat('2026-11-10T21:15:00+09:00')))
         self.assertEqual(json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
-    def test_november_17_and_later_regular_editions_require_exactly_three(self):
+    def test_november_17_and_later_regular_editions_allow_one_to_three(self):
         data=fixture('2026-11-17')
         for story in data['stories']:
             story['reported']='2026-11-17'
-        self.assertEqual(len(validate_approved(data,'2026-11-17')['stories']),3)
-        for missing in (1,2,0):
-            with self.subTest(missing=missing):
-                insufficient={**data,'stories':data['stories'][:missing]}
-                with self.assertRaisesRegex(ValueError,'3本が必須'):
-                    validate_approved(insufficient,'2026-11-17')
-        data['stories'].append({
+        for count in (1,2,3):
+            with self.subTest(approved_count=count):
+                result=validate_approved(
+                    {**data,'stories':data['stories'][:count]},'2026-11-17')
+                self.assertEqual(len(result['stories']),count)
+        with self.assertRaisesRegex(ValueError,'1〜3本'):
+            validate_approved({**data,'stories':[]},'2026-11-17')
+        # Four or more vetted CANDIDATES are allowed by the editorial
+        # selector, but the final approved edition contains at most three.
+        fourth={
             **data['stories'][0],
             'id':'fourth-unique-event',
             'sourceUrl':'https://third.example.com/unique',
             'verificationUrls':['https://third.example.com/unique','https://other.example.org/unique']
-        })
-        with self.assertRaisesRegex(ValueError,'3本が必須'):
-            validate_approved(data,'2026-11-17')
+        }
+        with self.assertRaisesRegex(ValueError,'1〜3本'):
+            validate_approved({**data,'stories':data['stories']+[fourth]},'2026-11-17')
 
-    def test_insufficient_nightly_issue_cannot_replace_existing_publication(self):
-        # Publishing any two-story future edition would violate the hard
-        # three-story policy; no archive or current publication is changed.
+    def test_one_and_two_story_evenings_publish_without_filler(self):
+        for day,count in [('2026-11-17',1),('2026-11-18',2)]:
+            with self.subTest(date=day,count=count):
+                approved=fixture(day)
+                approved['stories']=approved['stories'][:count]
+                for story in approved['stories']:
+                    story['reported']=day
+                path=self.root/'data'/'approved'/f'{day}.json'
+                path.write_text(json.dumps(approved,ensure_ascii=False),encoding='utf-8')
+                now=datetime.fromisoformat(day+'T21:07:00+09:00')
+                self.assertTrue(publish(self.root,now))
+                archive=json.loads((self.root/'data'/'archive'/f'{day}.json').read_text(encoding='utf-8'))
+                current=json.loads((self.root/'data'/'current.json').read_text(encoding='utf-8'))
+                self.assertEqual(len(archive['stories']),count)
+                self.assertEqual(len(current['stories']),count)
+                self.assertEqual(current['editionDate'],day)
+
+    def test_zero_verified_stories_never_replace_existing_publication(self):
         today='2026-11-17'
-        incomplete=fixture(today)
-        incomplete['stories']=incomplete['stories'][:2]
-        for story in incomplete['stories']:
-            story['reported']=today
+        empty=fixture(today)
+        empty['stories']=[]
         path=self.root/'data'/'approved'/f'{today}.json'
-        path.write_text(json.dumps(incomplete,ensure_ascii=False),encoding='utf-8')
-        with self.assertRaisesRegex(ValueError,'3本が必須'):
-            publish(self.root,datetime.fromisoformat('2026-11-17T21:07:00+09:00'))
+        path.write_text(json.dumps(empty,ensure_ascii=False),encoding='utf-8')
+        with self.assertRaisesRegex(ValueError,'1〜3本'):
+            publish(self.root,datetime.fromisoformat(today+'T21:07:00+09:00'))
         self.assertFalse((self.root/'data'/'archive'/f'{today}.json').exists())
         self.assertEqual(
             json.loads((self.root/'data'/'current.json').read_text())['status'],'demo')
