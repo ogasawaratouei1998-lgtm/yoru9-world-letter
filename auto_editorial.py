@@ -24,6 +24,15 @@ PRIVATE_GOSSIP=re.compile(r"不倫|浮気|私生活|婚外|私的な関係|恋�
 # words such as "hope" or "tomorrow" are intentionally NOT blanket-banned.
 READER_PRESSURE=re.compile(r"あなたより大変|悩みなんて小さい|たかが失敗|感謝すべき|笑うべき|もっと頑張れ|努力が足りない|必ず元気になる|必ず幸せになる|明日は絶対に良くなる|笑わなければならない",re.I)
 
+def semantic_matching_needed(headline_pair_count):
+    """Expand cross-language pairing only when direct retrieved headlines yield few pairs.
+
+    This heuristic never approves a story. Mandatory full-text evidence
+    checking and independent fact review still apply to every candidate.
+    """
+    return headline_pair_count < 2
+
+
 def editorial_fit_rejection(story):
     """Reject missing plan-versus-reality evidence and private gossip.
 
@@ -711,13 +720,21 @@ def main():
     # Overlapping windows allow semantic matching across the full fetched set.
     # Headline groups are still included; AI proposals remain unverified.
     semantic=[]
-    for start in range(0,len(source_leads),90):
-        if editorial_seconds_remaining()<220:
-            print("Skipping remaining semantic matching to reserve time for independent review.",flush=True)
-            break
-        window=source_leads[max(0,start-30):start+120]
-        if len(window)<2:continue
-        semantic.extend(semantic_corroboration_groups(window))
+    # Pair detection from confirmed retrieved headlines already gives editor A
+    # concrete incident hypotheses. The separate semantic matching stage
+    # consumes expensive API requests without verifying ANY story. Skip it
+    # when at least two possible independent-source pairs are already known;
+    # use that quota for the mandatory independent fact-checker instead.
+    if semantic_matching_needed(len(groups)):
+        for start in range(0,len(source_leads),90):
+            if editorial_seconds_remaining()<220:
+                print("Skipping remaining semantic matching to reserve time for independent review.",flush=True)
+                break
+            window=source_leads[max(0,start-30):start+120]
+            if len(window)<2:continue
+            semantic.extend(semantic_corroboration_groups(window))
+    else:
+        print("Skipping optional semantic matching: reserving Gemini calls for mandatory source review.",flush=True)
     existing={tuple(sorted(x['url'] for x in group)) for group in groups}
     for group in semantic:
         key=tuple(sorted(x['url'] for x in group))

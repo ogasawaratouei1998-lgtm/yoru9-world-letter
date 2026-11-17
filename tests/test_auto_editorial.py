@@ -350,6 +350,13 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("legalStatusAccurate",code)
         self.assertIn("translationAccurate",code)
 
+    def test_semantic_matching_is_optional_to_preserve_fact_review_quota(self):
+        from auto_editorial import semantic_matching_needed
+        self.assertTrue(semantic_matching_needed(0))
+        self.assertTrue(semantic_matching_needed(1))
+        self.assertFalse(semantic_matching_needed(2))
+        self.assertFalse(semantic_matching_needed(3))
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
