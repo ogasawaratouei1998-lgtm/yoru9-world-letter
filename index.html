@@ -7,7 +7,10 @@
 <meta property="og:title" content="よる9じの世界便り｜今日も世界は、ちょっとやらかした。">
 <meta property="og:description" content="世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。今日も世界は、ちょっとやらかした。">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="よる9じの世界便り">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
 <title>よる9じの世界便り｜今日も世界は、ちょっとやらかした。</title>
 <style>
 :root{color-scheme:dark;--bg:#0b1425;--card:#1b2942;--card2:#293955;--ink:#f8f4ed;--sub:#bac9dc;--gold:#ffd89e;--line:#475773;--mint:#bde9db}
@@ -464,10 +467,102 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 }
 @media(max-width:370px){.evening-entry a{font-size:.75rem}
  .spotlight-location{margin-left:0;flex-basis:100%;text-align:left}}
+
+/* v9 — refined iPhone-first cover, deliberate story hierarchy and app brand. */
+.skip-link{position:absolute;left:16px;top:-110px;z-index:100;border-radius:10px;
+ background:#fff0d2;color:#15243a;font-weight:850;padding:11px 15px}
+.skip-link:focus{top:calc(env(safe-area-inset-top,0px) + 12px)}
+.nav .logo{display:inline-flex;align-items:center;gap:9px;line-height:1.35;letter-spacing:.012em}
+.nav .logo-mark{width:32px;height:32px;display:block;flex:0 0 32px;border-radius:9px;
+ border:1px solid #526781;background:#14253f;box-shadow:0 2px 8px #0002}
+.nav .tag{border-radius:9px;background:#17253a;padding:6px 9px;color:#dfebf5;
+ font-weight:680;text-align:right;font-variant-numeric:tabular-nums;line-height:1.45}
+.evening-entry{margin:8px 0 11px}
+.evening-entry p{color:#f4e6d0}
+.hero{border-bottom-color:#425775}
+.hero .eyebrow{color:#f1d8a7}
+.country-chip{background:#263a55;border-color:#6b849f}
+.spotlight{position:relative;isolation:isolate;overflow:hidden;
+ background:linear-gradient(160deg,#253b56 0%,#1a2d46 47%,#17263c 100%);
+ border:1px solid #7a8da2;box-shadow:0 12px 30px #020b1b35;
+ border-radius:22px;padding:20px 19px 21px}
+.spotlight:before{content:"";position:absolute;z-index:-1;top:-72px;right:-85px;
+ width:245px;height:245px;border-radius:50%;
+ background:radial-gradient(circle,#e4bb7842 0%,#98adc912 38%,transparent 72%);
+ pointer-events:none}
+.spotlight-topline{padding-bottom:11px;margin-bottom:15px;
+ border-bottom:1px solid #77899c69;gap:6px 10px}
+.evening-moon{color:#ffdb9b;font-size:1.7rem}
+.spotlight-kicker{color:#ffdcaa;font-weight:850;letter-spacing:.035em}
+.spotlight-location{color:#dce8f2;font-weight:680}
+.spotlight h1{color:#fff9ed;font-size:clamp(1.55rem,5.6vw,2.3rem);
+ font-weight:860;line-height:1.42;letter-spacing:-.018em;margin:0 0 13px;
+ text-wrap:pretty}
+.spotlight-brief{font-size:1rem;line-height:1.78;color:#f2f0e9;
+ margin-bottom:17px}
+.spotlight-divider{background:#74839a75;margin-bottom:13px}
+.spotlight-quip-label{color:#ffdc9e;letter-spacing:.025em}
+.spotlight-quip{color:#fff0d7;font-size:clamp(1.0625rem,4.4vw,1.27rem);
+ line-height:1.69;font-weight:770;margin-bottom:19px}
+.spotlight #spotlightRead{background:#ffda9c;border:1px solid #ffe5b9;
+ color:#152439;min-height:50px;padding:10px 20px;
+ font-size:1rem;font-weight:850;box-shadow:0 4px 11px #0710222a}
+.spotlight #spotlightRead:focus-visible{outline-color:#fff}
+.spotlight .travel-slot{margin:17px 0 5px}
+.spotlight .travel-open{min-height:44px;padding:9px 12px;border:1px solid #7088a2;
+ border-radius:11px;background:#273e57;color:#ffebc4;font-size:.9375rem;
+ text-decoration:none;line-height:1.5}
+.spotlight .world-invitation{font-size:.875rem;color:#d8e5ef;
+ text-underline-offset:3px;margin-top:4px;min-height:44px}
+.sectionhead{border-bottom-color:#62758e;padding-top:8px}
+.sectionhead h2{font-weight:850;color:#f8e8d1;line-height:1.5}
+.sectionhead .small{white-space:nowrap;font-variant-numeric:tabular-nums;color:#dce6f1}
+.intro{color:#cddceb}
+.filters[hidden],.sectionhead[hidden],.intro[hidden]{display:none!important}
+.story{background:linear-gradient(152deg,#21344d,#1a2b42);border:1px solid #526a88;
+ border-left:3px solid #d5b47e;border-radius:17px;padding:18px 17px;
+ box-shadow:0 5px 18px #00000016}
+.story:nth-child(even){border-left-color:#9ac5c5}
+.storytop{color:#dbe5ee;font-size:.875rem;gap:8px}
+.number{background:#f3d7a4;color:#1c2b42;font-size:.875rem;width:31px;height:31px}
+.story h3{font-size:clamp(1.22rem,4.6vw,1.55rem);line-height:1.46;
+ margin:10px 0 9px;color:#fff9ed;text-wrap:pretty}
+.story .summary{font-size:.9375rem;line-height:1.76;color:#e6eaf1}
+.story .label{color:#f4d29d;font-size:.8rem;letter-spacing:.015em}
+.story .teaserquip{border-left:3px solid #ffdb9c;background:#30455f;color:#fff4dd;
+ font-size:.95rem;padding:12px 13px;line-height:1.7;margin-top:14px}
+.story .teaserquip span{color:#ffe0ae;font-size:.8rem}
+.story .readbtn{font-size:.9375rem}
+.month-retrospective>details{border-color:#70849b}
+.month-retrospective>details>summary{color:#ffe4b5}
+.reader-tool{border-color:#637c98}
+.reader-tool>summary{font-size:.975rem}
+.footerpanel{border-color:#7084a0}
+@media(max-width:520px){
+ .nav .logo{font-size:.89rem;gap:7px}
+ .nav .logo-mark{width:30px;height:30px;flex-basis:30px}
+ .nav .tag{font-size:.7rem;max-width:46%;padding:5px 7px}
+ .evening-entry{margin:6px 0 9px}
+ .spotlight{padding:19px 17px 18px;border-radius:19px}
+ .spotlight-topline{margin-bottom:12px;padding-bottom:10px}
+ .spotlight h1{font-size:clamp(1.52rem,6vw,1.9rem);line-height:1.43}
+ .spotlight-brief{font-size:.975rem;line-height:1.74}
+ .spotlight-quip{font-size:1.1rem;line-height:1.65}
+ .spotlight #spotlightRead{width:100%;align-self:stretch;min-height:52px;
+  border-radius:12px;font-size:1rem}
+ .spotlight .travel-open{width:100%;justify-content:space-between}
+ .story{padding:16px 15px}
+ .story h3{font-size:1.3rem}
+}
+@media(prefers-reduced-motion:no-preference){
+ .story,.spotlight{transition:border-color .2s ease,box-shadow .2s ease}
+ .story:focus-within,.spotlight:focus-within{border-color:#f4cf8e}
+}
 </style>
 </head>
 <body><div class="wrap">
-<header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
+<a class="skip-link" href="#spotlight">今夜のニュースへ移動</a>
+<header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <main>
 <section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a href="#closing">今夜は、ひと言だけ読む</a></section>
 <section class="hero" aria-label="ニュースの舞台"><p class="eyebrow">世界の「まさか」を、実話で。</p><div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div></section>
@@ -1205,7 +1300,7 @@ document.querySelector('main').addEventListener('click',async event=>{
 function updateFilters(){
  const available=new Set(edition.stories.slice(1).map(s=>s.category));
  const controls=document.querySelector('.filters');
- controls.hidden=available.size<=1;
+ controls.hidden=edition.stories.length<=3||available.size<=1;
  controls.querySelectorAll('[data-filter]').forEach(button=>{
   button.hidden=button.dataset.filter!=='all'&&!available.has(button.dataset.filter);
  });
@@ -1220,9 +1315,9 @@ function render(){const d=edition.stories;
  lastRenderedLocalDate=localDate(now);
  displayReleaseStatus();
  $('editionTag').textContent=archive?`保存済みの体験版 · 実話${d.length}本`:datedPrevious?`前回の配信号 · 実話${d.length}本`:special?`創刊特集号 · 実話${d.length}本`:`今夜の配信号 · 実話${d.length}本`;
- $('storyHeading').textContent=archive?'体験版のほかのニュース':d.length===2?'もうひとつ、世界のどこかから':'世界のどこかから、もう少し';
+ $('storyHeading').textContent=archive?'体験版のほかのニュース':d.length===2?'もうひとつ、世界のどこかから':`世界から届いた、あと${Math.max(0,d.length-1)}本`;
  document.querySelector('.sectionhead').hidden=d.length<=1;
- $('intro').textContent='別の場所から届いた、もうひとつの実話。';
+ $('intro').textContent='続きも、報道に基づく小さな「まさか」です。';
  $('intro').hidden=d.length<=1;
  const reportedDates=d.map(s=>String(s.reported||'').replaceAll('.','-')).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)).sort();
  const range=reportedDates.length?reportedDates[0]+(reportedDates.length>1?' 〜 '+reportedDates[reportedDates.length-1]:''):'記事中の出典を参照';
