@@ -88,7 +88,7 @@ def build(root, output):
     # files stay in Git, while the reader sees only recent collections.
     monthly_index = root / 'data/monthly/index.json'
     if monthly_index.exists():
-        from monthly_research import safe_day, validate_story
+        from monthly_research import safe_day, validate_story, REVIEW_METHOD, LEGACY_REVIEW_METHOD
         manifest = json.loads(monthly_index.read_text(encoding='utf-8'))
         if (manifest.get('status') != 'published-monthly-index'
                 or not isinstance(manifest.get('issues'), list)):
@@ -108,7 +108,7 @@ def build(root, output):
             stories = document.get('stories')
             if (document.get('status') != 'published-monthly'
                     or document.get('collectionDate') != date_str
-                    or document.get('reviewMethod') != 'two-source-two-stage-AI'
+                    or document.get('reviewMethod') not in (REVIEW_METHOD, LEGACY_REVIEW_METHOD)
                     or not isinstance(stories, list) or not stories
                     or len(stories) > 3):
                 raise ValueError('invalid monthly public collection')
