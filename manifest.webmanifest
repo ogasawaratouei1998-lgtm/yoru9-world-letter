@@ -1,7 +1,7 @@
 {
   "name": "よる9じの世界便り",
   "short_name": "よる9じ",
-  "description": "ニュースは実話、ツッコミ担当はAI。世界の大失敗５連発。",
+  "description": "世界の思いがけない実話とAIのひと言。夜9時に、心が少し軽くなる世界便り。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
