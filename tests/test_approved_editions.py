@@ -18,7 +18,13 @@ class ApprovedEditionTest(unittest.TestCase):
                 self.assertEqual(public["status"],"published")
                 self.assertTrue(1 <= len(public["stories"]) <= 3 if data.get("editionType", "regular") == "regular" else len(public["stories"]) == 5)
                 self.assertTrue(all("editorVerified" not in story for story in public["stories"]))
-                self.assertTrue(all("verificationUrls" not in story for story in public["stories"]))
+                # Public source URLs are intentional reader-facing evidence links;
+                # internal editorial assessments must still remain private.
+                self.assertTrue(all(len(story.get("verificationUrls",[])) >= 2
+                                    for story in public["stories"]))
+                self.assertTrue(all("evidence" not in story and "editorVerified" not in story
+                                    and "humorSafe" not in story
+                                    for story in public["stories"]))
 
     def test_approved_issue_releases_only_after_jst_nine(self):
         """End-to-end dry-run on a temporary directory (never updates the published site)."""
