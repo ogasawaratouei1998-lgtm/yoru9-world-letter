@@ -867,6 +867,14 @@ function renderMonthRetrospective(){
   target.append(card);
  }
 }
+// Monthly photos appear as soon as readers expand an article.
+// Loading remains lazy: collapsed articles do not fetch photos.
+$('monthCards').addEventListener('toggle',event=>{
+ const details=event.target;
+ if(!details.matches?.('.month-story > details')||!details.open)return;
+ const button=details.querySelector('[data-month-travel]');
+ if(button&&button.getAttribute('aria-expanded')==='false')button.click();
+},true);
 async function updateMonthFromArchives(issues){
  // Only completed public releases listed in the archive manifest are eligible.
  const {start,end}=monthWindow();
@@ -966,7 +974,7 @@ function loadTravelStops(){
  if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
   .then(v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{})
-  .catch(()=>({}));
+  .catch(()=>{travelStopsPromise=null;return {}});
  return travelStopsPromise;
 }
 function renderTravelSlots(){
