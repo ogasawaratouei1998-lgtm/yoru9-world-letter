@@ -11,6 +11,7 @@ import monthly_research as m
 
 TODAY = datetime(2026, 11, 17, 13, 0, tzinfo=ZoneInfo("Asia/Tokyo")).date()
 URLS = ["https://publisher-a.example/story", "https://publisher-b.example/report"]
+ORIGINAL = "https://www.bbc.com/news/articles/original-workplace-report"
 
 
 def sample_story():
@@ -30,6 +31,7 @@ def sample_story():
         "sourceName": "Publisher A",
         "sourceUrl": URLS[0],
         "verificationUrls": URLS[:],
+        "sourceBasis": "independent-reports",
         "reported": TODAY.isoformat(),
         "expectedPlan": "注文品を正しい届け先へ配達する予定でした。",
         "observedOutcome": "届け先を取り違え、予定とは違う対応が必要になりました。",
@@ -57,10 +59,13 @@ class MonthlyResearchTest(unittest.TestCase):
             self.assertIsNone(m.bing_publisher_url(
                 good+"&url="+quote(URLS[1],safe="")))
 
-    def test_two_independent_retrieved_publishers_are_mandatory(self):
+    def test_two_independent_sources_or_vetted_single_original(self):
         with patch.object(m.editorial, "public_host", return_value=True):
             self.assertTrue(m.publisher_pair(URLS))
             self.assertFalse(m.publisher_pair([URLS[0]]))
+            self.assertFalse(m.source_urls_ok([URLS[0]]))
+            self.assertTrue(m.source_urls_ok([ORIGINAL]))
+            self.assertFalse(m.source_urls_ok(["https://unknown.example/story"]))
             self.assertFalse(m.publisher_pair([URLS[0], URLS[0]]))
             self.assertFalse(m.publisher_pair(["https://bbc.co.uk/a", "https://bbc.com/b"]))
             self.assertFalse(m.publisher_pair(["https://publisher-a.example/a", "https://publisher-a.example/b"]))
@@ -85,7 +90,9 @@ class MonthlyResearchTest(unittest.TestCase):
             if "monthly editor A" in prompt:
                 return {"story": sample_story()}
             return {"approved": True, "independent": True,
-                    "bothSourcesSupport": True, "reasonCode": "verified"}
+                    "bothSourcesSupport": True, "factsVerified": True,
+                    "originalReporting": True, "dateVerified": True,
+                    "safeTone": True, "reasonCode": "verified"}
         group = [{"url": URLS[0], "title": "mix-up", "seendate": "2026-11-17"},
                  {"url": URLS[1], "title": "mix-up", "seendate": "2026-11-17"}]
         with patch.object(m.editorial, "public_host", return_value=True):
@@ -95,6 +102,7 @@ class MonthlyResearchTest(unittest.TestCase):
             self.assertEqual(len(calls), 2)
             self.assertEqual(result["verificationUrls"], URLS)
             self.assertNotIn("evidence", result)
+            self.assertEqual(result["sourceBasis"],"independent-reports")
             self.assertIsNone(m.make_story(group, TODAY, [], ask_ai=ask,
                                            source_reader=lambda url: "too short"))
             def reject(prompt, temperature=0.1):
@@ -104,6 +112,69 @@ class MonthlyResearchTest(unittest.TestCase):
                         "bothSourcesSupport": False}
             self.assertIsNone(m.make_story(group, TODAY, [], ask_ai=reject,
                                            source_reader=lambda url: "body " * 150))
+
+    def test_single_original_gets_two_stage_audit_and_transparent_label(self):
+        single={**sample_story(),"sourceName":"BBC News","sourceUrl":ORIGINAL,
+                "verificationUrls":[ORIGINAL],"sourceBasis":"original-report"}
+        group=[{"url":ORIGINAL,"title":"Local delivery mix-up",
+                "seendate":"2026-11-17"}]
+        prompts=[]
+        def ask(prompt,temperature=0.1):
+            prompts.append(prompt)
+            if "monthly editor A" in prompt:
+                return {"story":single}
+            return {"approved":True,"factsVerified":True,"originalReporting":True,
+                    "dateVerified":True,"safeTone":True,"independent":False,
+                    "bothSourcesSupport":False,"reasonCode":"original_verified"}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            result=m.make_story(group,TODAY,[],ask_ai=ask,
+                                 source_reader=lambda url:"Verified primary report. "*35)
+        self.assertIsNotNone(result)
+        self.assertEqual(len(prompts),2)
+        self.assertEqual(result["verificationUrls"],[ORIGINAL])
+        self.assertEqual(result["sourceBasis"],"original-report")
+        self.assertIn("別媒体による独立した裏付けは確認できていません",result["attributionNote"])
+
+    def test_original_article_without_firsthand_fact_check_is_rejected(self):
+        single={**sample_story(),"sourceUrl":ORIGINAL,
+                "verificationUrls":[ORIGINAL],"sourceBasis":"original-report"}
+        group=[{"url":ORIGINAL,"title":"Social post goes viral",
+                "seendate":"2026-11-17"}]
+        def weak(prompt,temperature=0.1):
+            if "monthly editor A" in prompt:
+                return {"story":single}
+            return {"approved":True,"factsVerified":True,"originalReporting":False,
+                    "dateVerified":True,"safeTone":True}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertIsNone(m.make_story(group,TODAY,[],ask_ai=weak,
+                              source_reader=lambda url:"Social post claimed a mistake. "*32))
+        # The allowed publisher must also be the actual source URL, not an
+        # arbitrary site or another outlet that just republishes headlines.
+        other=[{"url":URLS[0],"title":"unverified","seendate":"2026-11-17"}]
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertIsNone(m.make_story(other,TODAY,[],ask_ai=weak,
+                              source_reader=lambda url:"long body "*100))
+
+    def test_single_source_cannot_invent_extra_url_or_source_basis(self):
+        single={**sample_story(),"sourceUrl":ORIGINAL,
+                "verificationUrls":[ORIGINAL],"sourceBasis":"original-report"}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertTrue(m.validate_story(single,[ORIGINAL],TODAY))
+            self.assertFalse(m.validate_story(
+                {**single,"verificationUrls":[ORIGINAL,URLS[1]]},[ORIGINAL],TODAY))
+            self.assertFalse(m.validate_story(
+                {**single,"sourceBasis":"independent-reports"},[ORIGINAL],TODAY))
+            self.assertFalse(m.validate_story(
+                {**single,"sourceUrl":URLS[1]},[ORIGINAL],TODAY))
+
+    def test_pairing_discovery_falls_back_to_vetted_singles(self):
+        leads=[{"url":ORIGINAL,"title":"Delivery mix-up",
+                "seendate":"2026-11-17"},
+               {"url":URLS[0],"title":"Different story in unvetted source",
+                "seendate":"2026-11-17"}]
+        with patch.object(m.editorial,"public_host",return_value=True):
+            groups=m.candidate_pairs(leads,ask_ai=lambda *args,**kw:{"pairs":[]})
+        self.assertEqual([[x["url"] for x in group] for group in groups],[[ORIGINAL]])
 
     def test_no_key_is_safe_skip_with_no_public_file(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -119,7 +190,7 @@ class MonthlyResearchTest(unittest.TestCase):
                 self.assertFalse(m.publish_monthly([sample_story()], TODAY, root))
             file = root/"data/monthly/2026-11-17.json"
             index = root/"data/monthly/index.json"
-            self.assertEqual(json.loads(file.read_text())["reviewMethod"], "two-source-two-stage-AI")
+            self.assertEqual(json.loads(file.read_text())["reviewMethod"], m.REVIEW_METHOD)
             self.assertEqual(json.loads(index.read_text())["issues"],
                              [{"date": "2026-11-17", "count": 1}])
 
@@ -142,7 +213,8 @@ class MonthlyResearchTest(unittest.TestCase):
         build=(root/"build_site.py").read_text(encoding="utf-8")
         worker=(root/"service-worker.js").read_text(encoding="utf-8")
         self.assertIn("async function loadMonthlyVerified()",html)
-        self.assertIn("document.reviewMethod!=='two-source-two-stage-AI'",html)
+        self.assertIn("source-quality-two-stage-AI",html)
+        self.assertIn("s.sourceBasis==='original-report'",html)
         self.assertIn("...monthRollingStories,...monthPublishedStories,...monthStories",html)
         self.assertIn("loadMonthlyVerified();",html)
         self.assertIn("data/monthly/index.json",build)
