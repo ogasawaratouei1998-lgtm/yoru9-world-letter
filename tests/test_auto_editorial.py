@@ -303,6 +303,26 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
+    def test_four_or_more_verified_candidates_result_in_three_selected_stories(self):
+        import auto_editorial
+        from collections import Counter
+        pool=[
+            {'id':'Japan','country':'日本','category':'work'},
+            {'id':'Korea','country':'韓国','category':'person'},
+            {'id':'Brazil','country':'ブラジル','category':'company'},
+            {'id':'France','country':'フランス','category':'sports'},
+        ]
+        # Four articles may be vetted; selection must reduce to three.
+        selected=auto_editorial.select_diverse_verified_stories(pool,Counter(),Counter())
+        self.assertEqual(len(selected),3)
+        self.assertTrue(all(story in pool for story in selected))
+        self.assertEqual(len({story['id'] for story in selected}),3)
+        # Publishing a short edition must remain possible: neither one nor
+        # two should be discarded merely because the target is three.
+        for count in (1,2):
+            self.assertEqual(len(auto_editorial.select_diverse_verified_stories(
+                pool[:count],Counter(),Counter())),count)
+
     def test_new_editorial_caps_three_and_legacy_publisher_supports_five(self):
         from pathlib import Path
         root = Path(__file__).resolve().parents[1]
