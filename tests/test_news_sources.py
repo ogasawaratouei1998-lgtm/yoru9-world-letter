@@ -69,6 +69,27 @@ class NewsSourceRegistryTest(unittest.TestCase):
         self.assertEqual(leads[0]["sourcecountry"],"US")
         self.assertEqual(leads[0]["status"],"unverified")
 
+    def test_first_results_rotate_between_world_markets(self):
+        us={"id":"us-first","name":"US Publisher",
+            "url":"https://rss.upi.com/news/news.rss","market":"US",
+            "language":"en","focus":"general","site":"upi.com"}
+        nz={"id":"nz-first","name":"NZ Publisher",
+            "url":"https://www.rnz.co.nz/rss/news.xml","market":"NZ",
+            "language":"en","focus":"local","site":"rnz.co.nz"}
+        def xml(base):
+            items="".join(
+                f"<item><title>Unexpected local mixup {i}</title>"
+                f"<link>https://www.{base}/story{i}</link>"
+                f"<pubDate>Tue, 17 Nov 2026 05:00:00 GMT</pubDate></item>"
+                for i in range(3))
+            return f"<rss><channel>{items}</channel></rss>".encode()
+        def fetch(url,timeout):
+            return xml("upi.com" if "upi.com" in url else "rnz.co.nz")
+        items=sources.fetch_registry_feeds(
+            sources=[us,nz],fetch=fetch,parse=parse_rss,max_workers=2)
+        self.assertEqual([x["sourcecountry"] for x in items[:4]],
+                         ["US","NZ","US","NZ"])
+
     def test_unsupported_network_response_never_creates_a_lead(self):
         src=sources.source_registry()[0]
         self.assertEqual(
