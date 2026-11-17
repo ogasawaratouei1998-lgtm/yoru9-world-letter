@@ -189,6 +189,45 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertEqual([len(group) for group in groups],[2,1])
         self.assertEqual(groups[1][0]["url"],ORIGINAL)
 
+    def test_short_original_article_can_be_used_only_by_monthly_review(self):
+        body="Reporter interviewed the shop owner about a harmless mix-up. "*8
+        self.assertGreaterEqual(len(body),350)
+        self.assertLess(len(body),600)
+        article="<html><body><article><p>"+body+"</p></article></body></html>"
+        self.assertEqual(m.editorial.extracted_article_text(article),"")
+        self.assertEqual(m.editorial.extracted_article_text(article,min_chars=350),body)
+        group=[{"url":ORIGINAL,"title":"Harmless delivery mix-up",
+                "seendate":"2026-11-17"}]
+        single={**sample_story(),"sourceName":"BBC News","sourceUrl":ORIGINAL,
+                "verificationUrls":[ORIGINAL],"sourceBasis":"original-report"}
+        def ask(prompt,temperature=0.1):
+            if "monthly editor A" in prompt:return {"story":single}
+            return {"approved":True,"factsVerified":True,"originalReporting":True,
+                    "dateVerified":True,"safeTone":True,"independent":False,
+                    "bothSourcesSupport":False,"reasonCode":"supported"}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertIsNotNone(m.make_story(
+                group,TODAY,[],ask_ai=ask,source_reader=lambda url:body))
+
+    def test_second_quip_is_optional_when_first_is_source_grounded(self):
+        single={**sample_story(),"sourceName":"BBC News","sourceUrl":ORIGINAL,
+                "verificationUrls":[ORIGINAL],"sourceBasis":"original-report"}
+        single.pop("quipSecond")
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertTrue(m.validate_story(single,[ORIGINAL],TODAY))
+            self.assertFalse(m.validate_story(
+                {**single,"quipSecond":single["quip"]},[ORIGINAL],TODAY))
+            self.assertFalse(m.validate_story(
+                {**single,"quipSecond":"短い"},[ORIGINAL],TODAY))
+
+    def test_matching_headlines_no_longer_requires_ai_call(self):
+        original={"url":ORIGINAL,"title":"Local delivery mistake",
+                  "seendate":"2026-11-17"}
+        def prohibited(*args,**kwargs):
+            raise AssertionError("A model should not be called merely to pair headlines")
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertEqual(m.candidate_pairs([original],ask_ai=prohibited),[[original]])
+
     def test_no_key_is_safe_skip_with_no_public_file(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(m.editorial, "KEY", ""):
