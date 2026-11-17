@@ -53,7 +53,7 @@ BING_QUERIES = (
     ("勘違い", "ja-JP"),
 )
 REQUIRED = ("id", "country", "category", "categoryLabel", "label",
-            "title", "summary", "detail", "quip", "quipSecond",
+            "title", "summary", "detail", "quip",
             "sourceName", "sourceUrl", "reported", "expectedPlan",
             "observedOutcome", "eventKey")
 # Distinct domains are required, but this list catches some obvious same-owner mirrors.
@@ -256,58 +256,32 @@ def discover(now, fetch=fetch_bytes):
 
 
 def candidate_pairs(leads, ask_ai=editorial.ai):
-    """Prefer corroborated pairs, then credible original reports without a pair."""
+    """Shortlist originals directly; independently corroborated pairs come first.
+
+    A separate AI call just to match two headlines was an unnecessary gate:
+    headlines can suggest duplication, but only fetched publisher bodies can
+    establish whether two sources cover the same event.
+    """
     allowed = {x["url"]: x for x in leads}
-    found, seen = [], set()
-    def add(urls):
-        if not publisher_pair(urls) or any(u not in allowed for u in urls):
-            return
-        key = tuple(sorted(urls))
-        if key not in seen:
-            seen.add(key)
-            found.append([allowed[u] for u in urls])
-
+    pairs, seen = [], set()
     for group in editorial.corroboration_groups(leads):
-        if len(group) >= 2:
-            add([group[0]["url"], group[1]["url"]])
-
-    # Explicit, bounded pairing expands beyond English-identical headlines.
-    prompts = [{"index": i, "headline": x["title"], "url": x["url"],
-                "published": str(lead_day(x))}
-               for i, x in enumerate(leads[:100])]
-    if len(prompts) >= 2:
-        try:
-            result = ask_ai(
-                "You are a multilingual news researcher. Pair two distinct "
-                "original publisher articles about the SAME concrete harmless "
-                "mistake from the following HEADLINES. Different publishers "
-                "and dates are common. Do NOT invent or infer any facts. "
-                "These are merely hypotheses and cannot authorize publication. "
-                "Return JSON {pairs:[{first:integer,second:integer}]} with up to "
-                "12 pairs. Pair only titles that clearly concern the exact same "
-                "incident; no generic topical similarity. Headlines: "
-                + json.dumps(prompts, ensure_ascii=False), temperature=0.1)
-            if isinstance(result, dict) and isinstance(result.get("pairs"), list):
-                for pair in result["pairs"][:12]:
-                    if not isinstance(pair, dict):
-                        continue
-                    a, b = pair.get("first"), pair.get("second")
-                    if (type(a) is int and type(b) is int and a != b
-                            and 0 <= a < len(prompts) and 0 <= b < len(prompts)):
-                        add([leads[a]["url"], leads[b]["url"]])
-        except (OSError, RuntimeError, ValueError, KeyError, TypeError) as exc:
-            print("Monthly pairing unavailable:", type(exc).__name__, flush=True)
-    # One strong original report can be eligible even when another outlet
-    # never covered the small local mishap. The later audit is mandatory.
-    # Keep independent one-source review even if an attempted two-source
-    # match fails later as unrelated, syndicated or missing an article body.
-    # The single-source route must pass its OWN firsthand-reporting audit.
-    for item in leads:
-        if len(found)>=18:break
-        if not trusted_original_url(item["url"]):
+        if len(group)<2:
             continue
-        found.append([item])
-    return found[:18]
+        urls=[group[0]["url"],group[1]["url"]]
+        key=tuple(sorted(urls))
+        if key in seen or not publisher_pair(urls) or any(u not in allowed for u in urls):
+            continue
+        seen.add(key)
+        pairs.append([allowed[u] for u in urls])
+        if len(pairs)>=4:
+            break
+    # Each vetted original report has its own chance, including when a
+    # tentative two-publisher match turns out to be wrong or syndicated.
+    singles=[[lead] for lead in leads if trusted_original_url(lead["url"])]
+    result=pairs+singles[:max(0,18-len(pairs))]
+    print("Monthly source shortlist:", len(pairs), "potential pairs,",
+          len(result)-len(pairs), "original publisher articles",flush=True)
+    return result
 
 
 def existing_articles(root=ROOT):
@@ -359,11 +333,13 @@ def validate_story(story, urls, today):
             not 12 <= len(story["eventKey"]) <= 150 or
             story["category"] not in CATEGORIES or
             not editorial.country_code(story["country"]) or
-            not (35 <= len(story["summary"]) <= 650 and
-                 100 <= len(story["detail"]) <= 2100) or
-            not (12 <= len(story["quip"]) <= 90 and
-                 12 <= len(story["quipSecond"]) <= 100) or
-            story["quip"].strip() == story["quipSecond"].strip() or
+            not (28 <= len(story["summary"]) <= 650 and
+                 75 <= len(story["detail"]) <= 2100) or
+            not (10 <= len(story["quip"]) <= 90) or
+            (story.get("quipSecond") is not None and (
+                not isinstance(story["quipSecond"], str) or
+                not 10 <= len(story["quipSecond"].strip()) <= 100 or
+                story["quip"].strip() == story["quipSecond"].strip())) or
             editorial.editorial_fit_rejection(story)):
         return False
     reported = safe_day(story["reported"])
@@ -386,16 +362,22 @@ def validate_story(story, urls, today):
     return True
 
 
+def monthly_source_text(url):
+    """Short original reporting is eligible, but still article-body only."""
+    return editorial.source_text(url,min_chars=350)
+
+
 def make_story(group, today, old_summaries, ask_ai=editorial.ai,
-               source_reader=editorial.source_text):
+               source_reader=None):
     urls = [item["url"] for item in group]
     if not source_urls_ok(urls):
         return None
     single = len(urls)==1
     evidence = []
+    source_reader = source_reader or monthly_source_text
     for item in group:
         text = source_reader(item["url"])
-        if not isinstance(text, str) or len(text)<600:
+        if not isinstance(text, str) or len(text)<350:
             return None
         evidence.append({"url": item["url"], "headline": item["title"],
                          "published": str(lead_day(item)),
@@ -428,6 +410,8 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         " and " + str(today) + ". "
         "Return JSON {story:object|null} using fields " + str(REQUIRED) +
         " plus verificationUrls containing the EXACT supplied URLs in order. "
+        "quipSecond is OPTIONAL: supply it only when it adds a genuinely "
+        "different, source-supported lighthearted observation. "
         "Do not invent a second URL or an official statement. "
         "The story's sourceName must accurately identify its original outlet. "
         "Return null on uncertainty. Previously released stories: " +
@@ -444,6 +428,8 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         return None
     # The AI cannot self-assert which verification tier it belongs to.
     story["sourceBasis"] = "original-report" if single else "independent-reports"
+    if not story.get("quipSecond"):
+        story.pop("quipSecond",None)
     if not validate_story(story, urls, today):
         return None
     try:
@@ -556,8 +542,8 @@ def run(now=None, root=ROOT):
     # Spread the scarce pairing context across publisher regions and domains,
     # rather than letting one high-volume feed consume the first 100 headlines.
     leads = editorial.balanced_source_retrieval(leads, limit=150)
-    if len(leads) < 2:
-        print("Not enough 30-day source leads; no publication.")
+    if len(leads) < 1:
+        print("No recent source leads; no publication.")
         return False
     groups = candidate_pairs(leads)
     if not groups:
@@ -581,7 +567,7 @@ def run(now=None, root=ROOT):
         known[3].add(story["eventKey"])
         accepted.append(story)
     if not accepted:
-        print("No independently verified new monthly articles; existing shelf preserved.")
+        print("No source-grounded, approved new monthly articles; existing shelf preserved.")
         return False
     wrote = publish_monthly(accepted, today, root)
     print("Verified monthly articles saved:", len(accepted) if wrote else 0,
