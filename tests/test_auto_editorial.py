@@ -453,9 +453,9 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<150",source)
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
-        self.assertIn("if len(draft)>=2:",source)
+        self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),4)):",source)
-        self.assertIn("Draft reserve reached: moving directly to independent fact review.",source)
+        self.assertIn("Two eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_model_catalog_selects_supported_model(self):
         import io
@@ -583,10 +583,44 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         now=datetime(2026,11,15,21,0,tzinfo=ZoneInfo("Asia/Tokyo"))
         self.assertTrue(editorial.valid_recent_reported("2026-11-15",now))
         self.assertTrue(editorial.valid_recent_reported("2026-11-14",now))
-        self.assertFalse(editorial.valid_recent_reported("2026-11-13",now))
+        self.assertTrue(editorial.valid_recent_reported("2026-11-13",now))
+        self.assertTrue(editorial.valid_recent_reported("2026-11-08",now))
         self.assertFalse(editorial.valid_recent_reported("2026-11-07",now))
         self.assertFalse(editorial.valid_recent_reported("2026-11-16",now))
         self.assertFalse(editorial.valid_recent_reported("unverified",now))
+
+    def test_bad_drafts_do_not_stop_search_for_funny_human_blunders(self):
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        now=datetime(2026,11,18,9,0,tzinfo=ZoneInfo("Asia/Tokyo"))
+        acceptable={"id":"delivery-mixup-2026","country":"日本",
+            "category":"work","categoryLabel":"仕事","label":"世界のまさか",
+            "title":"誤配送で注文品が別の家に届いた",
+            "summary":"従業員が送り先を取り違えました。",
+            "detail":"配達先の番地を見間違えたため違う家に届きました。",
+            "quip":"送り先を間違えたのに、到着通知だけは正確だった。",
+            "sourceName":"BBC","sourceUrl":"https://www.bbc.com/news/example",
+            "reported":"2026-11-17","humanActor":"店員",
+            "humanMistake":"住所を見間違えて別の家へ配送した",
+            "expectedPlan":"注文主の正しい住所へ品物を届ける予定だった。",
+            "observedOutcome":"実際には別の住所へ誤って配達してしまった。"}
+        self.assertTrue(editorial.draft_preflight_viable(acceptable,now))
+        serious={**acceptable,
+            "title":"消防団員にサイレンの苦情と嫌がらせ",
+            "humanActor":"住民","humanMistake":"消防団員に暴言を浴びせた"}
+        self.assertFalse(editorial.draft_preflight_viable(serious,now))
+        self.assertFalse(editorial.draft_preflight_viable({
+            **acceptable,"quip":"まさかの展開でした。"},now))
+        self.assertFalse(editorial.draft_preflight_viable({
+            **acceptable,"reported":"2026-11-09"},now))
+
+    def test_primary_editor_prompt_prefers_small_sourced_blunders(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("Small and harmless mistakes are ideal",code)
+        self.assertNotIn("Do not prioritize trivial typos",code)
+        self.assertIn("already_drafted_urls",code)
+        self.assertIn("min(incident_priority(article)",code)
 
     def test_light_human_blunders_get_retrieval_priority_over_disputes(self):
         ordinary={"title":"Company accidentally sent the wrong order to customers",

@@ -681,11 +681,36 @@ def semantic_corroboration_groups(items):
     return groups[:36]
 
 def valid_recent_reported(raw, now):
-    """Allow reporting dated today or yesterday in Japan (time-zone buffer)."""
+    """Seven-day lookback matches the publisher's existing current-news limit."""
     if not isinstance(raw,str) or not re.fullmatch(r"\d{4}[-.]\d{2}[-.]\d{2}",raw):return False
     try:reported=datetime.strptime(raw.replace(".","-"),"%Y-%m-%d").date()
     except ValueError:return False
-    return now.date()-timedelta(days=1)<=reported<=now.date()
+    return now.date()-timedelta(days=7)<=reported<=now.date()
+
+def draft_preflight_viable(story,now):
+    """Fast comedy and date screening, never replaces source/fact review.
+
+    This counts only drafts worth spending scarce independent B-review calls
+    on; it cannot mark any story as verified or publishable by itself.
+    """
+    if not isinstance(story,dict):
+        return False
+    if any(not isinstance(story.get(key),str) or not story[key].strip()
+           for key in REQUIRED):
+        return False
+    if not valid_recent_reported(story["reported"],now):
+        return False
+    if story.get("category") not in ("person","work","company","sports"):
+        return False
+    if (editorial_fit_rejection(story) or human_failure_rejection(story)
+            or noncomic_incident_rejection(story)
+            or comic_line_rejection(story.get("quip"))):
+        return False
+    if BLOCK.search(" ".join(str(story.get(key,"")) for key in
+                             ("title","summary","detail","quip"))):
+        return False
+    return True
+
 
 def main():
     global RUN_DEADLINE, AI_QUOTA_BLOCKED
@@ -705,7 +730,7 @@ def main():
                 stamp=datetime.strptime(raw,"%Y%m%dT%H%M%SZ").replace(tzinfo=ZoneInfo("UTC")).astimezone(JST)
             else:
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
-            if not (now - timedelta(hours=36) <= stamp <= now + timedelta(minutes=10)):continue
+            if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
     if len(recent)<5:
@@ -797,7 +822,7 @@ def main():
                     allowed_pairs.add(frozenset((first["url"],second["url"])))
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
+    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are a Japanese comedy show writer working as news editor A. Discover up to 12 REAL, lightly embarrassing or absurd HUMAN BLUNDERS from these fetched original articles. First search for genuine mistakes in everyday work, deliveries, public signs, mistaken assumptions, clerical errors, confusing customer interactions, awkward sports decisions, and administrative mix-ups. Small and harmless mistakes are ideal WHEN the sourced mismatch supports a concrete sharp punchline. DO NOT favor consequential crises, high-profile resignations, serious disciplinary conflict, emergency harassment, criminal cases, politics, bad outcomes affecting victims, or news that is merely surprising. Human error must actually be in the fetched source; a dispute or apology alone is not a lighthearted mistake. For EACH incident first identify humanActor, humanMistake, expectedPlan and observedOutcome; only then privately draft FOUR radically different Japanese punchlines and pick the strongest short unexpected payoff, not a recap or lesson. Give unusual but independently documented minor errors priority over major corporate failures, provided the joke is really funny without mocking a harmed person. Return zero stories if no supported comedic mistake exists. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
       'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. Never invent facts, URLs, or details. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
@@ -838,7 +863,7 @@ def main():
         "total":len(grouped_evidence),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if len(draft)<2:
+    if sum(draft_preflight_viable(item,now) for item in draft)<2:
         # Reserve API quota for independent reviewer B as soon as two draft
         # candidates exist. A big batch of unreviewed prose is not progress.
         # Separate diagnosis from drafting. A large all-groups request can
@@ -851,7 +876,17 @@ def main():
         # drafting chance; the deterministic and independent audit gates below
         # remain unchanged.
         # Use model diagnostics only for ordering, NEVER as an acceptance veto.
-        retry_candidates=sorted(grouped_evidence,key=lambda g:(
+        # An AI-generated draft of a distressing event does NOT consume the
+        # chance to try a different ordinary blunder from the source pool.
+        already_drafted_urls={url for item in draft if isinstance(item,dict)
+            for url in (item.get("verificationUrls") or [])
+            if isinstance(url,str)}
+        retry_candidates=sorted((
+            group for group in grouped_evidence
+            if not any(article["url"] in already_drafted_urls
+                       for article in group["articles"])
+        ),key=lambda g:(
+            min(incident_priority(article)[0] for article in g["articles"]),
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
@@ -873,8 +908,8 @@ def main():
                 "eventKey (specific incident identifier at least 12 characters), "
                 "and evidence (facts supported by the supplied source text). "
                 "category must be exactly person, work, company, or sports. "
-                "reported must be an explicit source-supported date within the "
-                "edition day or previous day (JST), formatted YYYY-MM-DD. "
+                "reported must be a source-supported actual publication date within "
+                "the last seven days including edition day (JST), formatted YYYY-MM-DD. "
                 "Use warm humor about the mistake, never victims or suffering; "
                 "allow an optional humane reflection without prescribing feelings, lessons or outcomes. "
                 "Do not infer any fact absent from the supplied text. Sharpen the first hit through three private alternatives, and aim the second hit at a DIFFERENT verified contrast; avoid long explanations or rumors. "
@@ -889,8 +924,8 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if len(draft)>=2:
-                print("Draft reserve reached: moving directly to independent fact review.",flush=True)
+            if sum(draft_preflight_viable(item,now) for item in draft)>=2:
+                print("Two eligible comedy drafts reserved: moving to independent fact review.",flush=True)
                 break
     if AI_QUOTA_BLOCKED:
         print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)
