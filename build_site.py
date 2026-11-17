@@ -82,6 +82,10 @@ def build(root, output):
         target = output / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    # The standalone iOS and Android icons are built locally from the same
+    # Moon / envelope / 9 artwork. No third-party image processing needed.
+    from app_icon import render_icons
+    render_icons(output / 'assets')
     for source in (root / 'data' / 'archive').glob('????-??-??.json'):
         shutil.copy2(source, output / 'data' / 'archive' / source.name)
     # Only publish explicitly audited monthly collections. Immutable source
