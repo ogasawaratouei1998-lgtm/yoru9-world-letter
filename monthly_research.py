@@ -32,8 +32,10 @@ SLUG_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]{8,95}$")
 CATEGORIES = {"person", "work", "company", "sports"}
 # This preference filters retrieval, NOT evidence. Factual claims need two bodies.
 MISHAP = re.compile(
-    r"mistake|mix.?up|blunder|typo|accidental|misprint|wrong |error|mishap|"
-    r"mistaken|confusion|手違い|誤配達|間違い|勘違い|失敗|珍事|誤記|"
+    r"mistak|mix.?up|blunder|typo|accidental|misprint|wrong|error|mishap|"
+    r"mistaken|confus|apolog|fail|backfir|oops|embarrass|misstep|oddity|"
+    r"unusual|unexpected|odd |weird|mixing up|changed plans|"
+    r"手違い|誤配達|間違|勘違い|失敗|珍事|誤記|謝罪|撤回|おわび|予想外|"
     r"Verwechslung|Panne|méprise|equivocación|실수|착각|por engano", re.I
 )
 GDELT_QUERIES = (
@@ -202,13 +204,13 @@ def discover(now, fetch=fetch_bytes):
                 add(lead)
         except (OSError, ValueError, TypeError, KeyError) as exc:
             problems.append(type(exc).__name__)
-    for url, provider in INDEPENDENT_FEEDS[:8]:
+    for url, provider in INDEPENDENT_FEEDS:
         try:
             for lead in parse_rss(fetch(url), provider)[:35]:
                 add(lead)
         except (OSError, ValueError, TypeError, KeyError) as exc:
             problems.append(type(exc).__name__)
-    for url in BBC_FEEDS[:2]:
+    for url in BBC_FEEDS:
         try:
             for lead in parse_rss(fetch(url), "BBC RSS", relevant_only=True)[:35]:
                 add(lead)
@@ -458,6 +460,9 @@ def run(now=None, root=ROOT):
         print("Today's monthly collection already committed; immutable safe skip.")
         return False
     leads = discover(now)
+    # Spread the scarce pairing context across publisher regions and domains,
+    # rather than letting one high-volume feed consume the first 100 headlines.
+    leads = editorial.balanced_source_retrieval(leads, limit=150)
     if len(leads) < 2:
         print("Not enough 30-day source leads; no publication.")
         return False
