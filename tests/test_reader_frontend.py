@@ -435,6 +435,87 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_world_map_uses_visible_monthly_stories_and_links_to_special(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        for text in (
+            "function mapDisplayStories()",
+            "[...edition.stories,...visibleMonthStories]",
+            "for(const story of mapDisplayStories())",
+            "function countryResultsFor(country)",
+            "visibleMonthStories.filter(s=>countryKey(s.country)===country)",
+            "const matches=countryResultsFor(country)",
+            "card.dataset.monthStoryId=s.id",
+            "node.dataset.monthStoryId===item.id",
+            "$('monthDetails').open=true",
+            "if(details)details.open=true",
+            "renderWorld();refreshCountryChoices();refreshMonthlyDashboard();",
+            "表示中の配信号と月間特集の掲載国",
+        ):
+            with self.subTest(marker=text):
+                self.assertIn(text,page)
+        self.assertIn("配信号と月間特集の記事を探せます",page)
+
+    def test_monthly_special_appears_in_30_day_editorial_coverage(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        for token in (
+            "function refreshMonthlyDashboard()",
+            "let dashboardIssues=[],dashboardFailed=0",
+            "for(const story of monthStories)",
+            "isMonthDate(monthRetentionDate(story),monthWindow().start,now)",
+            "if(usedIds.has(story.id)||keys.some(key=>usedSources.has(key)))",
+            "特集収録'+curated+'本",
+            "pin.addEventListener('click',()=>{",
+            "renderEditorialDashboard(all.filter(Boolean),all.filter(x=>!x).length)",
+        ):
+            with self.subTest(marker=token):
+                self.assertIn(token,page)
+        self.assertIn("公開済み配信号と月間特集を集計しています",page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required for map behavior test")
+    def test_world_map_pins_count_current_and_monthly_articles(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        funcs="function mapDisplayStories(){"+page.split("function mapDisplayStories(){",1)[1].split("function includeCurrentCountries(){",1)[0]
+        js=r"""
+const edition={stories:[{id:'now',country:'日本'}]};
+const visibleMonthStories=[
+ {id:'old-a',country:'韓国'},
+ {id:'old-b',country:'韓国'},
+ {id:'now',country:'日本'}
+];
+const dom={
+ mapPins:{children:[],replaceChildren(){this.children=[]},append(x){this.children.push(x)}},
+ mapCaption:{textContent:''},
+ countrySelect:{value:'',options:[],scrollIntoView(){this.didScroll=true}}
+};
+const $=id=>dom[id];
+const countryKey=name=>({'韓国':'KR','日本':'JP'})[name]||name;
+const countryRecord=name=>({'KR':{name:'韓国'},'JP':{name:'日本'}})[name]||null;
+const countryLabel=name=>({'KR':'韓国','JP':'日本'})[name]||name;
+const mapPoint=name=>name==='JP'?[80,25]:[77,27];
+let selected=0;
+const showCountryResults=()=>{selected++};
+const document={createElement:()=>({
+ style:{},setAttribute(name,value){this[name]=value},
+ addEventListener(name,callback){if(name==='click')this.click=callback}
+})};
+"""
+        assertions=r"""
+if(mapDisplayStories().length!==3)process.exit(1);
+renderWorld();
+if(dom.mapPins.children.length!==2)process.exit(2);
+const countries=Object.fromEntries(dom.mapPins.children.map(p=>[p['aria-label'],p.textContent]));
+if(countries['韓国：配信号と月間特集に2本']!=='2')process.exit(3);
+if(countries['日本：配信号と月間特集に1本']!=='1')process.exit(4);
+if(!dom.mapCaption.textContent.includes('韓国'))process.exit(5);
+dom.mapPins.children.find(p=>p.textContent==='2').click();
+if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)process.exit(6);
+"""
+        with tempfile.TemporaryDirectory() as directory:
+            script=Path(directory)/"map-test.js"
+            script.write_text(js+"\n"+funcs+"\n"+assertions,encoding="utf-8")
+            p=subprocess.run(["node",str(script)],capture_output=True,text=True)
+            self.assertEqual(p.returncode,0,p.stderr)
+
     def test_world_map_and_country_archive(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="worldMap"', 'id="mapPins"', 'id="countrySelect"',
