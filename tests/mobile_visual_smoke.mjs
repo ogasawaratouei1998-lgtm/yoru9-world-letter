@@ -24,6 +24,21 @@ try{
     const el=document.querySelector('#spotlightTitle');
     return el&&el.textContent&&!el.textContent.includes('準備中');
    },null,{timeout:30000});
+   const appIcon=page.locator('header.nav .logo-mark');
+   assert.equal(await appIcon.count(),1,'the redesigned home-screen mark is shown');
+   await appIcon.evaluate(img=>img.decode());
+   assert.equal(await appIcon.evaluate(img=>img.naturalWidth>0),true,'brand icon loads');
+   const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
+   assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
+   const primaryButton=page.locator('#spotlightRead');
+   const buttonHeight=await primaryButton.evaluate(el=>el.getBoundingClientRect().height);
+   assert.ok(buttonHeight>=44,'lead article action must be touch-friendly');
+   const shortEdition=await page.evaluate(()=>document.querySelectorAll('#stories .story').length+1<=3);
+   if(shortEdition){
+    const hidden=await page.locator('.filters').evaluate(el=>getComputedStyle(el).display==='none');
+    assert.ok(hidden,'1–3 article editions do not need five category filters');
+   }
+   await page.screenshot({path:'mobile-screenshots/cover-'+viewport.name+'.png',animations:'disabled'});
    const article=page.locator('#monthCards .month-story').first();
    await article.waitFor({state:'attached',timeout:30000});
    const shelf=page.locator('#monthRetrospective > details');
