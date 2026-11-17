@@ -558,6 +558,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .story,.spotlight{transition:border-color .2s ease,box-shadow .2s ease}
  .story:focus-within,.spotlight:focus-within{border-color:#f4cf8e}
 }
+
+/* A small postcard after the article, not another dense information panel. */
+.travel-card{padding:16px 16px 13px;border-color:#7790a7}
+.travel-kicker{font-size:.875rem;color:#ffdfaa;font-weight:850;margin:0 0 7px}
+.travel-disclaimer{background:transparent;border:0;border-left:2px solid #d9bd8d;
+ color:#d9e3ec;font-size:.8125rem;line-height:1.6;padding:2px 0 2px 9px;margin:6px 0 9px}
+.travel-figure{margin:11px 0 8px}
+.travel-figure figcaption{font-size:.9375rem;line-height:1.7;margin:9px 0 0}
+.travel-caption-label{font-size:.8125rem;margin-bottom:3px}
+.travel-links{margin:7px 0 4px}
+.travel-credit{color:#cad7e6;font-size:.75rem;line-height:1.5;margin:7px 0 0}
+.travel-credit a{color:#d6e9d8}
 </style>
 </head>
 <body><div class="wrap">
@@ -1230,7 +1242,7 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
  return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
-  (showIntro?'<p class="travel-disclaimer">※ここではニュースとは別の旅先をご紹介します。</p>':'')+
+  (showIntro?'<p class="travel-disclaimer">写真はニュース現場ではなく、旅先の風景です。</p>':'')+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region)+(sameCountry?'':' · '+escapeHtml(stop.country)):'')+'</h4>'+
   (known&&!sameCountry?'<p class="travel-elsewhere">この国の写真を準備中のため、今日は別の国の景色へ寄り道します。</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
