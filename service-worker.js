@@ -1,8 +1,8 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v7';
+const SHELL_CACHE = 'yoru9-shell-v8';
 const ISSUE_CACHE = 'yoru9-released-issues-v2';
 const SCOPE = self.registration.scope;
-const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg'];
+const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
@@ -79,7 +79,7 @@ self.addEventListener('push', event => {
     const url=new URL('index.html',SCOPE).href;
     await self.registration.showNotification(title,{
       body,tag:'yoru9-release-'+editionDate,renotify:false,
-      icon:new URL('assets/icon.svg',SCOPE).href,
+      icon:new URL('assets/icon-192.png',SCOPE).href,
       data:{url},timestamp:Date.now()
     });
   })());
