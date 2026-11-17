@@ -1,9 +1,5 @@
 name: Free-tier AI editorial double-check (safe preview)
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/ai-editorial-preview.yml'
   workflow_dispatch:
   schedule:
     - cron: '45 19 * * *'
@@ -12,9 +8,6 @@ permissions:
   contents: read
 jobs:
   review:
-    # This commit is an explicit one-time end-to-end verification. Other push
-    # events never run live API calls. Normal schedule/manual remain unchanged.
-    if: github.event_name != 'push' || contains(github.event.head_commit.message, '[verify-live-once]')
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
