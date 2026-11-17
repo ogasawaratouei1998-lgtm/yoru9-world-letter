@@ -39,7 +39,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("countryLabel(country)",page)
         self.assertIn("if(country&&key&&!names.has(key))",page)
         self.assertIn("renderWorld();renderIssueCountries();",page)
-        self.assertIn("renderIssueCountries();updateSpotlight();updateFilters();",page)
+        self.assertIn("renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();",page)
         self.assertIn("edition.status==='demo'?'体験版の舞台は'",page)
         self.assertNotIn("sourcecountry",page)
 
@@ -172,7 +172,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("controls.hidden=available.size<=1", page)
         self.assertIn("button.hidden=button.dataset.filter!=='all'&&!available.has(", page)
         self.assertIn(".filters[hidden],.filter[hidden]", page)
-        self.assertIn("updateSpotlight();updateFilters();applyFilter();", page)
+        self.assertIn("updateSpotlight();renderTravelSlots();updateFilters();applyFilter();", page)
         self.assertIn("document.querySelector('.sectionhead').hidden=d.length<=1", page)
         self.assertIn("$('intro').hidden=d.length<=1", page)
 
