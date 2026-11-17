@@ -74,6 +74,20 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
 )
 REVIEW_METHOD = "source-quality-two-stage-AI"
 LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
+# A concise monthly-only brief replaces the nightly pipeline's elaborate
+# editorial mission. The factual checks below remain independent and strict.
+MONTHLY_BRIEF = (
+    "Yoru9 is a quiet Japanese evening news app featuring real, gentle, "
+    "surprising incidents. Prefer specific everyday miscommunications, "
+    "small harmless mix-ups and unexpected outcomes, not celebrity or "
+    "corporate importance. Facts come ONLY from the fetched publisher "
+    "article bodies. Give a clear short Japanese account and one warm "
+    "observational joke about the mismatch, never a victim or individual. "
+    "No invented details, sensationalism, clichés, reader advice or "
+    "forced optimism. Reject rumor, private-life allegations, injury, "
+    "tragedy, or unfounded claims. Fewer safe, sourced stories are better "
+    "than filling a quota. "
+)
 
 
 def date_window(today):
@@ -355,6 +369,8 @@ def validate_story(story, urls, today):
         return False
     narrative = " ".join(str(story[k]) for k in REQUIRED if k not in
                          ("id", "sourceUrl", "reported", "eventKey"))
+    if isinstance(story.get("quipSecond"),str):
+        narrative += " " + story["quipSecond"]
     if editorial.BLOCK.search(narrative) or editorial.PRIVATE_GOSSIP.search(narrative):
         return False
     if editorial.READER_PRESSURE.search(narrative):
@@ -395,7 +411,7 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         "or different events."
     )
     directive = (
-        editorial.EDITORIAL_MISSION + editorial.WRITING_CRAFT +
+        MONTHLY_BRIEF +
         " You are monthly editor A. Draft at most ONE Japanese news story "
         "only when the evidence meets this source rule: " + evidence_rule +
         " The article must describe a real harmless, specific, human-scale "
@@ -434,7 +450,7 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         return None
     try:
         verdict = ask_ai(
-            editorial.EDITORIAL_MISSION +
+            MONTHLY_BRIEF +
             " You are adversarial fact checker B, INDEPENDENT of editor A. "
             "Check every substantive factual statement in the Japanese title, "
             "summary, detail, expectedPlan, observedOutcome, reported date and "
