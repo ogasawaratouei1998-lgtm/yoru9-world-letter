@@ -621,7 +621,7 @@ $('worldInvitation').addEventListener('click',event=>{
    Curated locations belong to incident IDs, not the publisher's country. */
 let travelStopsPromise=null;
 function loadTravelStops(){
- if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'force-cache'})
+ if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
   .then(v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{})
   .catch(()=>({}));
@@ -646,15 +646,20 @@ function travelPostcardHtml(story,stop){
   ?{lat:countryRecord(story.country).lat,lon:countryRecord(story.country).lon,zoom:4}:null;
  const mapUrl=locator?'https://www.openstreetmap.org/?mlat='+locator.lat+'&mlon='+locator.lon+
   '#map='+locator.zoom+'/'+locator.lat+'/'+locator.lon:'';
- const photo=known&&typeof stop.photo==='string'&&stop.photo.startsWith('https://upload.wikimedia.org/wikipedia/commons/thumb/')&&
+ const photo=known&&typeof stop.photo==='string'&&
+  stop.photo.startsWith('https://upload.wikimedia.org/wikipedia/commons/')&&
+  typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
+ const countryOnly=known&&stop.countryOnly===true;
+ const description=countryOnly?'この記事が伝える国の、別の風景に立ち寄ります。ニュースの現場ではありません。':
+  'この記事が伝える場所の景色に、ちょっと寄り道します。';
  return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
-  '<p class="travel-country">'+escapeHtml(country)+'から届いた実話の舞台を、少しだけ眺めてみる。</p>'+
-  (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="'+
-   escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
+  '<p class="travel-country">'+escapeHtml(country)+'からの便り。'+escapeHtml(description)+'</p>'+
+  (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
+   escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を読み込めませんでした。地図や撮影元の資料は開けます。</p>'+
    '<figcaption>'+escapeHtml(stop.photoCaption)+'</figcaption></figure>':'<p class="travel-empty">この場所の確認済みの写真は準備中です。地図から、遠くの場所に思いを巡らせてみませんか。</p>')+
   (known?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':'')+
@@ -681,10 +686,19 @@ document.querySelector('main').addEventListener('click',async event=>{
  const stops=await loadTravelStops();
  // An archive switch or rapid close must not put the old postcard in a new edition.
  if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return;
- const candidate=stops[story.id];
+ // The current issue gets its exact curated stop. A country-only postcard
+ // may serve as a clearly labelled fallback when a fresh story has no photo yet.
+ const candidate=stops[story.id]||Object.values(stops).find(s=>s.country===story.country&&s.countryOnly===true);
  panel.innerHTML=travelPostcardHtml(story,candidate);
  const img=panel.querySelector('.travel-photo');
  if(img)img.addEventListener('error',()=>{
+  // The website-hosted image is preferred. If it is unavailable, try Wikimedia
+  // directly once, then show a usable source link instead of a broken picture.
+  if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
+   img.dataset.remoteTried='true';
+   img.src=img.dataset.remotePhoto;
+   return;
+  }
   img.hidden=true;
   const fallback=panel.querySelector('.travel-photo-error');
   if(fallback)fallback.hidden=false;

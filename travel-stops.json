@@ -11,7 +11,8 @@
     "author": "ewanmcandrew",
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
-    "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Royal_Mile.jpg"
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Royal_Mile.jpg",
+    "photoAsset": "assets/travel/edinburgh.jpg"
   },
   "cheonan-painters-coffee-rescue-2026": {
     "country": "韓国",
@@ -25,7 +26,8 @@
     "author": "Chaeyoung907",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "photoPage": "https://commons.wikimedia.org/wiki/File:Sinbu-Dong.jpg"
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sinbu-Dong.jpg",
+    "photoAsset": "assets/travel/cheonan.jpg"
   },
   "guaira-degavar-road-marking-2026": {
     "country": "ブラジル",
@@ -39,6 +41,55 @@
     "author": "Augusto Rodrigo da Silva Gomes",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "photoPage": "https://commons.wikimedia.org/wiki/File:Pra%C3%A7a_Castelo_Branco_Gua%C3%ADra_Pr.jpg"
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Pra%C3%A7a_Castelo_Branco_Gua%C3%ADra_Pr.jpg",
+    "photoAsset": "assets/travel/guaira.jpg"
+  },
+  "faa-router-ground-stop-2026": {
+    "country": "アメリカ合衆国",
+    "countryOnly": true,
+    "place": "グランドキャニオン",
+    "region": "アリゾナ州",
+    "latitude": 36.0544,
+    "longitude": -112.1401,
+    "note": "このニュースは全米規模の通信トラブルで、現場が一つに限定されません。ここでは米国の別の風景、アリゾナのグランドキャニオンへ。ニュースが起きた場所の写真ではありません。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/8/84/Grand_canyon.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Grand_canyon.jpg",
+    "photoAsset": "assets/travel/grand-canyon.jpg",
+    "photoCaption": "米国アリゾナ州グランドキャニオンの景色。記事の現場写真ではありません。",
+    "author": "U.S. National Park Service（Wikimedia Commons経由）",
+    "license": "パブリックドメイン",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+  },
+  "jensen-huang-nvidia-resignation-2026": {
+    "country": "アメリカ合衆国",
+    "countryOnly": true,
+    "place": "ヨセミテ国立公園",
+    "region": "カリフォルニア州",
+    "latitude": 37.7456,
+    "longitude": -119.5936,
+    "note": "このニュースに登場する米国・カリフォルニア州には、こんな山と森の風景もあります。記事の出来事の現場ではなく、同じ州の別の場所に立ち寄ります。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Yosemite_National_Park_by_Carol_M._Highsmith.jpg/640px-Yosemite_National_Park_by_Carol_M._Highsmith.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Yosemite_National_Park_by_Carol_M._Highsmith.jpg",
+    "photoAsset": "assets/travel/yosemite.jpg",
+    "photoCaption": "米国カリフォルニア州のヨセミテ国立公園。記事の現場写真ではありません。",
+    "author": "Carol M. Highsmith（Library of Congress / Wikimedia Commons）",
+    "license": "パブリックドメイン",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+  },
+  "spacex-starship-booster-failure-2026": {
+    "country": "アメリカ合衆国",
+    "countryOnly": true,
+    "place": "ビッグベンド国立公園",
+    "region": "テキサス州",
+    "latitude": 29.2498,
+    "longitude": -103.2512,
+    "note": "宇宙開発の話に登場するテキサス州から、今夜は少し離れた国立公園へ。山と砂漠、川が交わる景色です。打ち上げ現場の写真ではありません。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Big_Bend_National_Park_PB112584.jpg/640px-Big_Bend_National_Park_PB112584.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Big_Bend_National_Park_PB112584.jpg",
+    "photoAsset": "assets/travel/big-bend.jpg",
+    "photoCaption": "米国テキサス州のビッグベンド国立公園。ロケット打ち上げ現場の写真ではありません。",
+    "author": "U.S. National Park Service（Wikimedia Commons経由）",
+    "license": "パブリックドメイン",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
   }
 }
