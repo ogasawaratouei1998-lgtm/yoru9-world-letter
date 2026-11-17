@@ -124,6 +124,24 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(sum(countries.values()),2)
             self.assertEqual(categories["work"],2)
 
+    def test_editorial_voice_respects_exhausted_readers(self):
+        mission=editorial.EDITORIAL_MISSION
+        craft=editorial.WRITING_CRAFT
+        self.assertIn("quiet place",mission)
+        self.assertIn("reader owes us no smile",mission)
+        self.assertIn("Do not diagnose the reader",mission)
+        self.assertIn("never a compulsory lesson",craft)
+        self.assertIn("a joke can stand without any advice",craft)
+        self.assertIn("Never write moral lessons",craft)
+        source=(__import__("pathlib").Path(__file__).resolve().parents[1]/
+                "auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn('Reject if the writing shames a person',source)
+        self.assertIn('気が向かなければ笑わなくてもよい',source)
+        charter=(__import__("pathlib").Path(__file__).resolve().parents[1]/
+                 "EDITORIAL_PROMISE.md").read_text(encoding="utf-8")
+        self.assertIn("読者に何も求めない",charter)
+        self.assertIn("読者の心を測らない",charter)
+
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
         self.assertIn("real, consequential failures",mission)
