@@ -330,5 +330,21 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_Panorama.jpg",
     "photoAsset": "assets/travel/london-tower-bridge.jpg"
+  },
+  "uk-windermere-postcard": {
+    "country": "イギリス",
+    "countryOnly": true,
+    "place": "ウィンダミア湖",
+    "region": "イングランド・湖水地方",
+    "latitude": 54.3629,
+    "longitude": -2.94,
+    "note": "穏やかな湖面と、その向こうに続く緑の丘。英国の湖水地方ならではの、深呼吸したくなるような風景です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Lake_Windermere_Panoramic.jpg/500px-Lake_Windermere_Panoramic.jpg",
+    "photoCaption": "イングランド・ウィンダミア湖のパノラマ（2022年撮影）",
+    "author": "Michael D Beckwith",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Lake_Windermere_Panoramic.jpg",
+    "photoAsset": "assets/travel/england-windermere.jpg"
   }
 }
