@@ -148,7 +148,7 @@ class ReaderFrontendTest(unittest.TestCase):
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
         self.assertIn("'travel-stops.json'",build)
         self.assertIn("'travel-stops.json'",worker)
-        self.assertRegex(worker,r"const SHELL_CACHE = 'yoru9-shell-v[3-9][0-9]*';")
+        self.assertRegex(worker,r"const SHELL_CACHE = 'yoru9-shell-v(?:[3-9]|[1-9][0-9]+)';")
         self.assertIn("travel-photo-error", (ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("bundle_travel_photos(root, output)",build)
         self.assertIn("data-remote-photo=", (ROOT/"index.html").read_text(encoding="utf-8"))
@@ -214,11 +214,14 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("(isMonth&&!visibleMonthStories.includes(story))",page)
         self.assertIn('aria-expanded="false"',page)
 
-    def test_monthly_articles_auto_show_photo_on_expand(self):
+    def test_monthly_travel_requires_explicit_reader_action(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn("addEventListener('toggle',event=>{",page)
         self.assertIn("details.matches?.('.month-story > details')",page)
-        self.assertIn("if(button&&button.getAttribute('aria-expanded')==='false')button.click()",page)
+        self.assertNotIn("if(button&&button.getAttribute('aria-expanded')==='false')button.click()",page)
+        self.assertIn('aria-expanded="false" aria-controls="month-travel-',page)
+        self.assertIn("document.querySelector('main').addEventListener('click',async event=>{",page)
+        self.assertIn("const control=event.target.closest('[data-travel],[data-month-travel]')",page)
         self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
         self.assertIn("travelFailedPhotos.add(stop.photoAsset)",page)
 
@@ -526,7 +529,7 @@ class ReaderFrontendTest(unittest.TestCase):
                       "pageshow", "reg.update()", "controllerchange"):
             with self.subTest(token=token):
                 self.assertIn(token, page)
-        self.assertRegex(worker,r"yoru9-shell-v[3-9][0-9]*")
+        self.assertRegex(worker,r"yoru9-shell-v(?:[3-9]|[1-9][0-9]+)")
         self.assertIn("yoru9-released-issues-v2", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
 
