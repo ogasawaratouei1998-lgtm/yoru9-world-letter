@@ -577,6 +577,42 @@
       "language": "en",
       "focus": "local",
       "site": "japantimes.co.jp"
+    },
+    {
+      "id": "rnz-new-zealand-news",
+      "name": "RNZ New Zealand News",
+      "url": "https://www.rnz.co.nz/rss/news.xml",
+      "market": "NZ",
+      "language": "en",
+      "focus": "regional",
+      "site": "rnz.co.nz"
+    },
+    {
+      "id": "rnz-new-zealand-national",
+      "name": "RNZ New Zealand National",
+      "url": "https://www.rnz.co.nz/rss/national.xml",
+      "market": "NZ",
+      "language": "en",
+      "focus": "local",
+      "site": "rnz.co.nz"
+    },
+    {
+      "id": "g1-brazil-world",
+      "name": "G1 Brazil World",
+      "url": "https://g1.globo.com/rss/g1/mundo/",
+      "market": "BR",
+      "language": "pt",
+      "focus": "regional",
+      "site": "g1.globo.com"
+    },
+    {
+      "id": "g1-brazil-technology",
+      "name": "G1 Brazil Technology",
+      "url": "https://g1.globo.com/rss/g1/tecnologia/",
+      "market": "BR",
+      "language": "pt",
+      "focus": "technology",
+      "site": "g1.globo.com"
     }
   ]
 }
