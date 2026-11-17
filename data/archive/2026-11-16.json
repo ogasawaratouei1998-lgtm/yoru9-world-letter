@@ -17,7 +17,12 @@
       "sourceName": "米連邦航空局（FAA、2026年11月15日）",
       "sourceUrl": "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers",
       "reported": "2026-11-15",
-      "quipSecond": "22か所の管制センターのうち17か所が不安定。「ちょっと重い」の桁が違う。"
+      "quipSecond": "22か所の管制センターのうち17か所が不安定。「ちょっと重い」の桁が違う。",
+      "verificationUrls": [
+        "https://www.faa.gov/newsroom/nationwide-ground-stop-questions-and-answers",
+        "https://www.nbcnews.com/politics/trump-administration/transportation-secretary-apologize-nationwide-ground-stop-airports-rcna609397",
+        "https://www.cbsnews.com/news/faa-ground-stop-canceled-flights-travelers-what-we-know/"
+      ]
     },
     {
       "id": "jensen-huang-nvidia-resignation-2026",
@@ -26,13 +31,19 @@
       "categoryLabel": "企業・組織",
       "label": "エヌビディア（Nvidia）",
       "title": "NVIDIAのフアンCEOが即時退任、次のトップは選定中",
-      "summary": "米半導体大手NVIDIAは11月12日、ジェンスン・フアン氏がCEOと取締役を退任したと発表した。暫定CEOには最高財務責任者のコレット・クレス氏が就任。辞任をめぐっては私生活や企業関係について報道が出ているが、報じられた疑惑と公式に確認された事実は区別する必要がある。",
-      "detail": "NVIDIAは2026年11月12日、ジェンスン・フアン氏が社長、最高経営責任者（CEO）、取締役を退任したと正式に発表しました。暫定CEOには最高財務責任者のコレット・クレス氏が就き、後任の選定が進められています。報道では、フアン氏とデータセンター関連企業の元幹部アリス・フアン氏との私的な関係や安全保障上の懸念が取り上げられています。一方、関係企業Megaspeed Internationalは同氏が2025年に退職したと説明し、不正行為を否定しています。辞任そのものは会社発表で確認できますが、報道された疑惑のすべてが確定した事実というわけではありません。",
+      "summary": "米半導体大手NVIDIAは11月12日、ジェンスン・フアン氏のCEO・取締役退任と、最高財務責任者コレット・クレス氏の暫定CEO就任を発表した。11日付で取締役会が退任を受理したことはSEC提出書類でも確認できる。後任CEOの選定が続いている。",
+      "detail": "2026年11月12日、米半導体大手NVIDIAは、ジェンスン・フアン氏が社長・最高経営責任者（CEO）・取締役を退任し、最高財務責任者（CFO）のコレット・クレス氏が暫定CEOを兼務すると発表しました。米証券取引委員会（SEC）に提出された書類では、取締役会が11月11日に退任を受理したことも確認できます。企業は社内外から正式な後任CEOを探しており、クレス氏はCFOも兼任します。会社発表と提出書類には退任理由の詳しい説明がないため、理由については推測しません。",
       "quip": "AIの未来を走らせる会社が、次の社長はただいま検索中。",
       "sourceName": "NVIDIA公式発表（2026年11月12日）",
       "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
       "reported": "2026-11-16",
-      "quipSecond": "GPUは並列処理。暫定CEOはCFOも兼務。マルチタスクが生身に来た。"
+      "quipSecond": "GPUは並列処理。暫定CEOはCFOも兼務。マルチタスクが生身に来た。",
+      "verificationUrls": [
+        "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm",
+        "https://www.reuters.com/business/view-nvidia-ceo-jensen-huang-steps-down-2026-11-12/"
+      ],
+      "correctionNote": "2026年11月17日訂正：以前の本文に含まれていた私生活に関する記述を削除し、会社発表とSEC提出書類で確認できる事実に限定しました。"
     },
     {
       "id": "spacex-starship-booster-failure-2026",
@@ -47,7 +58,12 @@
       "sourceName": "AP通信（2026年11月15日）",
       "sourceUrl": "https://apnews.com/article/df394c1b5a0f85e11194f9ff7db9ee6b",
       "reported": "2026-11-15",
-      "quipSecond": "「完全再利用」のカタログに、ブースターの「今回限り」は載せづらい。"
+      "quipSecond": "「完全再利用」のカタログに、ブースターの「今回限り」は載せづらい。",
+      "verificationUrls": [
+        "https://apnews.com/article/df394c1b5a0f85e11194f9ff7db9ee6b",
+        "https://www.abc.net.au/news/2026-11-15/spacex-rocket-returns-to-launch-pad-after-orbitting-earth/107387168",
+        "https://www.npr.org/2026/11/14/g-s1-153786/spacex-successfully-catches-starship-and-makes-history"
+      ]
     }
   ],
   "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.",

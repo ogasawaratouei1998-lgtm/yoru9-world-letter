@@ -30,6 +30,16 @@ class EditorialQuipQualityTest(unittest.TestCase):
                 for unsafe in ("甘い誘い","怪しい人物","スキャンダルによる","反抗期があったようです"):
                     self.assertNotIn(unsafe,story["quip"]+story["quipSecond"]+story["title"])
 
+    def test_revised_nvidia_story_excludes_private_life_allegations_and_shows_sources(self):
+        current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        story=next(s for s in current["stories"] if s["id"]=="jensen-huang-nvidia-resignation-2026")
+        for phrase in ("私的な関係","アリス・フアン","スパイ","不倫","Megaspeed"):
+            self.assertNotIn(phrase,story["summary"]+story["detail"])
+        self.assertIn("correctionNote",story)
+        self.assertIn("SEC",story["detail"])
+        self.assertIn("sec.gov", " ".join(story["verificationUrls"]))
+        self.assertTrue(all(url.startswith("https://") for url in story["verificationUrls"]))
+
     def test_generator_creativity_and_fact_checker_remain_separate(self):
         self.assertIn("three alternative first-hit jokes",WRITING_CRAFT)
         self.assertIn("unproven causes",WRITING_CRAFT)

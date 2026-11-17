@@ -244,6 +244,17 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_sources_correction_and_notification_are_unobtrusive(self):
+        page = (ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('function storyEvidenceHtml(story)',page)
+        self.assertIn('function storyCorrectionHtml(story)',page)
+        self.assertIn('追加の確認資料',page)
+        self.assertIn('編集訂正あり',page)
+        self.assertIn('<section class="notification-panel" id="notificationSection" hidden><details',page)
+        self.assertIn('<summary>夜9時のお知らせ・通知設定</summary>',page)
+        self.assertIn('id="editionMessage" hidden',page)
+        self.assertIn('.status .release-status{margin:0;padding:0;',page)
+
     def test_nightly_message_is_rendered_without_share_button(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)

@@ -155,6 +155,15 @@ def validate_approved(data, expected_date):
         sources.add(story['sourceUrl'])
         # Editorial review metadata is kept in the repository, not public story JSON.
         public_story = {key: story[key].strip() for key in REQUIRED_STORY}
+        # Readers can inspect supporting sources, without exposing private AI
+        # verification prompts or editorial-review records.
+        public_story['verificationUrls'] = list(urls)
+        if 'correctionNote' in story:
+            note = story['correctionNote']
+            require(isinstance(note, str) and 15 <= len(note.strip()) <= 250
+                    and not any(ch in note for ch in '<>\r\n'),
+                    f'{i}本目の編集訂正文が不正です')
+            public_story['correctionNote'] = note.strip()
         if isinstance(story.get('flag'), str):
             public_story['flag'] = story['flag']
         if 'quipSecond' in story:

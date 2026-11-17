@@ -43,26 +43,27 @@
       "categoryLabel": "企業・組織",
       "label": "エヌビディア（Nvidia）",
       "title": "NVIDIAのフアンCEOが即時退任、次のトップは選定中",
-      "summary": "米半導体大手NVIDIAは11月12日、ジェンスン・フアン氏がCEOと取締役を退任したと発表した。暫定CEOには最高財務責任者のコレット・クレス氏が就任。辞任をめぐっては私生活や企業関係について報道が出ているが、報じられた疑惑と公式に確認された事実は区別する必要がある。",
-      "detail": "NVIDIAは2026年11月12日、ジェンスン・フアン氏が社長、最高経営責任者（CEO）、取締役を退任したと正式に発表しました。暫定CEOには最高財務責任者のコレット・クレス氏が就き、後任の選定が進められています。報道では、フアン氏とデータセンター関連企業の元幹部アリス・フアン氏との私的な関係や安全保障上の懸念が取り上げられています。一方、関係企業Megaspeed Internationalは同氏が2025年に退職したと説明し、不正行為を否定しています。辞任そのものは会社発表で確認できますが、報道された疑惑のすべてが確定した事実というわけではありません。",
+      "summary": "米半導体大手NVIDIAは11月12日、ジェンスン・フアン氏のCEO・取締役退任と、最高財務責任者コレット・クレス氏の暫定CEO就任を発表した。11日付で取締役会が退任を受理したことはSEC提出書類でも確認できる。後任CEOの選定が続いている。",
+      "detail": "2026年11月12日、米半導体大手NVIDIAは、ジェンスン・フアン氏が社長・最高経営責任者（CEO）・取締役を退任し、最高財務責任者（CFO）のコレット・クレス氏が暫定CEOを兼務すると発表しました。米証券取引委員会（SEC）に提出された書類では、取締役会が11月11日に退任を受理したことも確認できます。企業は社内外から正式な後任CEOを探しており、クレス氏はCFOも兼任します。会社発表と提出書類には退任理由の詳しい説明がないため、理由については推測しません。",
       "quip": "AIの未来を走らせる会社が、次の社長はただいま検索中。",
       "sourceName": "NVIDIA公式発表（2026年11月12日）",
       "sourceUrl": "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
       "reported": "2026-11-16",
       "verificationUrls": [
         "https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition",
-        "https://www.abc.net.au/news/2026-11-16/alice-huang-megaspeed-departure/107388304",
-        "https://www.cbsnews.com/news/megaspeed-nvidia-china-ties/"
+        "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000082/nvda-20261111.htm",
+        "https://www.reuters.com/business/view-nvidia-ceo-jensen-huang-steps-down-2026-11-12/"
       ],
       "eventKey": "jensen_huang_nvidia_resignation_2026",
       "evidence": [
-        "Jensen Huang resigned as CEO of Nvidia following public disclosure of his extramarital relationship with Alice Huang.",
-        "Alice Huang was a leader at Megaspeed International, a major Nvidia customer currently under U.S. and Singaporean scrutiny over alleged unauthorized chip transfers to China and intelligence ties.",
-        "Nvidia's board faced intense pressure, launched an independent investigation, and faced a shareholder class-action lawsuit over the undisclosed relationship."
+        "NVIDIA's official announcement of November 12, 2026 confirms that Jensen Huang resigned as President, CEO and director, effective immediately.",
+        "NVIDIA's SEC Form 8-K states that the board accepted his resignation on November 11, 2026 and appointed CFO Colette M. Kress as interim CEO.",
+        "NVIDIA's November 12 statement says the board will consider internal and external candidates for the permanent CEO role."
       ],
       "editorVerified": true,
       "humorSafe": true,
-      "quipSecond": "GPUは並列処理。暫定CEOはCFOも兼務。マルチタスクが生身に来た。"
+      "quipSecond": "GPUは並列処理。暫定CEOはCFOも兼務。マルチタスクが生身に来た。",
+      "correctionNote": "2026年11月17日訂正：以前の本文に含まれていた私生活に関する記述を削除し、会社発表とSEC提出書類で確認できる事実に限定しました。"
     },
     {
       "id": "spacex-starship-booster-failure-2026",
