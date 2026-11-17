@@ -12,10 +12,10 @@ ROOT = Path(__file__).resolve().parents[1]
 class ReaderFrontendTest(unittest.TestCase):
     def test_homepage_explains_the_editorial_concept(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn("今日も世界は、", page)
-        self.assertIn("ちょっとやらかした。", page)
-        self.assertIn("世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。", page)
-        self.assertIn("あなたも自分に優しく。", page)
+        self.assertIn("今日も一日、おつかれさま。", page)
+        self.assertIn("世界の「まさか」に、ふっとひと息。", page)
+        self.assertIn("思いがけない実話と、小さなユーモアを夜9時に。", page)
+        self.assertIn("読み切る必要はありません。", page)
         self.assertIn('class="hero-description"', page)
 
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
@@ -30,21 +30,22 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         cover = page[page.index('<header class="nav">'):page.index('<div id="offlineNotice"')]
         self.assertLess(cover.index('class="spotlight"'), cover.index('class="hero"'))
-        for token in ('class="spotlight-award"', '<svg', 'id="spotlightTitle"',
+        for token in ('class="spotlight-award"', 'class="evening-moon"', 'id="spotlightTitle"',
                       'class="spotlight-divider"', 'AIツッコミ',
                       'id="spotlightQuip"', 'この話の続きへ ↓'):
             self.assertIn(token, cover)
 
     def test_mishap_award_is_dynamic_and_archive_aware(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ('id="spotlightAward"', "今夜のやらかし大賞",
-                      "前回のやらかし大賞", "体験版のやらかし大賞",
+        for token in ('id="spotlightAward"', "今夜のひと話",
+                      "前回のひと話", "体験版のひと話",
                       "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
 
     def test_lead_story_is_inside_main_landmark_and_summary_not_repeated(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('</header>\n<main><section class="spotlight"', page)
+        self.assertIn('</header>\n<main><section class="evening-entry"', page)
+        self.assertLess(page.index('class="evening-entry"'),page.index('class="spotlight"'))
         self.assertNotIn('<main><p class="release-status"', page)
         self.assertIn("isJapaneseText(first.detail)?'<p class=\"summary\">'", page)
         self.assertIn("storyDetailHtml(first)", page)
@@ -87,8 +88,8 @@ class ReaderFrontendTest(unittest.TestCase):
 
     def test_two_stage_ai_joke_and_nightly_payoff(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ('AIツッコミ・追撃', 's.quipSecond',
-                      'class="second-quip"', '今夜のオチ',
+        for token in ('もうひとつ、AIのひと言', 's.quipSecond',
+                      'class="second-quip"', '今夜のひと言',
                       'id="nightlyMessage"'):
             self.assertIn(token, page)
         editor = (ROOT / "auto_editorial.py").read_text(encoding="utf-8")
@@ -255,11 +256,24 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('id="editionMessage" hidden',page)
         self.assertIn('.status .release-status{margin:0;padding:0;',page)
 
+    def test_evening_reading_is_an_invitation_not_a_task(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('href="#closing"',page)
+        self.assertIn('今夜は、ひと言だけ読む',page)
+        self.assertIn('id="closing"',page)
+        self.assertIn('また、気が向いた夜に。',page)
+        self.assertIn('Math.max(0,edition.stories.length-1)',page)
+        self.assertNotIn('state.read.length} /',page)
+        self.assertNotIn('やらかし大賞',page)
+        self.assertNotIn('AIツッコミ・追撃',page)
+        self.assertIn('.evening-entry',page)
+        self.assertIn('min-height:44px',page)
+
     def test_nightly_message_is_rendered_without_share_button(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
         self.assertIn("edition.nightlyMessage", page)
-        self.assertIn('今夜のオチ', page)
+        self.assertIn('今夜のひと言', page)
         self.assertNotIn('shareNightQuote', page)
         self.assertNotIn('この言葉を共有', page)
         self.assertNotIn(".night-quote button{", page)
