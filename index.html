@@ -1464,7 +1464,13 @@ async function refreshOnForeground(){
   navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});
  }
 }
-document.addEventListener('visibilitychange',refreshOnForeground);
+// iOS may freeze the same live page: clear expanded optional cards before
+// suspension as well as when the app becomes visible again.
+document.addEventListener('visibilitychange',()=>{
+ if(document.visibilityState==='hidden')closeOptionalTravelPanels();
+ refreshOnForeground();
+});
+window.addEventListener('pagehide',closeOptionalTravelPanels);
 window.addEventListener('pageshow',refreshOnForeground);
 window.addEventListener('focus',refreshOnForeground);
 // Also check periodically while the reader remains open.
