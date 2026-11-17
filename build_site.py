@@ -23,7 +23,7 @@ def bundle_travel_photos(root, output):
         url = stop.get('photo', '')
         page = stop.get('photoPage', '')
         license_url = stop.get('licenseUrl', '')
-        if not re.fullmatch(r'assets/travel/[a-z0-9-]+\\.jpg', asset):
+        if not re.fullmatch(r'assets/travel/[a-z0-9-]+\.jpg', asset):
             raise ValueError(f'{key}: invalid local photo path')
         parts = urlparse(url)
         source = urlparse(page)
@@ -54,7 +54,7 @@ def bundle_travel_photos(root, output):
                 with urlopen(request, timeout=20) as response:
                     payload = response.read(2_000_001)
                     kind = response.headers.get('Content-Type', '')
-                if not (payload.startswith(b'\\xff\\xd8\\xff') and 3000 <= len(payload) <= 2_000_000
+                if not (payload.startswith(b'\xff\xd8\xff') and 3000 <= len(payload) <= 2_000_000
                         and 'image/' in kind):
                     raise ValueError('response was not a valid JPEG preview')
                 target.write_bytes(payload)
