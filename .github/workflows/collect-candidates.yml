@@ -6,6 +6,9 @@ on:
     paths:
       - '.github/workflows/collect-candidates.yml'
       - 'collect_candidates.py'
+      - 'data/news-source-registry.json'
+      - 'news_sources.py'
+      - 'tests/test_news_sources.py'
       - 'prepare_editorial.py'
   workflow_dispatch:
   schedule:
