@@ -86,6 +86,25 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                "observedOutcome":"トップの退任と暫定CEOの選任が発表された。"}
         self.assertEqual(editorial.editorial_fit_rejection(story),"private_gossip")
 
+    def test_editorial_fit_rejects_coercive_self_help_not_natural_warmth(self):
+        story={"title":"仕事の勘違い","summary":"注文の数を間違えた。",
+               "detail":"予定の数より多く届いた。","quip":"注文だけ張り切りすぎた。",
+               "expectedPlan":"職場では正しい数を注文する予定だった。",
+               "observedOutcome":"実際には想定より多く注文してしまった。"}
+        self.assertIsNone(editorial.editorial_fit_rejection(story))
+        for phrase in ("あなたより大変", "感謝すべき", "もっと頑張れ",
+                       "必ず元気になる", "笑わなければならない"):
+            with self.subTest(phrase=phrase):
+                self.assertEqual(editorial.editorial_fit_rejection(
+                    {**story,"detail":phrase}),"coercive_reader_tone")
+
+    def test_ai_audit_does_not_require_a_compulsory_life_lesson(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertNotIn("missing compassionate reframing",code)
+        self.assertNotIn("offer a specific perspective shift",code)
+        self.assertIn("prescriptive or humiliating reader commentary",code)
+
     def test_nightly_fallback_avoids_recent_repetition(self):
         from publish_approved import nightly_message, NIGHT_MESSAGES
         stories=[{"category":"work","id":"one"}]
@@ -146,7 +165,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         mission=editorial.EDITORIAL_MISSION
         self.assertIn("real, consequential failures",mission)
         self.assertIn("warm, witty AI quip",mission)
-        self.assertIn("concrete reframing",mission)
+        self.assertIn("humane aftertaste is optional",mission)
         self.assertIn("Never replace a failure with generic",mission)
         self.assertIn("Do not invent a happy ending",mission)
 

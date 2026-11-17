@@ -18,6 +18,9 @@ BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死�
 # An app about humane, verifiable mistakes must not turn personal scandals
 # into entertainment. This conservative deterministic filter supplements AI.
 PRIVATE_GOSSIP=re.compile(r"不倫|浮気|私生活|婚外|私的な関係|恋愛関係|交際相手|extramarital|affair\\b|alleged spy",re.I)
+# Narrow, deterministic safeguard against coercive self-help framing. General
+# words such as "hope" or "tomorrow" are intentionally NOT blanket-banned.
+READER_PRESSURE=re.compile(r"あなたより大変|悩みなんて小さい|たかが失敗|感謝すべき|笑うべき|もっと頑張れ|努力が足りない|必ず元気になる|必ず幸せになる|明日は絶対に良くなる|笑わなければならない",re.I)
 
 def editorial_fit_rejection(story):
     """Reject missing plan-versus-reality evidence and private gossip.
@@ -29,6 +32,8 @@ def editorial_fit_rejection(story):
                      ("title","summary","detail","quip","quipSecond"))
     if PRIVATE_GOSSIP.search(content):
         return "private_gossip"
+    if READER_PRESSURE.search(content):
+        return "coercive_reader_tone"
     expectation=story.get("expectedPlan")
     outcome=story.get("observedOutcome")
     if (not isinstance(expectation,str) or not isinstance(outcome,str)
@@ -40,9 +45,9 @@ def editorial_fit_rejection(story):
 # Rank incident-specific reporting ahead of generic world-news headlines.
 # Ranking only changes retrieval order; it never certifies a fact or relaxes review.
 EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and plans that backfired. "
-    "Every story must have three inseparable parts: source-supported facts about a failure; "
-    "a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim; "
-    "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
+    "Every story must have two essential parts: source-supported facts about a failure; "
+    "and a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim. "
+    "A humane aftertaste is optional, not a compulsory lesson or an instruction for the reader to feel better. "
     "The quip must deliver a sharp, surprising payoff rather than merely restating the facts; aim for a vivid, quotable contrast between plan and reality without exaggerating evidence. "
     "Never replace a failure with generic surprising, uplifting or quirky news merely to fill a quota. "
     "A CEO resignation, appointment, product launch, earnings report or sensational headline is NOT itself a verified mistake. Publish it only if the supplied reporting independently establishes a concrete original expectation and a documented failure to meet it. "
@@ -629,7 +634,7 @@ def main():
       'verificationUrls must be exact URLs present in evidence (one is sufficient; two distinct publishers are preferred when available). Do not invent facts, URLs or unsupported details. '
       'For each include required fields '+str(REQUIRED)+', expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
-      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
+      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
@@ -692,7 +697,7 @@ def main():
                 "reported must be an explicit source-supported date within the "
                 "edition day or previous day (JST), formatted YYYY-MM-DD. "
                 "Use warm humor about the mistake, never victims or suffering; "
-                "give readers perspective without inventing outcomes. "
+                "allow an optional humane reflection without prescribing feelings, lessons or outcomes. "
                 "Do not infer any fact absent from the supplied text. Sharpen the first hit through three private alternatives, and aim the second hit at a DIFFERENT verified contrast; avoid long explanations or rumors. "
                 "Edition date JST: "+day+
                 ". Candidate groups (hypotheses, NOT proof): "+
@@ -766,7 +771,7 @@ def main():
         audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the fetched original source article text(s) below. "
           "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
-          "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
+          "unsafe jokes, generic news without a genuine failure, prescriptive or humiliating reader commentary, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
           "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. "
