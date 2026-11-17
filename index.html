@@ -409,7 +409,7 @@ footer{font-size:.8125rem;line-height:1.7}
 </section>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
 <div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
-<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜の世界地図</h2><p class="small" id="mapCaption">記事の国・地域を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・直近30日の掲載状況</summary><p class="small">公開済み配信号のみを集計。未掲載とは、この30日間に掲載記録がない地域を指します。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国別アーカイブ</h2><p class="small">公開済みのニュースを国・地域から探せます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
+<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜と、この30日の世界地図</h2><p class="small" id="mapCaption" aria-live="polite">公開された配信号と月間特集の掲載国を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・直近30日の掲載状況</summary><p class="small">公開済み配信号と月間特集を集計しています。未掲載とは、直近30日間の配信または特集収録に掲載記録がない地域です。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国・地域から記事を探す</h2><p class="small">配信号と月間特集の記事を探せます。地図の数字をタップすると、この国の記事が一覧表示されます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
 </div>
 <section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
 <summary>夜9時のお知らせ・通知設定</summary>
@@ -503,11 +503,35 @@ async function loadWorldBoundaries(){
 }
 loadWorldBoundaries();
 loadCountryCatalog();
+function mapDisplayStories(){
+ // Merge the selected edition with the published 30-day collection.
+ // This uses the same selection as the monthly reading cards.
+ return [...edition.stories,...visibleMonthStories]
+  .filter((s,i,all)=>all.findIndex(x=>x.id===s.id)===i);
+}
 function renderWorld(){
- const counts=new Map();edition.stories.forEach(story=>{const country=countryKey(story.country);if(country)counts.set(country,(counts.get(country)||0)+1)});
+ const counts=new Map();
+ for(const story of mapDisplayStories()){
+  const country=countryKey(story.country);
+  if(country&&countryRecord(country))counts.set(country,(counts.get(country)||0)+1);
+ }
  const pins=$('mapPins');pins.replaceChildren();
- counts.forEach((count,country)=>{const point=mapPoint(country);if(!point)return;const btn=document.createElement('button');btn.type='button';btn.className='map-pin';btn.style.left=point[0]+'%';btn.style.top=point[1]+'%';btn.textContent=String(count);btn.title=countryLabel(country)+'：'+count+'本';btn.setAttribute('aria-label',btn.title);btn.addEventListener('click',()=>{const opt=[...$('countrySelect').options].find(o=>o.value===country);if(opt){$('countrySelect').value=country;showCountryResults();$('countrySelect').scrollIntoView({behavior:'smooth',block:'center'})}});pins.append(btn)});
- $('mapCaption').textContent='掲載国：'+([...counts.keys()].map(countryLabel).join('、')||'取得中')+'。点は国のおおよその位置です。';
+ counts.forEach((count,country)=>{
+  const point=mapPoint(country);if(!point)return;
+  const btn=document.createElement('button');btn.type='button';btn.className='map-pin';
+  btn.style.left=point[0]+'%';btn.style.top=point[1]+'%';btn.textContent=String(count);
+  btn.title=countryLabel(country)+'：配信号と月間特集に'+count+'本';
+  btn.setAttribute('aria-label',btn.title);
+  btn.addEventListener('click',()=>{
+   const select=$('countrySelect');select.value=country;showCountryResults();
+   select.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+  pins.append(btn);
+ });
+ $('mapCaption').textContent='表示中の配信号と月間特集の掲載国：'+
+  ([...counts.keys()].map(countryLabel).join('、')||'確認中')+
+  '（'+[...counts.values()].reduce((sum,count)=>sum+count,0)+
+  '記事）。ピンは記事が発生した都市ではなく、国・地域のおおよその中心です。';
 }
 function includeCurrentCountries(){
  if(!edition||edition.status==='demo'||!Array.isArray(edition.stories))return;
@@ -523,11 +547,13 @@ function refreshCountryChoices(){
  includeCurrentCountries();
  const menu=$('countrySelect'),previous=menu.value;
  menu.innerHTML='<option value="">すべての国・地域</option>';
- [...countryIndex.keys()].sort((a,b)=>a.localeCompare(b,'ja')).forEach(country=>{
-  const option=document.createElement('option');option.value=country;
-  option.textContent=countryLabel(country)+' ('+countryIndex.get(country).length+')';menu.append(option);
- });
- if(countryIndex.has(previous))menu.value=previous;
+ const countries=new Set([...countryIndex.keys(),...visibleMonthStories.map(s=>countryKey(s.country))]);
+ [...countries].filter(country=>countryRecord(country))
+  .sort((a,b)=>countryLabel(a).localeCompare(countryLabel(b),'ja')).forEach(country=>{
+   const option=document.createElement('option');option.value=country;
+   option.textContent=countryLabel(country)+' ('+countryResultsFor(country).length+')';menu.append(option);
+  });
+ if([...menu.options].some(option=>option.value===previous))menu.value=previous;
  showCountryResults();
 }
 const EDITOR_REGIONS=['アジア','ヨーロッパ','北アメリカ','南アメリカ','アフリカ','オセアニア'];
@@ -576,13 +602,40 @@ function renderEditorialDashboard(issues,failed=0){
  }
  if(!counts.size){const p=document.createElement('p');p.textContent='対象期間に掲載記録がありません。';countryBox.append(p)}
 }
+function countryResultsFor(country){
+ const fromMonth=visibleMonthStories.filter(s=>countryKey(s.country)===country)
+  .map(s=>({kind:'month',id:s.id,date:monthRetentionDate(s),title:s.title}));
+ const fromArchive=(countryIndex.get(country)||[]).filter(item=>
+  !fromMonth.some(s=>s.date===item.date&&s.title===item.title));
+ return [...fromMonth,...fromArchive];
+}
 function showCountryResults(){
  const country=$('countrySelect').value;
  const result=$('countryResults');result.replaceChildren();
- if(!country){result.textContent='国を選ぶと、公開済みの記事が表示されます。';return}
- const matches=countryIndex.get(country)||[];
+ if(!country){result.textContent='国を選ぶと、公開済みの配信号と月間特集の記事を表示します。';return}
+ const matches=countryResultsFor(country);
  if(!matches.length){result.textContent='この国の公開済み記事はまだありません。';return}
- matches.forEach(item=>{const row=document.createElement('div');row.className='country-result';const button=document.createElement('button');button.type='button';button.textContent=item.title;button.addEventListener('click',()=>{if(item.date==='current'){archiveMenu.value='current';archiveMenu.dispatchEvent(new Event('change'))}else{archiveMenu.value=item.date;archiveMenu.dispatchEvent(new Event('change'))}window.scrollTo({top:0,behavior:'smooth'})});row.append(button,document.createTextNode(' · '+item.date));result.append(row)})
+ matches.forEach(item=>{
+  const row=document.createElement('div');row.className='country-result';
+  const button=document.createElement('button');button.type='button';
+  button.textContent=item.title;
+  button.addEventListener('click',()=>{
+   if(item.kind==='month'){
+    const card=[...$('monthCards').querySelectorAll('.month-story')]
+     .find(node=>node.dataset.monthStoryId===item.id);
+    if(!card)return;
+    $('monthDetails').open=true;
+    const details=card.querySelector('details');if(details)details.open=true;
+    card.scrollIntoView({behavior:'smooth',block:'center'});return;
+   }
+   archiveMenu.value=item.date==='current'?'current':item.date;
+   archiveMenu.dispatchEvent(new Event('change'));
+   window.scrollTo({top:0,behavior:'smooth'});
+  });
+  row.append(button,document.createTextNode(' · '+item.date+
+   (item.kind==='month'?'（月間特集）':'（配信号）')));
+  result.append(row);
+ });
 }
 async function loadCountryIndex(issues){
  cachedCountryIssues=issues;
@@ -675,12 +728,15 @@ function renderMonthRetrospective(){
    seen.add(s.id);keys.forEach(key=>seenSources.add(key));return true;
   });
  visibleMonthStories=stories;
+ // The map and country links must update when either source of stories loads,
+ // and when the rolling 30-day window changes.
+ renderWorld();refreshCountryChoices();refreshMonthlyDashboard();
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
  $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
  $('monthIntro').textContent=start+'〜'+end+'に配信または特集収録された実話です。報道日は記事ごとに異なります。新しく公開された記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。確認できないニュースは追加しません。';
  for(const s of stories){
-  const card=document.createElement('article');card.className='month-story';
+  const card=document.createElement('article');card.className='month-story';card.dataset.monthStoryId=s.id;
   const recorded=s.monthOrigin==='curated'?'特集収録日 ':'配信日 ';
   card.innerHTML='<details><summary><span class="month-country">'+escapeHtml(countryLabel(s.country))+
    ' · '+recorded+escapeHtml(monthRetentionDate(s))+' · 報道日 '+escapeHtml(s.reported.replaceAll('.','-'))+
