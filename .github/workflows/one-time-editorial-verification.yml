@@ -1,10 +1,7 @@
-name: One-time bounded live Gemini editorial verification
+name: Manual full Gemini editorial verification (read-only)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/one-time-editorial-verification.yml'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -57,5 +54,5 @@ jobs:
               text="AI review did not create an approved issue; previous publication remains intact"
           print(text)
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
-              f.write("## One-time editorial proof\n\n"+text+"\n")
+              f.write("## Manual editorial verification\n\n"+text+"\n")
           PY
