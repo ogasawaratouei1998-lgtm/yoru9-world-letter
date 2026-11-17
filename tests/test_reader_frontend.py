@@ -371,7 +371,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("function updateFilters()", page)
         self.assertIn("edition.stories.slice(1).map(s=>s.category)", page)
-        self.assertIn("controls.hidden=available.size<=1", page)
+        self.assertIn("controls.hidden=edition.stories.length<=3||available.size<=1", page)
         self.assertIn("button.hidden=button.dataset.filter!=='all'&&!available.has(", page)
         self.assertIn(".filters[hidden],.filter[hidden]", page)
         self.assertIn("updateSpotlight();renderTravelSlots();updateFilters();applyFilter();", page)
