@@ -90,6 +90,22 @@ class NewsSourceRegistryTest(unittest.TestCase):
         self.assertEqual([x["sourcecountry"] for x in items[:4]],
                          ["US","NZ","US","NZ"])
 
+    def test_feed_health_report_only_records_diagnostic_metadata(self):
+        with tempfile.TemporaryDirectory() as d:
+            path=Path(d)/"source-health.json"
+            src=sources.source_registry()[0]
+            sources.fetch_registry_feeds(
+                sources=[src],fetch=lambda url,timeout:b"<rss><channel></channel></rss>",
+                parse=parse_rss,max_workers=1,report_path=path)
+            report=json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(report["status"],"unverified-feed-health")
+            self.assertEqual(report["attempted"],1)
+            self.assertEqual(report["usable"],0)
+            self.assertEqual(report["feeds"][0]["status"],"empty_or_unusable")
+            self.assertEqual(report["feeds"][0]["rawPublisherLeads"],0)
+            self.assertNotIn("articleBody",json.dumps(report))
+            self.assertNotIn("stories",report)
+
     def test_unsupported_network_response_never_creates_a_lead(self):
         src=sources.source_registry()[0]
         self.assertEqual(
