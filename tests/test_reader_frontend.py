@@ -15,8 +15,19 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("今日も一日、おつかれさま。", page)
         self.assertIn("世界の「まさか」に、ふっとひと息。", page)
         self.assertIn("思いがけない実話と、小さなユーモアを夜9時に。", page)
-        self.assertIn("読み切る必要はありません。", page)
+        self.assertIn("気になる話を、ひとつだけ。", page)
         self.assertIn('class="hero-description"', page)
+
+    def test_global_perspective_is_visible_and_grounded_in_incident_country(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('id="spotlightLocation"',page)
+        self.assertIn("first.country?'この話の国・地域：'+countryLabel(first.country)",page)
+        self.assertIn("今見えている場所の外にも、いろんな毎日がある。",page)
+        self.assertIn('id="worldInvitation" href="#mapExtras"',page)
+        self.assertIn("$('worldInvitation').addEventListener('click',event=>{",page)
+        self.assertIn("map.open=true;",page)
+        self.assertIn("window.matchMedia('(prefers-reduced-motion: reduce)')",page)
+        self.assertIn(".world-invitation:focus-visible",page)
 
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
