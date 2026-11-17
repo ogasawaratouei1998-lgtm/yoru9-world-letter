@@ -323,6 +323,10 @@ footer{font-size:.8125rem;line-height:1.7}
 .travel-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0}
 .travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
 .travel-credit a{color:#d2eadd}
+.travel-elsewhere{font-size:.875rem;line-height:1.65;color:#e1e8f1;margin:4px 0 10px}
+.month-travel-slot{margin:5px 0 13px}
+.month-travel-slot .travel-open{padding:6px 0;margin-bottom:2px}
+.month-travel-slot .travel-card{margin-top:4px}
 @media(max-width:520px){
  .travel-card{padding:14px 13px}
  .travel-photo{max-height:220px}
@@ -791,6 +795,8 @@ function storyCorrectionHtml(story){
 /* Archived research collection is not a fake old daily edition. */
 /* History shelf: 30 JST dates by actual release/collection, not reporting date. */
 let monthStories=[],monthPublishedStories=[],visibleMonthStories=[];
+// Preserve expanded monthly articles when live archive updates re-render this shelf.
+const monthlyExpandedStories=new Set();
 function monthWindow(){
  const now=new Date();
  return {start:localDate(new Date(now.getTime()-29*86400000)),end:localDate(now)};
@@ -824,7 +830,16 @@ function monthSourceKeys(s){
    catch(_){return '';}}).filter(Boolean);
 }
 function renderMonthRetrospective(){
- const target=$('monthCards');target.replaceChildren();
+ const target=$('monthCards');
+ // Capture the current choice before DOM replacement. Some archives arrive
+ // asynchronously, but a reader's open article should not suddenly collapse.
+ target.querySelectorAll('.month-story').forEach(card=>{
+  const details=card.querySelector('details');
+  if(!details)return;
+  if(details.open)monthlyExpandedStories.add(card.dataset.monthStoryId);
+  else monthlyExpandedStories.delete(card.dataset.monthStoryId);
+ });
+ target.replaceChildren();
  const {start,end}=monthWindow();
  const seen=new Set(edition.stories.map(s=>s.id));
  const seenSources=new Set(edition.stories.flatMap(monthSourceKeys));
@@ -844,7 +859,7 @@ function renderMonthRetrospective(){
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
  $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
- $('monthIntro').textContent=start+'〜'+end+'に配信または特集収録された実話です。報道日は記事ごとに異なります。新しく公開された記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。確認できないニュースは追加しません。';
+ $('monthIntro').textContent='過去に報道された実話です。今日起きた出来事ではありません。'+start+'〜'+end+'の配信・特集収録から30日間表示します。報道日と配信日は異なります。新しく確認された公開記事は自動的に加わります。';
  for(const s of stories){
   const card=document.createElement('article');card.className='month-story';card.dataset.monthStoryId=s.id;
   const recorded=s.monthOrigin==='curated'?'特集収録日 ':'配信日 ';
@@ -853,17 +868,20 @@ function renderMonthRetrospective(){
    '</span><strong>'+escapeHtml(s.title)+'</strong><span class="month-preview">'+escapeHtml(s.summary)+
    '</span><span class="month-story-disclosure" aria-hidden="true"><span class="month-story-closed">記事を開く</span><span class="month-story-opened">記事を閉じる</span><span class="month-story-chevron">⌄</span></span></summary>'+
    '<div class="month-story-body"><p class="month-quip-label">AIツッコミ</p>'+
-   '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+storyDetailHtml(s)+
+   '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+
    '<div class="travel-slot month-travel-slot"><button type="button" class="travel-open" data-month-travel="'+
      escapeHtml(s.id)+'" aria-expanded="false" aria-controls="month-travel-'+escapeHtml(s.id)+
      '">この国へ30秒だけ寄り道 <span aria-hidden="true">↗</span></button>'+
    '<div class="travel-panel" id="month-travel-'+escapeHtml(s.id)+'" hidden></div></div>'+
+   storyDetailHtml(s)+
    (s.quipSecond?'<p class="month-second">'+escapeHtml(s.quipSecond)+'</p>':'')+
    (s.attributionNote?'<p class="month-notice">'+escapeHtml(s.attributionNote)+'</p>':'')+
    '<p class="month-source">出典：<a href="'+escapeHtml(safeUrl(s.sourceUrl))+
      '" target="_blank" rel="noopener noreferrer">'+escapeHtml(s.sourceName||'出典元')+' ↗</a></p>'+
    storyEvidenceHtml(s)+
-   '<p class="month-notice">過去に報道された実話です。今日起きた出来事ではありません。</p></div></details>';
+   '</div></details>';
+  const details=card.querySelector('details');
+  details.open=monthlyExpandedStories.has(s.id);
   target.append(card);
  }
 }
@@ -871,7 +889,13 @@ function renderMonthRetrospective(){
 // Loading remains lazy: collapsed articles do not fetch photos.
 $('monthCards').addEventListener('toggle',event=>{
  const details=event.target;
- if(!details.matches?.('.month-story > details')||!details.open)return;
+ if(!details.matches?.('.month-story > details'))return;
+ const storyId=details.closest('.month-story')?.dataset.monthStoryId;
+ if(storyId){
+  if(details.open)monthlyExpandedStories.add(storyId);
+  else monthlyExpandedStories.delete(storyId);
+ }
+ if(!details.open)return;
  const button=details.querySelector('[data-month-travel]');
  if(button&&button.getAttribute('aria-expanded')==='false')button.click();
 },true);
@@ -1045,8 +1069,11 @@ function chooseTravelPhoto(story,stops){
  // Prefer a destination in the story's country. If none remains, offer a
  // different, explicitly labelled country rather than a repeated photo.
  let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
+ if(!pool.length&&sameCountry.length)pool=sameCountry;
+ // If an entirely new country has no photographs yet, show a clearly named
+ // world postcard, instead of an empty section. Never present it as local.
  if(!pool.length)pool=available.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(!pool.length)pool=sameCountry.length?sameCountry:available;
+ if(!pool.length)pool=available;
  // Only the choice within the unused pool is randomized. Reopening the same
  // article keeps its photo, while other articles receive distinct photos.
  const picked=pool[Math.floor(Math.random()*pool.length)];
@@ -1072,6 +1099,7 @@ function travelPostcardHtml(story,stop,showIntro=false){
   '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
   (showIntro?'<p class="travel-disclaimer">※ここではニュースとは別の旅先をご紹介します。</p>':'')+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region)+(sameCountry?'':' · '+escapeHtml(stop.country)):'')+'</h4>'+
+  (known&&!sameCountry?'<p class="travel-elsewhere">この国の写真を準備中のため、今日は別の国の景色へ寄り道します。</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
