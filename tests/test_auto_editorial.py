@@ -45,27 +45,46 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(sum("theguardian.com" in lead["url"] for lead in ordered),5)
         self.assertEqual(len(ordered),35)
 
-    def test_verified_selection_favors_distinct_regions(self):
+    def test_verified_selection_prefers_regions_and_perspectives_in_three_stories(self):
         from collections import Counter
-        pool=[{"id":f"usa{i}","country":"米国","category":"company"} for i in range(5)]
-        for code in ("BR","FR","IN","NG"):
-            pool.append({"id":code,"country":code,"category":"company"})
-        selected=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
-        self.assertEqual(len(selected),5)
-        self.assertEqual({story["country"] for story in selected if story["country"]!="米国"},
-                         {"BR","FR","IN","NG"})
-        self.assertEqual(sum(story["country"]=="米国" for story in selected),1)
+        pool=[{"id":f"us{i}","country":"US","category":"company"} for i in range(5)]
+        pool.extend([
+            {"id":"br","country":"BR","category":"person"},
+            {"id":"fr","country":"FR","category":"work"},
+            {"id":"ng","country":"NG","category":"sports"},
+            {"id":"in","country":"IN","category":"person"},
+        ])
+        chosen=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
+        from country_codes import country_region
+        self.assertEqual(len(chosen),3)
+        self.assertEqual(len({country_region(s["country"]) for s in chosen}),3)
+        self.assertEqual(len({s["category"] for s in chosen}),3)
 
-    def test_verified_selection_uses_30_day_tiebreaker(self):
+    def test_verified_selection_prioritizes_underrepresented_countries_in_tie(self):
         from collections import Counter
-        pool=([{"id":f"us{i}","country":"US","category":"work"} for i in range(2)]
-              +[{"id":f"ca{i}","country":"CA","category":"work"} for i in range(2)]
-              +[{"id":f"fr{i}","country":"FR","category":"work"} for i in range(2)])
-        selected=editorial.select_diverse_verified_stories(
-            pool,Counter({"US":18,"CA":1,"FR":1}),Counter())
-        self.assertEqual(len(selected),5)
-        self.assertEqual(sum(story["country"]=="US" for story in selected),1)
-        self.assertEqual(sum(story["country"]=="CA" for story in selected),2)
+        pool=[{"id":v,"country":v,"category":"work"} for v in ("US","CA","MX","FR")]
+        chosen=editorial.select_diverse_verified_stories(
+            pool,Counter({"US":18,"CA":1,"MX":2,"FR":1}),Counter())
+        self.assertEqual({s["country"] for s in chosen},{"CA","MX","FR"})
+
+    def test_editorial_fitness_requires_real_plan_and_observed_failure(self):
+        story={"title":"会社の発注ミスが発覚","summary":"想定とは異なる部品が納入された。",
+               "detail":"作業の確認を誤った。","quip":"計画と現実の差が出た。",
+               "expectedPlan":"正しい部品を指定して納入する予定でした。",
+               "observedOutcome":"誤った番号の部品が納入されたと報じられた。"}
+        self.assertIsNone(editorial.editorial_fit_rejection(story))
+        self.assertEqual(editorial.editorial_fit_rejection(
+            {**story,"expectedPlan":""}),"missing_source_grounded_plan_or_outcome")
+        self.assertEqual(editorial.editorial_fit_rejection(
+            {**story,"observedOutcome":story["expectedPlan"]}),"no_observed_failure_contrast")
+
+    def test_editorial_fitness_rejects_private_life_gossip(self):
+        story={"title":"CEOの私生活と交際相手を報じた記事",
+               "summary":"会社トップの退任を発表した。",
+               "detail":"詳しい事情を公表していない。","quip":"会議が増える。",
+               "expectedPlan":"会社は通常の経営運営を続ける計画だった。",
+               "observedOutcome":"トップの退任と暫定CEOの選任が発表された。"}
+        self.assertEqual(editorial.editorial_fit_rejection(story),"private_gossip")
 
     def test_nightly_fallback_avoids_recent_repetition(self):
         from publish_approved import nightly_message, NIGHT_MESSAGES
@@ -230,12 +249,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
-    def test_regular_edition_supports_five_without_forcing_five(self):
+    def test_new_editorial_caps_three_and_legacy_publisher_supports_five(self):
         from pathlib import Path
         root = Path(__file__).resolve().parents[1]
         editorial = (root / "auto_editorial.py").read_text(encoding="utf-8")
         publisher = (root / "publish_approved.py").read_text(encoding="utf-8")
-        self.assertIn("min(5,len(pool))", editorial)
+        self.assertIn("min(3,len(pool))", editorial)
         self.assertIn("1 <= len(stories) <= 5", publisher)
         self.assertIn("if not selected:", editorial)
 

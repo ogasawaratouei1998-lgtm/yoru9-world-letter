@@ -15,6 +15,28 @@ MODEL=os.getenv("GEMINI_MODEL","gemini-3.5-flash-lite")
 KEY=os.getenv("GEMINI_API_KEY","")
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
+# An app about humane, verifiable mistakes must not turn personal scandals
+# into entertainment. This conservative deterministic filter supplements AI.
+PRIVATE_GOSSIP=re.compile(r"不倫|浮気|私生活|婚外|私的な関係|恋愛関係|交際相手|extramarital|affair\\b|alleged spy",re.I)
+
+def editorial_fit_rejection(story):
+    """Reject missing plan-versus-reality evidence and private gossip.
+
+    Expected and observed outcomes are claims for independent source-text
+    audit, not self-certifying facts. The AI audit below must confirm both.
+    """
+    content=" ".join(str(story.get(field,"")) for field in
+                     ("title","summary","detail","quip","quipSecond"))
+    if PRIVATE_GOSSIP.search(content):
+        return "private_gossip"
+    expectation=story.get("expectedPlan")
+    outcome=story.get("observedOutcome")
+    if (not isinstance(expectation,str) or not isinstance(outcome,str)
+            or len(expectation.strip())<12 or len(outcome.strip())<12):
+        return "missing_source_grounded_plan_or_outcome"
+    if expectation.strip().casefold()==outcome.strip().casefold():
+        return "no_observed_failure_contrast"
+    return None
 # Rank incident-specific reporting ahead of generic world-news headlines.
 # Ranking only changes retrieval order; it never certifies a fact or relaxes review.
 EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and plans that backfired. "
@@ -23,6 +45,9 @@ EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and 
     "and a concrete reframing that helps a reader who failed today feel that setbacks are survivable. "
     "The quip must deliver a sharp, surprising payoff rather than merely restating the facts; aim for a vivid, quotable contrast between plan and reality without exaggerating evidence. "
     "Never replace a failure with generic surprising, uplifting or quirky news merely to fill a quota. "
+    "A CEO resignation, appointment, product launch, earnings report or sensational headline is NOT itself a verified mistake. Publish it only if the supplied reporting independently establishes a concrete original expectation and a documented failure to meet it. "
+    "Prioritize relatable, unexpected non-tragic mistakes in daily life, work, sport and small organizations; a large-company headline has no automatic priority. "
+    "Exclude salacious private-life allegations and romantic rumors even about public figures, whether reported elsewhere or not. "
     "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when independently verified stories are available; never lower evidence standards or fabricate coverage for geographic quotas. "
     "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
     "Do not invent a happy ending, recovery, quote or fact. A reframing is editorial interpretation, not reporting.")
@@ -323,7 +348,7 @@ def ai(prompt,temperature=0.1):
     raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
 
 def select_diverse_verified_stories(pool, country_history, category_history):
-    """Select up to five ALREADY audited stories, with regional fairness.
+    """Select up to three ALREADY audited stories, with regional fairness.
 
     Country is the fact-checked event country, not the RSS feed locale.
     Unknown event countries receive no fictitious diversity credit.
@@ -337,7 +362,7 @@ def select_diverse_verified_stories(pool, country_history, category_history):
         region=country_region(country)
         if region:
             region_history[region]+=count
-    choices=list(combinations(range(len(pool)),min(5,len(pool))))
+    choices=list(combinations(range(len(pool)),min(3,len(pool))))
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
         countries=[country_code(story.get("country")) for story in stories]
@@ -348,7 +373,7 @@ def select_diverse_verified_stories(pool, country_history, category_history):
         # Only approved stories compete. Prefer distinct world regions, then
         # countries, then editorial perspectives; break ties by 30-day history
         # and original verified editorial ranking.
-        return (len(set(known_regions)),len(set(known_countries)),len(categories),
+        return (len(set(known_regions)),len(categories),len(set(known_countries)),
                 -sum(region_history[region] for region in known_regions),
                 -sum(country_history[country] for country in known_countries),
                 -sum(category_history[story["category"]] for story in stories),
@@ -596,7 +621,7 @@ def main():
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
       'verificationUrls must be exact URLs present in evidence (one is sufficient; two distinct publishers are preferred when available). Do not invent facts, URLs or unsupported details. '
-      'For each include required fields '+str(REQUIRED)+', quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
+      'For each include required fields '+str(REQUIRED)+', expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1 or 2 URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. In the detail or summary, offer a specific perspective shift for readers who are worried about their own failure. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
@@ -653,7 +678,7 @@ def main():
                 "Return JSON object with stories array. Do not return diagnostics. "
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
-                "Each story must contain fields "+str(REQUIRED)+", quipSecond (distinct second punchline), "
+                "Each story must contain fields "+str(REQUIRED)+", expectedPlan (verifiable expectation), observedOutcome (what demonstrably went wrong), quipSecond (distinct second punchline), "
                 "verificationUrls (one or two exact supplied URLs from that group), "
                 "eventKey (specific incident identifier at least 12 characters), "
                 "and evidence (facts supported by the supplied source text). "
@@ -706,6 +731,10 @@ def main():
             reject("invalid_reporting_date");continue
         if story["category"] not in ("person","work","company","sports"):
             reject("invalid_category");continue
+        # Never infer a failure from a sensational headline or private rumor.
+        fit_issue=editorial_fit_rejection(story)
+        if fit_issue:
+            reject(fit_issue);continue
         urls=story.get("verificationUrls",[])
         if not isinstance(urls,list) or not (1<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
             reject("insufficient_independent_urls");continue
@@ -733,7 +762,7 @@ def main():
           "A single credible original publisher is sufficient; do not demand independent corroboration. Reject unsupported claims, mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, missing compassionate reframing, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
-          "Reject if evidence is insufficient or unclear. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. "
+          "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. "
           "Output only JSON {approved:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
