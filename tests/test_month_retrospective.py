@@ -18,7 +18,17 @@ class RetrospectiveTest(unittest.TestCase):
         self.assertEqual(len(d["stories"]),5)
         self.assertIn("過去に実際の配信があったように見せるものではなく",d["description"])
         a=json.loads((ROOT/"data/archive/index.json").read_text(encoding="utf-8"))
-        self.assertNotIn("2026-11-17",[v["date"] for v in a["issues"]])
+        # On Nov 17, a real nightly edition may legitimately be released.
+        # The retrospective is its own collection and must not fabricate
+        # dated archive records: every indexed release must actually exist.
+        for record in a["issues"]:
+            path=ROOT/"data/archive"/(record["date"]+".json")
+            with self.subTest(archive=record["date"]):
+                self.assertTrue(path.is_file())
+                issue=json.loads(path.read_text(encoding="utf-8"))
+                self.assertEqual(issue["editionDate"],record["date"])
+                self.assertEqual(issue["status"],"published")
+        self.assertNotEqual(d["status"],"published")
 
     def test_stories_use_independent_cited_reporting_without_existing_duplicates(self):
         d=json.loads(SRC.read_text(encoding="utf-8"))

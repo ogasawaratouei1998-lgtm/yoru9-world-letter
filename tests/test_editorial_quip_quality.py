@@ -31,8 +31,10 @@ class EditorialQuipQualityTest(unittest.TestCase):
                     self.assertNotIn(unsafe,story["quip"]+story["quipSecond"]+story["title"])
 
     def test_revised_nvidia_story_excludes_private_life_allegations_and_shows_sources(self):
-        current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
-        story=next(s for s in current["stories"] if s["id"]=="jensen-huang-nvidia-resignation-2026")
+        # The incident belongs to the archived Nov 16 release, not
+        # data/current.json after the next nightly edition goes live.
+        archived=json.loads((ROOT/"data/archive"/(DAY+".json")).read_text(encoding="utf-8"))
+        story=next(s for s in archived["stories"] if s["id"]=="jensen-huang-nvidia-resignation-2026")
         for phrase in ("私的な関係","アリス・フアン","スパイ","不倫","Megaspeed"):
             self.assertNotIn(phrase,story["summary"]+story["detail"])
         self.assertIn("correctionNote",story)
