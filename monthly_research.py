@@ -17,6 +17,7 @@ import json
 import os
 import re
 import sys
+import xml.etree.ElementTree as ET
 
 import auto_editorial as editorial
 from news_sources import source_registry, fetch_registry_feeds
@@ -262,7 +263,7 @@ def discover(now, fetch=fetch_bytes):
                      "seendate": str(item.get("seendate", "")),
                      "sourcecountry": str(item.get("sourcecountry", "")),
                      "provider": "GDELT 30-day research"})
-        except (OSError, ValueError, KeyError, TypeError) as exc:
+        except (OSError, ValueError, KeyError, TypeError, ET.ParseError) as exc:
             problems.append(type(exc).__name__)
 
     # A second keyless discovery source helps when GDELT is rate-limited.
@@ -281,7 +282,7 @@ def discover(now, fetch=fetch_bytes):
                     before = len(candidates)
                     add({**item, "url": publisher, "provider": "Bing News publisher discovery"})
                     bing_added += len(candidates) - before
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, ET.ParseError) as exc:
             problems.append(type(exc).__name__)
     print("Monthly GDELT raw rows:", gdelt_rows,
           "Bing RSS rows:", bing_rows,
@@ -293,19 +294,19 @@ def discover(now, fetch=fetch_bytes):
             for lead in parse_rss(fetch(url), provider, language=language,
                                   sourcecountry=country)[:35]:
                 add(lead)
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, ET.ParseError) as exc:
             problems.append(type(exc).__name__)
     for url, provider in INDEPENDENT_FEEDS:
         try:
             for lead in parse_rss(fetch(url), provider)[:35]:
                 add(lead)
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, ET.ParseError) as exc:
             problems.append(type(exc).__name__)
     for url in BBC_FEEDS:
         try:
             for lead in parse_rss(fetch(url), "BBC RSS", relevant_only=True)[:35]:
                 add(lead)
-        except (OSError, ValueError, TypeError, KeyError) as exc:
+        except (OSError, ValueError, TypeError, KeyError, ET.ParseError) as exc:
             problems.append(type(exc).__name__)
     print("Monthly discovery:", len(candidates), "dated direct leads;",
           len(problems), "feed failures", flush=True)
