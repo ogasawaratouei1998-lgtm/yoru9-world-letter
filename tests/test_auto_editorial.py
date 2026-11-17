@@ -570,7 +570,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
         # One real publisher's article is acceptable, but still must be
         # fetched, source-grounded and independently audited by the AI.
-        self.assertIn("groups.extend([[item] for item in source_leads",pipeline)
+        self.assertIn("groups.extend([[item] for item in unpaired",pipeline)
         self.assertIn("not (1<=len(urls)<=3)",pipeline)
         self.assertIn("if len(evidence)<1",pipeline)
         self.assertIn("originalReportingVerified",pipeline)
