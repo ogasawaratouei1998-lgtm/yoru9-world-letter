@@ -44,6 +44,19 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertEqual((end-start).days, 29)
         self.assertIsNone(m.safe_day("2026-11-31"))
 
+    def test_bing_discovery_extracts_only_safe_original_publisher_urls(self):
+        from urllib.parse import quote
+        good="https://www.bing.com/news/apiclick.aspx?url="+quote(URLS[0],safe="")
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertEqual(m.bing_publisher_url(good),URLS[0])
+            self.assertIsNone(m.bing_publisher_url("https://www.bing.com/news/search?q=x"))
+            self.assertIsNone(m.bing_publisher_url(
+                "https://evil.example/news/apiclick.aspx?url="+quote(URLS[0],safe="")))
+            self.assertIsNone(m.bing_publisher_url(
+                "https://www.bing.com/news/apiclick.aspx?url="+quote("http://unsafe.example",safe="")))
+            self.assertIsNone(m.bing_publisher_url(
+                good+"&url="+quote(URLS[1],safe="")))
+
     def test_two_independent_retrieved_publishers_are_mandatory(self):
         with patch.object(m.editorial, "public_host", return_value=True):
             self.assertTrue(m.publisher_pair(URLS))
