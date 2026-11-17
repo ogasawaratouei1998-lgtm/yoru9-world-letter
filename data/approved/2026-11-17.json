@@ -2,7 +2,7 @@
   "status": "approved",
   "editionDate": "2026-11-17",
   "editionType": "regular",
-  "title": "2026-11-17｜世界のちょっと意外な失敗2本",
+  "title": "2026-11-17｜世界のちょっと意外な失敗3本",
   "editorApproved": true,
   "factChecked": true,
   "humorReviewed": true,
@@ -67,7 +67,38 @@
       "observedOutcome": "実際には「DEGAVAR」と誤記され、市が塗り直した後、反響を交通安全の啓発に転用しました。",
       "editorVerified": true,
       "humorSafe": true
+    },
+    {
+      "id": "albert-lea-mcnugget-monkey-diaper-police-2026",
+      "country": "アメリカ",
+      "category": "person",
+      "categoryLabel": "個人・暮らし",
+      "label": "「不審な存在」の正体はサル",
+      "title": "「不審者」を探す警察官。現場にいたのは、おむつ姿のサル「マックナゲット」",
+      "summary": "米国ミネソタ州で警察が通報を受けて駆けつけると、現れたのはおむつ姿のクモザル。名前は「マックナゲット」。立ち寄ったトラック運転手の飼い主とはぐれましたが、警察に保護され、パトカーで暖まったあと無事に再会しました。",
+      "detail": "2026年11月14日早朝、米ミネソタ州アルバートリーのサービスエリア付近で、おむつを着けたサルが歩き回っていると通報がありました。現場に向かった警察官が発見したのは、クモザルの「マックナゲット」。トラック運転手の飼い主と一緒に移動中、立ち寄った場所ではぐれていたことを、地元記者が警察の担当者に取材して確認しました。市の公式サイトに転載された警察の投稿では、この来訪者をユーモラスに「不審な存在」と表現し、「弁護士とバナナを要求した」と冗談も。もちろん、サルが実際にしゃべったわけではありません。サルは警察のパトカーで寒さをしのぎ、飼い主と無事に再会。現地報道によると人にもサルにもけがはありませんでした。\n\nここからはAIの見方。見回りの予定には、動物園でもない場所でおむつ姿のサルに出会う項目はなかったはずです。",
+      "quip": "身元確認する前に気づいた。今回の「不審者」、身分証よりおむつが目印だった。",
+      "quipSecond": "警察の予定外の任務は、サルの保護とパトカーの暖房係。取り調べは、もちろん不要でした。",
+      "sourceName": "Bring Me The News（2026年11月14日）",
+      "sourceUrl": "https://bringmethenews.com/minnesota-lifestyle/diaper-wearing-monkey-captured-near-service-station-in-albert-lea",
+      "reported": "2026-11-14",
+      "verificationUrls": [
+        "https://bringmethenews.com/minnesota-lifestyle/diaper-wearing-monkey-captured-near-service-station-in-albert-lea",
+        "https://www.cityofalbertlea.org/social-media-feeds/",
+        "https://www.valleynewslive.com/2026/11/14/albert-lea-police-rescue-lost-spider-monkey/",
+        "https://www.upi.com/Odd_News/2026/11/16/albert-lea-minnesota-spider-monkey/5631794844324/"
+      ],
+      "eventKey": "albert_lea_mcnugget_spider_monkey_diaper_police_20261114",
+      "evidence": [
+        "Albert Lea Police Department's November 14 post, reproduced on the official City of Albert Lea social-media page, confirms McNugget, her diaper, the police-car warm-up, reunion, and that the lawyer-and-banana line is the department's joke, not speech by an animal.",
+        "Bring Me The News, November 14, independently interviewed patrol sergeant Jason Taylor, who confirmed the truck-driver owner's stop, the monkey's escape near Petro Travel Center, reunion at Freeborn County Law Enforcement Center, and no injuries.",
+        "KTTC/Valley News Live, November 14, corroborates the police response, spider monkey's name, cold-weather discovery, and safe reunion; UPI, November 16, separately reports the unusual response."
+      ],
+      "expectedPlan": "トラック運転手は飼いサルと一緒に立ち寄り、警察官は通常の通報対応をする予定でした。",
+      "observedOutcome": "サルが飼い主とはぐれて警察に保護され、パトカーで暖まってから無事に飼い主と再会しました。",
+      "editorVerified": true,
+      "humorSafe": true
     }
   ],
-  "nightlyMessage": "コーヒー4杯が出口になり、誤字が安全運転の合図になる。世界の『しまった』には、ときどき思いがけない続きがある。"
+  "nightlyMessage": "コーヒーの配達が出口になり、誤字が安全の呼びかけに。警察が保護したのは、おむつ姿のサル。世界の「まさか」は予想以上に自由です。"
 }
