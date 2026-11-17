@@ -614,13 +614,14 @@ def main():
         if key not in existing:
             groups.append(group)
             existing.add(key)
-    # Single-source reporting is eligible when the original article is retrievable.
-    # Keep independent corroboration pairs where available.
-    paired_urls={item['url'] for group in groups for item in group}
-    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls])
+    # Preserve real two-publisher hypotheses first, but do not silently drop
+    # the available original reports: select_distinct_groups() intentionally
+    # handles PAIRS only and would otherwise throw every one-source lead away.
     raw_group_count=len(groups)
-    groups=select_distinct_groups(groups,limit=36)
-    print('Combined cross-publisher groups:',len(groups),'distinct from',raw_group_count,'overlapping candidates',flush=True)
+    groups=select_distinct_groups(groups,limit=18)
+    paired_urls={item['url'] for group in groups for item in group}
+    groups.extend([[item] for item in source_leads if item['url'] not in paired_urls][:max(0,36-len(groups))])
+    print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
         print('No retrieved candidate articles; safe skip.');return 0
     # Preserve each hypothesized incident's exact article-to-article association.
@@ -718,7 +719,7 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if len(draft)>=6:
+            if len(draft)>=12:
                 break
     if not draft:
         # A successful API call can legitimately return zero verifiable stories.
@@ -817,6 +818,12 @@ def main():
     # Geographic diversity applies ONLY after source-text and AI fact review.
     country_history,category_history=recent_diversity_counts(now.date())
     selected=select_diverse_verified_stories(selected,country_history,category_history)
+    # Three is a hard RELEASE condition, never a license to invent filler.
+    # Leave the previous published edition untouched when fewer pass.
+    if len(selected) != 3:
+        print("Nightly 3-story requirement unmet:",len(selected),
+              "independently audited stories; keep existing edition unchanged.",flush=True)
+        return 0
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
         "selected_countries":len({country_code(story["country"]) for story in selected
