@@ -224,6 +224,35 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(editorial.extracted_article_text(
             '<html><body><nav>Menu</nav><div>Unrelated headlines</div></body></html>'),'')
 
+    def test_quota_http_error_fails_fast_without_leaking_credentials(self):
+        from urllib.error import HTTPError
+        from io import BytesIO
+        error=HTTPError("https://example.test",429,"quota",{},BytesIO(
+            b'{"error":{"status":"RESOURCE_EXHAUSTED","message":"secret key EXAMPLE_SECRET"}}'))
+        with patch.object(editorial,"KEY","test-secret"), \
+             patch.object(editorial,"available_models",return_value=["models/gemini-2.5-flash"]), \
+             patch.object(editorial,"urlopen",side_effect=error) as request, \
+             patch("builtins.print") as prints:
+            with self.assertRaisesRegex(RuntimeError,"HTTP 429 RESOURCE_EXHAUSTED"):
+                editorial.ai("return JSON")
+            self.assertEqual(request.call_count,1)
+            self.assertNotIn("test-secret",str(prints.call_args_list))
+            self.assertNotIn("EXAMPLE_SECRET",str(prints.call_args_list))
+
+    def test_http_404_tries_other_version(self):
+        import io
+        from urllib.error import HTTPError
+        def response(req,timeout=None):
+            if "/v1beta/" in req.full_url:
+                raise HTTPError(req.full_url,404,"missing",{},io.BytesIO(
+                    b'{"error":{"status":"NOT_FOUND"}}'))
+            return io.BytesIO(b'{"candidates":[{"content":{"parts":[{"text":"{\\\"ok\\\":true}"}]}}]}')
+        with patch.object(editorial,"KEY","test-secret"), \
+             patch.object(editorial,"available_models",return_value=["models/gemini-2.5-flash"]), \
+             patch.object(editorial,"urlopen",side_effect=response) as requests:
+            self.assertEqual(editorial.ai("return JSON"),{"ok":True})
+            self.assertEqual(requests.call_count,2)
+
     def test_model_catalog_selects_supported_model(self):
         import io
         class FakeResponse:

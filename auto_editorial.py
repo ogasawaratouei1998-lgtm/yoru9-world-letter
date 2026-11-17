@@ -346,8 +346,12 @@ def available_models():
     """List supported models, with a bounded preference order and no paid fallback."""
     endpoint="https://generativelanguage.googleapis.com/v1beta/models?pageSize=100"
     req=Request(endpoint,headers={"x-goog-api-key":KEY})
-    with urlopen(req,timeout=25) as response:
-        catalog=json.load(response)
+    try:
+        with urlopen(req,timeout=25) as response:
+            catalog=json.load(response)
+    except HTTPError as exc:
+        print("Gemini model catalog HTTP",exc.code,flush=True)
+        raise RuntimeError("Gemini model catalog unavailable: HTTP "+str(exc.code)) from None
     models=[m["name"] for m in catalog.get("models",[])
             if "generateContent" in m.get("supportedGenerationMethods",[])
             and m.get("name","").startswith("models/gemini-")]
@@ -391,12 +395,6 @@ def ai(prompt,temperature=0.1):
                 ACTIVE_MODEL=model
                 print("Gemini generation succeeded:",model,version,flush=True)
                 return parsed
-            except (URLError, TimeoutError, ConnectionError, OSError) as exc:
-                # Network timeouts are not editorial rejections. Try the next
-                # supported model/version; do not approve an unverified story.
-                print("Gemini request unavailable:",model,version,type(exc).__name__,flush=True)
-                last_error=type(exc).__name__
-                continue
             except HTTPError as exc:
                 # Print only status and sanitized provider reason, never headers or key.
                 try:
@@ -406,8 +404,15 @@ def ai(prompt,temperature=0.1):
                     message=re.sub(r"AIza[A-Za-z0-9_-]{20,}", "[REDACTED_KEY]", message)
                     message=re.sub(r"key=[^&\\s]+", "key=[REDACTED]", message,flags=re.I)
                 except (ValueError,UnicodeError,AttributeError):status="UNKNOWN";message="unavailable"
-                print("Gemini generation failed:",model,version,"HTTP",exc.code,status,"reason:",message,flush=True)
+                category=("quota_or_rate_limit" if exc.code==429 or status=="RESOURCE_EXHAUSTED" else
+                          "auth_or_permission" if exc.code in (401,403) else
+                          "unsupported_model_or_request" if exc.code in (400,404) else
+                          "provider_transient" if exc.code in (500,502,503,504) else "other")
+                print("Gemini generation failed:",model,version,"HTTP",exc.code,status,"category:",category,flush=True)
                 last_error=exc.code
+                if exc.code in (401,403,429):
+                    # Key-level denial and quota limits must not fan out across models.
+                    raise RuntimeError("Gemini API stopped: HTTP "+str(exc.code)+" "+status+" "+category) from None
                 if exc.code in (429,500,502,503,504):
                     # One bounded retry for temporary capacity failures; never bypass checks.
                     time.sleep(3)
@@ -431,6 +436,12 @@ def ai(prompt,temperature=0.1):
                         print("Gemini transient retry failed:",type(retry_exc).__name__,flush=True)
                     break
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
+            except (URLError, TimeoutError, ConnectionError, OSError) as exc:
+                # Network timeouts are not editorial rejections. Try the next
+                # supported model/version; do not approve an unverified story.
+                print("Gemini request unavailable:",model,version,type(exc).__name__,flush=True)
+                last_error=type(exc).__name__
+                continue
     raise RuntimeError("No available model/version generated content; last HTTP "+str(last_error))
 
 def select_diverse_verified_stories(pool, country_history, category_history):

@@ -21,10 +21,15 @@ def check_release(root: Path, now: datetime):
     if not current_file.is_file():
         return False, "承認済み記事がありますが current.json がありません"
     current = json.loads(current_file.read_text(encoding="utf-8"))
+    approved_data=json.loads(approved.read_text(encoding="utf-8"))
+    expected_count=len(approved_data.get("stories",[]))
+    is_legacy=issue_date<"2026-11-17" or approved_data.get("editionType")=="special"
+    if not ((expected_count==5) if is_legacy else (1<=expected_count<=3)):
+        return False, "承認済み記事数が配信ルールを満たしません"
     if not (current.get("status") == "published" and
             current.get("editionDate") == issue_date and
             isinstance(current.get("stories"), list) and
-            len(current["stories"]) == 5):
+            len(current["stories"]) == expected_count):
         return False, "承認済み記事があるのに今日の公開号がありません"
     archive = root / "data" / "archive" / (issue_date + ".json")
     if not archive.is_file():
@@ -35,7 +40,10 @@ def check_release(root: Path, now: datetime):
         for x in json.loads(index_file.read_text(encoding="utf-8")).get("issues", [])
     ):
         return False, "アーカイブ一覧に今日の公開号がありません"
-    return True, "今日の承認済み5本が公開データとアーカイブに反映されています"
+    archived=json.loads(archive.read_text(encoding="utf-8"))
+    if archived!=current:
+        return False, "公開号とアーカイブが一致していません"
+    return True, f"今日の承認済み{expected_count}本が公開データとアーカイブに反映されています"
 
 
 def main():
