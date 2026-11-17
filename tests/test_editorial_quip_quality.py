@@ -42,6 +42,27 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertIn("sec.gov", " ".join(story["verificationUrls"]))
         self.assertTrue(all(url.startswith("https://") for url in story["verificationUrls"]))
 
+    def test_november_17_coffee_joke_is_clear_in_all_published_copies(self):
+        day="2026-11-17"
+        approved=json.loads((ROOT/"data/approved"/(day+".json")).read_text(encoding="utf-8"))
+        archive=json.loads((ROOT/"data/archive"/(day+".json")).read_text(encoding="utf-8"))
+        current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        self.assertEqual(validate_approved(approved,day),archive)
+        if current.get("editionDate")==day:
+            self.assertEqual(current,archive)
+        story=next(s for s in archive["stories"] if s["id"]=="cheonan-painters-coffee-rescue-2026")
+        self.assertEqual(story["quipSecond"],"コーヒーを注文したら、配達員が救助隊まで兼任してくれた。")
+        self.assertIn("コーヒー4杯",story["summary"])
+        self.assertIn("配達員",story["summary"])
+        self.assertIn("報道に基づく事実関係は変更していません",story["correctionNote"])
+        self.assertNotIn("開くはずのなかったドア",story["quipSecond"])
+
+    def test_generated_jokes_have_first_read_clarity_rule(self):
+        self.assertIn("Clarity veto:",WRITING_CRAFT)
+        self.assertIn("the reader must understand both jokes on the first pass",WRITING_CRAFT)
+        code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("Reject a quip that a Japanese reader cannot understand on the first read after the summary",code)
+
     def test_generator_creativity_and_fact_checker_remain_separate(self):
         self.assertIn("three alternative first-hit jokes",WRITING_CRAFT)
         self.assertIn("unproven causes",WRITING_CRAFT)
