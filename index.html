@@ -1432,9 +1432,28 @@ if('serviceWorker' in navigator&&location.protocol==='https:'){
   });
  }).catch(err=>console.info('オフライン保存は現在利用できません',err));
 }
+// Optional travel is closed at the start of every reader visit, including
+// when iOS reuses a previously open PWA page from its suspended memory.
+function closeOptionalTravelPanels(){
+ document.querySelectorAll('.travel-slot').forEach(slot=>{
+  const control=slot.querySelector('button.travel-open');
+  const panel=slot.querySelector('.travel-panel');
+  if(!control||!panel)return;
+  panel.hidden=true;
+  panel.replaceChildren();
+  control.setAttribute('aria-expanded','false');
+  if(control.firstChild?.nodeType===Node.TEXT_NODE)
+   control.firstChild.textContent='ニュースの余韻で、30秒の小旅行 ';
+  const arrow=control.querySelector('span[aria-hidden="true"]');
+  if(arrow)arrow.textContent='⌄';
+ });
+}
 let lastForegroundCheck=0;
 async function refreshOnForeground(){
- if(document.visibilityState==='hidden'||!navigator.onLine)return;
+ if(document.visibilityState==='hidden')return;
+ // Do not carry an expanded postcard into the next app visit.
+ closeOptionalTravelPanels();
+ if(!navigator.onLine)return;
  const now=Date.now();
  if(now-lastForegroundCheck<15000)return;
  lastForegroundCheck=now;
