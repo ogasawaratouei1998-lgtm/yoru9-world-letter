@@ -143,6 +143,23 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(sum(countries.values()),2)
             self.assertEqual(categories["work"],2)
 
+    def test_global_perspective_comes_from_verified_worldly_incidents_not_pain_comparisons(self):
+        mission=editorial.EDITORIAL_MISSION
+        craft=editorial.WRITING_CRAFT
+        self.assertIn("world beyond that view is wider",mission)
+        self.assertIn("reader's burdens are not smaller",mission)
+        self.assertIn("never a quota or substitute for evidence",mission)
+        self.assertIn("publication's market is never evidence",craft)
+        self.assertIn("Never invent local customs",craft)
+        source=(__import__("pathlib").Path(__file__).resolve().parents[1]/
+                "auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("Reject location claims inferred from the feed's language",source)
+        document=(__import__("pathlib").Path(__file__).resolve().parents[1]/
+                  "EDITORIAL_PROMISE.md").read_text(encoding="utf-8")
+        self.assertIn("世界の広さを、実話で感じる",document)
+        self.assertIn("視界に別の場所をそっと増やす",document)
+        self.assertIn("国全体の特徴として語らない",document)
+
     def test_editorial_voice_respects_exhausted_readers(self):
         mission=editorial.EDITORIAL_MISSION
         craft=editorial.WRITING_CRAFT
