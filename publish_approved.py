@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 import sys
 from urllib.parse import urlsplit
+from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from zoneinfo import ZoneInfo
 
 JST = ZoneInfo('Asia/Tokyo')
@@ -187,7 +188,15 @@ def validate_approved(data, expected_date):
         require(story['sourceUrl'] in urls, f'{i}本目の出典が検証用URLに含まれていません')
         require(len(set(urls)) == len(urls), f'{i}本目の検証用URLが重複しています')
         domains = {urlsplit(u).hostname.lower().removeprefix('www.') for u in urls}
-        if len(urls) >= 2:
+        if len(urls) == 1:
+            require(trusted_original_domain(urls[0]),
+                    f'{i}本目の単独報道元は審査済み媒体ではありません')
+            require(story.get('sourceBasis') == 'original-report' and
+                    story.get('originalReportingVerified') is True,
+                    f'{i}本目の独自取材を独立審査で確認してください')
+            require(story.get('attributionNote') == SINGLE_SOURCE_NOTE,
+                    f'{i}本目の単独報道の注意書きがありません')
+        else:
             require(len(domains) >= 2, f'{i}本目の複数出典は独立したドメインが必要です')
         require(story['id'] not in ids and story['sourceUrl'] not in sources, '記事IDまたは出典URLが重複しています')
         ids.add(story['id'])
@@ -197,6 +206,9 @@ def validate_approved(data, expected_date):
         # Readers can inspect supporting sources, without exposing private AI
         # verification prompts or editorial-review records.
         public_story['verificationUrls'] = list(urls)
+        if len(urls) == 1:
+            public_story['sourceBasis'] = 'original-report'
+            public_story['attributionNote'] = SINGLE_SOURCE_NOTE
         if 'correctionNote' in story:
             note = story['correctionNote']
             require(isinstance(note, str) and 15 <= len(note.strip()) <= 250

@@ -2,6 +2,7 @@
 """Free-tier AI editorial pipeline. Fail closed: no key or no verified story means no publication."""
 import json, os, re, sys, ipaddress, socket, time
 from country_codes import country_code, country_key, country_region
+from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -878,12 +879,14 @@ def main():
         urls=story.get("verificationUrls",[])
         if not isinstance(urls,list) or not (1<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
             reject("insufficient_independent_urls");continue
-        if len(urls)>1 and not any(frozenset(pair) in allowed_pairs for pair in __import__("itertools").combinations(urls,2)):
+        single_original=(len(urls)==1)
+        if single_original:
+            if not trusted_original_domain(urls[0]):
+                reject("single_source_unvetted");continue
+        elif (len({host(u) for u in urls})<2 or not any(
+                frozenset(pair) in allowed_pairs
+                for pair in __import__("itertools").combinations(urls,2))):
             reject("unmatched_source_pair");continue
-        # A single retrieved original publisher is eligible. Multiple URLs
-        # must be from distinct publishers rather than padding with mirrors.
-        if len(urls)>1 and len({host(u) for u in urls})<2:
-            reject("repeated_publisher_domains");continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
             reject("urls_not_in_fetched_evidence");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
@@ -895,11 +898,12 @@ def main():
             reject("invalid_event_key");continue
         if event in seen:
             reject("duplicate_event");continue
-        # The original publisher page must actually be retrieved; never trust a model-listed URL alone.
+        # Full fetched publisher articles, not model-listed headlines.
         evidence=[]
         for url in urls[:3]:
-            if cache[url]:evidence.append({"url":url,"text":cache[url]})
-        if len(evidence)<1 or (len(urls)>1 and len({host(x["url"]) for x in evidence})<2):
+            if cache.get(url):evidence.append({"url":url,"text":cache[url]})
+        if len(evidence)<1 or (not single_original and
+                              (len(evidence)<2 or len({host(x["url"]) for x in evidence})<2)):
             reject("insufficient_fetched_original_reporting");continue
         if editorial_seconds_remaining()<45:
             print("Independent review stopped at editorial time budget; only prior verified articles remain.",flush=True)
@@ -907,13 +911,13 @@ def main():
         try:
             audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the fetched original source article text(s) below. "
-          "One credible ORIGINAL reporter's complete fetched article may support an incident. If a second independent original is supplied, verify both. Reject press-release paraphrases, syndicated copies, aggregators, social posts and unsupported claims; for one-source cases explicitly assess publisher credibility and original reporting before approving. Reject mismatched dates, invented quotes, "
+          "One credible ORIGINAL reporter's complete fetched article may support an incident. If a second independent original is supplied, verify both. Reject press-release paraphrases, syndicated copies, aggregators, social posts and unsupported claims; for one-source cases explicitly verify FIRSTHAND reporting from the article text and return boolean flags originalReporting, factsVerified, dateVerified, safeTone. Set any uncertain flag false before approval. Reject mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, prescriptive or humiliating reader commentary, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
           "Reject location claims inferred from the feed's language or edition instead of the actual article text, invented customs, national stereotypes, or jokes comparing the reader's troubles with someone else's troubles. "
           "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Also perform a comedy-editor check on EACH quip: concrete setup supported by sources, short reversal or fresh payoff, first-read clarity in natural Japanese, and a distinctly new premise for quipSecond. Reject generic recap disguised as a punchline, overlong commentary, forced wordplay and recycled 'unexpected!' endings, even when factual; ask the writer to sharpen before publication. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
-          "Output only JSON {approved:boolean,reason:string}. Article: "
+          "Output only JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,dateVerified:boolean,safeTone:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
           +json.dumps(accepted_summaries,ensure_ascii=False)+" Fetched original source text(s): "
@@ -931,6 +935,13 @@ def main():
             elif any(w in reason for w in ("source","evidence","corroborat","unsupported","fact","verify","claim")):category="audit_evidence"
             else:category="audit_other_or_unspecified"
             reject(category);continue
+        if single_original:
+            if any(audit.get(field) is not True for field in
+                   ("originalReporting","factsVerified","dateVerified","safeTone")):
+                reject("single_original_not_verified");continue
+            story["sourceBasis"]="original-report"
+            story["originalReportingVerified"]=True
+            story["attributionNote"]=SINGLE_SOURCE_NOTE
         story["editorVerified"]=True
         story["humorSafe"]=True
         seen.update((story["sourceUrl"],story["id"],event))

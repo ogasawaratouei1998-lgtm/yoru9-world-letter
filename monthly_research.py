@@ -70,26 +70,7 @@ SAME_PUBLISHER = (
 # A one-source story must be an original news report on a known publisher's
 # domain. These domains are reviewed in code, not inferred from RSS names or AI
 # assertions. Other sites may still qualify when TWO independent reports agree.
-TRUSTED_ORIGINAL_PUBLISHERS = (
-    "bbc.com", "bbc.co.uk", "theguardian.com", "guardian.co.uk",
-    "npr.org", "cbsnews.com", "nbcnews.com", "nytimes.com",
-    "abc.net.au", "cbc.ca", "france24.com", "lemonde.fr",
-    "dw.com", "elpais.com", "japantimes.co.jp", "thehindu.com",
-    "globo.com", "premiumtimesng.com", "inquirer.net",
-    "reuters.com", "apnews.com", "nhk.or.jp", "kyodonews.net",
-    "upi.com", "koreaherald.com", "straitstimes.com",
-    "africanews.com", "aljazeera.com", "rte.ie", "euronews.com",
-    "independent.co.uk", "skynews.com", "spiegel.de",
-    "scmp.com", "timesofindia.indiatimes.com", "ndtv.com",
-    "theverge.com", "techcrunch.com", "wired.com", "latimes.com",
-    "pbs.org", "axios.com", "time.com", "foxnews.com",
-    "abcnews.go.com", "nypost.com", "phys.org",
-    "mashable.com", "quantamagazine.org", "newscientist.com",
-    "propublica.org", "theatlantic.com", "newyorker.com",
-    "vox.com", "skysports.com", "espn.com", "formula1.com",
-    "arstechnica.com", "gizmodo.com", "engadget.com",
-    "scientificamerican.com", "rnz.co.nz",
-)
+from trusted_originals import TRUSTED_ORIGINAL_PUBLISHERS
 REVIEW_METHOD = "source-quality-two-stage-AI"
 LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
 # A concise monthly-only brief replaces the nightly pipeline's elaborate
