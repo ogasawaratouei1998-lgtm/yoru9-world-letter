@@ -6,7 +6,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="よる9じの世界便り｜今日も世界は、ちょっとやらかした。">
 <meta property="og:description" content="世界の失敗・勘違い・まさかのニュースを、夜9時にお届け。今日も世界は、ちょっとやらかした。">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="よる9じの世界便り">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black"><meta name="apple-mobile-web-app-title" content="よる9じの世界便り">
 <link rel="manifest" href="./manifest.webmanifest"><link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
 <title>よる9じの世界便り｜今日も世界は、ちょっとやらかした。</title>
 <style>
@@ -384,19 +384,97 @@ footer{font-size:.8125rem;line-height:1.7}
 .month-story .month-travel-slot .travel-open{padding:8px 0;min-height:48px}
 .month-story .travel-panel:not([hidden]){margin:8px 0 16px}
 .month-story .travel-card{margin:0}
+
+/* v8: the lead incident is the cover; no oversized mission explainer. */
+:root{--safe-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:calc(var(--safe-top) + 65px)}
+body{background:#0b1528}
+body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);background:#0b1528;z-index:40;pointer-events:none}
+.wrap{padding-top:calc(var(--safe-top) + 5px)}
+.nav{position:sticky;top:var(--safe-top);z-index:30;margin:0 0 4px;
+ padding:8px 1px 9px;background:#0b1528;border-bottom:1px solid #344761}
+.nav .logo{font-size:.9375rem}
+.nav .tag{font-size:.75rem;max-width:48%;border-color:#455b74;color:#d0ddeb}
+.evening-entry{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;
+ justify-content:space-between;gap:3px 12px;margin:5px 0 9px}
+.evening-entry p{font-size:.9375rem;font-weight:650;line-height:1.6;flex-basis:auto}
+.evening-entry a{font-size:.8125rem;line-height:1.45;color:#d5dfed;min-height:44px;padding:7px 0}
+.hero{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+ flex-wrap:wrap;gap:5px 10px;text-align:left;margin:0 0 11px;padding:0 0 10px;
+ border:0;border-bottom:1px solid #3b4d66;border-radius:0;background:none;box-shadow:none}
+.hero::before{display:none}
+.hero .eyebrow{display:inline-block!important;flex:0 0 auto;margin:0;
+ font-size:.875rem;line-height:1.55;font-weight:680;letter-spacing:0;color:#efd6ac}
+.issue-countries{display:inline-flex;flex:0 1 auto;justify-content:flex-start;
+ align-items:center;gap:5px;margin:0;flex-wrap:wrap}
+.countries-intro{flex:0 0 auto;font-size:.8125rem;line-height:1.5;color:#b6c7da}
+.country-chip{font-size:.8125rem;font-weight:700;line-height:1.5;padding:2px 9px;
+ color:#f2e2c4;background:transparent;border:1px solid #5d718e}
+.spotlight{margin:0 0 14px;padding:16px 18px 15px;display:flex;
+ flex-direction:column;text-align:left;background:#192b43;border:1px solid #526982;
+ border-radius:18px;box-shadow:none}
+.spotlight-topline{display:flex;align-items:center;gap:7px 10px;flex-wrap:wrap;margin:0 0 12px}
+.spotlight-award{display:inline-flex;flex:0 0 auto;margin:0}
+.evening-moon{font-size:1.45rem;line-height:1}
+.spotlight-kicker{margin:0;font-size:.875rem;line-height:1.5;font-weight:760;text-align:left;color:#f2d3a0;letter-spacing:0}
+.spotlight-location{margin:0 0 0 auto;font-size:.8125rem;line-height:1.6;text-align:right;color:#d5dfeb;letter-spacing:0}
+.spotlight h1{font-size:clamp(1.45rem,5.6vw,2rem);line-height:1.45;
+ font-weight:820;letter-spacing:-.015em;margin:0 0 11px;color:#fff4e8}
+.spotlight-brief{font-size:.9875rem;line-height:1.76;color:#dbe5f0;font-weight:480;
+ margin:0 0 13px;overflow-wrap:anywhere}
+.spotlight-divider{background:#415570;margin:0 0 11px}
+.spotlight-quip-label{font-size:.8125rem;line-height:1.5;font-weight:780;color:#f2cd90;margin:0 0 4px}
+.spotlight-quip{font-size:clamp(1rem,4.1vw,1.125rem);line-height:1.7;
+ font-weight:730;color:#fff1df;margin:0 0 13px}
+.spotlight #spotlightRead{display:inline-flex;align-items:center;justify-content:center;
+ align-self:flex-start;width:auto;min-height:44px;background:#ecd4af;color:#15243a;
+ border:1px solid #e7c998;border-radius:11px;font-size:.9375rem;font-weight:800;padding:8px 17px}
+.spotlight .travel-slot{margin:9px 0 0}
+.spotlight .travel-open{font-size:.875rem;min-height:40px;padding:5px 0}
+.spotlight .world-invitation{align-self:flex-start;width:auto;min-height:40px;margin:0;
+ padding:5px 0;font-size:.8125rem;color:#c9d8ea}
+.spotlight-body{margin-top:12px;padding-top:12px}
+.story{box-shadow:none}
+.story h3{font-size:clamp(1.2rem,4.7vw,1.5rem)}
+@media(max-width:520px){
+ .wrap{padding-top:calc(var(--safe-top) + 5px)}
+ .nav{padding:7px 0 8px}
+ .nav .logo{font-size:.875rem}
+ .nav .tag{font-size:.75rem}
+ .evening-entry{gap:3px 9px;margin:4px 0 9px}
+ .evening-entry p{flex-basis:auto;font-size:.875rem}
+ .evening-entry a{font-size:.8125rem}
+ .hero{padding:0 0 10px;margin:0 0 10px;gap:4px 9px}
+ .hero .eyebrow{font-size:.8125rem}
+ .issue-countries{margin:0;gap:4px}
+ .countries-intro{font-size:.75rem}
+ .country-chip{font-size:.75rem;padding:2px 8px}
+ .spotlight{padding:15px 15px 14px}
+ .spotlight-topline{margin-bottom:10px}
+ .spotlight h1{font-size:clamp(1.4rem,5.75vw,1.75rem);line-height:1.47;margin-bottom:9px}
+ .spotlight-brief{font-size:.9375rem;line-height:1.7;margin-bottom:10px}
+ .spotlight-quip{font-size:1.0625rem;line-height:1.65;margin-bottom:12px}
+ .spotlight #spotlightRead{font-size:.9375rem}
+}
+@media(max-width:370px){.evening-entry a{font-size:.75rem}
+ .spotlight-location{margin-left:0;flex-basis:100%;text-align:left}}
 </style>
 </head>
 <body><div class="wrap">
 <header class="nav"><div class="logo"><span class="icon" aria-hidden="true">☾</span>よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
-<main><section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a href="#closing">今夜は、ひと言だけ読む</a></section><section class="hero" aria-label="世界から届いた便り"><p class="eyebrow">世界の「まさか」に、ふっとひと息。</p><div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">この号の舞台を読み込み中</span></div><p class="hero-description">思いがけない実話と、小さなユーモアを夜9時に。</p><p class="hero-truth">今見えている場所の外にも、いろんな毎日がある。<strong>気になる話を、ひとつだけ。</strong></p><a class="world-invitation" id="worldInvitation" href="#mapExtras">この号の舞台を地図で見る</a></section><section class="spotlight" id="spotlight" aria-label="今夜のひと話">
- <div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div>
- <div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div>
- <p class="spotlight-location" id="spotlightLocation">この話の国・地域を確認中</p>
- <h1 id="spotlightTitle">今夜のやらかしを準備中…</h1>
+<main>
+<section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a href="#closing">今夜は、ひと言だけ読む</a></section>
+<section class="hero" aria-label="ニュースの舞台"><p class="eyebrow">世界の「まさか」を、実話で。</p><div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div></section>
+<section class="spotlight" id="spotlight" aria-label="今夜のひと話">
+ <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
+ <h1 id="spotlightTitle">世界の実話を準備中…</h1>
+ <p class="spotlight-brief" id="spotlightBrief">何が起きたのか、まず短く。</p>
  <div class="spotlight-divider" aria-hidden="true"></div>
  <p class="spotlight-quip-label">AIツッコミ</p>
  <p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p>
- <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button><div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
+ <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button>
+ <div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
+ <a class="world-invitation" id="worldInvitation" href="#mapExtras">この話の舞台を地図で見る</a>
 </section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
@@ -828,7 +906,7 @@ function renderIssueCountries(){
  const intro=document.createElement('span');
  intro.className='countries-intro';
  const current=edition.status!=='demo'&&edition.editionDate===localDate(new Date())&&$('archiveSelect').value==='current';
- intro.textContent=current?'今夜の便りは':edition.status==='demo'?'体験版の舞台は':'この号の便りは';
+ intro.textContent=current?'今夜の舞台':edition.status==='demo'?'体験版の舞台':'この号の舞台';
  target.append(intro);
  if(!names.size){
   const pending=document.createElement('span');pending.className='country-pending';
@@ -843,11 +921,13 @@ function updateSpotlight(){
  const first=Array.isArray(edition.stories)?edition.stories[0]:null;
  $('spotlight').hidden=!first;
  if(!first)return;
- $('spotlightAward').textContent=edition.status==='demo'?'体験版のひと話':edition.editionDate!==localDate(new Date())?'前回のひと話':'今夜のひと話';
+ $('spotlightAward').textContent=edition.status==='demo'?'体験版の実話':edition.editionDate!==localDate(new Date())?'公開済みの便りから':'今夜の便りから';
  // This is the checked incident location, never the publisher's search market.
- $('spotlightLocation').textContent=first.country?'この話の国・地域：'+countryLabel(first.country):'この話の国・地域を確認中';
- $('spotlightTitle').textContent=first.title||'今夜のやらかし';
- $('spotlightQuip').textContent=first.quip||'予定どおりにいかないのが、世界の通常運転。';
+ $('spotlightLocation').textContent=first.country?'舞台：'+countryLabel(first.country):'舞台を確認中';
+ $('spotlightTitle').textContent=first.title||'世界の実話';
+ const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
+ $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
+ $('spotlightQuip').textContent=first.quip||'世界の予定と現実は、ときどき仲が悪い。';
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');

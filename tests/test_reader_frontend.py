@@ -13,16 +13,16 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_homepage_explains_the_editorial_concept(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("今日も一日、おつかれさま。", page)
-        self.assertIn("世界の「まさか」に、ふっとひと息。", page)
-        self.assertIn("思いがけない実話と、小さなユーモアを夜9時に。", page)
-        self.assertIn("気になる話を、ひとつだけ。", page)
-        self.assertIn('class="hero-description"', page)
+        self.assertIn("世界の「まさか」を、実話で。",page)
+        self.assertIn('class="spotlight-topline"',page)
+        self.assertIn('id="spotlightBrief"',page)
+        self.assertIn('id="spotlightQuip"',page)
 
     def test_global_perspective_is_visible_and_grounded_in_incident_country(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightLocation"',page)
-        self.assertIn("first.country?'この話の国・地域：'+countryLabel(first.country)",page)
-        self.assertIn("今見えている場所の外にも、いろんな毎日がある。",page)
+        self.assertIn("first.country?'舞台：'+countryLabel(first.country)",page)
+        self.assertIn("世界の「まさか」を、実話で。",page)
         self.assertIn('id="worldInvitation" href="#mapExtras"',page)
         self.assertIn("$('worldInvitation').addEventListener('click',event=>{",page)
         self.assertIn("map.open=true;",page)
@@ -40,7 +40,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("if(country&&key&&!names.has(key))",page)
         self.assertIn("renderWorld();renderIssueCountries();",page)
         self.assertIn("renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();",page)
-        self.assertIn("edition.status==='demo'?'体験版の舞台は'",page)
+        self.assertIn("edition.status==='demo'?'体験版の舞台'",page)
         self.assertNotIn("sourcecountry",page)
 
     def test_reading_flow_prioritizes_stories_over_release_metadata(self):
@@ -216,6 +216,24 @@ class ReaderFrontendTest(unittest.TestCase):
              "if(isMonthDate('2026-11-18','2026-10-19','2026-11-17'))process.exit(4);"
         result=subprocess.run(["node","-e",code],capture_output=True,text=True)
         self.assertEqual(result.returncode,0,result.stderr)
+
+
+    def test_mobile_cover_puts_verified_story_above_quip_without_intrusive_intro(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('name="apple-mobile-web-app-status-bar-style" content="black"',page)
+        self.assertIn('env(safe-area-inset-top,0px)',page)
+        self.assertIn('padding-top:calc(var(--safe-top) + 5px)',page)
+        self.assertIn('position:sticky;top:var(--safe-top)',page)
+        self.assertIn('height:var(--safe-top);background:#0b1528;z-index:40',page)
+        self.assertLess(page.index('id="spotlightTitle"'),page.index('id="spotlightBrief"'))
+        self.assertLess(page.index('id="spotlightBrief"'),page.index('id="spotlightQuip"'))
+        self.assertLess(page.index('id="spotlightQuip"'),page.index('id="spotlightRead"'))
+        self.assertLess(page.index('id="spotlightRead"'),page.index('id="worldInvitation"'))
+        self.assertIn("firstSentence=summary.split('。')[0].trim()",page)
+        self.assertIn('width:auto;min-height:44px;',page)
+        self.assertIn('font-size:clamp(1.4rem,5.75vw,1.75rem)',page)
+        self.assertNotIn('class="hero-description"',page)
+        self.assertNotIn('class="hero-truth"',page)
 
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
