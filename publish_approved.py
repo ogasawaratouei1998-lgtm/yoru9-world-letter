@@ -186,9 +186,12 @@ def validate_approved(data, expected_date):
                     isinstance(story.get('humanActor'), str) and
                     isinstance(story.get('humanMistake'), str),
                     f'{i}本目は人間の具体的な失敗が確認されていません')
-            from editorial_identity import human_failure_rejection, comic_line_rejection
+            from editorial_identity import (human_failure_rejection,
+                                            comic_line_rejection,noncomic_incident_rejection)
             require(human_failure_rejection(story) is None,
                     f'{i}本目は人間の失敗中心のニュースではありません')
+            require(noncomic_incident_rejection(story) is None,
+                    f'{i}本目は深刻な事件であり、笑いの題材として不適切です')
             require(comic_line_rejection(story['quip']) is None,
                     f'{i}本目はツッコミとして成立していません')
         urls = story.get('verificationUrls')
