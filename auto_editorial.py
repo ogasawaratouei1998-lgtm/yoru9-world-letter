@@ -60,7 +60,7 @@ def editorial_fit_rejection(story):
     return None
 # Rank incident-specific reporting ahead of generic world-news headlines.
 # Ranking only changes retrieval order; it never certifies a fact or relaxes review.
-EDITORIAL_MISSION=("Publish only real, consequential failures, misjudgments and plans that backfired. "
+EDITORIAL_MISSION=("Publish only real, source-supported HUMAN mistakes with a funny, observable plan-versus-reality reversal. "
     "Every story must have two essential parts: source-supported facts about a failure; "
     "and a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim. "
     "A humane aftertaste is optional, not a compulsory lesson or an instruction for the reader to feel better. "
@@ -214,6 +214,23 @@ def incident_priority(lead):
     else:
         rank=2
     return (rank,1 if host(lead.get("url",""))=="news.google.com" else 0)
+
+
+def prioritize_comic_groups(groups, limit=24):
+    """Present comic human mistakes first, regardless of corroboration count.
+
+    An original single-source report is eligible for independent auditing:
+    a serious two-source conflict should not occupy a limited model context
+    slot ahead of a funny, sourced workplace mistake. No item is approved here.
+    """
+    return sorted(
+        (group for group in groups if group),
+        key=lambda group: (
+            min(incident_priority(item)[0] for item in group),
+            0 if len(group) >= 2 else 1,
+            min(incident_priority(item)[1] for item in group),
+        ),
+    )[:limit]
 
 
 def host(url):
@@ -780,6 +797,7 @@ def main():
     groups=select_distinct_groups(groups,limit=18)
     paired_urls={item['url'] for group in groups for item in group}
     groups.extend([[item] for item in source_leads if item['url'] not in paired_urls][:max(0,36-len(groups))])
+    groups=prioritize_comic_groups(groups,limit=24)
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
         print('No retrieved candidate articles; safe skip.');return 0
@@ -797,13 +815,13 @@ def main():
                     allowed_pairs.add(frozenset((first["url"],second["url"])))
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
-    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
+    prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about SOURCE-SUPPORTED, COMIC human mistakes and plans that backfired by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to give readers a genuinely funny, clearly documented HUMAN blunder, not therapy or the most consequential crisis. Prioritize real typos, wrong orders, mistaken identities, everyday work mix-ups and harmless plans that backfire when an original source confirms the human mistake and the comic reversal. Small, verified mistakes are FIRST-CLASS story candidates, never filler. A story is not eligible merely because it describes an animal, a confrontation, a disciplinary incident, private gossip or a serious setback. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
       'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. Never invent facts, URLs, or details. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
-      'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
+      'Do not select a merely verifiable incident when the actual human mistake lacks a clear, safe, incident-specific comic reversal. Improve weak writing by trying a new angle, but do not replace comedy with a vague inspirational observation. Serious stakes are NOT a selection advantage. NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
@@ -838,9 +856,10 @@ def main():
         "total":len(grouped_evidence),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if len(draft)<2:
-        # Reserve API quota for independent reviewer B as soon as two draft
-        # candidates exist. A big batch of unreviewed prose is not progress.
+    if len(draft)<4:
+        # Keep a small reserve of alternative comic incidents in case the first draft
+        # contains serious or unsupported events. Independent reviewer B still
+        # audits every submitted article. An unreviewed draft is not progress.
         # Separate diagnosis from drafting. A large all-groups request can
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
@@ -889,7 +908,7 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if len(draft)>=2:
+            if len(draft)>=5:
                 print("Draft reserve reached: moving directly to independent fact review.",flush=True)
                 break
     if AI_QUOTA_BLOCKED:
