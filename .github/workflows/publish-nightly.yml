@@ -5,7 +5,6 @@ on:
   push:
     branches: [main]
     paths:
-      - '.github/workflows/publish-nightly.yml'
       - 'data/approved/*.json'
   schedule:
     - cron: '7,17,37,47 21 * * *'

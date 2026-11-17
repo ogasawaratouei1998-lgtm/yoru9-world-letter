@@ -5,6 +5,11 @@ on:
     branches: [main]
     paths:
       - 'publish_approved.py'
+      - 'auto_editorial.py'
+      - 'stage_review.py'
+      - '.github/workflows/ai-editorial-preview.yml'
+      - '.github/workflows/publish-nightly.yml'
+      - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
       - 'data/news-source-registry.json'
       - 'news_sources.py'
