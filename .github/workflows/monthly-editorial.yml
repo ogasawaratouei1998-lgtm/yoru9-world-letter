@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/monthly-editorial.yml'
       - 'monthly_research.py'
+      - 'auto_editorial.py'
       - 'tests/test_monthly_research.py'
   workflow_dispatch:
   schedule:
@@ -34,9 +35,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Check all publication and independent-source safeguards
+      - name: Check original-source quality and publication safeguards
         run: python -m unittest discover -s tests -v
-      - name: Discover and independently audit up to two monthly stories
+      - name: Review up to two source-grounded monthly surprises
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
