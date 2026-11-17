@@ -379,6 +379,11 @@ footer{font-size:.8125rem;line-height:1.7}
 @media(max-width:520px){.month-summary-right{width:100%;justify-content:space-between;gap:7px}
  .month-story-disclosure{margin-top:4px}
 }
+/* Travel stays optional in the already-expanded monthly story. */
+.month-travel-slot{margin:14px 0 15px}
+.month-story .month-travel-slot .travel-open{padding:8px 0;min-height:48px}
+.month-story .travel-panel:not([hidden]){margin:8px 0 16px}
+.month-story .travel-card{margin:0}
 </style>
 </head>
 <body><div class="wrap">
@@ -621,66 +626,85 @@ function storyCorrectionHtml(story){
  return note?'<p class="correction-note"><strong>編集訂正：</strong>'+escapeHtml(note)+'</p>':'';
 }
 /* Archived research collection is not a fake old daily edition. */
-let monthStories=[];
-let monthPublishedStories=[];
+/* History shelf: 30 JST dates by actual release/collection, not reporting date. */
+let monthStories=[],monthPublishedStories=[],visibleMonthStories=[];
 function monthWindow(){
  const now=new Date();
- return {start:localDate(new Date(now.getTime()-30*86400000)),end:localDate(now)};
+ return {start:localDate(new Date(now.getTime()-29*86400000)),end:localDate(now)};
 }
-function validMonthStory(s,start,end){
- if(!s||!s.id||!s.country||!s.title||!s.summary||!s.detail||!isJapaneseText(s.detail)||
-    !/^\d{4}-\d{2}-\d{2}$/.test(s.reported||'')||s.reported<start||s.reported>end||
+function isMonthDate(date,start,end){
+ return /^\d{4}-\d{2}-\d{2}$/.test(date||'')&&date>=start&&date<=end;
+}
+function monthRetentionDate(s){
+ return s.monthOrigin==='curated'?s.collectionDate:s.publishedAt;
+}
+function validMonthStory(s){
+ if(!s||!s.id||!/^[a-zA-Z0-9-]+$/.test(s.id)||!s.country||!s.title||!s.summary||
+    !s.detail||!isJapaneseText(s.summary)||
+    !/^\d{4}[-.]\d{2}[-.]\d{2}$/.test(s.reported||'')||
+    !/^\d{4}-\d{2}-\d{2}$/.test(monthRetentionDate(s)||'')||
+    s.reported.replaceAll('.','-')>monthRetentionDate(s)||
     safeUrl(s.sourceUrl)==='#')return false;
+ // Archives can contain legacy verified issues predating the new 2-source rule.
+ // Their public 'published' status is confirmed separately from the archive.
+ if(s.monthOrigin==='published')return true;
  const urls=s.verificationUrls;
  if(!Array.isArray(urls)||urls.length<2||!urls.includes(s.sourceUrl)||
     urls.some(u=>typeof u!=='string'||safeUrl(u)==='#'))return false;
  try{return new Set(urls.map(u=>new URL(u).hostname.replace(/^www\./,''))).size>=2;}
  catch(_){return false;}
 }
-function monthCountryMapUrl(country){
- const r=countryRecord(country);
- return r&&Number.isFinite(r.lat)&&Number.isFinite(r.lon)
-  ?'https://www.openstreetmap.org/?mlat='+r.lat+'&mlon='+r.lon+'#map=4/'+r.lat+'/'+r.lon:'';
+function monthSourceKeys(s){
+ return [s.sourceUrl,...(Array.isArray(s.verificationUrls)?s.verificationUrls:[])]
+  .filter(u=>typeof u==='string'&&safeUrl(u)!=='#')
+  .map(u=>{try{const p=new URL(u);return p.hostname.replace(/^www\./,'')+p.pathname.replace(/\/$/,'');}
+   catch(_){return '';}}).filter(Boolean);
 }
 function renderMonthRetrospective(){
  const target=$('monthCards');target.replaceChildren();
  const {start,end}=monthWindow();
  const seen=new Set(edition.stories.map(s=>s.id));
- // Daily additions only inherit previously published, independently sourced
- // stories. The original hand-reviewed special remains a separate collection.
+ const seenSources=new Set(edition.stories.flatMap(monthSourceKeys));
  const stories=[...monthPublishedStories,...monthStories]
-  .filter(s=>validMonthStory(s,start,end))
-  .sort((a,b)=>b.reported.localeCompare(a.reported))
-  .filter(s=>{if(seen.has(s.id))return false;seen.add(s.id);return true;});
+  .filter(s=>validMonthStory(s)&&isMonthDate(monthRetentionDate(s),start,end))
+  .sort((a,b)=>monthRetentionDate(b).localeCompare(monthRetentionDate(a))||
+   b.reported.replaceAll('.','-').localeCompare(a.reported.replaceAll('.','-')))
+  .filter(s=>{
+   const keys=monthSourceKeys(s);
+   if(seen.has(s.id)||keys.some(key=>seenSources.has(key)))return false;
+   seen.add(s.id);keys.forEach(key=>seenSources.add(key));return true;
+  });
+ visibleMonthStories=stories;
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
- $('monthCount').textContent='直近30日 · '+stories.length+'本';
- $('monthIntro').textContent=start+'〜'+end+'に報道された実話を紹介しています。新しく公開された確認済みのニュースは、ここにも自動で追加します。公開号がない日には記事は増えません。過去の話題を、今日起きたニュースとして紹介することはありません。';
+ $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
+ $('monthIntro').textContent=start+'〜'+end+'に配信または特集収録された実話です。報道日は記事ごとに異なります。新しく公開された記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。確認できないニュースは追加しません。';
  for(const s of stories){
   const card=document.createElement('article');card.className='month-story';
-  const source=safeUrl(s.sourceUrl),map=monthCountryMapUrl(s.country);
+  const recorded=s.monthOrigin==='curated'?'特集収録日 ':'配信日 ';
   card.innerHTML='<details><summary><span class="month-country">'+escapeHtml(countryLabel(s.country))+
-   ' · 報道日 '+escapeHtml(s.reported)+'</span><strong>'+escapeHtml(s.title)+
-   '</strong><span class="month-preview">'+escapeHtml(s.summary)+'</span>'+
-   '<span class="month-story-disclosure" aria-hidden="true"><span class="month-story-closed">記事を開く</span><span class="month-story-opened">記事を閉じる</span><span class="month-story-chevron">⌄</span></span></summary>'+
+   ' · '+recorded+escapeHtml(monthRetentionDate(s))+' · 報道日 '+escapeHtml(s.reported.replaceAll('.','-'))+
+   '</span><strong>'+escapeHtml(s.title)+'</strong><span class="month-preview">'+escapeHtml(s.summary)+
+   '</span><span class="month-story-disclosure" aria-hidden="true"><span class="month-story-closed">記事を開く</span><span class="month-story-opened">記事を閉じる</span><span class="month-story-chevron">⌄</span></span></summary>'+
    '<div class="month-story-body"><p class="month-quip-label">AIツッコミ</p>'+
    '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+storyDetailHtml(s)+
+   '<div class="travel-slot month-travel-slot"><button type="button" class="travel-open" data-month-travel="'+
+     escapeHtml(s.id)+'" aria-expanded="false" aria-controls="month-travel-'+escapeHtml(s.id)+
+     '">この国へ30秒だけ寄り道 <span aria-hidden="true">↗</span></button>'+
+   '<div class="travel-panel" id="month-travel-'+escapeHtml(s.id)+'" hidden></div></div>'+
    (s.quipSecond?'<p class="month-second">'+escapeHtml(s.quipSecond)+'</p>':'')+
    (s.attributionNote?'<p class="month-notice">'+escapeHtml(s.attributionNote)+'</p>':'')+
-   '<p class="month-source">出典：<a href="'+escapeHtml(source)+'" target="_blank" rel="noopener noreferrer">'+
-   escapeHtml(s.sourceName||'出典元')+' ↗</a></p>'+storyEvidenceHtml(s)+
-   (map?'<p class="month-map"><a href="'+escapeHtml(map)+'" target="_blank" rel="noopener noreferrer">'+
-     escapeHtml(countryLabel(s.country))+'のおおよその位置を見る ↗</a></p>':'')+
+   '<p class="month-source">出典：<a href="'+escapeHtml(safeUrl(s.sourceUrl))+
+     '" target="_blank" rel="noopener noreferrer">'+escapeHtml(s.sourceName||'出典元')+' ↗</a></p>'+
+   storyEvidenceHtml(s)+
    '<p class="month-notice">過去に報道された実話です。今日起きた出来事ではありません。</p></div></details>';
   target.append(card);
  }
 }
 async function updateMonthFromArchives(issues){
- // Only the public archive index is trusted as a list of released editions.
- // No raw RSS candidates, editor drafts or approved-but-unpublished stories.
+ // Only completed public releases listed in the archive manifest are eligible.
  const {start,end}=monthWindow();
- const recent=issues.filter(item=>item&&/^\d{4}-\d{2}-\d{2}$/.test(item.date)&&
-  item.date>=start&&item.date<=end).slice(0,31);
+ const recent=issues.filter(item=>item&&isMonthDate(item.date,start,end)).slice(0,30);
  const entries=await Promise.all(recent.map(async item=>{
   try{
    const response=await fetch('./data/archive/'+item.date+'.json',{cache:'no-store'});
@@ -691,7 +715,8 @@ async function updateMonthFromArchives(issues){
   }catch(_){return null;}
  }));
  monthPublishedStories=entries.filter(Boolean).flatMap(item=>
-  item.stories.filter(s=>validMonthStory(s,start,end)));
+  item.stories.map(s=>({...s,monthOrigin:'published',publishedAt:item.editionDate}))
+   .filter(validMonthStory));
  renderMonthRetrospective();
 }
 async function loadMonthRetrospective(){
@@ -700,9 +725,9 @@ async function loadMonthRetrospective(){
   if(!response.ok)throw Error('monthly collection unavailable');
   const data=await response.json();
   if(data.status!=='published-retrospective'||data.collectionDate!=='2026-11-17'||
-     !Array.isArray(data.stories)||!/^\d{4}-\d{2}-\d{2}$/.test(data.windowStart||'')||
-     !/^\d{4}-\d{2}-\d{2}$/.test(data.windowEnd||''))return;
-  monthStories=data.stories.filter(s=>validMonthStory(s,data.windowStart,data.windowEnd));
+     !Array.isArray(data.stories)||!isMonthDate(data.collectionDate,data.windowStart,data.windowEnd))return;
+  monthStories=data.stories.map(s=>({...s,monthOrigin:'curated',collectionDate:data.collectionDate}))
+   .filter(validMonthStory);
   renderMonthRetrospective();
  }catch(error){console.info('過去1か月の特集を読み込めませんでした',error);}
 }
@@ -817,19 +842,25 @@ function travelPostcardHtml(story,stop){
   '</section>';
 }
 document.querySelector('main').addEventListener('click',async event=>{
- const control=event.target.closest('[data-travel]');
+ const control=event.target.closest('[data-travel],[data-month-travel]');
  if(!control)return;
- const i=Number(control.dataset.travel),story=edition.stories[i],panel=$('travel-panel-'+i);
- if(!Number.isInteger(i)||!story||!panel)return;
+ const isMonth=control.hasAttribute('data-month-travel'),i=isMonth?null:Number(control.dataset.travel);
+ const story=isMonth?visibleMonthStories.find(s=>s.id===control.dataset.monthTravel):edition.stories[i];
+ const panel=control.nextElementSibling;
+ if(!story||!panel||!panel.classList.contains('travel-panel')||
+    (!isMonth&&!Number.isInteger(i)))return;
  const opening=panel.hidden;
  panel.hidden=!opening;
  control.setAttribute('aria-expanded',String(opening));
- control.firstChild.textContent=opening?'寄り道を閉じる ':'この場所に30秒だけ寄り道 ';
+ control.firstChild.textContent=opening?'寄り道を閉じる ':
+  isMonth?'この国へ30秒だけ寄り道 ':'この場所に30秒だけ寄り道 ';
  if(!opening)return;
  panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
  const stops=await loadTravelStops();
- // An archive switch or rapid close must not put the old postcard in a new edition.
- if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return;
+ // Switching issues, re-rendering the month or closing the card cancels stale inserts.
+ if(!panel.isConnected||panel.hidden||
+    (!isMonth&&edition.stories[i]!==story)||
+    (isMonth&&!visibleMonthStories.includes(story)))return;
  // The current issue gets its exact curated stop. A country-only postcard
  // may serve as a clearly labelled fallback when a fresh story has no photo yet.
  const candidate=stops[story.id]||Object.values(stops).find(s=>s.country===story.country&&s.countryOnly===true);
