@@ -37,10 +37,16 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
         run: python auto_editorial.py
-      - name: Save approved preview privately in workflow artifact
+      - name: Stage only today's publication-valid reviewed issue
+        id: staged
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          python stage_review.py --day "$DAY" --destination "$RUNNER_TEMP/yoru9-reviewed"
+      - name: Save one validated review privately for the nightly publisher
+        if: steps.staged.outputs.ready == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: ai-reviewed-preview
-          path: data/approved/*.json
-          if-no-files-found: ignore
-          retention-days: 2
+          path: ${{ steps.staged.outputs.path }}
+          if-no-files-found: error
+          retention-days: 3
