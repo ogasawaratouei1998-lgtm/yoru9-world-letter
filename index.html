@@ -859,7 +859,7 @@ function renderMonthRetrospective(){
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
  $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
- $('monthIntro').textContent='過去に報道された実話です。今日起きた出来事ではありません。'+start+'〜'+end+'の配信・特集収録から30日間表示します。報道日と配信日は異なります。新しく確認された公開記事は自動的に加わります。';
+ $('monthIntro').textContent='過去に報道された実話です。今日起きた出来事ではありません。'+start+'〜'+end+'の配信・特集収録から30日間表示します。報道日と配信日は異なります。新しく確認された公開記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。';
  for(const s of stories){
   const card=document.createElement('article');card.className='month-story';card.dataset.monthStoryId=s.id;
   const recorded=s.monthOrigin==='curated'?'特集収録日 ':'配信日 ';
