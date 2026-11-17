@@ -1,0 +1,61 @@
+name: One-time bounded live Gemini editorial verification
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-editorial-verification.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the editorial regression tests
+        run: python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
+      - name: Verify API key is configured
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Gemini key is missing; no review or publication"
+            exit 1
+          fi
+      - name: Collect source candidates
+        run: python collect_candidates.py
+      - name: Simulate a new issue without altering any published file
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          rm -f "data/approved/$DAY.json"
+          echo "No local approval for $DAY: test review must independently select candidates"
+      - name: Run bounded AI editorial and independent fact review
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.5-flash-lite
+        run: python auto_editorial.py
+      - name: Summarize AI review outcome (test-only; never publish)
+        if: always()
+        run: |
+          python - <<'PY'
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          import json, os
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          p=Path("data/approved")/(day+".json")
+          if p.exists():
+              data=json.loads(p.read_text(encoding="utf-8"))
+              text=f"AI review created {len(data.get('stories',[]))} locally approved candidates; not published"
+          else:
+              text="AI review did not create an approved issue; previous publication remains intact"
+          print(text)
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
+              f.write("## One-time editorial proof\n\n"+text+"\n")
+          PY
