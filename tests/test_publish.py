@@ -172,10 +172,26 @@ class PublishingTest(unittest.TestCase):
         data=fixture()
         data['stories'][2]['editorVerified']=False
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
-    def test_missing_second_source_blocked(self):
+    def test_historical_issue_retains_original_two_source_rule(self):
         data=fixture()
         data['stories'][0]['verificationUrls']=data['stories'][0]['verificationUrls'][:1]
         with self.assertRaises(ValueError):validate_approved(data,'2026-11-10')
+
+    def test_current_regular_one_source_is_publishable(self):
+        data=fixture('2026-11-17')
+        for story in data['stories']:
+            story['reported']='2026-11-17'
+        data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl']]
+        public=validate_approved(data,'2026-11-17')
+        self.assertEqual(public['stories'][0]['verificationUrls'],[data['stories'][0]['sourceUrl']])
+
+    def test_current_regular_zero_sources_is_rejected(self):
+        data=fixture('2026-11-17')
+        for story in data['stories']:
+            story['reported']='2026-11-17'
+        data['stories'][0]['verificationUrls']=[]
+        with self.assertRaises(ValueError):validate_approved(data,'2026-11-17')
+
     def test_independent_domains_required(self):
         data=fixture()
         data['stories'][0]['verificationUrls']=[data['stories'][0]['sourceUrl'], 'https://news.example.com/mirror']

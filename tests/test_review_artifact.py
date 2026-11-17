@@ -60,9 +60,18 @@ class ReviewStageTest(unittest.TestCase):
         self.assertIsNone(stage_review(self.root,DAY,self.destination))
         self.assertFalse(publish(self.root,late))
 
-    def test_single_source_is_not_publishable(self):
+    def test_single_verified_original_is_stageable(self):
         item=json.loads(self.source.read_text(encoding="utf-8"))
         item["stories"][0]["verificationUrls"]=[item["stories"][0]["sourceUrl"]]
+        self.source.write_text(json.dumps(item,ensure_ascii=False),encoding="utf-8")
+        staged=stage_review(self.root,DAY,self.destination)
+        self.assertIsNotNone(staged)
+        self.assertEqual(json.loads(staged.read_text(encoding="utf-8"))["stories"][0]["verificationUrls"],
+                         [item["stories"][0]["sourceUrl"]])
+
+    def test_no_sources_is_not_stageable(self):
+        item=json.loads(self.source.read_text(encoding="utf-8"))
+        item["stories"][0]["verificationUrls"]=[]
         self.source.write_text(json.dumps(item,ensure_ascii=False),encoding="utf-8")
         with self.assertRaises(ValueError):
             stage_review(self.root,DAY,self.destination)

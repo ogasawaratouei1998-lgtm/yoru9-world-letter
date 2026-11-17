@@ -704,7 +704,7 @@ def main():
     # candidates, semantic matching can find additional consequential incidents
     # described with different wording by independent publishers.
     # Keep the bounded candidate budget; final publication still requires
-    # two fetched sources and an independent adversarial AI audit.
+    # at least one original report verified against its fetched text and an independent adversarial AI audit.
     print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
     # Overlapping windows allow semantic matching across the full fetched set.
     # Headline groups are still included; AI proposals remain unverified.
@@ -748,8 +748,8 @@ def main():
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are editor A. Return JSON object with stories array of up to 16 Japanese stories about CONSEQUENTIAL, well-documented failures by ordinary individuals, workers, entrepreneurs, companies, institutions, governments or prominent decision-makers. Include personal decisions that backfired (such as work, career, business, purchases or everyday judgment), costly mistakes, public policy reversals, operational breakdowns and ambitious plans that backfired. Give individual incidents equal editorial consideration; do not require celebrity, high financial stakes or institutional status. Seek balanced coverage across person (individuals), work (employees and workplace), company (companies, governments and organizations), and sports (athletes, teams, referees, event organizers) over successive editions. Sports stories must concern a verifiable non-tragic mistake, surprising reversal, or plan-versus-reality mismatch, not simply a loss. Prefer underrepresented categories, especially person and work, when equally well-verified stories are available; never invent or weaken evidence to meet a category target. The purpose is to help readers facing serious personal difficulties regain perspective: even powerful organizations make mistakes, and setbacks can be survived. Do not prioritize trivial typos or harmless oddities merely because they are easy to joke about. A personally meaningful mistake can be consequential without being nationally important. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
-      'verificationUrls must be TWO or more independently fetched original publisher URLs about the same incident, with distinct publisher domains. Do not invent facts, URLs or unsupported details. '
-      'For each include required fields '+str(REQUIRED)+', expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (at least two independent publisher URLs), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
+      'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. Never invent facts, URLs, or details. '
+      'For each include required fields '+str(REQUIRED)+', expectedPlan (the concrete source-supported expected plan or outcome, in Japanese, at least 12 characters), observedOutcome (the documented contrasting actual mistake or failure, in Japanese, at least 12 characters), quipSecond (a distinct 15-55-character follow-up AI joke), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not reject a verifiable incident solely because it lacks a laugh-out-loud punchline: use respectful, gentle irony about the decision, or decline only if any such treatment would be harmful. Serious stakes are welcome, but NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have a verifiable reporting date of the edition day in Japan, or the previous day only to account for international time zones; do not confuse edition date with the incident date. Prioritize same-day reporting. '
@@ -816,7 +816,7 @@ def main():
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
                 "Each story must contain fields "+str(REQUIRED)+", expectedPlan (verifiable expectation), observedOutcome (what demonstrably went wrong), quipSecond (distinct second punchline), "
-                "verificationUrls (at least two exact independently fetched publisher URLs from that group), "
+                "verificationUrls (1-3 exact retrieved ORIGINAL publisher URLs from that group; prefer independently reported pairs when available), "
                 "eventKey (specific incident identifier at least 12 characters), "
                 "and evidence (facts supported by the supplied source text). "
                 "category must be exactly person, work, company, or sports. "
@@ -876,12 +876,14 @@ def main():
         if fit_issue:
             reject(fit_issue);continue
         urls=story.get("verificationUrls",[])
-        if not isinstance(urls,list) or not (2<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
+        if not isinstance(urls,list) or not (1<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
             reject("insufficient_independent_urls");continue
         if len(urls)>1 and not any(frozenset(pair) in allowed_pairs for pair in __import__("itertools").combinations(urls,2)):
             reject("unmatched_source_pair");continue
-        if len({host(u) for u in urls})<2:
-            reject("publication_requires_independent_publishers");continue
+        # A single retrieved original publisher is eligible. Multiple URLs
+        # must be from distinct publishers rather than padding with mirrors.
+        if len(urls)>1 and len({host(u) for u in urls})<2:
+            reject("repeated_publisher_domains");continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
             reject("urls_not_in_fetched_evidence");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
@@ -893,19 +895,19 @@ def main():
             reject("invalid_event_key");continue
         if event in seen:
             reject("duplicate_event");continue
-        # Both independent source pages must be actually retrieved, not merely named by AI.
+        # The original publisher page must actually be retrieved; never trust a model-listed URL alone.
         evidence=[]
         for url in urls[:3]:
             if cache[url]:evidence.append({"url":url,"text":cache[url]})
-        if len(evidence)<2 or len({host(x["url"]) for x in evidence})<2:
-            reject("insufficient_independent_fetched_articles");continue
+        if len(evidence)<1 or (len(urls)>1 and len({host(x["url"]) for x in evidence})<2):
+            reject("insufficient_fetched_original_reporting");continue
         if editorial_seconds_remaining()<45:
             print("Independent review stopped at editorial time budget; only prior verified articles remain.",flush=True)
             break
         try:
             audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+" You are independent adversarial fact checker B. You must verify every concrete "
           "claim in this Japanese article against the fetched original source article text(s) below. "
-          "Require two independently retrieved publishers on different domains supporting the same event. Reject unsupported claims, mismatched dates, invented quotes, "
+          "One credible ORIGINAL reporter's complete fetched article may support an incident. If a second independent original is supplied, verify both. Reject press-release paraphrases, syndicated copies, aggregators, social posts and unsupported claims; for one-source cases explicitly assess publisher credibility and original reporting before approving. Reject mismatched dates, invented quotes, "
           "unsafe jokes, generic news without a genuine failure, prescriptive or humiliating reader commentary, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "

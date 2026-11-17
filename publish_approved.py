@@ -178,12 +178,17 @@ def validate_approved(data, expected_date):
         require(story.get('editorVerified') is True and story.get('humorSafe') is True,
                 f'{i}本目は個別の事実確認・危害配慮が未承認です')
         urls = story.get('verificationUrls')
-        require(isinstance(urls, list) and len(urls) >= 2 and all(valid_url(u) for u in urls),
-                f'{i}本目は2件以上の検証用HTTPS URLが必要です')
+        # Existing historical/special records retain their original two-source
+        # contract. New regular issues may use ONE verified original publisher
+        # if the separate AI fact review confirmed its actual article text.
+        min_sources = 1 if edition_type == 'regular' and issue_day >= date(2026, 11, 17) else 2
+        require(isinstance(urls, list) and len(urls) >= min_sources and all(valid_url(u) for u in urls),
+                f'{i}本目は{min_sources}件以上の検証用HTTPS URLが必要です')
         require(story['sourceUrl'] in urls, f'{i}本目の出典が検証用URLに含まれていません')
         require(len(set(urls)) == len(urls), f'{i}本目の検証用URLが重複しています')
         domains = {urlsplit(u).hostname.lower().removeprefix('www.') for u in urls}
-        require(len(domains) >= 2, f'{i}本目は別の報道機関など独立したドメインでの裏付けが必要です')
+        if len(urls) >= 2:
+            require(len(domains) >= 2, f'{i}本目の複数出典は独立したドメインが必要です')
         require(story['id'] not in ids and story['sourceUrl'] not in sources, '記事IDまたは出典URLが重複しています')
         ids.add(story['id'])
         sources.add(story['sourceUrl'])

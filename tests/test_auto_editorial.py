@@ -98,13 +98,14 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 self.assertEqual(editorial.editorial_fit_rejection(
                     {**story,"detail":phrase}),"coercive_reader_tone")
 
-    def test_ai_approved_json_matches_real_publisher_rules(self):
+    def test_ai_approved_json_matches_one_source_publisher_rules(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("2<=len(urls)<=3",code)
-        self.assertIn('len({host(u) for u in urls})<2',code)
-        self.assertIn("len(evidence)<2",code)
+        self.assertIn("1<=len(urls)<=3",code)
+        self.assertIn('if len(urls)>1 and len({host(u) for u in urls})<2',code)
+        self.assertIn("if len(evidence)<1",code)
         self.assertIn("validate_approved(payload,day)",code)
+        self.assertIn("a syndicated copy, social media repost",code)
 
     def test_ai_audit_does_not_require_a_compulsory_life_lesson(self):
         from pathlib import Path
@@ -455,15 +456,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("1 <= len(stories) <= 5", publisher)
         self.assertIn("if not selected:", editorial)
 
-    def test_single_source_discovery_is_preserved_but_publication_needs_two_sources(self):
+    def test_single_original_report_can_pass_independent_ai_review(self):
         from pathlib import Path
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
-        # Single-source leads are valuable for discovery, but cannot be
-        # approved until a second independent, actually fetched report agrees.
+        # One real publisher's article is acceptable, but still must be
+        # fetched, source-grounded and independently audited by the AI.
         self.assertIn("groups.extend([[item] for item in source_leads",pipeline)
-        self.assertIn("not (2<=len(urls)<=3)",pipeline)
-        self.assertIn("if len(evidence)<2",pipeline)
-        self.assertIn("Require two independently retrieved publishers",pipeline)
+        self.assertIn("not (1<=len(urls)<=3)",pipeline)
+        self.assertIn("if len(evidence)<1",pipeline)
+        self.assertIn("One credible ORIGINAL reporter",pipeline)
         self.assertIn('validate_approved(payload,day)',pipeline)
         self.assertIn('if not valid_recent_reported(story["reported"],now):',pipeline)
 
