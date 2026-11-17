@@ -102,7 +102,7 @@ WRITING_CRAFT=(
 # The independent reviewer may choose only from the drafted, locally screened options.
 NIGHTLY_COMEDY_CRAFT=(
     "あなたは『よる9じの世界便り』の放送作家です。 "
-    "その日の検証済み記事を、仕事や予定が思わぬ方向に転ぶという共通の視点から見直してください。 "
+    "その日の検証済み記事を、仕事や予定が思わぬ方向に転ぶという共通の視点から見直してください。 気が向かなければ笑わなくてもよい読者に向け、笑いや元気を強要しません。 "
     "今夜のひと言はニュース3本の要約や固有名詞の羅列ではなく、読了後にだけ効く独立したオチです。 "
     "20〜60文字の自然な日本語を4案作ってください。"
     "構造は『短いフリ→予想外の着地』。一度読めば伝わり、最後の一語が笑いの芯になること。 "
@@ -110,7 +110,7 @@ NIGHTLY_COMEDY_CRAFT=(
     "本文にない発言、事実、固有名詞、数字、被害や結果を追加しない。誰かの不運や弱さを笑わない。 "
     "よくある励まし、精神論、抽象的な『世界は自由』、記事の順番どおりのおさらい、語尾だけの『まさか』は禁止。 "
     "読者の感情や行動を指示せず、説教しない。創作的な比喩は事実の断定に見えないようにする。 "
-    "JSON {\\\"candidates\\\":[\\\"案1\\\",\\\"案2\\\",\\\"案3\\\",\\\"案4\\\"]} のみ返してください。"
+    "JSON {\"candidates\":[\"案1\",\"案2\",\"案3\",\"案4\"]} のみ返してください。"
 )
 
 def valid_nightly_comedy_line(line, recent_lines=()):
@@ -119,9 +119,9 @@ def valid_nightly_comedy_line(line, recent_lines=()):
     if not isinstance(line,str):
         return False
     line=line.strip()
-    if not (20<=len(line)<=60) or any(ch in line for ch in "<>\\r\\n"):
+    if not (20<=len(line)<=60) or any(ch in line for ch in "<>\r\n"):
         return False
-    if re.search(r"https?://|\\\\[rn]",line) or line.count("。")>2 or line.count("、")>2:
+    if ("://" in line or "\\" in line) or line.count("。")>2 or line.count("、")>2:
         return False
     if any(phrase in line for phrase in (
         "世界の「まさか」は予想以上に自由", "世界は予想以上に自由",
@@ -154,7 +154,7 @@ def compose_nightly_comedy(stories,recent_lines=()):
         "複数記事の内容をただ列挙する総集編、精神論、説教、平凡な『想定外』『自由です』、"
         "無理なダジャレ、記事本文と重複する説明は不合格。"
         "どれも弱ければ approved:false にしてください。"
-        "JSON {\\\"approved\\\":true/false,\\\"bestIndex\\\":0,\\\"reason\\\":\\\"短い理由\\\"} のみ。"
+        "JSON {\"approved\":true/false,\"bestIndex\":0,\"reason\":\"短い理由\"} のみ。"
         "検証済み記事:"+json.dumps(payload,ensure_ascii=False)+
         "候補:"+json.dumps(candidates,ensure_ascii=False),
         temperature=0.1)

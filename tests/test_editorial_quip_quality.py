@@ -101,6 +101,10 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertFalse(valid_nightly_comedy_line(old))
         self.assertFalse(valid_nightly_comedy_line("おやすみなさい。元気を出してください。"))
         self.assertFalse(valid_nightly_comedy_line(good,[good]))
+        self.assertFalse(valid_nightly_comedy_line("これはテスト用の文章です。\\nふたつに分かれています。"))
+        self.assertFalse(valid_nightly_comedy_line("これはテスト用の文章です。\\r改行が混じっています。"))
+        self.assertFalse(valid_nightly_comedy_line("これはテスト用の文章です。 https://example.org/"))
+
         self.assertIn("20〜60文字",NIGHTLY_COMEDY_CRAFT)
         stories=[{"title":"現実は予定外","summary":"事実だけの短い説明です。","category":"work"}]
         drafts={"candidates":["短すぎる",good,"予定どおりならニュースにならない。今日も現実が台本を破った。"]}
