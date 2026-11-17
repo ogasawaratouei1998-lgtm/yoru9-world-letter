@@ -1105,7 +1105,7 @@ document.querySelector('main').addEventListener('click',async event=>{
   const img=panel.querySelector('.travel-photo');
   if(!img)return;
   img.addEventListener('error',()=>{
-   if(!panel.isConnected||panel.hidden)return;
+   if(!img.isConnected||!panel.isConnected||panel.hidden)return;
    // Try the original Commons thumbnail if the bundled copy cannot load.
    if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
     img.dataset.remoteTried='true';
