@@ -1,0 +1,93 @@
+name: One-time current news discovery and publication eligibility proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/verify-current-news-once.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Confirm current publication contract tests
+        run: |
+          python -m unittest discover -s tests -p 'test_review_artifact.py' -v
+          python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
+      - name: Collect today's live news leads
+        run: python collect_candidates.py
+      - name: Independently draft and fact-check without publishing
+        id: editorial
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: gemini-3.5-flash-lite
+        run: |
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::error::Gemini key is not configured; unverified news may not be approved"
+            exit 1
+          fi
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          # All edits are confined to this throwaway runner, never pushed.
+          rm -f "data/approved/$DAY.json"
+          python auto_editorial.py
+      - name: Check actual publishability and report measurable outcome
+        if: always()
+        env:
+          AI_STEP_OUTCOME: ${{ steps.editorial.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os, re
+          from pathlib import Path
+          from datetime import datetime
+          from zoneinfo import ZoneInfo
+          from publish_approved import validate_approved
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          candidates=Path("data/candidates.json")
+          c=json.loads(candidates.read_text(encoding="utf-8")) if candidates.exists() else {}
+          leads=len(c.get("candidates",[]))
+          p=Path("data/approved")/(day+".json")
+          count=0
+          status="NOT_PROVEN"
+          note="No same-day approval JSON was created"
+          if p.exists():
+            try:
+              obj=json.loads(p.read_text(encoding="utf-8"))
+              validate_approved(obj,day)
+              count=len(obj["stories"])
+              status="PASS" if 1<=count<=3 else "NOT_PROVEN"
+              note="Exact normal publisher contract passed" if status=="PASS" else "Outside acceptable article count"
+            except (ValueError,KeyError,TypeError,json.JSONDecodeError) as exc:
+              status="REJECTED"
+              note="Publisher validation rejected AI draft: "+type(exc).__name__
+          text=[
+            "## Current news discovery – independent proof",
+            "- Date (JST): "+day,
+            "- Unverified discovered candidate links: "+str(leads),
+            "- Actual Gemini editorial step: "+os.getenv("AI_STEP_OUTCOME","unknown"),
+            "- Publisher-valid and approved stories: "+str(count),
+            "- Final result: **"+status+"**",
+            "- Validation: "+note,
+            "- Safe mode: no git push, no Pages deploy, no push notification"
+          ]
+          print("\n".join(text))
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
+            f.write("\n".join(text)+"\n")
+          if status=="PASS":
+            for s in obj["stories"]:
+              print("VERIFIED_STORY",json.dumps({
+                "id":s["id"],"title":s["title"],"sourceName":s["sourceName"],
+                "sourceUrl":s["sourceUrl"],"reported":s["reported"],
+                "sourceBasis":s.get("sourceBasis","independent-reports"),
+                "verificationUrls":s["verificationUrls"]
+              },ensure_ascii=False))
+          else:
+            raise SystemExit("No publication-valid news demonstrated in this probe")
+          PY
