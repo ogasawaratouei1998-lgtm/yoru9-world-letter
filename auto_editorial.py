@@ -185,13 +185,35 @@ def compose_nightly_comedy(stories,recent_lines=()):
 
 INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error|wrong|failed|failure|apolog(?:y|ise|ize)|revers(?:e|al)|scrap(?:ped)?|cancel(?:led|ed)|recall|outage|glitch|misplac(?:ed)?|misprint|confus(?:ion|ed)|fiasco|oversight|backfir(?:e|ed)|botch(?:ed)?|miscalculat(?:e|ed|ion))\b|手違い|誤発注|間違|失敗|謝罪|撤回|中止|障害|誤送信|ミス|실수|착각|Verwechslung|Fehler|Panne|par erreur|erreur|confusion|equivocaci[oó]n|por engano|equívoco|confusão|erro|falha",re.I)
 
+# Specific harmless human miscues deserve the scarce fetched-article slots.
+# Disciplinary crises and animal novelties can still be read as leads, but
+# never outrank a clearly sourced typo, wrong delivery, or mistaken assumption.
+COMIC_MISSTEP_TERMS=re.compile(
+    r"typo|misspell|misprint|mix.?up|accidentally|by mistake|mistook|"
+    r"wrong recipient|wrong order|wrong delivery|wrong address|"
+    r"誤字|誤記|手違い|誤配達|誤送信|誤発注|勘違い|見間違い|取り違え|"
+    r"verwechslung|aus versehen|por error|equivocaci[oó]n|실수",re.I
+)
+SERIOUS_CONFLICT_TERMS=re.compile(
+    r"harass|abuse|intimidat|disciplin|suspend|protest|minister|"
+    r"convocation row|emergency siren|罵倒|嫌がらせ|脅迫|"
+    r"停学|懲戒|処分|大臣|抗議|起訴",re.I
+)
+
 def incident_priority(lead):
     title=lead.get("title","")
-    # Fetch firsthand reports of real HUMAN BLUNDERS before wildlife novelties.
-    # This is only ranking, not a decision that a headline is true.
-    return (2 if animal_novelty_headline(title) else
-            0 if INCIDENT_TERMS.search(title) else 1,
-            1 if host(lead.get("url",""))=="news.google.com" else 0)
+    # Discovery order is not proof: original sources and AI must still audit.
+    if animal_novelty_headline(title):
+        rank=4
+    elif SERIOUS_CONFLICT_TERMS.search(title):
+        rank=3
+    elif COMIC_MISSTEP_TERMS.search(title):
+        rank=0
+    elif INCIDENT_TERMS.search(title):
+        rank=1
+    else:
+        rank=2
+    return (rank,1 if host(lead.get("url",""))=="news.google.com" else 0)
 
 
 def host(url):

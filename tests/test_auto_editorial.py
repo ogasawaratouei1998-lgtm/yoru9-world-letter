@@ -588,6 +588,19 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertFalse(editorial.valid_recent_reported("2026-11-16",now))
         self.assertFalse(editorial.valid_recent_reported("unverified",now))
 
+    def test_light_human_blunders_get_retrieval_priority_over_disputes(self):
+        ordinary={"title":"Company accidentally sent the wrong order to customers",
+                  "url":"https://news.example.org/work"}
+        generic={"title":"Company announces new quarter",
+                 "url":"https://news.example.org/company"}
+        serious={"title":"Minister faces protest after student suspensions",
+                 "url":"https://news.example.org/dispute"}
+        animal={"title":"Rare deer appears at island nursery",
+                "url":"https://news.example.org/wildlife"}
+        ranked=sorted([serious,animal,generic,ordinary],key=editorial.incident_priority)
+        self.assertEqual([x["url"] for x in ranked],
+                         [ordinary["url"],generic["url"],serious["url"],animal["url"]])
+
     def test_incident_relevance_ranking_is_not_fact_approval(self):
         leads=[{"title":"World leaders meet at summit","url":"https://example.org/a"},
                {"title":"Company accidentally sends wrong invoices","url":"https://example.org/b"}]
