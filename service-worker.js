@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v5';
+const SHELL_CACHE = 'yoru9-shell-v6';
 const ISSUE_CACHE = 'yoru9-released-issues-v2';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg'];
@@ -27,6 +27,8 @@ self.addEventListener('fetch', event => {
       relative === 'editor.html') return;
 
   if (relative === 'data/current.json' || relative === 'data/archive/index.json' ||
+      relative === 'data/monthly/index.json' ||
+      /^data\/monthly\/\d{4}-\d{2}-\d{2}\.json$/.test(relative) ||
       relative === 'data/retrospective/2026-11-17.json' ||
       /^data\/archive\/\d{4}-\d{2}-\d{2}\.json$/.test(relative)) {
     const canonical = new URL(relative, SCOPE).href;
