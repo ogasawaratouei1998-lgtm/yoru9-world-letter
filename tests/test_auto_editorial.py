@@ -98,6 +98,14 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 self.assertEqual(editorial.editorial_fit_rejection(
                     {**story,"detail":phrase}),"coercive_reader_tone")
 
+    def test_ai_approved_json_matches_real_publisher_rules(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("2<=len(urls)<=3",code)
+        self.assertIn('len({host(u) for u in urls})<2',code)
+        self.assertIn("len(evidence)<2",code)
+        self.assertIn("validate_approved(payload,day)",code)
+
     def test_ai_audit_does_not_require_a_compulsory_life_lesson(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
