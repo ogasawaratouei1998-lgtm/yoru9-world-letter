@@ -19,6 +19,7 @@ import re
 import sys
 
 import auto_editorial as editorial
+from news_sources import source_registry, fetch_registry_feeds
 from collect_candidates import (
     BBC_FEEDS, GDELT, INDEPENDENT_FEEDS, LOCAL_LANGUAGE_FEEDS,
     fetch_bytes, parse_rss, safe_url,
@@ -71,6 +72,14 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
     "dw.com", "elpais.com", "japantimes.co.jp", "thehindu.com",
     "globo.com", "premiumtimesng.com", "inquirer.net",
     "reuters.com", "apnews.com", "nhk.or.jp", "kyodonews.net",
+    "upi.com", "koreaherald.com", "straitstimes.com",
+    "africanews.com", "aljazeera.com", "rte.ie", "euronews.com",
+    "independent.co.uk", "skynews.com", "spiegel.de",
+    "scmp.com", "timesofindia.indiatimes.com", "ndtv.com",
+    "theverge.com", "techcrunch.com", "wired.com", "latimes.com",
+    "pbs.org", "axios.com", "time.com", "foxnews.com",
+    "abcnews.go.com", "nypost.com", "phys.org",
+    "mashable.com", "quantamagazine.org", "newscientist.com",
 )
 REVIEW_METHOD = "source-quality-two-stage-AI"
 LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
@@ -190,20 +199,45 @@ def discover(now, fetch=fetch_bytes):
     """
     start, end = date_window(now.date())
     candidates, seen, problems = [], set(), []
+    host_counts, market_counts = {}, {}
     def add(lead):
-        if len(candidates) >= 150:
+        # Keep enough room for several regions and dozens of publishers.
+        if len(candidates) >= 360:
             return
-        url = lead.get("url", "")
-        if (url in seen or safe_url(url) != url or
-                not editorial.public_host(url) or
-                not MISHAP.search(str(lead.get("title", ""))) or
-                editorial.BLOCK.search(str(lead.get("title", "")))):
+        url=lead.get("url","")
+        title=str(lead.get("title",""))
+        # A dedicated newsroom's *Odd News* section already provides topical
+        # discovery. Ordinary headline feeds still need a gentle-mishap hook.
+        focused=lead.get("focus")=="oddities"
+        if (url in seen or safe_url(url)!=url or
+                (not focused and not MISHAP.search(title)) or
+                editorial.BLOCK.search(title) or
+                not editorial.public_host(url)):
             return
-        seen_day = lead_day(lead)
+        seen_day=lead_day(lead)
         if seen_day is None or not start <= seen_day <= end:
             return
+        host=editorial.host(url)
+        market=str(lead.get("sourcecountry") or "未確認")
+        if (host_counts.get(host,0)>=18 or
+                market_counts.get(market,0)>=65):
+            return
         seen.add(url)
+        host_counts[host]=host_counts.get(host,0)+1
+        market_counts[market]=market_counts.get(market,0)+1
         candidates.append(lead)
+
+    # Source registry first: dedicated oddity reporting and regional desks
+    # should not be crowded out by US/English-language news aggregators.
+    # Feed success is only discovery metadata, NEVER article verification.
+    try:
+        extra=fetch_registry_feeds(
+            sources=source_registry(),fetch=fetch,parse=parse_rss,
+            max_workers=10,per_feed=30)
+        for lead in extra:add(lead)
+    except (OSError,ValueError,TypeError,KeyError) as exc:
+        problems.append(type(exc).__name__)
+        print("Publisher RSS registry unavailable:",type(exc).__name__,flush=True)
 
     gdelt_rows = 0
     for query in GDELT_QUERIES:
@@ -557,7 +591,7 @@ def run(now=None, root=ROOT):
     leads = discover(now)
     # Spread the scarce pairing context across publisher regions and domains,
     # rather than letting one high-volume feed consume the first 100 headlines.
-    leads = editorial.balanced_source_retrieval(leads, limit=150)
+    leads = editorial.balanced_source_retrieval(leads, limit=220)
     if len(leads) < 1:
         print("No recent source leads; no publication.")
         return False
