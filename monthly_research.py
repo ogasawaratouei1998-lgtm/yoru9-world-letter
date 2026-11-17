@@ -241,7 +241,8 @@ def discover(now, fetch=fetch_bytes):
     try:
         extra=fetch_registry_feeds(
             sources=source_registry(),fetch=fetch,parse=parse_rss,
-            max_workers=10,per_feed=30)
+            max_workers=10,per_feed=30,
+            report_path="data/source-health.json")
         for lead in extra:add(lead)
     except (OSError,ValueError,TypeError,KeyError) as exc:
         problems.append(type(exc).__name__)
