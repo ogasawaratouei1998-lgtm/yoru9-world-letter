@@ -227,6 +227,54 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertGreaterEqual(len(photos),len(curated["stories"]))
         self.assertEqual(len(photos),len({stop["photo"] for stop in stops.values()}))
 
+    def test_monthly_postcard_appears_before_detailed_article_and_disclaimer_once(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        month=page.split("function renderMonthRetrospective(){",1)[1].split(
+            "async function updateMonthFromArchives(issues)",1)[0]
+        self.assertLess(month.index("'<p class=\"month-quip\"'"),
+                        month.index("class=\"travel-slot month-travel-slot"))
+        self.assertLess(month.index("class=\"travel-slot month-travel-slot"),
+                        month.index("storyDetailHtml(s)+"))
+        self.assertEqual(page.count("過去に報道された実話です。今日起きた出来事ではありません。"),1)
+
+    def test_monthly_live_updates_preserve_open_cards(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn("const monthlyExpandedStories=new Set()",page)
+        self.assertIn("if(details.open)monthlyExpandedStories.add(card.dataset.monthStoryId)",page)
+        self.assertIn("details.open=monthlyExpandedStories.has(s.id)",page)
+        self.assertIn("if(details.open)monthlyExpandedStories.add(storyId)",page)
+        self.assertIn("else monthlyExpandedStories.delete(storyId)",page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_photo_selection_never_switches_country_just_to_avoid_repetition(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index("const travelSelections=new Map();")
+        end=page.index("function travelPostcardHtml(",start)
+        logic=page[start:end]
+        # Small deterministic catalog: the second American article should
+        # reuse a US photograph rather than mislabel a Japan photograph as US.
+        payload={
+          "one":{"country":"アメリカ合衆国","place":"A","region":"USA","latitude":40,"longitude":-70,
+                  "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/x/photo.jpg",
+                  "photoAsset":"assets/travel/usa.jpg",
+                  "photoPage":"https://commons.wikimedia.org/wiki/File:USA.jpg",
+                  "licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},
+          "two":{"country":"日本","place":"B","region":"日本","latitude":35,"longitude":139,
+                  "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/y/photo.jpg",
+                  "photoAsset":"assets/travel/japan.jpg",
+                  "photoPage":"https://commons.wikimedia.org/wiki/File:Japan.jpg",
+                  "licenseUrl":"https://creativecommons.org/licenses/by/4.0/"}
+        }
+        import json
+        script=logic+"\\nconst stops="+json.dumps(payload,ensure_ascii=False)+";\\n"+(
+            "const first=chooseTravelPhoto({id:'first',country:'アメリカ'},stops);"
+            "const second=chooseTravelPhoto({id:'second',country:'アメリカ'},stops);"
+            "if(!first||!second||first.country!=='アメリカ合衆国'||"
+            "second.country!=='アメリカ合衆国')process.exit(3);"
+        )
+        p=subprocess.run(["node","-e",script],capture_output=True,text=True)
+        self.assertEqual(p.returncode,0,p.stderr)
+
     def test_monthly_retention_uses_actual_publish_or_collection_date(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn("function isMonthDate(date,start,end)",page)
