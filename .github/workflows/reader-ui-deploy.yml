@@ -45,8 +45,11 @@ jobs:
           html = Path('_site/index.html').read_text(encoding='utf-8')
           worker = Path('_site/service-worker.js').read_text(encoding='utf-8')
           assert "INITIAL_MONTHLY_COLLAPSED" in html
+          assert "function closeOptionalTravelPanels()" in html
+          assert "closeOptionalTravelPanels();\n if(!navigator.onLine)return;" in html
+          assert "panel.hidden=true;\n  panel.replaceChildren();" in html
           assert "if(button&&button.getAttribute('aria-expanded')==='false')button.click();" not in html
-          assert "const SHELL_CACHE = 'yoru9-shell-v9';" in worker
+          assert "const SHELL_CACHE = 'yoru9-shell-v10';" in worker
           print('月間特集・小旅行の初期閉じ状態とキャッシュ更新を確認')
           PY
       - uses: actions/configure-pages@v5
@@ -78,8 +81,9 @@ jobs:
                   with urlopen(req_sw, timeout=15) as response:
                       worker = response.read().decode('utf-8')
                   if ("INITIAL_MONTHLY_COLLAPSED" in html and
+                      "function closeOptionalTravelPanels()" in html and
                       "if(button&&button.getAttribute('aria-expanded')==='false')button.click();" not in html and
-                      "yoru9-shell-v9" in worker):
+                      "yoru9-shell-v10" in worker):
                       print('公開サイトから新しい閉じた初期状態と更新版キャッシュを取得できました')
                       break
                   print('公開サイトは更新反映待ち:', attempt + 1)
