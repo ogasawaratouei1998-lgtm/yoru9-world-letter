@@ -385,6 +385,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             **base,"humanActor":"動物管理局の担当者",
             "humanMistake":"ワニだと見間違えて救助に出動した",
             "title":"担当者がワニと勘違いして出動、実は浮き輪"}))
+        # Do not reject source-grounded human errors on their wording alone.
+        self.assertIsNone(human_failure_rejection({
+            **base, "humanMistake":"宛名と異なる住所へ商品を配送してしまった"}))
+        self.assertEqual(human_failure_rejection({
+            **base, "humanMistake":"珍しい生物を見つけた"}),
+            "animal_sighting_is_not_a_human_error")
         self.assertIsNone(comic_line_rejection(
             "配達員、コーヒーの注文を受けたら救助まで兼任することに。"))
         self.assertEqual(comic_line_rejection("世界は予想外です。"),

@@ -63,9 +63,13 @@ def human_failure_rejection(story):
     if (not isinstance(actor,str) or not 2<=len(actor.strip())<=90
             or ANIMAL_ONLY_ACTOR.fullmatch(actor.strip())):
         return "missing_human_mistake_actor"
-    if (not isinstance(error,str) or not 10<=len(error.strip())<=220
-            or not HUMAN_ERROR_SIGNAL.search(error)):
+    # Natural descriptions of mistakes do not always contain specific
+    # words like ミス/間違い. Let the independent fact checker determine
+    # whether the incident is genuinely a documented human blunder.
+    if not isinstance(error,str) or not 10<=len(error.strip())<=220:
         return "missing_concrete_human_error"
+    if re.match(r"^(?:珍しい|珍奇な|不思議な|見たことのない)(?:動物|生物|鳥|鹿|シカ)",error.strip()):
+        return "animal_sighting_is_not_a_human_error"
     title=story.get("title","")
     if not isinstance(title,str):
         return "missing_human_error_headline"
