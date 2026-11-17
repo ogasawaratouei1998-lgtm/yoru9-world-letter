@@ -11,7 +11,7 @@ from __future__ import annotations
 from datetime import datetime, timedelta, timezone
 from difflib import SequenceMatcher
 from pathlib import Path
-from urllib.parse import urlencode, urlsplit
+from urllib.parse import urlencode, urlsplit, parse_qs
 from zoneinfo import ZoneInfo
 import json
 import os
@@ -39,6 +39,16 @@ MISHAP = re.compile(
 GDELT_QUERIES = (
     '("mix-up" OR "blunder" OR "typo")',
     '("accidentally" OR "by mistake" OR "mishap")',
+)
+# Bing News RSS keeps a verifiable publisher address in the "url" parameter.
+# It is a DISCOVERY source only; original publisher bodies must still be fetched.
+BING_QUERIES = (
+    ("mix-up mistake unusual", "en-US"),
+    ("accidentally delivered wrong address", "en-US"),
+    ("typo apology funny", "en-GB"),
+    ("sports unexpected blunder", "en-GB"),
+    ("勘違い 誤配達 珍事", "ja-JP"),
+    ("うっかり ミス ニュース", "ja-JP"),
 )
 REQUIRED = ("id", "country", "category", "categoryLabel", "label",
             "title", "summary", "detail", "quip", "quipSecond",
@@ -79,6 +89,28 @@ def lead_day(lead):
                 return None
         return date.astimezone(JST).date()
     except ValueError:
+        return None
+
+
+def bing_publisher_url(raw):
+    """Resolve only the URL parameter of Bing's RSS apiclick wrapper.
+
+    Neither Bing headlines nor this URL is considered evidence. The destination
+    must still pass safe URL/host checks and later source-text verification.
+    """
+    try:
+        parts = urlsplit(str(raw))
+        if (parts.scheme != "https" or parts.hostname not in ("bing.com", "www.bing.com")
+                or parts.path != "/news/apiclick.aspx"):
+            return None
+        candidates = parse_qs(parts.query).get("url", [])
+        if len(candidates) != 1:
+            return None
+        destination = candidates[0]
+        if safe_url(destination) != destination or not editorial.public_host(destination):
+            return None
+        return destination
+    except (ValueError, TypeError):
         return None
 
 
@@ -131,6 +163,23 @@ def discover(now, fetch=fetch_bytes):
         except (OSError, ValueError, KeyError, TypeError) as exc:
             problems.append(type(exc).__name__)
 
+    # A second keyless discovery source helps when GDELT is rate-limited.
+    # The apiclick wrapper is never stored as a source or publisher URL.
+    bing_added = 0
+    for query, market in BING_QUERIES:
+        params = {"q": query, "format": "rss", "mkt": market}
+        try:
+            rss = parse_rss(fetch("https://www.bing.com/news/search?" + urlencode(params)),
+                            "Bing News RSS", sourcecountry="未確認")
+            for item in rss:
+                publisher = bing_publisher_url(item["url"])
+                if publisher:
+                    before = len(candidates)
+                    add({**item, "url": publisher, "provider": "Bing News publisher discovery"})
+                    bing_added += len(candidates) - before
+        except (OSError, ValueError, TypeError, KeyError) as exc:
+            problems.append(type(exc).__name__)
+    print("Monthly Bing direct publisher leads:", bing_added, flush=True)
     # Direct editorial publishers broaden geography and provide real bodies.
     for url, provider, language, country in LOCAL_LANGUAGE_FEEDS[:8]:
         try:
