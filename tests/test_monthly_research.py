@@ -176,6 +176,19 @@ class MonthlyResearchTest(unittest.TestCase):
             groups=m.candidate_pairs(leads,ask_ai=lambda *args,**kw:{"pairs":[]})
         self.assertEqual([[x["url"] for x in group] for group in groups],[[ORIGINAL]])
 
+    def test_broken_two_source_pair_still_allows_original_single_review(self):
+        original={"url":ORIGINAL,"title":"Harmless delivery mix-up at local shop",
+                  "seendate":"2026-11-17"}
+        other={"url":URLS[0],"title":"Harmless delivery mix-up at local shop",
+               "seendate":"2026-11-17"}
+        with patch.object(m.editorial,"public_host",return_value=True), \
+             patch.object(m.editorial,"corroboration_groups",
+                          return_value=[[original,other]]):
+            groups=m.candidate_pairs([original,other],
+                ask_ai=lambda prompt,temperature=0.1:{"pairs":[]})
+        self.assertEqual([len(group) for group in groups],[2,1])
+        self.assertEqual(groups[1][0]["url"],ORIGINAL)
+
     def test_no_key_is_safe_skip_with_no_public_file(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch.object(m.editorial, "KEY", ""):
