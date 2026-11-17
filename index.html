@@ -818,9 +818,16 @@ function validMonthStory(s){
  // Their public 'published' status is confirmed separately from the archive.
  if(s.monthOrigin==='published')return true;
  const urls=s.verificationUrls;
- if(!Array.isArray(urls)||urls.length<2||!urls.includes(s.sourceUrl)||
+ if(!Array.isArray(urls)||!urls.includes(s.sourceUrl)||
     urls.some(u=>typeof u!=='string'||safeUrl(u)==='#'))return false;
- try{return new Set(urls.map(u=>new URL(u).hostname.replace(/^www\./,''))).size>=2;}
+ // Monthly collections may contain one trusted original publisher report.
+ // Historic curated stories retain their original 2-publisher rule.
+ if(s.monthOrigin==='monthly'){
+  if(s.sourceBasis==='original-report')return urls.length===1;
+  if(s.sourceBasis!=='independent-reports'||urls.length!==2)return false;
+ }else if(urls.length<2)return false;
+ try{return new Set(urls.map(u=>new URL(u).hostname.replace(/^www\./,''))).size>=
+  (s.monthOrigin==='monthly'?urls.length:2);}
  catch(_){return false;}
 }
 function monthSourceKeys(s){
@@ -930,7 +937,8 @@ async function loadMonthRetrospective(){
  }catch(error){console.info('過去1か月の特集を読み込めませんでした',error);}
 }
 async function loadMonthlyVerified(){
- // A separate editorial workflow publishes only audited two-publisher stories.
+ // The monthly workflow publishes only audited original publisher reports
+ // or independently corroborated incidents.
  // Unverified candidates, private previews and drafts are never fetched here.
  const {start,end}=monthWindow();
  try{
@@ -946,7 +954,7 @@ async function loadMonthlyVerified(){
     if(!res.ok)return [];
     const document=await res.json();
     if(document.status!=='published-monthly'||document.collectionDate!==date||
-       document.reviewMethod!=='two-source-two-stage-AI'||
+       !['two-source-two-stage-AI','source-quality-two-stage-AI'].includes(document.reviewMethod)||
        !Array.isArray(document.stories))return [];
     return document.stories.map(story=>({...story,monthOrigin:'monthly',collectionDate:date}))
      .filter(validMonthStory);
