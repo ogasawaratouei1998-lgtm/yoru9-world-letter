@@ -457,7 +457,7 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         "each supported by the SOURCE TEXT, even for small everyday blunders. "
         "Never fabricate a mistake to repurpose wildlife news. "
         "The title must center the human error and its ironic outcome. "
-        "Reject emergencies, harassment of volunteer responders, serious conflict, fear, harm, unverified personal anecdotes, "
+        "Reject emergencies, harassment of volunteer responders, serious student or political disciplinary conflicts, fear, harm, unverified personal anecdotes, "
         "private allegations, and corporate crises. A headline, search snippet, "
         "or publisher reputation cannot establish a claim. Every fact, incident "
         "country, expectedPlan, observedOutcome and the reporting date must "

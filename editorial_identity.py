@@ -131,6 +131,10 @@ SERVICE_PROTEST=re.compile(
     re.I
 )
 PROTEST_PATTERN=re.compile(r"苦情|抗議|クレーム|complain|protest",re.I)
+# A punitive ceremony confrontation is not a lighthearted human blunder.
+CEREMONY=re.compile(r"学位授与式|卒業式|convocation|graduation ceremony",re.I)
+DISCIPLINARY=re.compile(r"停学|退学|処分|大臣|閣僚|学内評議会|suspend|disciplin|minister|council",re.I)
+DISRUPTION=re.compile(r"妨害|抗議|騒動|乱し|途中退席|protest|disrupt|walked out|row\\b|clash",re.I)
 
 
 def noncomic_incident_rejection(story, fetched_articles=()):
@@ -146,6 +150,11 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     surface=" ".join(str(story.get(key,"")) for key in fields)
     bodies=" ".join(str(item.get("text",item.get("body","")))
                     for item in fetched_articles if isinstance(item,dict))
+    if ((CEREMONY.search(surface) and DISCIPLINARY.search(surface)
+             and DISRUPTION.search(surface)) or
+            (CEREMONY.search(bodies) and DISCIPLINARY.search(bodies)
+             and DISRUPTION.search(bodies))):
+        return "disciplinary_confrontation_not_comic_error"
     if ((EMERGENCY_WORK.search(surface) and HARASSMENT.search(surface)) or
             (EMERGENCY_WORK.search(bodies) and HARASSMENT.search(bodies))):
         return "harassment_of_emergency_responders"

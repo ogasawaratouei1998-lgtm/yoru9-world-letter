@@ -19,6 +19,28 @@ class ComicSituationTests(unittest.TestCase):
         self.assertEqual(noncomic_incident_rejection(sanitized,original),
                          "harassment_of_emergency_responders")
 
+    def test_unfunny_student_disciplinary_dispute_is_rejected(self):
+        story={"title":"学位授与式の騒動で大臣が途中退席、学生らに処分",
+               "humanActor":"学生リーダー",
+               "humanMistake":"式典で抗議をして学内評議会に謝罪を求められた"}
+        article=[{"text":"Convocation row: council asks suspended students to "
+                         "accept mistake after minister walked out."}]
+        self.assertEqual(noncomic_incident_rejection(story,article),
+                         "disciplinary_confrontation_not_comic_error")
+        softened={"title":"大学で思いがけない展開",
+                  "humanActor":"学生",
+                  "humanMistake":"進行を勘違いしてしまった"}
+        self.assertEqual(noncomic_incident_rejection(softened,article),
+                         "disciplinary_confrontation_not_comic_error")
+
+    def test_comic_graduation_diploma_typo_still_eligible(self):
+        story={"title":"卒業式の証書を誤字で印刷、職員が訂正",
+               "humanActor":"事務職員",
+               "humanMistake":"卒業証書の文字を間違えて印刷した"}
+        article=[{"text":"At graduation ceremony the printer misspelled "
+                         "names and staff corrected the diplomas."}]
+        self.assertIsNone(noncomic_incident_rejection(story,article))
+
     def test_real_harmless_work_mixup_remains_allowed(self):
         story={"title":"市の道路工事で標示を誤記した",
                "humanActor":"市役所の道路管理担当",
