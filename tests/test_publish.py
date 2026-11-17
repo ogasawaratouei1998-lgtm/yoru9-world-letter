@@ -249,6 +249,23 @@ class PublishingTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_approved(data,"2026-11-18")
 
+    def test_automated_editor_cannot_publish_deliberate_student_dispute(self):
+        data=fixture("2026-11-17")
+        data["editionDate"]="2026-11-18"
+        data["approvedBy"]="automated-two-stage-review"
+        for item in data["stories"]:
+            item["reported"]="2026-11-17"
+            item["editorQualityVerified"]=True
+            item["humanFailureVerified"]=True
+            item["humanActor"]="学校関係者"
+            item["humanMistake"]="式典で別の原稿を読んでしまった"
+        data["stories"][0]["title"]="学位授与式を妨害、学生に懲戒処分"
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
+        data["stories"][0]["title"]="式典の担当者が原稿を読み間違えた"
+        published=validate_approved(data,"2026-11-18")
+        self.assertEqual(len(published["stories"]),3)
+
     def test_automated_editor_cannot_publish_emergency_harassment_as_comedy(self):
         data=fixture("2026-11-17")
         data["editionDate"]="2026-11-18"

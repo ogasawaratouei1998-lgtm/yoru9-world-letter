@@ -396,6 +396,22 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(comic_line_rejection("世界は予想外です。"),
                          "no_usable_first_punchline")
 
+    def test_deliberate_university_disciplinary_dispute_is_not_a_funny_mistake(self):
+        from editorial_identity import human_failure_rejection
+        row={
+            "humanActor":"学生たち",
+            "humanMistake":"大学の学位授与式で大臣が退席する事態を招いた",
+            "title":"学位授与式を乱して学生らが停学処分に",
+            "summary":"式典の妨害をめぐって大学評議会と学生が対立した"}
+        self.assertEqual(human_failure_rejection(row),
+                         "institutional_confrontation_not_comic_miscalculation")
+        # Mere graduation/ceremony context must not ban a harmless human error.
+        harmless={
+            "humanActor":"式典の司会者",
+            "humanMistake":"卒業式の祝辞で別の式典の原稿を読んでしまった",
+            "title":"卒業式で別の日の原稿を読んだ司会者"}
+        self.assertIsNone(human_failure_rejection(harmless))
+
     def test_emergency_responder_harassment_is_not_a_comedy_story(self):
         from editorial_identity import human_failure_rejection
         emergency={"humanActor":"地元の住民たち",

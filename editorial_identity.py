@@ -24,6 +24,10 @@ HUMAN_FAILURE_MISSION=(
     "Do not invent a human mistake to force an amusing animal sighting into "
     "the column. Ordinary, harmless personal, workplace or public-relations "
     "blunders are welcome even with no big consequences. "
+    "Do not turn intentional intimidation, disruptive political protest, "
+    "university disciplinary confrontations or public-safety disputes into "
+    "jokes. Someone being disciplined for alleged misconduct is NOT the "
+    "same as a documented accidental human blunder with an ironic payoff. "
 )
 
 ANIMAL_TOPIC=re.compile(
@@ -69,6 +73,20 @@ RESPONDER_HARASSMENT=re.compile(
     re.I,
 )
 
+# Deliberate disciplinary and institutional protest disputes are not
+# lighthearted, accidental blunders. Conjunction keeps harmless ceremony
+# mishaps like forgetting one's speech admissible.
+FORMAL_CONFLICT_CONTEXT=re.compile(
+    r"学位授与式|卒業式|式典|学内評議会|学生リーダー|学内処分|"
+    r"大学.*(?:抗議|処分)|convocation|graduation ceremony|student council",
+    re.I,
+)
+DELIBERATE_CONFLICT_ACTION=re.compile(
+    r"妨害|乱し|退席させ|抗議|対立|停学|処分|懲戒|"
+    r"disrupt|protest|suspended|disciplin|confrontation",
+    re.I,
+)
+
 def human_failure_rejection(story):
     """Require the source-checkable identity of a person's actual mistake."""
     if not isinstance(story,dict):
@@ -94,6 +112,8 @@ def human_failure_rejection(story):
                        ("title","summary","detail","humanMistake","observedOutcome"))
     if EMERGENCY_RESPONSE.search(situation) and RESPONDER_HARASSMENT.search(situation):
         return "emergency_responder_harassment_not_comic_blunder"
+    if FORMAL_CONFLICT_CONTEXT.search(situation) and DELIBERATE_CONFLICT_ACTION.search(situation):
+        return "institutional_confrontation_not_comic_miscalculation"
     return None
 
 
@@ -131,10 +151,6 @@ SERVICE_PROTEST=re.compile(
     re.I
 )
 PROTEST_PATTERN=re.compile(r"苦情|抗議|クレーム|complain|protest",re.I)
-# A punitive ceremony confrontation is not a lighthearted human blunder.
-CEREMONY=re.compile(r"学位授与式|卒業式|convocation|graduation ceremony",re.I)
-DISCIPLINARY=re.compile(r"停学|退学|処分|大臣|閣僚|学内評議会|suspend|disciplin|minister|council",re.I)
-DISRUPTION=re.compile(r"妨害|抗議|騒動|乱し|途中退席|protest|disrupt|walked out|row\\b|clash",re.I)
 
 
 def noncomic_incident_rejection(story, fetched_articles=()):
@@ -150,11 +166,6 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     surface=" ".join(str(story.get(key,"")) for key in fields)
     bodies=" ".join(str(item.get("text",item.get("body","")))
                     for item in fetched_articles if isinstance(item,dict))
-    if ((CEREMONY.search(surface) and DISCIPLINARY.search(surface)
-             and DISRUPTION.search(surface)) or
-            (CEREMONY.search(bodies) and DISCIPLINARY.search(bodies)
-             and DISRUPTION.search(bodies))):
-        return "disciplinary_confrontation_not_comic_error"
     if ((EMERGENCY_WORK.search(surface) and HARASSMENT.search(surface)) or
             (EMERGENCY_WORK.search(bodies) and HARASSMENT.search(bodies))):
         return "harassment_of_emergency_responders"

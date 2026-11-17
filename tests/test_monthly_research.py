@@ -59,6 +59,19 @@ class MonthlyResearchTest(unittest.TestCase):
         self.assertTrue(identity.animal_novelty_headline("アシカが植物園に入った"))
         self.assertFalse(identity.animal_novelty_headline("ワニと見間違えて駆けつけた職員"))
 
+    def test_monthly_editor_excludes_deliberate_dispute_not_ceremony_mixup(self):
+        dispute={**sample_story(),
+                 "title":"学位授与式を乱して評議会と学生が対立",
+                 "humanActor":"学生たち",
+                 "humanMistake":"式典に乱入して退席騒動を引き起こした"}
+        harmless={**sample_story(),
+                  "title":"卒業式で読み間違えた司会者",
+                  "humanActor":"式典の司会者",
+                  "humanMistake":"別の式典の原稿を読み上げてしまった"}
+        with patch.object(m.editorial,"public_host",return_value=True):
+            self.assertFalse(m.validate_story(dispute,URLS,TODAY))
+            self.assertTrue(m.validate_story(harmless,URLS,TODAY))
+
     def test_monthly_editor_excludes_emergency_worker_harassment(self):
         story=sample_story()
         story["title"]="消防団員への暴言と嫌がらせ"
