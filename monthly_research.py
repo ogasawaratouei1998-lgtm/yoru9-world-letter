@@ -35,14 +35,14 @@ CATEGORIES = {"person", "work", "company", "sports"}
 # This preference filters retrieval, NOT evidence. All factual claims need fetched original article bodies.
 MISHAP = re.compile(
     r"mistak|mix.?up|blunder|typo|accidental|misprint|wrong|error|mishap|"
-    r"mistaken|confus|apolog|fail|backfir|oops|embarrass|misstep|oddity|"
-    r"unusual|unexpected|odd |weird|mixing up|changed plans|"
-    r"手違い|誤配達|間違|勘違い|失敗|珍事|誤記|謝罪|撤回|おわび|予想外|"
+    r"mistaken|confus|apolog|fail|backfir|oops|embarrass|misstep|"
+    r"mixing up|wrong turn|mixed up|changed plans|"
+    r"手違い|誤配達|間違|勘違い|失敗|誤記|謝罪|撤回|おわび|誤認|"
     r"Verwechslung|Panne|aus Versehen|méprise|par erreur|équivoque|"
     r"equivocación|por error|sin querer|confusión|"
     r"engano|por engano|erro|confusão|sem querer|"
     r"실수|착각|잘못|بالخطأ|خطأ|keliru|kesalahan|"
-    r"うっかり|まさか|珍しい出来事", re.I
+    r"うっかり|誤発注|誤送信|取り違え|確認不足|見間違い", re.I
 )
 GDELT_QUERIES = (
     '("mix-up" OR "blunder" OR "typo")',
@@ -61,7 +61,7 @@ BING_QUERIES = (
 REQUIRED = ("id", "country", "category", "categoryLabel", "label",
             "title", "summary", "detail", "quip",
             "sourceName", "sourceUrl", "reported", "expectedPlan",
-            "observedOutcome", "eventKey")
+            "observedOutcome", "eventKey", "humanActor", "humanMistake")
 # Distinct domains are required, but this list catches some obvious same-owner mirrors.
 SAME_PUBLISHER = (
     {"bbc.co.uk", "bbc.com"},
@@ -76,12 +76,18 @@ LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
 # A concise monthly-only brief replaces the nightly pipeline's elaborate
 # editorial mission. The factual checks below remain independent and strict.
 MONTHLY_BRIEF = (
-    "Yoru9 is a quiet Japanese evening news app featuring real, gentle, "
-    "surprising incidents. Prefer specific everyday miscommunications, "
-    "small harmless mix-ups and unexpected outcomes, not celebrity or "
-    "corporate importance. Facts come ONLY from the fetched publisher "
-    "article bodies. Give a clear short Japanese account and one warm "
-    "observational joke about the mismatch, never a victim or individual. "
+    "Yoru9 is a Japanese COMEDY COLUMN ABOUT HUMAN BLUNDERS, NOT animal "
+    "oddities, unusual wildlife or general surprising-news stories. "
+    "Each article MUST identify a real person's or human-run organization's "
+    "specific mistaken assumption, decision, mix-up or botched plan and its "
+    "actual unexpected consequence. A strange deer, monkey rescue, crab "
+    "migration, sea lion entering a nursery or rare animal sighting is NOT "
+    "a human error. An animal-related story is allowed ONLY when a real "
+    "human's specific mistake is the documented comic center. Prefer "
+    "small harmless work and everyday mix-ups to celebrity importance. "
+    "Facts come ONLY from fetched publisher article bodies. Write as an "
+    "experienced Japanese comedy writer: crisp human setup, sudden funny "
+    "payoff, never a victim or identity as the joke. "
     "No invented details, sensationalism, clichés, reader advice or "
     "forced optimism. Reject rumor, private-life allegations, injury, "
     "tragedy, or unfounded claims. Fewer safe, sourced stories are better "
@@ -196,11 +202,10 @@ def discover(now, fetch=fetch_bytes):
             return
         url=lead.get("url","")
         title=str(lead.get("title",""))
-        # A dedicated newsroom's *Odd News* section already provides topical
-        # discovery. Ordinary headline feeds still need a gentle-mishap hook.
-        focused=lead.get("focus")=="oddities"
+        # Oddity desks contain many animal sightings; only human mistake
+        # signals get scarce article-fetch and AI editorial slots.
         if (url in seen or safe_url(url)!=url or
-                (not focused and not MISHAP.search(title)) or
+                not MISHAP.search(title) or
                 editorial.BLOCK.search(title) or
                 not editorial.public_host(url)):
             return
@@ -379,7 +384,9 @@ def validate_story(story, urls, today):
                 not isinstance(story["quipSecond"], str) or
                 not 10 <= len(story["quipSecond"].strip()) <= 100 or
                 story["quip"].strip() == story["quipSecond"].strip())) or
-            editorial.editorial_fit_rejection(story)):
+            editorial.editorial_fit_rejection(story) or
+            editorial.human_failure_rejection(story) or
+            editorial.comic_line_rejection(story["quip"])):
         return False
     reported = safe_day(story["reported"])
     if reported is None or not date_window(today)[0] <= reported <= today:
@@ -439,8 +446,12 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         MONTHLY_BRIEF +
         " You are monthly editor A. Draft at most ONE Japanese news story "
         "only when the evidence meets this source rule: " + evidence_rule +
-        " The article must describe a real harmless, specific, human-scale "
-        "surprising mismatch between an intended plan and the observed outcome. "
+        " The article must describe a real person's or human-run organization's "
+        "documented mistake or wrong assumption, not merely a strange animal "
+        "or an unexpectedly funny event. Include humanActor and humanMistake, "
+        "each supported by the SOURCE TEXT, even for small everyday blunders. "
+        "Never fabricate a mistake to repurpose wildlife news. "
+        "The title must center the human error and its ironic outcome. "
         "Reject emergencies, fear, harm, unverified personal anecdotes, "
         "private allegations, and corporate crises. A headline, search snippet, "
         "or publisher reputation cannot establish a claim. Every fact, incident "
@@ -451,8 +462,11 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         " and " + str(today) + ". "
         "Return JSON {story:object|null} using fields " + str(REQUIRED) +
         " plus verificationUrls containing the EXACT supplied URLs in order. "
-        "quipSecond is OPTIONAL: supply it only when it adds a genuinely "
-        "different, source-supported lighthearted observation. "
+        "quip must be the strongest of FOUR privately drafted Japanese "
+        "tsukkomi options: specific setup, unexpected compact payoff at "
+        "the end; not a news recap, platitude or bland life lesson. "
+        "quipSecond is OPTIONAL: supply it only if a new, equally funny "
+        "and source-grounded second angle exists. "
         "Do not invent a second URL or an official statement. "
         "The story's sourceName must accurately identify its original outlet. "
         "Return null on uncertainty. Previously released stories: " +
@@ -491,10 +505,23 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
             "alone NEVER verify a story. Reject if a source is incomplete, "
             "does not explicitly support the precise expectation and outcome, "
             "or fails to establish a reliable reported date. "
-            "Be conservative. Only approve entirely substantiated, "
-            "non-tragic, respectful stories. Return JSON with EXACT fields "
+            "Verify there really was a specific HUMAN ERROR with an "
+            "identified humanActor and humanMistake; the source must prove "
+            "the person's plan, error and contrasting result. Reject animal "
+            "sightings, rescues, wildlife antics, unusual discoveries and "
+            "generic happy or surprising news with no human mistake. "
+            "Set humanFailureConfirmed=false whenever the error is inferred. "
+            "Check quip as a JAPANESE COMEDY EDITOR: a recognizable setup "
+            "about the specific error followed by a concise unexpected "
+            "payoff, rather than simply repeating the title. Set "
+            "comicPunchlineWorks=false on bland paraphrases. "
+            "Be conservative on facts but allow small harmless mistakes: "
+            "size and number of media sources do not make a joke better. "
+            "Only approve substantiated, non-tragic, amusing human failures. "
+            "Return JSON with EXACT fields "
             "{approved:boolean,factsVerified:boolean,originalReporting:boolean,"
             "dateVerified:boolean,safeTone:boolean,"
+            "humanFailureConfirmed:boolean,comicPunchlineWorks:boolean,"
             "independent:boolean,bothSourcesSupport:boolean,reasonCode:string}. "
             "For ONE source, independent and bothSourcesSupport should be false; "
             "for TWO sources, both must be true. Draft: " +
@@ -509,7 +536,8 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
     if not isinstance(verdict, dict) or any(
         verdict.get(field) is not True
         for field in ("approved", "factsVerified", "originalReporting",
-                      "dateVerified", "safeTone")
+                      "dateVerified", "safeTone", "humanFailureConfirmed",
+                      "comicPunchlineWorks")
     ):
         return None
     if not single and not (verdict.get("independent") is True

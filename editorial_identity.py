@@ -74,6 +74,12 @@ def human_failure_rejection(story):
     return None
 
 
+def animal_novelty_headline(title):
+    """Demote animal spectacles while preserving documented human mistakes."""
+    return (isinstance(title,str) and bool(ANIMAL_TOPIC.search(title))
+            and not bool(ANIMAL_MISTAKE_HEADLINE.search(title)))
+
+
 def comic_line_rejection(quip):
     """Only catch obvious non-jokes; comic timing is decided by a real editor."""
     if not isinstance(quip,str) or not 12<=len(quip.strip())<=100:

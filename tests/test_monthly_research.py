@@ -35,10 +35,26 @@ def sample_story():
         "reported": TODAY.isoformat(),
         "expectedPlan": "注文品を正しい届け先へ配達する予定でした。",
         "observedOutcome": "届け先を取り違え、予定とは違う対応が必要になりました。",
+        "humanActor": "店の担当スタッフ",
+        "humanMistake": "注文した品の配達先を間違えて取り違えた",
     }
 
 
 class MonthlyResearchTest(unittest.TestCase):
+    def test_monthly_is_human_failure_not_animals_or_oddities(self):
+        import editorial_identity as identity
+        self.assertFalse(m.MISHAP.search("Rare unicorn deer caught on camera"))
+        self.assertFalse(m.MISHAP.search("Sea lion visits nursery"))
+        self.assertTrue(m.MISHAP.search("Worker accidentally emailed wrong customer"))
+        story=sample_story()
+        self.assertTrue(m.validate_story(story,URLS,TODAY))
+        self.assertFalse(m.validate_story({**story,"title":"野生のサルが保護された"},URLS,TODAY))
+        self.assertFalse(m.validate_story({**story,"humanActor":"サル"},URLS,TODAY))
+        self.assertFalse(m.validate_story({**story,"humanMistake":"珍しい生物を見つけた"},URLS,TODAY))
+        self.assertIn("COMEDY COLUMN ABOUT HUMAN BLUNDERS",m.MONTHLY_BRIEF)
+        self.assertTrue(identity.animal_novelty_headline("アシカが植物園に入った"))
+        self.assertFalse(identity.animal_novelty_headline("ワニと見間違えて駆けつけた職員"))
+
     def test_window_is_jst_thirty_calendar_dates(self):
         start, end = m.date_window(TODAY)
         self.assertEqual(start.isoformat(), "2026-10-19")
@@ -92,7 +108,7 @@ class MonthlyResearchTest(unittest.TestCase):
             return {"approved": True, "independent": True,
                     "bothSourcesSupport": True, "factsVerified": True,
                     "originalReporting": True, "dateVerified": True,
-                    "safeTone": True, "reasonCode": "verified"}
+                    "safeTone": True, "humanFailureConfirmed":True, "comicPunchlineWorks":True, "reasonCode": "verified"}
         group = [{"url": URLS[0], "title": "mix-up", "seendate": "2026-11-17"},
                  {"url": URLS[1], "title": "mix-up", "seendate": "2026-11-17"}]
         with patch.object(m.editorial, "public_host", return_value=True):
@@ -124,7 +140,7 @@ class MonthlyResearchTest(unittest.TestCase):
             if "monthly editor A" in prompt:
                 return {"story":single}
             return {"approved":True,"factsVerified":True,"originalReporting":True,
-                    "dateVerified":True,"safeTone":True,"independent":False,
+                    "dateVerified":True,"safeTone":True, "humanFailureConfirmed":True, "comicPunchlineWorks":True,"independent":False,
                     "bothSourcesSupport":False,"reasonCode":"original_verified"}
         with patch.object(m.editorial,"public_host",return_value=True):
             result=m.make_story(group,TODAY,[],ask_ai=ask,
@@ -144,7 +160,7 @@ class MonthlyResearchTest(unittest.TestCase):
             if "monthly editor A" in prompt:
                 return {"story":single}
             return {"approved":True,"factsVerified":True,"originalReporting":False,
-                    "dateVerified":True,"safeTone":True}
+                    "dateVerified":True,"safeTone":True, "humanFailureConfirmed":True, "comicPunchlineWorks":True}
         with patch.object(m.editorial,"public_host",return_value=True):
             self.assertIsNone(m.make_story(group,TODAY,[],ask_ai=weak,
                               source_reader=lambda url:"Social post claimed a mistake. "*32))
@@ -203,7 +219,7 @@ class MonthlyResearchTest(unittest.TestCase):
         def ask(prompt,temperature=0.1):
             if "monthly editor A" in prompt:return {"story":single}
             return {"approved":True,"factsVerified":True,"originalReporting":True,
-                    "dateVerified":True,"safeTone":True,"independent":False,
+                    "dateVerified":True,"safeTone":True, "humanFailureConfirmed":True, "comicPunchlineWorks":True,"independent":False,
                     "bothSourcesSupport":False,"reasonCode":"supported"}
         with patch.object(m.editorial,"public_host",return_value=True):
             self.assertIsNotNone(m.make_story(

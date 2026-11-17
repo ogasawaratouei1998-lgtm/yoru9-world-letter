@@ -188,6 +188,13 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("読者に何も求めない",charter)
         self.assertIn("読者の心を測らない",charter)
 
+    def test_incident_retrieval_prefers_human_errors_over_animals(self):
+        from auto_editorial import incident_priority
+        human={"title":"店員が注文の数を間違えた","url":"https://publisher.example/human"}
+        deer={"title":"珍しいユニコーンのようなシカが出現","url":"https://publisher.example/animal"}
+        self.assertLess(incident_priority(human),incident_priority(deer))
+        self.assertIn("animal_novelty_headline(title)",__import__("inspect").getsource(incident_priority))
+
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
         self.assertIn("real, consequential failures",mission)

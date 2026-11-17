@@ -34,6 +34,13 @@ SEARCHES = [
     ('"por engano" OR "erro de pedido" when:7d', 'pt', 'BR', 'BR:pt-419'),
     ('(실수 OR 착각) when:7d', 'ko', 'KR', 'KR:ko'),
     ('"mistake" OR "mix-up" when:7d', 'en', 'IN', 'IN:en'),
+    # Human-caused errors, not animal oddities or generic surprise clips.
+    ('"sent by mistake" OR "wrong recipient" OR "accidental email" when:7d', 'en', 'GB', 'GB:en'),
+    ('"wrong order" OR "order mix-up" OR "misprinted" when:7d', 'en', 'US', 'US:en'),
+    ('"mistaken identity" OR "mistook for" when:7d', 'en', 'AU', 'AU:en'),
+    ('(間違えて送信 OR 誤発注 OR 確認ミス OR 人違い) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('("se equivocó" OR "por equivocación") when:7d', 'es', 'MX', 'MX:es'),
+    ('("falsche Bestellung" OR "versehentlich geschickt") when:7d', 'de', 'DE', 'DE:de'),
     ('"accidentally ordered" OR "wrong destination" when:7d', 'en', 'US', 'US:en'),
     ('"mix-up" OR "wrong" when:7d', 'en', 'AU', 'AU:en'),
     # Broaden the search beyond the ten original editions; every result remains unverified.

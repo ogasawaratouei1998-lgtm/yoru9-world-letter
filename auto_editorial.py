@@ -6,6 +6,7 @@ from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from editorial_quality import headline_fidelity_risk, independent_editorial_quality_passed
 from editorial_identity import (
     HUMAN_FAILURE_MISSION, human_failure_rejection, comic_line_rejection,
+    animal_novelty_headline,
 )
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
@@ -185,7 +186,10 @@ INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error
 
 def incident_priority(lead):
     title=lead.get("title","")
-    return (0 if INCIDENT_TERMS.search(title) else 1,
+    # Fetch firsthand reports of real HUMAN BLUNDERS before wildlife novelties.
+    # This is only ranking, not a decision that a headline is true.
+    return (2 if animal_novelty_headline(title) else
+            0 if INCIDENT_TERMS.search(title) else 1,
             1 if host(lead.get("url",""))=="news.google.com" else 0)
 
 
