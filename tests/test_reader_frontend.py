@@ -202,7 +202,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('id="month-travel-',page)
         self.assertIn("control.nextElementSibling",page)
         self.assertIn("visibleMonthStories.find(s=>s.id===control.dataset.monthTravel)",page)
-        self.assertIn("panel.innerHTML=travelPostcardHtml(story,candidate)",page)
+        self.assertIn("panel.innerHTML=travelPostcardHtml(story,candidate,firstIntro)",page)
         self.assertIn("const stops=await loadTravelStops()",page)
         self.assertIn("isMonth?'この国へ30秒だけ寄り道 '",page)
         self.assertIn("(isMonth&&!visibleMonthStories.includes(story))",page)
