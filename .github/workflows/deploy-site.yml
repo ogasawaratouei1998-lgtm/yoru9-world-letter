@@ -37,6 +37,10 @@ jobs:
     environment: github-pages
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Always build the latest verified main, not a stale event SHA.
+          # A monthly release may have been pushed while this job was queued.
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
