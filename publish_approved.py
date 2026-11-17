@@ -178,6 +178,10 @@ def validate_approved(data, expected_date):
         require(valid_url(story['sourceUrl']), f'{i}本目のsourceUrlが安全なHTTPS URLではありません')
         require(story.get('editorVerified') is True and story.get('humorSafe') is True,
                 f'{i}本目は個別の事実確認・危害配慮が未承認です')
+        if (issue_day >= date(2026, 11, 18) and
+                data.get('approvedBy') == 'automated-two-stage-review'):
+            require(story.get('editorQualityVerified') is True,
+                    f'{i}本目は見出しの事実性・翻訳・法的表現・ユーモアの独立審査が未完了です')
         urls = story.get('verificationUrls')
         # Existing historical/special records retain their original two-source
         # contract. New regular issues may use ONE verified original publisher

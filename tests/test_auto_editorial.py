@@ -341,6 +341,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 editorial.ai("Return JSON")
             model.assert_not_called()
 
+    def test_independent_japanese_headline_and_humor_review_is_required(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("headline_fidelity_risk(story,evidence)",code)
+        self.assertIn("independent_editorial_quality_passed(audit)",code)
+        self.assertIn('story["editorQualityVerified"]=True',code)
+        self.assertIn("legalStatusAccurate",code)
+        self.assertIn("translationAccurate",code)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")

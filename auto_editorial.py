@@ -3,6 +3,7 @@
 import json, os, re, sys, ipaddress, socket, time
 from country_codes import country_code, country_key, country_region
 from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
+from editorial_quality import headline_fidelity_risk, independent_editorial_quality_passed
 from html.parser import HTMLParser
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -71,7 +72,7 @@ WRITING_CRAFT=(
     " Write for a tired Japanese reader at 9pm, not for a compliance committee. "
     "Structure each story as (1) a concrete verified plan or expectation, "
     "(2) the documented mistake and surprising contrast, (3) optionally a small humane aftertaste, never a compulsory lesson. "
-    "Write a factual, curiosity-provoking Japanese headline: put the concrete plan and unexpected outcome in sharp contrast; favor vivid specifics over abstract labels. Never invent numbers, quotes, consequences or a stronger failure than sources establish. "
+    "Write a factual, curiosity-provoking Japanese headline: put the concrete plan and unexpected outcome in sharp contrast; favor vivid specifics over abstract labels. Never invent numbers, quotes, consequences or a stronger failure than sources establish. Legal accusations must retain exact procedural status (charged, to be charged, detained, arrested, convicted are DIFFERENT). Do not translate plant nursery as 植物園 or 産院, and do not turn colorful metaphors into reportable locations. Avoid imputing cunning or intent to anyone without specific source evidence. "
     "The first selected story is the nightly lead and must be the most immediately surprising, clearly verified, humane-to-laugh-at incident; do not rank by human suffering or severity. "
     "A great lead should sound like a small story somebody would retell at dinner, not an emergency alert. When a gentle, independently verified mistake exists, give it editorial preference over an airport shutdown, market shock or executive transition; never exaggerate or invent the gentle story. "
     "The title should show the specific mismatch, not generic outrage or a vague 'big failure'. "
@@ -908,6 +909,9 @@ def main():
         if len(evidence)<1 or (not single_original and
                               (len(evidence)<2 or len({host(x["url"]) for x in evidence})<2)):
             reject("insufficient_fetched_original_reporting");continue
+        headline_risk=headline_fidelity_risk(story,evidence)
+        if headline_risk:
+            reject("headline_"+headline_risk);continue
         if editorial_seconds_remaining()<45:
             print("Independent review stopped at editorial time budget; only prior verified articles remain.",flush=True)
             break
@@ -919,8 +923,8 @@ def main():
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
           "Reject location claims inferred from the feed's language or edition instead of the actual article text, invented customs, national stereotypes, or jokes comparing the reader's troubles with someone else's troubles. "
-          "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Also perform a comedy-editor check on EACH quip: concrete setup supported by sources, short reversal or fresh payoff, first-read clarity in natural Japanese, and a distinctly new premise for quipSecond. Reject generic recap disguised as a punchline, overlong commentary, forced wordplay and recycled 'unexpected!' endings, even when factual; ask the writer to sharpen before publication. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
-          "Output only JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,dateVerified:boolean,safeTone:boolean,reason:string}. Article: "
+          "Reject if evidence is insufficient or unclear. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Carefully verify ENGLISH-to-JAPANESE institution words: plant nursery is a plant-growing nursery, not a botanical garden (植物園) or a human maternity ward (産院). Verify LEGAL STATUS separately: 'to be charged' is not arrested, convicted, or already prosecuted. Do not imply a criminal plan, motive, cunning, repeated actions or a quote unless the source explicitly supports it. Metaphorical institutions or invented services belong only in clearly labeled jokes, never a factual headline. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Also perform a comedy-editor check on EACH quip: concrete setup supported by sources, short reversal or fresh payoff, first-read clarity in natural Japanese, and a distinctly new premise for quipSecond. Reject generic recap disguised as a punchline, overlong commentary, forced wordplay and recycled 'unexpected!' endings, even when factual; ask the writer to sharpen before publication. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
+          "Return explicit independent booleans headlineGrounded,translationAccurate,legalStatusAccurate,humorRespectful,jokeClear; EVERY field must be true for approval, unknown must be false. Even if approved=true, any absent/false field means rejection. Output only JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,dateVerified:boolean,safeTone:boolean,headlineGrounded:boolean,translationAccurate:boolean,legalStatusAccurate:boolean,humorRespectful:boolean,jokeClear:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
           +json.dumps(past,ensure_ascii=False)+" Already selected today: "
           +json.dumps(accepted_summaries,ensure_ascii=False)+" Fetched original source text(s): "
@@ -938,6 +942,8 @@ def main():
             elif any(w in reason for w in ("source","evidence","corroborat","unsupported","fact","verify","claim")):category="audit_evidence"
             else:category="audit_other_or_unspecified"
             reject(category);continue
+        if not independent_editorial_quality_passed(audit):
+            reject("editorial_headline_or_humor_quality_not_confirmed");continue
         if single_original:
             if any(audit.get(field) is not True for field in
                    ("originalReporting","factsVerified","dateVerified","safeTone")):
@@ -947,6 +953,8 @@ def main():
             story["attributionNote"]=SINGLE_SOURCE_NOTE
         story["editorVerified"]=True
         story["humorSafe"]=True
+        # Private proof; public JSON never exposes model review fields.
+        story["editorQualityVerified"]=True
         seen.update((story["sourceUrl"],story["id"],event))
         second=story.get("quipSecond")
         if not (isinstance(second,str) and 12<=len(second.strip())<=100

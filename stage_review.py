@@ -35,7 +35,19 @@ def main():
     if args.day!=datetime.now(JST).date().isoformat():
         raise SystemExit("Review date changed; no artifact staged")
     staged=stage_review(args.root,args.day,args.destination)
-    print(("Staged publisher-valid review" if staged else "No new publisher-valid review")+": "+args.day)
+    count=0
+    if staged:
+        count=len(json.loads(staged.read_text(encoding="utf-8"))["stories"])
+    outcome="PUBLISHER_VALID" if staged else "NO_QUALIFYING_ISSUE"
+    print("AI review outcome:",outcome,"date",args.day,"approved_stories",count,flush=True)
+    summary=os.getenv("GITHUB_STEP_SUMMARY")
+    if summary:
+        with open(summary,"a",encoding="utf-8") as f:
+            f.write("## AIニュース編集の実行結果\n\n"
+                    "- 対象日（JST）: "+args.day+"\n"
+                    "- 公開検証済みの記事数: "+str(count)+"\n"
+                    "- 判定: **"+outcome+"**\n"
+                    "- 0件は公開成功ではありません。既存号を維持します。\n")
     if os.getenv("GITHUB_OUTPUT"):
         with open(os.environ["GITHUB_OUTPUT"],"a",encoding="utf-8") as f:
             f.write("ready="+("true" if staged else "false")+"\n")

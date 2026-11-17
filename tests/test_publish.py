@@ -211,6 +211,20 @@ class PublishingTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_approved(data,'2026-11-17')
 
+    def test_new_automated_approval_needs_independent_editorial_quality_proof(self):
+        data=fixture("2026-11-17")
+        data["editionDate"]="2026-11-18"
+        data["approvedBy"]="automated-two-stage-review"
+        for story in data["stories"]:
+            story["reported"]="2026-11-17"
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
+        for story in data["stories"]:
+            story["editorQualityVerified"]=True
+        published=validate_approved(data,"2026-11-18")
+        self.assertEqual(len(published["stories"]),len(data["stories"]))
+        self.assertNotIn("editorQualityVerified",published["stories"][0])
+
     def test_current_regular_zero_sources_is_rejected(self):
         data=fixture('2026-11-17')
         for story in data['stories']:
