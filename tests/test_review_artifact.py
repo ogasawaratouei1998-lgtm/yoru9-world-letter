@@ -37,6 +37,29 @@ class ReviewStageTest(unittest.TestCase):
         (self.root/"data"/"archive"/(DAY+".json")).write_text("{}")
         self.assertIsNone(stage_review(self.root,DAY,self.destination))
 
+    def test_staged_review_publishes_only_after_2100_jst(self):
+        from datetime import datetime
+        from publish_approved import publish
+        from shutil import copyfile
+
+        artifact=stage_review(self.root,DAY,self.destination)
+        self.assertIsNotNone(artifact)
+        # Simulate a separate GitHub Actions release job recovering the artifact.
+        self.source.unlink()
+        copyfile(artifact,self.source)
+        early=datetime.fromisoformat("2026-11-17T20:59:00+09:00")
+        late=datetime.fromisoformat("2026-11-17T21:05:00+09:00")
+        self.assertFalse(publish(self.root,early))
+        self.assertFalse((self.root/"data"/"current.json").exists())
+        self.assertTrue(publish(self.root,late))
+        archive=self.root/"data"/"archive"/(DAY+".json")
+        current=json.loads((self.root/"data"/"current.json").read_text(encoding="utf-8"))
+        self.assertEqual(current,json.loads(archive.read_text(encoding="utf-8")))
+        self.assertEqual(current["editionDate"],DAY)
+        self.assertTrue(1<=len(current["stories"])<=3)
+        self.assertIsNone(stage_review(self.root,DAY,self.destination))
+        self.assertFalse(publish(self.root,late))
+
     def test_single_source_is_not_publishable(self):
         item=json.loads(self.source.read_text(encoding="utf-8"))
         item["stories"][0]["verificationUrls"]=[item["stories"][0]["sourceUrl"]]
