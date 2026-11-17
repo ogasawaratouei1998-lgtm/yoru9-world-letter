@@ -647,7 +647,7 @@ function travelPostcardHtml(story,stop){
  const mapUrl=locator?'https://www.openstreetmap.org/?mlat='+locator.lat+'&mlon='+locator.lon+
   '#map='+locator.zoom+'/'+locator.lat+'/'+locator.lon:'';
  const photo=known&&typeof stop.photo==='string'&&
-  stop.photo.startsWith('https://upload.wikimedia.org/wikipedia/commons/')&&
+  stop.photo.startsWith('https://thumb.wikimedia.org/wikipedia/commons/thumb/')&&
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');

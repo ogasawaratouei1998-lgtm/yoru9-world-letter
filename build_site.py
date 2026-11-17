@@ -24,7 +24,7 @@ def bundle_travel_photos(root, output):
         if not re.fullmatch(r'assets/travel/[a-z0-9-]+\.jpg', asset):
             continue
         parts = urlparse(url)
-        if parts.scheme != 'https' or parts.hostname != 'upload.wikimedia.org' or not parts.path.startswith('/wikipedia/commons/'):
+        if parts.scheme != 'https' or parts.hostname != 'thumb.wikimedia.org' or not parts.path.startswith('/wikipedia/commons/'):
             continue
         target = output / asset
         target.parent.mkdir(parents=True, exist_ok=True)

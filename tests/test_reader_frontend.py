@@ -109,7 +109,7 @@ class ReaderFrontendTest(unittest.TestCase):
                 self.assertIn(stop["country"],("韓国","ブラジル","イギリス","アメリカ合衆国"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
-                self.assertTrue(stop["photo"].startswith("https://upload.wikimedia.org/wikipedia/commons/"))
+                self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
                 # Wikimedia disallows arbitrary 640px thumbnails since 2026.
                 self.assertIn("/500px-",stop["photo"])
                 self.assertRegex(stop["photoAsset"],r"^assets/travel/[a-z0-9-]+\.jpg$")
