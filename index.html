@@ -907,6 +907,8 @@ function storyCorrectionHtml(story){
 let monthStories=[],monthPublishedStories=[],monthRollingStories=[],visibleMonthStories=[];
 // Preserve expanded monthly articles when live archive updates re-render this shelf.
 const monthlyExpandedStories=new Set();
+// INITIAL_MONTHLY_COLLAPSED: the monthly shelf is opt-in even when a browser restores prior <details> state.
+$('monthDetails').open=false;
 function monthWindow(){
  const now=new Date();
  return {start:localDate(new Date(now.getTime()-29*86400000)),end:localDate(now)};
