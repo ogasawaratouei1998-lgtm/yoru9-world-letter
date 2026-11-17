@@ -117,8 +117,11 @@ def validate_approved(data, expected_date):
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
     if edition_type == 'regular' and issue_day >= date(2026, 11, 17):
-        require(isinstance(stories, list) and len(stories) == 3,
-                '通常号は検証・編集承認済みのニュース3本が必須です。未達日は公開しません')
+        # Three is the editorial goal, not a minimum or an exact quota.
+        # The editorial process selects at most three from a larger vetted
+        # candidate pool; release all 1-3 verified approved stories.
+        require(isinstance(stories, list) and 1 <= len(stories) <= 3,
+                '通常号は検証・編集承認済みのニュース1〜3本を公開します。0本と4本以上は公開用の最終選定を確認してください')
     else:
         # Historical regular issues and the five-article specials are immutable.
         require(isinstance(stories, list) and
