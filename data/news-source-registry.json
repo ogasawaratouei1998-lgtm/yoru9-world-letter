@@ -1,0 +1,582 @@
+{
+  "version": 1,
+  "description": "Curated, public news-publisher feeds for unverified story discovery. Feed identity is not proof of reporting or incident geography. Never publish headlines without original-article body review.",
+  "feeds": [
+    {
+      "id": "upi-odd-news-odd-news-rss",
+      "name": "UPI Odd News",
+      "url": "https://rss.upi.com/news/odd_news.rss",
+      "market": "US",
+      "language": "en",
+      "focus": "oddities",
+      "site": "upi.com"
+    },
+    {
+      "id": "upi-main-news-rss",
+      "name": "UPI Main",
+      "url": "https://rss.upi.com/news/news.rss",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "upi.com"
+    },
+    {
+      "id": "upi-sports-sports-news-rss",
+      "name": "UPI Sports",
+      "url": "https://rss.upi.com/news/sports_news.rss",
+      "market": "US",
+      "language": "en",
+      "focus": "sports",
+      "site": "upi.com"
+    },
+    {
+      "id": "the-korea-herald-all-newsall",
+      "name": "The Korea Herald All",
+      "url": "https://www.koreaherald.com/rss/newsAll",
+      "market": "KR",
+      "language": "en",
+      "focus": "general",
+      "site": "koreaherald.com"
+    },
+    {
+      "id": "the-korea-herald-life-kh-lifenculture",
+      "name": "The Korea Herald Life",
+      "url": "https://www.koreaherald.com/rss/kh_LifenCulture",
+      "market": "KR",
+      "language": "en",
+      "focus": "culture",
+      "site": "koreaherald.com"
+    },
+    {
+      "id": "the-straits-times-singapore-rss-xml",
+      "name": "The Straits Times Singapore",
+      "url": "https://www.straitstimes.com/news/singapore/rss.xml",
+      "market": "SG",
+      "language": "en",
+      "focus": "local",
+      "site": "straitstimes.com"
+    },
+    {
+      "id": "the-straits-times-asia-rss-xml",
+      "name": "The Straits Times Asia",
+      "url": "https://www.straitstimes.com/news/asia/rss.xml",
+      "market": "SG",
+      "language": "en",
+      "focus": "regional",
+      "site": "straitstimes.com"
+    },
+    {
+      "id": "the-straits-times-life-rss-xml",
+      "name": "The Straits Times Life",
+      "url": "https://www.straitstimes.com/news/life/rss.xml",
+      "market": "SG",
+      "language": "en",
+      "focus": "culture",
+      "site": "straitstimes.com"
+    },
+    {
+      "id": "africanews-english-rss",
+      "name": "Africanews English",
+      "url": "https://www.africanews.com/feed/rss",
+      "market": "ZA",
+      "language": "en",
+      "focus": "regional",
+      "site": "africanews.com"
+    },
+    {
+      "id": "al-jazeera-english-all-xml",
+      "name": "Al Jazeera English",
+      "url": "https://www.aljazeera.com/xml/rss/all.xml",
+      "market": "QA",
+      "language": "en",
+      "focus": "regional",
+      "site": "aljazeera.com"
+    },
+    {
+      "id": "sky-news-world-world-xml",
+      "name": "Sky News World",
+      "url": "https://feeds.skynews.com/feeds/rss/world.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "regional",
+      "site": "skynews.com"
+    },
+    {
+      "id": "sky-news-home-home-xml",
+      "name": "Sky News Home",
+      "url": "https://feeds.skynews.com/feeds/rss/home.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "general",
+      "site": "skynews.com"
+    },
+    {
+      "id": "the-independent-news-rss",
+      "name": "The Independent News",
+      "url": "https://www.independent.co.uk/news/rss",
+      "market": "GB",
+      "language": "en",
+      "focus": "general",
+      "site": "independent.co.uk"
+    },
+    {
+      "id": "rt-ireland",
+      "name": "RTÉ Ireland",
+      "url": "https://www.rte.ie/feeds/rss/?index=/news/",
+      "market": "IE",
+      "language": "en",
+      "focus": "local",
+      "site": "rte.ie"
+    },
+    {
+      "id": "euronews-rss",
+      "name": "Euronews",
+      "url": "https://www.euronews.com/rss",
+      "market": "FR",
+      "language": "en",
+      "focus": "regional",
+      "site": "euronews.com"
+    },
+    {
+      "id": "dw-english-rss-en-all",
+      "name": "DW English",
+      "url": "https://rss.dw.com/rdf/rss-en-all",
+      "market": "DE",
+      "language": "en",
+      "focus": "regional",
+      "site": "dw.com"
+    },
+    {
+      "id": "dw-english-top-rss-en-top",
+      "name": "DW English Top",
+      "url": "https://rss.dw.com/rdf/rss-en-top",
+      "market": "DE",
+      "language": "en",
+      "focus": "general",
+      "site": "dw.com"
+    },
+    {
+      "id": "le-monde-english-une-xml",
+      "name": "Le Monde English",
+      "url": "https://www.lemonde.fr/en/rss/une.xml",
+      "market": "FR",
+      "language": "en",
+      "focus": "regional",
+      "site": "lemonde.fr"
+    },
+    {
+      "id": "der-spiegel-international-index-rss",
+      "name": "Der Spiegel International",
+      "url": "https://www.spiegel.de/international/index.rss",
+      "market": "DE",
+      "language": "en",
+      "focus": "regional",
+      "site": "spiegel.de"
+    },
+    {
+      "id": "south-china-morning-post",
+      "name": "South China Morning Post",
+      "url": "https://www.scmp.com/rss/91/feed/",
+      "market": "HK",
+      "language": "en",
+      "focus": "regional",
+      "site": "scmp.com"
+    },
+    {
+      "id": "the-times-of-india-rssfeedstopstories-cms",
+      "name": "The Times of India",
+      "url": "https://timesofindia.indiatimes.com/rssfeedstopstories.cms",
+      "market": "IN",
+      "language": "en",
+      "focus": "regional",
+      "site": "timesofindia.indiatimes.com"
+    },
+    {
+      "id": "ndtv-india-ndtvnews-top-stories",
+      "name": "NDTV India",
+      "url": "https://feeds.feedburner.com/ndtvnews-top-stories",
+      "market": "IN",
+      "language": "en",
+      "focus": "regional",
+      "site": "ndtv.com"
+    },
+    {
+      "id": "the-new-york-times-home-homepage-xml",
+      "name": "The New York Times Home",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "nytimes.com"
+    },
+    {
+      "id": "the-new-york-times-science-science-xml",
+      "name": "The New York Times Science",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/Science.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "science",
+      "site": "nytimes.com"
+    },
+    {
+      "id": "the-new-york-times-sports-sports-xml",
+      "name": "The New York Times Sports",
+      "url": "https://rss.nytimes.com/services/xml/rss/nyt/Sports.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "sports",
+      "site": "nytimes.com"
+    },
+    {
+      "id": "npr-world-rss-xml",
+      "name": "NPR World",
+      "url": "https://feeds.npr.org/1004/rss.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "regional",
+      "site": "npr.org"
+    },
+    {
+      "id": "npr-strange-news-rss-xml",
+      "name": "NPR Strange News",
+      "url": "https://feeds.npr.org/1025/rss.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "culture",
+      "site": "npr.org"
+    },
+    {
+      "id": "pbs-newshour-headlines",
+      "name": "PBS NewsHour",
+      "url": "https://www.pbs.org/newshour/feeds/rss/headlines",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "pbs.org"
+    },
+    {
+      "id": "los-angeles-times-index-rss",
+      "name": "Los Angeles Times",
+      "url": "https://www.latimes.com/index.rss",
+      "market": "US",
+      "language": "en",
+      "focus": "regional",
+      "site": "latimes.com"
+    },
+    {
+      "id": "los-angeles-times-world-rss2-0-xml",
+      "name": "Los Angeles Times World",
+      "url": "https://www.latimes.com/world-nation/rss2.0.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "regional",
+      "site": "latimes.com"
+    },
+    {
+      "id": "abc-news-us-topstories",
+      "name": "ABC News US",
+      "url": "https://abcnews.go.com/abcnews/topstories",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "abcnews.go.com"
+    },
+    {
+      "id": "axios",
+      "name": "Axios",
+      "url": "https://api.axios.com/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "axios.com"
+    },
+    {
+      "id": "time",
+      "name": "TIME",
+      "url": "https://time.com/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "time.com"
+    },
+    {
+      "id": "propublica-main",
+      "name": "ProPublica",
+      "url": "https://www.propublica.org/feeds/propublica/main",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "propublica.org"
+    },
+    {
+      "id": "new-york-post",
+      "name": "New York Post",
+      "url": "https://nypost.com/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "local",
+      "site": "nypost.com"
+    },
+    {
+      "id": "the-atlantic",
+      "name": "The Atlantic",
+      "url": "https://www.theatlantic.com/feed/all/",
+      "market": "US",
+      "language": "en",
+      "focus": "culture",
+      "site": "theatlantic.com"
+    },
+    {
+      "id": "the-new-yorker-everything",
+      "name": "The New Yorker",
+      "url": "https://www.newyorker.com/feed/everything",
+      "market": "US",
+      "language": "en",
+      "focus": "culture",
+      "site": "newyorker.com"
+    },
+    {
+      "id": "vox-index-xml",
+      "name": "Vox",
+      "url": "https://www.vox.com/rss/index.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "vox.com"
+    },
+    {
+      "id": "fox-news-latest-latest-xml",
+      "name": "Fox News Latest",
+      "url": "https://moxie.foxnews.com/google-publisher/latest.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "general",
+      "site": "foxnews.com"
+    },
+    {
+      "id": "guardian-life-style-rss",
+      "name": "Guardian Life & Style",
+      "url": "https://www.theguardian.com/lifeandstyle/rss",
+      "market": "GB",
+      "language": "en",
+      "focus": "culture",
+      "site": "theguardian.com"
+    },
+    {
+      "id": "guardian-uk-rss",
+      "name": "Guardian UK",
+      "url": "https://www.theguardian.com/uk/rss",
+      "market": "GB",
+      "language": "en",
+      "focus": "local",
+      "site": "theguardian.com"
+    },
+    {
+      "id": "guardian-sport-rss",
+      "name": "Guardian Sport",
+      "url": "https://www.theguardian.com/uk/sport/rss",
+      "market": "GB",
+      "language": "en",
+      "focus": "sports",
+      "site": "theguardian.com"
+    },
+    {
+      "id": "bbc-sport-rss-xml",
+      "name": "BBC Sport",
+      "url": "https://feeds.bbci.co.uk/sport/rss.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "sports",
+      "site": "bbc.com"
+    },
+    {
+      "id": "bbc-sport-football-rss-xml",
+      "name": "BBC Sport Football",
+      "url": "https://feeds.bbci.co.uk/sport/football/rss.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "sports",
+      "site": "bbc.com"
+    },
+    {
+      "id": "bbc-top-rss-xml",
+      "name": "BBC Top",
+      "url": "https://feeds.bbci.co.uk/news/rss.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "general",
+      "site": "bbc.com"
+    },
+    {
+      "id": "sky-sports-12040",
+      "name": "Sky Sports",
+      "url": "https://www.skysports.com/rss/12040",
+      "market": "GB",
+      "language": "en",
+      "focus": "sports",
+      "site": "skysports.com"
+    },
+    {
+      "id": "espn-news-news",
+      "name": "ESPN News",
+      "url": "https://www.espn.com/espn/rss/news",
+      "market": "US",
+      "language": "en",
+      "focus": "sports",
+      "site": "espn.com"
+    },
+    {
+      "id": "espn-soccer-news",
+      "name": "ESPN Soccer",
+      "url": "https://www.espn.com/espn/rss/soccer/news",
+      "market": "US",
+      "language": "en",
+      "focus": "sports",
+      "site": "espn.com"
+    },
+    {
+      "id": "france-24-sport-rss",
+      "name": "France 24 Sport",
+      "url": "https://www.france24.com/en/sport/rss",
+      "market": "FR",
+      "language": "en",
+      "focus": "sports",
+      "site": "france24.com"
+    },
+    {
+      "id": "formula-1-all-xml",
+      "name": "Formula 1",
+      "url": "https://www.formula1.com/en/latest/all.xml",
+      "market": "GB",
+      "language": "en",
+      "focus": "sports",
+      "site": "formula1.com"
+    },
+    {
+      "id": "the-verge-index-xml",
+      "name": "The Verge",
+      "url": "https://www.theverge.com/rss/index.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "theverge.com"
+    },
+    {
+      "id": "techcrunch",
+      "name": "TechCrunch",
+      "url": "https://techcrunch.com/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "techcrunch.com"
+    },
+    {
+      "id": "ars-technica-index",
+      "name": "Ars Technica",
+      "url": "https://feeds.arstechnica.com/arstechnica/index",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "arstechnica.com"
+    },
+    {
+      "id": "wired-rss",
+      "name": "Wired",
+      "url": "https://www.wired.com/feed/rss",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "wired.com"
+    },
+    {
+      "id": "gizmodo-feed",
+      "name": "Gizmodo",
+      "url": "https://gizmodo.com/feed",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "gizmodo.com"
+    },
+    {
+      "id": "engadget-rss-xml",
+      "name": "Engadget",
+      "url": "https://www.engadget.com/rss.xml",
+      "market": "US",
+      "language": "en",
+      "focus": "technology",
+      "site": "engadget.com"
+    },
+    {
+      "id": "mashable-all",
+      "name": "Mashable",
+      "url": "https://mashable.com/feeds/rss/all",
+      "market": "US",
+      "language": "en",
+      "focus": "culture",
+      "site": "mashable.com"
+    },
+    {
+      "id": "nasa-news",
+      "name": "NASA News",
+      "url": "https://www.nasa.gov/news-release/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "science",
+      "site": "nasa.gov"
+    },
+    {
+      "id": "phys-org",
+      "name": "Phys.org",
+      "url": "https://phys.org/rss-feed/",
+      "market": "GB",
+      "language": "en",
+      "focus": "science",
+      "site": "phys.org"
+    },
+    {
+      "id": "new-scientist",
+      "name": "New Scientist",
+      "url": "https://www.newscientist.com/feed/",
+      "market": "GB",
+      "language": "en",
+      "focus": "science",
+      "site": "newscientist.com"
+    },
+    {
+      "id": "quanta-magazine",
+      "name": "Quanta Magazine",
+      "url": "https://www.quantamagazine.org/feed/",
+      "market": "US",
+      "language": "en",
+      "focus": "science",
+      "site": "quantamagazine.org"
+    },
+    {
+      "id": "scientific-american",
+      "name": "Scientific American",
+      "url": "https://www.scientificamerican.com/platform/syndication/rss/",
+      "market": "US",
+      "language": "en",
+      "focus": "science",
+      "site": "scientificamerican.com"
+    },
+    {
+      "id": "the-hindu-more-india-default-rss",
+      "name": "The Hindu More India",
+      "url": "https://www.thehindu.com/news/international/feeder/default.rss",
+      "market": "IN",
+      "language": "en",
+      "focus": "regional",
+      "site": "thehindu.com"
+    },
+    {
+      "id": "the-japan-times-local",
+      "name": "The Japan Times Local",
+      "url": "https://www.japantimes.co.jp/news/feed/",
+      "market": "JP",
+      "language": "en",
+      "focus": "local",
+      "site": "japantimes.co.jp"
+    }
+  ]
+}
