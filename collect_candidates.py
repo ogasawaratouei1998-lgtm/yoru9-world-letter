@@ -186,7 +186,8 @@ def main():
     try:
         registered=fetch_registry_feeds(
             sources=source_registry(),fetch=fetch_bytes,parse=parse_rss,
-            max_workers=10,per_feed=18)
+            max_workers=10,per_feed=18,
+            report_path="data/source-health.json")
         keep(registered,limit=285)
     except (OSError,ValueError,TypeError,KeyError) as exc:
         errors.append("Publisher RSS catalog: "+type(exc).__name__)
