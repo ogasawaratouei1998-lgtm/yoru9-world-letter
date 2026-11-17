@@ -67,6 +67,55 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('.issue-details .status{margin:0',css)
         self.assertIn('@media(max-width:520px)',css)
 
+    def test_optional_microtravel_after_lead_and_each_secondary_story(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('class="travel-slot" data-travel-slot="0"',page)
+        self.assertIn('class="travel-slot" data-travel-slot="${i}"',page)
+        self.assertIn("function renderTravelSlots()",page)
+        self.assertIn("renderTravelSlots();updateFilters();",page)
+        self.assertIn("class=\"travel-open\" data-travel=",page)
+        self.assertIn('aria-expanded="false" aria-controls="travel-panel-',page)
+        self.assertIn("panel.hidden=!opening",page)
+        self.assertIn("if(!opening)return",page)
+
+    def test_photos_load_only_after_explicit_travel_click(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn("document.querySelector('main').addEventListener('click',async event=>{",page)
+        self.assertIn("event.target.closest('[data-travel]')",page)
+        self.assertIn("const stops=await loadTravelStops()",page)
+        self.assertIn("fetch('./travel-stops.json',{cache:'force-cache'})",page)
+        self.assertIn('loading="lazy" decoding="async"',page)
+        self.assertIn("if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return",page)
+        self.assertIn("img.addEventListener('error',()=>{",page)
+        self.assertNotIn("<audio autoplay",page)
+        self.assertNotIn("<video autoplay",page)
+
+    def test_travel_stop_coordinates_rights_and_event_are_specific(self):
+        import json
+        payload=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertIn("cheonan-painters-coffee-rescue-2026",payload)
+        self.assertIn("guaira-degavar-road-marking-2026",payload)
+        self.assertIn("flight-wrong-country",payload)
+        for key,stop in payload.items():
+            with self.subTest(event=key):
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス"))
+                self.assertTrue(-90<=stop["latitude"]<=90)
+                self.assertTrue(-180<=stop["longitude"]<=180)
+                self.assertTrue(stop["photo"].startswith("https://upload.wikimedia.org/wikipedia/commons/thumb/"))
+                self.assertTrue(stop["photoPage"].startswith("https://commons.wikimedia.org/wiki/File:"))
+                self.assertTrue(stop["licenseUrl"].startswith("https://creativecommons.org/"))
+                self.assertIn("ニュース現場の写真ではありません",stop["photoCaption"])
+        self.assertIn("if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
+        self.assertIn("stop.country===story.country",(ROOT/"index.html").read_text(encoding="utf-8"))
+
+    def test_published_travel_guide_is_offline_safe(self):
+        build=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        self.assertIn("'travel-stops.json'",build)
+        self.assertIn("'travel-stops.json'",worker)
+        self.assertIn("'yoru9-shell-v3'",worker)
+        self.assertIn("travel-photo-error", (ROOT/"index.html").read_text(encoding="utf-8"))
+
     def test_lead_story_spotlight_is_dynamic_and_readable(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlight"', 'id="spotlightTitle"',

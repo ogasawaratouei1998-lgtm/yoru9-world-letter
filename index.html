@@ -297,6 +297,35 @@ footer{font-size:.8125rem;line-height:1.7}
  .spotlight-quip{font-size:1.125rem}
  .sectionhead{margin-top:7px}
 }
+
+/* Opt-in micro-travel: no auto-playing media, no forced progression. */
+.travel-slot{margin:11px 0 8px}
+.travel-open{display:inline-flex;align-items:center;justify-content:center;gap:7px;
+ min-height:44px;padding:7px 2px;border:0;background:transparent;color:#f5d8a1;
+ text-decoration:underline;text-underline-offset:4px;font-size:.9375rem;font-weight:750;line-height:1.6}
+.travel-open span{font-size:1rem;opacity:.85}
+.travel-panel[hidden],.travel-photo[hidden],.travel-photo-error[hidden]{display:none}
+.travel-card{border:1px solid #677c92;background:linear-gradient(150deg,#21334c,#192b43);
+ border-radius:16px;padding:16px;margin:7px 0 16px;color:#f3efe7;overflow-wrap:anywhere}
+.travel-kicker{color:#f8dfb1;font-size:.875rem;font-weight:750;margin:0 0 4px}
+.travel-card h4{font-size:clamp(1.25rem,5vw,1.55rem);margin:0 0 5px;line-height:1.5}
+.travel-country{font-size:1rem;line-height:1.8;margin:0 0 12px}
+.travel-figure{margin:0 0 12px}
+.travel-photo{display:block;width:100%;height:auto;max-height:255px;object-fit:cover;
+ aspect-ratio:16/9;border-radius:11px;background:#1a2b40}
+.travel-figure figcaption{color:#e1e6ef;font-size:.875rem;line-height:1.7;margin:7px 0 0}
+.travel-photo-error,.travel-empty{font-size:.9375rem;line-height:1.75;padding:12px;
+ border:1px dashed #6d8098;border-radius:10px;color:#e5e7ee}
+.travel-note{font-size:1rem;line-height:1.85;margin:12px 0}
+.travel-small,.travel-credit,.travel-loading{font-size:.875rem;line-height:1.75;color:#d8e2eb;margin:9px 0}
+.travel-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0}
+.travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
+.travel-credit a{color:#d2eadd}
+@media(max-width:520px){
+ .travel-card{padding:14px 13px}
+ .travel-photo{max-height:220px}
+ .travel-note,.travel-country{font-size:1rem}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -309,7 +338,7 @@ footer{font-size:.8125rem;line-height:1.7}
  <div class="spotlight-divider" aria-hidden="true"></div>
  <p class="spotlight-quip-label">AIツッコミ</p>
  <p class="spotlight-quip" id="spotlightQuip">世界の予定と現実は、ときどき仲が悪い。</p>
- <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button><div id="spotlightBody" class="spotlight-body" hidden></div>
+ <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button><div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
 </section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の思わぬ失敗を、実話とAIツッコミで。</p>
@@ -588,6 +617,79 @@ $('worldInvitation').addEventListener('click',event=>{
   block:'start'
  });
 });
+/* Optional 30-second journey: photo assets load only if the reader chooses to open it.
+   Curated locations belong to incident IDs, not the publisher's country. */
+let travelStopsPromise=null;
+function loadTravelStops(){
+ if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'force-cache'})
+  .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
+  .then(v=>v&&typeof v==='object'&&!Array.isArray(v)?v:{})
+  .catch(()=>({}));
+ return travelStopsPromise;
+}
+function renderTravelSlots(){
+ document.querySelectorAll('[data-travel-slot]').forEach(slot=>{
+  const i=Number(slot.dataset.travelSlot);
+  if(!Number.isInteger(i)||!edition.stories[i])return;
+  slot.innerHTML='<button type="button" class="travel-open" data-travel="'+i+
+   '" aria-expanded="false" aria-controls="travel-panel-'+i+
+   '">この場所に30秒だけ寄り道 <span aria-hidden="true">↗</span></button>'+
+   '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
+ });
+}
+function travelPostcardHtml(story,stop){
+ const country=countryLabel(story.country||'');
+ const known=stop&&stop.country===story.country&&Number.isFinite(stop.latitude)&&
+  Number.isFinite(stop.longitude)&&Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
+ const place=known?stop.place:country;
+ const locator=known?{lat:stop.latitude,lon:stop.longitude,zoom:11}:countryRecord(story.country)
+  ?{lat:countryRecord(story.country).lat,lon:countryRecord(story.country).lon,zoom:4}:null;
+ const mapUrl=locator?'https://www.openstreetmap.org/?mlat='+locator.lat+'&mlon='+locator.lon+
+  '#map='+locator.zoom+'/'+locator.lat+'/'+locator.lon:'';
+ const photo=known&&typeof stop.photo==='string'&&stop.photo.startsWith('https://upload.wikimedia.org/wikipedia/commons/thumb/')&&
+  typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
+  typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
+ return '<section class="travel-card" aria-label="30秒の世界寄り道">'+
+  '<p class="travel-kicker">世界へ、30秒の寄り道</p>'+
+  '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
+  '<p class="travel-country">'+escapeHtml(country)+'から届いた実話の舞台を、少しだけ眺めてみる。</p>'+
+  (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" referrerpolicy="no-referrer" src="'+
+   escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
+   '<p class="travel-photo-error" hidden>写真を読み込めませんでした。地図や撮影元の資料は開けます。</p>'+
+   '<figcaption>'+escapeHtml(stop.photoCaption)+'</figcaption></figure>':'<p class="travel-empty">この場所の確認済みの写真は準備中です。地図から、遠くの場所に思いを巡らせてみませんか。</p>')+
+  (known?'<p class="travel-note">'+escapeHtml(stop.note)+'</p>':'')+
+  '<p class="travel-small">観光案内ではなく、実際の場所へ視線を向ける短い寄り道です。滞在時間も、感じ方も自由です。</p>'+
+  '<div class="travel-links">'+
+   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で場所を確かめる ↗</a>':'')+
+   (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
+  '</div>'+
+  (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
+   '" target="_blank" rel="noopener noreferrer">'+escapeHtml(stop.license)+'</a>（画面に合わせて表示範囲を調整）</p>':'')+
+  '</section>';
+}
+document.querySelector('main').addEventListener('click',async event=>{
+ const control=event.target.closest('[data-travel]');
+ if(!control)return;
+ const i=Number(control.dataset.travel),story=edition.stories[i],panel=$('travel-panel-'+i);
+ if(!Number.isInteger(i)||!story||!panel)return;
+ const opening=panel.hidden;
+ panel.hidden=!opening;
+ control.setAttribute('aria-expanded',String(opening));
+ control.firstChild.textContent=opening?'寄り道を閉じる ':'この場所に30秒だけ寄り道 ';
+ if(!opening)return;
+ panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
+ const stops=await loadTravelStops();
+ // An archive switch or rapid close must not put the old postcard in a new edition.
+ if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return;
+ const candidate=stops[story.id];
+ panel.innerHTML=travelPostcardHtml(story,candidate);
+ const img=panel.querySelector('.travel-photo');
+ if(img)img.addEventListener('error',()=>{
+  img.hidden=true;
+  const fallback=panel.querySelector('.travel-photo-error');
+  if(fallback)fallback.hidden=false;
+ });
+});
 function updateFilters(){
  const available=new Set(edition.stories.slice(1).map(s=>s.category));
  const controls=document.querySelector('.filters');
@@ -615,8 +717,8 @@ function render(){const d=edition.stories;
  $('editionMessage').textContent=archive?'過去の実話を使った体験版':`${edition.editionDate} 発行 · ${d.length}本${special?'（特集）':''}`;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
- $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
- renderIssueCountries();updateSpotlight();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();}
+ $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
+ renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();}
 function update(){$('progress').textContent=`ほかに${Math.max(0,edition.stories.length-1)}本`;$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;

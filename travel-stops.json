@@ -1,0 +1,44 @@
+{
+  "flight-wrong-country": {
+    "country": "イギリス",
+    "place": "エディンバラ",
+    "region": "スコットランド",
+    "latitude": 55.9533,
+    "longitude": -3.1883,
+    "note": "飛行機が予定外に降りたのは、スコットランドのエディンバラ。旧市街のロイヤル・マイルの写真から、少しだけ街の空気を想像してみてください。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Edinburgh_Royal_Mile.jpg/640px-Edinburgh_Royal_Mile.jpg",
+    "photoCaption": "エディンバラのロイヤル・マイル（2016年撮影）。ニュース現場の写真ではありません。",
+    "author": "ewanmcandrew",
+    "license": "CC0 1.0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Royal_Mile.jpg"
+  },
+  "cheonan-painters-coffee-rescue-2026": {
+    "country": "韓国",
+    "place": "天安",
+    "region": "忠清南道",
+    "latitude": 36.819058,
+    "longitude": 127.157967,
+    "note": "コーヒー配達が思わぬ助けになった天安。写真は新富洞の街の一角です。遠い国の普通の街角にも、それぞれの予想外の一日があります。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Sinbu-Dong.jpg/640px-Sinbu-Dong.jpg",
+    "photoCaption": "天安・新富洞の通り（2019年撮影）。ニュース現場の写真ではありません。",
+    "author": "Chaeyoung907",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sinbu-Dong.jpg"
+  },
+  "guaira-degavar-road-marking-2026": {
+    "country": "ブラジル",
+    "place": "グアイラ",
+    "region": "パラナ州",
+    "latitude": -24.08,
+    "longitude": -54.255,
+    "note": "道路標示の誤字が話題になったパラナ州グアイラ。街の広場の写真を眺めながら、世界の別の場所にも同じような日常があると感じられます。",
+    "photo": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Pra%C3%A7a_Castelo_Branco_Gua%C3%ADra_Pr.jpg/640px-Pra%C3%A7a_Castelo_Branco_Gua%C3%ADra_Pr.jpg",
+    "photoCaption": "グアイラのカステロ・ブランコ広場（2013年撮影）。ニュース現場の写真ではありません。",
+    "author": "Augusto Rodrigo da Silva Gomes",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Pra%C3%A7a_Castelo_Branco_Gua%C3%ADra_Pr.jpg"
+  }
+}
