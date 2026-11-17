@@ -42,9 +42,19 @@ try{
    const article=page.locator('#monthCards .month-story').first();
    await article.waitFor({state:'attached',timeout:30000});
    const shelf=page.locator('#monthRetrospective > details');
-   if((await shelf.getAttribute('open'))===null)await shelf.locator('summary').first().click();
+   assert.equal(await shelf.getAttribute('open'),null,'monthly shelf begins closed');
+   await shelf.locator('summary').first().click();
    const details=article.locator('details').first();
    await details.locator('summary').first().click();
+   const travelButton=article.locator('[data-month-travel]').first();
+   const travelPanel=article.locator('.travel-panel').first();
+   assert.equal(await travelButton.getAttribute('aria-expanded'),'false',
+    'monthly travel remains closed when an article opens');
+   assert.equal(await travelPanel.isHidden(),true,
+    'travel photos are opt-in rather than auto-shown');
+   await travelButton.click();
+   assert.equal(await travelButton.getAttribute('aria-expanded'),'true',
+    'tapping the travel button opens its postcard');
    await page.waitForFunction(()=>{
     const img=document.querySelector('#monthCards .month-story .travel-photo');
     return !!img&&img.complete&&img.naturalWidth>0;
