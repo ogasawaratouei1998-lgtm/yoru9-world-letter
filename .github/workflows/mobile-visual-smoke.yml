@@ -1,0 +1,35 @@
+name: Mobile reader visual smoke
+
+on:
+  workflow_run:
+    workflows: ['Deploy reader website']
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mobile-smoke:
+    if: github.event_name == 'workflow_dispatch' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test browser
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Check mobile layout, monthly image, reopen behavior
+        run: node tests/mobile_visual_smoke.mjs
+      - name: Keep diagnostic screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mobile-reader-screenshots
+          path: mobile-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
