@@ -194,7 +194,13 @@ COMIC_MISSTEP_TERMS=re.compile(
     r"wrong (?:city|cities|town|landmark|cathedral|mural|sign)|"
     r"AI.generated.{0,70}(?:wrong|errors?|mistake|misspell)|"
     r"誤字|誤記|手違い|誤配達|誤送信|誤発注|勘違い|見間違い|取り違え|"
-    r"verwechslung|aus versehen|por error|equivocaci[oó]n|실수",re.I
+    r"verwechslung|aus versehen|por error|equivocaci[oó]n|"
+    r"erreur|m[eé]prise|faux|sbagli|scambiat|errore|"
+    r"equ[ií]voc|confus[aã]o|engano|enganou|"
+    r"\b(?:salah|keliru|tertukar|kesalahan)\b|"
+    r"\b(?:nh[aầ]m|sai|l[oỗ]i)\b|"
+    r"pomy[lł]k|yanl[iı][sş]|hata|خطأ|خطا|"
+    r"실수|착각|오류|잘못",re.I
 )
 SERIOUS_CONFLICT_TERMS=re.compile(
     r"harass|abuse|intimidat|disciplin|suspend|protest|minister|"
@@ -278,6 +284,42 @@ def prioritize_comic_groups(groups, limit=24):
                 chosen+=1
             if chosen>=per_desk:
                 break
+    # Next preserve qualified human-mishap evidence from *publisher* regions.
+    # These are discovery markets, NOT asserted event countries. Geographic
+    # exposure never overrides the actual original-article/AI verification.
+    from collections import Counter
+    regional_counts=Counter()
+    for group in seeded:
+        for region in {country_region(item.get("sourcecountry")) for item in group}:
+            if region: regional_counts[region]+=1
+    region_allowance=max(1,min(2,limit//18))
+    for group in ranked:
+        if len(seeded)>=limit:
+            break
+        if min(incident_priority(item)[0] for item in group)>2 or group in seeded:
+            continue
+        regions={country_region(item.get("sourcecountry")) for item in group}
+        if any(region and regional_counts[region]<region_allowance
+               for region in regions):
+            seeded.append(group)
+            for region in regions:
+                if region: regional_counts[region]+=1
+    # Within continents, expose a few distinct local media markets. A
+    # high-volume US/UK publisher must not occupy every creative review slot.
+    represented={country_code(item.get("sourcecountry"))
+                 for group in seeded for item in group}
+    new_market_budget=max(0,min(limit//3,limit-len(seeded)))
+    for group in ranked:
+        if new_market_budget<=0 or len(seeded)>=limit:
+            break
+        if min(incident_priority(item)[0] for item in group)>2 or group in seeded:
+            continue
+        countries={country_code(item.get("sourcecountry")) for item in group}
+        countries.discard(None)
+        if countries-represented:
+            seeded.append(group)
+            represented.update(countries)
+            new_market_budget-=1
     return (seeded+[group for group in ranked if group not in seeded])[:limit]
 
 
@@ -894,7 +936,14 @@ def main():
             reason=diagnostics[0] if diagnostics else 'unknown'
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
-        if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:8500]})
+        if cache[url]:source_leads.append({
+            'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
+            'text':cache[url][:8500],
+            # Publisher *market*, not a report of the incident's location.
+            'sourcecountry':lead.get('sourcecountry',''),
+            'language':lead.get('language',''),
+            'focus':lead.get('focus',''),
+        })
     print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
@@ -942,7 +991,10 @@ def main():
                     key=lambda item:(incident_priority(item)[0],
                                      0 if trusted_original_domain(item['url']) else 1,
                                      incident_priority(item)[1]))
-    groups.extend([[item] for item in unpaired[:max(0,36-len(groups))]])
+    # Do not truncate single-original reports BEFORE the multilingual,
+    # multi-region shortlist. Doing that selected only the first English
+    # keyword matches and made newly registered local publishers invisible.
+    groups.extend([[item] for item in unpaired])
     groups=prioritize_comic_groups(groups,limit=36)
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
