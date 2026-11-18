@@ -861,6 +861,38 @@ def valid_recent_reported(raw, now):
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
 
+def source_bound_batch_drafts(response, groups):
+    """Keep at most one unverified draft per evidence group in a small AI batch.
+
+    Crucially, this is NOT fact verification or publication approval. It
+    blocks one model response from combining different unrelated publishers'
+    reports, fabricating a source URL, or consuming limited independent
+    reviewer calls on a clearly untraceable draft.
+    """
+    proposed=response.get("stories",[]) if isinstance(response,dict) else []
+    if not isinstance(proposed,list) or not isinstance(groups,list):
+        return []
+    selected=[]
+    for group in groups[:2]:
+        articles=group.get("articles",[]) if isinstance(group,dict) else []
+        allowed={x.get("url") for x in articles if isinstance(x,dict)
+                 and isinstance(x.get("url"),str) and host(x["url"])}
+        if not allowed:
+            continue
+        for draft in proposed:
+            if not isinstance(draft,dict):
+                continue
+            urls=draft.get("verificationUrls")
+            if not isinstance(urls,list) or not (1<=len(urls)<=3):
+                continue
+            if (all(isinstance(url,str) for url in urls)
+                    and set(urls).issubset(allowed)
+                    and draft.get("sourceUrl") in allowed):
+                selected.append(draft)
+                break
+    return selected
+
+
 def draft_preflight_viable(story,now):
     """Fast comedy and date screening, never replaces source/fact review.
 
@@ -895,7 +927,7 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "candidate_review_groups","paired_groups","single_original_groups",
     "first_ai_batch_groups","drafted","preflight_eligible",
     "independent_approved","selected_for_edition",
-    "supplemental_attempts","supplemental_generated"
+    "supplemental_attempts","supplemental_groups","supplemental_generated"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
@@ -1116,12 +1148,16 @@ def main():
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
     supplemental_attempts=0
+    supplemental_groups=0
     supplemental_generated=0
     if sum(draft_preflight_viable(item,now) for item in draft)<3:
         # Tonight's target is three separately reviewed stories, not two.
         # The large first batch can return diagnostics only, with no actual
-        # drafts: try additional *individual* incident reports without
-        # weakening the original-text evidence or independent B audit gates.
+        # drafts: examine evidence in pairs, each as a separate incident,
+        # without weakening the original-text evidence or B-review gates.
+        # An observed 12 single-group drafts + 1 B approval exhausted the
+        # free-tier provider quota before B could independently check all
+        # three candidates. Fewer drafting calls preserve audit capacity.
         # Always preserve time and model quota for B. More unreviewed prose
         # alone is not progress.
         # Separate diagnosis from drafting. A large all-groups request can
@@ -1148,17 +1184,23 @@ def main():
             min(incident_priority(article)[0] for article in g["articles"]),
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
-        print("Supplementing insufficient editorial drafts one incident at a time:",
+        print("Supplementing insufficient editorial drafts with two separate incidents per call:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),20)):
+        # At most 8 short AI calls exploring 16 evidence groups. The observed
+        # provider limit leaves capacity for the original-text checks by
+        # independent reviewer B (rather than spending 12-20 calls on A).
+        for start in range(0,min(len(retry_candidates),16),2):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
-            batch=retry_candidates[start:start+1]
+            batch=retry_candidates[start:start+2]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
-                " You are editor A. Prefer a genuinely funny, low-stakes human mistake. Draft up to five Japanese news stories ONLY "
-                "when at least one retrieved publisher article in the input group "
-                "supports the same specific real-world mistake. "
+                " You are editor A. Prefer genuinely funny, low-stakes human mistakes. "
+                "Evaluate EACH evidence group independently; these may be UNRELATED incidents. "
+                "Write AT MOST ONE fully sourced story per group, and AT MOST TWO stories total. "
+                "Never combine reports from separate groups, never invent verification URLs. "
+                "Write a story ONLY when the article body within that single group "
+                "supports the specific real-world mistake. "
                 "Return JSON object with stories array. Do not return diagnostics. "
                 "If evidence supports the incident but an overt joke feels inappropriate, use a gentle factual irony directed at the decision or plan, not people harmed. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
@@ -1177,12 +1219,12 @@ def main():
                 json.dumps(batch,ensure_ascii=False))
             try:
                 supplemental_attempts+=1
+                supplemental_groups+=len(batch)
                 retry_result=ai(retry_prompt,temperature=0.65)
-                retry_stories=retry_result.get("stories",[]) if isinstance(retry_result,dict) else []
-                if isinstance(retry_stories,list):
-                    supplemental_generated+=min(3,len(retry_stories))
-                    draft.extend(retry_stories[:3])
-                print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
+                retry_stories=source_bound_batch_drafts(retry_result,batch)
+                supplemental_generated+=len(retry_stories)
+                draft.extend(retry_stories)
+                print("Small-batch source-bound draft count:",len(retry_stories),flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
             if sum(draft_preflight_viable(item,now) for item in draft)>=3:
@@ -1191,6 +1233,7 @@ def main():
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
                supplemental_attempts=supplemental_attempts,
+               supplemental_groups=supplemental_groups,
                supplemental_generated=supplemental_generated)
     if AI_QUOTA_BLOCKED:
         checkpoint("model_quota_blocked")
