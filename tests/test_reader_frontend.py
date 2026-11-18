@@ -71,6 +71,24 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="issueGallery"'),page.index('id="coverWorldMap"'))
         self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
+    def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('data-layout="mobile-grid-2plus1"',page)
+        self.assertIn("絵を選んで読む",page)
+        self.assertIn("#atlasHero .gallery-track{width:100%;display:grid;",page)
+        self.assertIn("grid-auto-flow:row;grid-auto-columns:auto;",page)
+        self.assertIn("grid-template-columns:repeat(2,minmax(0,1fr));",page)
+        self.assertIn("gap:9px;overflow-x:visible;",page)
+        self.assertIn("scroll-snap-type:none;",page)
+        self.assertIn("#atlasHero .gallery-tile:last-child:nth-child(odd){",page)
+        self.assertIn("grid-column:1/-1;display:grid;",page)
+        self.assertIn("#atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{",page)
+        self.assertIn("@media(max-width:355px){",page)
+        # The news tiles remain buttons pointing to real published stories,
+        # not duplicate content or nonfunctional decorative pictures.
+        self.assertIn("button.addEventListener('click',()=>openAtlasStory(index))",page)
+        self.assertIn("target.replaceChildren()",page)
+
     def test_humor_identity_is_readable_before_the_map_on_mobile(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         before_map=page[page.index('<section class="hero" id="atlasHero"'):
