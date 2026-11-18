@@ -72,5 +72,30 @@ class HardSurpriseEditionTest(unittest.TestCase):
                 publish(root,datetime.fromisoformat('2026-11-18T22:15:00+09:00'))
 
 
+    def test_auto_editor_must_supply_independent_wow_and_stage_verdicts(self):
+        from editorial_quality import REVIEW_FIELDS, independent_editorial_quality_passed
+        self.assertIn("shockFactorConfirmed",REVIEW_FIELDS)
+        self.assertIn("stageTsukkomiConfirmed",REVIEW_FIELDS)
+        full={"approved":True,**{key:True for key in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(full))
+        self.assertFalse(independent_editorial_quality_passed({**full,"shockFactorConfirmed":False}))
+        self.assertFalse(independent_editorial_quality_passed({**full,"stageTsukkomiConfirmed":False}))
+
+    def test_three_corporate_stories_never_fill_edition(self):
+        from collections import Counter
+        from auto_editorial import select_diverse_verified_stories
+        pool=[{"id":str(i),"country":country,"category":"company"}
+              for i,country in enumerate(("US","FR","DE","BR"))]
+        chosen=select_diverse_verified_stories(pool,Counter(),Counter())
+        self.assertEqual(len(chosen),1)
+        pool.extend([
+            {"id":"a","country":"AR","category":"sports"},
+            {"id":"b","country":"JP","category":"person"},
+        ])
+        chosen=select_diverse_verified_stories(pool,Counter(),Counter())
+        self.assertEqual(len(chosen),3)
+        self.assertLessEqual(sum(x["category"]=="company" for x in chosen),1)
+
+
 if __name__=='__main__':
     unittest.main()
