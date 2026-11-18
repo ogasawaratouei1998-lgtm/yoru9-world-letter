@@ -33,6 +33,17 @@ class NightlyQuoteTest(unittest.TestCase):
         public=validate_approved(approved,'2026-11-10')
         self.assertNotEqual(public['nightlyMessage'],approved['nightlyMessage'])
 
+    def test_intentionally_blank_nightly_punchline_stays_blank(self):
+        approved=fixture()
+        # A deliberate empty line differs from a missing legacy field:
+        # publishing should not invent a decorative replacement joke.
+        self.assertTrue(validate_approved(approved,'2026-11-10')['nightlyMessage'])
+        approved['nightlyMessage']=""
+        public=validate_approved(approved,'2026-11-10')
+        self.assertEqual(public['nightlyMessage'],"")
+        self.assertEqual(len(public['stories']),3)
+        self.assertTrue(public['nightQuote'])
+
     def test_published_issue_contains_nightly_quote(self):
         public=validate_approved(fixture(),'2026-11-10')
         self.assertTrue(public['nightQuote'])
