@@ -176,6 +176,13 @@ def validate_approved(data, expected_date):
         require(isinstance(stories, list) and
                 ((1 <= len(stories) <= 5) if edition_type == 'regular' else len(stories) == 5),
                 '過去の通常号は1〜5本、特集号は5本の記事が必要です')
+    hard_reissue = data.get('approvedBy') == 'editorial-hard-surprise-2026-11-18'
+    if hard_reissue:
+        require(expected_date == '2026-11-18' and edition_type == 'regular',
+                '特別な編集差し替えは2026-11-18の通常号に限ります')
+        from editorial_surprise import edition_mixture_rejection
+        require(edition_mixture_rejection(stories) is None,
+                '3本は分野を分け、企業ニュースの偏りを避けてください')
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
@@ -201,25 +208,38 @@ def validate_approved(data, expected_date):
         require(valid_url(story['sourceUrl']), f'{i}本目のsourceUrlが安全なHTTPS URLではありません')
         require(story.get('editorVerified') is True and story.get('humorSafe') is True,
                 f'{i}本目は個別の事実確認・危害配慮が未承認です')
-        if (issue_day >= date(2026, 11, 18) and
-                data.get('approvedBy') == 'automated-two-stage-review'):
+        automated = data.get('approvedBy') == 'automated-two-stage-review'
+        if issue_day >= date(2026, 11, 18) and (automated or hard_reissue):
             require(story.get('editorQualityVerified') is True,
-                    f'{i}本目は見出しの事実性・翻訳・法的表現・ユーモアの独立審査が未完了です')
-            require(story.get('humanFailureVerified') is True and
-                    isinstance(story.get('humanActor'), str) and
-                    isinstance(story.get('humanMistake'), str),
-                    f'{i}本目は人間の具体的な失敗が確認されていません')
+                    f'{i}本目の事実・翻訳・漫才審査が未完了です')
+            if automated and issue_day >= date(2026, 11, 19):
+                require(story.get('surpriseVerified') is True and
+                        story.get('stageTsukkomiVerified') is True,
+                        f'{i}本目は驚きの強さと鋭いツッコミの独立審査が未完了です')
+            if automated:
+                require(story.get('humanFailureVerified') is True and
+                        isinstance(story.get('humanActor'), str) and
+                        isinstance(story.get('humanMistake'), str),
+                        f'{i}本目は人間の具体的行動が確認されていません')
             from country_codes import country_codes
-            require(country_codes(story["country"]),
+            require(country_codes(story['country']),
                     f'{i}本目の出来事が起きた国・地域を認識できません')
             from editorial_identity import (human_failure_rejection,
                                             comic_line_rejection,noncomic_incident_rejection)
             require(human_failure_rejection(story) is None,
-                    f'{i}本目は人間の失敗中心のニュースではありません')
+                    f'{i}本目は事実に裏付けられた意外な行動ではありません')
             require(noncomic_incident_rejection(story) is None,
                     f'{i}本目は深刻な事件であり、笑いの題材として不適切です')
             require(comic_line_rejection(story['quip']) is None,
                     f'{i}本目はツッコミとして成立していません')
+            if hard_reissue:
+                from editorial_surprise import extraordinary_rejection
+                require(extraordinary_rejection(story) is None,
+                        f'{i}本目は強い意外性・舞台的ツッコミの審査に不合格です')
+                require(isinstance(story.get('expectedPlan'),str) and
+                        isinstance(story.get('observedOutcome'),str) and
+                        story['expectedPlan'] != story['observedOutcome'],
+                        f'{i}本目は事実で裏付けられた期待と結果の差がありません')
         urls = story.get('verificationUrls')
         # Existing historical/special records retain their original two-source
         # contract. New regular issues may use ONE verified original publisher
@@ -262,7 +282,7 @@ def validate_approved(data, expected_date):
         if 'quipSecond' in story:
             # Automatic approval needs explicit second-joke review; matching
             # length and differing words are not sufficient comic standards.
-            if issue_day >= date(2026, 11, 18) and data.get('approvedBy') == 'automated-two-stage-review':
+            if issue_day >= date(2026, 11, 18) and (automated or hard_reissue):
                 require(story.get('secondQuipVerified') is True,
                         f'{i}本目の2本目のAIツッコミは独立審査で未承認です')
             second = story['quipSecond']
@@ -315,6 +335,11 @@ NIGHT_LINES = {
 }
 
 def nightly_line(edition_date, stories):
+    # Only the explicitly reissued 2026-11-18 show receives a stage-style
+    # closing line; past immutable editions and other dates stay untouched.
+    if (edition_date == '2026-11-18' and stories and
+            stories[0].get('id') == 'argentina-goalkeeper-throws-own-goal-2026'):
+        return '世界がボケ続けるなら、ツッコミは今夜も残業や！'
     import hashlib
     key = edition_date + '|' + '|'.join(story['id'] for story in stories)
     digest = hashlib.sha256(key.encode('utf-8')).digest()

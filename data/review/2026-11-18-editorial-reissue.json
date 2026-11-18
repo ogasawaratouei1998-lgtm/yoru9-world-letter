@@ -1,0 +1,48 @@
+{
+  "date": "2026-11-18",
+  "reason": "Reader rejected Nov 18 edition: pedestrian institutional business stories and weak comment-style quips.",
+  "approvedReplacement": true,
+  "oldEditionTitle": "2026-11-18｜世界の「まさか」3本",
+  "removedStoryIds": [
+    "new-plymouth-cycleway-2026",
+    "oy-bar-studio-city-closure-2026",
+    "blackburn-mcdonalds-ai-mural-mixups-2026"
+  ],
+  "replacementStoryIds": [
+    "argentina-goalkeeper-throws-own-goal-2026",
+    "france-candy-police-mock-wanted-2026",
+    "mickey-83-tattoos-disney-unvisited-2026"
+  ],
+  "editorialChange": "Explicit editorial reissue; replace all public copies after CI. Rejected articles remain discoverable in Git history; public edition shows only the new three.",
+  "sourceEvidence": [
+    {
+      "id": "argentina-goalkeeper-throws-own-goal-2026",
+      "sourceUrls": [
+        "https://www.tycsports.com/primera-division-b/explicacion-arquero-comunicaciones-tras-su-insolito-gol-contra-ante-arsenal-id771787.html",
+        "https://tn.com.ar/deportes/futbol/2026/11/17/el-arquero-de-comunicaciones-conto-como-supero-el-gol-en-contra-que-se-volvio-viral-comimos-unas-empanadas-y-miramos-ufc/",
+        "https://www.lanacion.com.ar/deportes/futbol/el-insolito-gol-en-contra-que-hizo-el-arquero-de-comunicaciones-que-cayo-como-local-3-2-ante-arsenal-nid14112026/"
+      ],
+      "originalReportDate": "2026-11-16",
+      "sourceInterpretation": "GKがボールを捕って味方に投げる通常のプレー -> 味方ではなく自分のゴールに投げ入れてしまった"
+    },
+    {
+      "id": "france-candy-police-mock-wanted-2026",
+      "sourceUrls": [
+        "https://www.ledauphine.com/faits-divers-justice/2026/11/16/lettre-adorable-et-distribution-de-bonbons-a-halloween-deux-jeunes-filles-recherchees-pour-avoir-fait-fondre-les-policiers",
+        "https://www.laradioplus.com/news/locales/129639/thonon-les-bains-la-police-recherche-deux-jeunes-filles-apres-une-jolie-attention"
+      ],
+      "originalReportDate": "2026-11-16",
+      "sourceInterpretation": "子どもが警察にお菓子を差し入れる善意 -> 警察は感謝状ではなく指名手配風の投稿で応じた"
+    },
+    {
+      "id": "mickey-83-tattoos-disney-unvisited-2026",
+      "sourceUrls": [
+        "https://www.guinnessworldrecords.com/news/2026/11/woman-inks-over-80-mickey-mouse-tattoos-after-moving-to-usa-he-puts-a-smile-on-my-face",
+        "https://parade.com/news/woman-sets-world-record-with-83-mickey-mouse-tattoos-despite-never-visiting-disney-world"
+      ],
+      "originalReportDate": "2026-11-13",
+      "sourceInterpretation": "ミッキーを好きすぎてタトゥーを83個入れ世界記録 -> 本家ディズニーワールドを一度も訪ねていない"
+    }
+  ],
+  "policy": "Only safe, source-supported comedy about documented actions; no personal attacks, violence, serious harm, or invented facts."
+}

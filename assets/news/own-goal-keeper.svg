@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="t">
+<title id="t">ゴールキーパーが味方へ投げたつもりのボールが自分のゴールへ向かう、創作の3コマ風イラスト</title>
+<defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#FFE58D"/><stop offset="1" stop-color="#FE9E83"/></linearGradient><filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#29435E" flood-opacity=".17"/></filter></defs>
+<rect width="800" height="480" rx="28" fill="url(#bg)"/><circle cx="685" cy="84" r="142" fill="#fff" opacity=".20"/>
+<path d="M0 333Q200 294 412 338T800 316V480H0Z" fill="#5EB5A6"/><path d="M0 393Q240 342 480 388T800 376" fill="none" stroke="#E9FFF0" stroke-width="7"/>
+<g stroke="#214A61" stroke-width="11" fill="none" stroke-linejoin="round" stroke-linecap="round"><path d="M130 180L130 397L395 397L395 180Z"/><path d="M130 180l57-49 264 0-56 49"/><path d="M395 180l56-49v216l-56 50"/></g>
+<g stroke="#C8EBE5" stroke-width="3" opacity=".85"><path d="M183 131v216M236 131v216M289 131v216M342 131v216M395 131v216M130 232h265M130 287h265M130 343h265"/></g>
+<g filter="url(#shadow)" transform="translate(585 259)"><ellipse cx="0" cy="142" rx="79" ry="18" fill="#35616A" opacity=".19"/><path d="M-36 70l-36 67M24 70l29 65" stroke="#1C475C" stroke-width="19" stroke-linecap="round"/><path d="M-57 -11q57-40 110 0l-8 95h-97z" fill="#4278BF" stroke="#1B435D" stroke-width="9"/><path d="M-44 5l-66 -21M43 -2l56 -61" stroke="#F3AE84" stroke-width="21" stroke-linecap="round"/><circle cx="-3" cy="-77" r="45" fill="#F3AE84" stroke="#1B435D" stroke-width="9"/><path d="M-37 -91q-2-53 50-42l25 30" fill="none" stroke="#1B435D" stroke-width="25" stroke-linecap="round"/><circle cx="14" cy="-73" r="5" fill="#1B435D"/></g>
+<g filter="url(#shadow)"><circle cx="313" cy="260" r="54" fill="#fff" stroke="#1B435D" stroke-width="8"/><path d="M295 232l31-4 20 27-17 30-35-2-16-30z" fill="#1B435D"/><path d="M313 206v24M265 234l22 17M362 252l-21 12M334 309l-5-27M278 297l17-16" stroke="#1B435D" stroke-width="8"/></g>
+<path d="M507 153C460 158 407 188 363 217" fill="none" stroke="#FFF" stroke-width="14" stroke-linecap="round" stroke-dasharray="15 22"/>
+<path d="M374 208l-37 16 31 21" fill="none" stroke="#FFF" stroke-width="11" stroke-linecap="round"/>
+<g filter="url(#shadow)"><rect x="467" y="30" width="272" height="103" rx="31" fill="#fff9ef" stroke="#1B435D" stroke-width="7"/><path d="M540 133l-18 34 53-34" fill="#fff9ef" stroke="#1B435D" stroke-width="7"/><text x="602" y="104" text-anchor="middle" font-family="system-ui,sans-serif" font-size="65" font-weight="900" fill="#E85D49">えっ!?</text></g>
+<path d="M75 93l38 13m-23-39l28 23m562 315l41-12" stroke="#fff9ef" stroke-width="9" stroke-linecap="round"/>
+</svg>
