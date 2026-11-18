@@ -575,6 +575,80 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .travel-links{margin:7px 0 4px}
 .travel-credit{color:#cad7e6;font-size:.75rem;line-height:1.5;margin:7px 0 0}
 .travel-credit a{color:#d6e9d8}
+
+/* World Letter / atlas-first cover, scoped and placed after legacy overrides. */
+#atlasHero{display:flex;flex-direction:column;align-items:stretch;margin:4px 0 16px;
+ padding:17px 17px 15px!important;text-align:left!important;
+ background:linear-gradient(154deg,#1c314b 0%,#14263e 58%,#101e32 100%)!important;
+ border:1px solid #607790!important;border-radius:20px!important;overflow:hidden!important}
+.atlas-heading{width:100%}
+#atlasHero .eyebrow{display:block!important;text-align:left!important;margin:0 0 5px!important;
+ color:#f5d6a1!important;font-size:.72rem!important;font-weight:800;letter-spacing:.12em!important}
+.atlas-title{margin:0;color:#fff5e7;font-size:clamp(1.2rem,4.9vw,1.8rem);
+ line-height:1.46;font-weight:820;letter-spacing:-.02em;overflow-wrap:anywhere}
+.atlas-title span{color:#ffd799;font-variant-numeric:tabular-nums}
+.atlas-lede{font-size:.875rem;color:#d6e3f2;line-height:1.6;margin:4px 0 9px}
+.atlas-brand{font-size:.78rem;color:#d7dfed;letter-spacing:.015em;line-height:1.5;margin:0 0 11px}
+.atlas-map{height:auto;aspect-ratio:2/1;min-height:140px;width:100%;position:relative;
+ border-radius:12px;border:1px solid #49617c;overflow:hidden;isolation:isolate;
+ background-color:#14273d;
+ background-image:linear-gradient(#7e96ab20 1px,transparent 1px),
+ linear-gradient(90deg,#7e96ab20 1px,transparent 1px),
+ radial-gradient(ellipse at 48% 43%,#284766a8 0%,#122338 78%);
+ background-size:100% 25%,12.5% 100%,100% 100%}
+.atlas-map::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+ background:radial-gradient(ellipse at 50% 43%,transparent 35%,#0d1d337a 100%)}
+#coverWorldCoastlines{display:block;width:100%;height:100%;position:absolute;inset:0;z-index:0;
+ fill:#49627b;stroke:#879eb443;stroke-width:.28px;stroke-linejoin:round;opacity:.85}
+.atlas-pins{position:absolute;inset:0;z-index:3;pointer-events:none}
+.atlas-pin{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;
+ min-height:32px;min-width:32px;border-radius:50%;border:2px solid #fff3da;
+ background:#f5d28e;color:#13243b;font-size:.8rem;font-weight:900;
+ box-shadow:0 0 0 5px #eabf6240,0 3px 12px #0008;cursor:pointer;
+ pointer-events:auto;touch-action:manipulation}
+.atlas-pin:focus-visible{outline:3px solid #fff;outline-offset:6px}
+.atlas-map-symbol{display:none}
+.atlas-map-caption{margin:9px 0 4px;font-size:.73rem;line-height:1.6;color:#c1d1e4}
+#atlasHero .issue-countries{display:flex;justify-content:flex-start;margin:5px 0 9px!important;
+ gap:7px 6px;align-items:center}
+#atlasHero .issue-countries .countries-intro{font-size:.8rem;font-weight:770;flex:0 0 auto;
+ margin-right:3px;color:#e7d8ba}
+#atlasHero .country-chip{font-size:.79rem;padding:5px 12px;line-height:1.5;min-height:44px;appearance:none;cursor:pointer;
+ color:#fff0d8;background:#2a405c;border:1px solid #7a8fab;border-radius:100px}
+.atlas-explore{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;
+ width:max-content;max-width:100%;padding:6px 2px;min-height:44px;
+ font-size:.84rem;line-height:1.6;font-weight:740;color:#ffdc9c!important;
+ text-decoration:underline;text-underline-offset:4px}
+.atlas-explore span{font-size:1.3rem;line-height:1}
+.spotlight{border-color:#8f7f69}
+.spotlight-topline{border-bottom-color:#d5a96c48}
+.spotlight-location{background:#253d57;border:1px solid #68809a;border-radius:99px;
+ padding:3px 10px;color:#f3e6ce}
+.story{border-left-width:3px}
+.story:nth-child(2){background:linear-gradient(145deg,#223550,#17283e)}
+.story:nth-child(3){background:linear-gradient(145deg,#1d3446,#18263c)}
+.story .teaserquip{border-radius:9px}
+.footerpanel{padding:22px 18px 20px;margin-top:25px;border-color:#526a81}
+.footerpanel .closing-moon{font-size:1.55rem}
+.footerpanel .bye{margin-top:12px}
+.disclosure-details{margin:10px 0 23px;border-top:1px solid #3c536d;padding:0 2px;
+ color:#d1dfed}
+.disclosure-details>summary{min-height:44px;padding:10px 3px;font-size:.84rem;
+ cursor:pointer;color:#c2d1e2;line-height:1.65}
+.disclosure-details .note{margin:2px 0 8px;padding:12px 13px;
+ background:#122139;border:1px solid #3e5672;font-size:.86rem;line-height:1.75}
+@media(max-width:520px){
+ #atlasHero{padding:15px 14px 13px!important;border-radius:17px!important;margin:3px 0 14px}
+ .atlas-title{font-size:clamp(1.21rem,5.3vw,1.42rem)}
+ .atlas-lede{font-size:.8125rem}
+ .atlas-map{min-height:135px}
+ .atlas-pin{min-height:31px;min-width:31px}
+ .atlas-map-caption{font-size:.73rem}
+ #atlasHero .country-chip{font-size:.78rem}
+ .spotlight-location{margin:0 0 0 auto}
+ .spotlight h1{font-size:clamp(1.44rem,5.7vw,1.9rem)}
+}
+@media(prefers-reduced-motion:reduce){.atlas-pin{transition:none}}
 </style>
 </head>
 <body><div class="wrap">
@@ -582,7 +656,22 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <main>
 <section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a id="closingJump" href="#closing">今夜は、ひと言だけ読む</a></section>
-<section class="hero" aria-label="ニュースの舞台"><p class="eyebrow">世界の「やらかし」に、AIが本気でツッコむ。</p><div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div></section>
+<section class="hero" id="atlasHero" aria-label="世界から届くニュースの舞台">
+ <div class="atlas-heading">
+  <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
+  <h2 class="atlas-title">世界から届いた、<span id="atlasStoryCount">3</span>つの実話。</h2>
+  <p class="atlas-lede">今夜の「まさか」は、どこの国から？</p>
+  <p class="atlas-brand">世界の「やらかし」に、AIが本気でツッコむ。</p>
+ </div>
+ <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
+  <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
+  <div id="coverMapPins" class="atlas-pins"></div>
+  <span class="atlas-map-symbol" aria-hidden="true">◌</span>
+ </div>
+ <p class="atlas-map-caption" id="coverMapCaption">地図の点は、掲載国のおおよその位置です。記事の現場ではありません。</p>
+ <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
+ <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
+</section>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
  <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
  <h1 id="spotlightTitle">世界の実話を準備中…</h1>
@@ -615,7 +704,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
 <section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
-<aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside>
+<details class="disclosure-details"><summary>編集方針・出典と配信情報について</summary><aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside></details>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
 <script id="embedded-demo" type="application/json">{"status":"demo","editionDate":null,"title":"創刊準備号｜過去の大失敗ニュース5本","stories":[{"id":"flight-wrong-country","country":"イギリス","category":"company","categoryLabel":"企業・職場の大失敗","label":"国ごと間違えた","title":"ドイツ行きの飛行機、到着したのはスコットランド。","summary":"乗客はドイツに向かっていたはず。ところが着陸後の機内アナウンスは「エディンバラへようこそ」。国が違います。","detail":"2019年3月、ロンドン発デュッセルドルフ行きの便が、誤った飛行計画書に従ってスコットランドのエディンバラに着陸。乗客は最初、機長の冗談だと思ったそうです。乗客の話では、機長が「デュッセルドルフに行きたい人は？」と手を挙げてもらうと、全員が手を挙げました。飛行機はその後、給油をして本来の目的地に向かいました。","quip":"旅先を決めるのは乗客、と思っていたら、書類が先に旅先を決めていた。","sourceName":"ABC News（2019年3月26日）","sourceUrl":"https://www.abc.net.au/news/2019-03-26/british-airways-plane-edinburgh-scotland-dusseldorf-germany/10938796","reported":"2019.03.26","disclaimer":"安全上の問題はなかったと運航会社が説明。乗客の遅延・不便は発生。","flag":"🇬🇧"},{"id":"lollipops-70000","country":"アメリカ","category":"person","categoryLabel":"個人の大失敗","label":"約70,000個","title":"8歳の少年が「友達への景品」を注文。届いたキャンディー、約7万個。","summary":"お母さんのスマホから注文したのは、小さな縁日で配るためのお菓子。自宅に届いたのは、およそ4,000ドル分の巨大な箱の山でした。","detail":"米ケンタッキー州で、8歳の少年がお母さんのスマートフォンを使ってキャンディー約7万個を発注。玄関には22ケースが届き、残りのケースも配送手続き中でした。少年の目的は、友達と開く縁日で配る景品を用意すること。お母さんは驚きましたが、返品対応などを進め、最終的に返金を受けられたとAP通信は報じました。","quip":"「みんなにお菓子をあげたい」は素敵。ただし、学校ひとつ分でも足りそうな量ではない。","sourceName":"AP通信 / Spectrum News（2025年5月7日）","sourceUrl":"https://ny1.com/nyc/all-boroughs/ap-top-news/2025/05/06/kentucky-boy-uses-mothers-phone-to-order-70k-dum-dum-suckers-to-share-with-his-friends","reported":"2025.05.07","disclaimer":"注文額は報道時の概算。保護者への返金が報じられています。","flag":"🇺🇸"},{"id":"spain-trains-too-big","country":"スペイン","category":"company","categoryLabel":"企業・組織の大失敗","label":"31編成","title":"新しい列車を31編成発注。ところがトンネルの寸法に合わない。","summary":"列車を新しくして便利にする計画。ところが設計段階で、トンネルを通れないサイズだと判明。まさかの設計やり直しに。","detail":"スペイン北部向けに2020年に発注された31編成の列車について、当初の設計では地域の一部トンネルを通れないことが分かりました。問題は製造完了前に発覚し、設計変更が必要に。政府側は公金の無駄は生じていないと説明しましたが、納入は2〜3年ほど遅れる見通しとなり、幹部の辞任にも発展しました。","quip":"列車を走らせる前に、最初に通るべきだったのは「寸法の確認」だった。","sourceName":"AP通信（2023年2月20日）","sourceUrl":"https://apnews.com/article/a4d3e2fc2eb80af8561215eba931105b","reported":"2023.02.20","disclaimer":"「完成した列車がつかえた」わけではありません。設計段階で発覚した問題です。","flag":"🇪🇸"},{"id":"welsh-out-of-office","country":"イギリス・ウェールズ","category":"work","categoryLabel":"職場・会社員の大失敗","label":"自動返信が標識に","title":"道路標識の翻訳を依頼したら、「ただいま外出中」をそのまま印刷。","summary":"大型車の進入禁止を示すはずだった標識。ウェールズ語部分には、担当者の不在自動返信が堂々と掲示されていました。","detail":"ウェールズのスウォンジー市で、道路標識に載せるウェールズ語訳をメールで依頼したところ、翻訳担当者の自動返信が届きました。担当者は不在で、返信の意味は「今は事務所にいません。翻訳作業は送ってください」というもの。ところが依頼側はそれを訳文だと思い込み、標識に印刷して設置。気づいたウェールズ語話者の指摘を受けて撤去されました。","quip":"看板は交通規制を伝えるはずが、翻訳担当者の勤務状況を全力で知らせていた。","sourceName":"The Guardian（2008年11月1日）","sourceUrl":"https://www.theguardian.com/theguardian/2008/nov/01/5","reported":"2008.11.01","disclaimer":"実際の標識に掲載された文章は翻訳担当者の自動返信でした。","flag":"🇬🇧"},{"id":"reporter-worker","country":"イギリス","category":"work","categoryLabel":"職場の勘違い","label":"生放送中","title":"BBC記者、生中継中に「すみません、店員さん？」と間違われる。","summary":"物価を伝える真剣なレポートの途中。安全ベストを着た記者が、目の前の人から店のスタッフだと思われて話しかけられました。","detail":"英国バーミンガムの卸売市場で、BBCの記者ベン・ブロスさんが物価のニュースを生中継。安全のため反射ベストを着ていたところ、一般の人が市場の従業員と勘違いして声をかけました。記者は「ここで働いていないんです。ニュースを伝えているだけです」と説明し、笑いをこらえながら中継を続行。スタジオ側も仕事ぶりをいじり、本人もジョークで返しました。","quip":"今日いちばん現場に溶け込んでいた人が、取材している人だった。","sourceName":"Evening Standard（2023年12月20日）","sourceUrl":"https://www.standard.co.uk/news/uk/bbc-presenter-ben-boulos-mistaken-worker-factory-tv-live-report-inflation-uk-b1128250.html","reported":"2023.12.20","disclaimer":"出典には当時の映像に関する説明があります。本人も笑って受け止めた場面です。","flag":"🇬🇧"}]}</script>
@@ -718,7 +807,7 @@ async function loadWorldBoundaries(){
     const path=document.createElementNS(ns,'path');path.setAttribute('d',d);fragment.append(path);
    }
   }
-  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
+  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;$('coverWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
  }catch(err){
   status.textContent='地図の形を取得できません。国別アーカイブは利用できます。';
  }
@@ -1114,6 +1203,50 @@ async function loadMonthlyVerified(){
   // The 30-day filter still applies at render time.
  }
 }
+// The cover map uses the SAME factual location catalog as the deep archive.
+// Pins represent countries or territories, NEVER the precise incident venue.
+function openWorldExplorer(country=''){
+ const map=$('mapExtras');
+ map.open=true;
+ const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+ const select=$('countrySelect');
+ if(country&&[...select.options].some(option=>option.value===country)){
+  select.value=country;
+  showCountryResults();
+  select.scrollIntoView({behavior,block:'center'});
+ }else{
+  map.scrollIntoView({behavior,block:'start'});
+ }
+}
+function renderCoverMap(){
+ const pins=$('coverMapPins');
+ pins.replaceChildren();
+ if(!Array.isArray(edition.stories))return;
+ const present=new Map();
+ for(const story of edition.stories){
+  for(const country of countryKeys(story.country)){
+   if(!present.has(country))present.set(country,0);
+   present.set(country,present.get(country)+1);
+  }
+ }
+ for(const [code,count] of present){
+  const point=mapPoint(code);
+  if(!point)continue;
+  const button=document.createElement('button');
+  button.type='button';button.className='atlas-pin';
+  button.style.left=point[0]+'%';button.style.top=point[1]+'%';
+  button.textContent=String(count);
+  button.title=countryLabel(code)+'の掲載記事を探す（国の代表位置）';
+  button.setAttribute('aria-label',button.title);
+  button.addEventListener('click',()=>openWorldExplorer(code));
+  pins.append(button);
+ }
+ const caption=$('coverMapCaption');
+ const names=[...present.keys()].map(countryLabel).join('・');
+ caption.textContent=names
+  ?'掲載国：'+names+'。点は国・地域の代表位置で、ニュースの現場ではありません。'
+  :'公開記事の掲載国を確認中です。地図の点はニュースの現場ではありません。';
+}
 function renderIssueCountries(){
  const target=$('issueCountries');
  target.replaceChildren();
@@ -1129,12 +1262,17 @@ function renderIssueCountries(){
  target.append(intro);
  if(!names.size){
   const pending=document.createElement('span');pending.className='country-pending';
-  pending.textContent='舞台の国・地域を確認中';target.append(pending);return;
+  pending.textContent='舞台の国・地域を確認中';target.append(pending);renderCoverMap();return;
  }
- for(const name of names.values()){
-  const chip=document.createElement('span');chip.className='country-chip';
-  chip.textContent=name;target.append(chip);
+ for(const [code,name] of names){
+  const chip=document.createElement('button');
+  chip.type='button';chip.className='country-chip';
+  chip.textContent=name;
+  chip.setAttribute('aria-label',name+'の記事を地図から探す');
+  chip.addEventListener('click',()=>openWorldExplorer(code));
+  target.append(chip);
  }
+ renderCoverMap();
 }
 function updateSpotlight(){
  const first=Array.isArray(edition.stories)?edition.stories[0]:null;
@@ -1163,13 +1301,10 @@ $('spotlightRead').addEventListener('click',()=>{
  if(show){markRead(0);panel.scrollIntoView({behavior:'smooth',block:'nearest'})}
 });
 $('worldInvitation').addEventListener('click',event=>{
- event.preventDefault();
- const map=$('mapExtras');
- map.open=true;
- map.scrollIntoView({
-  behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',
-  block:'start'
- });
+ event.preventDefault();openWorldExplorer();
+});
+$('coverWorldLink').addEventListener('click',event=>{
+ event.preventDefault();openWorldExplorer();
 });
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
@@ -1361,6 +1496,7 @@ function updateFilters(){
  if(filter!=='all'&&!available.has(filter))filter='all';
 }
 function render(){const d=edition.stories;
+ $('atlasStoryCount').textContent=d.length===1?'1':String(d.length);
  const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
   $('nightlyMessage').textContent=nightlyLine;
   $('closingQuote').hidden=!nightlyLine;
