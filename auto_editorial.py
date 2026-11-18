@@ -191,6 +191,8 @@ INCIDENT_TERMS=re.compile(r"\b(accidentally|mistak(?:e|en)|mix.?up|blunder|error
 COMIC_MISSTEP_TERMS=re.compile(
     r"typo|misspell|misprint|mix.?up|accidentally|by mistake|mistook|"
     r"wrong recipient|wrong order|wrong delivery|wrong address|"
+    r"wrong (?:city|cities|town|landmark|cathedral|mural|sign)|"
+    r"AI.generated.{0,70}(?:wrong|errors?|mistake|misspell)|"
     r"誤字|誤記|手違い|誤配達|誤送信|誤発注|勘違い|見間違い|取り違え|"
     r"verwechslung|aus versehen|por error|equivocaci[oó]n|실수",re.I
 )

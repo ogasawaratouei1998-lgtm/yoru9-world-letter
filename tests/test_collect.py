@@ -22,9 +22,36 @@ class CollectionTest(unittest.TestCase):
             }]}).encode()
         with patch.object(c,"fetch_bytes",side_effect=fetch):
             leads=c.get_gdelt()
-        self.assertEqual(len(queries),3)
-        self.assertEqual(len(leads),3)
+        self.assertEqual(len(queries),6)
+        self.assertEqual(len(leads),6)
         self.assertTrue(any("wrong recipient" in item for item in queries))
+        self.assertTrue(any("AI-generated mural" in item for item in queries))
+        self.assertTrue(any("misspelled" in item for item in queries))
+
+    def test_gdelt_caps_each_search_and_deduplicates(self):
+        import json
+        from unittest.mock import patch
+        def fetch(url):
+            self.assertIn('timespan=7d',url)
+            self.assertIn('maxrecords=40',url)
+            return json.dumps({'articles':[
+                {'title':'Local road sign misspelled',
+                 'url':f'https://example.org/story-{i}',
+                 'seendate':'20261118T003000Z',
+                 'domain':'example.org','sourcecountry':'GB',
+                 'language':'English'} for i in range(12)]}).encode()
+        with patch.object(c,'fetch_bytes',side_effect=fetch):
+            leads=c.get_gdelt()
+        # Ten from the first query, then the remaining two unique URLs.
+        # Later queries cannot duplicate already discovered publisher reports.
+        self.assertEqual(len(leads),12)
+        self.assertEqual(len({v['url'] for v in leads}),12)
+
+    def test_regional_bbc_feeds_support_local_mistakes(self):
+        self.assertTrue(any('lancashire/rss.xml' in url for url in c.BBC_FEEDS))
+        self.assertTrue(any('leicestershire/rss.xml' in url for url in c.BBC_FEEDS))
+        import inspect
+        self.assertIn("sourcecountry='GB'",inspect.getsource(c.main))
 
     def test_google_news_rss_parses(self):
         rss=b'''<rss version="2.0"><channel><item><title>Shocking mix-up at a bakery</title><link>https://news.google.com/articles/abc</link><source>NewsOutlet</source><pubDate>Tue, 10 Nov 2026 03:00:00 GMT</pubDate></item></channel></rss>'''

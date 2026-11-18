@@ -635,6 +635,16 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual([x["url"] for x in ranked],
                          [ordinary["url"],generic["url"],serious["url"],animal["url"]])
 
+    def test_wrong_ai_landmark_is_prioritized_as_comic_blunder(self):
+        mural={'title':"McDonald's AI-generated mural riddled with errors",
+               'url':'https://www.bbc.com/news/a'}
+        generic={'title':'Local economic forecasts updated',
+                 'url':'https://www.bbc.com/news/b'}
+        conflict={'title':'Minister faces protests after suspensions',
+                  'url':'https://www.bbc.com/news/c'}
+        self.assertLess(editorial.incident_priority(mural),editorial.incident_priority(generic))
+        self.assertLess(editorial.incident_priority(mural),editorial.incident_priority(conflict))
+
     def test_incident_relevance_ranking_is_not_fact_approval(self):
         leads=[{"title":"World leaders meet at summit","url":"https://example.org/a"},
                {"title":"Company accidentally sends wrong invoices","url":"https://example.org/b"}]
