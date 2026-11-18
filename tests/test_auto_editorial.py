@@ -399,10 +399,10 @@ class AutoEditorialSafetyTests(unittest.TestCase):
 
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
-        self.assertIn("source-supported HUMAN mistakes",mission)
+        self.assertIn("source-supported extraordinary human actions",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
-        self.assertIn("Never replace a concrete human-led incident",mission)
+        self.assertIn("Never replace a genuine hard-to-believe sourced human episode",mission)
         self.assertIn("Do not invent a happy ending",mission)
 
     def test_reject_private_hosts(self):
@@ -974,7 +974,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_creative_scope_relaxed_but_source_and_safety_guards_retained(self):
         from pathlib import Path
         src=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("source need not call it a mistake",src)
+        self.assertIn("no literal error is required",src)
         self.assertIn("trusted_original_domain(urls[0])",src)
         self.assertIn("noncomic_incident_rejection(story,evidence)",src)
         self.assertIn("independent_editorial_quality_passed(audit)",src)
