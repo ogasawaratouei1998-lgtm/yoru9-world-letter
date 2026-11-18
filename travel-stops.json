@@ -1,4 +1,35 @@
 {
+  "argentina-goalkeeper-throws-own-goal-2026": {
+    "country": "アルゼンチン",
+    "countryOnly": true,
+    "place": "ブエノスアイレスのオベリスコ",
+    "region": "ブエノスアイレス・7月9日大通り",
+    "latitude": -34.6037,
+    "longitude": -58.3816,
+    "note": "ブエノスアイレスの中心に立つオベリスコ。夕暮れの大通りを眺めれば、南米の大都市の躍動が伝わってきます。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Obelisco_de_Buenos_Aires%2C_Argentina.jpg/500px-Obelisco_de_Buenos_Aires%2C_Argentina.jpg",
+    "photoCaption": "夕暮れのブエノスアイレス、7月9日大通りとオベリスコ（2023年撮影）",
+    "author": "Franco Javier Perez",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Obelisco_de_Buenos_Aires,_Argentina.jpg",
+    "photoAsset": "assets/travel/buenos-aires-obelisco.jpg"
+  },
+  "france-candy-police-mock-wanted-2026": {
+    "country": "フランス",
+    "place": "トノン＝レ＝バンのリーヴ港",
+    "region": "オート＝サヴォワ県・レマン湖畔",
+    "latitude": 46.374367,
+    "longitude": 6.48026,
+    "note": "レマン湖のほとりに広がるリーヴ港。夕暮れに灯る港の明かりと、静かな湖面の風景が印象的です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Port_de_Rives_in_Thonon-les-Bains_01.jpg/500px-Port_de_Rives_in_Thonon-les-Bains_01.jpg",
+    "photoCaption": "フランス・トノン＝レ＝バンのリーヴ港とレマン湖（2020年撮影）",
+    "author": "Krzysztof Golik (Tournasol7)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Port_de_Rives_in_Thonon-les-Bains_01.jpg",
+    "photoAsset": "assets/travel/thonon-port-de-rives.jpg"
+  },
   "flight-wrong-country": {
     "country": "イギリス",
     "place": "エディンバラ城",
