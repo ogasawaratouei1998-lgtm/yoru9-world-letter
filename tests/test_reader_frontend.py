@@ -810,7 +810,7 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn("edition.editionDate==='2026-11-17'&&nightlyOriginal===staleClosing",page)
         self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
         self.assertIn("$('closingJump').hidden=!nightlyLine",page)
-        self.assertIn("この号の「まさか」",page)
+        self.assertIn("この号に収録された、世界の失敗・勘違い・珍事件。",page)
         self.assertIn("ニュースの現場ではありません",page)
         self.assertIn("map.open=true",page)
 
