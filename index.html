@@ -1208,13 +1208,14 @@ async function loadMonthlyVerified(){
 function openWorldExplorer(country=''){
  const map=$('mapExtras');
  map.open=true;
+ const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
  const select=$('countrySelect');
  if(country&&[...select.options].some(option=>option.value===country)){
   select.value=country;
   showCountryResults();
-  select.scrollIntoView({behavior:'auto',block:'center'});
+  select.scrollIntoView({behavior,block:'center'});
  }else{
-  map.scrollIntoView({behavior:'auto',block:'start'});
+  map.scrollIntoView({behavior,block:'start'});
  }
 }
 function renderCoverMap(){
