@@ -28,6 +28,8 @@ HUMAN_FAILURE_MISSION=(
     "university disciplinary confrontations or public-safety disputes into "
     "jokes. Someone being disciplined for alleged misconduct is NOT the "
     "same as a documented accidental human blunder with an ironic payoff. "
+    "Hospital understaffing and threats to patient care are serious systemic "
+    "issues, NOT comedy, even when publicity or media choices sound ironic. "
 )
 
 ANIMAL_TOPIC=re.compile(
@@ -83,6 +85,17 @@ ANIMAL_DISTRESS=re.compile(
     re.I,
 )
 
+# Hospital staff shortages and patient-care crises are not harmless blunders.
+# Preserve ordinary hospital signage and administrative typo stories.
+HEALTHCARE_CONTEXT=re.compile(
+    r"病院|医療機関|救急医療|患者|hospital|healthcare|health service|"
+    r"medical centre|medical center|patient care",re.I,
+)
+HEALTHCARE_STAFF_CRISIS=re.compile(
+    r"人員不足|人手不足|職員不足|看護師不足|医師不足|医療崩壊|"
+    r"understaff|staff(?:ing)? shortage|shortage of (?:nurses|doctors|staff)|"
+    r"hospital staffing crisis|patient safety crisis",re.I,
+)
 # Deliberate disciplinary and institutional protest disputes are not
 # lighthearted, accidental blunders. Conjunction keeps harmless ceremony
 # mishaps like forgetting one's speech admissible.
@@ -179,6 +192,8 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     combined=surface+" "+bodies
     if ANIMAL_TOPIC.search(combined) and ANIMAL_DISTRESS.search(combined):
         return "animal_death_or_disposal_not_comedy"
+    if HEALTHCARE_CONTEXT.search(combined) and HEALTHCARE_STAFF_CRISIS.search(combined):
+        return "hospital_staffing_crisis_not_comedy"
     # Source-text veto also catches a confrontational student/minister story
     # when an AI rewrites its Japanese headline as harmless entertainment.
     if ((FORMAL_CONFLICT_CONTEXT.search(surface)
