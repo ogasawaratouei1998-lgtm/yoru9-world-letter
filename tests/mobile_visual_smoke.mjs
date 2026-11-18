@@ -13,6 +13,7 @@ try{
    viewport:{width:viewport.width,height:viewport.height},
    deviceScaleFactor:2,isMobile:true,hasTouch:true,
    serviceWorkers:'block', // Compare deployed HTML, not a cached PWA shell.
+   reducedMotion:'reduce', // Stable capture and no forced motion on tests.
    locale:'ja-JP',timezoneId:'Asia/Tokyo'
   });
   try{
