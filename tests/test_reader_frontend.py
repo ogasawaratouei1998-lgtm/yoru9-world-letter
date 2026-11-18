@@ -27,6 +27,32 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
         self.assertIn("yoru9-shell-v11",worker)
 
+    def test_humor_identity_is_readable_before_the_map_on_mobile(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        before_map=page[page.index('<section class="hero" id="atlasHero"'):
+                        page.index('<div class="atlas-map" id="coverWorldMap"')]
+        self.assertIn('class="atlas-oops">「やらかし」</span>',before_map)
+        self.assertIn('class="atlas-title-second">ニュース、<span id="atlasStoryCount">3</span>本。',before_map)
+        self.assertIn('class="atlas-real-stamp">実話</span>',before_map)
+        self.assertIn('class="atlas-bubble-tag">AIツッコミ</span>',before_map)
+        self.assertIn('世界の「やらかし」に、AIが本気でツッコむ。',before_map)
+        self.assertIn('id="atlasLede"',before_map)
+        self.assertIn('報道された実話にAIがユーモアのあるツッコミを添える',before_map)
+        self.assertLess(before_map.index('class="atlas-title"'),before_map.index('class="atlas-concept"'))
+        self.assertLess(before_map.index('class="atlas-concept"'),len(before_map))
+        self.assertIn("#atlasHero .atlas-title-second{display:block",page)
+        self.assertIn("#atlasHero .atlas-oops::after{content:",page)
+        self.assertIn("#atlasHero .atlas-brand{display:block!important",page)
+        self.assertIn(".atlas-brand{display:block}",page)
+        self.assertNotIn(".atlas-brand{display:none}",page)
+        self.assertIn("$('atlasStoryCount').textContent=d.length===1?'1':String(d.length)",page)
+        self.assertIn("d.length===2?'世界の「やらかし」、もう1本。'",page)
+        self.assertIn("Math.max(0,d.length-1)}本。",page)
+        # Do not hide the story or geography just to make the intro louder.
+        self.assertLess(page.index('id="coverWorldMap"'),page.index('id="spotlightTitle"'))
+        self.assertIn('aria-label="掲載記事の国・地域のおおよその位置"',page)
+        self.assertIn("ニュースの現場ではありません",page)
+
     def test_global_perspective_is_visible_and_grounded_in_incident_country(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightLocation"',page)
@@ -59,7 +85,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="stories"'),page.index('class="issue-details"'))
         self.assertLess(page.index('class="issue-details"'),page.index('id="exploreExtras"'))
         self.assertLess(page.index('id="exploreExtras"'),page.index('id="closing"'))
-        self.assertIn('もうひとつ、世界のどこかから',page)
+        self.assertIn('世界の「やらかし」、もう1本。',page)
         self.assertIn('id="worldInvitation" href="#mapExtras"',page)
         self.assertIn("map.open=true;",page)
         self.assertIn('id="releaseStatus"',page)
@@ -772,10 +798,11 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
     def test_iphone_refinement_keeps_atlas_and_removes_duplicate_metadata(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="atlasLede"',page)
-        self.assertIn("currentIssue?'今夜の「まさか」は、どこの国から？':'この号の「まさか」は、どこの国から？'",page)
+        self.assertIn("currentIssue?'世界で報じられた、思わず「まさか」な失敗と珍事件。':'この号に収録された、世界の失敗・勘違い・珍事件。'",page)
         self.assertIn("const count=Math.max(0,edition.stories.length-1)",page)
         self.assertIn("$('progress').hidden=count<=3",page)
-        self.assertIn(".atlas-brand{display:none}",page)
+        self.assertIn(".atlas-brand{display:block}",page)
+        self.assertIn("#atlasHero .atlas-brand{display:block!important;",page)
         self.assertIn(".spotlight h1{font-size:clamp(1.31rem",page)
         self.assertIn(".atlas-map-caption{font-size:.73rem}",page)
         # Source JSON stays immutable. UI doesn't give a failed 11/17
