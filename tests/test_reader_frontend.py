@@ -526,7 +526,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("アメリカ",usa["aliases"])
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         for token in ("function countryKey(name)","function countryRecord(name)",
-                      "const country=countryKey(story.country);","country-catalog.json"):
+                      "for(const country of countryKeys(story.country))","country-catalog.json"):
             self.assertIn(token,page)
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
         self.assertIn("'country-catalog.json'",build)
@@ -616,7 +616,7 @@ class ReaderFrontendTest(unittest.TestCase):
         ):
             with self.subTest(marker=token):
                 self.assertIn(token,page)
-        self.assertIn("公開済み配信号と月間特集を集計しています",page)
+        self.assertIn("国・地域の累計紹介数は公開済みの過去号から集計",page)
 
     @unittest.skipUnless(shutil.which("node"), "Node.js required for map behavior test")
     def test_world_map_pins_count_current_and_monthly_articles(self):
@@ -636,6 +636,7 @@ const dom={
 };
 const $=id=>dom[id];
 const countryKey=name=>({'韓国':'KR','日本':'JP'})[name]||name;
+const countryKeys=name=>[countryKey(name)];
 const countryRecord=name=>({'KR':{name:'韓国'},'JP':{name:'日本'}})[name]||null;
 const countryLabel=name=>({'KR':'韓国','JP':'日本'})[name]||name;
 const mapPoint=name=>name==='JP'?[80,25]:[77,27];
