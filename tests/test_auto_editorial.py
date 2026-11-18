@@ -67,6 +67,58 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             pool,Counter({"US":18,"CA":1,"MX":2,"FR":1}),Counter())
         self.assertEqual({s["country"] for s in chosen},{"CA","MX","FR"})
 
+    def test_final_selection_prioritizes_neglected_categories_not_corporate_volume(self):
+        from collections import Counter
+        pool=[
+            {"id":"co1","country":"US","category":"company","title":"Company sign error"},
+            {"id":"co2","country":"FR","category":"company","title":"Company mural error"},
+            {"id":"co3","country":"DE","category":"company","title":"Company typo error"},
+            {"id":"sp","country":"BR","category":"sports","title":"Referee makes a mistake"},
+            {"id":"pe","country":"JP","category":"person","title":"Tourist mistaken identity"},
+            {"id":"wo","country":"GB","category":"work","title":"Chef wrong order"},
+        ]
+        chosen=editorial.select_diverse_verified_stories(
+            pool,Counter(),Counter({"company":16,"work":2,"person":0,"sports":1}))
+        self.assertEqual({s["category"] for s in chosen},{"work","person","sports"})
+
+    def test_published_topic_rotation_avoids_repeating_same_gag(self):
+        from collections import Counter
+        pool=[
+            {"id":"sign","country":"JP","category":"person","title":"道路の看板に誤字"},
+            {"id":"order","country":"JP","category":"person","title":"注文が別の人へ"},
+            {"id":"work","country":"GB","category":"work","title":"店員が勘違い"},
+            {"id":"sports","country":"BR","category":"sports","title":"審判の珍事"},
+        ]
+        chosen=editorial.select_diverse_verified_stories(
+            pool,Counter(),Counter(),Counter({"signs":12,"orders":0}))
+        self.assertIn("order",{s["id"] for s in chosen})
+        self.assertNotIn("sign",{s["id"] for s in chosen})
+        self.assertEqual(editorial.surprise_topic(pool[0]),"signs")
+        self.assertEqual(editorial.surprise_topic(pool[1]),"orders")
+
+    def test_discovery_slots_spread_our_four_desks(self):
+        dominant=[
+            [{"title":"Company accidentally prints wrong name",
+              "url":f"https://company{i}.example/story"}] for i in range(30)]
+        others=[
+            [{"title":"Tourist accidentally boards wrong train",
+              "url":"https://person.example/story"}],
+            [{"title":"Waiter accidentally brings wrong order",
+              "url":"https://work.example/story"}],
+            [{"title":"Referee mistakenly selects wrong player",
+              "url":"https://sports.example/story"}],
+        ]
+        proposed=editorial.prioritize_comic_groups(dominant+others,limit=12)
+        desks={editorial.discovery_desk(group[0]) for group in proposed}
+        self.assertEqual(desks,{"person","work","sports","company"})
+        self.assertLessEqual(len(proposed),12)
+
+    def test_concise_human_reversal_need_not_be_verbose(self):
+        draft={"expectedPlan":"注文を届ける","observedOutcome":"隣の家へ配達"}
+        self.assertIsNone(editorial.editorial_fit_rejection(draft))
+        self.assertEqual(editorial.editorial_fit_rejection(
+            {**draft,"expectedPlan":""}),"missing_source_grounded_plan_or_outcome")
+
     def test_editorial_fitness_requires_real_plan_and_observed_failure(self):
         story={"title":"会社の発注ミスが発覚","summary":"想定とは異なる部品が納入された。",
                "detail":"作業の確認を誤った。","quip":"計画と現実の差が出た。",
@@ -200,7 +252,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("source-supported HUMAN mistakes",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
-        self.assertIn("Never replace a failure with generic",mission)
+        self.assertIn("Never replace a concrete human-led incident",mission)
         self.assertIn("Do not invent a happy ending",mission)
 
     def test_reject_private_hosts(self):
@@ -703,6 +755,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('publisher_titles={',source)
         self.assertIn('source_title_is_policy_explainer(publisher_titles.get(u,""))',source)
         self.assertIn('policy_explainer_without_incident_reporting',source)
+    def test_creative_scope_relaxed_but_source_and_safety_guards_retained(self):
+        from pathlib import Path
+        src=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("source need not call it a mistake",src)
+        self.assertIn("trusted_original_domain(urls[0])",src)
+        self.assertIn("noncomic_incident_rejection(story,evidence)",src)
+        self.assertIn("independent_editorial_quality_passed(audit)",src)
+        self.assertIn("validate_approved(payload,day)",src)
+
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
             with patch.object(editorial,"ai") as mock_ai:
