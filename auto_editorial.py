@@ -202,10 +202,23 @@ SERIOUS_CONFLICT_TERMS=re.compile(
     r"停学|懲戒|処分|大臣|抗議|起訴",re.I
 )
 
+POLICY_EXPLAINER_TITLE=re.compile(
+    r"(?:\bwhat\b.{0,90}\b(?:rules?|policy|policies|law|changes)\b"
+    r".{0,90}\bmean for\b)|"
+    r"(?:\b(?:guide|explainer)\s*:\s*(?:proposed|new)\b)|"
+    r"(?:新(?:制度|規則|ルール).{0,20}(?:解説|影響|とは))",
+    re.I,
+)
+
+def source_title_is_policy_explainer(title):
+    """A general policy guide is not itself a documented human blunder."""
+    return isinstance(title,str) and bool(POLICY_EXPLAINER_TITLE.search(title))
 def incident_priority(lead):
     title=lead.get("title","")
     # Discovery order is not proof: original sources and AI must still audit.
-    if animal_novelty_headline(title):
+    if source_title_is_policy_explainer(title):
+        rank=4
+    elif animal_novelty_headline(title):
         rank=4
     elif SERIOUS_CONFLICT_TERMS.search(title):
         rank=3
@@ -979,6 +992,7 @@ def main():
     past=archive_summaries()
     accepted_summaries=[]
     lead_urls={x['url'] for x in source_leads}
+    publisher_titles={x['url']:x['title'] for x in source_leads}
     for story in draft:
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):
             reject("missing_required_fields");continue
@@ -1014,6 +1028,10 @@ def main():
             reject("unmatched_source_pair");continue
         if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
             reject("urls_not_in_fetched_evidence");continue
+        # A policy/rules explainer is not a first-hand report of a specific
+        # blunder; another original incident-focused reporter can still qualify.
+        if all(source_title_is_policy_explainer(publisher_titles.get(u,"")) for u in urls):
+            reject("policy_explainer_without_incident_reporting");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
             reject("previously_published");continue
         if BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):

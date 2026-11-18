@@ -111,5 +111,11 @@ class ComicSituationTests(unittest.TestCase):
                          "near the outpatient entrance."}]
         self.assertIsNone(noncomic_incident_rejection(story,article))
 
+    def test_moralizing_study_advice_is_not_a_comedy_quip(self):
+        self.assertEqual(comic_line_rejection(
+            '制限時間を突破した情熱を勉強に向ければよかったのに'),
+            'scolding_advice_not_comedy')
+        self.assertIsNone(comic_line_rejection(
+            '地元愛をAIに丸投げしたら、壁画だけ県外進出。'))
 if __name__=="__main__":
     unittest.main()

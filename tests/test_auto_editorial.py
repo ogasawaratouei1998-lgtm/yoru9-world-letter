@@ -692,6 +692,17 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("independent_editorial_quality_passed(audit)",code)
         self.assertIn("validate_approved(payload,day)",code)
 
+    def test_explainer_only_reporting_is_not_a_comic_incident(self):
+        title="What S'pore's proposed social media rules mean for young people"
+        self.assertTrue(editorial.source_title_is_policy_explainer(title))
+        bbc="McDonald's AI-generated mural riddled with errors"
+        self.assertFalse(editorial.source_title_is_policy_explainer(bbc))
+        self.assertLess(editorial.incident_priority({'title':bbc,'url':'https://bbc.com/a'}),
+                        editorial.incident_priority({'title':title,'url':'https://straitstimes.com/b'}))
+        source=__import__('inspect').getsource(editorial.main)
+        self.assertIn('publisher_titles={',source)
+        self.assertIn('source_title_is_policy_explainer(publisher_titles.get(u,""))',source)
+        self.assertIn('policy_explainer_without_incident_reporting',source)
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
             with patch.object(editorial,"ai") as mock_ai:
