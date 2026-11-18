@@ -83,6 +83,20 @@ ANIMAL_DISTRESS=re.compile(
     re.I,
 )
 
+# A staffing/patient-safety crisis in a hospital is not a light human
+# blunder. Narrow conjunction keeps harmless hospital signage or typo errors.
+HOSPITAL_CONTEXT=re.compile(
+    r"病院|医療機関|入院患者|hospital|health service|clinical",
+    re.I,
+)
+HOSPITAL_PATIENT_RISK=re.compile(
+    r"人員不足|職員不足|人手不足|患者の安全|医療安全|診療制限|"
+    r"staff(?:ing)? (?:shortage|shortfall|crisis|restrictions?)|"
+    r"understaff(?:ed|ing)|patient safety|patient care (?:risk|concern)|"
+    r"vacancies|cancelled surger(?:y|ies)|cancer treatment delays",
+    re.I,
+)
+
 # Deliberate disciplinary and institutional protest disputes are not
 # lighthearted, accidental blunders. Conjunction keeps harmless ceremony
 # mishaps like forgetting one's speech admissible.
@@ -179,6 +193,8 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     combined=surface+" "+bodies
     if ANIMAL_TOPIC.search(combined) and ANIMAL_DISTRESS.search(combined):
         return "animal_death_or_disposal_not_comedy"
+    if HOSPITAL_CONTEXT.search(combined) and HOSPITAL_PATIENT_RISK.search(combined):
+        return "hospital_patient_safety_crisis_not_comedy"
     # Source-text veto also catches a confrontational student/minister story
     # when an AI rewrites its Japanese headline as harmless entertainment.
     if ((FORMAL_CONFLICT_CONTEXT.search(surface)
