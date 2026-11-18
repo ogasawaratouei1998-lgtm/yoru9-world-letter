@@ -454,7 +454,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
-        self.assertIn("for start in range(0,min(len(retry_candidates),4)):",source)
+        self.assertIn("for start in range(0,min(len(retry_candidates),8)):",source)
         self.assertIn("Two eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_model_catalog_selects_supported_model(self):
@@ -661,12 +661,26 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_current_comedy_prompt_preserves_one_source_and_seven_days(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("groups=prioritize_comic_groups(groups,limit=24)",code)
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=36)",code)
         self.assertIn("unpaired=sorted",code)
         self.assertIn("trusted_original_domain(item['url'])",code)
         self.assertIn("within the preceding seven days",code)
         self.assertIn("independent_editorial_quality_passed(audit)",code)
         self.assertIn("draft_preflight_viable(item,now)",code)
+
+    def test_second_window_reviews_new_fetched_articles(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("json.dumps(grouped_evidence[:24],ensure_ascii=False)",code)
+        self.assertIn("enumerate(groups[:36])",code)
+        self.assertIn('0 if g["groupId"]>24 else 1',code)
+        self.assertIn("min(len(retry_candidates),8)",code)
+        self.assertIn('"fresh_backup_groups"',code)
+        # No shortcut around original source, comedy, independent and publisher gates.
+        self.assertIn("trusted_original_domain(urls[0])",code)
+        self.assertIn("noncomic_incident_rejection(story,evidence)",code)
+        self.assertIn("independent_editorial_quality_passed(audit)",code)
+        self.assertIn("validate_approved(payload,day)",code)
 
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
