@@ -111,6 +111,13 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
             i=futures[future]
             results[i],health[i]=future.result()
     counts=Counter(health)
+    # Group source health by *publisher* market, never reported event country.
+    market_health={}
+    for i,src in enumerate(sources):
+        row=market_health.setdefault(src["market"],{"attempted":0,"usable":0,"links":0})
+        row["attempted"]+=1
+        row["usable"]+=int(health[i]=="ok")
+        row["links"]+=len(results[i])
     if report_path is not None:
         # Diagnostic artifact, never part of the public site or article data.
         # Feed errors are descriptive only and must never authorize a story.
@@ -118,6 +125,8 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
                 "checkedAt":datetime.now(timezone.utc).isoformat(),
                 "attempted":len(sources),
                 "usable":counts.get("ok",0),
+                "marketHealth":dict(sorted(market_health.items())),
+                "marketNote":"Publisher markets are NOT verified event locations.",
                 "feeds":[{"id":src["id"],"name":src["name"],
                           "market":src["market"],"focus":src["focus"],
                           "status":health[i],
