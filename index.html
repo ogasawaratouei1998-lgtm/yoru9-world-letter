@@ -818,6 +818,33 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .travel-photo{aspect-ratio:16/10;max-height:245px}
  .travel-links a{flex:1 1 145px;justify-content:center;text-align:center}
 }
+
+/* Evergreen closing: a quiet farewell at any hour, not a second hero card. */
+#closing.footerpanel{margin:20px 0 16px;padding:17px 18px 15px;
+ border-radius:18px;border-color:#5c738f;background:linear-gradient(155deg,#243854,#192a43)}
+#closing .closing-moon{font-size:1.2rem;line-height:1;margin:0 0 6px;color:#ffda9d}
+#closing h2{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;
+ font-size:clamp(1.13rem,4.3vw,1.36rem);line-height:1.56;
+ font-weight:680;letter-spacing:.014em;margin:0 0 7px;color:#f7efe4}
+#closing .closing-afterword{border-top:1px solid #637993;
+ margin:12px auto 0;padding:11px 0 0;max-width:28rem;
+ font-size:clamp(.93rem,3.4vw,1.045rem);font-weight:620;
+ line-height:1.62;color:#e4eaf1}
+#closing .bye{font-size:.85rem;line-height:1.62;letter-spacing:.01em;
+ color:#e7c99c;font-weight:560;margin:7px 0 0}
+#closing .night-quote{margin:12px auto 0;padding:12px 6px 2px;
+ max-width:28rem;border-top:1px solid #637993}
+#closing .night-quote span{font-size:.8rem;line-height:1.5}
+#closing .night-quote p{font-size:clamp(.96rem,3.7vw,1.12rem);
+ line-height:1.68;margin:7px auto 10px;font-weight:650}
+#closing .night-quote:not([hidden])~.closing-afterword{border-top:0;
+ padding-top:2px;margin-top:6px}
+@media(max-width:520px){
+ #closing.footerpanel{margin:19px 0 14px;padding:16px 14px 14px;border-radius:16px}
+ #closing h2{font-size:clamp(1.11rem,4.7vw,1.28rem)}
+ #closing .closing-afterword{font-size:.94rem;margin-top:10px;padding-top:10px}
+ #closing .bye{font-size:.82rem}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -876,7 +903,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
-<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
+<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>世界からの便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="closing-afterword">次の「まさか」も、世界のどこかから。</p><p class="bye">また、次の便りで。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
 <details class="disclosure-details"><summary>編集方針・出典と配信情報について</summary><aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside></details>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
