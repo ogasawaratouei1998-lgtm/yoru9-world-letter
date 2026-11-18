@@ -826,7 +826,7 @@ def main():
                                      0 if trusted_original_domain(item['url']) else 1,
                                      incident_priority(item)[1]))
     groups.extend([[item] for item in unpaired[:max(0,36-len(groups))]])
-    groups=prioritize_comic_groups(groups,limit=24)
+    groups=prioritize_comic_groups(groups,limit=36)
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
         print('No retrieved candidate articles; safe skip.');return 0
@@ -834,7 +834,7 @@ def main():
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
         "url":item["url"],"text":item["text"][:4800]} for item in group]}
-        for i,group in enumerate(groups[:24])]
+        for i,group in enumerate(groups[:36])]
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
     allowed_pairs=set()
     for group in groups[:36]:
@@ -857,7 +857,7 @@ def main():
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
-      'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence,ensure_ascii=False))
+      'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:24],ensure_ascii=False))
     if editorial_seconds_remaining()<100:
         print("Editorial budget too low for safe independent review; no new publication.",flush=True)
         return 0
@@ -874,15 +874,16 @@ def main():
         "no_respectful_comic_angle","other"}
     group_reasons={}
     if isinstance(diagnostics,list):
-        for item in diagnostics[:len(grouped_evidence)]:
+        for item in diagnostics[:min(24,len(grouped_evidence))]:
             if not isinstance(item,dict):continue
             group_id=item.get("groupId")
             code=item.get("reasonCode")
-            if type(group_id) is int and 1<=group_id<=len(grouped_evidence) and code in valid_codes:
+            if type(group_id) is int and 1<=group_id<=min(24,len(grouped_evidence)) and code in valid_codes:
                 group_reasons[group_id]=code
     print("AI candidate group assessment:",json.dumps({
         "assessed":len(group_reasons),
-        "total":len(grouped_evidence),
+        "total":min(24,len(grouped_evidence)),
+        "fresh_backup_groups":max(0,len(grouped_evidence)-24),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
     if sum(draft_preflight_viable(item,now) for item in draft)<2:
@@ -908,18 +909,19 @@ def main():
             if not any(article["url"] in already_drafted_urls
                        for article in group["articles"])
         ),key=lambda g:(
+            0 if g["groupId"]>24 else 1,
             min(incident_priority(article)[0] for article in g["articles"]),
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),4)):
+        for start in range(0,min(len(retry_candidates),8)):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
             batch=retry_candidates[start:start+1]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+
-                " You are editor A. Draft up to five Japanese news stories ONLY "
+                " You are editor A. Prefer a genuinely funny, low-stakes human mistake. Draft up to five Japanese news stories ONLY "
                 "when at least one retrieved publisher article in the input group "
                 "supports the same specific real-world mistake. "
                 "Return JSON object with stories array. Do not return diagnostics. "
