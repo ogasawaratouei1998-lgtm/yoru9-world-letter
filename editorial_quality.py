@@ -81,7 +81,7 @@ def independently_approved_secondary_quip(story, review):
         return None
     second=second.strip()
     if (not 15<=len(second)<=55 or first.strip()==second or
-            any(c in second for c in "<>\\\r\n") or
+            any(ord(c) in (10,13,60,62,92) for c in second) or
             comic_line_rejection(second) is not None):
         return None
     if SequenceMatcher(None,first.strip(),second).ratio()>=0.82:
