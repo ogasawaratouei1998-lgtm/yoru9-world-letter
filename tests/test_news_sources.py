@@ -12,14 +12,81 @@ from collect_candidates import parse_rss
 class NewsSourceRegistryTest(unittest.TestCase):
     def test_registry_has_many_distinct_publisher_feeds_and_world_regions(self):
         rows=sources.source_registry()
-        self.assertGreaterEqual(len(rows),60)
-        self.assertGreaterEqual(len({r["site"] for r in rows}),40)
-        self.assertGreaterEqual(len({r["market"] for r in rows}),10)
+        self.assertGreaterEqual(len(rows),100)
+        self.assertGreaterEqual(len({r["site"] for r in rows}),75)
+        self.assertGreaterEqual(len({r["market"] for r in rows}),40)
+        from country_codes import country_code, country_region
+        self.assertTrue(all(country_code(r["market"]) for r in rows))
+        regions={country_region(r["market"]) for r in rows}
+        self.assertEqual(len(regions),6)
+        for market in ("NG","KE","GH","MA","MW","TZ","ID","VN","PK",
+                       "BD","FJ","PG","IT","PL","AR","PY","EC","UY"):
+            self.assertIn(market,{r["market"] for r in rows})
         self.assertIn("https://rss.upi.com/news/odd_news.rss",{r["url"] for r in rows})
         self.assertIn("oddities",{r["focus"] for r in rows})
         self.assertTrue(all(r["url"].startswith("https://") for r in rows))
         # Every candidate still requires verified ORIGINAL article text.
         self.assertFalse(any("news.google.com" in r["url"] for r in rows))
+
+    def test_new_local_sources_are_editorial_candidates_not_automatic_proof(self):
+        from trusted_originals import trusted_original_domain
+        catalog=sources.source_registry()
+        by_market={}
+        for entry in catalog:
+            by_market.setdefault(entry["market"],[]).append(entry)
+            self.assertIn(entry["language"],sources.ALLOWED_LANGUAGES)
+        for market in ("NG","GH","KE","ID","VN","FJ","PG","AR","EC","PY"):
+            self.assertTrue(any(x["focus"]=="local" for x in by_market[market]))
+        self.assertIn("vi",sources.ALLOWED_LANGUAGES)
+        self.assertIn("it",sources.ALLOWED_LANGUAGES)
+        self.assertTrue(trusted_original_domain("https://www.myjoyonline.com/story/news"))
+        self.assertTrue(trusted_original_domain("https://www.abc.com.py/noticias/story"))
+        self.assertFalse(trusted_original_domain("https://abc.com.py.evil.invalid/story"))
+        self.assertFalse(trusted_original_domain("http://www.myjoyonline.com/story"))
+
+    def test_sources_with_same_market_rotate_between_publishers(self):
+        publishers=[]
+        for label,focus in (("general","general"),("sports","sports"),("local","local")):
+            publishers.append({
+                "id":label+"-news","name":label,"url":"https://"+label+".example.org/rss",
+                "market":"NG","language":"en","focus":focus,"site":label+".example.org"
+            })
+        def fetch(url,timeout):
+            from urllib.parse import urlsplit
+            name=urlsplit(url).hostname
+            items="".join("<item><title>Small business mix-up {0}</title>"
+                          "<link>https://{1}/news/{0}</link></item>".format(i,name)
+                          for i in range(5))
+            return ("<rss><channel>"+items+"</channel></rss>").encode()
+        records=sources.fetch_registry_feeds(
+            sources=publishers,fetch=fetch,parse=parse_rss,max_workers=3)
+        self.assertEqual(len(records),15)
+        self.assertEqual([record["registeredSource"] for record in records[:6]],
+                         ["local-news","sports-news","general-news"]*2)
+
+    def test_global_local_feed_health_is_observable_by_publisher_market(self):
+        from tempfile import TemporaryDirectory
+        with TemporaryDirectory() as tmp:
+            srcs=sources.source_registry()
+            nigeria=next(x for x in srcs if x["market"]=="NG")
+            italy=next(x for x in srcs if x["market"]=="IT")
+            def fetch(url,timeout):
+                if url==italy["url"]:
+                    raise OSError("feed temporarily unavailable")
+                return ("<rss><channel><item><title>Local human mix-up</title>"
+                        "<link>https://www."+nigeria["site"]+"/story</link>"
+                        "</item></channel></rss>").encode()
+            report_path=Path(tmp)/"health.json"
+            source_news=sources.fetch_registry_feeds(
+                sources=[nigeria,italy],fetch=fetch,parse=parse_rss,
+                max_workers=2,report_path=report_path)
+            report=json.loads(report_path.read_text())
+            self.assertEqual(len(source_news),1)
+            self.assertEqual(report["marketHealth"]["NG"],
+                             {"attempted":1,"usable":1,"links":1})
+            self.assertEqual(report["marketHealth"]["IT"],
+                             {"attempted":1,"usable":0,"links":0})
+            self.assertIn("NOT verified event locations",report["marketNote"])
 
     def test_feed_link_must_resolve_to_real_registered_publisher(self):
         self.assertTrue(sources.host_matches("www.upi.com","upi.com"))
