@@ -24,6 +24,20 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
     "vox.com", "skysports.com", "espn.com", "formula1.com",
     "arstechnica.com", "gizmodo.com", "engadget.com",
     "scientificamerican.com", "rnz.co.nz",
+    # Local original reporting from underrepresented publisher markets.
+    # Domain enrollment does NOT excuse independent article-body verification.
+    "punchng.com", "vanguardngr.com", "guardian.ng",
+    "standardmedia.co.ke", "dailymaverick.co.za",
+    "myjoyonline.com", "egyptindependent.com", "hespress.com",
+    "independent.co.ug", "dailynews.co.tz", "nyasatimes.com",
+    "antaranews.com", "vnexpress.net", "dawn.com",
+    "thedailystar.net", "timesofisrael.com", "arabnews.com",
+    "dailysabah.com", "fbcnews.com.fj", "postcourier.com.pg",
+    "sbs.com.au", "ansa.it", "repubblica.it",
+    "notesfrompoland.com", "eldiario.es", "20minutos.es",
+    "observador.pt", "clarin.com", "rpp.pe",
+    "abc.com.py", "prensalibre.com", "eluniverso.com",
+    "elobservador.com.uy",
 )
 
 SINGLE_SOURCE_NOTE = ("報道機関1社の独自取材記事を確認しています。"
