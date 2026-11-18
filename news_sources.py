@@ -17,7 +17,7 @@ import re
 REGISTRY_PATH = Path(__file__).resolve().parent / "data/news-source-registry.json"
 ALLOWED_FOCUS = {"oddities", "general", "local", "regional", "culture",
                  "sports", "science", "technology"}
-ALLOWED_LANGUAGES = {"en", "ja", "ko", "de", "es", "fr", "pt", "ar", "id"}
+ALLOWED_LANGUAGES = {"en", "ja", "ko", "de", "es", "fr", "pt", "ar", "id", "it", "vi", "pl", "tr"}
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{3,90}$")
 ISO_RE = re.compile(r"^[A-Z]{2}$")
 
@@ -111,6 +111,13 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
             i=futures[future]
             results[i],health[i]=future.result()
     counts=Counter(health)
+    # Group source health by *publisher* market, never reported event country.
+    market_health={}
+    for i,src in enumerate(sources):
+        row=market_health.setdefault(src["market"],{"attempted":0,"usable":0,"links":0})
+        row["attempted"]+=1
+        row["usable"]+=int(health[i]=="ok")
+        row["links"]+=len(results[i])
     if report_path is not None:
         # Diagnostic artifact, never part of the public site or article data.
         # Feed errors are descriptive only and must never authorize a story.
@@ -118,6 +125,8 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
                 "checkedAt":datetime.now(timezone.utc).isoformat(),
                 "attempted":len(sources),
                 "usable":counts.get("ok",0),
+                "marketHealth":dict(sorted(market_health.items())),
+                "marketNote":"Publisher markets are NOT verified event locations.",
                 "feeds":[{"id":src["id"],"name":src["name"],
                           "market":src["market"],"focus":src["focus"],
                           "status":health[i],
@@ -134,19 +143,30 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
           "fetch/parser failures,",
           sum(len(group) for group in results),"raw publisher leads",
           flush=True)
-    # Round-robin the source markets so one busy US/English feed cannot fill
-    # the first N slots and exclude New Zealand, Latin America or Asia.
-    # Order within a market still favors the curated odd-news sections.
+    # Round-robin BOTH publisher markets and individual outlets within each
+    # market. The earlier implementation placed the first 18-35 items from the
+    # first outlet ahead of all other outlets in that country. That exhausted
+    # a market's slice before its local competitors could ever be seen.
+    #
+    # This is unverified source exploration only; a publisher's market is NOT
+    # the location of any event in the article it reports.
+    focus_rank={"oddities":0,"local":1,"sports":2,"culture":3,
+                "regional":4,"technology":5,"general":6,"science":7}
     markets={}
-    for source,group in zip(sources,results):
-        bucket=markets.setdefault(source["market"],deque())
-        bucket.extend(group)
+    for index,(source,group) in enumerate(zip(sources,results)):
+        if group:
+            markets.setdefault(source["market"],[]).append(
+                (focus_rank.get(source["focus"],8),index,deque(group)))
+    markets={market:deque(deq for _,_,deq in sorted(groups,key=lambda x:(x[0],x[1])))
+             for market,groups in markets.items()}
     ordered=[]
     while markets:
         for market in list(markets):
-            group=markets[market]
-            if group:
-                ordered.append(group.popleft())
-            if not group:
+            outlets=markets[market]
+            outlet=outlets.popleft()
+            ordered.append(outlet.popleft())
+            if outlet:
+                outlets.append(outlet)
+            if not outlets:
                 del markets[market]
     return ordered
