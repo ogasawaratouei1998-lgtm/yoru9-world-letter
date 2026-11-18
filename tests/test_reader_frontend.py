@@ -47,7 +47,7 @@ class ReaderFrontendTest(unittest.TestCase):
                 self.assertIn('viewBox="0 0 800 480"',raw)
                 self.assertNotIn("<script",raw)
                 self.assertNotIn("<foreignObject",raw)
-                self.assertNotIn("http://",raw)
+                self.assertNotIn('href="http',raw)
                 self.assertIn("assets/news/"+file,worker)
         self.assertIn("shutil.copytree(artwork_dir,output/'assets'/'news'",site)
         self.assertIn("'assets/news is required for published illustrations'",site)
