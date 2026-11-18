@@ -914,6 +914,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span>世界の「やらかし」に、AIが本気でツッコむ。</p>
   </div>
  </div>
+ <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
+  <div class="gallery-heading"><strong>今日はどの「まさか」から？</strong><span>絵をタップして読む</span></div>
+  <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧"></div>
+  <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
+ </section>
  <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
   <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
   <div id="coverMapPins" class="atlas-pins"></div>
@@ -926,6 +931,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 </section>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
  <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
+ <figure class="news-visual spotlight-visual" id="spotlightVisual">
+  <img id="spotlightImage" src="./assets/news/category-work.svg" alt="ニュースに添えた創作イラスト。報道写真ではありません。" width="800" height="480" decoding="async">
+  <figcaption>イメージイラスト <span aria-hidden="true">·</span> 現場写真ではありません</figcaption>
+ </figure>
  <h1 id="spotlightTitle">世界の実話を準備中…</h1>
  <div class="spotlight-fact" aria-label="出来事の要点"><span class="fact-kicker">起きたこと</span>
   <p class="spotlight-brief" id="spotlightBrief">何が起きたのか、まず短く。</p></div>
@@ -1458,6 +1467,41 @@ async function loadMonthlyVerified(){
   // The 30-day filter still applies at render time.
  }
 }
+// Safe, locally bundled editorial illustrations. None are documentary
+// photos; never substitute travel photography or publisher portraits.
+const NEWS_ARTWORK=Object.freeze({
+ 'cheonan-painters-coffee-rescue-2026':'coffee-rescue.svg',
+ 'guaira-degavar-road-marking-2026':'road-typo.svg',
+ 'albert-lea-mcnugget-monkey-diaper-police-2026':'monkey-patrol.svg'
+});
+const NEWS_ART_FALLBACK=Object.freeze({
+ work:'category-work.svg',company:'category-company.svg',
+ person:'category-person.svg',sports:'category-sports.svg'
+});
+function newsArt(story){
+ const name=NEWS_ARTWORK[story?.id]||NEWS_ART_FALLBACK[story?.category]||NEWS_ART_FALLBACK.person;
+ return './assets/news/'+name;
+}
+function renderIssueGallery(){
+ const target=$('issueGallery');
+ target.replaceChildren();
+ for(const [index,story] of edition.stories.entries()){
+  const button=document.createElement('button');
+  button.type='button';button.className='gallery-tile';
+  button.setAttribute('aria-label',(index+1)+'本目：'+String(story.title||'掲載記事')+'を読む');
+  const img=document.createElement('img');
+  img.className='gallery-art';img.src=newsArt(story);
+  img.alt='';img.loading=index===0?'eager':'lazy';img.decoding='async';
+  img.width=800;img.height=480;
+  const country=document.createElement('span');country.className='gallery-country';
+  country.textContent=(index+1)+' · '+countryLabel(story.country);
+  const label=document.createElement('span');label.className='gallery-label';
+  label.textContent=story.label||'世界のまさか';
+  button.append(img,country,label);
+  button.addEventListener('click',()=>openAtlasStory(index));
+  target.append(button);
+ }
+}
 // The cover map uses the SAME factual location catalog as the deep archive.
 // Pins represent countries or territories, NEVER the precise incident venue.
 let activeAtlasCountry=null;
@@ -1618,6 +1662,7 @@ function updateSpotlight(){
  // This is the checked incident location, never the publisher's search market.
  $('spotlightLocation').textContent=first.country?'舞台：'+countryLabel(first.country):'舞台を確認中';
  $('spotlightTitle').textContent=first.title||'世界の実話';
+ $('spotlightImage').src=newsArt(first);
  const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
  $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
  $('spotlightQuip').textContent=first.quip||'人間のやらかしに、AIが鋭くツッコミます。';
@@ -1871,8 +1916,8 @@ function render(){const d=edition.stories;
  $('editionMessage').textContent=archive?'過去の実話を使った体験版':`${edition.editionDate} 発行 · ${d.length}本${special?'（特集）':''}`;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
- $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
- renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
+ $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;const art=newsArt(s);return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="story-cover"><figure class="story-visual"><img class="story-art" src="${escapeHtml(art)}" alt="記事を象徴した創作イラスト。報道写真ではありません。" loading="lazy" decoding="async" width="800" height="480"><figcaption>イメージイラスト</figcaption></figure><div class="story-headline"><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3></div></div><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
+ renderIssueGallery();renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
 function update(){const count=Math.max(0,edition.stories.length-1);$('progress').hidden=count<=3;$('progress').textContent=count>3?`ほかに${count}本`:'';$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
