@@ -1905,6 +1905,7 @@ function openAtlasStory(index){
  const stage=$('articleReader');
  stage.hidden=false;
  $('readerSelected').textContent='選んだニュース · '+(index+1)+' / '+edition.stories.length;
+ if(index===0)$('spotlightAward').textContent='このニュースの詳しい話';
  $('spotlight').hidden=index!==0;
  $('stories').hidden=index===0;
  document.querySelector('.sectionhead').hidden=true;
