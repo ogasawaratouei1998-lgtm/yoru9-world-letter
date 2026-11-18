@@ -682,6 +682,39 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn("ニュースの現場ではありません",page)
         self.assertIn("map.open=true",page)
 
+    def test_atlas_country_previews_only_published_issue_stories(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('class="atlas-preview" id="atlasPreview"',page)
+        self.assertIn('aria-live="polite" hidden></section>',page)
+        self.assertIn('.atlas-preview[hidden]{display:none!important}',page)
+        self.assertIn('function showAtlasPreview(code,trigger)',page)
+        self.assertIn('function closeAtlasPreview(restoreFocus=false)',page)
+        self.assertIn('function openAtlasStory(index)',page)
+        self.assertIn("edition.stories.map((story,index)=>({story,index}))",page)
+        self.assertIn(".filter(item=>countryKeys(item.story.country).includes(code))",page)
+        self.assertIn("label.textContent=story.title||'掲載記事'",page)
+        self.assertIn('read.dataset.atlasRead=String(index)',page)
+        self.assertIn('read.addEventListener(\'click\',()=>openAtlasStory(index))',page)
+        self.assertIn("closeAtlasPreview();openWorldExplorer(code)",page)
+        self.assertIn("showAtlasPreview(code,button)",page)
+        self.assertIn("showAtlasPreview(code,chip)",page)
+        self.assertIn("aria-controls','atlasPreview'",page)
+        self.assertIn("aria-pressed','false'",page)
+        self.assertIn("if(index===0)",page)
+        self.assertIn("filter='all';applyFilter()",page)
+        self.assertIn("card.querySelector('[data-open=\"'+index+'\"]')",page)
+        self.assertIn("panel.replaceChildren()",page)
+        self.assertIn("panel.hidden=false",page)
+        self.assertIn("panel.hidden=true",page)
+        # Never interpolate untrusted source titles into raw HTML or use
+        # source discovery markets as the article's incident location.
+        block=page[page.index("function showAtlasPreview(code,trigger)"):
+                   page.index("function openWorldExplorer(country='')")]
+        self.assertNotIn('innerHTML',block)
+        self.assertNotIn('sourcecountry',block)
+        self.assertNotIn('visibleMonthStories',block)
+        self.assertLess(page.index('id="coverMapPins"'),page.index('id="atlasPreview"'))
+
     def test_atlas_cover_maps_only_article_countries_and_opens_archive(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="coverWorldMap"',page)
