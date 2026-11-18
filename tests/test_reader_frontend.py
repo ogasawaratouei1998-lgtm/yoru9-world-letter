@@ -13,7 +13,7 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_homepage_explains_the_editorial_concept(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn("今日も一日、おつかれさま。", page)
-        self.assertIn("世界の「やらかし」に、AIが本気でツッコむ。",page)
+        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',page)
         self.assertIn('class="spotlight-topline"',page)
         self.assertIn('id="spotlightBrief"',page)
         self.assertIn('id="spotlightQuip"',page)
@@ -78,7 +78,9 @@ class ReaderFrontendTest(unittest.TestCase):
         # The independently vetted first quip is the invitation to read, and
         # is sourced from the actual selected edition, never hardcoded copy.
         self.assertIn('class="quip-teaser" id="quipTeaser"',cover)
-        self.assertIn('id="quipTeaserImage"',cover)
+        self.assertNotIn('id="quipTeaserImage"',cover)
+        self.assertNotIn('class="quip-teaser-art"',cover)
+        self.assertIn('class="quip-teaser-heading"',cover)
         self.assertIn('id="quipTeaserLine"',cover)
         self.assertIn('role="note" aria-label="AIによる創作の冗談"',cover)
         self.assertIn('id="quipTeaserRead"',cover)
@@ -89,7 +91,10 @@ class ReaderFrontendTest(unittest.TestCase):
                         cover.index('id="coverWorldMap"'))
         self.assertIn("teaser.hidden=!first||!String(first.quip||'').trim()",page)
         self.assertIn("$('quipTeaserLine').textContent=first.quip",page)
-        self.assertIn("$('quipTeaserImage').src=newsArt(first)",page)
+        self.assertNotIn("$('quipTeaserImage').src",page)
+        self.assertIn("#atlasHero .quip-teaser{\n display:block;",page)
+        self.assertIn("#atlasHero .quip-teaser-actions{display:flex;align-items:stretch;",page)
+        self.assertIn("flex-wrap:nowrap;gap:8px;",page)
         self.assertIn("updateQuipTeaser();",page)
         self.assertIn("$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0))",page)
         # Short taglines use explicit vetted incident IDs and fall back to
@@ -117,6 +122,30 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("return './assets/news/'+name",page)
         self.assertIn("const first=Array.isArray(edition.stories)?edition.stories[0]:null;",page)
 
+    def test_compact_opening_teaser_does_not_duplicate_or_crop_illustrations(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        teaser=page[page.index('<section class="quip-teaser"'):
+                    page.index('<section class="issue-gallery"')]
+        self.assertIn('id="quipTeaserTopic"',teaser)
+        self.assertIn('id="quipTeaserLine"',teaser)
+        self.assertIn('class="quip-teaser-actions"',teaser)
+        self.assertNotIn('<img',teaser)
+        self.assertNotIn('quipTeaserImage',page)
+        self.assertNotIn('quip-teaser-art',page)
+        self.assertIn("id=\"issueGallery\"",page)
+        self.assertIn("img.className='gallery-art';img.src=newsArt(story)",page)
+        self.assertIn('id="spotlightImage"',page)
+        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',page)
+        self.assertIn('#atlasHero .atlas-brand::after{content:none}',page)
+        self.assertIn("#atlasHero .quip-teaser{\n display:block;",page)
+        self.assertIn("flex-wrap:nowrap;gap:8px;",page)
+        self.assertIn('#atlasHero .teaser-smile{flex:0 0 auto;',page)
+        self.assertIn('min-height:44px',page)
+        # The existing full news story remains intact, with an accessible source.
+        self.assertIn("body.innerHTML=",page)
+        self.assertIn("safeUrl(first.sourceUrl)",page)
+        self.assertIn("updateQuipTeaser();",page)
+
     def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('data-layout="mobile-grid-2plus1"',page)
@@ -143,14 +172,14 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('class="atlas-title-second">ニュース、<span id="atlasStoryCount">3</span>本。',before_map)
         self.assertIn('class="atlas-real-stamp">実話</span>',before_map)
         self.assertIn('class="atlas-bubble-tag">AIツッコミ</span>',before_map)
-        self.assertIn('世界の「やらかし」に、AIが本気でツッコむ。',before_map)
+        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',before_map)
         self.assertIn('id="atlasLede"',before_map)
         self.assertIn('報道された実話にAIがユーモアのあるツッコミを添える',before_map)
         self.assertLess(before_map.index('class="atlas-title"'),before_map.index('class="atlas-concept"'))
         self.assertLess(before_map.index('class="atlas-concept"'),len(before_map))
         self.assertIn("#atlasHero .atlas-title-second{display:block",page)
         self.assertIn("#atlasHero .atlas-oops::after{content:",page)
-        self.assertIn("#atlasHero .atlas-brand{display:block!important",page)
+        self.assertIn("#atlasHero .atlas-brand{display:flex!important",page)
         self.assertIn(".atlas-brand{display:block}",page)
         self.assertNotIn(".atlas-brand{display:none}",page)
         self.assertIn("$('atlasStoryCount').textContent=d.length===1?'1':String(d.length)",page)
@@ -165,7 +194,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightLocation"',page)
         self.assertIn("first.country?'舞台：'+countryLabel(first.country)",page)
-        self.assertIn("世界の「やらかし」に、AIが本気でツッコむ。",page)
+        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',page)
         self.assertIn('id="worldInvitation" href="#mapExtras"',page)
         self.assertIn("$('worldInvitation').addEventListener('click',event=>{",page)
         self.assertIn("map.open=true;",page)
