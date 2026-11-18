@@ -347,6 +347,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("travelCountryNames(story.country).includes(stop.country)",(ROOT/"index.html").read_text(encoding="utf-8"))
 
     def test_all_november_18_reissued_stories_have_valid_destination_photo(self):
+        import json
         from country_codes import country_codes
         stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
         issue=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
