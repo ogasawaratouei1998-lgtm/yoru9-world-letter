@@ -269,7 +269,9 @@ def main():
             sources=source_registry(),fetch=fetch_bytes,parse=parse_rss,
             max_workers=10,per_feed=18,
             report_path="data/source-health.json")
-        keep(registered,limit=285)
+        # Give 42+ markets a real chance in a fixed 750-lead budget.
+        # The collector still reserves subsequent slots for GDELT and BBC.
+        keep(registered,limit=350)
     except (OSError,ValueError,TypeError,KeyError) as exc:
         errors.append("Publisher RSS catalog: "+type(exc).__name__)
     for url,provider,language,country in LOCAL_LANGUAGE_FEEDS:
