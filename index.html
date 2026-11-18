@@ -805,7 +805,7 @@ async function loadWorldBoundaries(){
     const path=document.createElementNS(ns,'path');path.setAttribute('d',d);fragment.append(path);
    }
   }
-  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
+  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;$('coverWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
  }catch(err){
   status.textContent='地図の形を取得できません。国別アーカイブは利用できます。';
  }
@@ -1201,6 +1201,49 @@ async function loadMonthlyVerified(){
   // The 30-day filter still applies at render time.
  }
 }
+// The cover map uses the SAME factual location catalog as the deep archive.
+// Pins represent countries or territories, NEVER the precise incident venue.
+function openWorldExplorer(country=''){
+ const map=$('mapExtras');
+ map.open=true;
+ const select=$('countrySelect');
+ if(country&&[...select.options].some(option=>option.value===country)){
+  select.value=country;
+  showCountryResults();
+  select.scrollIntoView({behavior:'auto',block:'center'});
+ }else{
+  map.scrollIntoView({behavior:'auto',block:'start'});
+ }
+}
+function renderCoverMap(){
+ const pins=$('coverMapPins');
+ pins.replaceChildren();
+ if(!Array.isArray(edition.stories))return;
+ const present=new Map();
+ for(const story of edition.stories){
+  for(const country of countryKeys(story.country)){
+   if(!present.has(country))present.set(country,0);
+   present.set(country,present.get(country)+1);
+  }
+ }
+ for(const [code,count] of present){
+  const point=mapPoint(code);
+  if(!point)continue;
+  const button=document.createElement('button');
+  button.type='button';button.className='atlas-pin';
+  button.style.left=point[0]+'%';button.style.top=point[1]+'%';
+  button.textContent=String(count);
+  button.title=countryLabel(code)+'の掲載記事を探す（国の代表位置）';
+  button.setAttribute('aria-label',button.title);
+  button.addEventListener('click',()=>openWorldExplorer(code));
+  pins.append(button);
+ }
+ const caption=$('coverMapCaption');
+ const names=[...present.keys()].map(countryLabel).join('・');
+ caption.textContent=names
+  ?'掲載国：'+names+'。点は国・地域の代表位置で、ニュースの現場ではありません。'
+  :'公開記事の掲載国を確認中です。地図の点はニュースの現場ではありません。';
+}
 function renderIssueCountries(){
  const target=$('issueCountries');
  target.replaceChildren();
@@ -1216,12 +1259,13 @@ function renderIssueCountries(){
  target.append(intro);
  if(!names.size){
   const pending=document.createElement('span');pending.className='country-pending';
-  pending.textContent='舞台の国・地域を確認中';target.append(pending);return;
+  pending.textContent='舞台の国・地域を確認中';target.append(pending);renderCoverMap();return;
  }
  for(const name of names.values()){
   const chip=document.createElement('span');chip.className='country-chip';
   chip.textContent=name;target.append(chip);
  }
+ renderCoverMap();
 }
 function updateSpotlight(){
  const first=Array.isArray(edition.stories)?edition.stories[0]:null;
@@ -1250,13 +1294,10 @@ $('spotlightRead').addEventListener('click',()=>{
  if(show){markRead(0);panel.scrollIntoView({behavior:'smooth',block:'nearest'})}
 });
 $('worldInvitation').addEventListener('click',event=>{
- event.preventDefault();
- const map=$('mapExtras');
- map.open=true;
- map.scrollIntoView({
-  behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',
-  block:'start'
- });
+ event.preventDefault();openWorldExplorer();
+});
+$('coverWorldLink').addEventListener('click',event=>{
+ event.preventDefault();openWorldExplorer();
 });
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
@@ -1448,6 +1489,7 @@ function updateFilters(){
  if(filter!=='all'&&!available.has(filter))filter='all';
 }
 function render(){const d=edition.stories;
+ $('atlasStoryCount').textContent=d.length===1?'1':String(d.length);
  const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
   $('nightlyMessage').textContent=nightlyLine;
   $('closingQuote').hidden=!nightlyLine;
