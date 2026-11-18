@@ -664,6 +664,24 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
             p=subprocess.run(["node",str(script)],capture_output=True,text=True)
             self.assertEqual(p.returncode,0,p.stderr)
 
+    def test_iphone_refinement_keeps_atlas_and_removes_duplicate_metadata(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('id="atlasLede"',page)
+        self.assertIn("currentIssue?'今夜の「まさか」は、どこの国から？':'この号の「まさか」は、どこの国から？'",page)
+        self.assertIn("const count=Math.max(0,edition.stories.length-1)",page)
+        self.assertIn("$('progress').hidden=count<=3",page)
+        self.assertIn(".atlas-brand{display:none}",page)
+        self.assertIn(".spotlight h1{font-size:clamp(1.31rem",page)
+        self.assertIn(".atlas-map-caption{font-size:.73rem}",page)
+        # Source JSON stays immutable. UI doesn't give a failed 11/17
+        # off-topic punchline a second life as the current homepage closing.
+        self.assertIn("edition.editionDate==='2026-11-17'&&nightlyOriginal===staleClosing",page)
+        self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
+        self.assertIn("$('closingJump').hidden=!nightlyLine",page)
+        self.assertIn("この号の「まさか」",page)
+        self.assertIn("ニュースの現場ではありません",page)
+        self.assertIn("map.open=true",page)
+
     def test_atlas_cover_maps_only_article_countries_and_opens_archive(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('id="coverWorldMap"',page)
