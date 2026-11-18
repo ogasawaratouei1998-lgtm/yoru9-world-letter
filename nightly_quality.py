@@ -5,7 +5,6 @@ AI drafts need an independent reviewer as well. If the line is weak or
 unavailable, the reader gets a normal closing without manufactured humor.
 """
 from difflib import SequenceMatcher
-import re
 
 # These are generic cross-issue frames, not the verified incidents themselves.
 # The first published example ("世界の求人票...") sounded like improvised filler.
@@ -15,8 +14,6 @@ HOLLOW_FRAMES = (
     "予定表に書き忘れた", "世界の仕組み", "まさかの対応あり",
     "備考欄が足りない",
 )
-UNSUPPORTED_META = ("世界の求人票", "仕事内容：", "仕事内容:", "仕事の担当欄")
-
 
 def incident_specific_nightly_line(line, stories):
     """Require a concrete phrase from ONE factual headline/summary.
