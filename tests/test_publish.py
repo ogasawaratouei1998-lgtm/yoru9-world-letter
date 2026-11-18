@@ -228,6 +228,21 @@ class PublishingTest(unittest.TestCase):
         self.assertEqual(len(published["stories"]),len(data["stories"]))
         self.assertNotIn("editorQualityVerified",published["stories"][0])
 
+    def test_automated_country_must_be_one_of_the_196_real_reporting_locations(self):
+        data=fixture("2026-11-18")
+        data["approvedBy"]="automated-two-stage-review"
+        for story in data["stories"]:
+            story["reported"]="2026-11-17"
+            story["editorQualityVerified"]=True
+            story["humanFailureVerified"]=True
+            story["humanActor"]="広報担当者"
+            story["humanMistake"]="案内板に間違った文章を印刷した"
+        data["stories"][0]["country"]="未確認"
+        with self.assertRaises(ValueError):
+            validate_approved(data,"2026-11-18")
+        data["stories"][0]["country"]="パレスチナ"
+        self.assertEqual(validate_approved(data,"2026-11-18")["stories"][0]["country"],"パレスチナ")
+
     def test_automated_daily_news_cannot_publish_animal_novelty(self):
         data=fixture("2026-11-17")
         data["editionDate"]="2026-11-18"
