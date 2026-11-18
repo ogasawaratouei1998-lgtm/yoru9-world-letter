@@ -33,6 +33,7 @@ try{
     freshDesign=await page.locator('#coverWorldMap').count()===1&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
      await page.locator('#issueGallery[data-layout="mobile-grid-2plus1"]').count()===1&&
+     await page.locator('#quipTeaserLine').count()===1&&
      await page.locator('#spotlightImage').count()===1;
     if(freshDesign)break;
     await page.waitForTimeout(6000);
@@ -80,7 +81,56 @@ try{
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.mapTop+2,
     'the reading order is concept, joke, then countries');
+   // A first-time visitor sees an actual verified quip BEFORE the map.
+   const teaser=page.locator('#quipTeaser');
+   assert.equal(await teaser.isVisible(),true,
+    'the current approved issue has a real opening punchline');
+   assert.equal(await page.locator('#quipTeaserLine').textContent(),
+    await page.locator('#spotlightQuip').textContent(),
+    'opening joke and actual article use precisely the same approved text');
+   assert.equal(await page.locator('#quipTeaserImage').getAttribute('src'),
+    await page.locator('#spotlightImage').getAttribute('src'),
+    'the early joke uses the right published article illustration');
+   assert.ok((await page.locator('#quipTeaserTopic').textContent()).length>3,
+    'the opening joke has its news context rather than an unexplained gag');
+   const teaserGeometry=await page.evaluate(()=>{
+    const r=id=>document.querySelector(id)?.getBoundingClientRect();
+    const a=r('#atlasHero .atlas-concept'),t=r('#quipTeaser'),
+          g=r('#issueGallery'),m=r('#coverWorldMap');
+    return {conceptBottom:a?.bottom,teaserTop:t?.top,teaserBottom:t?.bottom,
+      galleryTop:g?.top,galleryBottom:g?.bottom,mapTop:m?.top,
+      mapHeight:m?.height,windowWidth:window.innerWidth};
+   });
+   assert.ok(teaserGeometry.conceptBottom<=teaserGeometry.teaserTop+2&&
+     teaserGeometry.teaserBottom<=teaserGeometry.galleryTop+2&&
+     teaserGeometry.galleryBottom<=teaserGeometry.mapTop+2,
+     'the comedy payoff is visible before choosing a picture or visiting a map');
+   assert.ok(teaserGeometry.mapHeight<=168,
+    'the small mobile atlas is compressed so readers reach a story sooner');
+   assert.equal(await page.locator('#quipTeaserRead').evaluate(el=>
+      el.getBoundingClientRect().height>=44),true,'first joke has a real thumb-size read action');
+   await page.locator('#quipTeaserRead').click();
+   assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
+    'first joke opens the real article with source, rather than inventing another page');
+   const earlySmile=page.locator('#quipTeaser .teaser-smile');
+   await earlySmile.click();
+   assert.equal(await earlySmile.getAttribute('aria-pressed'),'true',
+    'a happy reaction persists using the already existing reader state');
+   assert.ok(!(await earlySmile.evaluate(el=>el.classList.contains('smile-burst'))),
+    'reduced-motion mobile users never get forced sparkle movement');
+   await earlySmile.click();
+   assert.equal(await earlySmile.getAttribute('aria-pressed'),'false',
+    'the opt-in reaction can be undone without a fake vote count');
+   await teaser.scrollIntoViewIfNeeded();
+   await page.screenshot({path:'mobile-screenshots/first-laugh-'+viewport.name+'.png',
+     animations:'disabled'});
    const gallery=page.locator('#issueGallery .gallery-tile');
+   assert.equal(await page.locator('#galleryHeading').textContent(),
+    '世界の「まさか」'+editorialCover.storyCount+'コマ劇場',
+    'the stage label matches one/two/three or more actual published items');
+   assert.equal(await page.locator('#issueGallery .gallery-kicker').count(),
+    editorialCover.storyCount,'each visual article has an honest comic teaser');
+
    assert.equal(await gallery.count(),editorialCover.storyCount,
     'each published story has a prominent visual invitation');
    // A gallery must show *all* article pictures without hiding the next
