@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="title-road">
+<title id="title-road">文字の入れ替わった道路標示を表す創作イラスト</title>
+<defs><linearGradient id="bg-road" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#B7ECE5"/><stop offset="1" stop-color="#FCE399"/></linearGradient><filter id="shadow-road" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#10263D" flood-opacity=".16"/></filter></defs>
+<rect width="800" height="480" rx="28" fill="url(#bg-road)"/>
+<circle cx="685" cy="80" r="132" fill="#fff" opacity=".23"/><circle cx="110" cy="365" r="135" fill="#fff" opacity=".16"/>
+<path d="M0 416Q190 366 410 417T800 395V480H0Z" fill="#173956" opacity=".09"/>
+<path d="M80 88h62M111 57v62M705 331h52M731 305v52" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+
+<path d="M232 0L65 480h670L570 0z" fill="#2A5271" filter="url(#shadow-road)"/>
+<path d="M273 0 150 480M528 0l120 480" stroke="#FFF2CB" stroke-width="11"/>
+<path d="M400 15v90m0 70v90m0 72v89" stroke="#fff8e1" stroke-width="17" stroke-linecap="round" stroke-dasharray="55 30"/>
+<g transform="rotate(-6 402 227)" filter="url(#shadow-road)"><rect x="182" y="178" width="445" height="118" rx="18" fill="#FFF4D9" stroke="#203F5C" stroke-width="8"/><text x="405" y="261" font-family="system-ui,sans-serif" text-anchor="middle" font-size="61" font-weight="900" fill="#E7666E" letter-spacing="5">DEGAVAR</text></g>
+<g transform="translate(62 72)"><path d="M0 49q25-49 50 0q25 49 50 0" fill="none" stroke="#E96573" stroke-width="11" stroke-linecap="round"/><circle cx="111" cy="23" r="13" fill="#E96573"/></g>
+<g transform="translate(635 318)" filter="url(#shadow-road)"><path d="M-12 95 32 0 79 95Z" fill="#F28C4A" stroke="#203F5C" stroke-width="7"/><path d="M5 52h53M-3 74h69" stroke="#FFF2E0" stroke-width="11" stroke-linecap="round"/></g>
+<circle cx="690" cy="110" r="57" fill="#FFF5DA" stroke="#254765" stroke-width="7"/><text x="690" y="137" text-anchor="middle" font-size="90" font-family="system-ui,sans-serif" font-weight="850" fill="#254765">?</text></svg>
