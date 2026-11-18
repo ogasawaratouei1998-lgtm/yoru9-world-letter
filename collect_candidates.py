@@ -214,7 +214,8 @@ def uncovered_country_searches(day=None, max_countries=9):
     )
 
 
-def get_gdelt(extra_searches=(), min_interval_seconds=5.5, diagnostics=None):
+def get_gdelt(extra_searches=(), min_interval_seconds=10.5, diagnostics=None,
+              day=None, max_queries=5):
     """Discover original publisher links; respect GDELT's public API pacing.
 
     A rate-limited, malformed or empty GDELT response must be visible as a
@@ -222,8 +223,12 @@ def get_gdelt(extra_searches=(), min_interval_seconds=5.5, diagnostics=None):
     No API response or title is considered a verified news event.
     """
     from collections import Counter
-    if not isinstance(min_interval_seconds,(int,float)) or not 0<=min_interval_seconds<=10:
-        raise ValueError("GDELT delay must be between 0 and 10 seconds")
+    if not isinstance(min_interval_seconds,(int,float)) or not 0<=min_interval_seconds<=30:
+        raise ValueError("GDELT delay must be between 0 and 30 seconds")
+    if type(max_queries) is not int or not 1<=max_queries<=5:
+        raise ValueError("GDELT query budget must be 1-5")
+    if day is None:
+        day=datetime.now(timezone(timedelta(hours=9))).date()
     health=Counter()
     # Search light, documented human mistakes first. Keep each search capped.
     searches=(
@@ -242,27 +247,69 @@ def get_gdelt(extra_searches=(), min_interval_seconds=5.5, diagnostics=None):
         '("giao nhầm" OR "nhầm địa chỉ" OR "실수로" OR "착각")',
     )
     articles,seen=[],set()
-    queries=(*tuple(extra_searches)[:3],*searches)
+    country_queries=tuple(extra_searches)[:min(3,max_queries)]
+    remaining=max_queries-len(country_queries)
+    # Rotate the ten creative search themes rather than hammering all ten
+    # every morning. The three country targets continue to cover nine
+    # never-featured locations each day. Over several days all headline
+    # languages and error motifs receive their turn.
+    offset=(day.toordinal()*max(1,remaining))%len(searches)
+    generic=tuple(searches[(offset+i)%len(searches)]
+                  for i in range(remaining))
+    queries=(*country_queries,*generic)
+    health["planned"]=len(queries)
+    consecutive_rate_limited=0
     for index,query in enumerate(queries):
-        # The DOC endpoint may return HTTP 429 or plain-text rate-limit
-        # notices at HTTP 200 when requests arrive closer than ~5 seconds.
-        # Do not hammer it with thirteen simultaneous rapid queries.
+        # Live evidence: 11 of 13 responses were HTTP 429 despite 5.5-second
+        # pacing. Limit to five rotated queries, increase the interval and
+        # stop when the provider repeatedly requests throttling.
         if index:
             time.sleep(min_interval_seconds)
         health["attempted"]+=1
         params={'query':query,'mode':'ArtList','format':'json','maxrecords':40,
                 'timespan':'7d','sort':'DateDesc'}
         try:
-            data=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
+            body=fetch_bytes(GDELT+'?'+urlencode(params))
+            if not isinstance(body,bytes):
+                health["invalid_json_or_plaintext"]+=1
+                consecutive_rate_limited=0
+                continue
+            # HTTP 200 may contain a plain-text "limit requests" notice.
+            # Recognize the throttle without ever printing response contents.
+            if not body.lstrip().startswith(b"{"):
+                text=body[:256].decode("utf-8",errors="replace").lower()
+                if any(term in text for term in
+                       ("limit requests","too many requests","rate limit",
+                        "please wait","requests per")):
+                    health["rate_limit_notice"]+=1
+                    consecutive_rate_limited+=1
+                    if consecutive_rate_limited>=2:
+                        health["circuit_open"]=1
+                        break
+                else:
+                    health["invalid_json_or_plaintext"]+=1
+                    consecutive_rate_limited=0
+                continue
+            data=json.loads(body.decode('utf-8'))
         except HTTPError as exc:
             health["http_"+str(exc.code)]+=1
+            if exc.code==429:
+                consecutive_rate_limited+=1
+                if consecutive_rate_limited>=2:
+                    health["circuit_open"]=1
+                    break
+            else:
+                consecutive_rate_limited=0
             continue
         except (URLError,OSError,TimeoutError):
             health["network_failure"]+=1
+            consecutive_rate_limited=0
             continue
         except (ValueError,UnicodeError):
             health["invalid_json_or_plaintext"]+=1
+            consecutive_rate_limited=0
             continue
+        consecutive_rate_limited=0
         if not isinstance(data,dict) or not isinstance(data.get("articles"),list):
             health["missing_articles"]+=1
             continue
