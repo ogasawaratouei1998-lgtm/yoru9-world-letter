@@ -98,6 +98,15 @@ class TravelPhotoRotationTest(unittest.TestCase):
         run=subprocess.run(["node","-e",script],capture_output=True,text=True)
         self.assertEqual(run.returncode,0,run.stderr)
 
+    def test_argentina_france_and_usa_have_three_different_destinations(self):
+        manifest=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        for country in ("アルゼンチン","フランス","アメリカ合衆国"):
+            with self.subTest(country=country):
+                photos={stop["photoAsset"] for stop in manifest.values()
+                        if stop["country"]==country}
+                self.assertGreaterEqual(len(photos),3,
+                    "Insufficient photo variation for current edition: "+country)
+
     def test_privacy_mode_without_storage_still_keeps_own_country(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         logic=page[page.index("const travelSelections=new Map();"):
