@@ -8,7 +8,7 @@ const url='https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/';
 await fs.mkdir('mobile-screenshots',{recursive:true});
 const browser=await chromium.launch({headless:true});
 try{
- for(const viewport of [{width:375,height:667,name:'small'},{width:393,height:852,name:'standard'}]){
+ for(const viewport of [{width:320,height:667,name:'narrow'},{width:375,height:667,name:'small'},{width:393,height:852,name:'standard'}]){
   const context=await browser.newContext({
    viewport:{width:viewport.width,height:viewport.height},
    deviceScaleFactor:2,isMobile:true,hasTouch:true,
@@ -32,7 +32,7 @@ try{
     assert.equal(res?.status(),200,'reader page must be reachable');
     freshDesign=await page.locator('#coverWorldMap').count()===1&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
-     await page.locator('#issueGallery').count()===1&&
+     await page.locator('#issueGallery[data-layout="mobile-grid-2plus1"]').count()===1&&
      await page.locator('#spotlightImage').count()===1;
     if(freshDesign)break;
     await page.waitForTimeout(6000);
@@ -83,6 +83,57 @@ try{
    const gallery=page.locator('#issueGallery .gallery-tile');
    assert.equal(await gallery.count(),editorialCover.storyCount,
     'each published story has a prominent visual invitation');
+   // A gallery must show *all* article pictures without hiding the next
+   // image in a horizontal scroller. Test physical geometry, not CSS text.
+   const grid=await page.evaluate(()=>{
+    const track=document.querySelector('#issueGallery');
+    const hero=document.querySelector('#atlasHero');
+    const hint=document.querySelector('#atlasHero .gallery-heading span');
+    const rect=el=>{
+      const r=el.getBoundingClientRect();
+      return {left:r.left,right:r.right,top:r.top,bottom:r.bottom,width:r.width,height:r.height};
+    };
+    return {
+      layout:getComputedStyle(track).gridAutoFlow,
+      overflowX:getComputedStyle(track).overflowX,
+      columns:getComputedStyle(track).gridTemplateColumns,
+      scrollOverflow:track.scrollWidth-track.clientWidth,
+      pageOverflow:document.documentElement.scrollWidth-window.innerWidth,
+      track:rect(track),hero:rect(hero),hint:rect(hint),
+      tiles:[...track.querySelectorAll('.gallery-tile')].map(el=>({
+        tile:rect(el),image:rect(el.querySelector('.gallery-art'))
+      }))
+    };
+   });
+   assert.equal(grid.layout,'row','mobile illustrated articles use a real two-row grid');
+   assert.equal(grid.overflowX,'visible','news illustrations are not hidden inside a carousel');
+   assert.equal(grid.columns.split(' ').length,2,'mobile grid has exactly two columns');
+   assert.ok(grid.scrollOverflow<=2,
+    'no clipped/scrollable illustration inside gallery: '+grid.scrollOverflow+'px');
+   assert.ok(grid.pageOverflow<2,'no page-wide horizontal overflow: '+grid.pageOverflow+'px');
+   assert.ok(grid.hint.right<=grid.hero.right+2,
+    'gallery header hint stays entirely inside the hero');
+   for(const [i,item] of grid.tiles.entries()){
+    assert.ok(item.tile.left>=grid.track.left-2&&item.tile.right<=grid.track.right+2,
+     'every article tile fits inside the gallery: '+(i+1));
+    assert.ok(item.image.left>=item.tile.left-2&&item.image.right<=item.tile.right+2,
+     'every article illustration fits within its own tile: '+(i+1));
+   }
+   if(grid.tiles.length>=2){
+    assert.ok(Math.abs(grid.tiles[0].tile.top-grid.tiles[1].tile.top)<=2,
+     'two picture cards appear side-by-side in the first row');
+    assert.ok(grid.tiles[1].tile.left>=grid.tiles[0].tile.right-2,
+     'first two article cards do not overlap');
+   }
+   if(grid.tiles.length%2===1){
+    const last=grid.tiles.at(-1).tile;
+    assert.ok(last.width>=grid.track.width-2,
+     'odd last article uses the full width of the gallery');
+    if(grid.tiles.length>1){
+     assert.ok(last.top>=grid.tiles[0].tile.bottom-2,
+      'third article is on a new row, never cut off at the right edge');
+    }
+   }
    const note=page.locator('#atlasHero .gallery-clarity');
    assert.ok((await note.textContent()).includes('現場の写真ではありません'),
     'editorial illustrations cannot be mistaken for incident photographs');
