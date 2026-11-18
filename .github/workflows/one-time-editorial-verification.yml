@@ -1,5 +1,6 @@
 name: Manual full Gemini editorial verification (read-only)
 
+# 2026-11-18 follow-up: test expanded one-by-one comic recovery against real original articles.
 # Changing this workflow on main triggers one additional read-only
 # end-to-end Gemini verification. Normal application code commits do not.
 on:
@@ -88,7 +89,8 @@ jobs:
               for key in ("collected","fresh","planned_fetches",
                           "fetchable_original_bodies","candidate_review_groups",
                           "first_ai_batch_groups","drafted","preflight_eligible",
-                          "independent_approved","selected_for_edition"):
+                          "independent_approved","selected_for_edition",
+                          "supplemental_attempts","supplemental_generated"):
                   if key in report:
                       parts.append(f"| {key} | {report[key]} |")
               parts.extend(["","Publisher-market region and rejection diagnostic labels do not establish actual event countries."])
