@@ -49,9 +49,34 @@ try{
    },null,{timeout:30000});
    const pins=page.locator('#coverMapPins .atlas-pin');
    assert.ok(await pins.count()>=1,'published story locations are represented');
+   const preview=page.locator('#atlasPreview');
+   assert.equal(await preview.isHidden(),true,'country preview starts closed');
    await pins.first().click();
+   assert.equal(await preview.isVisible(),true,'country pin previews this edition without leaving atlas');
+   assert.ok(await preview.locator('.atlas-preview-title').count()>=1,'preview has a real news title');
+   assert.equal(await pins.first().getAttribute('aria-pressed'),'true',
+    'active map selection is accessible');
+   const firstStory=await preview.locator('.atlas-preview-title').first().textContent();
+   if(await pins.count()>1){
+    await pins.nth(1).click();
+    assert.equal(await pins.nth(1).getAttribute('aria-pressed'),'true');
+    assert.notEqual(await preview.locator('.atlas-preview-title').first().textContent(),firstStory,
+     'different country pin previews a different published story');
+   }
+   const read=preview.locator('[data-atlas-read]').first();
+   const storyIndex=Number(await read.getAttribute('data-atlas-read'));
+   await read.click();
+   assert.equal(await preview.isHidden(),true,'preview closes when a story opens');
+   if(storyIndex===0){
+    assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
+     'lead preview expands the original lead article');
+   }else{
+    assert.equal(await page.locator('#stories [data-story-index="'+storyIndex+'"] [data-open]').getAttribute('aria-expanded'),'true',
+     'country preview opens the exact supporting article');
+   }
+   await page.locator('#coverWorldLink').click();
    assert.equal(await page.locator('#mapExtras').getAttribute('open'),'',
-    'tapping a country opens the deeper country archive');
+    'full country archive remains reachable independently');
    await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
