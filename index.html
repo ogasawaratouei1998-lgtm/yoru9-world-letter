@@ -1847,12 +1847,9 @@ function updateFilters(){
 }
 function render(){const d=edition.stories;
  $('atlasStoryCount').textContent=d.length===1?'1':String(d.length);
- // The immutable 11/17 archive contains a generic closing that did not
- // meet the current quality bar. Keep the record unchanged, but do not
- // give the rejected gag top billing on the public reading surface.
- const nightlyOriginal=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
- const staleClosing='仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。';
- const nightlyLine=(edition.editionDate==='2026-11-17'&&nightlyOriginal===staleClosing)?'':nightlyOriginal;
+ // An intentionally empty nightly message leaves the closing quiet.
+ // The editing source, public archive and current issue now agree.
+ const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
   $('nightlyMessage').textContent=nightlyLine;
   $('closingQuote').hidden=!nightlyLine;
   $('closingJump').hidden=!nightlyLine;
