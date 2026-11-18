@@ -20,10 +20,15 @@ class CollectionTest(unittest.TestCase):
                 "domain":f"report{i}.example.com",
                 "sourcecountry":"GB","language":"English",
             }]}).encode()
+        from datetime import date,timedelta
+        day=date(2026,11,18)
         with patch.object(c,"fetch_bytes",side_effect=fetch):
-            leads=c.get_gdelt(min_interval_seconds=0)
-        self.assertEqual(len(queries),10)
-        self.assertEqual(len(leads),10)
+            for offset in range(5):
+                leads=c.get_gdelt(min_interval_seconds=0,
+                                  day=day+timedelta(days=offset))
+                self.assertEqual(len(leads),5)
+        self.assertEqual(len(queries),25)
+        self.assertEqual(len(set(queries)),10)
         self.assertTrue(any("per sbaglio" in query for query in queries))
         self.assertTrue(any("por engano" in query for query in queries))
         self.assertTrue(any("salah kirim" in query for query in queries))
@@ -98,9 +103,9 @@ class CollectionTest(unittest.TestCase):
         with patch.object(c,"fetch_bytes",side_effect=fetch):
             leads=c.get_gdelt(extra_searches=['("Fiji") ("mistake" OR "blunder")'],
                               min_interval_seconds=0)
-        self.assertEqual(len(queries),11)
+        self.assertEqual(len(queries),5)
         self.assertIn('"Fiji"',queries[0])
-        self.assertEqual(len(leads),11)
+        self.assertEqual(len(leads),5)
         self.assertTrue(all(lead["status"]=="unverified" for lead in leads))
 
 
@@ -126,14 +131,15 @@ class CollectionTest(unittest.TestCase):
               patch.object(c.time,"sleep") as mock_sleep):
             result=c.get_gdelt(min_interval_seconds=5.5,
                                diagnostics=health)
-        self.assertEqual(health["attempted"],10)
+        self.assertEqual(health["planned"],5)
+        self.assertEqual(health["attempted"],2)
         self.assertEqual(health["http_429"],1)
-        self.assertEqual(health["invalid_json_or_plaintext"],1)
-        self.assertEqual(health["unverified_original_links"],8)
-        self.assertEqual(len(result),8)
-        self.assertEqual(mock_sleep.call_count,9)
-        self.assertTrue(all(args.args==(5.5,)
-                            for args in mock_sleep.call_args_list))
+        self.assertEqual(health["rate_limit_notice"],1)
+        self.assertEqual(health["circuit_open"],1)
+        self.assertEqual(health["unverified_original_links"],0)
+        self.assertEqual(len(result),0)
+        self.assertEqual(mock_sleep.call_count,1)
+        self.assertEqual(mock_sleep.call_args.args,(5.5,))
         self.assertTrue(all(x["status"]=="unverified" for x in result))
         self.assertFalse(any("eventCountry" in x for x in result))
 
@@ -143,8 +149,34 @@ class CollectionTest(unittest.TestCase):
               patch.object(c.time,"sleep") as sleep):
             result=c.get_gdelt(min_interval_seconds=0)
         self.assertEqual(result,[])
-        self.assertEqual(sleep.call_count,9)
+        self.assertEqual(sleep.call_count,4)
         self.assertTrue(all(arg.args==(0,) for arg in sleep.call_args_list))
+
+    def test_gdelt_one_429_can_recover_without_hammering(self):
+        import json
+        from urllib.error import HTTPError
+        from unittest.mock import patch
+        count=[0]
+        def fetch(url):
+            count[0]+=1
+            if count[0]==1:
+                raise HTTPError(url,429,"Too many requests",None,None)
+            return json.dumps({"articles":[{
+                "title":"A funny human mix-up",
+                "url":f"https://news{count[0]}.example.org/report",
+                "sourcecountry":"NG"
+            }]}).encode()
+        health={}
+        with (patch.object(c,"fetch_bytes",side_effect=fetch),
+              patch.object(c.time,"sleep") as delay):
+            leads=c.get_gdelt(min_interval_seconds=10.5,diagnostics=health)
+        self.assertEqual(count[0],5)
+        self.assertEqual(health["attempted"],5)
+        self.assertEqual(health["http_429"],1)
+        self.assertEqual(health["responded"],4)
+        self.assertNotIn("circuit_open",health)
+        self.assertEqual(len(leads),4)
+        self.assertEqual(delay.call_count,4)
 
     def test_original_comedy_search_is_reserved_even_when_feeds_fill_budget(self):
         """Generic publisher headlines cannot starve targeted original discovery."""
