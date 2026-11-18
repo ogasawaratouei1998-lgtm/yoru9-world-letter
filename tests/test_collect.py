@@ -39,7 +39,7 @@ class CollectionTest(unittest.TestCase):
         self.assertEqual(len(second),3)
         self.assertNotEqual(first,second)
         self.assertEqual(sum(len(re.findall(r'"[A-Za-z][A-Za-z0-9 .-]{2,64}"',q))
-                             for q in first),18)
+                             for q in first),21)
         for query in first:
             self.assertIn('"mistake"',query)
             self.assertIn('"mix-up"',query)
