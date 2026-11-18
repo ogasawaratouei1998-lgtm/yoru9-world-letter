@@ -531,6 +531,34 @@ class ReaderFrontendTest(unittest.TestCase):
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
         self.assertIn("'country-catalog.json'",build)
 
+    def test_full_country_catalog_and_truthful_lifetime_scoreboard_are_exposed(self):
+        import json
+        from tempfile import TemporaryDirectory
+        from build_site import build_country_coverage
+        catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(catalog),196)
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        for marker in ("function countryKeys(name)",
+                       "loadLifetimeCoverage()",
+                       "country-coverage.json",
+                       "累計：","未紹介",
+                       "countryKeys(story.country)",
+                       "countryKeys(s.country).includes(country)"):
+            self.assertIn(marker,page)
+        with TemporaryDirectory() as tmp:
+            from pathlib import Path
+            result=build_country_coverage(ROOT,Path(tmp))
+            report=json.loads((Path(tmp)/"data/country-coverage.json").read_text(encoding="utf-8"))
+        self.assertEqual(result,report)
+        self.assertEqual(report["total"],196)
+        self.assertEqual(report["covered"],len(report["byCountry"]))
+        self.assertEqual(report["remaining"],196-report["covered"])
+        self.assertIn("US",report["byCountry"])
+        self.assertIn("GB",report["byCountry"])
+        self.assertIn("AG",report["byCountry"])
+        self.assertNotIn("sourcecountry",report)
+        self.assertEqual(report["basis"],"published-archive-only")
+
     def test_app_refreshes_on_resume_and_updates_offline_cache(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
@@ -561,7 +589,7 @@ class ReaderFrontendTest(unittest.TestCase):
             "[...edition.stories,...visibleMonthStories]",
             "for(const story of mapDisplayStories())",
             "function countryResultsFor(country)",
-            "visibleMonthStories.filter(s=>countryKey(s.country)===country)",
+            "visibleMonthStories.filter(s=>countryKeys(s.country).includes(country))",
             "const matches=countryResultsFor(country)",
             "card.dataset.monthStoryId=s.id",
             "node.dataset.monthStoryId===item.id",
