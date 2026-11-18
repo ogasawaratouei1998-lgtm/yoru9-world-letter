@@ -197,7 +197,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
 
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
-        self.assertIn("real, consequential failures",mission)
+        self.assertIn("source-supported HUMAN mistakes",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
         self.assertIn("Never replace a failure with generic",mission)
@@ -570,7 +570,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
         # One real publisher's article is acceptable, but still must be
         # fetched, source-grounded and independently audited by the AI.
-        self.assertIn("groups.extend([[item] for item in source_leads",pipeline)
+        self.assertIn("groups.extend([[item] for item in unpaired",pipeline)
         self.assertIn("not (1<=len(urls)<=3)",pipeline)
         self.assertIn("if len(evidence)<1",pipeline)
         self.assertIn("originalReportingVerified",pipeline)
@@ -641,6 +641,32 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ranked=sorted(leads,key=editorial.incident_priority)
         self.assertEqual(ranked[0]["url"],"https://example.org/b")
         self.assertEqual(ranked[1]["url"],"https://example.org/a")
+
+    def test_comic_original_outweighs_serious_two_source_dispute(self):
+        comic={"title":"Cafe accidentally delivered wrong order",
+               "url":"https://www.bbc.com/news/comic"}
+        serious_a={"title":"Minister faces protest and student discipline",
+                   "url":"https://www.bbc.com/news/serious"}
+        serious_b={"title":"Suspended students in minister row",
+                   "url":"https://www.theguardian.com/news/serious"}
+        animal={"title":"Rare monkey appears at a station",
+                "url":"https://www.bbc.com/news/animal"}
+        groups=[[serious_a,serious_b],[animal],[comic]]
+        ranked=editorial.prioritize_comic_groups(groups,limit=2)
+        self.assertEqual(ranked[0],[comic])
+        self.assertEqual(ranked[1],[serious_a,serious_b])
+        self.assertEqual(len(groups),3)
+        self.assertEqual(editorial.prioritize_comic_groups([],limit=24),[])
+
+    def test_current_comedy_prompt_preserves_one_source_and_seven_days(self):
+        from pathlib import Path
+        code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=24)",code)
+        self.assertIn("unpaired=sorted",code)
+        self.assertIn("trusted_original_domain(item['url'])",code)
+        self.assertIn("within the preceding seven days",code)
+        self.assertIn("independent_editorial_quality_passed(audit)",code)
+        self.assertIn("draft_preflight_viable(item,now)",code)
 
     def test_without_key_does_not_call_ai(self):
         with patch.object(editorial,"KEY",""):
