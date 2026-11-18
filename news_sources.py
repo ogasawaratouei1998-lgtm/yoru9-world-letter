@@ -21,6 +21,51 @@ ALLOWED_LANGUAGES = {"en", "ja", "ko", "de", "es", "fr", "pt", "ar", "id", "it",
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{3,90}$")
 ISO_RE = re.compile(r"^[A-Z]{2}$")
 
+# Cheap discovery-only hints. They do NOT classify a report as true, comic or
+# geographically verified. Prioritizing them *within each publisher's feed*
+# avoids burying a small local mistake under dozens of general headlines.
+SMALL_MISSTEP = re.compile(
+    r"\b(?:typo|misspell\w*|misprint\w*|mix[- ]?up|by mistake|"
+    r"accidentally|mistook|wrong (?:order|address|delivery|recipient|sign|name)|"
+    r"wrongly delivered|mistaken identity|"
+    r"verwechslung|aus versehen|versehentlich|"
+    r"per sbaglio|per errore|sbagli\w*|"
+    r"por engano|por error|equivocaci[oó]n|"
+    r"par erreur|m[eé]prise|"
+    r"salah kirim|tertukar|keliru|"
+    r"nh[aầ]m|pomy[lł]k\w*|yanl[iı][sş]|"
+    r"실수|착각|오류|잘못)\b|"
+    r"誤字|誤記|誤発注|誤配達|誤送信|手違い|勘違い|取り違え|"
+    r"خطأ|بالخطأ",
+    re.I,
+)
+GENERAL_MISSTEP = re.compile(
+    r"\b(?:mistake|blunder|error|fiasco|confusion|mishap|"
+    r"fehler|panne|erreur|errore|erro|falha|"
+    r"confus[aã]o|equ[ií]voc\w*|kesalahan|hata)\b|"
+    r"間違|失敗|ミス|착오",
+    re.I,
+)
+DISTRESS_HEADLINE = re.compile(
+    r"\b(?:death|died|killed|murder|fatal|shooting|war|rape|"
+    r"injured|hospitalized|suicide|bombing|abuse|harassment)\b|"
+    r"死亡|殺害|負傷|災害|戦争|自殺|銃撃|死者|犠牲者",
+    re.I,
+)
+
+
+def provisional_headline_priority(title):
+    """Order unverified leads, never approve or infer an incident's country."""
+    value=str(title or "")
+    if DISTRESS_HEADLINE.search(value):
+        return 3
+    if SMALL_MISSTEP.search(value):
+        return 0
+    if GENERAL_MISSTEP.search(value):
+        return 1
+    return 2
+
+
 
 def host_matches(domain, expected):
     """Restrict candidate article links to the registered publisher.
@@ -110,6 +155,16 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
         for future in as_completed(futures):
             i=futures[future]
             results[i],health[i]=future.result()
+    # Preserve market/outlet round-robin while moving clearly relevant,
+    # source-dated human mistakes to the front of EACH publisher's queue.
+    # This does not drop unrelated headlines or assign a story location.
+    # Global budget truncation previously buried rare local mishaps in
+    # general-news RSS lists, leaving the AI with few draftable sources.
+    for group in results:
+        group.sort(key=lambda lead: (
+            provisional_headline_priority(lead.get("title")),
+            not bool(lead.get("seendate")),
+        ))
     counts=Counter(health)
     # Group source health by *publisher* market, never reported event country.
     market_health={}

@@ -140,6 +140,62 @@ class NewsSourceRegistryTest(unittest.TestCase):
         self.assertEqual(leads[0]["sourcecountry"],"US")
         self.assertEqual(leads[0]["status"],"unverified")
 
+    def test_multilingual_mishap_hints_are_ranking_only(self):
+        for title in (
+            "Worker accidentally sends an order to the wrong address",
+            "Comune pubblica cartelli per sbaglio",
+            "Le facteur a livré le colis par erreur",
+            "Petugas salah kirim paket",
+            "Nhân viên nhầm địa chỉ",
+            "직원이 실수로 잘못 배달했다",
+            "お店が誤発注して大量に届いた",
+        ):
+            with self.subTest(title=title):
+                self.assertEqual(sources.provisional_headline_priority(title),0)
+        self.assertEqual(
+            sources.provisional_headline_priority("A general market update"),2)
+        self.assertEqual(
+            sources.provisional_headline_priority("War report and injured victims"),3)
+
+    def test_late_local_mistakes_survive_publisher_rss_budget(self):
+        # Even if the first eight headlines from each publisher are generic,
+        # the article about a documented-sounding human mistake must be
+        # visible early in a capped, geographically balanced lead pool.
+        publishers=[
+            {"id":"nigeria-local","name":"Nigeria Local","url":"https://ng.example.org/rss",
+             "market":"NG","language":"en","focus":"local","site":"ng.example.org"},
+            {"id":"italy-local","name":"Italy Local","url":"https://it.example.org/rss",
+             "market":"IT","language":"it","focus":"local","site":"it.example.org"},
+        ]
+        def fetch(url,timeout):
+            from urllib.parse import urlsplit
+            host=urlsplit(url).hostname
+            generic="".join(
+                f"<item><title>General council update {i}</title>"
+                f"<link>https://{host}/story/{i}</link>"
+                "<pubDate>Tue, 17 Nov 2026 05:00:00 GMT</pubDate></item>"
+                for i in range(8))
+            mistake=("Worker accidentally sent an order to the wrong address"
+                     if host.startswith("ng.") else
+                     "Comune pubblica cartelli per sbaglio")
+            unusual=(f"<item><title>{mistake}</title>"
+                     f"<link>https://{host}/story/mistake</link>"
+                     "<pubDate>Tue, 17 Nov 2026 05:00:00 GMT</pubDate></item>")
+            return f"<rss><channel>{generic}{unusual}</channel></rss>".encode()
+        ranked=sources.fetch_registry_feeds(
+            sources=publishers,fetch=fetch,parse=parse_rss,
+            max_workers=2,per_feed=18)
+        self.assertEqual(len(ranked),18)
+        self.assertEqual([lead["sourcecountry"] for lead in ranked[:2]],
+                         ["NG","IT"])
+        self.assertTrue(all(lead["url"].endswith("/story/mistake")
+                            for lead in ranked[:2]))
+        self.assertTrue(all(lead["status"]=="unverified" for lead in ranked))
+        self.assertTrue(all("country" not in lead for lead in ranked))
+        # Ordinary reporting is retained for fallback, not silently dropped.
+        self.assertEqual(len([lead for lead in ranked
+                              if "/story/" in lead["url"]]),18)
+
     def test_first_results_rotate_between_world_markets(self):
         us={"id":"us-first","name":"US Publisher",
             "url":"https://rss.upi.com/news/news.rss","market":"US",
