@@ -807,7 +807,8 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn(".atlas-map-caption{font-size:.73rem}",page)
         # Source JSON stays immutable. UI doesn't give a failed 11/17
         # off-topic punchline a second life as the current homepage closing.
-        self.assertIn("edition.editionDate==='2026-11-17'&&nightlyOriginal===staleClosing",page)
+        self.assertIn("const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():''",page)
+        self.assertNotIn("staleClosing",page)
         self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
         self.assertIn("$('closingJump').hidden=!nightlyLine",page)
         self.assertIn("この号に収録された、世界の失敗・勘違い・珍事件。",page)
