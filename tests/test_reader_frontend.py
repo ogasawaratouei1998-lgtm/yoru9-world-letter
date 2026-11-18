@@ -691,7 +691,7 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn('function closeAtlasPreview(restoreFocus=false)',page)
         self.assertIn('function openAtlasStory(index)',page)
         self.assertIn("edition.stories.map((story,index)=>({story,index}))",page)
-        self.assertIn(".filter(item=>countryKeys(item.story.country).includes(code))",page)
+        self.assertIn(".filter(item=>countryKeys(item.story.country).some(key=>selectedCodes.includes(key)))",page)
         self.assertIn("label.textContent=story.title||'掲載記事'",page)
         self.assertIn('read.dataset.atlasRead=String(index)',page)
         self.assertIn('read.addEventListener(\'click\',()=>openAtlasStory(index))',page)
