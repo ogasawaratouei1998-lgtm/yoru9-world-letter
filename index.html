@@ -1279,6 +1279,78 @@ async function loadMonthlyVerified(){
 }
 // The cover map uses the SAME factual location catalog as the deep archive.
 // Pins represent countries or territories, NEVER the precise incident venue.
+let activeAtlasCountry=null;
+let lastAtlasTrigger=null;
+function atlasSetSelectedCountry(code){
+ for(const button of document.querySelectorAll('#coverMapPins .atlas-pin, #issueCountries .country-chip')){
+  button.setAttribute('aria-pressed',String(!!code&&button.dataset.country===code));
+ }
+}
+function closeAtlasPreview(restoreFocus=false){
+ const panel=$('atlasPreview');
+ panel.hidden=true;
+ panel.replaceChildren();
+ activeAtlasCountry=null;
+ atlasSetSelectedCountry(null);
+ if(restoreFocus&&lastAtlasTrigger?.isConnected)lastAtlasTrigger.focus({preventScroll:true});
+ lastAtlasTrigger=null;
+}
+function openAtlasStory(index){
+ // Read the actual story in this edition, even when a category filter is set.
+ if(!Number.isInteger(index)||index<0||index>=edition.stories.length)return;
+ closeAtlasPreview();
+ const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
+ if(index===0){
+  const button=$('spotlightRead');
+  if(button.getAttribute('aria-expanded')!=='true')button.click();
+  $('spotlight').scrollIntoView({behavior,block:'start'});
+  return;
+ }
+ filter='all';applyFilter();
+ const card=document.querySelector('#stories [data-story-index="'+index+'"]');
+ if(!card)return;
+ const button=card.querySelector('[data-open="'+index+'"]');
+ if(button&&button.getAttribute('aria-expanded')!=='true')button.click();
+ card.scrollIntoView({behavior,block:'start'});
+}
+function showAtlasPreview(code,trigger){
+ // This preview reads approved/public story data only, not source markets.
+ const stories=edition.stories.map((story,index)=>({story,index}))
+  .filter(item=>countryKeys(item.story.country).includes(code));
+ if(!stories.length){closeAtlasPreview();return}
+ if(activeAtlasCountry===code){closeAtlasPreview(true);return}
+ const panel=$('atlasPreview');panel.replaceChildren();
+ const heading=document.createElement('div');heading.className='atlas-preview-heading';
+ const title=document.createElement('h3');title.textContent=countryLabel(code)+'から届いた'+stories.length+'本';
+ const close=document.createElement('button');close.type='button';
+ close.className='atlas-preview-close';close.textContent='×';
+ close.setAttribute('aria-label','ニュースのプレビューを閉じる');
+ close.addEventListener('click',()=>closeAtlasPreview(true));
+ heading.append(title,close);panel.append(heading);
+ const list=document.createElement('ol');list.className='atlas-preview-list';
+ for(const {story,index} of stories){
+  const item=document.createElement('li');
+  const label=document.createElement('p');label.className='atlas-preview-title';
+  label.textContent=story.title||'掲載記事';
+  const meta=document.createElement('p');meta.className='atlas-preview-meta';
+  meta.textContent='報道日：'+String(story.reported||'記事で確認').replaceAll('.','-');
+  const read=document.createElement('button');read.type='button';
+  read.className='atlas-preview-read';read.dataset.atlasRead=String(index);
+  read.textContent='この記事を読む';
+  read.setAttribute('aria-label',(story.title||'掲載記事')+'を読む');
+  read.addEventListener('click',()=>openAtlasStory(index));
+  item.append(label,meta,read);list.append(item);
+ }
+ panel.append(list);
+ const archive=document.createElement('button');archive.type='button';
+ archive.className='atlas-preview-history';archive.textContent=countryLabel(code)+'の過去記事も探す';
+ archive.addEventListener('click',()=>{closeAtlasPreview();openWorldExplorer(code)});
+ panel.append(archive);
+ activeAtlasCountry=code;lastAtlasTrigger=trigger||null;
+ atlasSetSelectedCountry(code);
+ panel.hidden=false;
+ panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+}
 function openWorldExplorer(country=''){
  const map=$('mapExtras');
  map.open=true;
