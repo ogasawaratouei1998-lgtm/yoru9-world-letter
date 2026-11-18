@@ -30,7 +30,8 @@ try{
     freshUrl.searchParams.set('visual_smoke',String(Date.now())+'-'+attempt);
     res=await page.goto(freshUrl.toString(),{waitUntil:'domcontentloaded',timeout:35000});
     assert.equal(res?.status(),200,'reader page must be reachable');
-    freshDesign=await page.locator('#coverWorldMap').count()===1;
+    freshDesign=await page.locator('#coverWorldMap').count()===1&&
+     await page.locator('#atlasHero .atlas-oops').count()===1;
     if(freshDesign)break;
     await page.waitForTimeout(6000);
    }
@@ -39,6 +40,44 @@ try{
     const el=document.querySelector('#spotlightTitle');
     return el&&el.textContent&&!el.textContent.includes('準備中');
    },null,{timeout:30000});
+   const editorialCover=await page.evaluate(()=>{
+    const hero=document.querySelector('#atlasHero');
+    const h2=hero?.querySelector('.atlas-title');
+    const bubble=hero?.querySelector('.atlas-brand');
+    const lede=hero?.querySelector('#atlasLede');
+    const map=hero?.querySelector('#coverWorldMap');
+    const box=el=>el?.getBoundingClientRect();
+    return {
+      headline:h2?.textContent?.replace(/\\s+/g,'').trim(),
+      storyNumber:hero?.querySelector('#atlasStoryCount')?.textContent?.trim(),
+      storyCount:document.querySelectorAll('#stories .story').length+1,
+      lede:lede?.textContent?.trim(),
+      real:hero?.querySelector('.atlas-real-stamp')?.textContent?.trim(),
+      joke:hero?.querySelector('.atlas-bubble-tag')?.textContent?.trim(),
+      bubble:bubble?.textContent?.trim(),
+      bubbleVisible:getComputedStyle(bubble).display!=='none',
+      bubbleFont:parseFloat(getComputedStyle(bubble).fontSize),
+      headlineBottom:box(h2)?.bottom,
+      conceptTop:box(hero?.querySelector('.atlas-concept'))?.top,
+      conceptBottom:box(hero?.querySelector('.atlas-concept'))?.bottom,
+      mapTop:box(map)?.top
+    };
+   });
+   assert.equal(editorialCover.storyNumber,String(editorialCover.storyCount),
+    'headline dynamically matches the number of published stories');
+   assert.ok(editorialCover.headline.includes('世界の「やらかし」ニュース、')&&
+    editorialCover.headline.endsWith('本。'),'first glance defines the humorous news category');
+   assert.ok(editorialCover.lede?.includes('失敗')&&
+    editorialCover.lede?.includes('珍事件'),'cover explains its reported-incident premise');
+   assert.equal(editorialCover.real,'実話','reported facts are called real');
+   assert.equal(editorialCover.joke,'AIツッコミ','AI humor is prominently labeled');
+   assert.ok(editorialCover.bubbleVisible&&editorialCover.bubbleFont>=12,
+    'the AI comedy promise must be legible even on iPhone');
+   assert.ok(editorialCover.bubble.includes('AIが本気でツッコむ。'),
+    'the core joke premise appears on the screen');
+   assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
+    editorialCover.conceptBottom<=editorialCover.mapTop+2,
+    'the reading order is concept, joke, then countries');
    const appIcon=page.locator('header.nav .logo-mark');
    assert.equal(await appIcon.count(),1,'the redesigned home-screen mark is shown');
    await appIcon.evaluate(img=>img.decode());
