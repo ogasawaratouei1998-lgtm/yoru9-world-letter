@@ -577,17 +577,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .travel-credit a{color:#d6e9d8}
 
 /* World Letter / atlas-first cover, scoped and placed after legacy overrides. */
-.atlas-hero{display:flex;flex-direction:column;align-items:stretch;margin:4px 0 16px;
+#atlasHero{display:flex;flex-direction:column;align-items:stretch;margin:4px 0 16px;
  padding:17px 17px 15px!important;text-align:left!important;
  background:linear-gradient(154deg,#1c314b 0%,#14263e 58%,#101e32 100%)!important;
  border:1px solid #607790!important;border-radius:20px!important;overflow:hidden!important}
 .atlas-heading{width:100%}
-.atlas-hero .eyebrow{display:block!important;text-align:left!important;margin:0 0 5px!important;
+#atlasHero .eyebrow{display:block!important;text-align:left!important;margin:0 0 5px!important;
  color:#f5d6a1!important;font-size:.72rem!important;font-weight:800;letter-spacing:.12em!important}
 .atlas-title{margin:0;color:#fff5e7;font-size:clamp(1.2rem,4.9vw,1.8rem);
  line-height:1.46;font-weight:820;letter-spacing:-.02em;overflow-wrap:anywhere}
 .atlas-title span{color:#ffd799;font-variant-numeric:tabular-nums}
 .atlas-lede{font-size:.875rem;color:#d6e3f2;line-height:1.6;margin:4px 0 9px}
+.atlas-brand{font-size:.78rem;color:#d7dfed;letter-spacing:.015em;line-height:1.5;margin:0 0 11px}
 .atlas-map{height:auto;aspect-ratio:2/1;min-height:140px;width:100%;position:relative;
  border-radius:12px;border:1px solid #49617c;overflow:hidden;isolation:isolate;
  background-color:#14273d;
@@ -608,11 +609,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .atlas-pin:focus-visible{outline:3px solid #fff;outline-offset:6px}
 .atlas-map-symbol{display:none}
 .atlas-map-caption{margin:9px 0 4px;font-size:.73rem;line-height:1.6;color:#c1d1e4}
-.atlas-hero .issue-countries{display:flex;justify-content:flex-start;margin:5px 0 9px!important;
+#atlasHero .issue-countries{display:flex;justify-content:flex-start;margin:5px 0 9px!important;
  gap:7px 6px;align-items:center}
-.atlas-hero .issue-countries .countries-intro{font-size:.8rem;font-weight:770;flex:0 0 auto;
+#atlasHero .issue-countries .countries-intro{font-size:.8rem;font-weight:770;flex:0 0 auto;
  margin-right:3px;color:#e7d8ba}
-.atlas-hero .country-chip{font-size:.79rem;padding:3px 10px;line-height:1.5;
+#atlasHero .country-chip{font-size:.79rem;padding:3px 10px;line-height:1.5;
  color:#fff0d8;background:#2a405c;border:1px solid #7a8fab;border-radius:100px}
 .atlas-explore{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;
  width:max-content;max-width:100%;padding:6px 2px;min-height:44px;
@@ -637,13 +638,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .disclosure-details .note{margin:2px 0 8px;padding:12px 13px;
  background:#122139;border:1px solid #3e5672;font-size:.86rem;line-height:1.75}
 @media(max-width:520px){
- .atlas-hero{padding:15px 14px 13px!important;border-radius:17px!important;margin:3px 0 14px}
+ #atlasHero{padding:15px 14px 13px!important;border-radius:17px!important;margin:3px 0 14px}
  .atlas-title{font-size:clamp(1.21rem,5.3vw,1.42rem)}
  .atlas-lede{font-size:.8125rem}
  .atlas-map{min-height:135px}
  .atlas-pin{min-height:31px;min-width:31px}
  .atlas-map-caption{font-size:.73rem}
- .atlas-hero .country-chip{font-size:.78rem}
+ #atlasHero .country-chip{font-size:.78rem}
  .spotlight-location{margin:0 0 0 auto}
  .spotlight h1{font-size:clamp(1.44rem,5.7vw,1.9rem)}
 }
@@ -655,11 +656,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <main>
 <section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a id="closingJump" href="#closing">今夜は、ひと言だけ読む</a></section>
-<section class="hero atlas-hero" aria-label="世界から届くニュースの舞台">
+<section class="hero" id="atlasHero" aria-label="世界から届くニュースの舞台">
  <div class="atlas-heading">
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
   <h2 class="atlas-title">世界から届いた、<span id="atlasStoryCount">3</span>つの実話。</h2>
   <p class="atlas-lede">今夜の「まさか」は、どこの国から？</p>
+  <p class="atlas-brand">世界の「やらかし」に、AIが本気でツッコむ。</p>
  </div>
  <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
   <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
