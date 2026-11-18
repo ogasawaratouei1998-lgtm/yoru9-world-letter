@@ -34,6 +34,8 @@ try{
      await page.locator('#atlasHero .atlas-oops').count()===1&&
      await page.locator('#issueGallery[data-layout="mobile-grid-2plus1"]').count()===1&&
      await page.locator('#quipTeaserLine').count()===1&&
+     await page.locator('#articleReader[hidden]').count()===1&&
+     await page.locator('#readerBack').count()===1&&
      await page.locator('#spotlightImage').count()===1;
     if(freshDesign)break;
     await page.waitForTimeout(6000);
@@ -81,7 +83,14 @@ try{
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.mapTop+2,
     'the reading order is concept, joke, then countries');
-   // A first-time visitor sees an actual verified quip BEFORE the map.
+   // The three-comic gallery replaces a repeated always-visible article list.
+   const articleReader=page.locator('#articleReader');
+   assert.equal(await articleReader.isHidden(),true,
+    'no second full news list appears before the reader chooses a picture');
+   assert.equal(await page.locator('#spotlight').isHidden(),true,
+    'lead reporting stays closed until requested');
+   assert.equal(await page.locator('#stories').isHidden(),true,
+    'supporting full stories stay closed until requested');
    const teaser=page.locator('#quipTeaser');
    assert.equal(await teaser.isVisible(),true,
     'the current approved issue has a real opening punchline');
@@ -132,8 +141,17 @@ try{
    assert.equal(await page.locator('#quipTeaserRead').evaluate(el=>
       el.getBoundingClientRect().height>=44),true,'first joke has a real thumb-size read action');
    await page.locator('#quipTeaserRead').click();
+   assert.equal(await articleReader.isVisible(),true,
+    'tapping a featured joke opens the on-demand article reader');
    assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
     'first joke opens the real article with source, rather than inventing another page');
+   assert.equal(await page.locator('#spotlight').isVisible(),true);
+   assert.equal(await page.locator('#stories').isHidden(),true,
+    'other news is not repeated when reading the first article');
+   assert.equal(await page.locator('#storyHeading').isHidden(),true,
+    'redundant "あと2本" heading is not displayed');
+   assert.equal(await page.locator('#spotlightAward').textContent(),'このニュースの詳しい話',
+    'redundant prior-edition label is replaced by a detail label');
    const earlySmile=page.locator('#quipTeaser .teaser-smile');
    await earlySmile.click();
    assert.equal(await earlySmile.getAttribute('aria-pressed'),'true',
@@ -219,30 +237,34 @@ try{
    assert.ok((await gallery.first().getAttribute('aria-label')).includes('を読む'),
     'a picture alone has a meaningful accessible reading action');
    const leadImage=page.locator('#spotlightImage');
-   await leadImage.scrollIntoViewIfNeeded();
-   await leadImage.evaluate(async img=>{if(!img.complete)await new Promise((resolve,reject)=>{
-    img.addEventListener('load',resolve,{once:true});
-    img.addEventListener('error',()=>reject(Error('lead illustration failed')),{once:true});
-   });});
-   assert.ok(await leadImage.evaluate(el=>el.naturalWidth>0),
-    'the lead story has an actual visual instead of a colored placeholder');
+   assert.equal(await leadImage.isHidden(),true,
+    'news illustration is already visible in the gallery and must not repeat in detail');
    assert.ok((await page.locator('#spotlightVisual figcaption').textContent()).includes('現場写真ではありません'),
-    'lead illustration is explicitly labeled');
+    'hidden original image still has an accurate source disclaimer');
+   assert.ok((await gallery.first().locator('.gallery-art').evaluate(el=>el.naturalWidth))>0,
+    'the gallery retains the visible, fully loaded first illustration');
    if(await gallery.count()>1){
     await gallery.nth(1).click();
     assert.equal(await page.locator('#stories [data-story-index="1"] [data-open="1"]').getAttribute('aria-expanded'),
      'true','gallery opens the exact supporting story, not unrelated articles');
-    const art=page.locator('#stories [data-story-index="1"] .story-art');
-    await art.scrollIntoViewIfNeeded();
-    await page.waitForFunction(()=>{
-      const image=document.querySelector('#stories [data-story-index="1"] .story-art');
-      return image&&image.complete&&image.naturalWidth>0;
-    },null,{timeout:30000});
+    assert.equal(await page.locator('#spotlight').isHidden(),true,
+     'the lead article disappears when another news story is selected');
+    assert.equal(await page.locator('#stories [data-story-index="1"]').isVisible(),true,
+     'only the selected supporting article is visible');
+    assert.equal(await page.locator('#stories [data-story-index="1"] .story-art').isHidden(),true,
+     'the repeated supporting illustration is hidden in the detailed reader');
+    const visibleStories=await page.locator('#stories .story:visible').count();
+    assert.equal(visibleStories,1,'no duplicate supporting news cards');
     assert.ok((await page.locator('#stories .story-visual figcaption').first().textContent()).includes('イメージイラスト'),
-     'secondary story art is not presented as documentary photography');
+     'original news art retains truthful labeling in its accessible markup');
     assert.ok(await page.locator('#stories [data-story-index="1"] .readbtn').evaluate(el=>
-      el.getBoundingClientRect().height>=44),'illustrated story retains an easy touch target');
-    await page.screenshot({path:'mobile-screenshots/illustrated-story-'+viewport.name+'.png',animations:'disabled'});
+      el.getBoundingClientRect().height>=44),'selected story has a full-sized reading action');
+    await page.screenshot({path:'mobile-screenshots/selected-story-'+viewport.name+'.png',animations:'disabled'});
+    await page.locator('#readerBack').click();
+    assert.equal(await articleReader.isHidden(),true,
+     'the reader can return to the picture-only issue overview');
+    assert.equal(await gallery.nth(1).getAttribute('aria-expanded'),'false',
+     'the selection is cleared accessibly when returning to the gallery');
    }
    await page.locator('#issueGallery').scrollIntoViewIfNeeded();
    await page.screenshot({path:'mobile-screenshots/visual-gallery-'+viewport.name+'.png',animations:'disabled'});
@@ -274,6 +296,9 @@ try{
    const storyIndex=Number(await read.getAttribute('data-atlas-read'));
    await read.click();
    assert.equal(await preview.isHidden(),true,'preview closes when a story opens');
+   assert.equal(await articleReader.isVisible(),true,'map previews also open the on-demand reader');
+   assert.equal(await page.locator('#stories .story:visible').count(),storyIndex===0?0:1,
+    'the country preview never reveals a second list of unrelated stories');
    if(storyIndex===0){
     assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
      'lead preview expands the original lead article');
@@ -287,6 +312,10 @@ try{
    await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
+   // Typography checks need the lead article selected explicitly: the map
+   // preview above can select another country and hide the lead stage.
+   await gallery.first().click();
+   assert.equal(await page.locator('#spotlight').isVisible(),true);
    // Phase 2: typography, editorial labeling and touch targets.
    const leadHierarchy=await page.evaluate(()=>{
     const title=document.querySelector('#spotlightTitle');
@@ -314,7 +343,9 @@ try{
     'AI joke uses a distinct editorial surface');
    const supportingCards=page.locator('#stories .story');
    if(await supportingCards.count()>0){
+    await gallery.nth(1).click();
     const firstCard=supportingCards.first();
+    assert.equal(await firstCard.isVisible(),true);
     assert.equal(await firstCard.locator('.story-fact .fact-kicker').textContent(),'起きたこと');
     assert.equal(await firstCard.locator('.teaserquip .humor-marker').textContent(),'創作の冗談');
     assert.ok(await firstCard.locator('[data-open]').evaluate(
@@ -324,6 +355,7 @@ try{
       el.getBoundingClientRect().bottom<el.closest('.story').querySelector('.teaserquip').getBoundingClientRect().top),
      'secondary facts precede and remain separate from AI humor');
    }
+   await gallery.first().click();
    const primaryButton=page.locator('#spotlightRead');
    const buttonHeight=await primaryButton.evaluate(el=>el.getBoundingClientRect().height);
    assert.ok(buttonHeight>=44,'lead article action must be touch-friendly');

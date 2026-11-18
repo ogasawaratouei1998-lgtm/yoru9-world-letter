@@ -1205,10 +1205,44 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .smile.smile-burst::before,.smile.smile-burst::after{animation:none;content:none}
  #atlasHero .gallery-tile{transition:none}
 }
+
+/* The illustrated issue gallery is the ONLY default article index.
+   Actual reportage, sources, second quips and journey cards are still
+   available from each postcard, never permanently deleted. */
+#articleReader[hidden]{display:none!important}
+#articleReader{margin:17px 0 23px;scroll-margin-top:14px}
+#articleReader .article-reader-toolbar{display:flex;flex-wrap:wrap;
+ justify-content:space-between;align-items:center;gap:8px;
+ padding:0 1px 12px;border-bottom:1px solid #536D88;margin-bottom:14px}
+#articleReader #readerSelected{margin:0;color:#D3E9E6;
+ font-size:.86rem;font-weight:830;line-height:1.45}
+#articleReader #readerBack{min-height:44px;padding:8px 13px;
+ border-radius:12px;border:1px solid #91C3BF;background:#2A4661;
+ color:#FFF0DB;font-weight:820;font-size:.83rem;line-height:1.45}
+#articleReader #readerBack:focus-visible{outline:3px solid #FFE0AA;outline-offset:2px}
+#articleReader .sectionhead,#articleReader #intro,
+#articleReader .filters,#articleReader #empty{display:none!important}
+#articleReader .spotlight-visual,#articleReader .story-visual{display:none}
+#articleReader .story-cover{display:block;margin:7px 0 13px}
+#articleReader .story-headline{max-width:100%}
+#articleReader #stories{padding:0;margin:0;list-style:none}
+#articleReader #stories[hidden]{display:none!important}
+#articleReader #stories .story[hidden]{display:none!important}
+#articleReader .spotlight[hidden]{display:none!important}
+#atlasHero .gallery-tile[aria-expanded="true"]{
+ border-color:#FFE3AE;outline:2px solid #F8D297;outline-offset:1px}
+@media(max-width:520px){
+ #articleReader{margin:15px 0 19px}
+ #articleReader .article-reader-toolbar{gap:6px;padding-bottom:10px;margin-bottom:12px}
+ #articleReader #readerSelected{font-size:.79rem}
+ #articleReader #readerBack{font-size:.78rem;padding:8px 10px}
+ #articleReader .story-cover h3{-webkit-line-clamp:unset;display:block;overflow:visible;
+ font-size:1.18rem;line-height:1.5}
+}
 </style>
 </head>
 <body><div class="wrap">
-<a class="skip-link" href="#spotlight">今夜のニュースへ移動</a>
+<a class="skip-link" href="#issueGallery">ニュースを選ぶ</a>
 <header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <main>
 <section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a id="closingJump" href="#closing">今夜は、ひと言だけ読む</a></section>
@@ -1244,6 +1278,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
  <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
 </section>
+<section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
+ <div class="article-reader-toolbar"><p id="readerSelected">記事を読む</p><button id="readerBack" type="button">‹ 3コマ劇場に戻る</button></div>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
  <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
  <figure class="news-visual spotlight-visual" id="spotlightVisual">
@@ -1262,10 +1298,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  <div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
  <a class="world-invitation" id="worldInvitation" href="#mapExtras">この話の舞台を地図で見る</a>
 </section>
-<div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の人間の失敗談に、一読で笑えるAIツッコミを。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
+</section>
+<div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <section class="month-retrospective" id="monthRetrospective" hidden aria-label="過去1か月の特集">
  <details id="monthDetails"><summary><span class="month-title">この1か月の世界の「まさか」</span><span class="month-summary-right"><span id="monthCount">記事を準備中</span><span class="month-disclosure" aria-hidden="true"><span class="month-closed-label">開く</span><span class="month-open-label">閉じる</span><span class="month-chevron">⌄</span></span></span></summary>
  <p class="month-intro" id="monthIntro">過去1か月の実話をまとめています。今夜起きたニュースではありません。</p>
@@ -1824,6 +1861,8 @@ function renderIssueGallery(){
  for(const [index,story] of edition.stories.entries()){
   const button=document.createElement('button');
   button.type='button';button.className='gallery-tile';
+  button.setAttribute('aria-controls','articleReader');
+  button.setAttribute('aria-expanded','false');
   button.setAttribute('aria-label',(index+1)+'本目：'+String(story.title||'掲載記事')+'を読む');
   const img=document.createElement('img');
   img.className='gallery-art';img.src=newsArt(story);
@@ -1859,23 +1898,58 @@ function closeAtlasPreview(restoreFocus=false){
  lastAtlasTrigger=null;
 }
 function openAtlasStory(index){
- // Read the actual story in this edition, even when a category filter is set.
+ // Gallery and map lead to ONE expanded source-backed story, never a
+ // second always-visible news feed repeating every postcard.
  if(!Number.isInteger(index)||index<0||index>=edition.stories.length)return;
  closeAtlasPreview();
+ const stage=$('articleReader');
+ stage.hidden=false;
+ $('readerSelected').textContent='選んだニュース · '+(index+1)+' / '+edition.stories.length;
+ if(index===0)$('spotlightAward').textContent='このニュースの詳しい話';
+ $('spotlight').hidden=index!==0;
+ $('stories').hidden=index===0;
+ document.querySelector('.sectionhead').hidden=true;
+ $('intro').hidden=true;
+ document.querySelector('.filters').hidden=true;
+ $('empty').hidden=true;
+ filter='all';applyFilter();
+ // Do not reintroduce "あと2本" or any second list of the same news.
+ for(const card of document.querySelectorAll('#stories .story')){
+  card.hidden=Number(card.dataset.storyIndex)!==index;
+ }
+ $('empty').hidden=true;
+ for(const [i,tile] of [...$('issueGallery').querySelectorAll('.gallery-tile')].entries()){
+  tile.setAttribute('aria-expanded',String(i===index));
+ }
  const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
  if(index===0){
   const button=$('spotlightRead');
   if(button.getAttribute('aria-expanded')!=='true')button.click();
-  $('spotlight').scrollIntoView({behavior,block:'start'});
+  stage.scrollIntoView({behavior,block:'start'});
   return;
  }
- filter='all';applyFilter();
  const card=document.querySelector('#stories [data-story-index="'+index+'"]');
  if(!card)return;
  const button=card.querySelector('[data-open="'+index+'"]');
  if(button&&button.getAttribute('aria-expanded')!=='true')button.click();
- card.scrollIntoView({behavior,block:'start'});
+ stage.scrollIntoView({behavior,block:'start'});
 }
+function closeArticleReader(){
+ const stage=$('articleReader');
+ const selected=[...$('issueGallery').querySelectorAll('.gallery-tile')]
+  .find(tile=>tile.getAttribute('aria-expanded')==='true');
+ stage.hidden=true;
+ for(const tile of $('issueGallery').querySelectorAll('.gallery-tile')){
+  tile.setAttribute('aria-expanded','false');
+ }
+ const target=selected||$('issueGallery');
+ target.focus?.({preventScroll:true});
+ $('issueGallery').scrollIntoView({
+  behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',
+  block:'start'
+ });
+}
+$('readerBack').addEventListener('click',closeArticleReader);
 function showAtlasPreview(code,trigger){
  // This preview reads approved/public story data only, not source markets.
  const known=countryKeys(code);
@@ -2230,6 +2304,7 @@ function updateFilters(){
  if(filter!=='all'&&!available.has(filter))filter='all';
 }
 function render(){const d=edition.stories;
+ $('articleReader').hidden=true;
  $('atlasStoryCount').textContent=d.length===1?'1':String(d.length);
  // An intentionally empty nightly message leaves the closing quiet.
  // The editing source, public archive and current issue now agree.

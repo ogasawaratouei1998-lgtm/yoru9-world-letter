@@ -146,6 +146,43 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("safeUrl(first.sourceUrl)",page)
         self.assertIn("updateQuipTeaser();",page)
 
+    def test_gallery_is_the_only_default_news_index_and_detail_is_on_demand(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        cover=page[page.index('<section class="hero" id="atlasHero"'):
+                   page.index('<section class="article-reader" id="articleReader"')]
+        self.assertIn('id="issueGallery"',cover)
+        self.assertIn('id="quipTeaserLine"',cover)
+        self.assertIn('id="coverWorldMap"',cover)
+        self.assertIn('class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden',page)
+        self.assertIn('id="readerBack"',page)
+        self.assertIn('id="readerSelected"',page)
+        self.assertIn("button.setAttribute('aria-controls','articleReader')",page)
+        self.assertIn("button.setAttribute('aria-expanded','false')",page)
+        self.assertIn("$('articleReader').hidden=true;",page)
+        self.assertIn("const stage=$('articleReader');",page)
+        self.assertIn("stage.hidden=false;",page)
+        self.assertIn("stage.hidden=true;",page)
+        self.assertIn("card.hidden=Number(card.dataset.storyIndex)!==index;",page)
+        self.assertIn("$('spotlight').hidden=index!==0;",page)
+        self.assertIn("$('stories').hidden=index===0;",page)
+        self.assertIn("document.querySelector('.sectionhead').hidden=true;",page)
+        self.assertIn("document.querySelector('.filters').hidden=true;",page)
+        self.assertIn("$('intro').hidden=true;",page)
+        self.assertIn("if(index===0)$('spotlightAward').textContent='このニュースの詳しい話';",page)
+        self.assertIn("$('readerBack').addEventListener('click',closeArticleReader);",page)
+        self.assertIn("#articleReader[hidden]{display:none!important}",page)
+        self.assertIn("#articleReader .spotlight-visual,#articleReader .story-visual{display:none}",page)
+        self.assertIn("#articleReader #stories .story[hidden]{display:none!important}",page)
+        self.assertIn('<a class="skip-link" href="#issueGallery">ニュースを選ぶ</a>',page)
+        # Article facts, evidence, original source and travel button remain in
+        # the DOM for the explicitly selected article.
+        self.assertIn('id="spotlightBody" class="spotlight-body" hidden',page)
+        self.assertIn('id="worldInvitation"',page)
+        self.assertIn("storyDetailHtml(s)",page)
+        self.assertIn("storyEvidenceHtml(s)",page)
+        self.assertIn("storyAttributionHtml(s)",page)
+        self.assertIn("storyEvidenceHtml(first)",page)
+
     def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('data-layout="mobile-grid-2plus1"',page)
