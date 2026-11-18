@@ -5,7 +5,7 @@ from unittest.mock import patch
 import auto_editorial as editorial
 from nightly_quality import incident_specific_nightly_line
 from publish_approved import validate_approved
-from tests.test_publish import fixture
+from test_publish import fixture
 
 
 BAD="仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。"
