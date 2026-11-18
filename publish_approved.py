@@ -212,6 +212,10 @@ def validate_approved(data, expected_date):
         if issue_day >= date(2026, 11, 18) and (automated or hard_reissue):
             require(story.get('editorQualityVerified') is True,
                     f'{i}本目の事実・翻訳・漫才審査が未完了です')
+            if automated and issue_day >= date(2026, 11, 19):
+                require(story.get('surpriseVerified') is True and
+                        story.get('stageTsukkomiVerified') is True,
+                        f'{i}本目は驚きの強さと鋭いツッコミの独立審査が未完了です')
             if automated:
                 require(story.get('humanFailureVerified') is True and
                         isinstance(story.get('humanActor'), str) and
@@ -331,6 +335,11 @@ NIGHT_LINES = {
 }
 
 def nightly_line(edition_date, stories):
+    # Only the explicitly reissued 2026-11-18 show receives a stage-style
+    # closing line; past immutable editions and other dates stay untouched.
+    if (edition_date == '2026-11-18' and stories and
+            stories[0].get('id') == 'argentina-goalkeeper-throws-own-goal-2026'):
+        return '世界がボケ続けるなら、ツッコミは今夜も残業や！'
     import hashlib
     key = edition_date + '|' + '|'.join(story['id'] for story in stories)
     digest = hashlib.sha256(key.encode('utf-8')).digest()
