@@ -63,6 +63,10 @@ BBC_FEEDS = [
     'https://feeds.bbci.co.uk/news/technology/rss.xml',
     'https://feeds.bbci.co.uk/news/world/rss.xml',
     'https://feeds.bbci.co.uk/news/science_and_environment/rss.xml',
+    # Local reporting is often where small, funny signage/work errors appear.
+    'https://feeds.bbci.co.uk/news/england/lancashire/rss.xml',
+    'https://feeds.bbci.co.uk/news/england/leicestershire/rss.xml',
+    'https://feeds.bbci.co.uk/news/england/merseyside/rss.xml',
 ]
 INDEPENDENT_FEEDS = [
     ('https://www.theguardian.com/world/rss', 'The Guardian RSS'),
@@ -165,14 +169,18 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
 
 def get_gdelt():
     """Find original publisher leads for different forms of HUMAN mistakes."""
+    # Search light, documented human mistakes first. Keep each search capped.
     searches=(
-        '("blunder" OR "mix-up" OR "by mistake")',
+        '("misspelled" OR "misspelt" OR "typo" OR "sign error")',
+        '("wrong landmark" OR "wrong city" OR "AI-generated mural")',
+        '("wrong order" OR "wrong delivery" OR "accidentally delivered")',
         '("wrong recipient" OR "accidentally ordered" OR "sent by mistake")',
-        '("mistaken identity" OR "wrong delivery" OR "typo")',
+        '("mistaken identity" OR "by mistake" OR "mix-up")',
+        '("blunder" OR "fiasco" OR "misprint")',
     )
     articles,seen=[],set()
     for query in searches:
-        params={'query':query,'mode':'ArtList','format':'json','maxrecords':60,
+        params={'query':query,'mode':'ArtList','format':'json','maxrecords':40,
                 'timespan':'7d','sort':'DateDesc'}
         try:
             data=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
@@ -185,7 +193,7 @@ def get_gdelt():
             link=safe_url(item.get('url',''))
             if not link or link in seen or not title or EXCLUDE.search(title):
                 continue
-            if added>=20:break
+            if added>=10:break
             seen.add(link)
             added+=1
             articles.append({
@@ -232,7 +240,7 @@ def main():
     except (HTTPError, URLError, ValueError, TimeoutError) as e:
         errors.append(f'GDELT: {type(e).__name__}: {e}')
     for url in BBC_FEEDS:
-        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False),limit=18)
+        try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False,sourcecountry='GB'),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'BBC RSS: {type(e).__name__}: {e}')
     for i,(q,lang,country,ceid) in enumerate(SEARCHES):
