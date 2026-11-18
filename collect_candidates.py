@@ -214,8 +214,17 @@ def uncovered_country_searches(day=None, max_countries=9):
     )
 
 
-def get_gdelt(extra_searches=()):
-    """Find original publisher leads for different forms of HUMAN mistakes."""
+def get_gdelt(extra_searches=(), min_interval_seconds=5.5, diagnostics=None):
+    """Discover original publisher links; respect GDELT's public API pacing.
+
+    A rate-limited, malformed or empty GDELT response must be visible as a
+    COUNTER, not silently treated as zero funny news in the world.
+    No API response or title is considered a verified news event.
+    """
+    from collections import Counter
+    if not isinstance(min_interval_seconds,(int,float)) or not 0<=min_interval_seconds<=10:
+        raise ValueError("GDELT delay must be between 0 and 10 seconds")
+    health=Counter()
     # Search light, documented human mistakes first. Keep each search capped.
     searches=(
         '("misspelled" OR "misspelt" OR "typo" OR "sign error")',
@@ -233,15 +242,36 @@ def get_gdelt(extra_searches=()):
         '("giao nhầm" OR "nhầm địa chỉ" OR "실수로" OR "착각")',
     )
     articles,seen=[],set()
-    for query in (*tuple(extra_searches)[:3],*searches):
+    queries=(*tuple(extra_searches)[:3],*searches)
+    for index,query in enumerate(queries):
+        # The DOC endpoint may return HTTP 429 or plain-text rate-limit
+        # notices at HTTP 200 when requests arrive closer than ~5 seconds.
+        # Do not hammer it with thirteen simultaneous rapid queries.
+        if index:
+            time.sleep(min_interval_seconds)
+        health["attempted"]+=1
         params={'query':query,'mode':'ArtList','format':'json','maxrecords':40,
                 'timespan':'7d','sort':'DateDesc'}
         try:
             data=json.loads(fetch_bytes(GDELT+'?'+urlencode(params)).decode('utf-8'))
-        except (HTTPError,URLError,OSError,ValueError,TimeoutError):
+        except HTTPError as exc:
+            health["http_"+str(exc.code)]+=1
             continue
+        except (URLError,OSError,TimeoutError):
+            health["network_failure"]+=1
+            continue
+        except (ValueError,UnicodeError):
+            health["invalid_json_or_plaintext"]+=1
+            continue
+        if not isinstance(data,dict) or not isinstance(data.get("articles"),list):
+            health["missing_articles"]+=1
+            continue
+        if not data["articles"]:
+            health["empty"]+=1
+        else:
+            health["responded"]+=1
         added=0
-        for item in data.get('articles',[]):
+        for item in data['articles']:
             if not isinstance(item,dict):continue
             title=str(item.get('title','')).strip()
             link=safe_url(item.get('url',''))
@@ -258,6 +288,9 @@ def get_gdelt(extra_searches=()):
                 'language':str(item.get('language',''))[:40],
                 'status':'unverified','provider':'GDELT DOC API',
             })
+    health["unverified_original_links"]=len(articles)
+    if diagnostics is not None:
+        diagnostics.update(dict(sorted(health.items())))
     return articles
 
 def main():
@@ -275,8 +308,12 @@ def main():
     # aggregator links that cannot serve as independently verified evidence.
     # No GDELT result is publication-approved by being found here.
     try:
-        focused=get_gdelt(extra_searches=uncovered_country_searches())
+        gdelt_health={}
+        focused=get_gdelt(extra_searches=uncovered_country_searches(),
+                          diagnostics=gdelt_health)
         keep(focused,limit=90)
+        print("Focused original-publisher search health (counts only):",
+              json.dumps(gdelt_health,sort_keys=True),flush=True)
         print("Original-publisher mishap search leads:",
               sum(lead.get("provider")=="GDELT DOC API" for lead in leads),
               "(UNVERIFIED)",flush=True)
@@ -291,7 +328,7 @@ def main():
             max_workers=10,per_feed=18,
             report_path="data/source-health.json")
         # Give 42+ markets a real chance in a fixed 750-lead budget.
-        # The collector still reserves subsequent slots for GDELT and BBC.
+        # The collector still preserves other-source and BBC opportunities.
         keep(registered,limit=350)
     except (OSError,ValueError,TypeError,KeyError) as exc:
         errors.append("Publisher RSS catalog: "+type(exc).__name__)
