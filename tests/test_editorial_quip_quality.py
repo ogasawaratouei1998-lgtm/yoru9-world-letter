@@ -51,10 +51,12 @@ class EditorialQuipQualityTest(unittest.TestCase):
         if current.get("editionDate")==day:
             self.assertEqual(current,archive)
         story=next(s for s in archive["stories"] if s["id"]=="cheonan-painters-coffee-rescue-2026")
-        self.assertEqual(story["quipSecond"],"コーヒーを注文したら、配達員が救助隊まで兼任してくれた。")
+        self.assertEqual(story["quip"],"コーヒー4杯頼んで、いちばん先に欲しかったのが出口。")
+        self.assertEqual(story["quipSecond"],"ドアを開けた配達員にコーヒー1杯。届けた人が、届けられる側かい。")
         self.assertIn("コーヒー4杯",story["summary"])
         self.assertIn("配達員",story["summary"])
-        self.assertIn("報道に基づく事実関係は変更していません",story["correctionNote"])
+        self.assertNotIn("correctionNote",story)
+        self.assertNotIn("ここからはAIの見方。",story["detail"])
         self.assertNotIn("開くはずのなかったドア",story["quipSecond"])
 
     def test_manzai_craft_requires_furi_zurashi_and_a_last_beat(self):
@@ -97,14 +99,14 @@ class EditorialQuipQualityTest(unittest.TestCase):
         if current.get("editionDate")==day:self.assertEqual(current,archive)
         expected={
             "cheonan-painters-coffee-rescue-2026":(
-                "コーヒー4杯の注文メモが、まさかのSOS欄。配達アプリ、守備範囲が広い。",
-                "コーヒーを注文したら、配達員が救助隊まで兼任してくれた。"),
+                "コーヒー4杯頼んで、いちばん先に欲しかったのが出口。",
+                "ドアを開けた配達員にコーヒー1杯。届けた人が、届けられる側かい。"),
             "guaira-degavar-road-marking-2026":(
-                "「ゆっくり」のつづりは間違えた。でも目立つ仕事だけは大成功。",
-                "市は誤字を塗り直し、その失敗談を交通安全係にスカウト。"),
+                "「ゆっくり」を間違えて書いたら、読むほうが本当にゆっくり。",
+                "路面でクビになった誤字、交通安全の広報で再雇用。"),
             "albert-lea-mcnugget-monkey-diaper-police-2026":(
-                "「不審者」の正体は、おむつ姿のサル。しかも名前がマックナゲット。",
-                "警察の冗談は「弁護士とバナナを要求」。ボケ役、まさかの警察側。"),
+                "「不審者」の名はマックナゲット。警察の事件簿、急にお子さまメニュー。",
+                "警察が冗談で「弁護士とバナナを要求」。本人の供述、全部警察が代筆。"),
         }
         self.assertEqual(set(expected),{s["id"] for s in archive["stories"]})
         for story in archive["stories"]:
@@ -112,10 +114,15 @@ class EditorialQuipQualityTest(unittest.TestCase):
                 self.assertEqual((story["quip"],story["quipSecond"]),expected[story["id"]])
                 self.assertTrue(15<=len(story["quip"])<=45)
                 self.assertTrue(15<=len(story["quipSecond"])<=55)
-                self.assertIn("correctionNote",story)
+                self.assertNotIn("correctionNote",story)
+                self.assertNotIn("ここからはAIの見方。",story["detail"])
                 self.assertNotEqual(story["quip"],story["quipSecond"])
-        self.assertEqual(archive["nightlyMessage"],
-                         "仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。")
+                for stale in ("守備範囲が広い", "交通安全係にスカウト", "しかも名前がマックナゲット"):
+                    self.assertNotIn(stale,story["quip"]+story["quipSecond"])
+                self.assertTrue(story["sourceUrl"].startswith("https://"))
+                self.assertTrue(all(u.startswith("https://") for u in story["verificationUrls"]))
+        self.assertEqual(archive["nightlyMessage"],"")
+        self.assertFalse(any("修正しました" in s["quip"]+s["quipSecond"] for s in archive["stories"]))
 
     def test_closing_comedy_requires_concrete_payoff_and_independent_review(self):
         from unittest.mock import patch
