@@ -32,6 +32,37 @@ class EditorialQualityTests(unittest.TestCase):
                 report={**review,field:False}
                 self.assertFalse(independent_editorial_quality_passed(report))
 
+    def test_manzai_requires_new_angle_spoken_rhythm_and_last_beat(self):
+        from editorial_quality import REVIEW_FIELDS, independent_editorial_quality_passed
+        mandatory=("firstQuipAngleEarned","firstQuipNaturalSpeech","firstQuipFinalBeat")
+        for field in mandatory:
+            self.assertIn(field,REVIEW_FIELDS)
+        complete={"approved":True, **{name:True for name in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(complete))
+        for field in mandatory:
+            with self.subTest(field=field):
+                self.assertFalse(independent_editorial_quality_passed({**complete,field:False}))
+                unknown={k:v for k,v in complete.items() if k!=field}
+                self.assertFalse(independent_editorial_quality_passed(unknown))
+                self.assertFalse(independent_editorial_quality_passed({**complete,field:"true"}))
+
+    def test_interchangeable_lazy_tsukkomi_endings_are_vetoed_early(self):
+        from editorial_identity import comic_line_rejection
+        for line in (
+            "コーヒー4杯の注文メモがSOS欄。配達アプリ、守備範囲が広い。",
+            "道路の文字が違っていた。情報量が多い。",
+            "計画を立てたら予想の斜め上。",
+        ):
+            with self.subTest(line=line):
+                self.assertEqual(comic_line_rejection(line),
+                                 "stock_reaction_instead_of_punchline")
+        # An original, verified object-based twist remains eligible for
+        # *independent* editorial review; this check never certifies humor.
+        self.assertIsNone(comic_line_rejection(
+            "コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"))
+        self.assertIsNone(comic_line_rejection(
+            "「ゆっくり」を書き損ねて、読む人にはゆっくり読ませた。"))
+
     def test_second_quip_requires_three_independent_positive_verdicts(self):
         from editorial_quality import independently_approved_secondary_quip
         first="配達アプリでコーヒーを注文し、ドアを開けてもらった。"

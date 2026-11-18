@@ -17,6 +17,9 @@ REVIEW_FIELDS=(
     "comicPunchlineWorks",
     "firstQuipIncidentSpecific",
     "firstQuipNotRecap",
+    "firstQuipAngleEarned",
+    "firstQuipNaturalSpeech",
+    "firstQuipFinalBeat",
 )
 
 
