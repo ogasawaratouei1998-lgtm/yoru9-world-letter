@@ -324,7 +324,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("flight-wrong-country",payload)
         for key,stop in payload.items():
             with self.subTest(event=key):
-                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ"))
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ","アルゼンチン","フランス"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
@@ -345,6 +345,28 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertEqual("エディンバラ城",payload["flight-wrong-country"]["place"])
         self.assertIn("(!isMonth&&edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("travelCountryNames(story.country).includes(stop.country)",(ROOT/"index.html").read_text(encoding="utf-8"))
+
+    def test_all_november_18_reissued_stories_have_valid_destination_photo(self):
+        import json
+        from country_codes import country_codes
+        stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        issue=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        self.assertEqual(issue["editionDate"],"2026-11-18")
+        self.assertEqual(len(issue["stories"]),3)
+        for story in issue["stories"]:
+            with self.subTest(story=story["id"]):
+                country=story["country"]
+                photos=[stop for stop in stops.values() if
+                        country_codes(stop["country"])==country_codes(country)]
+                self.assertTrue(photos,"missing same-country photo: "+country)
+                if story["id"] in ("argentina-goalkeeper-throws-own-goal-2026",
+                                   "france-candy-police-mock-wanted-2026"):
+                    self.assertIn(story["id"],stops)
+                    selected=stops[story["id"]]
+                    self.assertTrue(selected["photo"].startswith(
+                        "https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
+                    self.assertEqual(selected["license"],"CC BY-SA 4.0")
+                    self.assertIn(selected["photoAsset"],(ROOT/"travel-stops.json").read_text())
 
     def test_every_postcard_distinguishes_news_country_from_tourist_photography(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
