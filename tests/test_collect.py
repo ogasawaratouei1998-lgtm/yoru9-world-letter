@@ -28,6 +28,76 @@ class CollectionTest(unittest.TestCase):
         self.assertTrue(any("AI-generated mural" in item for item in queries))
         self.assertTrue(any("misspelled" in item for item in queries))
 
+    def test_unseen_country_discovery_rotates_without_claiming_publisher_origin(self):
+        from datetime import date,timedelta
+        import re
+        from country_codes import catalog
+        day=date(2026,11,18)
+        first=c.uncovered_country_searches(day)
+        second=c.uncovered_country_searches(day+timedelta(days=1))
+        self.assertEqual(len(first),3)
+        self.assertEqual(len(second),3)
+        self.assertNotEqual(first,second)
+        self.assertEqual(sum(len(re.findall(r'"[A-Za-z][A-Za-z0-9 .-]{2,64}"',q))
+                             for q in first),18)
+        for query in first:
+            self.assertIn('"mistake"',query)
+            self.assertIn('"mix-up"',query)
+            self.assertIn('"blunder"',query)
+            self.assertNotIn("sourcecountry",query)
+        self.assertEqual(len(catalog()),196)
+
+    def test_country_targeting_respects_only_published_archive(self):
+        from datetime import date
+        from unittest.mock import patch
+        from pathlib import Path
+        import json,tempfile,os
+        from country_codes import catalog
+        day=date(2026,11,18)
+        codes=sorted(row["code"] for row in catalog())
+        # The first rotating window is known, so test publication removes a
+        # genuinely targeted location and draft content does not.
+        selected=codes[(day.toordinal()*9)%len(codes)]
+        entry=next(x for x in catalog() if x["code"]==selected)
+        with tempfile.TemporaryDirectory() as tmp:
+            archive=Path(tmp)/"data"/"archive";archive.mkdir(parents=True)
+            (archive/"2026-11-16.json").write_text(json.dumps({
+                "status":"draft","editionDate":"2026-11-16",
+                "stories":[{"country":selected}]
+            }),encoding="utf-8")
+            old=os.getcwd()
+            try:
+                os.chdir(tmp)
+                baseline=c.uncovered_country_searches(day)
+                (archive/"2026-11-16.json").write_text(json.dumps({
+                    "status":"published","editionDate":"2026-11-16",
+                    "stories":[{"country":selected}]
+                }),encoding="utf-8")
+                after=c.uncovered_country_searches(day)
+            finally:
+                os.chdir(old)
+        self.assertNotEqual(baseline,after)
+
+    def test_targeted_gdelt_adds_original_article_leads_before_generic_queries(self):
+        import json
+        from urllib.parse import parse_qs,urlsplit
+        from unittest.mock import patch
+        queries=[]
+        def fetch(url):
+            q=parse_qs(urlsplit(url).query)["query"][0]
+            queries.append(q)
+            return json.dumps({"articles":[{
+                "title":"Local street sign mistake",
+                "url":f"https://original{len(queries)}.example.org/story",
+                "sourcecountry":"FR","language":"English"
+            }]}).encode()
+        with patch.object(c,"fetch_bytes",side_effect=fetch):
+            leads=c.get_gdelt(extra_searches=['("Fiji") ("mistake" OR "blunder")'])
+        self.assertEqual(len(queries),7)
+        self.assertIn('"Fiji"',queries[0])
+        self.assertEqual(len(leads),7)
+        self.assertTrue(all(lead["status"]=="unverified" for lead in leads))
+
     def test_gdelt_caps_each_search_and_deduplicates(self):
         import json
         from unittest.mock import patch
