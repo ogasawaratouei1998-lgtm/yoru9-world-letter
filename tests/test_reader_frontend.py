@@ -120,7 +120,7 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('data-layout="mobile-grid-2plus1"',page)
-        self.assertIn("絵を選んで読む",page)
+        self.assertIn("気になる絵から読む",page)
         self.assertIn("#atlasHero .gallery-track{width:100%;display:grid;",page)
         self.assertIn("grid-auto-flow:row;grid-auto-columns:auto;",page)
         self.assertIn("grid-template-columns:repeat(2,minmax(0,1fr));",page)
