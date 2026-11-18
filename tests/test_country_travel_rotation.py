@@ -91,7 +91,7 @@ class TravelPhotoRotationTest(unittest.TestCase):
             "const seventh=visit('アメリカ','seventh');\n"
             "if(seventh!==chosen[0])throw Error('Least-recently-seen rotation failed');\n"
             "const japan=visit('日本','japan');\n"
-            "if(japan!==undefined)throw Error('Cross-country photo was substituted');\n"
+            "if(japan!==null)throw Error('Cross-country photo was substituted');\n"
             "if(!data['yoru9-travel-photo-rotation-v1'])"
             " throw Error('No cross-reload history stored');\n"
         )
