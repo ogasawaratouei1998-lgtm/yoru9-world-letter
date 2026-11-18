@@ -256,6 +256,11 @@ def validate_approved(data, expected_date):
         if isinstance(story.get('flag'), str):
             public_story['flag'] = story['flag']
         if 'quipSecond' in story:
+            # Automatic approval needs explicit second-joke review; matching
+            # length and differing words are not sufficient comic standards.
+            if issue_day >= date(2026, 11, 18) and data.get('approvedBy') == 'automated-two-stage-review':
+                require(story.get('secondQuipVerified') is True,
+                        f'{i}本目の2本目のAIツッコミは独立審査で未承認です')
             second = story['quipSecond']
             require(isinstance(second, str),
                     f'{i}本目のquipSecondは文章で指定してください')
