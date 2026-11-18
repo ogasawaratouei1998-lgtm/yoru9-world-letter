@@ -13,6 +13,10 @@ on:
       timezone: 'Asia/Tokyo'
     - cron: '7,37 23 * * *'
       timezone: 'Asia/Tokyo'
+    # UTC fallback slots supplement the local-time schedule. Each release is
+    # idempotent and immutable; if the JST schedule runs, these are no-ops.
+    - cron: '13,43 12 * * *' # 21:13 / 21:43 JST
+    - cron: '13 13 * * *'    # 22:13 JST
   workflow_dispatch:
   workflow_run:
     workflows: ['Free-tier AI editorial double-check (safe preview)']
