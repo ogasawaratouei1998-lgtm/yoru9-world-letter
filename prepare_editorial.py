@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Make a DAILY EDITORIAL INBOX from headline leads; NEVER claim facts verified.
 
-No model calls, and no automatic publication. Human editors must open
-original reporting and at least one independent corroborating source.
+No model calls and no automatic publication. Human editors must open and
+verify the original publisher's article. A second independent article is
+helpful when available but is NOT mandatory for an original report.
 """
 from __future__ import annotations
 from datetime import datetime, timedelta, timezone
@@ -73,7 +74,7 @@ def prepare(data,now=None,maximum=40):
             "isGoogleNewsRedirect":bool(u.hostname and u.hostname.endswith("news.google.com")),
             "factStatus":"NOT_VERIFIED",
             "aiQuipStatus":"NOT_GENERATED",
-            "editorAction":"Open primary reporting; cross-check with independent source; confirm original event date, outcome, harms, and context.",
+            "editorAction":"Open the ORIGINAL publisher report and verify its article body, event location, real publication date, outcome and safety. Seek an independent second report when available; one firsthand original may suffice after fact review.",
             "independentEvidenceUrls":[],
             "searchToVerify":"https://www.google.com/search?q="+quote('"'+title[:130]+'"'),
         })
@@ -85,7 +86,7 @@ def prepare(data,now=None,maximum=40):
       "status":"EDITORIAL_LEADS_ONLY",
       "automaticVerification":False,
       "automaticPublication":False,
-      "readMe":"Headlines are not confirmed facts. Date is a source publication estimate, NOT the event date. Google News links may redirect. No story may be published without independent review and explicit approval.",
+      "readMe":"Headlines are not verified facts. The date is only the source publication estimate, not the event date; publisher market is not incident location. An independent second outlet is OPTIONAL when a verified original report is available. Each item still requires complete original-article fact and comedy review and explicit approval. No automatic publication.",
       "leads":rows,
     }
 
