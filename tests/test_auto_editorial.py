@@ -656,21 +656,33 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
-        self.assertIn("for start in range(0,min(len(retry_candidates),20)):",source)
+        self.assertIn("for start in range(0,min(len(retry_candidates),20),2,2):",source)
         self.assertIn("Three eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_draft_recovery_targets_three_before_fact_review_and_respects_quota(self):
         import inspect
         code=inspect.getsource(editorial.main)
         self.assertIn('draft_preflight_viable(item,now) for item in draft)<3',code)
-        self.assertIn('for start in range(0,min(len(retry_candidates),20)):',code)
+        self.assertIn('for start in range(0,min(len(retry_candidates),20),2,2):',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
         self.assertIn('supplemental_attempts+=1',code)
-        self.assertIn('supplemental_generated+=min(3,len(retry_stories))',code)
+        self.assertIn('supplemental_generated+=min(len(batch),len(retry_stories))',code)
         self.assertIn('independent_editorial_quality_passed(audit)',code)
         self.assertIn('if len(selected)>=9:break',code)
         self.assertIn('select_diverse_verified_stories(selected,',code)
+
+    def test_comedy_draft_pairing_preserves_individual_evidence_and_review_budget(self):
+        import inspect
+        code=inspect.getsource(editorial.main)
+        self.assertIn('for start in range(0,min(len(retry_candidates),20),2):',code)
+        self.assertIn('batch=retry_candidates[start:min(start+2,20,len(retry_candidates))]',code)
+        self.assertIn('supplemental_groups_examined+=len(batch)',code)
+        self.assertIn('draft.extend(retry_stories[:len(batch)])',code)
+        self.assertIn('NEVER merge facts, people, locations, or sources from different groups',code)
+        self.assertIn('editorial_seconds_remaining()<150',code)
+        self.assertIn('independent_editorial_quality_passed(audit)',code)
+        self.assertIn('if AI_QUOTA_BLOCKED:',code)
 
     def test_model_catalog_selects_supported_model(self):
         import io
@@ -899,7 +911,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("json.dumps(grouped_evidence[:24],ensure_ascii=False)",code)
         self.assertIn("enumerate(groups[:36])",code)
         self.assertIn('0 if g["groupId"]>24 else 1',code)
-        self.assertIn("min(len(retry_candidates),20)",code)
+        self.assertIn("min(len(retry_candidates),20),2",code)
         self.assertIn('"fresh_backup_groups"',code)
         # No shortcut around original source, comedy, independent and publisher gates.
         self.assertIn("trusted_original_domain(urls[0])",code)
