@@ -7,12 +7,13 @@ independent reviewer still verifies each human mistake against source text.
 import re
 
 HUMAN_FAILURE_MISSION=(
-    "THIS IS A COMEDY COLUMN ABOUT HUMANS MAKING MISTAKES. It is NOT an animal "
+    "THIS IS A COMEDY COLUMN ABOUT SURPRISING HUMAN MISHAPS AND PLANS THAT BACKFIRE. It is NOT an animal "
     "oddities, cute creature, weird wildlife, heartwarming rescue, nature, or "
     "general surprising-news column. Every selected story MUST demonstrate a "
     "specific HUMAN actor (person, worker, team, official or organization) "
-    "making a mistaken decision, error, wrong assumption, miscommunication, "
-    "bungled plan, or avoidable mix-up with a concrete ironic result. "
+    "making a mistaken decision, surprising but poorly judged choice, wrong assumption, miscommunication, "
+    "bungled plan, or avoidable mix-up with a concrete ironic result. Do not require "
+    "that a reputable reporter literally label a source-supported human misstep as a mistake. "
     "A rare animal, escaped monkey, strange deer, crab migration, sea lion "
     "nursery, animal rescue, or unusual sighting is NEVER itself a human mistake. "
     "An incident involving an animal is eligible ONLY when the documented "
@@ -20,7 +21,7 @@ HUMAN_FAILURE_MISSION=(
     "alligator, or leaving a gate unlocked) is the central story and the "
     "headline and punchline focus on THAT HUMAN ERROR, not the animal. "
     "For EACH proposed story, include humanActor (who acted or misjudged) "
-    "and humanMistake (what the human actually got wrong, in clear Japanese). "
+    "and humanMistake (the human-led misstep or surprising plan-versus-result, in clear Japanese). "
     "Do not invent a human mistake to force an amusing animal sighting into "
     "the column. Ordinary, harmless personal, workplace or public-relations "
     "blunders are welcome even with no big consequences. "
@@ -123,7 +124,7 @@ def human_failure_rejection(story):
     # Natural descriptions of mistakes do not always contain specific
     # words like ミス/間違い. Let the independent fact checker determine
     # whether the incident is genuinely a documented human blunder.
-    if not isinstance(error,str) or not 10<=len(error.strip())<=220:
+    if not isinstance(error,str) or not 8<=len(error.strip())<=220:
         return "missing_concrete_human_error"
     if re.match(r"^(?:珍しい|珍奇な|不思議な|見たことのない)(?:動物|生物|鳥|鹿|シカ)",error.strip()):
         return "animal_sighting_is_not_a_human_error"
