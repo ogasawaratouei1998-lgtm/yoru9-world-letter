@@ -59,5 +59,33 @@ class ComicSituationTests(unittest.TestCase):
         self.assertIsNone(noncomic_incident_rejection(story,[
             {"text":"The officer mistook an inflatable pool toy for an alligator."}]))
 
+    def test_dead_racehorse_disposal_is_never_light_comedy(self):
+        # A previous live probe approved this kind of unsuitable story.
+        story={"title":"競走馬が埋葬の途中でゴミ箱に見つかった",
+               "humanActor":"関係者",
+               "humanMistake":"亡くなった競走馬の処理を不適切に行った",
+               "quip":"栄光のゴール板ではなくゴミ箱行き"}
+        article=[{"text":"Dead Melbourne Cup racehorse found dumped in "
+                         "Sydney waste facility during disposal."}]
+        self.assertEqual(noncomic_incident_rejection(story,article),
+                         "animal_death_or_disposal_not_comedy")
+        self.assertEqual(noncomic_incident_rejection(
+            {"title":"担当者の段取りミス",
+             "humanActor":"関係者","humanMistake":"動物の扱いを誤った"},
+            article),"animal_death_or_disposal_not_comedy")
+
+    def test_horse_novelty_requires_actual_human_error(self):
+        story={"title":"競走馬が思いがけない場所で見つかった",
+               "humanActor":"係員",
+               "humanMistake":"発見しただけで特定のミスはない"}
+        self.assertEqual(human_failure_rejection(story),
+                         "animal_novelty_not_human_failure")
+        harmless={"title":"係員が馬を犬と見間違えて通報",
+                  "humanActor":"施設の係員",
+                  "humanMistake":"遠くの馬を犬だと見間違えて通報してしまった"}
+        self.assertIsNone(human_failure_rejection(harmless))
+        self.assertIsNone(noncomic_incident_rejection(harmless,[
+            {"text":"The attendant mistook a horse for a dog."}]))
+
 if __name__=="__main__":
     unittest.main()
