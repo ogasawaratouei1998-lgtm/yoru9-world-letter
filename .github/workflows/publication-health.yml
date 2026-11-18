@@ -70,6 +70,21 @@ jobs:
                       warnings.append('No new published edition for more than two days; verify editorial approval and publishing')
                   if age<0:
                       failures.append('Live edition date is in the future')
+                  # At 00:15 JST the previous evening's approved issue must
+                  # be present on the PUBLIC Pages site, not just in git.
+                  # A one-day-old live edition is fine only when yesterday
+                  # had no approved issue.
+                  previous_day=(jst.date()-timedelta(days=1)).isoformat()
+                  if date<previous_day:
+                      try:
+                          approvals=gh([f'repos/{repo}/contents/data/approved'])
+                          approved_names={item.get('name') for item in approvals}
+                          if previous_day+'.json' in approved_names:
+                              failures.append('Approved '+previous_day+
+                                              ' issue missing from live Pages')
+                      except Exception as exc:
+                          failures.append('Cannot audit prior-day approval: '+
+                                          type(exc).__name__)
           except Exception as exc:
               failures.append('Unable to retrieve live published edition: '+type(exc).__name__)
           lines=['## Publication health — '+jst.strftime('%Y-%m-%d %H:%M JST'),

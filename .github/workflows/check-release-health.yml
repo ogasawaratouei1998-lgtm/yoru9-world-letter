@@ -8,12 +8,16 @@ on:
       - 'check_release_health.py'
   workflow_dispatch:
   schedule:
+    # UTC watchdog slots, deliberately different from publication cron slots.
+    - cron: '35 12 * * *' # 21:35 JST
+    - cron: '5 13 * * *'  # 22:05 JST
     - cron: '27 22 * * *'
       timezone: 'Asia/Tokyo'
     - cron: '27 23 * * *'
       timezone: 'Asia/Tokyo'
 
 permissions:
+  actions: write
   contents: read
 
 jobs:
@@ -26,4 +30,23 @@ jobs:
         with:
           python-version: '3.12'
       - name: Validate approved issue publication and archive
+        id: release_check
+        continue-on-error: true
         run: python check_release_health.py
+      - name: Request safe retry if an approved nightly issue was missed
+        if: steps.release_check.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Publishing itself repeats complete fact/safety checks and preserves
+          # immutable archives; this watchdog never authors news.
+          gh workflow run publish-nightly.yml --repo "$GH_REPO" --ref main
+          echo "::warning::Missing approved release: queued guarded publication retry."
+      - name: Keep the missed-release signal visible
+        if: steps.release_check.outcome == 'failure'
+        run: |
+          echo "::error::Approved nightly issue missing at check time; guarded retry requested."
+          exit 1
