@@ -20,6 +20,8 @@ REVIEW_FIELDS=(
     "firstQuipAngleEarned",
     "firstQuipNaturalSpeech",
     "firstQuipFinalBeat",
+    "shockFactorConfirmed",
+    "stageTsukkomiConfirmed",
 )
 
 
