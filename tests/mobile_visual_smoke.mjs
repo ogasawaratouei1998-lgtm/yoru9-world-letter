@@ -93,8 +93,8 @@ try{
       quipBottom:quip?.getBoundingClientRect().bottom,
       label:facts?.querySelector('.fact-kicker')?.textContent?.trim(),
       disclaimer:quip?.querySelector('.humor-marker')?.textContent?.trim(),
-      factBackground:getComputedStyle(facts).backgroundColor,
-      quipBackground:getComputedStyle(quip).backgroundColor
+      factBackground:getComputedStyle(facts).backgroundImage,
+      quipBackground:getComputedStyle(quip).backgroundImage
     };
    });
    assert.equal(leadHierarchy.label,'起きたこと','reporting is clearly labeled');
