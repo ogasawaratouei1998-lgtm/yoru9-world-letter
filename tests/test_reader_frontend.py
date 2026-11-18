@@ -664,6 +664,36 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
             p=subprocess.run(["node",str(script)],capture_output=True,text=True)
             self.assertEqual(p.returncode,0,p.stderr)
 
+    def test_atlas_cover_maps_only_article_countries_and_opens_archive(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('id="coverWorldMap"',page)
+        self.assertIn('id="coverWorldCoastlines"',page)
+        self.assertIn('id="coverMapPins"',page)
+        self.assertIn('id="atlasStoryCount"',page)
+        self.assertIn('id="coverWorldLink"',page)
+        self.assertIn('function renderCoverMap()',page)
+        self.assertIn("for(const story of edition.stories)",page)
+        self.assertIn("for(const country of countryKeys(story.country))",page)
+        self.assertIn("const point=mapPoint(code)",page)
+        self.assertIn("openWorldExplorer(code)",page)
+        self.assertIn("renderCoverMap();",page)
+        self.assertIn("$('coverWorldCoastlines').innerHTML=svg.innerHTML",page)
+        self.assertIn("ニュースの現場ではありません",page)
+        self.assertLess(page.index('id="coverWorldMap"'),page.index('id="spotlightTitle"'))
+        # The atlas is a locator of *published incident country*, not a
+        # second listing of publishers' source markets or unverified leads.
+        block=page[page.index("function renderCoverMap(){"):page.index("function renderIssueCountries(){")]
+        self.assertNotIn("sourcecountry",block)
+        self.assertNotIn("registeredSource",block)
+        self.assertNotIn("visibleMonthStories",block)
+
+    def test_footer_trust_note_is_readable_but_not_an_extra_huge_card(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn('<details class="disclosure-details">',page)
+        self.assertIn('<summary>編集方針・出典と配信情報について</summary>',page)
+        self.assertIn('<aside class="note" id="disclosure">',page)
+        self.assertIn('.disclosure-details>summary{min-height:44px',page)
+
     def test_world_map_and_country_archive(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="worldMap"', 'id="mapPins"', 'id="countrySelect"',
