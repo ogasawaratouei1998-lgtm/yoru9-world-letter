@@ -57,6 +57,31 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertIn("報道に基づく事実関係は変更していません",story["correctionNote"])
         self.assertNotIn("開くはずのなかったドア",story["quipSecond"])
 
+    def test_manzai_craft_requires_furi_zurashi_and_a_last_beat(self):
+        from auto_editorial import MANZAI_CRAFT,MANZAI_REVIEW
+        from editorial_quality import REVIEW_FIELDS
+        code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
+        for idea in ("actual function","role reversal","last short phrase",
+                     "read-aloud one-breath test","LAST beat",
+                     "headline already tells WHO and WHAT"):
+            self.assertIn(idea,MANZAI_CRAFT)
+        for flag in ("firstQuipAngleEarned","firstQuipNaturalSpeech",
+                     "firstQuipFinalBeat"):
+            self.assertIn(flag,MANZAI_REVIEW)
+            self.assertIn(flag,REVIEW_FIELDS)
+            self.assertIn(flag+":boolean",code)
+        self.assertIn("MANZAI_CRAFT+' You are a Japanese comedy show writer",code)
+        self.assertIn("MANZAI_CRAFT+\n",code)
+        self.assertIn('MANZAI_REVIEW+" You are independent adversarial',code)
+        self.assertEqual(code.count("audit=ai("),1,
+                         "quality upgrade must not add a scarce AI fact-review call")
+        self.assertIn("no quip-worthy story",MANZAI_CRAFT)
+        self.assertIn("Do NOT invent literal dialogue",MANZAI_CRAFT)
+        # Strict new rules apply to NEW content; immutable past records
+        # remain unchanged and are not retroactively misrepresented.
+        archive=json.loads((ROOT/"data/archive"/"2026-11-17.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(archive["stories"]),3)
+
     def test_generated_jokes_have_first_read_clarity_rule(self):
         self.assertIn("Clarity veto:",WRITING_CRAFT)
         self.assertIn("the reader must understand both jokes on the first pass",WRITING_CRAFT)
