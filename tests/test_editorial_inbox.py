@@ -24,6 +24,20 @@ class EditorialInboxTest(unittest.TestCase):
     def test_location_diversity(self):
         d={'candidates':[{'title':'wrong order '+str(i),'url':'https://example.org/'+str(i),'seendate':'2026-11-11','sourcecountry':'JP'} for i in range(15)]}
         self.assertEqual(len(prepare(d,now=datetime(2026,11,11,tzinfo=JST))['leads']),6)
+    def test_one_firsthand_original_is_eligible_for_manual_review(self):
+        record={'title':'Small restaurant wrong order leads to surprise',
+                'url':'https://independent.example/story','sourcecountry':'GH',
+                'seendate':'2026-11-11'}
+        result=prepare({'candidates':[record]},
+                       now=datetime(2026,11,11,9,tzinfo=JST))
+        self.assertEqual(len(result['leads']),1)
+        self.assertEqual(result['leads'][0]['factStatus'],'NOT_VERIFIED')
+        self.assertIn('one firsthand original may suffice',
+                      result['leads'][0]['editorAction'])
+        self.assertIn('OPTIONAL',result['readMe'])
+        self.assertEqual(result['leads'][0]['independentEvidenceUrls'],[])
+        self.assertFalse(result['automaticVerification'])
+
     def test_gdelt_date_parse(self):
         self.assertEqual(timestamp('20261110T100500Z').astimezone(JST).date().isoformat(),'2026-11-10')
 

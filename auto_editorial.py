@@ -194,7 +194,13 @@ COMIC_MISSTEP_TERMS=re.compile(
     r"wrong (?:city|cities|town|landmark|cathedral|mural|sign)|"
     r"AI.generated.{0,70}(?:wrong|errors?|mistake|misspell)|"
     r"誤字|誤記|手違い|誤配達|誤送信|誤発注|勘違い|見間違い|取り違え|"
-    r"verwechslung|aus versehen|por error|equivocaci[oó]n|실수",re.I
+    r"verwechslung|aus versehen|por error|equivocaci[oó]n|"
+    r"erreur|m[eé]prise|faux|sbagli|scambiat|errore|"
+    r"equ[ií]voc|confus[aã]o|engano|enganou|"
+    r"\b(?:salah|keliru|tertukar|kesalahan)\b|"
+    r"\b(?:nh[aầ]m|sai|l[oỗ]i)\b|"
+    r"pomy[lł]k|yanl[iı][sş]|hata|خطأ|خطا|"
+    r"실수|착각|오류|잘못",re.I
 )
 SERIOUS_CONFLICT_TERMS=re.compile(
     r"harass|abuse|intimidat|disciplin|suspend|protest|minister|"
@@ -278,6 +284,42 @@ def prioritize_comic_groups(groups, limit=24):
                 chosen+=1
             if chosen>=per_desk:
                 break
+    # Next preserve qualified human-mishap evidence from *publisher* regions.
+    # These are discovery markets, NOT asserted event countries. Geographic
+    # exposure never overrides the actual original-article/AI verification.
+    from collections import Counter
+    regional_counts=Counter()
+    for group in seeded:
+        for region in {country_region(item.get("sourcecountry")) for item in group}:
+            if region: regional_counts[region]+=1
+    region_allowance=max(1,min(2,limit//18))
+    for group in ranked:
+        if len(seeded)>=limit:
+            break
+        if min(incident_priority(item)[0] for item in group)>2 or group in seeded:
+            continue
+        regions={country_region(item.get("sourcecountry")) for item in group}
+        if any(region and regional_counts[region]<region_allowance
+               for region in regions):
+            seeded.append(group)
+            for region in regions:
+                if region: regional_counts[region]+=1
+    # Within continents, expose a few distinct local media markets. A
+    # high-volume US/UK publisher must not occupy every creative review slot.
+    represented={country_code(item.get("sourcecountry"))
+                 for group in seeded for item in group}
+    new_market_budget=max(0,min(limit//3,limit-len(seeded)))
+    for group in ranked:
+        if new_market_budget<=0 or len(seeded)>=limit:
+            break
+        if min(incident_priority(item)[0] for item in group)>2 or group in seeded:
+            continue
+        countries={country_code(item.get("sourcecountry")) for item in group}
+        countries.discard(None)
+        if countries-represented:
+            seeded.append(group)
+            represented.update(countries)
+            new_market_budget-=1
     return (seeded+[group for group in ranked if group not in seeded])[:limit]
 
 
@@ -846,6 +888,45 @@ def draft_preflight_viable(story,now):
     return True
 
 
+# Pipeline diagnostics deliberately contain COUNTS ONLY. Never write source
+# article text, individuals' names, URLs, model prompts or unverified events.
+FUNNEL_COUNT_FIELDS=frozenset({
+    "collected","fresh","planned_fetches","fetchable_original_bodies",
+    "candidate_review_groups","paired_groups","single_original_groups",
+    "first_ai_batch_groups","drafted","preflight_eligible",
+    "independent_approved","selected_for_edition"
+})
+FUNNEL_MAP_FIELDS=frozenset({
+    "publisher_regions_fetch_plan","publisher_regions_fetched",
+    "publisher_regions_shortlist","rejection_reasons"
+})
+FUNNEL_STAGES=frozenset({
+    "fresh_filter","fetch_plan","body_fetch","shortlist",
+    "budget_blocked","model_quota_blocked","draft","audit","selected"
+})
+
+def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
+    """Persist bounded, nonpublic stage counts for operational audit only."""
+    if stage not in FUNNEL_STAGES:
+        raise ValueError("unrecognized editorial funnel stage")
+    output={"status":"DIAGNOSTIC_ONLY_UNVERIFIED",
+            "meaning":"Publisher regions are not incident locations.",
+            "phase":stage}
+    for key,value in counts.items():
+        if key in FUNNEL_COUNT_FIELDS and type(value) is int and 0<=value<=100000:
+            output[key]=value
+        elif key in FUNNEL_MAP_FIELDS and isinstance(value,dict):
+            if len(value)<=80 and all(
+                    isinstance(k,str) and 1<=len(k)<=90
+                    and type(v) is int and 0<=v<=100000
+                    for k,v in value.items()):
+                output[key]=dict(sorted(value.items()))
+    dest=Path(path)
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    dest.write_text(json.dumps(output,ensure_ascii=False,sort_keys=True,indent=2)+"\n",encoding="utf-8")
+    print("Editorial funnel checkpoint:",json.dumps(output,ensure_ascii=False,sort_keys=True),flush=True)
+    return output
+
 def main():
     global RUN_DEADLINE, AI_QUOTA_BLOCKED
     now=datetime.now(JST)
@@ -856,6 +937,10 @@ def main():
     RUN_DEADLINE=time.monotonic()+540
     AI_QUOTA_BLOCKED=False
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
+    funnel={"collected":len(leads)}
+    def checkpoint(stage, **fields):
+        funnel.update(fields)
+        save_editorial_funnel(stage,funnel)
     recent=[]
     for lead in leads:
         try:
@@ -867,8 +952,9 @@ def main():
             if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
         if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
+    checkpoint("fresh_filter",fresh=len(recent))
     if len(recent)<5:
-        print("Not enough fresh leads within 36 hours; safe skip.");return 0
+        print("Not enough fresh leads within seven days; safe skip.");return 0
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
@@ -880,6 +966,8 @@ def main():
                               for lead in ordered)
     print("Article retrieval by discovery-source region (not event country):",
           json.dumps(dict(retrieval_regions),ensure_ascii=False,sort_keys=True),flush=True)
+    checkpoint("fetch_plan",planned_fetches=len(ordered),
+               publisher_regions_fetch_plan=dict(retrieval_regions))
     outcomes={}
     failure_reasons={}
     for lead in ordered:
@@ -894,7 +982,17 @@ def main():
             reason=diagnostics[0] if diagnostics else 'unknown'
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
-        if cache[url]:source_leads.append({'title':lead['title'],'url':url,'publisher':lead.get('domain',''),'text':cache[url][:8500]})
+        if cache[url]:source_leads.append({
+            'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
+            'text':cache[url][:8500],
+            # Publisher *market*, not a report of the incident's location.
+            'sourcecountry':lead.get('sourcecountry',''),
+            'language':lead.get('language',''),
+            'focus':lead.get('focus',''),
+        })
+    fetched_regions=Counter(country_region(x.get("sourcecountry")) or "unattributed" for x in source_leads)
+    checkpoint("body_fetch",fetchable_original_bodies=len(source_leads),
+               publisher_regions_fetched=dict(fetched_regions))
     print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
@@ -942,8 +1040,20 @@ def main():
                     key=lambda item:(incident_priority(item)[0],
                                      0 if trusted_original_domain(item['url']) else 1,
                                      incident_priority(item)[1]))
-    groups.extend([[item] for item in unpaired[:max(0,36-len(groups))]])
+    # Do not truncate single-original reports BEFORE the multilingual,
+    # multi-region shortlist. Doing that selected only the first English
+    # keyword matches and made newly registered local publishers invisible.
+    groups.extend([[item] for item in unpaired])
     groups=prioritize_comic_groups(groups,limit=36)
+    shortlisted_regions=Counter()
+    for group in groups:
+        for region in {country_region(x.get("sourcecountry")) for x in group}:
+            if region: shortlisted_regions[region]+=1
+    checkpoint("shortlist",candidate_review_groups=len(groups),
+               paired_groups=sum(len(g)>=2 for g in groups),
+               single_original_groups=sum(len(g)==1 for g in groups),
+               first_ai_batch_groups=min(24,len(groups)),
+               publisher_regions_shortlist=dict(shortlisted_regions))
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
         print('No retrieved candidate articles; safe skip.');return 0
@@ -976,6 +1086,7 @@ def main():
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:24],ensure_ascii=False))
     if editorial_seconds_remaining()<100:
+        checkpoint("budget_blocked")
         print("Editorial budget too low for safe independent review; no new publication.",flush=True)
         return 0
     draft_response=ai(prompt,temperature=0.65)
@@ -1068,7 +1179,10 @@ def main():
             if sum(draft_preflight_viable(item,now) for item in draft)>=2:
                 print("Two eligible comedy drafts reserved: moving to independent fact review.",flush=True)
                 break
+    checkpoint("draft",drafted=len(draft),
+               preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft))
     if AI_QUOTA_BLOCKED:
+        checkpoint("model_quota_blocked")
         print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)
         return 0
     if not draft:
@@ -1214,6 +1328,8 @@ def main():
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)>=9:break
+    checkpoint("audit",independent_approved=len(selected),
+               rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Source-text verification approved no stories; no publication.");return 0
@@ -1222,6 +1338,7 @@ def main():
     topic_history=recent_topic_counts(now.date())
     lifetime_history=lifetime_country_counts(now.date())
     selected=select_diverse_verified_stories(selected,country_history,category_history,topic_history,lifetime_history)
+    checkpoint("selected",selected_for_edition=len(selected))
     print("Nightly verified selection:",len(selected),"source-checked stories;",
           "target 3, release 1-3.",flush=True)
     print("30-day editorial diversity:",json.dumps({

@@ -180,6 +180,89 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(desks,{"person","work","sports","company"})
         self.assertLessEqual(len(proposed),12)
 
+    def test_local_language_headlines_are_not_discarded_as_generic(self):
+        headlines={
+            "it":"Comune pubblica un cartello con errore di stampa",
+            "fr":"Le restaurant commande par erreur 500 pizzas",
+            "pt":"Prefeitura admite engano em entrega",
+            "id":"Petugas salah mengirim pesanan ke kota lain",
+            "vi":"Nhân viên nhầm địa chỉ giao hàng",
+            "pl":"Urzędnik przyznaje pomyłkę w zamówieniu",
+            "tr":"Yetkili yanlış sipariş verdi",
+            "ar":"خطأ في الطلب يربك الموظف",
+            "ko":"직원이 실수로 잘못 배달했다",
+        }
+        for language,title in headlines.items():
+            with self.subTest(language=language):
+                rank=editorial.incident_priority({
+                    "title":title,"url":"https://local.example/story"
+                })[0]
+                self.assertEqual(rank,0,title)
+        self.assertGreater(editorial.incident_priority({
+            "title":"New market quarterly update",
+            "url":"https://local.example/boring"
+        })[0],0)
+
+    def test_global_editorial_shortlist_preserves_all_six_publisher_regions(self):
+        from country_codes import country_region
+        # Ninety US original articles might rank ahead of the local ones by
+        # discovery order, although each regional source reports a human error.
+        dominant=[[{"title":"Company accidentally publishes wrong name",
+                    "url":f"https://us{i}.example/story",
+                    "sourcecountry":"US"}] for i in range(90)]
+        markets=("NG","BR","IN","FJ","FR","US")
+        local=[[{"title":f"Worker sends wrong delivery {code}",
+                 "url":f"https://{code.lower()}.example/story",
+                 "sourcecountry":code}] for code in markets]
+        selected=editorial.prioritize_comic_groups(dominant+local,limit=24)
+        regions={country_region(x.get("sourcecountry"))
+                 for group in selected for x in group}
+        self.assertEqual(len(selected),24)
+        self.assertEqual(len(regions),6)
+        self.assertTrue(all(editorial.incident_priority(g[0])[0]==0
+                            for g in selected))
+        # Publisher markets are discovery metadata, not events' countries.
+        self.assertFalse(any("country" in x for g in selected for x in g))
+
+    def test_single_original_reports_are_filtered_after_not_before_geographic_review(self):
+        import inspect
+        code=inspect.getsource(editorial.main)
+        self.assertIn("groups.extend([[item] for item in unpaired])",code)
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=36)",code)
+        self.assertIn("'sourcecountry':lead.get('sourcecountry','')",code)
+        self.assertIn("trusted_original_domain(urls[0])",code)
+        self.assertIn("independent_editorial_quality_passed(audit)",code)
+
+    def test_funnel_audit_logs_counts_only_and_never_mistakes_media_market_for_event(self):
+        import json, tempfile
+        from pathlib import Path
+        with tempfile.TemporaryDirectory() as tmp:
+            target=Path(tmp)/"funnel.json"
+            saved=editorial.save_editorial_funnel("shortlist",{
+                "collected":750,"fresh":600,"planned_fetches":240,
+                "fetchable_original_bodies":130,
+                "candidate_review_groups":36,"first_ai_batch_groups":24,
+                "publisher_regions_shortlist":{"アフリカ":6,"アジア":9},
+                "rejection_reasons":{"missing_original":7},
+                "articleUrl":"https://private.example/story",
+                "articleBody":"Never expose this news body",
+                "unverifiedEventCountry":"Fiji",
+            },path=target)
+            self.assertEqual(saved["collected"],750)
+            self.assertEqual(saved["publisher_regions_shortlist"]["アフリカ"],6)
+            self.assertNotIn("articleUrl",saved)
+            self.assertNotIn("articleBody",saved)
+            self.assertNotIn("unverifiedEventCountry",saved)
+            self.assertNotIn("private.example",target.read_text())
+            self.assertIn("not incident locations",saved["meaning"])
+            with self.assertRaises(ValueError):
+                editorial.save_editorial_funnel("published",{},path=target)
+        import inspect
+        code=inspect.getsource(editorial.main)
+        for stage in ("fresh_filter","fetch_plan","body_fetch",
+                      "shortlist","draft","audit","selected"):
+            self.assertIn("checkpoint(\""+stage+"\"",code)
+
     def test_concise_human_reversal_need_not_be_verbose(self):
         draft={"expectedPlan":"注文を届ける","observedOutcome":"隣の家へ配達"}
         self.assertIsNone(editorial.editorial_fit_rejection(draft))
