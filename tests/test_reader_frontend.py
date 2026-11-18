@@ -594,8 +594,32 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         closing = page[page.index('<section class="footerpanel" id="closing">'):page.index('</section>', page.index('<section class="footerpanel" id="closing">'))]
         self.assertEqual(closing.count('id="nightlyMessage"'), 1)
-        self.assertIn('今日の便りは、ここまで。', closing)
+        self.assertIn('世界からの便りは、ここまで。', closing)
+        self.assertIn('次の「まさか」も、世界のどこかから。', closing)
+        self.assertIn('また、次の便りで。', closing)
+        self.assertNotIn('おやすみなさい', closing)
+        self.assertNotIn('気が向いた夜に', closing)
         self.assertNotIn('完璧じゃないのは', closing)
+
+    def test_compact_closing_is_appropriate_for_daytime_and_previous_editions(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        closing=page[page.index('<section class="footerpanel" id="closing">'):
+                     page.index('</section>',page.index('<section class="footerpanel" id="closing">'))]
+        self.assertIn('世界からの便りは、ここまで。',closing)
+        self.assertIn('class="closing-afterword"',closing)
+        self.assertIn('次の「まさか」も、世界のどこかから。',closing)
+        self.assertIn('また、次の便りで。',closing)
+        self.assertNotIn('今日の便りは',closing)
+        self.assertNotIn('おやすみなさい',closing)
+        self.assertNotIn('毎晩必ず',closing)
+        self.assertEqual(closing.count('id="nightlyMessage"'),1)
+        self.assertIn('#closing.footerpanel{margin:20px 0 16px;padding:17px 18px 15px;',page)
+        self.assertIn('#closing .closing-moon{font-size:1.2rem;',page)
+        self.assertIn('#closing .closing-afterword{border-top:1px solid #637993;',page)
+        self.assertIn('#closing .night-quote:not([hidden])~.closing-afterword',page)
+        self.assertIn('#closing .night-quote p{font-size:clamp(.96rem',page)
+        self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
+        self.assertIn("$('closingJump').hidden=!nightlyLine",page)
 
     def test_iso_country_catalog_is_used_across_reader(self):
         import json
@@ -851,7 +875,7 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn('href="#closing"',page)
         self.assertIn('今夜は、ひと言だけ読む',page)
         self.assertIn('id="closing"',page)
-        self.assertIn('また、気が向いた夜に。',page)
+        self.assertIn('また、次の便りで。',page)
         self.assertIn('Math.max(0,edition.stories.length-1)',page)
         self.assertNotIn('state.read.length} /',page)
         self.assertNotIn('やらかし大賞',page)
