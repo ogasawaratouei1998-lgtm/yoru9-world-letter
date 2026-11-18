@@ -360,6 +360,35 @@ class ReaderFrontendTest(unittest.TestCase):
                       "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
 
+    def test_article_cards_separate_reported_facts_from_creative_ai_comedy(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        lead=page[page.index('<section class="spotlight"'):page.index('<div id="offlineNotice"')]
+        self.assertIn('class="spotlight-fact" aria-label="出来事の要点"',lead)
+        self.assertIn('class="spotlight-joke" role="note" aria-label="AIによる創作の冗談"',lead)
+        self.assertIn('<span class="fact-kicker">起きたこと</span>',lead)
+        self.assertIn('<span class="humor-marker">創作の冗談</span>',lead)
+        self.assertLess(lead.index('id="spotlightTitle"'),lead.index('class="spotlight-fact"'))
+        self.assertLess(lead.index('id="spotlightBrief"'),lead.index('id="spotlightQuip"'))
+        self.assertLess(lead.index('class="spotlight-joke"'),lead.index('id="spotlightRead"'))
+        second=page[page.index("d.slice(1).map((s,offset)"):page.index("renderIssueCountries();updateSpotlight()")]
+        self.assertIn('<div class="story-fact"><span class="fact-kicker">起きたこと</span>',second)
+        self.assertIn('class="teaserquip" role="note" aria-label="AIによる創作の冗談"',second)
+        self.assertIn('class="humor-marker">創作の冗談</small>',second)
+        self.assertIn('escapeHtml(s.title)',second)
+        self.assertIn('escapeHtml(s.summary)',second)
+        self.assertIn('escapeHtml(s.quip)',second)
+        self.assertIn('escapeHtml(s.sourceName',second)
+        self.assertIn('data-open=',second)
+        self.assertIn('class="details" hidden',second)
+        # The visual treatment must not overwrite reporting, source details
+        # or the separate human/AI editorial review process.
+        self.assertIn('role="note" aria-label="AIによる創作の冗談"',page)
+        self.assertIn('style',page)
+        self.assertIn('.spotlight-joke{margin:0 0 13px',page)
+        self.assertIn('.story .readbtn{display:flex',page)
+        self.assertIn('.story .teaserquip .humor-marker{',page)
+        self.assertIn('@media(max-width:520px)',page)
+
     def test_lead_story_is_inside_main_landmark_and_summary_not_repeated(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('</header>\n<main>\n<section class="evening-entry"', page)
