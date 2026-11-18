@@ -76,8 +76,8 @@ try{
    assert.equal(editorialCover.joke,'AIツッコミ','AI humor is prominently labeled');
    assert.ok(editorialCover.bubbleVisible&&editorialCover.bubbleFont>=12,
     'the AI comedy promise must be legible even on iPhone');
-   assert.ok(editorialCover.bubble.includes('AIが本気でツッコむ。'),
-    'the core joke premise appears on the screen');
+   assert.ok(editorialCover.bubble.includes('創作の冗談'),
+    'the condensed concept identifies the AI comment as fictional humor');
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.mapTop+2,
     'the reading order is concept, joke, then countries');
@@ -88,18 +88,25 @@ try{
    assert.equal(await page.locator('#quipTeaserLine').textContent(),
     await page.locator('#spotlightQuip').textContent(),
     'opening joke and actual article use precisely the same approved text');
-   assert.equal(await page.locator('#quipTeaserImage').getAttribute('src'),
-    await page.locator('#spotlightImage').getAttribute('src'),
-    'the early joke uses the right published article illustration');
+   assert.equal(await teaser.locator('img').count(),0,
+    'do not duplicate or tightly crop the gallery picture in the opening joke');
+   assert.equal(await page.locator('#spotlightImage').count(),1,
+    'the full article still has its own properly labeled cover');
    assert.ok((await page.locator('#quipTeaserTopic').textContent()).length>3,
     'the opening joke has its news context rather than an unexplained gag');
    const teaserGeometry=await page.evaluate(()=>{
     const r=id=>document.querySelector(id)?.getBoundingClientRect();
     const a=r('#atlasHero .atlas-concept'),t=r('#quipTeaser'),
           g=r('#issueGallery'),m=r('#coverWorldMap');
+    const buttons=[...document.querySelectorAll('#quipTeaser .quip-teaser-actions button')]
+      .map(el=>el.getBoundingClientRect());
+    const teaser=t?.toJSON();
+    const hero=r('#atlasHero')?.toJSON();
     return {conceptBottom:a?.bottom,teaserTop:t?.top,teaserBottom:t?.bottom,
+      teaserHeight:t?.height,teaserLeft:t?.left,teaserRight:t?.right,
       galleryTop:g?.top,galleryBottom:g?.bottom,mapTop:m?.top,
-      mapHeight:m?.height,windowWidth:window.innerWidth};
+      mapHeight:m?.height,windowWidth:window.innerWidth,
+      teaser,hero,buttons:buttons.map(x=>({left:x.left,right:x.right,top:x.top,bottom:x.bottom,height:x.height}))};
    });
    assert.ok(teaserGeometry.conceptBottom<=teaserGeometry.teaserTop+2&&
      teaserGeometry.teaserBottom<=teaserGeometry.galleryTop+2&&
@@ -107,6 +114,21 @@ try{
      'the comedy payoff is visible before choosing a picture or visiting a map');
    assert.ok(teaserGeometry.mapHeight<=168,
     'the small mobile atlas is compressed so readers reach a story sooner');
+   assert.ok(teaserGeometry.teaserHeight<=225,
+    'opening laugh should be a compact speech bubble, not another full illustration card: '+
+      teaserGeometry.teaserHeight+'px');
+   assert.equal(teaserGeometry.buttons.length,2,'both opening controls remain usable');
+   assert.ok(Math.abs(teaserGeometry.buttons[0].top-teaserGeometry.buttons[1].top)<2,
+    'read and smile actions share the same row rather than stacking vertically');
+   assert.ok(teaserGeometry.buttons.every(b=>b.height>=44&&
+     b.left>=teaserGeometry.teaserLeft-1&&b.right<=teaserGeometry.teaserRight+1),
+    'both actions stay inside their teaser and meet minimum touch size');
+   assert.ok(teaserGeometry.teaser.left>=teaserGeometry.hero.left-2&&
+     teaserGeometry.teaser.right<=teaserGeometry.hero.right+2,
+    'opening speech bubble never overflows the phone viewport');
+   assert.ok(await page.locator('#atlasHero .atlas-brand').evaluate(el=>
+     getComputedStyle(el).display==='flex'),
+    'the explanatory concept uses a compact row, not a second oversized bubble');
    assert.equal(await page.locator('#quipTeaserRead').evaluate(el=>
       el.getBoundingClientRect().height>=44),true,'first joke has a real thumb-size read action');
    await page.locator('#quipTeaserRead').click();
