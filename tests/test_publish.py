@@ -387,6 +387,11 @@ class PublishingTest(unittest.TestCase):
     def test_build_excludes_approved_files(self):
         (self.root/'assets').mkdir()
         (self.root/'assets'/'icon.svg').write_text('<svg></svg>')
+        # The production reader includes bundled original news illustrations;
+        # the isolated publication fixture must provide them, too.
+        import shutil
+        shutil.copytree(Path(__file__).resolve().parents[1]/'assets'/'news',
+                        self.root/'assets'/'news')
         (self.root/'index.html').write_text('<html></html>')
         (self.root/'manifest.webmanifest').write_text('{}')
         (self.root/'service-worker.js').write_text('/* test worker */')
@@ -401,6 +406,8 @@ class PublishingTest(unittest.TestCase):
         self.assertTrue((out/'data'/'retrospective'/'2026-11-17.json').exists())
         self.assertTrue((out/'travel-stops.json').exists())
         self.assertTrue((out/'index.html').exists())
+        self.assertTrue((out/'assets'/'news'/'coffee-rescue.svg').is_file())
+        self.assertTrue((out/'assets'/'news'/'category-sports.svg').is_file())
         self.assertFalse((out/'data'/'approved').exists())
         self.assertFalse((out/'publish_approved.py').exists())
 
