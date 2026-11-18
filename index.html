@@ -2131,7 +2131,7 @@ function restoreTravelPhotoHistory(){
   for(const [country,items] of Object.entries(saved)){
    if(typeof country==='string'&&Array.isArray(items)){
     result[country]=items.filter(x=>typeof x==='string'&&
-     /^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(x)).slice(-40);
+     /^assets\/travel\/[a-z0-9-]+\.jpg$/.test(x)).slice(-40);
    }
   }
   return result;
@@ -2190,7 +2190,7 @@ function travelPhotoOptions(stops){
      typeof stop.photo!=='string'||
      !stop.photo.startsWith('https://thumb.wikimedia.org/wikipedia/commons/thumb/')||
      typeof stop.photoAsset!=='string'||
-     !/^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(stop.photoAsset)||
+     !/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)||
      typeof stop.photoPage!=='string'||
      !stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')||
      typeof stop.licenseUrl!=='string'||
