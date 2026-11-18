@@ -1,10 +1,6 @@
 name: Manual current news discovery and publication eligibility proof
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/verify-current-news-once.yml'
   workflow_dispatch:
 
 permissions:
