@@ -18,8 +18,21 @@ try{
    const page=await context.newPage();
    const errors=[];
    page.on('pageerror',e=>errors.push(String(e)));
-   const res=await page.goto(url,{waitUntil:'domcontentloaded',timeout:35000});
-   assert.equal(res?.status(),200,'reader page must be reachable');
+   // GitHub Pages can serve the previous deployment briefly after the
+   // deployment workflow completes. Verify the expected version, rather than
+   // misreporting a stale CDN page as a new-design regression.
+   let res;
+   let freshDesign=false;
+   for(let attempt=0;attempt<16;attempt++){
+    const freshUrl=new URL(url);
+    freshUrl.searchParams.set('visual_smoke',String(Date.now())+'-'+attempt);
+    res=await page.goto(freshUrl.toString(),{waitUntil:'domcontentloaded',timeout:35000});
+    assert.equal(res?.status(),200,'reader page must be reachable');
+    freshDesign=await page.locator('#coverWorldMap').count()===1;
+    if(freshDesign)break;
+    await page.waitForTimeout(6000);
+   }
+   assert.ok(freshDesign,'GitHub Pages must serve the latest world-atlas cover');
    await page.waitForFunction(()=>{
     const el=document.querySelector('#spotlightTitle');
     return el&&el.textContent&&!el.textContent.includes('準備中');
@@ -28,6 +41,16 @@ try{
    assert.equal(await appIcon.count(),1,'the redesigned home-screen mark is shown');
    await appIcon.evaluate(img=>img.decode());
    assert.equal(await appIcon.evaluate(img=>img.naturalWidth>0),true,'brand icon loads');
+   await page.waitForFunction(()=>{
+    const pagePins=document.querySelectorAll('#coverMapPins .atlas-pin');
+    return pagePins.length>0&&document.querySelector('#coverMapCaption')?.textContent.includes('ニュースの現場ではありません');
+   },null,{timeout:30000});
+   const pins=page.locator('#coverMapPins .atlas-pin');
+   assert.ok(await pins.count()>=1,'published story locations are represented');
+   await pins.first().click();
+   assert.equal(await page.locator('#mapExtras').getAttribute('open'),'',
+    'tapping a country opens the deeper country archive');
+   await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
    const primaryButton=page.locator('#spotlightRead');
