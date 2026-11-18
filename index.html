@@ -613,7 +613,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  gap:7px 6px;align-items:center}
 #atlasHero .issue-countries .countries-intro{font-size:.8rem;font-weight:770;flex:0 0 auto;
  margin-right:3px;color:#e7d8ba}
-#atlasHero .country-chip{font-size:.79rem;padding:3px 10px;line-height:1.5;
+#atlasHero .country-chip{font-size:.79rem;padding:5px 12px;line-height:1.5;min-height:44px;appearance:none;cursor:pointer;
  color:#fff0d8;background:#2a405c;border:1px solid #7a8fab;border-radius:100px}
 .atlas-explore{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;
  width:max-content;max-width:100%;padding:6px 2px;min-height:44px;
@@ -1264,9 +1264,13 @@ function renderIssueCountries(){
   const pending=document.createElement('span');pending.className='country-pending';
   pending.textContent='舞台の国・地域を確認中';target.append(pending);renderCoverMap();return;
  }
- for(const name of names.values()){
-  const chip=document.createElement('span');chip.className='country-chip';
-  chip.textContent=name;target.append(chip);
+ for(const [code,name] of names){
+  const chip=document.createElement('button');
+  chip.type='button';chip.className='country-chip';
+  chip.textContent=name;
+  chip.setAttribute('aria-label',name+'の記事を地図から探す');
+  chip.addEventListener('click',()=>openWorldExplorer(code));
+  target.append(chip);
  }
  renderCoverMap();
 }
