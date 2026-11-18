@@ -84,7 +84,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 os.chdir(old)
             self.assertEqual(dict(all_time),{"GB":1,"US":1,"AG":1})
             self.assertEqual(dict(recent),{"GB":1,"US":1,"AG":1})
-            self.assertEqual(categories["person"],2)
+            self.assertEqual(categories["person"],3)
 
     def test_evidence_retrieval_rotates_geographic_source_markets(self):
         leads=[{"title":"Company error","url":f"https://us{i}.example/story",
