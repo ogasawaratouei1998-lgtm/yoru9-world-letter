@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Collect UNVERIFIED news leads. Editorial verification is mandatory before publication."""
 from __future__ import annotations
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from urllib.parse import urlencode, urlsplit
@@ -167,7 +167,54 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
     return [dict(item,sourcecountry=country,language=lang) for item in items]
 
 
-def get_gdelt():
+def uncovered_country_searches(day=None, max_countries=9):
+    """Rotate discovery requests across NEVER-featured reporting countries.
+
+    A GDELT match is merely an UNVERIFIED lead. The article's occurrence
+    country is independently checked later against ORIGINAL publisher text.
+    Publisher sourcecountry, RSS market and geography keywords are not proof.
+    """
+    from country_codes import catalog, country_codes
+    if day is None:
+        day=datetime.now(timezone(timedelta(hours=9))).date()
+    from collections import Counter
+    appeared=Counter()
+    for file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            issue=json.loads(file.read_text(encoding="utf-8"))
+            issue_day=datetime.strptime(issue.get("editionDate",""),"%Y-%m-%d").date()
+            if issue.get("status")!="published" or issue_day>day:
+                continue
+            for story in issue.get("stories",[]):
+                appeared.update(country_codes(story.get("country")))
+        except (ValueError,OSError,TypeError,KeyError):
+            continue
+    unseen=sorted((x for x in catalog() if appeared[x["code"]]==0),
+                  key=lambda x:x["code"])
+    if not unseen:
+        return ()
+    # 9-country daily windows step through the whole set without sticking
+    # permanently to alphabetically early and high-publication countries.
+    start=(day.toordinal()*max_countries)%len(unseen)
+    selected=[unseen[(start+i)%len(unseen)]
+              for i in range(min(max_countries,len(unseen)))]
+    def english_name(item):
+        # Use original English country names rather than abbreviations and
+        # keep GDELT query fragments strictly quoted and bounded.
+        for alias in item["aliases"]:
+            if re.fullmatch(r"[A-Za-z][A-Za-z0-9 .-]{2,64}",alias) and len(alias)>3:
+                return alias
+        return None
+    names=[english_name(x) for x in selected]
+    names=[name for name in names if name]
+    return tuple(
+        "("+" OR ".join('"'+name+'"' for name in names[i:i+3])+
+        ') ("mistake" OR "mix-up" OR "blunder" OR "unexpected")'
+        for i in range(0,len(names),3)
+    )
+
+
+def get_gdelt(extra_searches=()):
     """Find original publisher leads for different forms of HUMAN mistakes."""
     # Search light, documented human mistakes first. Keep each search capped.
     searches=(
@@ -179,7 +226,7 @@ def get_gdelt():
         '("blunder" OR "fiasco" OR "misprint")',
     )
     articles,seen=[],set()
-    for query in searches:
+    for query in (*tuple(extra_searches)[:3],*searches):
         params={'query':query,'mode':'ArtList','format':'json','maxrecords':40,
                 'timespan':'7d','sort':'DateDesc'}
         try:
@@ -236,7 +283,7 @@ def main():
             errors.append(f'{provider}: {type(e).__name__}: {e}')
     # Discover original publisher links for human errors before broad world feeds
     # exhaust the 750-link budget.
-    try:keep(get_gdelt(),limit=60)
+    try:keep(get_gdelt(extra_searches=uncovered_country_searches()),limit=60)
     except (HTTPError, URLError, ValueError, TimeoutError) as e:
         errors.append(f'GDELT: {type(e).__name__}: {e}')
     for url in BBC_FEEDS:
