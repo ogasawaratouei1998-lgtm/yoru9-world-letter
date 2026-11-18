@@ -157,6 +157,10 @@ def comic_line_rejection(quip):
     if re.search(r"^(?:まさか|驚き|予想外)(?:の展開|でした|です)[。！]?$",
                  quip.strip()):
         return "surprise_recapped_without_joke"
+    # Advice and after-the-fact scolding are not professional comic punchlines.
+    if re.search(r"ればよかったのに|すればよかった|すべきだった|勉強に向ければ",
+                 quip.strip()):
+        return "scolding_advice_not_comedy"
     return None
 
 # Intentional intimidation or harassment of emergency responders is not
