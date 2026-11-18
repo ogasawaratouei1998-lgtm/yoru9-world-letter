@@ -897,6 +897,121 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 @media(prefers-reduced-motion:reduce){
  #atlasHero .atlas-real-stamp{transition:none}
 }
+
+/* Illustrated news digest v1: playfulness without presenting artwork as evidence.
+   Text, source references and original story facts stay fully accessible. */
+#atlasHero{position:relative;background:linear-gradient(155deg,#223B59 0%,#182A43 70%,#203C4B 100%);
+ border:1px solid #7D94AD;border-radius:20px}
+#atlasHero::after{content:"✦";position:absolute;top:13px;right:12px;color:#FDA19A;
+ font-size:1.25rem;pointer-events:none;opacity:.86}
+#atlasHero .atlas-oops{color:#FFD084;transform:rotate(-1.5deg)}
+#atlasHero .atlas-oops::after{height:8px;background:#F88D81A8;bottom:0}
+#atlasHero .atlas-real-stamp{background:#FFE6B5;border-color:#FFEDD0;color:#263A52}
+#atlasHero .atlas-bubble-tag{color:#A9F0DA}
+#atlasHero .atlas-brand{border-color:#84C9BE;background:linear-gradient(135deg,#2D5270,#294761)}
+#atlasHero .atlas-brand::after{background:#2D5270;border-color:#84C9BE}
+#atlasHero .issue-gallery{text-align:left;margin:5px 0 13px;min-width:0}
+#atlasHero .gallery-heading{display:flex;align-items:baseline;justify-content:space-between;
+ gap:10px;margin:0 0 9px;color:#FFF1DE;font-size:.91rem;line-height:1.5}
+#atlasHero .gallery-heading strong{font-weight:900;letter-spacing:.01em}
+#atlasHero .gallery-heading span{color:#B9E9DD;font-size:.77rem;font-weight:720;
+ white-space:nowrap}
+#atlasHero .gallery-track{width:100%;display:grid;grid-auto-flow:column;
+ grid-auto-columns:minmax(142px,1fr);gap:9px;overflow-x:auto;overscroll-behavior-x:contain;
+ scrollbar-width:thin;scrollbar-color:#A7C9C2 transparent;scroll-snap-type:x proximity;
+ padding:1px 1px 8px;box-sizing:border-box}
+#atlasHero .gallery-tile{display:flex;flex-direction:column;align-items:stretch;
+ min-width:0;max-width:100%;width:100%;border:1px solid #6589A7;
+ border-bottom:3px solid #F9C77D;background:#294663;
+ padding:6px 6px 9px;border-radius:13px;color:#FFF5E9;text-align:left;
+ cursor:pointer;scroll-snap-align:start;touch-action:manipulation;
+ transition:transform .18s ease,border-color .18s ease,background .18s ease}
+#atlasHero .gallery-tile:nth-child(2){border-bottom-color:#90D4C6}
+#atlasHero .gallery-tile:nth-child(3){border-bottom-color:#FFA7A0}
+#atlasHero .gallery-tile:hover{transform:translateY(-3px);background:#355574;
+ border-color:#FFDBA2}
+#atlasHero .gallery-tile:focus-visible{outline:3px solid #FFE3B2;outline-offset:2px}
+#atlasHero .gallery-art{display:block;width:100%;height:auto;aspect-ratio:5/3;
+ object-fit:cover;border-radius:9px;background:#F7C6BA}
+#atlasHero .gallery-country{display:block;font-size:.77rem;font-weight:900;
+ line-height:1.45;color:#AEEADB;margin:6px 3px 2px;overflow-wrap:anywhere}
+#atlasHero .gallery-label{display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:2;overflow:hidden;min-height:2.7em;line-height:1.37;
+ font-size:.8rem;font-weight:760;margin:0 3px}
+#atlasHero .gallery-clarity{font-size:.7rem;line-height:1.65;
+ color:#CAD9E6;margin:5px 0 0}
+#atlasHero .atlas-map{border-color:#547D8E;background-color:#22445A}
+.news-visual,.story-visual{position:relative;overflow:hidden;margin:0}
+.news-visual img,.story-visual img{display:block;width:100%;height:auto;object-fit:cover;
+ background:#F9CFAB}
+.spotlight .spotlight-visual{margin:0 0 16px;border-radius:13px;
+ background:#E9C7AA;border:1px solid #6F859A}
+.spotlight .spotlight-visual img{aspect-ratio:16/9;max-height:240px}
+.news-visual figcaption,.story-visual figcaption{position:absolute;bottom:8px;right:8px;
+ z-index:1;font-size:.68rem;line-height:1.55;color:#FFF8EF;background:#172B44E6;
+ padding:4px 9px;border:1px solid #BED2D9A8;border-radius:99px;
+ max-width:calc(100% - 16px);text-align:right}
+.spotlight .spotlight-topline{margin-bottom:11px}
+.spotlight .spotlight-fact{margin-bottom:7px}
+.spotlight .spotlight-joke{border-left:4px solid #FFA1A1;
+ background:linear-gradient(135deg,#354E6A,#273C57)}
+.spotlight .quip-kicker .spotlight-quip-label{color:#FFD9A2}
+.story .story-cover{display:grid;grid-template-columns:minmax(120px,41%) minmax(0,1fr);
+ gap:12px;align-items:start;margin:11px 0 12px}
+.story .story-visual{border-radius:11px;aspect-ratio:4/3;border:1px solid #7394A8}
+.story .story-visual .story-art{height:100%;aspect-ratio:4/3;object-fit:cover}
+.story .story-visual figcaption{font-size:.64rem;right:5px;bottom:5px;padding:3px 6px}
+.story .story-headline{min-width:0}
+.story .story-headline .label{font-size:.73rem;line-height:1.5;
+ margin:0 0 5px;color:#B8EBDD}
+.story .story-cover h3{font-size:clamp(1.05rem,3.5vw,1.32rem);
+ font-weight:850;line-height:1.45;margin:0;display:-webkit-box;
+ -webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.story.expanded .story-cover h3{display:block;overflow:visible}
+.story .story-fact{margin:0 0 4px;padding:0}
+.story .story-fact .fact-kicker{color:#B8E7DB;font-size:.72rem;margin:0 0 3px}
+.story .story-fact .summary{display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:2;overflow:hidden;line-height:1.68;margin:0;
+ color:#DCE9F1;font-size:.94rem}
+.story.expanded .story-fact .summary{display:block;overflow:visible}
+.story .teaserquip{border-left-color:#FFA5A1;background:#304961;
+ margin:10px 0 9px;padding:10px 12px;line-height:1.58;font-weight:760}
+.story .teaserquip span{color:#FFDBA1;margin-bottom:4px}
+.story .reported{display:none}
+.story.expanded .reported{display:block}
+.story .readbtn{min-height:46px;margin-top:9px;
+ background:#354D67;color:#FFE0AE;border-color:#86A2B5}
+.story:nth-child(even){border-left-color:#89D3C5}
+.story:nth-child(odd){border-left-color:#FFA49F}
+@media(max-width:520px){
+ #atlasHero{border-radius:16px}
+ #atlasHero .issue-gallery{margin:5px 0 10px}
+ #atlasHero .gallery-heading{font-size:.82rem;margin-bottom:7px}
+ #atlasHero .gallery-heading span{font-size:.72rem}
+ #atlasHero .gallery-track{grid-auto-columns:minmax(128px,45%);gap:8px;padding-bottom:6px}
+ #atlasHero .gallery-tile{padding:5px 5px 8px;border-radius:11px}
+ #atlasHero .gallery-label{font-size:.76rem;min-height:2.7em}
+ #atlasHero .gallery-clarity{font-size:.69rem}
+ .spotlight .spotlight-visual{margin:0 0 13px;border-radius:11px}
+ .spotlight .spotlight-visual img{aspect-ratio:16/9;max-height:204px}
+ .spotlight .spotlight-topline{margin-bottom:8px}
+ .story{padding:14px 13px 15px}
+ .story .story-cover{grid-template-columns:minmax(110px,39%) minmax(0,1fr);
+  gap:10px;margin:10px 0 9px}
+ .story .story-cover h3{font-size:1.01rem;line-height:1.44;-webkit-line-clamp:4}
+ .story .story-headline .label{font-size:.72rem}
+ .story .story-fact .summary{font-size:.91rem;line-height:1.66}
+ .story .teaserquip{font-size:.955rem;line-height:1.6;padding:10px 11px}
+ .story .readbtn{margin-top:8px}
+}
+@media(max-width:355px){
+ .story .story-cover{grid-template-columns:minmax(104px,37%) minmax(0,1fr);gap:8px}
+ .story .story-cover h3{font-size:.94rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #atlasHero .gallery-tile{transition:none}
+ #atlasHero .gallery-tile:hover{transform:none}
+}
 </style>
 </head>
 <body><div class="wrap">
