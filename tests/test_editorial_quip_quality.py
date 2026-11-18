@@ -95,7 +95,9 @@ class EditorialQuipQualityTest(unittest.TestCase):
     def test_closing_comedy_requires_concrete_payoff_and_independent_review(self):
         from unittest.mock import patch
         from auto_editorial import valid_nightly_comedy_line,compose_nightly_comedy,NIGHTLY_COMEDY_CRAFT
-        good="仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。"
+        # Previously published as the 11/17 closing, but it must never
+        # pass the stronger evidence-and-comedy gates for new editions.
+        good="コーヒー4杯を頼んだら、いちばん必要だった出口まで届いた。"
         old="コーヒーの配達が出口になり、誤字が安全の呼びかけに。警察が保護したのは、おむつ姿のサル。世界の「まさか」は予想以上に自由です。"
         self.assertTrue(valid_nightly_comedy_line(good))
         self.assertFalse(valid_nightly_comedy_line(old))
@@ -106,9 +108,12 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertFalse(valid_nightly_comedy_line("これはテスト用の文章です。 https://example.org/"))
 
         self.assertIn("20〜60文字",NIGHTLY_COMEDY_CRAFT)
-        stories=[{"title":"現実は予定外","summary":"事実だけの短い説明です。","category":"work"}]
+        stories=[{"title":"コーヒー4杯を注文し、配達員にドアを開けてもらった",
+                  "summary":"閉じ込められた作業員がコーヒー4杯を注文し、配達員がドアを開けて救助した。",
+                  "category":"work"}]
         drafts={"candidates":["短すぎる",good,"予定どおりならニュースにならない。今日も現実が台本を破った。"]}
-        verdict={"approved":True,"bestIndex":0,"reason":"一読で意味が伝わる"}
+        verdict={"approved":True,"bestIndex":0,"factAnchorVerified":True,
+                 "comicPayoffWorks":True,"reason":"原記事の事実からオチまでつながる"}
         with patch("auto_editorial.ai",side_effect=[drafts,verdict]) as mocked:
             self.assertEqual(compose_nightly_comedy(stories),good)
             self.assertEqual(mocked.call_count,2)

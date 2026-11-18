@@ -120,8 +120,8 @@ WRITING_CRAFT=(
 # The independent reviewer may choose only from the drafted, locally screened options.
 NIGHTLY_COMEDY_CRAFT=(
     "あなたは『よる9じの世界便り』の放送作家です。 "
-    "その日の検証済み記事を、仕事や予定が思わぬ方向に転ぶという共通の視点から見直してください。 気が向かなければ笑わなくてもよい読者に向け、笑いや元気を強要しません。 "
-    "今夜のひと言はニュース3本の要約や固有名詞の羅列ではなく、読了後にだけ効く独立したオチです。 "
+    "その日の検証済み記事から、最も笑える具体的な出来事を一つだけ選んでください。無理に3本をまとめて共通テーマを作らないこと。気が向かなければ笑わなくてもよい読者に向け、笑いや元気を強要しません。 "
+    "今夜のひと言はニュースの要約でも固有名詞の羅列でもなく、実際に紹介した記事の具体物・行為・数字を一つ以上言葉として出し、読後にだけ効く鋭いオチです。根拠のない職業一般の設定、架空の求人票・担当欄・台本・会議・マニュアルを持ち込むのは禁止。 "
     "20〜60文字の自然な日本語を4案作ってください。"
     "構造は『短いフリ→予想外の着地』。一度読めば伝わり、最後の一語が笑いの芯になること。 "
     "題材が1〜2本の日は無理に共通点を捏造せず、確認された範囲の小さな皮肉でよい。 "
@@ -163,6 +163,10 @@ def compose_nightly_comedy(stories,recent_lines=()):
     for item in proposed:
         if valid_nightly_comedy_line(item,recent_lines) and item.strip() not in candidates:
             candidates.append(item.strip())
+    # Do not ask the reviewer to rescue an ungrounded abstract metaphor.
+    from nightly_quality import incident_specific_nightly_line
+    candidates=[item for item in candidates
+                if incident_specific_nightly_line(item,stories)]
     if not candidates:
         return None
     review=ai(
@@ -171,12 +175,16 @@ def compose_nightly_comedy(stories,recent_lines=()):
         "5軸で最も良い1案のみを選んでください。確認済みのニュースにない事実を含む候補は不可。"
         "複数記事の内容をただ列挙する総集編、精神論、説教、平凡な『想定外』『自由です』、"
         "無理なダジャレ、記事本文と重複する説明は不合格。"
+        "記事に実在する物・行為にひも付かない世界全体の比喩や、根拠のない求人票・仕事内容・予定表のような新しい設定は失格。"
+        "事実に根差す具体的なフリがあるか、オチが本当に意外で一度で伝わるか、それぞれ別個に判定してください。"
         "どれも弱ければ approved:false にしてください。"
-        "JSON {\"approved\":true/false,\"bestIndex\":0,\"reason\":\"短い理由\"} のみ。"
+        "JSON {\"approved\":true/false,\"bestIndex\":0,\"factAnchorVerified\":true/false,\"comicPayoffWorks\":true/false,\"reason\":\"短い理由\"} のみ。"
         "検証済み記事:"+json.dumps(payload,ensure_ascii=False)+
         "候補:"+json.dumps(candidates,ensure_ascii=False),
         temperature=0.1)
     if not isinstance(review,dict) or review.get("approved") is not True:
+        return None
+    if review.get("factAnchorVerified") is not True or review.get("comicPayoffWorks") is not True:
         return None
     index=review.get("bestIndex")
     if type(index) is not int or not 0<=index<len(candidates):

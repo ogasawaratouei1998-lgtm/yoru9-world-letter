@@ -70,7 +70,8 @@ body{background:#0b1528}
 .hero-description{font-size:14px;line-height:1.7;color:#d9e6f6;margin:0 0 9px;max-width:580px}.hero-truth{font-size:15px;font-weight:650;color:#f3e5ce;line-height:1.75;margin:0}
 .hero-truth strong{color:#ffd89e}
 @media(max-width:520px){.hero-audience{font-size:12px}.hero h1{font-size:clamp(24px,6.5vw,30px)}.hero-description{font-size:12px}.hero-truth{font-size:13px}}
-.night-quote{margin:22px auto 0;padding:16px 12px;border-top:1px solid #536786;max-width:490px}.night-quote span{font-size:11px;color:var(--gold);font-weight:750}.night-quote p{font-size:15px;line-height:1.8;margin:7px 0 12px}
+.night-quote{margin:22px auto 0;padding:16px 12px;border-top:1px solid #536786;max-width:490px}.night-quote[hidden],.evening-entry a[hidden]{display:none!important}
+.night-quote span{font-size:11px;color:var(--gold);font-weight:750}.night-quote p{font-size:15px;line-height:1.8;margin:7px 0 12px}
 .worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.world-coastlines{position:absolute;inset:0;width:100%;height:100%;display:block}.world-coastlines path{fill:#527b79;stroke:#93b4ae;stroke-width:.24;vector-effect:non-scaling-stroke}.map-fallback{position:absolute;left:10px;bottom:7px;z-index:1;background:#14243dcc;border-radius:7px;padding:4px 7px;font-size:11px;color:#fff0d8;pointer-events:none}
 .map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
 .editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
@@ -580,7 +581,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <a class="skip-link" href="#spotlight">今夜のニュースへ移動</a>
 <header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
 <main>
-<section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a href="#closing">今夜は、ひと言だけ読む</a></section>
+<section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a id="closingJump" href="#closing">今夜は、ひと言だけ読む</a></section>
 <section class="hero" aria-label="ニュースの舞台"><p class="eyebrow">世界の「やらかし」に、AIが本気でツッコむ。</p><div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div></section>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
  <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
@@ -613,7 +614,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
-<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
+<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
 <aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -1360,7 +1361,11 @@ function updateFilters(){
  if(filter!=='all'&&!available.has(filter))filter='all';
 }
 function render(){const d=edition.stories;
- $('nightlyMessage').textContent=typeof edition.nightlyMessage==='string'&&edition.nightlyMessage.trim()?edition.nightlyMessage:'今日の反省会は閉会。続きは、また明日。'; $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
+ const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
+  $('nightlyMessage').textContent=nightlyLine;
+  $('closingQuote').hidden=!nightlyLine;
+  $('closingJump').hidden=!nightlyLine;
+  $('editionTitle').textContent=edition.title||'今夜の世界の大失敗';
  const archive=edition.status==='demo'; const now=new Date();
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));

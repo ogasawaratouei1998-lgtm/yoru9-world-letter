@@ -109,6 +109,25 @@ def nightly_message(edition_date, stories, recent_messages=()):
             return line
     return ordered[0]
 
+def publication_nightly_message(data, edition_date, stories):
+    """A closing gag is optional, never a reason to publish unrelated filler.
+
+    Preserve archived-era behavior; new editions need a real incident anchor.
+    Without a qualifying approved line, retain a clean neutral sign-off.
+    """
+    raw=data.get("nightlyMessage")
+    if isinstance(raw,str):
+        clean=raw.strip()
+        if (20<=len(clean)<=110 and not any(c in clean for c in "<>\r\n")
+                and not re.search(r"\\[rn]",clean)):
+            if edition_date < "2026-11-18":
+                return clean
+            from nightly_quality import incident_specific_nightly_line
+            if incident_specific_nightly_line(clean, stories):
+                return clean
+    return nightly_message(edition_date,stories) if edition_date < "2026-11-18" else ""
+
+
 def recent_nightly_messages(root, edition_date, days=60):
     from datetime import timedelta
     today=date.fromisoformat(edition_date)
@@ -250,7 +269,7 @@ def validate_approved(data, expected_date):
         public_stories.append(public_story)
     return {'status': 'published', 'editionDate': expected_date, 'title': data['title'].strip(),
             'editionType': edition_type,
-            'nightlyMessage': data.get('nightlyMessage', '').strip() if isinstance(data.get('nightlyMessage'),str) and 20 <= len(data['nightlyMessage'].strip()) <= 110 and not any(ch in data['nightlyMessage'] for ch in '<>\r\n') and not re.search(r'\\[rn]', data['nightlyMessage']) else nightly_message(expected_date, public_stories),
+            'nightlyMessage': publication_nightly_message(data, expected_date, public_stories),
             **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
             'stories': public_stories,
             'nightQuote': nightly_line(expected_date, public_stories),
@@ -316,8 +335,10 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
     from difflib import SequenceMatcher
     recent = recent_nightly_messages(root, date)
     proposed = public_issue['nightlyMessage']
-    if any(SequenceMatcher(None, proposed, old).ratio() >= 0.72 for old in recent):
-        public_issue['nightlyMessage'] = nightly_message(date, public_issue['stories'], recent)
+    if proposed and any(SequenceMatcher(None, proposed, old).ratio() >= 0.72 for old in recent):
+        # Published text is not reused just to fill a decorative slot.
+        public_issue['nightlyMessage'] = (nightly_message(date, public_issue['stories'], recent)
+                                          if date < '2026-11-18' else '')
     current_path = root / 'data' / 'current.json'
     current = json.loads(current_path.read_text(encoding='utf-8')) if current_path.exists() else {}
     old_date = current.get('editionDate') or ''
