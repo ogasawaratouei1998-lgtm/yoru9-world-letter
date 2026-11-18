@@ -1061,6 +1061,137 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   font-size:.8rem;line-height:1.42
  }
 }
+
+/* Playful reading v2: land the first verified joke BEFORE the news list and
+   world map, then reveal the same article (no new fabricated joke/source). */
+#atlasHero .quip-teaser[hidden]{display:none!important}
+#atlasHero .quip-teaser{
+ display:grid;grid-template-columns:minmax(0,33%) minmax(0,1fr);
+ gap:12px;align-items:stretch;margin:3px 0 15px;padding:11px;
+ background:linear-gradient(125deg,#305775,#263F60);
+ border:1px solid #91C9BF;border-left:4px solid #FBA69C;
+ border-radius:16px;position:relative;min-width:0;max-width:100%;
+ box-shadow:0 7px 18px #07152725
+}
+#atlasHero .quip-teaser::after{
+ content:"";position:absolute;left:42%;bottom:-9px;width:15px;height:15px;
+ transform:rotate(-45deg);border-bottom:1px solid #91C9BF;
+ border-left:1px solid #91C9BF;background:#263F60;pointer-events:none
+}
+#atlasHero .quip-teaser-art{min-width:0;overflow:hidden;
+ border-radius:11px;background:#F8C9B1;align-self:stretch}
+#atlasHero .quip-teaser-art img{
+ width:100%;height:100%;min-height:124px;max-height:190px;
+ object-fit:cover;display:block
+}
+#atlasHero .quip-teaser-body{display:flex;flex-direction:column;min-width:0}
+#atlasHero .quip-teaser-kicker{font-size:.77rem;line-height:1.45;
+ font-weight:900;color:#FFE1A7;margin:0 0 4px}
+#atlasHero .quip-teaser-topic{font-size:.72rem;line-height:1.45;
+ color:#ACEADB;font-weight:800;margin:0 0 7px;overflow-wrap:anywhere}
+#atlasHero .quip-teaser-line{font-size:clamp(1.02rem,3.65vw,1.3rem);
+ line-height:1.52;font-weight:840;color:#FFF8ED;margin:0 0 11px;
+ overflow-wrap:anywhere;text-wrap:pretty}
+#atlasHero .quip-teaser-actions{display:flex;flex-wrap:wrap;
+ gap:7px;align-items:center;margin-top:auto}
+#atlasHero #quipTeaserRead{flex:1 1 112px;min-height:44px;padding:8px 10px;
+ color:#23354B;background:#FFE0AC;border:1px solid #FFF2D1;
+ border-radius:11px;font-weight:900;font-size:.78rem;line-height:1.5}
+#atlasHero #quipTeaserRead:hover{background:#FFF0CC}
+#atlasHero #quipTeaserRead:focus-visible,
+#atlasHero .teaser-smile:focus-visible{outline:3px solid #FFF3D5;outline-offset:3px}
+#atlasHero .teaser-smile{flex:1 1 102px;min-height:44px;padding:8px 10px;
+ border-radius:11px;border:1px solid #9CD9D0;color:#EAFBF6;
+ background:#264D5F;font-size:.75rem;font-weight:800;line-height:1.5}
+#atlasHero .teaser-smile[aria-pressed="true"]{
+ color:#1D3545;background:#BBE6CE;border-color:#E1FFEB
+}
+/* Editorially verified article-specific taglines are visual labels, not
+   additional reporting. For future items use the editor-approved short label. */
+#atlasHero .gallery-kicker{display:block;max-width:100%;min-width:0;
+ margin:1px 3px 3px;color:#FFDFAC;font-size:.76rem;line-height:1.45;
+ font-weight:900;overflow-wrap:anywhere}
+#atlasHero .gallery-label{font-size:.79rem;line-height:1.48;
+ color:#F0F5FC;font-weight:720;min-height:2.9em}
+#atlasHero .gallery-tile:nth-child(2) .gallery-kicker{color:#B7F0D6}
+#atlasHero .gallery-tile:nth-child(3) .gallery-kicker{color:#FFC0C8}
+#atlasHero .gallery-tile{box-shadow:0 4px 10px #08192C35}
+#atlasHero .gallery-tile:nth-child(1){background:linear-gradient(140deg,#3C536B,#274262)}
+#atlasHero .gallery-tile:nth-child(2){background:linear-gradient(140deg,#2C5960,#26465C)}
+#atlasHero .gallery-tile:nth-child(3){background:linear-gradient(140deg,#58445C,#343E60)}
+/* Less atlas height so the live story comes into view before scrolling far.
+   Pin position remains percentage-based and still means *country*, not venue. */
+#atlasHero .atlas-map{aspect-ratio:2.32/1;min-height:125px}
+#atlasHero .atlas-map-caption{margin:6px 0 3px;line-height:1.5}
+/* Physically playful comic speech bubbles, but do not conflate them with facts. */
+.spotlight .spotlight-joke{position:relative;overflow:visible;
+ border-radius:19px 19px 19px 8px;border-left:4px solid #FFAAA7;
+ box-shadow:0 5px 11px #07152728;margin-bottom:22px}
+.spotlight .spotlight-joke::before{content:"";position:absolute;
+ left:21px;bottom:-11px;width:17px;height:17px;
+ transform:rotate(-45deg);background:#283E56;
+ border-left:1px solid #6E839A6B;border-bottom:1px solid #6E839A6B;
+ pointer-events:none}
+.story .teaserquip{position:relative;border-radius:16px 16px 16px 7px;
+ box-shadow:0 5px 11px #07152728;margin-bottom:17px}
+.story .teaserquip::after{content:"";position:absolute;left:20px;bottom:-10px;
+ width:15px;height:15px;transform:rotate(-45deg);
+ background:#304961;border-left:1px solid #7181987A;
+ border-bottom:1px solid #7181987A;pointer-events:none}
+/* Small feedback ONLY on a genuine tap, not an autoplaying animation. */
+.smile{position:relative;isolation:isolate}
+.smile.smile-burst::before,.smile.smile-burst::after{
+ content:"✦";position:absolute;top:-18px;color:#FFE0A1;
+ font-size:1.1rem;pointer-events:none;opacity:0;
+ animation:tinyLaughStar .55s ease-out both
+}
+.smile.smile-burst::before{left:15%;--star-shift:-12px}
+.smile.smile-burst::after{right:15%;--star-shift:12px;
+ color:#9CE1D4;animation-delay:.07s}
+@keyframes tinyLaughStar{
+ 0%{opacity:0;transform:translateY(8px) translateX(0) scale(.4)}
+ 35%{opacity:1;transform:translateY(-5px) translateX(var(--star-shift)) scale(1)}
+ 100%{opacity:0;transform:translateY(-19px) translateX(var(--star-shift)) scale(.65)}
+}
+@media(max-width:520px){
+ #atlasHero .quip-teaser{grid-template-columns:minmax(0,31%) minmax(0,1fr);
+  gap:9px;padding:9px;margin:2px 0 13px;border-radius:14px}
+ #atlasHero .quip-teaser-art img{min-height:132px;max-height:200px}
+ #atlasHero .quip-teaser-kicker{font-size:.71rem}
+ #atlasHero .quip-teaser-topic{font-size:.69rem;margin-bottom:4px}
+ #atlasHero .quip-teaser-line{font-size:.98rem;line-height:1.5;margin-bottom:8px}
+ #atlasHero .quip-teaser-actions{gap:5px}
+ #atlasHero #quipTeaserRead,#atlasHero .teaser-smile{
+  padding:6px 8px;font-size:.72rem;min-height:44px}
+ #atlasHero .gallery-kicker{font-size:.73rem;margin:1px 3px 2px}
+ #atlasHero .gallery-label{font-size:.74rem;line-height:1.47}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-template-rows:auto auto minmax(0,1fr);
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{
+  grid-row:1/span 3
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-kicker{
+  grid-column:2;grid-row:2;align-self:center;margin:0 0 4px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  grid-column:2;grid-row:3;align-self:start;min-height:0;
+  -webkit-line-clamp:2
+ }
+ #atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}
+}
+@media(max-width:355px){
+ #atlasHero .quip-teaser{grid-template-columns:minmax(0,29%) minmax(0,1fr);
+  gap:8px;padding:7px}
+ #atlasHero .quip-teaser-line{font-size:.91rem;line-height:1.5}
+ #atlasHero .quip-teaser-art img{min-height:150px}
+ #atlasHero .gallery-kicker{font-size:.7rem}
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .smile.smile-burst::before,.smile.smile-burst::after{animation:none;content:none}
+ #atlasHero .gallery-tile{transition:none}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1088,7 +1219,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   </div>
  </section>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
-  <div class="gallery-heading"><strong>世界の「まさか」3コマ劇場</strong><span>気になる絵から読む</span></div>
+  <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」3コマ劇場</strong><span>気になる絵から読む</span></div>
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
@@ -1678,6 +1809,7 @@ function newsArt(story){
 }
 function renderIssueGallery(){
  const target=$('issueGallery');
+ $('galleryHeading').textContent='世界の「まさか」'+edition.stories.length+'コマ劇場';
  target.replaceChildren();
  for(const [index,story] of edition.stories.entries()){
   const button=document.createElement('button');
