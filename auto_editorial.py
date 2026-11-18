@@ -894,7 +894,8 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "collected","fresh","planned_fetches","fetchable_original_bodies",
     "candidate_review_groups","paired_groups","single_original_groups",
     "first_ai_batch_groups","drafted","preflight_eligible",
-    "independent_approved","selected_for_edition"
+    "independent_approved","selected_for_edition",
+    "supplemental_attempts","supplemental_generated"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
@@ -1114,9 +1115,15 @@ def main():
         "fresh_backup_groups":max(0,len(grouped_evidence)-24),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if sum(draft_preflight_viable(item,now) for item in draft)<2:
-        # Reserve API quota for independent reviewer B as soon as two draft
-        # candidates exist. A big batch of unreviewed prose is not progress.
+    supplemental_attempts=0
+    supplemental_generated=0
+    if sum(draft_preflight_viable(item,now) for item in draft)<3:
+        # Tonight's target is three separately reviewed stories, not two.
+        # The large first batch can return diagnostics only, with no actual
+        # drafts: try additional *individual* incident reports without
+        # weakening the original-text evidence or independent B audit gates.
+        # Always preserve time and model quota for B. More unreviewed prose
+        # alone is not progress.
         # Separate diagnosis from drafting. A large all-groups request can
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
@@ -1143,7 +1150,7 @@ def main():
             g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),8)):
+        for start in range(0,min(len(retry_candidates),20)):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
@@ -1169,18 +1176,22 @@ def main():
                 ". Candidate groups (hypotheses, NOT proof): "+
                 json.dumps(batch,ensure_ascii=False))
             try:
+                supplemental_attempts+=1
                 retry_result=ai(retry_prompt,temperature=0.65)
                 retry_stories=retry_result.get("stories",[]) if isinstance(retry_result,dict) else []
                 if isinstance(retry_stories,list):
+                    supplemental_generated+=min(3,len(retry_stories))
                     draft.extend(retry_stories[:3])
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if sum(draft_preflight_viable(item,now) for item in draft)>=2:
-                print("Two eligible comedy drafts reserved: moving to independent fact review.",flush=True)
+            if sum(draft_preflight_viable(item,now) for item in draft)>=3:
+                print("Three eligible comedy drafts reserved: moving to independent fact review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
-               preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft))
+               preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
+               supplemental_attempts=supplemental_attempts,
+               supplemental_generated=supplemental_generated)
     if AI_QUOTA_BLOCKED:
         checkpoint("model_quota_blocked")
         print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)
