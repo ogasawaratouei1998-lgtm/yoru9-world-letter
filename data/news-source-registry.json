@@ -613,6 +613,321 @@
       "language": "pt",
       "focus": "technology",
       "site": "g1.globo.com"
+    },
+    {
+      "id": "world-ng-punchng-local",
+      "name": "Punch Nigeria",
+      "url": "https://punchng.com/feed/",
+      "market": "NG",
+      "language": "en",
+      "focus": "local",
+      "site": "punchng.com"
+    },
+    {
+      "id": "world-ng-vanguardngr-local",
+      "name": "Vanguard Nigeria",
+      "url": "https://www.vanguardngr.com/feed/",
+      "market": "NG",
+      "language": "en",
+      "focus": "local",
+      "site": "vanguardngr.com"
+    },
+    {
+      "id": "world-ng-guardian-local",
+      "name": "The Guardian Nigeria",
+      "url": "https://guardian.ng/feed/",
+      "market": "NG",
+      "language": "en",
+      "focus": "local",
+      "site": "guardian.ng"
+    },
+    {
+      "id": "world-ke-standardmedia-local",
+      "name": "The Standard Kenya",
+      "url": "https://www.standardmedia.co.ke/rss/headlines.php",
+      "market": "KE",
+      "language": "en",
+      "focus": "local",
+      "site": "standardmedia.co.ke"
+    },
+    {
+      "id": "world-za-dailymaverick-local",
+      "name": "Daily Maverick South Africa",
+      "url": "https://www.dailymaverick.co.za/dmrss/",
+      "market": "ZA",
+      "language": "en",
+      "focus": "local",
+      "site": "dailymaverick.co.za"
+    },
+    {
+      "id": "world-gh-myjoyonline-local",
+      "name": "MyJoyOnline Ghana",
+      "url": "https://www.myjoyonline.com/feed/",
+      "market": "GH",
+      "language": "en",
+      "focus": "local",
+      "site": "myjoyonline.com"
+    },
+    {
+      "id": "world-eg-egyptindependent-local",
+      "name": "Egypt Independent",
+      "url": "https://www.egyptindependent.com/feed/",
+      "market": "EG",
+      "language": "en",
+      "focus": "local",
+      "site": "egyptindependent.com"
+    },
+    {
+      "id": "world-ma-hespress-local",
+      "name": "Hespress Morocco",
+      "url": "https://en.hespress.com/feed",
+      "market": "MA",
+      "language": "en",
+      "focus": "local",
+      "site": "hespress.com"
+    },
+    {
+      "id": "world-ug-independent-local",
+      "name": "The Independent Uganda",
+      "url": "https://www.independent.co.ug/feed/",
+      "market": "UG",
+      "language": "en",
+      "focus": "local",
+      "site": "independent.co.ug"
+    },
+    {
+      "id": "world-tz-dailynews-local",
+      "name": "Daily News Tanzania",
+      "url": "https://dailynews.co.tz/feed/",
+      "market": "TZ",
+      "language": "en",
+      "focus": "local",
+      "site": "dailynews.co.tz"
+    },
+    {
+      "id": "world-mw-nyasatimes-local",
+      "name": "Nyasa Times Malawi",
+      "url": "https://www.nyasatimes.com/feed/",
+      "market": "MW",
+      "language": "en",
+      "focus": "local",
+      "site": "nyasatimes.com"
+    },
+    {
+      "id": "world-id-antaranews-local",
+      "name": "ANTARA Indonesia",
+      "url": "https://www.antaranews.com/rss/terkini.xml",
+      "market": "ID",
+      "language": "id",
+      "focus": "local",
+      "site": "antaranews.com"
+    },
+    {
+      "id": "world-vn-e-local",
+      "name": "VnExpress English Vietnam",
+      "url": "https://e.vnexpress.net/rss/news.rss",
+      "market": "VN",
+      "language": "en",
+      "focus": "local",
+      "site": "e.vnexpress.net"
+    },
+    {
+      "id": "world-vn-vnexpress-local",
+      "name": "VnExpress Vietnam Vietnamese",
+      "url": "https://vnexpress.net/rss/tin-moi-nhat.rss",
+      "market": "VN",
+      "language": "vi",
+      "focus": "local",
+      "site": "vnexpress.net"
+    },
+    {
+      "id": "world-pk-dawn-local",
+      "name": "Dawn Pakistan",
+      "url": "https://www.dawn.com/feeds/home",
+      "market": "PK",
+      "language": "en",
+      "focus": "local",
+      "site": "dawn.com"
+    },
+    {
+      "id": "world-bd-thedailystar-local",
+      "name": "The Daily Star Bangladesh",
+      "url": "https://www.thedailystar.net/rss.xml",
+      "market": "BD",
+      "language": "en",
+      "focus": "local",
+      "site": "thedailystar.net"
+    },
+    {
+      "id": "world-il-timesofisrael-local",
+      "name": "The Times of Israel",
+      "url": "https://www.timesofisrael.com/feed/",
+      "market": "IL",
+      "language": "en",
+      "focus": "local",
+      "site": "timesofisrael.com"
+    },
+    {
+      "id": "world-sa-arabnews-local",
+      "name": "Arab News Saudi Arabia",
+      "url": "https://www.arabnews.com/rss.xml",
+      "market": "SA",
+      "language": "en",
+      "focus": "local",
+      "site": "arabnews.com"
+    },
+    {
+      "id": "world-tr-dailysabah-culture",
+      "name": "Daily Sabah Turkey Life",
+      "url": "https://www.dailysabah.com/rss/life",
+      "market": "TR",
+      "language": "en",
+      "focus": "culture",
+      "site": "dailysabah.com"
+    },
+    {
+      "id": "world-tr-dailysabah-sports",
+      "name": "Daily Sabah Turkey Sport",
+      "url": "https://www.dailysabah.com/rss/sports",
+      "market": "TR",
+      "language": "en",
+      "focus": "sports",
+      "site": "dailysabah.com"
+    },
+    {
+      "id": "world-fj-fbcnews-local",
+      "name": "FBC News Fiji",
+      "url": "https://www.fbcnews.com.fj/feed",
+      "market": "FJ",
+      "language": "en",
+      "focus": "local",
+      "site": "fbcnews.com.fj"
+    },
+    {
+      "id": "world-pg-postcourier-local",
+      "name": "Post-Courier Papua New Guinea",
+      "url": "https://www.postcourier.com.pg/feed/",
+      "market": "PG",
+      "language": "en",
+      "focus": "local",
+      "site": "postcourier.com.pg"
+    },
+    {
+      "id": "world-au-sbs-regional",
+      "name": "SBS News Australia",
+      "url": "https://www.sbs.com.au/news/feed",
+      "market": "AU",
+      "language": "en",
+      "focus": "regional",
+      "site": "sbs.com.au"
+    },
+    {
+      "id": "world-it-ansa-local",
+      "name": "ANSA Italy",
+      "url": "https://www.ansa.it/sito/ansait_rss.xml",
+      "market": "IT",
+      "language": "it",
+      "focus": "local",
+      "site": "ansa.it"
+    },
+    {
+      "id": "world-it-repubblica-local",
+      "name": "La Repubblica Italy",
+      "url": "https://www.repubblica.it/rss/homepage/rss2.0.xml",
+      "market": "IT",
+      "language": "it",
+      "focus": "local",
+      "site": "repubblica.it"
+    },
+    {
+      "id": "world-pl-notesfrompoland-local",
+      "name": "Notes from Poland",
+      "url": "https://notesfrompoland.com/feed/",
+      "market": "PL",
+      "language": "en",
+      "focus": "local",
+      "site": "notesfrompoland.com"
+    },
+    {
+      "id": "world-es-eldiario-local",
+      "name": "elDiario.es Spain",
+      "url": "https://www.eldiario.es/rss/",
+      "market": "ES",
+      "language": "es",
+      "focus": "local",
+      "site": "eldiario.es"
+    },
+    {
+      "id": "world-es-20minutos-local",
+      "name": "20minutos Spain",
+      "url": "https://www.20minutos.es/rss/",
+      "market": "ES",
+      "language": "es",
+      "focus": "local",
+      "site": "20minutos.es"
+    },
+    {
+      "id": "world-pt-observador-local",
+      "name": "Observador Portugal",
+      "url": "https://observador.pt/feed/",
+      "market": "PT",
+      "language": "pt",
+      "focus": "local",
+      "site": "observador.pt"
+    },
+    {
+      "id": "world-ar-clarin-local",
+      "name": "Clarin Argentina",
+      "url": "https://www.clarin.com/rss/lo-ultimo/",
+      "market": "AR",
+      "language": "es",
+      "focus": "local",
+      "site": "clarin.com"
+    },
+    {
+      "id": "world-pe-rpp-local",
+      "name": "RPP Noticias Peru",
+      "url": "https://rpp.pe/rss",
+      "market": "PE",
+      "language": "es",
+      "focus": "local",
+      "site": "rpp.pe"
+    },
+    {
+      "id": "world-py-abc-local",
+      "name": "ABC Color Paraguay",
+      "url": "https://www.abc.com.py/arc/outboundfeeds/rss/noticias-del-dia/",
+      "market": "PY",
+      "language": "es",
+      "focus": "local",
+      "site": "abc.com.py"
+    },
+    {
+      "id": "world-gt-prensalibre-local",
+      "name": "Prensa Libre Guatemala",
+      "url": "https://www.prensalibre.com/feed/",
+      "market": "GT",
+      "language": "es",
+      "focus": "local",
+      "site": "prensalibre.com"
+    },
+    {
+      "id": "world-ec-eluniverso-local",
+      "name": "El Universo Ecuador",
+      "url": "https://www.eluniverso.com/arc/outboundfeeds/rss-subsection/comunidad/ecuador?outputType=xml",
+      "market": "EC",
+      "language": "es",
+      "focus": "local",
+      "site": "eluniverso.com"
+    },
+    {
+      "id": "world-uy-elobservador-local",
+      "name": "El Observador Uruguay",
+      "url": "https://www.elobservador.com.uy/rss/pages/ultimo-momento.xml",
+      "market": "UY",
+      "language": "es",
+      "focus": "local",
+      "site": "elobservador.com.uy"
     }
   ]
 }
