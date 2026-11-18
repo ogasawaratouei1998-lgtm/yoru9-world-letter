@@ -21,7 +21,7 @@ class CollectionTest(unittest.TestCase):
                 "sourcecountry":"GB","language":"English",
             }]}).encode()
         with patch.object(c,"fetch_bytes",side_effect=fetch):
-            leads=c.get_gdelt()
+            leads=c.get_gdelt(min_interval_seconds=0)
         self.assertEqual(len(queries),10)
         self.assertEqual(len(leads),10)
         self.assertTrue(any("per sbaglio" in query for query in queries))
@@ -96,12 +96,55 @@ class CollectionTest(unittest.TestCase):
                 "sourcecountry":"FR","language":"English"
             }]}).encode()
         with patch.object(c,"fetch_bytes",side_effect=fetch):
-            leads=c.get_gdelt(extra_searches=['("Fiji") ("mistake" OR "blunder")'])
+            leads=c.get_gdelt(extra_searches=['("Fiji") ("mistake" OR "blunder")'],
+                              min_interval_seconds=0)
         self.assertEqual(len(queries),11)
         self.assertIn('"Fiji"',queries[0])
         self.assertEqual(len(leads),11)
         self.assertTrue(all(lead["status"]=="unverified" for lead in leads))
 
+
+    def test_gdelt_rate_limit_and_plain_text_failures_are_logged_and_paced(self):
+        import json
+        from urllib.error import HTTPError
+        from unittest.mock import patch
+        url="https://api.gdeltproject.org/api/v2/doc/doc"
+        calls=[]
+        def fetch(request):
+            calls.append(request)
+            if len(calls)==1:
+                raise HTTPError(url,429,"Too Many Requests",None,None)
+            if len(calls)==2:
+                return b"Please limit requests to one every 5 seconds"
+            n=len(calls)
+            return json.dumps({"articles":[
+                {"title":"Town makes a funny human mistake",
+                 "url":f"https://original{n}.example.org/report",
+                 "sourcecountry":"FR"}]}).encode()
+        health={}
+        with (patch.object(c,"fetch_bytes",side_effect=fetch),
+              patch.object(c.time,"sleep") as mock_sleep):
+            result=c.get_gdelt(min_interval_seconds=5.5,
+                               diagnostics=health)
+        self.assertEqual(health["attempted"],10)
+        self.assertEqual(health["http_429"],1)
+        self.assertEqual(health["invalid_json_or_plaintext"],1)
+        self.assertEqual(health["unverified_original_links"],8)
+        self.assertEqual(len(result),8)
+        self.assertEqual(mock_sleep.call_count,9)
+        self.assertTrue(all(args.args==(5.5,)
+                            for args in mock_sleep.call_args_list))
+        self.assertTrue(all(x["status"]=="unverified" for x in result))
+        self.assertFalse(any("eventCountry" in x for x in result))
+
+    def test_gdelt_delay_is_configurable_for_unit_tests(self):
+        from unittest.mock import patch
+        with (patch.object(c,"fetch_bytes",return_value=b'{"articles":[]}'),
+              patch.object(c.time,"sleep") as sleep):
+            result=c.get_gdelt(min_interval_seconds=0)
+        self.assertEqual(result,[])
+        self.assertEqual(sleep.call_count,9)
+        self.assertTrue(all(arg.args==(0,) for arg in sleep.call_args_list))
 
     def test_original_comedy_search_is_reserved_even_when_feeds_fill_budget(self):
         """Generic publisher headlines cannot starve targeted original discovery."""
@@ -172,7 +215,7 @@ class CollectionTest(unittest.TestCase):
                  'domain':'example.org','sourcecountry':'GB',
                  'language':'English'} for i in range(12)]}).encode()
         with patch.object(c,'fetch_bytes',side_effect=fetch):
-            leads=c.get_gdelt()
+            leads=c.get_gdelt(min_interval_seconds=0)
         # Ten from the first query, then the remaining two unique URLs.
         # Later queries cannot duplicate already discovered publisher reports.
         self.assertEqual(len(leads),12)
