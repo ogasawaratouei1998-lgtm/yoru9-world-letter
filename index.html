@@ -1012,6 +1012,55 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #atlasHero .gallery-tile{transition:none}
  #atlasHero .gallery-tile:hover{transform:none}
 }
+
+/* Fix: the narrow iPhone viewport must show EVERY published postcard without
+   a partially clipped third tile. At most 520px use a two-column grid and
+   let the final odd article occupy a full-width horizontal postcard. */
+@media(max-width:520px){
+ #atlasHero .gallery-heading{flex-wrap:wrap;gap:3px 9px}
+ #atlasHero .gallery-heading strong{min-width:0}
+ #atlasHero .gallery-heading span{white-space:normal}
+ #atlasHero .gallery-track{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-flow:row;grid-auto-columns:auto;
+  gap:9px;overflow-x:visible;overscroll-behavior-x:auto;
+  scroll-snap-type:none;scrollbar-width:none;
+  padding:0;min-width:0;max-width:100%;width:100%;box-sizing:border-box
+ }
+ #atlasHero .gallery-tile{min-width:0;width:100%;max-width:100%;
+  height:100%;box-sizing:border-box;scroll-snap-align:none;overflow:hidden}
+ #atlasHero .gallery-art{max-width:100%;min-width:0;aspect-ratio:5/3}
+ #atlasHero .gallery-country,#atlasHero .gallery-label{min-width:0;
+  max-width:100%;overflow-wrap:anywhere}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-column:1/-1;display:grid;
+  grid-template-columns:minmax(0,43%) minmax(0,1fr);
+  grid-template-rows:auto 1fr;align-items:center;align-content:center;
+  gap:0 12px;padding:7px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{
+  grid-column:1;grid-row:1/span 2;width:100%;height:auto;
+  align-self:center;aspect-ratio:5/3;object-fit:cover
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-country{
+  grid-column:2;grid-row:1;align-self:end;margin:0 0 4px;font-size:.8rem
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  grid-column:2;grid-row:2;align-self:start;margin:0;min-height:0;
+  font-size:.87rem;line-height:1.44;-webkit-line-clamp:3
+ }
+}
+@media(max-width:355px){
+ #atlasHero .gallery-track{gap:7px}
+ #atlasHero .gallery-tile{padding:5px}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-template-columns:minmax(0,41%) minmax(0,1fr);
+  gap:0 8px;padding:6px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  font-size:.8rem;line-height:1.42
+ }
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1030,8 +1079,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   </div>
  </div>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
-  <div class="gallery-heading"><strong>今日はどの「まさか」から？</strong><span>絵をタップして読む</span></div>
-  <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧"></div>
+  <div class="gallery-heading"><strong>今日はどの「まさか」から？</strong><span>絵を選んで読む</span></div>
+  <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
  <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
