@@ -228,6 +228,26 @@ class PublishingTest(unittest.TestCase):
         self.assertEqual(len(published["stories"]),len(data["stories"]))
         self.assertNotIn("editorQualityVerified",published["stories"][0])
 
+    def test_automated_second_joke_requires_its_own_review_proof(self):
+        data=fixture("2026-11-18")
+        data["approvedBy"]="automated-two-stage-review"
+        for story in data["stories"]:
+            story["reported"]="2026-11-17"
+            story["editorQualityVerified"]=True
+            story["humanFailureVerified"]=True
+            story["humanActor"]="市の掲示担当者"
+            story["humanMistake"]="案内文を誤った文字で掲示した"
+        data["stories"][0]["quipSecond"]="道しるべを作ったら、文字のほうが先に道に迷った。"
+        with self.assertRaisesRegex(ValueError,"2本目"):
+            validate_approved(data,"2026-11-18")
+        data["stories"][0]["secondQuipVerified"]=True
+        published=validate_approved(data,"2026-11-18")
+        self.assertIn("quipSecond",published["stories"][0])
+        self.assertNotIn("secondQuipVerified",published["stories"][0])
+        del data["stories"][0]["quipSecond"]
+        del data["stories"][0]["secondQuipVerified"]
+        self.assertNotIn("quipSecond",validate_approved(data,"2026-11-18")["stories"][0])
+
     def test_automated_country_must_be_one_of_the_196_real_reporting_locations(self):
         data=fixture("2026-11-18")
         data["approvedBy"]="automated-two-stage-review"

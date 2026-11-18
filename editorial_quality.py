@@ -15,6 +15,8 @@ REVIEW_FIELDS=(
     "jokeClear",
     "humanFailureConfirmed",
     "comicPunchlineWorks",
+    "firstQuipIncidentSpecific",
+    "firstQuipNotRecap",
 )
 
 
@@ -60,3 +62,32 @@ def headline_fidelity_risk(story, fetched_articles):
     if re.search(r"(?:巧妙|周到)な(?:妨害|犯行|犯罪|計画)",title):
         return "unproven_criminal_intent_in_headline"
     return None
+
+
+def independently_approved_secondary_quip(story, review):
+    """Return only a separately vetted second angle; never reject the first joke.
+
+    Editor B checks factual grounding, distinct premise, and an actual payoff
+    in the SAME existing fact-check call. These flags are independent of the
+    first joke's verdict: a poor second joke must simply disappear.
+    """
+    from difflib import SequenceMatcher
+    from editorial_identity import comic_line_rejection
+    if not isinstance(story,dict) or not isinstance(review,dict):
+        return None
+    first=story.get("quip")
+    second=story.get("quipSecond")
+    if not isinstance(first,str) or not isinstance(second,str):
+        return None
+    second=second.strip()
+    if (not 15<=len(second)<=55 or first.strip()==second or
+            any(ord(c) in (10,13,60,62,92) for c in second) or
+            comic_line_rejection(second) is not None):
+        return None
+    if SequenceMatcher(None,first.strip(),second).ratio()>=0.82:
+        return None
+    if not all(review.get(field) is True for field in
+               ("secondQuipFactsVerified","secondQuipHasNewAngle",
+                "secondQuipPunchlineWorks")):
+        return None
+    return second
