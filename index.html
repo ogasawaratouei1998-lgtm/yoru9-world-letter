@@ -2119,6 +2119,33 @@ let travelExplainerShown=false;
 const travelSelections=new Map();
 const travelUsedPhotos=new Set();
 const travelFailedPhotos=new Set();
+// Rotate within each verified country, not just within one page visit. A
+// session-only random choice could show Grand Canyon twice on successive days.
+const TRAVEL_PHOTO_HISTORY_KEY='yoru9-travel-photo-rotation-v1';
+function restoreTravelPhotoHistory(){
+ try{
+  if(typeof localStorage==='undefined')return {};
+  const saved=JSON.parse(localStorage.getItem(TRAVEL_PHOTO_HISTORY_KEY)||'{}');
+  if(!saved||typeof saved!=='object'||Array.isArray(saved))return {};
+  const result={};
+  for(const [country,items] of Object.entries(saved)){
+   if(typeof country==='string'&&Array.isArray(items)){
+    result[country]=items.filter(x=>typeof x==='string'&&
+     /^assets\/travel\/[a-z0-9-]+\.jpg$/.test(x)).slice(-40);
+   }
+  }
+  return result;
+ }catch(_){return {};}
+}
+const travelPhotoHistory=restoreTravelPhotoHistory();
+function rememberTravelPhoto(country,asset){
+ const old=Array.isArray(travelPhotoHistory[country])?travelPhotoHistory[country]:[];
+ travelPhotoHistory[country]=[...old.filter(x=>x!==asset),asset].slice(-40);
+ try{
+  if(typeof localStorage!=='undefined')
+   localStorage.setItem(TRAVEL_PHOTO_HISTORY_KEY,JSON.stringify(travelPhotoHistory));
+ }catch(_){/* Private mode or disabled storage: still rotate within this visit. */}
+}
 function loadTravelStops(){
  if(!travelStopsPromise)travelStopsPromise=fetch('./travel-stops.json',{cache:'no-store'})
   .then(r=>{if(!r.ok)throw Error('travel stops unavailable');return r.json()})
@@ -2183,27 +2210,47 @@ function chooseTravelPhoto(story,stops){
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
  const sameCountry=available.filter(s=>countries.includes(s.country));
- // Never silently replace an unrepresented article country with an unrelated
- // country's photograph. A country-only map card is more honest.
+ // Always retain authentic article-country alignment; no fake foreign photo.
  if(!sameCountry.length)return null;
- // Editorially curated article destinations are more relevant than a random
- // tourist photograph of the same country. Only validated stops qualify.
- const curated=sameCountry.find(stop=>stop===stops?.[story.id]);
+ // Avoid two copies in one session, unless it is the ONLY available photograph.
  let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(curated&&!travelUsedPhotos.has(curated.photoAsset)){
-  pool=[curated];
- }else if(!pool.length){
-  pool=curated?[curated]:sameCountry;
+ if(!pool.length)pool=sameCountry;
+ // First exhaust every licensed photo within the country across page reloads.
+ const unseen=pool.filter(s=>!(travelPhotoHistory[s.country]||[]).includes(s.photoAsset));
+ if(unseen.length){
+  pool=unseen;
+ }else{
+  // A full cycle is exhausted: take the least recently shown photo, never
+  // the immediately preceding image when alternatives exist.
+  const age=s=>{
+   const order=travelPhotoHistory[s.country]||[];
+   return order.indexOf(s.photoAsset);
+  };
+  const oldest=Math.min(...pool.map(age));
+  pool=pool.filter(s=>age(s)===oldest);
  }
- // Welsh incidents prefer Welsh photographs when a specific direct stop is
- // unavailable; never infer the actual incident's precise location.
- if(!curated&&String(story.country||'').includes('ウェールズ')){
-  const welsh=pool.filter(s=>String(s.region).includes('ウェールズ'));
-  if(welsh.length)pool=welsh;
+ // A documented same-town destination can be preferred only until it has
+ // been seen. Later visits rotate to different pictures of the same country.
+ const curated=pool.find(stop=>stop===stops?.[story.id]);
+ if(curated)pool=[curated];
+ else{
+  // Prefer evergreen postcards before recycled illustrations from old news
+  // editions, including the repeatedly shown Grand Canyon. Once the public
+  // postcards have been seen, remaining unshown old photos join the rotation.
+  // "countryOnly" also marks old news-specific cards (e.g. Grand Canyon).
+  // Prefer the explicitly evergreen -postcard catalog keys instead.
+  const evergreen=pool.filter(stop=>Object.entries(stops||{}).some(
+   ([id,value])=>value===stop&&id.endsWith('-postcard')));
+  if(evergreen.length)pool=evergreen;
+  if(String(story.country||'').includes('ウェールズ')){
+   const welsh=pool.filter(s=>String(s.region).includes('ウェールズ'));
+   if(welsh.length)pool=welsh;
+  }
  }
  const picked=pool[Math.floor(Math.random()*pool.length)];
  travelSelections.set(key,picked);
  travelUsedPhotos.add(picked.photoAsset);
+ rememberTravelPhoto(picked.country,picked.photoAsset);
  return picked;
 }
 function travelPostcardHtml(story,stop,showIntro=false){
