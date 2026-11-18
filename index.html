@@ -2237,8 +2237,11 @@ function chooseTravelPhoto(story,stops){
   // Prefer evergreen postcards before recycled illustrations from old news
   // editions, including the repeatedly shown Grand Canyon. Once the public
   // postcards have been seen, remaining unshown old photos join the rotation.
-  const generic=pool.filter(s=>s.countryOnly===true);
-  if(generic.length)pool=generic;
+  // "countryOnly" also marks old news-specific cards (e.g. Grand Canyon).
+  // Prefer the explicitly evergreen -postcard catalog keys instead.
+  const evergreen=pool.filter(stop=>Object.entries(stops||{}).some(
+   ([id,value])=>value===stop&&id.endsWith('-postcard')));
+  if(evergreen.length)pool=evergreen;
   if(String(story.country||'').includes('ウェールズ')){
    const welsh=pool.filter(s=>String(s.region).includes('ウェールズ'));
    if(welsh.length)pool=welsh;
