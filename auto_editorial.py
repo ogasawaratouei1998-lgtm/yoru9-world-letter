@@ -1516,8 +1516,8 @@ def main():
     topic_history=recent_topic_counts(now.date())
     lifetime_history=lifetime_country_counts(now.date())
     cooldown=recent_country_cooldown_counts(now.date())
-    selected=select_diverse_verified_stories(
-        selected,country_history,category_history,topic_history,lifetime_history,
+    selected=select_diverse_verified_stories(selected,
+        country_history,category_history,topic_history,lifetime_history,
         recent_country_cooldown=cooldown,selection_seed=now.date().isoformat())
     checkpoint("selected",selected_for_edition=len(selected))
     print("Nightly verified selection:",len(selected),"source-checked stories;",
