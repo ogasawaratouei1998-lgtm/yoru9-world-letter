@@ -1114,9 +1114,11 @@ def main():
         "fresh_backup_groups":max(0,len(grouped_evidence)-24),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
-    if sum(draft_preflight_viable(item,now) for item in draft)<2:
-        # Reserve API quota for independent reviewer B as soon as two draft
-        # candidates exist. A big batch of unreviewed prose is not progress.
+    if sum(draft_preflight_viable(item,now) for item in draft)<3:
+        # Aim for three *eligible* drafts without forcing publication:
+        # independent reviewer B must still approve each original article.
+        # Keep quota/time reserve for B. A big batch of unreviewed prose is
+        # not progress.
         # Separate diagnosis from drafting. A large all-groups request can
         # return only diagnostics, even when some groups are draftable.
         # Retry in small, independent batches; the same downstream source,
@@ -1143,7 +1145,12 @@ def main():
             g["groupId"]))
         print("Supplementing insufficient editorial drafts one incident at a time:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),8)):
+        # Real end-to-end trial: 24 first-pass groups produced zero drafts,
+        # and eight separate recovery attempts found only one qualifying
+        # incident. Cover up to sixteen different source-supported mishaps,
+        # but stop immediately when three viable drafts exist or B-review
+        # time/quota becomes scarce. Never force weak drafts into an edition.
+        for start in range(0,min(len(retry_candidates),16)):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
@@ -1176,8 +1183,8 @@ def main():
                 print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if sum(draft_preflight_viable(item,now) for item in draft)>=2:
-                print("Two eligible comedy drafts reserved: moving to independent fact review.",flush=True)
+            if sum(draft_preflight_viable(item,now) for item in draft)>=3:
+                print("Three eligible comedy drafts reserved: moving to independent fact review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft))
