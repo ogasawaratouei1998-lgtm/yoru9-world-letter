@@ -1,6 +1,12 @@
 name: Manual full Gemini editorial verification (read-only)
 
+# Changing this workflow on main triggers one additional read-only
+# end-to-end Gemini verification. Normal application code commits do not.
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/one-time-editorial-verification.yml'
   workflow_dispatch:
 
 permissions:
@@ -55,4 +61,39 @@ jobs:
           print(text)
           with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as f:
               f.write("## Manual editorial verification\n\n"+text+"\n")
+          PY
+      - name: Save private count-only funnel diagnosis, even on AI failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: read-only-editorial-funnel
+          path: data/editorial-funnel.json
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Summarize discovery-to-publication bottlenecks without story data
+        if: always()
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json, os
+          path=Path("data/editorial-funnel.json")
+          parts=["","### Private editorial funnel diagnostic",""]
+          if path.is_file():
+              report=json.loads(path.read_text(encoding="utf-8"))
+              parts.append("Stage: "+str(report.get("phase","unknown")))
+              parts.append("")
+              parts.append("| Stage count | Value |")
+              parts.append("| --- | ---: |")
+              for key in ("collected","fresh","planned_fetches",
+                          "fetchable_original_bodies","candidate_review_groups",
+                          "first_ai_batch_groups","drafted","preflight_eligible",
+                          "independent_approved","selected_for_edition"):
+                  if key in report:
+                      parts.append(f"| {key} | {report[key]} |")
+              parts.extend(["","Publisher-market region and rejection diagnostic labels do not establish actual event countries."])
+          else:
+              parts.append("No funnel file; the job failed before collection or independent editorial execution.")
+          with open(os.environ["GITHUB_STEP_SUMMARY"],"a",encoding="utf-8") as out:
+              out.write(chr(10).join(parts)+"\n")
           PY
