@@ -22,6 +22,40 @@ class EditorialQualityTests(unittest.TestCase):
         review["approved"]=False
         self.assertFalse(independent_editorial_quality_passed(review))
 
+    def test_first_quip_has_separate_nonrecap_and_incident_specific_verdicts(self):
+        self.assertIn("firstQuipIncidentSpecific", REVIEW_FIELDS)
+        self.assertIn("firstQuipNotRecap", REVIEW_FIELDS)
+        review={"approved":True, **{name:True for name in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(review))
+        for field in ("firstQuipIncidentSpecific","firstQuipNotRecap"):
+            with self.subTest(field=field):
+                report={**review,field:False}
+                self.assertFalse(independent_editorial_quality_passed(report))
+
+    def test_second_quip_requires_three_independent_positive_verdicts(self):
+        from editorial_quality import independently_approved_secondary_quip
+        first="配達アプリでコーヒーを注文し、ドアを開けてもらった。"
+        second="扉の鍵より先に、コーヒーの注文が救助隊を呼んだ。"
+        story={"quip":first,"quipSecond":second}
+        audit={"secondQuipFactsVerified":True,
+               "secondQuipHasNewAngle":True,
+               "secondQuipPunchlineWorks":True}
+        self.assertEqual(independently_approved_secondary_quip(story,audit),second)
+        for field in audit:
+            with self.subTest(field=field):
+                wrong={**audit,field:False}
+                self.assertIsNone(independently_approved_secondary_quip(story,wrong))
+                unknown={k:v for k,v in audit.items() if k!=field}
+                self.assertIsNone(independently_approved_secondary_quip(story,unknown))
+        self.assertIsNone(independently_approved_secondary_quip(
+            {"quip":first,"quipSecond":first},audit))
+        self.assertIsNone(independently_approved_secondary_quip(
+            {"quip":first,"quipSecond":"世界は予想外です。"},audit))
+        self.assertIsNone(independently_approved_secondary_quip(
+            {"quip":first,"quipSecond":"短い"},audit))
+        self.assertIsNone(independently_approved_secondary_quip(
+            {"quip":first},audit))
+
     def test_botanical_garden_is_not_plant_nursery(self):
         story={"title":"防護柵の意味なし、アシカが植物園を占拠"}
         article=[{"text":"Sea lions entered a Dunedin plant nursery after barriers were installed."}]
