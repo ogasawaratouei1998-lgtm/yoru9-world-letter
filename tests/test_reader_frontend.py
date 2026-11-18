@@ -146,6 +146,58 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("(!isMonth&&edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("travelCountryNames(story.country).includes(stop.country)",(ROOT/"index.html").read_text(encoding="utf-8"))
 
+    def test_every_postcard_distinguishes_news_country_from_tourist_photography(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        block=page[page.index("function travelPostcardHtml("):
+                   page.index("document.querySelector('main').addEventListener('click',async event=>{")]
+        self.assertIn("const reportCountry=countryLabel(story.country||'')",block)
+        self.assertIn("class=\"travel-context\" aria-label=\"記事と旅先の違い\"",block)
+        self.assertIn("記事の舞台（国） ",block)
+        self.assertIn("旅先 ",block)
+        self.assertIn("class=\"travel-trust\" role=\"note\"",block)
+        self.assertIn("この写真はニュース現場の記録ではなく、旅先の風景です。",block)
+        self.assertIn("写真や地図は記事の証拠ではなく",block)
+        self.assertIn("この国の写真はまだ準備中。",block)
+        self.assertIn("掲載国を地図で見る",block)
+        self.assertIn("旅先を地図で見る",block)
+        self.assertIn("countryRecord(countryKeys(story.country)[0]||'')",block)
+        # All trips, not just the first of the evening, show the truth marker.
+        self.assertLess(block.index("'<p class=\"travel-trust\""),block.index("(showIntro?'<p class=\"travel-disclaimer\""))
+        self.assertIn("panel.innerHTML=travelPostcardHtml(story,stop,firstIntro)",page)
+        self.assertIn(".travel-trust{display:block",page)
+        self.assertIn(".travel-context-story,.travel-context-destination{",page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_travel_priority_is_specific_same_country_or_honest_empty(self):
+        import json
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index("const travelSelections=new Map();")
+        end=page.index("function travelPostcardHtml(",start)
+        logic=page[start:end]
+        row=lambda country,asset: {
+          "country":country,"place":"観光の写真","region":"風景",
+          "latitude":35,"longitude":135,
+          "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/x/photo.jpg",
+          "photoAsset":"assets/travel/"+asset+".jpg",
+          "photoPage":"https://commons.wikimedia.org/wiki/File:Photo.jpg",
+          "licenseUrl":"https://creativecommons.org/licenses/by/4.0/"
+        }
+        stops={"article-specific":row("日本","kyoto"),
+               "japan-generic":row("日本","tokyo"),
+               "us":row("アメリカ合衆国","usa")}
+        script=(
+          "function countryKeys(){return [];} function countryLabel(x){return x;}\n"+
+          logic+"\nconst stops="+json.dumps(stops,ensure_ascii=False)+";\n"+
+          "const exact=chooseTravelPhoto({id:'article-specific',country:'日本'},stops);"
+          "if(exact!==stops['article-specific'])process.exit(2);"
+          "const other=chooseTravelPhoto({id:'other',country:'日本'},stops);"
+          "if(!other||other.country!=='日本')process.exit(3);"
+          "const missing=chooseTravelPhoto({id:'no-photo',country:'ケニア'},stops);"
+          "if(missing!==null)process.exit(4);"
+        )
+        run=subprocess.run(["node","-e",script],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+
     def test_travel_data_changes_trigger_validation_and_site_deploy(self):
         deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
         check=(ROOT/".github/workflows/test-publishing.yml").read_text(encoding="utf-8")
