@@ -656,14 +656,14 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
-        self.assertIn("for start in range(0,min(len(retry_candidates),20),2,2):",source)
+        self.assertIn("for start in range(0,min(len(retry_candidates),20),2):",source)
         self.assertIn("Three eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_draft_recovery_targets_three_before_fact_review_and_respects_quota(self):
         import inspect
         code=inspect.getsource(editorial.main)
         self.assertIn('draft_preflight_viable(item,now) for item in draft)<3',code)
-        self.assertIn('for start in range(0,min(len(retry_candidates),20),2,2):',code)
+        self.assertIn('for start in range(0,min(len(retry_candidates),20),2):',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
         self.assertIn('supplemental_attempts+=1',code)
