@@ -5,6 +5,7 @@ const area=document.getElementById('notificationSection');
 if(!area)return;
 const status=document.getElementById('notificationStatus');
 const button=document.getElementById('notificationButton');
+const testButton=document.getElementById('notificationTestButton');
 const info=document.getElementById('notificationInfo');
 let configuration=null;
 const message=s=>{status.textContent=s};
@@ -32,10 +33,19 @@ async function refresh(){
   }
   const reg=await navigator.serviceWorker.ready;
   const sub=await reg.pushManager.getSubscription();
+  if(testButton){
+    const canTest=Notification.permission==='granted' && typeof reg.showNotification==='function';
+    testButton.hidden=!canTest;
+    testButton.disabled=!canTest;
+  }
   button.textContent=sub?'通知を解除する':'夜9時の通知を受け取る';
   button.dataset.action=sub?'unsubscribe':'subscribe';
   button.disabled=false;
-  message(sub?'この端末は通知を購読しています。不要なら解除できます。':'許可すると、新しい配信号の公開後に通知を受け取れます。');
+  if(sub && Notification.permission!=='granted'){
+    message('購読登録はありますが、端末で通知が許可されていません。iPhoneの設定→通知からこのアプリを確認してください。');
+  }else{
+    message(sub?'この端末は通知を購読しています。届かない場合は「この端末で通知をテスト」をお試しください。':'許可すると、新しい配信号の公開後に通知を受け取れます。');
+  }
 }
 async function post(action,body){
   const base=configuration.backendUrl.replace(/\/+$/,'');
@@ -67,6 +77,24 @@ button.addEventListener('click',async()=>{
     }
   }catch(error){message('通知の設定が完了しませんでした。通信状況を確認してください。')}
   finally{await refresh().catch(()=>{button.disabled=false})}
+});
+// User-triggered local display test: never calls the push server or broadcasts.
+if(testButton)testButton.addEventListener('click',async()=>{
+  if(testButton.disabled || Notification.permission!=='granted')return;
+  testButton.disabled=true;
+  try{
+    const reg=await navigator.serviceWorker.ready;
+    if(typeof reg.showNotification!=='function')throw Error('unsupported');
+    await reg.showNotification('よる9じの世界便り',{
+      body:'端末への通知表示テストです。ニュース配信ではありません。',
+      tag:'yoru9-local-test'
+    });
+    message('端末へテスト通知を渡しました。見えない場合は、iPhoneの設定→通知・集中モードを確認してください。');
+  }catch(_){
+    message('端末でテスト通知を表示できませんでした。通知の許可とホーム画面アプリを確認してください。');
+  }finally{
+    testButton.disabled=false;
+  }
 });
 fetch('./notification-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('disabled');return r.json()}).then(async x=>{
   if(!validConfig(x))return;
