@@ -70,6 +70,46 @@ def bundle_travel_photos(root, output):
     return len(required)
 
 
+def build_country_coverage(root,output):
+    """Publish a truthful all-time 196-location scoreboard from released issues.
+
+    Unverified news leads, draft stories and publisher markets NEVER count.
+    One historical cross-border article can count in two reporting locations.
+    """
+    from collections import Counter
+    from country_codes import country_codes
+    catalog=json.loads((root/'country-catalog.json').read_text(encoding='utf-8'))
+    known={item['code'] for item in catalog}
+    counts=Counter()
+    published_dates=[]
+    for file in sorted((root/'data/archive').glob('????-??-??.json')):
+        try:
+            issue=json.loads(file.read_text(encoding='utf-8'))
+            if issue.get('status')!='published' or issue.get('editionDate')!=file.stem:
+                continue
+            published_dates.append(file.stem)
+            for story in issue.get('stories',[]):
+                for code in country_codes(story.get('country')):
+                    if code in known:
+                        counts[code]+=1
+        except (OSError,TypeError,ValueError,KeyError):
+            continue
+    result={
+        'basis':'published-archive-only',
+        'total':len(known),
+        'covered':len(counts),
+        'remaining':len(known)-len(counts),
+        'byCountry':dict(sorted(counts.items())),
+        'latestEdition':max(published_dates) if published_dates else None,
+        'note':'Counts come from released, source-reviewed editions. These are reporting locations, not a claim of diplomatic recognition.'
+    }
+    dest=output/'data/country-coverage.json'
+    dest.parent.mkdir(parents=True,exist_ok=True)
+    dest.write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    print(f"累計ニュース掲載国：{len(counts)}/{len(known)} か国・地域")
+    return result
+
+
 def build(root, output):
     if output.exists():
         shutil.rmtree(output)
@@ -120,6 +160,7 @@ def build(root, output):
                    for story in stories):
                 raise ValueError('monthly collection failed independent-source validation')
             shutil.copy2(source, output / 'data/monthly' / source.name)
+    build_country_coverage(root, output)
     bundle_travel_photos(root, output)
     print('公開用サイトを生成しました: ' + str(output))
     return output

@@ -604,7 +604,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 </section>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
 <div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
-<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜と、この30日の世界地図</h2><p class="small" id="mapCaption" aria-live="polite">公開された配信号と月間特集の掲載国を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・直近30日の掲載状況</summary><p class="small">公開済み配信号と月間特集を集計しています。未掲載とは、直近30日間の配信または特集収録に掲載記録がない地域です。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国・地域から記事を探す</h2><p class="small">配信号と月間特集の記事を探せます。地図の数字をタップすると、この国の記事が一覧表示されます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
+<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜と、この30日の世界地図</h2><p class="small" id="mapCaption" aria-live="polite">公開された配信号と月間特集の掲載国を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・196カ国の掲載状況</summary><p class="small">国・地域の累計紹介数は公開済みの過去号から集計。地図と地域別の本数は直近30日間です。未掲載とは、その30日間に掲載がない地域です。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国・地域から記事を探す</h2><p class="small">配信号と月間特集の記事を探せます。地図の数字をタップすると、この国の記事が一覧表示されます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
 </div>
 <section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
 <summary>夜9時のお知らせ・通知設定</summary>
@@ -640,6 +640,17 @@ function countryRecord(name){
  const key=String(name||'').trim().toLocaleLowerCase();
  return countryCatalog.find(item=>item.code.toLowerCase()===key||item.name.toLocaleLowerCase()===key||item.aliases.some(alias=>alias.toLocaleLowerCase()===key))||null;
 }
+function countryKeys(name){
+ const full=countryRecord(name);if(full)return [full.code];
+ const value=String(name||'').trim();
+ // Historical cross-border incidents: never split an exact compound country.
+ for(const sep of ['・','／','/','、',' and ']){
+  if(!value.includes(sep))continue;
+  const parts=value.split(sep).map(x=>countryRecord(x.trim())?.code);
+  if(parts.length>1&&parts.every(Boolean))return [...new Set(parts)];
+ }
+ return [];
+}
 function countryKey(name){return countryRecord(name)?.code||String(name||'').trim()}
 function countryLabel(name){return countryRecord(name)?.name||String(name||'').trim()}
 function mapPoint(name){
@@ -653,11 +664,25 @@ async function loadCountryCatalog(){
   const records=await response.json();
   if(!Array.isArray(records)||!records.length)throw Error('invalid country catalog');
   countryCatalog=records;
+  loadLifetimeCoverage();
   renderWorld();renderIssueCountries();
   if(Array.isArray(cachedCountryIssues))loadCountryIndex(cachedCountryIssues);
  }catch(err){console.info('国・地域の一覧を読み込めませんでした',err)}
 }
 let cachedCountryIssues=null;
+let lifetimeCountryCoverage=null;
+async function loadLifetimeCoverage(){
+ try{
+  const response=await fetch('./data/country-coverage.json',{cache:'no-store'});
+  if(!response.ok)throw Error('country scoreboard unavailable');
+  const report=await response.json();
+  if(report.basis!=='published-archive-only'||report.total!==countryCatalog.length||
+     !Number.isInteger(report.covered)||report.covered<0||report.covered>report.total)
+   throw Error('invalid country scoreboard');
+  lifetimeCountryCoverage=report;
+  renderEditorialDashboard(dashboardIssues,dashboardFailed);
+ }catch(err){console.info('累計の掲載国集計を読み込めませんでした',err)}
+}
 // Natural Earth-derived country boundaries are loaded as GeoJSON.
 // Drawn with an equirectangular projection matching the country marker positions.
 async function loadWorldBoundaries(){
@@ -708,8 +733,8 @@ function mapDisplayStories(){
 function renderWorld(){
  const counts=new Map();
  for(const story of mapDisplayStories()){
-  const country=countryKey(story.country);
-  if(country&&countryRecord(country))counts.set(country,(counts.get(country)||0)+1);
+  for(const country of countryKeys(story.country))
+   counts.set(country,(counts.get(country)||0)+1);
  }
  const pins=$('mapPins');pins.replaceChildren();
  counts.forEach((count,country)=>{
@@ -732,18 +757,19 @@ function renderWorld(){
 function includeCurrentCountries(){
  if(!edition||edition.status==='demo'||!Array.isArray(edition.stories))return;
  for(const story of edition.stories){
-  const country=countryKey(story.country);if(!country)continue;
-  if(!countryIndex.has(country))countryIndex.set(country,[]);
-  const list=countryIndex.get(country);
-  if(!list.some(item=>item.date===edition.editionDate&&item.title===story.title))
-   list.push({date:edition.editionDate,title:story.title});
+  for(const country of countryKeys(story.country)){
+   if(!countryIndex.has(country))countryIndex.set(country,[]);
+   const list=countryIndex.get(country);
+   if(!list.some(item=>item.date===edition.editionDate&&item.title===story.title))
+    list.push({date:edition.editionDate,title:story.title});
+  }
  }
 }
 function refreshCountryChoices(){
  includeCurrentCountries();
  const menu=$('countrySelect'),previous=menu.value;
  menu.innerHTML='<option value="">すべての国・地域</option>';
- const countries=new Set([...countryIndex.keys(),...visibleMonthStories.map(s=>countryKey(s.country))]);
+ const countries=new Set([...countryIndex.keys(),...visibleMonthStories.flatMap(s=>countryKeys(s.country))]);
  [...countries].filter(country=>countryRecord(country))
   .sort((a,b)=>countryLabel(a).localeCompare(countryLabel(b),'ja')).forEach(country=>{
    const option=document.createElement('option');option.value=country;
@@ -768,10 +794,13 @@ function renderEditorialDashboard(issues,failed=0){
   if(usedIds.has(story.id)||keys.some(key=>usedSources.has(key)))return false;
   usedIds.add(story.id);keys.forEach(key=>usedSources.add(key));
   articles++;
-  const country=countryKey(story.country);
-  if(country&&countryRecord(country))counts.set(country,(counts.get(country)||0)+1);
-  const region=editorialRegion(country);
-  if(region)regions.set(region,regions.get(region)+1);else unknown++;
+  const codes=countryKeys(story.country);
+  if(!codes.length)unknown++;
+  for(const country of codes){
+   counts.set(country,(counts.get(country)||0)+1);
+   const region=editorialRegion(country);
+   if(region)regions.set(region,regions.get(region)+1);
+  }
   return true;
  }
  for(const issue of issues){
@@ -792,7 +821,8 @@ function renderEditorialDashboard(issues,failed=0){
   if(isMonthDate(monthRetentionDate(story),monthWindow().start,now)&&countStory(story))curated++;
  }
  const missing=[...regions].filter(([,n])=>n===0).map(([name])=>name);
- $('editorStats').textContent='直近30日：'+dates.size+'配信号＋特集収録'+curated+'本／'+
+ const lifetime=lifetimeCountryCoverage?'累計：'+lifetimeCountryCoverage.covered+'/'+lifetimeCountryCoverage.total+'か国・地域を紹介（未紹介'+lifetimeCountryCoverage.remaining+'）。 ':' ';
+ $('editorStats').textContent=lifetime+'直近30日：'+dates.size+'配信号＋特集収録'+curated+'本／'+
   articles+'記事／'+counts.size+'か国・地域。未掲載地域：'+missing.length+'。'+
   (failed?'取得できなかった配信号：'+failed+'件。':'')+
   (unknown?'地域を判定できない記事：'+unknown+'件。':'');
@@ -828,7 +858,7 @@ function renderEditorialDashboard(issues,failed=0){
  if(!counts.size){const p=document.createElement('p');p.textContent='対象期間に掲載記録がありません。';countryBox.append(p)}
 }
 function countryResultsFor(country){
- const fromMonth=visibleMonthStories.filter(s=>countryKey(s.country)===country)
+ const fromMonth=visibleMonthStories.filter(s=>countryKeys(s.country).includes(country))
   .map(s=>({kind:'month',id:s.id,date:monthRetentionDate(s),title:s.title}));
  const fromArchive=(countryIndex.get(country)||[]).filter(item=>
   !fromMonth.some(s=>s.date===item.date&&s.title===item.title));
@@ -869,7 +899,7 @@ async function loadCountryIndex(issues){
  dashboardIssues=all.filter(Boolean);dashboardFailed=all.filter(x=>!x).length;
  renderEditorialDashboard(all.filter(Boolean),all.filter(x=>!x).length);
  countryIndex=new Map();
- all.filter(Boolean).forEach(issue=>issue.stories.forEach(story=>{const country=countryKey(story.country);if(!country)return;if(!countryIndex.has(country))countryIndex.set(country,[]);countryIndex.get(country).push({date:issue.editionDate,title:story.title})}));
+ all.filter(Boolean).forEach(issue=>issue.stories.forEach(story=>{for(const country of countryKeys(story.country)){if(!countryIndex.has(country))countryIndex.set(country,[]);countryIndex.get(country).push({date:issue.editionDate,title:story.title})}}));
  refreshCountryChoices();
 }
 $('countrySelect').addEventListener('change',showCountryResults);

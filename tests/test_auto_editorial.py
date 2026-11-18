@@ -19,6 +19,73 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIsNone(country_region("未確認"))
         self.assertIsNone(country_region("架空の国"))
 
+    def test_196_reporting_locations_have_unique_names_aliases_and_map_points(self):
+        from country_codes import catalog, country_code, country_codes, country_region
+        import re
+        rows=catalog()
+        self.assertEqual(len(rows),196)
+        self.assertEqual(len({row["code"] for row in rows}),196)
+        self.assertEqual({row["region"] for row in rows},
+                         {"アフリカ","アジア","ヨーロッパ","北アメリカ","南アメリカ","オセアニア"})
+        all_aliases={}
+        for item in rows:
+            self.assertRegex(item["code"],r"^[A-Z]{2}$")
+            self.assertTrue(item["name"])
+            self.assertTrue(-180<=item["lon"]<=180)
+            self.assertTrue(-90<=item["lat"]<=90)
+            for label in [item["code"],item["name"],*item["aliases"]]:
+                normalized=label.casefold().strip()
+                self.assertEqual(all_aliases.get(normalized,item["code"]),
+                                 item["code"],(label,item["code"]))
+                all_aliases[normalized]=item["code"]
+                self.assertEqual(country_code(label),item["code"])
+        for name,code in (("パレスチナ","PS"),("台湾","TW"),
+                          ("バチカン市国","VA"),("ミクロネシア連邦","FM"),
+                          ("コンゴ民主共和国","CD"),("コソボ",None)):
+            self.assertEqual(country_code(name),code)
+        self.assertEqual(country_codes("イギリス・アメリカ"),["GB","US"])
+        self.assertEqual(country_codes("アンティグア・バーブーダ"),["AG"])
+        self.assertEqual(country_codes("未確認"),[])
+        self.assertIsNone(country_region("発行元が不明"))
+
+    def test_all_time_country_selection_prefers_uncovered_not_repeated(self):
+        from collections import Counter
+        pool=[{"id":key,"country":key,"category":"work","title":"A workplace mix-up"}
+              for key in ("US","FR","TW","JP")]
+        chosen=editorial.select_diverse_verified_stories(
+            pool,Counter(),Counter(),Counter(),
+            Counter({"US":50,"FR":12,"JP":3}))
+        self.assertIn("TW",{item["country"] for item in chosen})
+        self.assertEqual(len(chosen),3)
+
+    def test_older_cross_border_editions_contribute_two_real_locations(self):
+        from datetime import date
+        from pathlib import Path
+        import tempfile,os,json
+        with tempfile.TemporaryDirectory() as tmp:
+            archive=Path(tmp)/"data"/"archive"
+            archive.mkdir(parents=True)
+            for filename,status,name in [
+                ("2026-11-11","published","イギリス・アメリカ"),
+                ("2026-11-12","draft","台湾"),
+                ("2026-11-13","published","未確認"),
+                ("2026-11-14","published","アンティグア・バーブーダ")
+            ]:
+                (archive/(filename+".json")).write_text(json.dumps({
+                    "editionDate":filename,"status":status,
+                    "stories":[{"country":name,"category":"person"}]
+                },ensure_ascii=False),encoding="utf-8")
+            old=os.getcwd()
+            try:
+                os.chdir(tmp)
+                all_time=editorial.lifetime_country_counts(date(2026,11,18))
+                recent,categories=editorial.recent_diversity_counts(date(2026,11,18))
+            finally:
+                os.chdir(old)
+            self.assertEqual(dict(all_time),{"GB":1,"US":1,"AG":1})
+            self.assertEqual(dict(recent),{"GB":1,"US":1,"AG":1})
+            self.assertEqual(categories["person"],3)
+
     def test_evidence_retrieval_rotates_geographic_source_markets(self):
         leads=[{"title":"Company error","url":f"https://us{i}.example/story",
                 "sourcecountry":"US"} for i in range(20)]
