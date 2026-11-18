@@ -187,6 +187,7 @@ body{background:#0b1528}
 .editor-dashboard summary,.editor-stats,.editor-regions{font-size:.875rem;line-height:1.7}
 .notification-panel p,.offlineNotice{font-size:.9375rem;line-height:1.8}
 .notification-panel button{font-size:1rem;min-height:44px}
+#notificationTestButton{margin-top:8px;background:transparent;border:1px solid #f5d8a1;color:#f5d8a1}
 .night-quote span{font-size:.9375rem;line-height:1.6}
 .footerpanel>p:not(.bye){font-size:1rem;line-height:1.9}
 .footerpanel .bye{font-size:.9375rem;line-height:1.8}
@@ -609,6 +610,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <summary>夜9時のお知らせ・通知設定</summary>
 <div class="notification-settings"><p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
 <button id="notificationButton" type="button" disabled>夜9時の通知を受け取る</button>
+<button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
 <section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>今日の便りは、ここまで。</h2><div class="night-quote"><span>今夜のひと言</span><p id="nightlyMessage">今日の反省会は閉会。続きは、また明日。</p></div><p class="bye">おやすみなさい。また、気が向いた夜に。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
