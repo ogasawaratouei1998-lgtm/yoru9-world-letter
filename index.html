@@ -649,6 +649,58 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .spotlight h1{font-size:clamp(1.44rem,5.7vw,1.9rem)}
 }
 @media(prefers-reduced-motion:reduce){.atlas-pin{transition:none}}
+
+/* iPhone screenshot refinement — de-duplicate geography, improve scan rhythm.
+   The world atlas stays legible; only unnecessary repetitions and gaps shrink. */
+#atlasHero{margin-bottom:12px!important;padding:14px 15px 12px!important}
+#atlasHero .eyebrow{margin-bottom:4px!important}
+.atlas-title{font-size:clamp(1.16rem,4.5vw,1.65rem);line-height:1.42}
+.atlas-lede{margin:3px 0 8px;line-height:1.45}
+.atlas-brand{margin-bottom:8px}
+.atlas-map-caption{font-size:.75rem;line-height:1.55;margin:7px 0 2px}
+#atlasHero .issue-countries{margin:4px 0 3px!important;gap:5px}
+#atlasHero .issue-countries .countries-intro{font-size:.76rem;margin-right:2px}
+#atlasHero .country-chip{padding:4px 11px;font-size:.76rem}
+.atlas-explore{font-size:.8rem;min-height:44px;margin-top:0;padding:5px 2px}
+.spotlight{padding:15px 16px 17px;margin-bottom:14px}
+.spotlight-topline{margin-bottom:10px;padding-bottom:9px}
+.spotlight h1{font-size:clamp(1.32rem,4.7vw,1.88rem);
+ line-height:1.47;font-weight:800;margin:0 0 11px}
+.spotlight-brief{font-size:.96rem;line-height:1.68;margin-bottom:12px}
+.spotlight-quip{font-size:clamp(1.02rem,4vw,1.18rem);line-height:1.6;margin-bottom:14px}
+.spotlight #spotlightRead{min-height:48px;box-shadow:none}
+.sectionhead .small[hidden]{display:none}
+.issue-details .status{border-radius:12px}
+.reader-extras{gap:7px}
+.reader-tool{border-radius:11px;padding:5px 13px}
+.reader-tool>summary{font-size:.9rem;min-height:44px;padding:6px 0}
+.footerpanel{padding:19px 15px 17px;margin-top:22px}
+.footerpanel h2{font-size:clamp(1.14rem,4.5vw,1.32rem)}
+.footerpanel .bye{font-size:.88rem;margin-top:10px}
+.footerpanel .closing-moon{font-size:1.45rem}
+.night-quote{margin-top:8px;padding:10px 8px 0}
+.night-quote p{font-size:clamp(1rem,4vw,1.15rem);line-height:1.68;
+ font-weight:660;margin:9px auto 12px}
+@media(max-width:520px){
+ #atlasHero{padding:12px 12px 11px!important;margin:3px 0 11px!important}
+ #atlasHero .eyebrow{font-size:.68rem!important}
+ .atlas-title{font-size:clamp(1.18rem,5vw,1.35rem)}
+ .atlas-lede{font-size:.8rem}
+ .atlas-brand{display:none}
+ .atlas-map-caption{font-size:.73rem}
+ #atlasHero .issue-countries{gap:5px 5px}
+ #atlasHero .country-chip{font-size:.73rem;padding:5px 9px;min-height:44px}
+ .atlas-explore{margin:0;font-size:.78rem}
+ .spotlight{padding:15px 15px 17px}
+ .spotlight h1{font-size:clamp(1.31rem,5.3vw,1.51rem);line-height:1.48}
+ .spotlight-brief{font-size:.94rem;line-height:1.7}
+ .spotlight-quip{font-size:1.025rem;line-height:1.65}
+ .spotlight-location{font-size:.78rem;line-height:1.45}
+ .spotlight-topline{gap:5px 7px}
+ .story h3{font-size:1.18rem;line-height:1.5}
+ .story .summary{font-size:.925rem;line-height:1.75}
+ .reader-tool>summary{font-size:.9rem}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -660,7 +712,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  <div class="atlas-heading">
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
   <h2 class="atlas-title">世界から届いた、<span id="atlasStoryCount">3</span>つの実話。</h2>
-  <p class="atlas-lede">今夜の「まさか」は、どこの国から？</p>
+  <p class="atlas-lede" id="atlasLede">この号の「まさか」は、どこの国から？</p>
   <p class="atlas-brand">世界の「やらかし」に、AIが本気でツッコむ。</p>
  </div>
  <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
@@ -1244,8 +1296,8 @@ function renderCoverMap(){
  const caption=$('coverMapCaption');
  const names=[...present.keys()].map(countryLabel).join('・');
  caption.textContent=names
-  ?'掲載国：'+names+'。点は国・地域の代表位置で、ニュースの現場ではありません。'
-  :'公開記事の掲載国を確認中です。地図の点はニュースの現場ではありません。';
+  ?'点は国・地域の代表位置です。ニュースの現場ではありません。'
+  :'掲載国を確認中です。点はニュースの現場ではありません。';
 }
 function renderIssueCountries(){
  const target=$('issueCountries');
@@ -1497,7 +1549,12 @@ function updateFilters(){
 }
 function render(){const d=edition.stories;
  $('atlasStoryCount').textContent=d.length===1?'1':String(d.length);
- const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
+ // The immutable 11/17 archive contains a generic closing that did not
+ // meet the current quality bar. Keep the record unchanged, but do not
+ // give the rejected gag top billing on the public reading surface.
+ const nightlyOriginal=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():'';
+ const staleClosing='仕事内容：その他、まさかの対応あり。世界の求人票、備考欄が足りない。';
+ const nightlyLine=(edition.editionDate==='2026-11-17'&&nightlyOriginal===staleClosing)?'':nightlyOriginal;
   $('nightlyMessage').textContent=nightlyLine;
   $('closingQuote').hidden=!nightlyLine;
   $('closingJump').hidden=!nightlyLine;
@@ -1506,6 +1563,7 @@ function render(){const d=edition.stories;
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
  const datedPrevious=!archive&&!currentIssue;
+ $('atlasLede').textContent=currentIssue?'今夜の「まさか」は、どこの国から？':'この号の「まさか」は、どこの国から？';
  lastRenderedLocalDate=localDate(now);
  displayReleaseStatus();
  $('editionTag').textContent=archive?`保存済みの体験版 · 実話${d.length}本`:datedPrevious?`前回の配信号 · 実話${d.length}本`:special?`創刊特集号 · 実話${d.length}本`:`今夜の配信号 · 実話${d.length}本`;
@@ -1520,7 +1578,7 @@ function render(){const d=edition.stories;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3><p class="summary">${escapeHtml(s.summary)}</p>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip"><span>AIツッコミ</span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
  renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
-function update(){$('progress').textContent=`ほかに${Math.max(0,edition.stories.length-1)}本`;$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
+function update(){const count=Math.max(0,edition.stories.length-1);$('progress').hidden=count<=3;$('progress').textContent=count>3?`ほかに${count}本`:'';$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
 const readTimers=new Map();
