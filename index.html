@@ -1315,8 +1315,10 @@ function openAtlasStory(index){
 }
 function showAtlasPreview(code,trigger){
  // This preview reads approved/public story data only, not source markets.
+ const known=countryKeys(code);
+ const selectedCodes=known.length?known:[code];
  const stories=edition.stories.map((story,index)=>({story,index}))
-  .filter(item=>countryKeys(item.story.country).includes(code));
+  .filter(item=>countryKeys(item.story.country).some(key=>selectedCodes.includes(key)));
  if(!stories.length){closeAtlasPreview();return}
  if(activeAtlasCountry===code){closeAtlasPreview(true);return}
  const panel=$('atlasPreview');panel.replaceChildren();
