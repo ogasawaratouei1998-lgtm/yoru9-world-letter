@@ -1078,8 +1078,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span>世界の「やらかし」に、AIが本気でツッコむ。</p>
   </div>
  </div>
+ <section class="quip-teaser" id="quipTeaser" aria-label="この号の最初のAIツッコミ">
+  <div class="quip-teaser-art"><img id="quipTeaserImage" src="./assets/news/category-work.svg" alt="創作イラスト。ニュース現場の写真ではありません。" width="800" height="480" decoding="async"></div>
+  <div class="quip-teaser-body">
+   <p class="quip-teaser-kicker">まずは、ひとツッコミ。</p>
+   <p class="quip-teaser-topic" id="quipTeaserTopic">世界の実話から</p>
+   <p class="quip-teaser-line" id="quipTeaserLine" role="note" aria-label="AIによる創作の冗談">記事に付いたツッコミを準備しています。</p>
+   <div class="quip-teaser-actions"><button type="button" id="quipTeaserRead">この話を読む ›</button><button type="button" class="smile teaser-smile" data-smile="0" aria-pressed="false">☺ ふっと笑えた</button></div>
+  </div>
+ </section>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
-  <div class="gallery-heading"><strong>今日はどの「まさか」から？</strong><span>絵を選んで読む</span></div>
+  <div class="gallery-heading"><strong>世界の「まさか」3コマ劇場</strong><span>気になる絵から読む</span></div>
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
@@ -1089,7 +1098,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   <span class="atlas-map-symbol" aria-hidden="true">◌</span>
  </div>
  <section class="atlas-preview" id="atlasPreview" aria-label="選択した国のニュース" aria-live="polite" hidden></section>
- <p class="atlas-map-caption" id="coverMapCaption">地図の点は、掲載国のおおよその位置です。記事の現場ではありません。</p>
+ <p class="atlas-map-caption" id="coverMapCaption">掲載国の代表位置です。ニュースの現場ではありません。</p>
  <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
  <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
 </section>
@@ -1642,6 +1651,27 @@ const NEWS_ART_FALLBACK=Object.freeze({
  work:'category-work.svg',company:'category-company.svg',
  person:'category-person.svg',sports:'category-sports.svg'
 });
+const NEWS_COMIC_KICKERS=Object.freeze({
+ 'cheonan-painters-coffee-rescue-2026':'注文がSOS',
+ 'guaira-degavar-road-marking-2026':'道路に誤字',
+ 'albert-lea-mcnugget-monkey-diaper-police-2026':'不審者はサル'
+});
+function shortComicKicker(story){
+ // New editions use the editor-verified article label, never invented details.
+ const line=NEWS_COMIC_KICKERS[story?.id]||story?.label||story?.categoryLabel||'世界の実話';
+ return String(line).trim().slice(0,18);
+}
+function updateQuipTeaser(){
+ const first=Array.isArray(edition.stories)?edition.stories[0]:null;
+ const teaser=$('quipTeaser');
+ teaser.hidden=!first||!String(first.quip||'').trim();
+ if(teaser.hidden)return;
+ $('quipTeaserImage').src=newsArt(first);
+ $('quipTeaserTopic').textContent=shortComicKicker(first)+' · '+countryLabel(first.country);
+ $('quipTeaserLine').textContent=first.quip;
+ $('quipTeaserRead').setAttribute('aria-label','1本目：'+String(first.title||'掲載記事')+'を読む');
+}
+
 function newsArt(story){
  const name=NEWS_ARTWORK[story?.id]||NEWS_ART_FALLBACK[story?.category]||NEWS_ART_FALLBACK.person;
  return './assets/news/'+name;
@@ -1659,9 +1689,11 @@ function renderIssueGallery(){
   img.width=800;img.height=480;
   const country=document.createElement('span');country.className='gallery-country';
   country.textContent=(index+1)+' · '+countryLabel(story.country);
+  const kicker=document.createElement('span');kicker.className='gallery-kicker';
+  kicker.textContent=shortComicKicker(story);
   const label=document.createElement('span');label.className='gallery-label';
-  label.textContent=story.label||'世界のまさか';
-  button.append(img,country,label);
+  label.textContent=story.title||'世界のまさか';
+  button.append(img,country,kicker,label);
   button.addEventListener('click',()=>openAtlasStory(index));
   target.append(button);
  }
@@ -1785,7 +1817,7 @@ function renderCoverMap(){
  const caption=$('coverMapCaption');
  const names=[...present.keys()].map(countryLabel).join('・');
  caption.textContent=names
-  ?'点は国・地域の代表位置です。ニュースの現場ではありません。'
+  ?'掲載国の代表位置です。ニュースの現場ではありません。'
   :'掲載国を確認中です。点はニュースの現場ではありません。';
 }
 function renderIssueCountries(){
@@ -1830,6 +1862,7 @@ function updateSpotlight(){
  const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
  $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
  $('spotlightQuip').textContent=first.quip||'人間のやらかしに、AIが鋭くツッコミます。';
+ updateQuipTeaser();
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');
@@ -2109,10 +2142,25 @@ function observeStories(){
 }
 function applyFilter(){let count=0;document.querySelectorAll('.story').forEach(el=>{const show=filter==='all'||el.dataset.type===filter;el.hidden=!show;if(show)count++});$('empty').hidden=count!==0;document.querySelectorAll('[data-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.filter===filter)))}
 async function handleStoryAction(e){const open=e.target.closest('[data-open]');if(open){const i=Number(open.dataset.open),details=$('details-'+i),show=details.hidden;details.hidden=!show;open.closest('.story').classList.toggle('expanded',show);open.textContent=show?'閉じる ↑':'詳しく読む ↓';open.setAttribute('aria-expanded',String(show));if(show&&!state.read.includes(i)){markRead(i)}return}
- const smile=e.target.closest('[data-smile]');if(smile){const i=Number(smile.dataset.smile);state.smiles=state.smiles.includes(i)?state.smiles.filter(x=>x!==i):[...state.smiles,i];saveState();update();return}
+ const smile=e.target.closest('[data-smile]');if(smile){
+  const i=Number(smile.dataset.smile);
+  const wasOn=state.smiles.includes(i);
+  state.smiles=wasOn?state.smiles.filter(x=>x!==i):[...state.smiles,i];
+  saveState();update();
+  // The animation is only a local, opt-in moment, never a fake vote count.
+  // Reduced-motion users get the same persistent pressed-state feedback.
+  if(!wasOn&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+   smile.classList.remove('smile-burst');void smile.offsetWidth;
+   smile.classList.add('smile-burst');
+   setTimeout(()=>smile.classList.remove('smile-burst'),650);
+  }
+  return
+ }
  const share=e.target.closest('[data-share]');if(share){const s=edition.stories[Number(share.dataset.share)];const txt=`${s.title}\n出典：${s.sourceUrl}\nよる9じの世界便り`;try{if(navigator.share)await navigator.share({title:s.title,text:txt});else if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('記事の情報をコピーしました')}else toast('共有できない環境です')}catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}}}
 $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
+$('atlasHero').addEventListener('click',handleStoryAction);
+$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();loadMonthRetrospective();loadMonthlyVerified();
