@@ -224,6 +224,13 @@ def get_gdelt(extra_searches=()):
         '("wrong recipient" OR "accidentally ordered" OR "sent by mistake")',
         '("mistaken identity" OR "by mistake" OR "mix-up")',
         '("blunder" OR "fiasco" OR "misprint")',
+        # Local reporting often does NOT describe the mishap in English.
+        # Exact, bounded multilingual searches uncover original publisher
+        # article URLs even when generic world RSS is dominated by politics.
+        '("per errore" OR "per sbaglio" OR "aus Versehen" OR "Verwechslung")',
+        '("por engano" OR "erro de pedido" OR "por error" OR "se equivocó")',
+        '("par erreur" OR "méprise" OR "salah kirim" OR "keliru")',
+        '("giao nhầm" OR "nhầm địa chỉ" OR "실수로" OR "착각")',
     )
     articles,seen=[],set()
     for query in (*tuple(extra_searches)[:3],*searches):
@@ -261,9 +268,23 @@ def main():
         for item in items:
             if item['url'] not in seen and len(leads)<750 and added<limit:
                 seen.add(item['url']);leads.append(item);added+=1
-    # Direct publishers come before Google News aggregator links, which are
-    # unsuitable as evidence without an original publisher article body.
-    # Feed failures are isolated and never treated as proof that news occurred.
+    # The dedicated incident discovery must run BEFORE broad publisher feeds
+    # fill the global 750-lead cap. A previous production run collected 750
+    # general headlines with ZERO Google or GDELT mishap-search leads.
+    # GDELT gives original publisher article URLs, unlike Google News RSS
+    # aggregator links that cannot serve as independently verified evidence.
+    # No GDELT result is publication-approved by being found here.
+    try:
+        focused=get_gdelt(extra_searches=uncovered_country_searches())
+        keep(focused,limit=90)
+        print("Original-publisher mishap search leads:",
+              sum(lead.get("provider")=="GDELT DOC API" for lead in leads),
+              "(UNVERIFIED)",flush=True)
+    except (HTTPError,URLError,ValueError,TimeoutError,OSError) as exc:
+        errors.append("GDELT: "+type(exc).__name__)
+    # Continue with direct original-publisher feeds, never an automatic
+    # inference that the publisher's market is the incident location.
+    # Isolate failing feeds; preserve the global cap and source scrutiny.
     try:
         registered=fetch_registry_feeds(
             sources=source_registry(),fetch=fetch_bytes,parse=parse_rss,
@@ -283,11 +304,6 @@ def main():
         try: keep(parse_rss(fetch_bytes(url),provider,relevant_only=False),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
             errors.append(f'{provider}: {type(e).__name__}: {e}')
-    # Discover original publisher links for human errors before broad world feeds
-    # exhaust the 750-link budget.
-    try:keep(get_gdelt(extra_searches=uncovered_country_searches()),limit=60)
-    except (HTTPError, URLError, ValueError, TimeoutError) as e:
-        errors.append(f'GDELT: {type(e).__name__}: {e}')
     for url in BBC_FEEDS:
         try: keep(parse_rss(fetch_bytes(url),'BBC RSS (unverified)',relevant_only=False,sourcecountry='GB'),limit=18)
         except (HTTPError, URLError, ET.ParseError, ValueError, TimeoutError) as e:
@@ -303,7 +319,7 @@ def main():
         return 1
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
-        'provider':'Reviewed global publisher RSS registry, Google News RSS, BBC RSS, independent publisher RSS, local-language RSS, GDELT (all attempted)',
+        'provider':'GDELT focused original-publisher search first; then reviewed global publisher RSS registry, original publisher RSS, BBC RSS, Google News RSS (where capacity permits)',
         'note':'UNVERIFIED headline links ONLY. These are not verified news facts and may be irrelevant. Automatic review must independently verify publisher article bodies before preparing any approved edition; never publish unverified leads.',
         'errors':errors,
         'candidates':leads,
