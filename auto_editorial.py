@@ -861,6 +861,41 @@ def valid_recent_reported(raw, now):
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
 
+def source_bound_batch_drafts(response, groups):
+    """Keep at most one unverified draft per article-evidence group.
+
+    Provenance-only prefilter: it does not verify a fact, a country, or the
+    quality of a joke. Independent reviewer B still must approve everything.
+    A model must not combine unrelated original articles from separate
+    groups or invent a URL to fill the three-story target.
+    """
+    proposed=response.get("stories",[]) if isinstance(response,dict) else []
+    if not isinstance(proposed,list) or not isinstance(groups,list):
+        return []
+    selected=[]
+    for group in groups[:2]:
+        articles=group.get("articles",[]) if isinstance(group,dict) else []
+        allowed={article.get("url") for article in articles
+                 if isinstance(article,dict)
+                 and isinstance(article.get("url"),str)
+                 and host(article["url"])}
+        if not allowed:
+            continue
+        for story in proposed:
+            if not isinstance(story,dict):
+                continue
+            urls=story.get("verificationUrls")
+            if not isinstance(urls,list) or not (1<=len(urls)<=3):
+                continue
+            if (all(isinstance(url,str) for url in urls)
+                    and len(set(urls))==len(urls)
+                    and set(urls).issubset(allowed)
+                    and story.get("sourceUrl") in allowed):
+                selected.append(story)
+                break
+    return selected
+
+
 def draft_preflight_viable(story,now):
     """Fast comedy and date screening, never replaces source/fact review.
 
@@ -1189,11 +1224,10 @@ def main():
                 supplemental_attempts+=1
                 supplemental_groups_examined+=len(batch)
                 retry_result=ai(retry_prompt,temperature=0.65)
-                retry_stories=retry_result.get("stories",[]) if isinstance(retry_result,dict) else []
-                if isinstance(retry_stories,list):
-                    supplemental_generated+=min(len(batch),len(retry_stories))
-                    draft.extend(retry_stories[:len(batch)])
-                print("Small-batch draft count:",len(retry_stories) if isinstance(retry_stories,list) else 0,flush=True)
+                retry_stories=source_bound_batch_drafts(retry_result,batch)
+                supplemental_generated+=len(retry_stories)
+                draft.extend(retry_stories)
+                print("Small-batch source-bound (NOT verified) drafts:",len(retry_stories),flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
             if sum(draft_preflight_viable(item,now) for item in draft)>=3:
