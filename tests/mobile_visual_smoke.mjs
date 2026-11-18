@@ -56,12 +56,12 @@ try{
    assert.ok(await preview.locator('.atlas-preview-title').count()>=1,'preview has a real news title');
    assert.equal(await pins.first().getAttribute('aria-pressed'),'true',
     'active map selection is accessible');
-   const firstStory=await preview.locator('.atlas-preview-title').first().textContent();
+   const firstCountry=await preview.locator('.atlas-preview-heading h3').textContent();
    if(await pins.count()>1){
     await pins.nth(1).click();
     assert.equal(await pins.nth(1).getAttribute('aria-pressed'),'true');
-    assert.notEqual(await preview.locator('.atlas-preview-title').first().textContent(),firstStory,
-     'different country pin previews a different published story');
+    assert.notEqual(await preview.locator('.atlas-preview-heading h3').textContent(),firstCountry,
+     'different country pin selects its own country, even for multi-country stories');
    }
    const read=preview.locator('[data-atlas-read]').first();
    const storyIndex=Number(await read.getAttribute('data-atlas-read'));
