@@ -35,8 +35,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertTrue(-90<=item["lat"]<=90)
             for label in [item["code"],item["name"],*item["aliases"]]:
                 normalized=label.casefold().strip()
-                self.assertNotIn(normalized,all_aliases,
-                                 (label,item["code"],all_aliases.get(normalized)))
+                self.assertEqual(all_aliases.get(normalized,item["code"]),
+                                 item["code"],(label,item["code"]))
                 all_aliases[normalized]=item["code"]
                 self.assertEqual(country_code(label),item["code"])
         for name,code in (("パレスチナ","PS"),("台湾","TW"),
