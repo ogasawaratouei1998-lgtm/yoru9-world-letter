@@ -126,6 +126,20 @@ try{
     assert.ok(hidden,'1–3 article editions do not need five category filters');
    }
    await page.screenshot({path:'mobile-screenshots/cover-'+viewport.name+'.png',animations:'disabled'});
+   const closing=page.locator('#closing');
+   assert.equal(await closing.locator('h2').textContent(),'世界からの便りは、ここまで。',
+    'closing works for both day and night, today and archive');
+   assert.equal(await closing.locator('.closing-afterword').textContent(),
+    '次の「まさか」も、世界のどこかから。');
+   assert.equal(await closing.locator('.bye').textContent(),'また、次の便りで。');
+   const quoteHidden=await page.locator('#closingQuote').isHidden();
+   if(quoteHidden){
+    const compactHeight=await closing.evaluate(el=>el.getBoundingClientRect().height);
+    assert.ok(compactHeight<=220,
+     'empty nightly joke should leave a quiet compact closing: '+compactHeight+'px');
+   }
+   await closing.scrollIntoViewIfNeeded();
+   await page.screenshot({path:'mobile-screenshots/closing-'+viewport.name+'.png',animations:'disabled'});
    const article=page.locator('#monthCards .month-story').first();
    await article.waitFor({state:'attached',timeout:30000});
    const shelf=page.locator('#monthRetrospective > details');
