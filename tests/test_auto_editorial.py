@@ -656,8 +656,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
-        self.assertIn("for start in range(0,min(len(retry_candidates),8)):",source)
-        self.assertIn("Two eligible comedy drafts reserved: moving to independent fact review.",source)
+        self.assertIn("for start in range(0,min(len(retry_candidates),16)):",source)
+        self.assertIn("Three eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_model_catalog_selects_supported_model(self):
         import io
@@ -886,7 +886,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("json.dumps(grouped_evidence[:24],ensure_ascii=False)",code)
         self.assertIn("enumerate(groups[:36])",code)
         self.assertIn('0 if g["groupId"]>24 else 1',code)
-        self.assertIn("min(len(retry_candidates),8)",code)
+        self.assertIn("min(len(retry_candidates),16)",code)
         self.assertIn('"fresh_backup_groups"',code)
         # No shortcut around original source, comedy, independent and publisher gates.
         self.assertIn("trusted_original_domain(urls[0])",code)
