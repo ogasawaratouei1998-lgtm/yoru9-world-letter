@@ -1459,6 +1459,11 @@ $('worldInvitation').addEventListener('click',event=>{
 $('coverWorldLink').addEventListener('click',event=>{
  event.preventDefault();openWorldExplorer();
 });
+$('atlasPreview').addEventListener('keydown',event=>{
+ if(event.key==='Escape'&&!$('atlasPreview').hidden){
+  event.preventDefault();closeAtlasPreview(true);
+ }
+});
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
 let travelStopsPromise=null;
