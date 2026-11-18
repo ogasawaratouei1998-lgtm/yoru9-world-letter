@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key or no verified story means no publication."""
 import json, os, re, sys, ipaddress, socket, time
-from country_codes import country_code, country_key, country_region
+from country_codes import catalog, country_code, country_codes, country_region
 from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from editorial_quality import headline_fidelity_risk, independent_editorial_quality_passed
 from editorial_identity import (
@@ -612,7 +612,7 @@ def recent_topic_counts(today,days=30):
     return counts
 
 
-def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None):
+def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None, lifetime_country_history=None):
     """Select up to three ALREADY audited stories, with regional fairness.
 
     Country is the fact-checked event country, not the RSS feed locale.
@@ -628,24 +628,28 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
         if region:
             region_history[region]+=count
     topic_history=topic_history or Counter()
+    lifetime_country_history=lifetime_country_history or Counter()
     choices=list(combinations(range(len(pool)),min(3,len(pool))))
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
-        countries=[country_code(story.get("country")) for story in stories]
-        regions=[country_region(story.get("country")) for story in stories]
-        known_countries=[country for country in countries if country]
-        known_regions=[region for region in regions if region]
+        country_groups=[country_codes(story.get("country")) for story in stories]
+        known_countries=[country for group in country_groups for country in group]
+        known_regions=[country_region(country) for country in known_countries
+                       if country_region(country)]
         categories={story["category"] for story in stories}
         topics=[surprise_topic(story) for story in stories]
         # Three stories cannot cover four categories nightly; rotate neglected
         # desks across issues. Themes come before geographic tie-breakers.
-        return (len(categories),
+        return (len(categories),len(set(known_countries)),
+                len({country for country in known_countries
+                     if lifetime_country_history[country]==0}),
                 -sum(category_history[story["category"]] for story in stories),
                 len(set(topics)),
                 -sum(topic_history[topic] for topic in topics),
-                len(set(known_regions)),len(set(known_countries)),
+                len(set(known_regions)),
                 -sum(region_history[region] for region in known_regions),
                 -sum(country_history[country] for country in known_countries),
+                -sum(lifetime_country_history[country] for country in known_countries),
                 -sum(indices))
     best=max(choices,key=diversity_score)
     return [pool[i] for i in best]
@@ -660,6 +664,28 @@ def archive_summaries():
         except (ValueError,OSError):continue
     return result[-250:]
 
+def lifetime_country_counts(today):
+    """All published editions contribute to the long-term 196-region goal.
+
+    Do not count discovery sources, pending drafts, or guessed countries.
+    Verified cross-border historical articles count for both named locations.
+    """
+    from collections import Counter
+    counts=Counter()
+    for file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            issue=json.loads(file.read_text(encoding="utf-8"))
+            issue_date=datetime.strptime(issue.get("editionDate",""),"%Y-%m-%d").date()
+            if issue.get("status")!="published" or issue_date>=today:
+                continue
+            for story in issue.get("stories",[]):
+                for code in country_codes(story.get("country")):
+                    counts[code]+=1
+        except (ValueError,OSError,TypeError,KeyError):
+            continue
+    return counts
+
+
 def recent_diversity_counts(today, days=30):
     """Count published country/category exposure during the preceding 30 days."""
     from collections import Counter
@@ -673,9 +699,9 @@ def recent_diversity_counts(today, days=30):
             if issue.get("status")!="published":
                 continue
             for story in issue.get("stories",[]):
-                country=country_key(story.get("country",""))
                 category=str(story.get("category","")).strip()
-                if country:country_counts[country]+=1
+                for country in country_codes(story.get("country","")):
+                    country_counts[country]+=1
                 if category in ("work","person","company","sports"):category_counts[category]+=1
         except (ValueError,OSError,TypeError,KeyError):
             continue
@@ -808,6 +834,8 @@ def draft_preflight_viable(story,now):
         return False
     if story.get("category") not in ("person","work","company","sports"):
         return False
+    if not country_codes(story.get("country")):
+        return False
     if (editorial_fit_rejection(story) or human_failure_rejection(story)
             or noncomic_incident_rejection(story)
             or comic_line_rejection(story.get("quip"))):
@@ -935,7 +963,7 @@ def main():
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+' You are a Japanese comedy show writer working as news editor A. Discover up to 12 REAL, lightly embarrassing or absurd HUMAN BLUNDERS from these fetched original articles. First search for genuine mistakes in everyday work, deliveries, public signs, mistaken assumptions, clerical errors, confusing customer interactions, awkward sports decisions, and administrative mix-ups. Small and harmless mistakes are ideal WHEN the sourced mismatch supports a concrete sharp punchline. DO NOT favor consequential crises, high-profile resignations, serious disciplinary conflict, emergency harassment, criminal cases, politics, bad outcomes affecting victims, or news that is merely surprising. The specific human action, mistake or unexpected decision and its comic consequence must actually be in the fetched source; the reporter need not literally call it a mistake. A dispute or apology alone is not comedy. For EACH incident first identify humanActor, humanMistake (the documented misstep or ironic choice), expectedPlan and observedOutcome; only then privately draft FOUR radically different Japanese punchlines and pick the strongest short unexpected payoff, not a recap or lesson. Give unusual but independently documented minor errors priority over major corporate failures, provided the joke is really funny without mocking a harmed person. Return zero stories if no supported comedic mistake exists. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
-      'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. Never invent facts, URLs, or details. '
+      'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. The catalog supports 196 reporting locations. Seek neglected countries as sources permit, but NEVER assign the publisher's country to the news incident or invent a story to fill an unreported country. Never invent facts, URLs, or details. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Propose incidents from ALL FOUR categories across multiple nights, prioritizing a neglected category whenever comparable source-supported funny stories exist; three published slots cannot cover four categories nightly. Make work about employees, operators and daily work mishaps, person about individual choices, sports about sporting decisions, and company only about organization-level choices. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic surprising news without a real failure, even if it is funny. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
@@ -1074,6 +1102,8 @@ def main():
             reject("invalid_reporting_date");continue
         if story["category"] not in ("person","work","company","sports"):
             reject("invalid_category");continue
+        if not country_codes(story["country"]):
+            reject("unrecognized_event_country");continue
         # Never substitute an animal sighting or odd fact for a human error.
         fit_issue=editorial_fit_rejection(story)
         if fit_issue:
@@ -1138,7 +1168,7 @@ def main():
           "unsafe jokes, generic news without a genuine failure, prescriptive or humiliating reader commentary, and repeated events. An ordinary individual's consequential, independently documented mistake is as eligible as a serious corporate or institutional failure when the humor targets a decision, irony or overconfidence rather than a victim or private vulnerability. Do not reject solely because the subject is not famous or the consequences are personal, financially serious or politically significant. Reject humiliating exposure of private individuals and unsupported personal details. Compare against the prior published events and already selected events, "
           "reject the same underlying incident even if the title, source, language or URL differs. "
           "Reject if the writing shames a person, trivializes hardship, pressures readers to feel grateful, cheerful or hopeful, gives therapy-like advice, or ends every story with a preachy life lesson. The best outcome is a spontaneous smile or a calmer minute, never a promised cure. "
-          "Reject location claims inferred from the feed's language or edition instead of the actual article text, invented customs, national stereotypes, or jokes comparing the reader's troubles with someone else's troubles. "
+          "Verify the story.country field against the ORIGINAL article event location (country or unambiguous reported local place). It must be one of the catalog's 196 recognized locations; do NOT infer a country's occurrence from sourcecountry, reporter origin, publisher domain, RSS edition or language. If a factual cross-border incident involves more than one country, verify each named location against source reporting; never fabricate a country to satisfy coverage. Reject location claims inferred from the feed's language or edition instead of actual article text, invented customs, national stereotypes, or jokes comparing the reader's troubles with someone else's troubles. "
           "Reject if evidence is insufficient or unclear. BEFORE looking at the jokes verify humanActor and humanMistake against the original: the identified human actually made a specific wrong assumption, choice, mix-up or operational error that drove the outcome, rather than just reacting normally to an animal sighting, animal rescue, wildlife behavior, generic surprising fact, or innocent person's misfortune. Do not invent a human mistake. Reject generic animal oddities even if they are charming. Deliberate harassment of firefighters or emergency responders, threats, distress, abuse and unsafe confrontations are not lighthearted human blunders; reject them even when there is a clever-sounding irony in the reporter's framing. A story has to be BOTH a documented human mistake AND a genuinely safe situation to laugh at, rather than a serious conflict rebranded as comedy. A ceremony protest, disciplinary dispute, student suspension, ministerial walkout, or public call to apologize is NOT a harmless human mix-up. Reject such conflicts without a SEPARATE actual comic mistake supported by original reporting. Require humanFailureConfirmed=true ONLY if the human misstep, surprising decision or concrete plan-versus-result reversal is explicit in the source; the source need not call it a mistake. Verify the exact expectedPlan AND observedOutcome against retrieved source text: they must establish a real, non-tragic failure rather than merely an executive transition, surprising news or corporate PR. Recheck that the headline and both Japanese article paragraphs stay within what the cited sources substantiate. Carefully verify ENGLISH-to-JAPANESE institution words: plant nursery is a plant-growing nursery, not a botanical garden (植物園) or a human maternity ward (産院). Verify LEGAL STATUS separately: 'to be charged' is not arrested, convicted, or already prosecuted. Do not imply a criminal plan, motive, cunning, repeated actions or a quote unless the source explicitly supports it. Metaphorical institutions or invented services belong only in clearly labeled jokes, never a factual headline. Reject private-life allegations, romantic gossip, and speculation about motives, even where public figures are involved. Do not approve on journalistic fame, narrative appeal or geographic balance alone. Also reject jokes that treat uncertain causes, rumors or accusations as facts; check that quipSecond really changes comic angle rather than paraphrasing quip. Also perform a comedy-editor check on EACH quip: concrete setup supported by sources, a specific comically unexpected payoff at the END, first-read clarity in natural spoken Japanese, and a distinctly new premise for quipSecond IF PRESENT. A single superb quip is better than two weak jokes. Rate comicPunchlineWorks=true only if the first quip is a real setup→payoff based on the verified HUMAN ERROR, not a headline recap or vague 'まさか', '守備範囲が広い' or '世界は自由'. Reject generic recap disguised as a punchline, overlong commentary, forced wordplay and recycled 'unexpected!' endings, even when factual; ask the writer to sharpen before publication. Reject a quip that a Japanese reader cannot understand on the first read after the summary, and reject poetic or counterfactual wording that misstates the factual outcome. "
           "Return explicit independent booleans headlineGrounded,translationAccurate,legalStatusAccurate,humorRespectful,jokeClear; EVERY field must be true for approval, unknown must be false. Even if approved=true, any absent/false field means rejection. Output only JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,dateVerified:boolean,safeTone:boolean,headlineGrounded:boolean,translationAccurate:boolean,legalStatusAccurate:boolean,humorRespectful:boolean,jokeClear:boolean,humanFailureConfirmed:boolean,comicPunchlineWorks:boolean,reason:string}. Article: "
           +json.dumps(story,ensure_ascii=False)+" Previously published events: "
@@ -1190,15 +1220,19 @@ def main():
     # Geographic diversity applies ONLY after source-text and AI fact review.
     country_history,category_history=recent_diversity_counts(now.date())
     topic_history=recent_topic_counts(now.date())
-    selected=select_diverse_verified_stories(selected,country_history,category_history,topic_history)
+    lifetime_history=lifetime_country_counts(now.date())
+    selected=select_diverse_verified_stories(selected,country_history,category_history,topic_history,lifetime_history)
     print("Nightly verified selection:",len(selected),"source-checked stories;",
           "target 3, release 1-3.",flush=True)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
-        "selected_countries":len({country_code(story["country"]) for story in selected
-                                  if country_code(story["country"])}),
-        "selected_regions":len({country_region(story["country"]) for story in selected
-                                if country_region(story["country"])}),
+        "selected_countries":len({code for story in selected
+                                  for code in country_codes(story["country"])}),
+        "selected_regions":len({country_region(code) for story in selected
+                                for code in country_codes(story["country"])
+                                if country_region(code)}),
+        "lifetime_countries_seen":len(lifetime_history),
+        "reporting_countries_target":len(catalog()),
         "selected_categories":len({story["category"] for story in selected}),
         "selected_comic_themes":len({surprise_topic(story) for story in selected}),
         "recent_category_counts":dict(category_history),
