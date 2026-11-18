@@ -158,6 +158,16 @@ def comic_line_rejection(quip):
     if re.search(r"^(?:まさか|驚き|予想外)(?:の展開|でした|です)[。！]?$",
                  quip.strip()):
         return "surprise_recapped_without_joke"
+    # These interchangeable endings can describe almost ANY news item.
+    # A professional punchline must earn a specific new angle, not attach
+    # an off-the-shelf reaction to a factual recap. Match endings only:
+    # "仕事が広い" in a source quote is not itself a publication veto.
+    if re.search(
+            r"(?:守備範囲が広い|情報量が多い|世の中わからない|"
+            r"予想の斜め上|まさかの展開|想定外でした|"
+            r"びっくりですね|いろいろあるもんだ|驚きの展開)[。！!]*$",
+            quip.strip()):
+        return "stock_reaction_instead_of_punchline"
     # Advice and after-the-fact scolding are not professional comic punchlines.
     if re.search(r"ればよかったのに|すればよかった|すべきだった|勉強に向ければ",
                  quip.strip()):
