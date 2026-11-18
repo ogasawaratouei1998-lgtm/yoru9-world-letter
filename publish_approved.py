@@ -118,8 +118,8 @@ def publication_nightly_message(data, edition_date, stories):
     raw=data.get("nightlyMessage")
     if isinstance(raw,str):
         clean=raw.strip()
-        if (20<=len(clean)<=110 and not any(c in clean for c in "<>\\r\\n")
-                and not re.search(r"\\\\[rn]",clean)):
+        if (20<=len(clean)<=110 and not any(c in clean for c in "<>\r\n")
+                and not re.search(r"\\[rn]",clean)):
             if edition_date < "2026-11-18":
                 return clean
             from nightly_quality import incident_specific_nightly_line
