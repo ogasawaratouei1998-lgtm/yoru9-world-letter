@@ -87,5 +87,29 @@ class ComicSituationTests(unittest.TestCase):
         self.assertIsNone(noncomic_incident_rejection(harmless,[
             {"text":"The attendant mistook a horse for a dog."}]))
 
+    def test_hospital_staffing_crisis_must_not_be_comedy(self):
+        story={"title":"病院の深刻な人員不足で経営陣が対立",
+               "humanActor":"経営陣",
+               "humanMistake":"人員不足についてメディアでの議論を選んだ"}
+        article=[{"text":"Cork University Hospital staffing restrictions "
+                         "raised patient safety concerns and clinicians "
+                         "described a shortfall in hospital posts."}]
+        self.assertEqual(noncomic_incident_rejection(story,article),
+                         "hospital_patient_safety_crisis_not_comedy")
+        # Softening the headline cannot hide the verified patient-care risks.
+        self.assertEqual(noncomic_incident_rejection(
+            {"title":"病院で意外な発表が起きた",
+             "humanActor":"経営陣",
+             "humanMistake":"伝達方法を誤った"},article),
+             "hospital_patient_safety_crisis_not_comedy")
+
+    def test_harmless_hospital_typo_remains_comic_eligible(self):
+        story={"title":"病院の案内看板を誤字で印刷",
+               "humanActor":"広報担当",
+               "humanMistake":"看板に誤った綴りを印刷してしまった"}
+        article=[{"text":"Hospital staff corrected a misspelled sign "
+                         "near the outpatient entrance."}]
+        self.assertIsNone(noncomic_incident_rejection(story,article))
+
 if __name__=="__main__":
     unittest.main()
