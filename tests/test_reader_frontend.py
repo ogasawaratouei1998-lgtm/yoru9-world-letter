@@ -688,6 +688,16 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_opt_in_local_notification_smoke_has_no_dispatch_side_effect(self):
+        page=(ROOT / 'index.html').read_text(encoding='utf-8')
+        js=(ROOT / 'notifications.js').read_text(encoding='utf-8')
+        self.assertIn('id="notificationTestButton" type="button" hidden disabled',page)
+        self.assertIn('Notification.permission',js)
+        self.assertIn('reg.showNotification',js)
+        self.assertIn("tag:'yoru9-local-test'",js)
+        self.assertIn('ニュース配信ではありません。',js)
+        self.assertIn('iPhoneの設定→通知',js)
+        self.assertIn('User-triggered local display test',js)
     def test_push_panel_hidden_until_backend_ready(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         cfg = __import__("json").loads((ROOT / "notification-config.json").read_text(encoding="utf-8"))
