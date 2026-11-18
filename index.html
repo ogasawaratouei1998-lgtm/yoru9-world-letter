@@ -1365,6 +1365,7 @@ function openWorldExplorer(country=''){
  }
 }
 function renderCoverMap(){
+ closeAtlasPreview();
  const pins=$('coverMapPins');
  pins.replaceChildren();
  if(!Array.isArray(edition.stories))return;
@@ -1381,10 +1382,13 @@ function renderCoverMap(){
   const button=document.createElement('button');
   button.type='button';button.className='atlas-pin';
   button.style.left=point[0]+'%';button.style.top=point[1]+'%';
+  button.dataset.country=code;
+  button.setAttribute('aria-controls','atlasPreview');
+  button.setAttribute('aria-pressed','false');
   button.textContent=String(count);
-  button.title=countryLabel(code)+'の掲載記事を探す（国の代表位置）';
+  button.title=countryLabel(code)+'の掲載記事をプレビュー（国の代表位置）';
   button.setAttribute('aria-label',button.title);
-  button.addEventListener('click',()=>openWorldExplorer(code));
+  button.addEventListener('click',()=>showAtlasPreview(code,button));
   pins.append(button);
  }
  const caption=$('coverMapCaption');
@@ -1414,8 +1418,11 @@ function renderIssueCountries(){
   const chip=document.createElement('button');
   chip.type='button';chip.className='country-chip';
   chip.textContent=name;
-  chip.setAttribute('aria-label',name+'の記事を地図から探す');
-  chip.addEventListener('click',()=>openWorldExplorer(code));
+  chip.dataset.country=code;
+  chip.setAttribute('aria-controls','atlasPreview');
+  chip.setAttribute('aria-pressed','false');
+  chip.setAttribute('aria-label',name+'の掲載記事をプレビュー');
+  chip.addEventListener('click',()=>showAtlasPreview(code,chip));
   target.append(chip);
  }
  renderCoverMap();
