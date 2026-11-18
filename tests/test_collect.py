@@ -42,8 +42,10 @@ class CollectionTest(unittest.TestCase):
                  'language':'English'} for i in range(12)]}).encode()
         with patch.object(c,'fetch_bytes',side_effect=fetch):
             leads=c.get_gdelt()
-        self.assertEqual(len(leads),10)
-        self.assertEqual(len({v['url'] for v in leads}),10)
+        # Ten from the first query, then the remaining two unique URLs.
+        # Later queries cannot duplicate already discovered publisher reports.
+        self.assertEqual(len(leads),12)
+        self.assertEqual(len({v['url'] for v in leads}),12)
 
     def test_regional_bbc_feeds_support_local_mistakes(self):
         self.assertTrue(any('lancashire/rss.xml' in url for url in c.BBC_FEEDS))
