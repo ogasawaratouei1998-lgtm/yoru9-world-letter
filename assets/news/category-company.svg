@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="title-company">
+<title id="title-company">組織のちょっと意外な失敗を象徴する創作イラスト</title>
+<defs><linearGradient id="bg-company" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#CDEAE6"/><stop offset="1" stop-color="#C0B9F5"/></linearGradient><filter id="shadow-company" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#10263D" flood-opacity=".16"/></filter></defs>
+<rect width="800" height="480" rx="28" fill="url(#bg-company)"/>
+<circle cx="685" cy="80" r="132" fill="#fff" opacity=".23"/><circle cx="110" cy="365" r="135" fill="#fff" opacity=".16"/>
+<path d="M0 416Q190 366 410 417T800 395V480H0Z" fill="#173956" opacity=".09"/>
+<path d="M80 88h62M111 57v62M705 331h52M731 305v52" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+
+<g filter="url(#shadow-company)"><path d="M229 403V128l152-69 180 67v277Z" fill="#FFF6E2" stroke="#284C66" stroke-width="10"/><path d="M365 61v342" stroke="#284C66" stroke-width="9"/><path d="M258 176h81m-81 67h81m-81 67h81m61-134h117m-117 67h117m-117 67h117" stroke="#89C7C6" stroke-width="22" stroke-linecap="round"/></g><rect x="520" y="100" width="147" height="119" rx="15" fill="#FFDC89" stroke="#294866" stroke-width="8" transform="rotate(10 590 156)"/><path d="M572 154h51M597 127v51" stroke="#E2797F" stroke-width="11" stroke-linecap="round"/><path d="M147 128l52-30m-40 80 60 9" stroke="#E2797F" stroke-width="12" stroke-linecap="round"/></svg>

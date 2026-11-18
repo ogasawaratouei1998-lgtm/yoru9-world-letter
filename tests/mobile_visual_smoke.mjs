@@ -31,7 +31,9 @@ try{
     res=await page.goto(freshUrl.toString(),{waitUntil:'domcontentloaded',timeout:35000});
     assert.equal(res?.status(),200,'reader page must be reachable');
     freshDesign=await page.locator('#coverWorldMap').count()===1&&
-     await page.locator('#atlasHero .atlas-oops').count()===1;
+     await page.locator('#atlasHero .atlas-oops').count()===1&&
+     await page.locator('#issueGallery').count()===1&&
+     await page.locator('#spotlightImage').count()===1;
     if(freshDesign)break;
     await page.waitForTimeout(6000);
    }
@@ -78,6 +80,49 @@ try{
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.mapTop+2,
     'the reading order is concept, joke, then countries');
+   const gallery=page.locator('#issueGallery .gallery-tile');
+   assert.equal(await gallery.count(),editorialCover.storyCount,
+    'each published story has a prominent visual invitation');
+   const note=page.locator('#atlasHero .gallery-clarity');
+   assert.ok((await note.textContent()).includes('現場の写真ではありません'),
+    'editorial illustrations cannot be mistaken for incident photographs');
+   await page.waitForFunction(()=>{
+    const image=document.querySelector('#issueGallery .gallery-art');
+    return image&&image.complete&&image.naturalWidth>0;
+   },null,{timeout:30000});
+   const firstImage=page.locator('#issueGallery .gallery-art').first();
+   assert.ok((await firstImage.getAttribute('src')).startsWith('./assets/news/'),
+    'visual assets are bundled locally, not from third-party news photos');
+   assert.ok((await gallery.first().getAttribute('aria-label')).includes('を読む'),
+    'a picture alone has a meaningful accessible reading action');
+   const leadImage=page.locator('#spotlightImage');
+   await leadImage.scrollIntoViewIfNeeded();
+   await leadImage.evaluate(async img=>{if(!img.complete)await new Promise((resolve,reject)=>{
+    img.addEventListener('load',resolve,{once:true});
+    img.addEventListener('error',()=>reject(Error('lead illustration failed')),{once:true});
+   });});
+   assert.ok(await leadImage.evaluate(el=>el.naturalWidth>0),
+    'the lead story has an actual visual instead of a colored placeholder');
+   assert.ok((await page.locator('#spotlightVisual figcaption').textContent()).includes('現場写真ではありません'),
+    'lead illustration is explicitly labeled');
+   if(await gallery.count()>1){
+    await gallery.nth(1).click();
+    assert.equal(await page.locator('#stories [data-story-index="1"] [data-open="1"]').getAttribute('aria-expanded'),
+     'true','gallery opens the exact supporting story, not unrelated articles');
+    const art=page.locator('#stories [data-story-index="1"] .story-art');
+    await art.scrollIntoViewIfNeeded();
+    await page.waitForFunction(()=>{
+      const image=document.querySelector('#stories [data-story-index="1"] .story-art');
+      return image&&image.complete&&image.naturalWidth>0;
+    },null,{timeout:30000});
+    assert.ok((await page.locator('#stories .story-visual figcaption').first().textContent()).includes('イメージイラスト'),
+     'secondary story art is not presented as documentary photography');
+    assert.ok(await page.locator('#stories [data-story-index="1"] .readbtn').evaluate(el=>
+      el.getBoundingClientRect().height>=44),'illustrated story retains an easy touch target');
+    await page.screenshot({path:'mobile-screenshots/illustrated-story-'+viewport.name+'.png',animations:'disabled'});
+   }
+   await page.locator('#issueGallery').scrollIntoViewIfNeeded();
+   await page.screenshot({path:'mobile-screenshots/visual-gallery-'+viewport.name+'.png',animations:'disabled'});
    const appIcon=page.locator('header.nav .logo-mark');
    assert.equal(await appIcon.count(),1,'the redesigned home-screen mark is shown');
    await appIcon.evaluate(img=>img.decode());

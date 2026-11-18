@@ -25,7 +25,51 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v11",worker)
+        self.assertIn("yoru9-shell-v12",worker)
+
+    def test_visual_first_digests_are_local_original_art_not_news_photos(self):
+        import xml.etree.ElementTree as ET
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        site=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        filenames=(
+            "coffee-rescue.svg","road-typo.svg","monkey-patrol.svg",
+            "category-work.svg","category-company.svg",
+            "category-person.svg","category-sports.svg"
+        )
+        for file in filenames:
+            with self.subTest(file=file):
+                path=ROOT/"assets"/"news"/file
+                self.assertTrue(path.is_file())
+                raw=path.read_text(encoding="utf-8")
+                root=ET.fromstring(raw)
+                self.assertTrue(root.tag.endswith("svg"))
+                self.assertIn('viewBox="0 0 800 480"',raw)
+                self.assertNotIn("<script",raw)
+                self.assertNotIn("<foreignObject",raw)
+                self.assertNotIn('href="http',raw)
+                self.assertIn("assets/news/"+file,worker)
+        self.assertIn("shutil.copytree(artwork_dir,output/'assets'/'news'",site)
+        self.assertIn("'assets/news is required for published illustrations'",site)
+        self.assertIn("'cheonan-painters-coffee-rescue-2026':'coffee-rescue.svg'",page)
+        self.assertIn("'guaira-degavar-road-marking-2026':'road-typo.svg'",page)
+        self.assertIn("'albert-lea-mcnugget-monkey-diaper-police-2026':'monkey-patrol.svg'",page)
+        self.assertIn("const name=NEWS_ARTWORK[story?.id]||NEWS_ART_FALLBACK[story?.category]",page)
+        self.assertIn("function renderIssueGallery()",page)
+        self.assertIn("button.addEventListener('click',()=>openAtlasStory(index))",page)
+        self.assertIn("target.replaceChildren()",page)
+        self.assertIn("renderIssueGallery();renderIssueCountries();updateSpotlight()",page)
+        self.assertIn("id=\"issueGallery\"",page)
+        self.assertIn("id=\"spotlightImage\"",page)
+        self.assertIn("class=\"story-art\"",page)
+        self.assertIn("ニュース現場の写真ではありません。",page)
+        self.assertIn("報道写真ではありません。",page)
+        self.assertIn("#atlasHero .gallery-track{width:100%;display:grid;",page)
+        self.assertIn(".story .story-fact .summary{display:-webkit-box",page)
+        self.assertIn("-webkit-line-clamp:2;overflow:hidden",page)
+        self.assertIn(".story.expanded .story-fact .summary{display:block",page)
+        self.assertLess(page.index('id="issueGallery"'),page.index('id="coverWorldMap"'))
+        self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
     def test_humor_identity_is_readable_before_the_map_on_mobile(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="title-work">
+<title id="title-work">仕事の行き違いを象徴する創作イラスト</title>
+<defs><linearGradient id="bg-work" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#F9E7B3"/><stop offset="1" stop-color="#FFA8A6"/></linearGradient><filter id="shadow-work" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#10263D" flood-opacity=".16"/></filter></defs>
+<rect width="800" height="480" rx="28" fill="url(#bg-work)"/>
+<circle cx="685" cy="80" r="132" fill="#fff" opacity=".23"/><circle cx="110" cy="365" r="135" fill="#fff" opacity=".16"/>
+<path d="M0 416Q190 366 410 417T800 395V480H0Z" fill="#173956" opacity=".09"/>
+<path d="M80 88h62M111 57v62M705 331h52M731 305v52" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+
+<g filter="url(#shadow-work)" transform="rotate(-9 366 254)"><rect x="237" y="92" width="268" height="326" rx="23" fill="#FFF8EA" stroke="#294966" stroke-width="10"/><rect x="321" y="70" width="103" height="40" rx="13" fill="#294966"/><path d="M290 168h166M290 230h145M290 292h167" stroke="#7CBAB4" stroke-width="16" stroke-linecap="round"/><path d="M290 348h70" stroke="#EF7F80" stroke-width="16" stroke-linecap="round"/></g><path d="M523 134l44-40m-4 91 59-10M555 249l51 26" stroke="#E96F75" stroke-width="12" stroke-linecap="round"/><path d="M145 288q-12-72 31-104 66-47 85 46" stroke="#294966" stroke-width="16" fill="none" stroke-linecap="round"/><path d="M143 276l-27-20 4 43z" fill="#294966"/></svg>

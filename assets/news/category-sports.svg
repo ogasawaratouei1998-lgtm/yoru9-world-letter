@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="title-sports">
+<title id="title-sports">スポーツの珍しい判断を象徴する創作イラスト</title>
+<defs><linearGradient id="bg-sports" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#B9EBE1"/><stop offset="1" stop-color="#F6C8AE"/></linearGradient><filter id="shadow-sports" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="11" stdDeviation="10" flood-color="#10263D" flood-opacity=".16"/></filter></defs>
+<rect width="800" height="480" rx="28" fill="url(#bg-sports)"/>
+<circle cx="685" cy="80" r="132" fill="#fff" opacity=".23"/><circle cx="110" cy="365" r="135" fill="#fff" opacity=".16"/>
+<path d="M0 416Q190 366 410 417T800 395V480H0Z" fill="#173956" opacity=".09"/>
+<path d="M80 88h62M111 57v62M705 331h52M731 305v52" fill="none" stroke="#ffffff" stroke-width="9" stroke-linecap="round" opacity=".72"/>
+
+<g filter="url(#shadow-sports)"><circle cx="381" cy="251" r="147" fill="#FFF7E7" stroke="#284765" stroke-width="11"/><path d="M325 176h113l46 77-81 71-91-49z" fill="#254F72"/><path d="M325 176 254 150m184 26 72-26M313 275l-22 94m112-45 41 85m-133-134-93 24m266-46 99 16" stroke="#254F72" stroke-width="10" fill="none" stroke-linecap="round"/></g><path d="M584 122l69-32m-45 82 71 10M149 143l-61-22" stroke="#F17C80" stroke-width="12" stroke-linecap="round"/><path d="M575 345q-13-62 40-88 42 33 16 82l-39 21" fill="#FDD579" stroke="#284765" stroke-width="9"/><circle cx="622" cy="342" r="12" fill="#284765"/></svg>

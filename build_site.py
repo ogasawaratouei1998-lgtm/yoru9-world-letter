@@ -122,6 +122,20 @@ def build(root, output):
         target = output / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    # Original in-house SVG illustrations are editorial artwork, NOT incident
+    # photographs. Bundle each verified static asset; no outside image server
+    # or mutable media URL is needed to render the news cards.
+    artwork_dir=root/'assets'/'news'
+    if not artwork_dir.is_dir():
+        raise FileNotFoundError('assets/news is required for published illustrations')
+    required_artwork={
+        'coffee-rescue.svg','road-typo.svg','monkey-patrol.svg',
+        'category-work.svg','category-company.svg',
+        'category-person.svg','category-sports.svg'
+    }
+    if not required_artwork.issubset({x.name for x in artwork_dir.glob('*.svg')}):
+        raise FileNotFoundError('A published news illustration is missing')
+    shutil.copytree(artwork_dir,output/'assets'/'news',dirs_exist_ok=True)
     # The standalone iOS and Android icons are built locally from the same
     # Moon / envelope / 9 artwork. No third-party image processing needed.
     from app_icon import render_icons
