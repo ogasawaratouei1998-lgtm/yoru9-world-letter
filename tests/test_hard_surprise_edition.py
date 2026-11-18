@@ -97,5 +97,19 @@ class HardSurpriseEditionTest(unittest.TestCase):
         self.assertLessEqual(sum(x["category"]=="company" for x in chosen),1)
 
 
+    def test_future_comedy_prompts_do_not_ask_for_soft_comments(self):
+        import auto_editorial
+        self.assertNotIn("favor a soft, unforced observation",auto_editorial.WRITING_CRAFT)
+        self.assertIn("hard",auto_editorial.MANZAI_CRAFT.lower())
+        self.assertIn("shockFactorConfirmed",auto_editorial.MANZAI_REVIEW)
+
+    def test_three_custom_visuals_are_cached_for_offline_reader(self):
+        worker=(ROOT/'service-worker.js').read_text(encoding='utf-8')
+        for name in ('own-goal-keeper.svg','police-sweets-wanted.svg',
+                     'mouse-83-tattoos.svg'):
+            self.assertIn("assets/news/"+name,worker)
+            self.assertTrue((ROOT/'assets/news'/name).is_file())
+
+
 if __name__=='__main__':
     unittest.main()
