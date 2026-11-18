@@ -146,6 +146,16 @@ try{
     const img=document.querySelector('#monthCards .month-story .travel-photo');
     return !!img&&img.complete&&img.naturalWidth>0;
    },null,{timeout:30000});
+   const postcard=article.locator('.travel-card');
+   assert.equal(await postcard.count(),1,'one optional postcard for selected story');
+   assert.ok((await postcard.locator('.travel-context-story').textContent()).includes('記事の舞台（国）'),
+    'article-country geography is labeled separately');
+   assert.ok((await postcard.locator('.travel-context-destination').textContent()).includes('旅先'),
+    'tourist destination has a separate country label');
+   assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
+    'every photograph is explicitly distinguished from incident footage');
+   assert.ok((await postcard.locator('.travel-links a').first().getAttribute('href')).includes('openstreetmap.org'),
+    'map opens the destination rather than inventing news-site coordinates');
    const photo=article.locator('.travel-photo');
    const photoSource=await photo.getAttribute('src');
    assert.ok(photoSource?.includes('assets/travel/'),'must use bundled photo');
