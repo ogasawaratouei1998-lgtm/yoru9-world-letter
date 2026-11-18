@@ -186,6 +186,9 @@ def validate_approved(data, expected_date):
                     isinstance(story.get('humanActor'), str) and
                     isinstance(story.get('humanMistake'), str),
                     f'{i}本目は人間の具体的な失敗が確認されていません')
+            from country_codes import country_codes
+            require(country_codes(story["country"]),
+                    f'{i}本目の出来事が起きた国・地域を認識できません')
             from editorial_identity import (human_failure_rejection,
                                             comic_line_rejection,noncomic_incident_rejection)
             require(human_failure_rejection(story) is None,
