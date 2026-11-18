@@ -649,6 +649,46 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("noncomic_incident_rejection(story,evidence)",code)
         self.assertIn("harassment of firefighters or emergency responders",code)
 
+    def test_small_batch_provenance_rejects_cross_story_and_invented_urls(self):
+        groups=[
+            {"groupId":1,"articles":[
+                {"url":"https://original-a.example/story"},
+                {"url":"https://original-b.example/story"}]},
+            {"groupId":2,"articles":[
+                {"url":"https://local-c.example/story"}]},
+        ]
+        a={"sourceUrl":"https://original-a.example/story",
+           "verificationUrls":["https://original-a.example/story"]}
+        b={"sourceUrl":"https://local-c.example/story",
+           "verificationUrls":["https://local-c.example/story"]}
+        wrong_cross={"sourceUrl":"https://original-a.example/story",
+                     "verificationUrls":[
+                         "https://original-a.example/story",
+                         "https://local-c.example/story"]}
+        invented={"sourceUrl":"https://invented.example/story",
+                  "verificationUrls":["https://invented.example/story"]}
+        duplicate={**a,"quip":"Another joke for same incident"}
+        self.assertEqual(editorial.source_bound_batch_drafts(
+            {"stories":[wrong_cross,invented,a,duplicate,b]},groups),[a,b])
+        self.assertEqual(editorial.source_bound_batch_drafts(
+            {"stories":[wrong_cross,invented]},groups),[])
+        self.assertEqual(editorial.source_bound_batch_drafts(
+            {"stories":"invalid"},groups),[])
+        self.assertEqual(editorial.source_bound_batch_drafts({},groups),[])
+
+    def test_provenance_prefilter_does_not_approve_articles_by_itself(self):
+        from pathlib import Path
+        import inspect
+        source=inspect.getsource(editorial.source_bound_batch_drafts)
+        self.assertNotIn('editorVerified',source)
+        self.assertNotIn('originalReportingVerified',source)
+        code=inspect.getsource(editorial.main)
+        self.assertIn('source_bound_batch_drafts(retry_result,batch)',code)
+        self.assertIn('independent_editorial_quality_passed(audit)',code)
+        self.assertIn('noncomic_incident_rejection(story,evidence)',code)
+        self.assertIn('trusted_original_domain(urls[0])',code)
+        self.assertIn('if AI_QUOTA_BLOCKED:',code)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
@@ -667,7 +707,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
         self.assertIn('supplemental_attempts+=1',code)
-        self.assertIn('supplemental_generated+=min(len(batch),len(retry_stories))',code)
+        self.assertIn('supplemental_generated+=len(retry_stories)',code)
+        self.assertIn('retry_stories=source_bound_batch_drafts(retry_result,batch)',code)
         self.assertIn('independent_editorial_quality_passed(audit)',code)
         self.assertIn('if len(selected)>=9:break',code)
         self.assertIn('select_diverse_verified_stories(selected,',code)
@@ -678,7 +719,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('for start in range(0,min(len(retry_candidates),20),2):',code)
         self.assertIn('batch=retry_candidates[start:min(start+2,20,len(retry_candidates))]',code)
         self.assertIn('supplemental_groups_examined+=len(batch)',code)
-        self.assertIn('draft.extend(retry_stories[:len(batch)])',code)
+        self.assertIn('draft.extend(retry_stories)',code)
         self.assertIn('NEVER merge facts, people, locations, or sources from different groups',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('independent_editorial_quality_passed(audit)',code)
