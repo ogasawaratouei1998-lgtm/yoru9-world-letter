@@ -1061,6 +1061,137 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   font-size:.8rem;line-height:1.42
  }
 }
+
+/* Playful reading v2: land the first verified joke BEFORE the news list and
+   world map, then reveal the same article (no new fabricated joke/source). */
+#atlasHero .quip-teaser[hidden]{display:none!important}
+#atlasHero .quip-teaser{
+ display:grid;grid-template-columns:minmax(0,33%) minmax(0,1fr);
+ gap:12px;align-items:stretch;margin:3px 0 15px;padding:11px;
+ background:linear-gradient(125deg,#305775,#263F60);
+ border:1px solid #91C9BF;border-left:4px solid #FBA69C;
+ border-radius:16px;position:relative;min-width:0;max-width:100%;
+ box-shadow:0 7px 18px #07152725
+}
+#atlasHero .quip-teaser::after{
+ content:"";position:absolute;left:42%;bottom:-9px;width:15px;height:15px;
+ transform:rotate(-45deg);border-bottom:1px solid #91C9BF;
+ border-left:1px solid #91C9BF;background:#263F60;pointer-events:none
+}
+#atlasHero .quip-teaser-art{min-width:0;overflow:hidden;
+ border-radius:11px;background:#F8C9B1;align-self:stretch}
+#atlasHero .quip-teaser-art img{
+ width:100%;height:100%;min-height:124px;max-height:190px;
+ object-fit:cover;display:block
+}
+#atlasHero .quip-teaser-body{display:flex;flex-direction:column;min-width:0}
+#atlasHero .quip-teaser-kicker{font-size:.77rem;line-height:1.45;
+ font-weight:900;color:#FFE1A7;margin:0 0 4px}
+#atlasHero .quip-teaser-topic{font-size:.72rem;line-height:1.45;
+ color:#ACEADB;font-weight:800;margin:0 0 7px;overflow-wrap:anywhere}
+#atlasHero .quip-teaser-line{font-size:clamp(1.02rem,3.65vw,1.3rem);
+ line-height:1.52;font-weight:840;color:#FFF8ED;margin:0 0 11px;
+ overflow-wrap:anywhere;text-wrap:pretty}
+#atlasHero .quip-teaser-actions{display:flex;flex-wrap:wrap;
+ gap:7px;align-items:center;margin-top:auto}
+#atlasHero #quipTeaserRead{flex:1 1 112px;min-height:44px;padding:8px 10px;
+ color:#23354B;background:#FFE0AC;border:1px solid #FFF2D1;
+ border-radius:11px;font-weight:900;font-size:.78rem;line-height:1.5}
+#atlasHero #quipTeaserRead:hover{background:#FFF0CC}
+#atlasHero #quipTeaserRead:focus-visible,
+#atlasHero .teaser-smile:focus-visible{outline:3px solid #FFF3D5;outline-offset:3px}
+#atlasHero .teaser-smile{flex:1 1 102px;min-height:44px;padding:8px 10px;
+ border-radius:11px;border:1px solid #9CD9D0;color:#EAFBF6;
+ background:#264D5F;font-size:.75rem;font-weight:800;line-height:1.5}
+#atlasHero .teaser-smile[aria-pressed="true"]{
+ color:#1D3545;background:#BBE6CE;border-color:#E1FFEB
+}
+/* Editorially verified article-specific taglines are visual labels, not
+   additional reporting. For future items use the editor-approved short label. */
+#atlasHero .gallery-kicker{display:block;max-width:100%;min-width:0;
+ margin:1px 3px 3px;color:#FFDFAC;font-size:.76rem;line-height:1.45;
+ font-weight:900;overflow-wrap:anywhere}
+#atlasHero .gallery-label{font-size:.79rem;line-height:1.48;
+ color:#F0F5FC;font-weight:720;min-height:2.9em}
+#atlasHero .gallery-tile:nth-child(2) .gallery-kicker{color:#B7F0D6}
+#atlasHero .gallery-tile:nth-child(3) .gallery-kicker{color:#FFC0C8}
+#atlasHero .gallery-tile{box-shadow:0 4px 10px #08192C35}
+#atlasHero .gallery-tile:nth-child(1){background:linear-gradient(140deg,#3C536B,#274262)}
+#atlasHero .gallery-tile:nth-child(2){background:linear-gradient(140deg,#2C5960,#26465C)}
+#atlasHero .gallery-tile:nth-child(3){background:linear-gradient(140deg,#58445C,#343E60)}
+/* Less atlas height so the live story comes into view before scrolling far.
+   Pin position remains percentage-based and still means *country*, not venue. */
+#atlasHero .atlas-map{aspect-ratio:2.32/1;min-height:125px}
+#atlasHero .atlas-map-caption{margin:6px 0 3px;line-height:1.5}
+/* Physically playful comic speech bubbles, but do not conflate them with facts. */
+.spotlight .spotlight-joke{position:relative;overflow:visible;
+ border-radius:19px 19px 19px 8px;border-left:4px solid #FFAAA7;
+ box-shadow:0 5px 11px #07152728;margin-bottom:22px}
+.spotlight .spotlight-joke::before{content:"";position:absolute;
+ left:21px;bottom:-11px;width:17px;height:17px;
+ transform:rotate(-45deg);background:#283E56;
+ border-left:1px solid #6E839A6B;border-bottom:1px solid #6E839A6B;
+ pointer-events:none}
+.story .teaserquip{position:relative;border-radius:16px 16px 16px 7px;
+ box-shadow:0 5px 11px #07152728;margin-bottom:17px}
+.story .teaserquip::after{content:"";position:absolute;left:20px;bottom:-10px;
+ width:15px;height:15px;transform:rotate(-45deg);
+ background:#304961;border-left:1px solid #7181987A;
+ border-bottom:1px solid #7181987A;pointer-events:none}
+/* Small feedback ONLY on a genuine tap, not an autoplaying animation. */
+.smile{position:relative;isolation:isolate}
+.smile.smile-burst::before,.smile.smile-burst::after{
+ content:"✦";position:absolute;top:-18px;color:#FFE0A1;
+ font-size:1.1rem;pointer-events:none;opacity:0;
+ animation:tinyLaughStar .55s ease-out both
+}
+.smile.smile-burst::before{left:15%;--star-shift:-12px}
+.smile.smile-burst::after{right:15%;--star-shift:12px;
+ color:#9CE1D4;animation-delay:.07s}
+@keyframes tinyLaughStar{
+ 0%{opacity:0;transform:translateY(8px) translateX(0) scale(.4)}
+ 35%{opacity:1;transform:translateY(-5px) translateX(var(--star-shift)) scale(1)}
+ 100%{opacity:0;transform:translateY(-19px) translateX(var(--star-shift)) scale(.65)}
+}
+@media(max-width:520px){
+ #atlasHero .quip-teaser{grid-template-columns:minmax(0,31%) minmax(0,1fr);
+  gap:9px;padding:9px;margin:2px 0 13px;border-radius:14px}
+ #atlasHero .quip-teaser-art img{min-height:132px;max-height:200px}
+ #atlasHero .quip-teaser-kicker{font-size:.71rem}
+ #atlasHero .quip-teaser-topic{font-size:.69rem;margin-bottom:4px}
+ #atlasHero .quip-teaser-line{font-size:.98rem;line-height:1.5;margin-bottom:8px}
+ #atlasHero .quip-teaser-actions{gap:5px}
+ #atlasHero #quipTeaserRead,#atlasHero .teaser-smile{
+  padding:6px 8px;font-size:.72rem;min-height:44px}
+ #atlasHero .gallery-kicker{font-size:.73rem;margin:1px 3px 2px}
+ #atlasHero .gallery-label{font-size:.74rem;line-height:1.47}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-template-rows:auto auto minmax(0,1fr);
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{
+  grid-row:1/span 3
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-kicker{
+  grid-column:2;grid-row:2;align-self:center;margin:0 0 4px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  grid-column:2;grid-row:3;align-self:start;min-height:0;
+  -webkit-line-clamp:2
+ }
+ #atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}
+}
+@media(max-width:355px){
+ #atlasHero .quip-teaser{grid-template-columns:minmax(0,29%) minmax(0,1fr);
+  gap:8px;padding:7px}
+ #atlasHero .quip-teaser-line{font-size:.91rem;line-height:1.5}
+ #atlasHero .quip-teaser-art img{min-height:150px}
+ #atlasHero .gallery-kicker{font-size:.7rem}
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){
+ .smile.smile-burst::before,.smile.smile-burst::after{animation:none;content:none}
+ #atlasHero .gallery-tile{transition:none}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1078,8 +1209,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span>世界の「やらかし」に、AIが本気でツッコむ。</p>
   </div>
  </div>
+ <section class="quip-teaser" id="quipTeaser" aria-label="この号の最初のAIツッコミ">
+  <div class="quip-teaser-art"><img id="quipTeaserImage" src="./assets/news/category-work.svg" alt="創作イラスト。ニュース現場の写真ではありません。" width="800" height="480" decoding="async"></div>
+  <div class="quip-teaser-body">
+   <p class="quip-teaser-kicker">まずは、ひとツッコミ。</p>
+   <p class="quip-teaser-topic" id="quipTeaserTopic">世界の実話から</p>
+   <p class="quip-teaser-line" id="quipTeaserLine" role="note" aria-label="AIによる創作の冗談">記事に付いたツッコミを準備しています。</p>
+   <div class="quip-teaser-actions"><button type="button" id="quipTeaserRead">この話を読む ›</button><button type="button" class="smile teaser-smile" data-smile="0" aria-pressed="false">☺ ふっと笑えた</button></div>
+  </div>
+ </section>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
-  <div class="gallery-heading"><strong>今日はどの「まさか」から？</strong><span>絵を選んで読む</span></div>
+  <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」3コマ劇場</strong><span>気になる絵から読む</span></div>
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
@@ -1089,7 +1229,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   <span class="atlas-map-symbol" aria-hidden="true">◌</span>
  </div>
  <section class="atlas-preview" id="atlasPreview" aria-label="選択した国のニュース" aria-live="polite" hidden></section>
- <p class="atlas-map-caption" id="coverMapCaption">地図の点は、掲載国のおおよその位置です。記事の現場ではありません。</p>
+ <p class="atlas-map-caption" id="coverMapCaption">掲載国の代表位置です。ニュースの現場ではありません。</p>
  <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
  <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
 </section>
@@ -1642,12 +1782,34 @@ const NEWS_ART_FALLBACK=Object.freeze({
  work:'category-work.svg',company:'category-company.svg',
  person:'category-person.svg',sports:'category-sports.svg'
 });
+const NEWS_COMIC_KICKERS=Object.freeze({
+ 'cheonan-painters-coffee-rescue-2026':'注文がSOS',
+ 'guaira-degavar-road-marking-2026':'道路に誤字',
+ 'albert-lea-mcnugget-monkey-diaper-police-2026':'不審者はサル'
+});
+function shortComicKicker(story){
+ // New editions use the editor-verified article label, never invented details.
+ const line=NEWS_COMIC_KICKERS[story?.id]||story?.label||story?.categoryLabel||'世界の実話';
+ return String(line).trim().slice(0,18);
+}
+function updateQuipTeaser(){
+ const first=Array.isArray(edition.stories)?edition.stories[0]:null;
+ const teaser=$('quipTeaser');
+ teaser.hidden=!first||!String(first.quip||'').trim();
+ if(teaser.hidden)return;
+ $('quipTeaserImage').src=newsArt(first);
+ $('quipTeaserTopic').textContent=shortComicKicker(first)+' · '+countryLabel(first.country);
+ $('quipTeaserLine').textContent=first.quip;
+ $('quipTeaserRead').setAttribute('aria-label','1本目：'+String(first.title||'掲載記事')+'を読む');
+}
+
 function newsArt(story){
  const name=NEWS_ARTWORK[story?.id]||NEWS_ART_FALLBACK[story?.category]||NEWS_ART_FALLBACK.person;
  return './assets/news/'+name;
 }
 function renderIssueGallery(){
  const target=$('issueGallery');
+ $('galleryHeading').textContent='世界の「まさか」'+edition.stories.length+'コマ劇場';
  target.replaceChildren();
  for(const [index,story] of edition.stories.entries()){
   const button=document.createElement('button');
@@ -1659,9 +1821,11 @@ function renderIssueGallery(){
   img.width=800;img.height=480;
   const country=document.createElement('span');country.className='gallery-country';
   country.textContent=(index+1)+' · '+countryLabel(story.country);
+  const kicker=document.createElement('span');kicker.className='gallery-kicker';
+  kicker.textContent=shortComicKicker(story);
   const label=document.createElement('span');label.className='gallery-label';
-  label.textContent=story.label||'世界のまさか';
-  button.append(img,country,label);
+  label.textContent=story.title||'世界のまさか';
+  button.append(img,country,kicker,label);
   button.addEventListener('click',()=>openAtlasStory(index));
   target.append(button);
  }
@@ -1785,7 +1949,7 @@ function renderCoverMap(){
  const caption=$('coverMapCaption');
  const names=[...present.keys()].map(countryLabel).join('・');
  caption.textContent=names
-  ?'点は国・地域の代表位置です。ニュースの現場ではありません。'
+  ?'掲載国の代表位置です。ニュースの現場ではありません。'
   :'掲載国を確認中です。点はニュースの現場ではありません。';
 }
 function renderIssueCountries(){
@@ -1830,6 +1994,7 @@ function updateSpotlight(){
  const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
  $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
  $('spotlightQuip').textContent=first.quip||'人間のやらかしに、AIが鋭くツッコミます。';
+ updateQuipTeaser();
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');
@@ -2109,10 +2274,25 @@ function observeStories(){
 }
 function applyFilter(){let count=0;document.querySelectorAll('.story').forEach(el=>{const show=filter==='all'||el.dataset.type===filter;el.hidden=!show;if(show)count++});$('empty').hidden=count!==0;document.querySelectorAll('[data-filter]').forEach(el=>el.setAttribute('aria-pressed',String(el.dataset.filter===filter)))}
 async function handleStoryAction(e){const open=e.target.closest('[data-open]');if(open){const i=Number(open.dataset.open),details=$('details-'+i),show=details.hidden;details.hidden=!show;open.closest('.story').classList.toggle('expanded',show);open.textContent=show?'閉じる ↑':'詳しく読む ↓';open.setAttribute('aria-expanded',String(show));if(show&&!state.read.includes(i)){markRead(i)}return}
- const smile=e.target.closest('[data-smile]');if(smile){const i=Number(smile.dataset.smile);state.smiles=state.smiles.includes(i)?state.smiles.filter(x=>x!==i):[...state.smiles,i];saveState();update();return}
+ const smile=e.target.closest('[data-smile]');if(smile){
+  const i=Number(smile.dataset.smile);
+  const wasOn=state.smiles.includes(i);
+  state.smiles=wasOn?state.smiles.filter(x=>x!==i):[...state.smiles,i];
+  saveState();update();
+  // The animation is only a local, opt-in moment, never a fake vote count.
+  // Reduced-motion users get the same persistent pressed-state feedback.
+  if(!wasOn&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+   smile.classList.remove('smile-burst');void smile.offsetWidth;
+   smile.classList.add('smile-burst');
+   setTimeout(()=>smile.classList.remove('smile-burst'),650);
+  }
+  return
+ }
  const share=e.target.closest('[data-share]');if(share){const s=edition.stories[Number(share.dataset.share)];const txt=`${s.title}\n出典：${s.sourceUrl}\nよる9じの世界便り`;try{if(navigator.share)await navigator.share({title:s.title,text:txt});else if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('記事の情報をコピーしました')}else toast('共有できない環境です')}catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}}}
 $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
+$('atlasHero').addEventListener('click',handleStoryAction);
+$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();loadMonthRetrospective();loadMonthlyVerified();

@@ -71,10 +71,56 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="issueGallery"'),page.index('id="coverWorldMap"'))
         self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
+    def test_five_playful_improvements_appear_without_unverified_new_claims(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        cover=page[page.index('<section class="hero" id="atlasHero"'):
+                   page.index('<section class="spotlight" id="spotlight"')]
+        # The independently vetted first quip is the invitation to read, and
+        # is sourced from the actual selected edition, never hardcoded copy.
+        self.assertIn('class="quip-teaser" id="quipTeaser"',cover)
+        self.assertIn('id="quipTeaserImage"',cover)
+        self.assertIn('id="quipTeaserLine"',cover)
+        self.assertIn('role="note" aria-label="AIによる創作の冗談"',cover)
+        self.assertIn('id="quipTeaserRead"',cover)
+        self.assertIn('data-smile="0" aria-pressed="false"',cover)
+        self.assertLess(cover.index('id="quipTeaser"'),
+                        cover.index('id="issueGallery"'))
+        self.assertLess(cover.index('id="issueGallery"'),
+                        cover.index('id="coverWorldMap"'))
+        self.assertIn("teaser.hidden=!first||!String(first.quip||'').trim()",page)
+        self.assertIn("$('quipTeaserLine').textContent=first.quip",page)
+        self.assertIn("$('quipTeaserImage').src=newsArt(first)",page)
+        self.assertIn("updateQuipTeaser();",page)
+        self.assertIn("$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0))",page)
+        # Short taglines use explicit vetted incident IDs and fall back to
+        # editor-provided labels for future published stories.
+        self.assertIn("const NEWS_COMIC_KICKERS=Object.freeze({",page)
+        self.assertIn("NEWS_COMIC_KICKERS[story?.id]||story?.label||story?.categoryLabel",page)
+        self.assertIn("kicker.textContent=shortComicKicker(story)",page)
+        self.assertIn("label.textContent=story.title||'世界のまさか'",page)
+        self.assertIn("$('galleryHeading').textContent='世界の「まさか」'+edition.stories.length+'コマ劇場'",page)
+        self.assertIn("#atlasHero .gallery-tile:last-child:nth-child(odd)",page)
+        self.assertIn("#atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}",page)
+        self.assertIn("掲載国の代表位置です。ニュースの現場ではありません。",page)
+        # CSS has physically identifiable comic bubble tails and one-tap
+        # sparkle feedback, with motion disabled when requested.
+        self.assertIn(".spotlight .spotlight-joke::before{content:",page)
+        self.assertIn(".story .teaserquip::after{content:",page)
+        self.assertIn("@keyframes tinyLaughStar{",page)
+        self.assertIn(".smile.smile-burst::before,.smile.smile-burst::after",page)
+        self.assertIn("!window.matchMedia('(prefers-reduced-motion: reduce)').matches",page)
+        self.assertIn("smile.classList.add('smile-burst')",page)
+        self.assertIn("$('atlasHero').addEventListener('click',handleStoryAction)",page)
+        self.assertIn("const wasOn=state.smiles.includes(i)",page)
+        self.assertIn("saveState();update();",page)
+        # No new story is invented or an unpublished image or source inserted.
+        self.assertIn("return './assets/news/'+name",page)
+        self.assertIn("const first=Array.isArray(edition.stories)?edition.stories[0]:null;",page)
+
     def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('data-layout="mobile-grid-2plus1"',page)
-        self.assertIn("絵を選んで読む",page)
+        self.assertIn("気になる絵から読む",page)
         self.assertIn("#atlasHero .gallery-track{width:100%;display:grid;",page)
         self.assertIn("grid-auto-flow:row;grid-auto-columns:auto;",page)
         self.assertIn("grid-template-columns:repeat(2,minmax(0,1fr));",page)
