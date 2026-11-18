@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v13';
+const SHELL_CACHE = 'yoru9-shell-v14';
 const ISSUE_CACHE = 'yoru9-released-issues-v2';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
