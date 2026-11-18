@@ -32,9 +32,9 @@ HUMAN_FAILURE_MISSION=(
 
 ANIMAL_TOPIC=re.compile(
     r"サル|ザル|猿|シカ|鹿|アシカ|トド|カニ|蟹|ワニ|鰐|ヘビ|蛇|"
-    r"ペンギン|アライグマ|ネコ|猫|イヌ|犬|ユニコーン|"
+    r"ペンギン|アライグマ|ネコ|猫|イヌ|犬|競走馬|ユニコーン|"
     r"monkey|sea.?lion|deer|crab|alligator|crocodile|"
-    r"snake|penguin|unicorn|raccoon|otter|lion cub",
+    r"snake|penguin|unicorn|raccoon|otter|lion cub|racehorse|horse",
     re.I
 )
 HUMAN_ERROR_SIGNAL=re.compile(
@@ -70,6 +70,16 @@ EMERGENCY_RESPONSE=re.compile(
 RESPONDER_HARASSMENT=re.compile(
     r"嫌がらせ|ハラスメント|暴言|罵倒|脅迫|威嚇|"
     r"abuse|harass|threat|intimidat",
+    re.I,
+)
+
+# Death, abuse or disposal of animals is not a light comedy situation, even
+# when a model rewrites the headline to suggest an ironic human blunder.
+# Apply this to publisher article bodies as well as Japanese draft text.
+ANIMAL_DISTRESS=re.compile(
+    r"死亡|死体|遺体|死骸|死んだ|埋葬|遺棄|投棄|"
+    r"dead|deceased|killed|died|carcass|burial|buried|"
+    r"dumped|waste facility|skip bin",
     re.I,
 )
 
@@ -166,6 +176,9 @@ def noncomic_incident_rejection(story, fetched_articles=()):
     surface=" ".join(str(story.get(key,"")) for key in fields)
     bodies=" ".join(str(item.get("text",item.get("body","")))
                     for item in fetched_articles if isinstance(item,dict))
+    combined=surface+" "+bodies
+    if ANIMAL_TOPIC.search(combined) and ANIMAL_DISTRESS.search(combined):
+        return "animal_death_or_disposal_not_comedy"
     # Source-text veto also catches a confrontational student/minister story
     # when an AI rewrites its Japanese headline as harmless entertainment.
     if ((FORMAL_CONFLICT_CONTEXT.search(surface)
