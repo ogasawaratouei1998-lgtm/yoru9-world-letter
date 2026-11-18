@@ -778,6 +778,46 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .story .teaserquip{font-size:.99rem;line-height:1.7;padding:11px 12px}
  .story .readbtn{font-size:.9rem}
 }
+
+/* Phase 3: country-grounded travel postcards, never incident-scene photos. */
+.travel-card{position:relative;border-radius:17px;padding:15px 15px 14px;
+ background:linear-gradient(149deg,#213751,#192a41);border:1px solid #69839c}
+.travel-kicker{font-size:.76rem;letter-spacing:.075em;text-transform:uppercase;
+ color:#ffe0a7;margin-bottom:9px}
+.travel-context{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin:0 0 12px;
+ font-size:.77rem;line-height:1.55}
+.travel-context-story,.travel-context-destination{display:inline-flex;align-items:center;
+ border-radius:100px;padding:5px 10px;border:1px solid #69829c;background:#2c425d;
+ color:#e8f0f6;font-weight:690}
+.travel-context-destination{border-color:#c69e63;color:#ffdfab;background:#493e3b}
+.travel-card h4{font-size:clamp(1.19rem,4.4vw,1.43rem);
+ font-weight:800;line-height:1.5;margin:0 0 9px;color:#fff5e8}
+.travel-trust{display:block;margin:8px 0 12px;padding:10px 12px;
+ border-radius:9px;background:#18283f;border:1px solid #8496a6;
+ font-size:.83rem;font-weight:720;line-height:1.65;color:#f0e1ca}
+.travel-disclaimer{margin:5px 0 13px;color:#c8d7e5;border-left-color:#8fa6bc;
+ font-size:.79rem;line-height:1.68}
+.travel-figure{margin:0 0 11px}
+.travel-photo{aspect-ratio:16/10;max-height:280px;width:100%;
+ border:1px solid #4d637c;border-radius:11px;object-fit:cover}
+.travel-figure figcaption{font-size:.92rem;line-height:1.78;color:#e6eef4;margin-top:11px}
+.travel-figure .travel-caption-label{font-size:.79rem;font-weight:820;color:#ffdda5}
+.travel-links{margin:10px 0;gap:7px 16px}
+.travel-links a{font-size:.88rem;line-height:1.65;min-height:44px;
+ border:1px solid #879db0;border-radius:9px;padding:7px 12px;color:#ffe1ad;
+ text-decoration:underline;text-underline-offset:3px}
+.travel-credit{font-size:.73rem;line-height:1.6;color:#becfdd;margin:7px 0 0}
+.travel-empty{font-size:.9rem;line-height:1.7;margin:12px 0;background:#1a2b42}
+@media(max-width:520px){
+ .travel-card{padding:13px 12px 12px;border-radius:14px}
+ .travel-kicker{font-size:.72rem}
+ .travel-context{font-size:.74rem}
+ .travel-context-story,.travel-context-destination{padding:6px 9px}
+ .travel-trust{font-size:.8rem;padding:9px 10px}
+ .travel-card h4{font-size:1.2rem}
+ .travel-photo{aspect-ratio:16/10;max-height:245px}
+ .travel-links a{flex:1 1 145px;justify-content:center;text-align:center}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1561,7 +1601,10 @@ function travelCountryNames(raw){
  if(text.includes('日本'))return ['日本'];
  if(text.includes('スペイン'))return ['スペイン'];
  if(text.includes('アンティグア'))return ['アンティグア・バーブーダ'];
- return text?[text]:[];
+ // The same catalog as the atlas covers all 196 countries and territories.
+ // Unknown labels are never guessed to be a different country.
+ const canonical=countryKeys(text);
+ return canonical.length?canonical.map(code=>countryLabel(code)):(text?[text]:[]);
 }
 function travelPhotoOptions(stops){
  // Several article IDs can refer to the same photograph; never count it twice.
@@ -1593,28 +1636,25 @@ function chooseTravelPhoto(story,stops){
  const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset));
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
- let sameCountry=available.filter(s=>countries.includes(s.country));
- // When two countries are named, prefer the first. This preserves the
- // limited supply of US photos for articles located only in the United States.
- if(countries.length>1){
-  const primary=available.filter(s=>s.country===countries[0]&&!travelUsedPhotos.has(s.photoAsset));
-  if(primary.length)sameCountry=primary;
- }
- // Specific Welsh destination first for Welsh articles, if it has not been used.
- if(String(story.country||'').includes('ウェールズ')){
-  const welsh=sameCountry.filter(s=>String(s.region).includes('ウェールズ')&&!travelUsedPhotos.has(s.photoAsset));
-  if(welsh.length)sameCountry=welsh;
- }
- // Prefer a destination in the story's country. If none remains, offer a
- // different, explicitly labelled country rather than a repeated photo.
+ const sameCountry=available.filter(s=>countries.includes(s.country));
+ // Never silently replace an unrepresented article country with an unrelated
+ // country's photograph. A country-only map card is more honest.
+ if(!sameCountry.length)return null;
+ // Editorially curated article destinations are more relevant than a random
+ // tourist photograph of the same country. Only validated stops qualify.
+ const curated=sameCountry.find(stop=>stop===stops?.[story.id]);
  let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(!pool.length&&sameCountry.length)pool=sameCountry;
- // If an entirely new country has no photographs yet, show a clearly named
- // world postcard, instead of an empty section. Never present it as local.
- if(!pool.length)pool=available.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(!pool.length)pool=available;
- // Only the choice within the unused pool is randomized. Reopening the same
- // article keeps its photo, while other articles receive distinct photos.
+ if(curated&&!travelUsedPhotos.has(curated.photoAsset)){
+  pool=[curated];
+ }else if(!pool.length){
+  pool=curated?[curated]:sameCountry;
+ }
+ // Welsh incidents prefer Welsh photographs when a specific direct stop is
+ // unavailable; never infer the actual incident's precise location.
+ if(!curated&&String(story.country||'').includes('ウェールズ')){
+  const welsh=pool.filter(s=>String(s.region).includes('ウェールズ'));
+  if(welsh.length)pool=welsh;
+ }
  const picked=pool[Math.floor(Math.random()*pool.length)];
  travelSelections.set(key,picked);
  travelUsedPhotos.add(picked.photoAsset);
@@ -1624,9 +1664,12 @@ function travelPostcardHtml(story,stop,showIntro=false){
  const known=stop&&Number.isFinite(stop.latitude)&&Number.isFinite(stop.longitude)&&
   Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
  const sameCountry=known&&travelCountryNames(story.country).includes(stop.country);
- const place=known?stop.place:countryLabel(story.country||'');
- const locator=known?{lat:stop.latitude,lon:stop.longitude,zoom:11}:countryRecord(story.country)
-  ?{lat:countryRecord(story.country).lat,lon:countryRecord(story.country).lon,zoom:4}:null;
+ const reportCountry=countryLabel(story.country||'');
+ const place=known?stop.place:reportCountry;
+ const fallbackCountry=countryRecord(story.country)||
+  countryRecord(countryKeys(story.country)[0]||'');
+ const locator=known?{lat:stop.latitude,lon:stop.longitude,zoom:11}:fallbackCountry
+  ?{lat:fallbackCountry.lat,lon:fallbackCountry.lon,zoom:4}:null;
  const mapUrl=locator?'https://www.openstreetmap.org/?mlat='+locator.lat+'&mlon='+locator.lon+
   '#map='+locator.zoom+'/'+locator.lat+'/'+locator.lon:'';
  const photo=known&&typeof stop.photo==='string'&&
@@ -1634,19 +1677,25 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
- return '<section class="travel-card" aria-label="世界の街角への30秒小旅行">'+
-  '<p class="travel-kicker">今夜の寄り道先</p>'+
-  '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region)+(sameCountry?'':' · '+escapeHtml(stop.country)):'')+'</h4>'+
-  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、世界の街角へ。'+
-   (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'ここはニュース現場そのものの紹介ではありません。')+'</p>':'')+
-  (known&&!sameCountry?'<p class="travel-elsewhere">記事の国から少し足をのばして、今日は'+escapeHtml(stop.country)+'の景色へ。</p>':'')+
+ return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する30秒の小旅行">'+
+  '<p class="travel-kicker">WORLD POSTCARD · 30秒の小旅行</p>'+
+  '<div class="travel-context" aria-label="記事と旅先の違い">'+
+   '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
+   '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span>'+
+  '</div>'+
+  '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
+  '<p class="travel-trust" role="note">'+
+   (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の旅先写真はまだ準備中です。ニュースの現場を示すものではありません。')+
+  '</p>'+
+  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、世界の街角へ。写真や地図は記事の証拠ではなく、別の旅のご案内です。</p>':'')+
+  (known&&!sameCountry?'<p class="travel-elsewhere">ニュースの舞台とは異なる国の旅先：'+escapeHtml(stop.country)+'</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
    '<figcaption><span class="travel-caption-label">この景色の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
-   '<p class="travel-empty">写真を読み込めませんでした。地図から場所をのぞいてみませんか。</p>')+
+   '<p class="travel-empty">'+(known?'写真を読み込めませんでした。撮影元と地図を確認できます。':'この国の写真はまだ準備中。ニュースの舞台を国単位の地図でのぞけます。')+'</p>')+
   '<div class="travel-links">'+
-   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">地図で旅先をのぞく ↗</a>':'')+
+   (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">'+(known?'旅先を地図で見る ↗':'掲載国を地図で見る ↗')+'</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
   '</div>'+
   (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
