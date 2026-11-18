@@ -116,6 +116,10 @@ def publication_nightly_message(data, edition_date, stories):
     Without a qualifying approved line, retain a clean neutral sign-off.
     """
     raw=data.get("nightlyMessage")
+    # An explicit empty string is an editorial decision to omit the extra
+    # punchline. A missing field retains legacy deterministic behavior.
+    if raw == "":
+        return ""
     if isinstance(raw,str):
         clean=raw.strip()
         if (20<=len(clean)<=110 and not any(c in clean for c in "<>\r\n")
