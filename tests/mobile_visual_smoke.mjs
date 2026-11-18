@@ -48,7 +48,7 @@ try{
     const map=hero?.querySelector('#coverWorldMap');
     const box=el=>el?.getBoundingClientRect();
     return {
-      headline:h2?.textContent?.replace(/\\s+/g,'').trim(),
+      headline:h2?.textContent?.replace(/\s+/g,'').trim(),
       storyNumber:hero?.querySelector('#atlasStoryCount')?.textContent?.trim(),
       storyCount:document.querySelectorAll('#stories .story').length+1,
       lede:lede?.textContent?.trim(),
