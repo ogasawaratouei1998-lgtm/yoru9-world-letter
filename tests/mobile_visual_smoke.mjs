@@ -80,6 +80,43 @@ try{
    await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
+   // Phase 2: typography, editorial labeling and touch targets.
+   const leadHierarchy=await page.evaluate(()=>{
+    const title=document.querySelector('#spotlightTitle');
+    const facts=document.querySelector('.spotlight-fact');
+    const quip=document.querySelector('.spotlight-joke');
+    return {
+      titleBottom:title?.getBoundingClientRect().bottom,
+      factTop:facts?.getBoundingClientRect().top,
+      factBottom:facts?.getBoundingClientRect().bottom,
+      quipTop:quip?.getBoundingClientRect().top,
+      quipBottom:quip?.getBoundingClientRect().bottom,
+      label:facts?.querySelector('.fact-kicker')?.textContent?.trim(),
+      disclaimer:quip?.querySelector('.humor-marker')?.textContent?.trim(),
+      factBackground:getComputedStyle(facts).backgroundImage,
+      quipBackground:getComputedStyle(quip).backgroundImage
+    };
+   });
+   assert.equal(leadHierarchy.label,'起きたこと','reporting is clearly labeled');
+   assert.equal(leadHierarchy.disclaimer,'創作の冗談','AI quip is explicitly marked as humor');
+   assert.ok(leadHierarchy.titleBottom<=leadHierarchy.factTop+2,
+    'headline precedes fact summary');
+   assert.ok(leadHierarchy.factBottom<leadHierarchy.quipTop,
+    'facts and AI punchline are visually separated');
+   assert.notEqual(leadHierarchy.factBackground,leadHierarchy.quipBackground,
+    'AI joke uses a distinct editorial surface');
+   const supportingCards=page.locator('#stories .story');
+   if(await supportingCards.count()>0){
+    const firstCard=supportingCards.first();
+    assert.equal(await firstCard.locator('.story-fact .fact-kicker').textContent(),'起きたこと');
+    assert.equal(await firstCard.locator('.teaserquip .humor-marker').textContent(),'創作の冗談');
+    assert.ok(await firstCard.locator('[data-open]').evaluate(
+      el=>el.getBoundingClientRect().height>=44),
+     'secondary story reading action is touch-friendly');
+    assert.ok(await firstCard.locator('.story-fact').evaluate(el=>
+      el.getBoundingClientRect().bottom<el.closest('.story').querySelector('.teaserquip').getBoundingClientRect().top),
+     'secondary facts precede and remain separate from AI humor');
+   }
    const primaryButton=page.locator('#spotlightRead');
    const buttonHeight=await primaryButton.evaluate(el=>el.getBoundingClientRect().height);
    assert.ok(buttonHeight>=44,'lead article action must be touch-friendly');
