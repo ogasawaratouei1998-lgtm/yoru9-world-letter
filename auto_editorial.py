@@ -722,7 +722,33 @@ def recent_topic_counts(today,days=30):
     return counts
 
 
-def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None, lifetime_country_history=None):
+def recent_country_cooldown_counts(today, days=3):
+    """Penalize a country featured in the immediately preceding editions.
+
+    Never infer the location from RSS publisher. Count actual countries in
+    published archives only; 1-day recency carries more weight than 3 days.
+    This affects ranking solely among independently verified candidates.
+    """
+    from collections import Counter
+    weights={1:9,2:4,3:2}
+    counts=Counter()
+    for file in Path("data/archive").glob("????-??-??.json"):
+        try:
+            issue=json.loads(file.read_text(encoding="utf-8"))
+            day=datetime.strptime(issue.get("editionDate",""),"%Y-%m-%d").date()
+            age=(today-day).days
+            if (issue.get("status")!="published" or
+                    not 1<=age<=days):
+                continue
+            for story in issue.get("stories",[]):
+                for code in set(country_codes(story.get("country",""))):
+                    counts[code]+=weights.get(age,1)
+        except (OSError,ValueError,TypeError,KeyError):
+            continue
+    return counts
+
+
+def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None, lifetime_country_history=None, recent_country_cooldown=None, selection_seed=None):
     """Select up to three ALREADY audited stories, with regional fairness.
 
     Country is the fact-checked event country, not the RSS feed locale.
@@ -739,6 +765,7 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
             region_history[region]+=count
     topic_history=topic_history or Counter()
     lifetime_country_history=lifetime_country_history or Counter()
+    recent_country_cooldown=recent_country_cooldown or Counter()
     # A routine company-news pile is never a complete issue. Fewer superb
     # verified stories beat filling three slots with corporate filler.
     choices=[]
@@ -750,6 +777,16 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
         if eligible:
             choices=eligible
             break
+    def random_tiebreak(indices):
+        if selection_seed is None:
+            return -sum(indices)
+        # Date-seeded stable shuffle among equally qualified combinations.
+        # This never chooses unverified news or changes factual countries.
+        import hashlib
+        identifiers=sorted(str(pool[i].get("id","")) for i in indices)
+        digest=hashlib.sha256((str(selection_seed)+"|"+
+                               "|".join(identifiers)).encode("utf-8")).digest()
+        return int.from_bytes(digest[:8],"big")
     def diversity_score(indices):
         stories=[pool[i] for i in indices]
         country_groups=[country_codes(story.get("country")) for story in stories]
@@ -758,19 +795,21 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
                        if country_region(country)]
         categories={story["category"] for story in stories}
         topics=[surprise_topic(story) for story in stories]
-        # Three stories cannot cover four categories nightly; rotate neglected
-        # desks across issues. Themes come before geographic tie-breakers.
-        return (len(categories),len(set(known_countries)),
+        # Actual country breadth and desk breadth beat stale dominant markets.
+        # A country used yesterday is penalized heavily BEFORE any long-run
+        # frequency and genre tie-breakers, not silently treated as "fresh".
+        return (len(set(known_countries)),len(categories),
+                len(set(known_regions)),
+                -sum(recent_country_cooldown[country] for country in known_countries),
                 len({country for country in known_countries
                      if lifetime_country_history[country]==0}),
                 -sum(category_history[story["category"]] for story in stories),
                 len(set(topics)),
                 -sum(topic_history[topic] for topic in topics),
-                len(set(known_regions)),
                 -sum(region_history[region] for region in known_regions),
                 -sum(country_history[country] for country in known_countries),
                 -sum(lifetime_country_history[country] for country in known_countries),
-                -sum(indices))
+                random_tiebreak(indices))
     best=max(choices,key=diversity_score)
     return [pool[i] for i in best]
 
@@ -1476,7 +1515,10 @@ def main():
     country_history,category_history=recent_diversity_counts(now.date())
     topic_history=recent_topic_counts(now.date())
     lifetime_history=lifetime_country_counts(now.date())
-    selected=select_diverse_verified_stories(selected,country_history,category_history,topic_history,lifetime_history)
+    cooldown=recent_country_cooldown_counts(now.date())
+    selected=select_diverse_verified_stories(
+        selected,country_history,category_history,topic_history,lifetime_history,
+        recent_country_cooldown=cooldown,selection_seed=now.date().isoformat())
     checkpoint("selected",selected_for_edition=len(selected))
     print("Nightly verified selection:",len(selected),"source-checked stories;",
           "target 3, release 1-3.",flush=True)
@@ -1492,6 +1534,7 @@ def main():
         "selected_categories":len({story["category"] for story in selected}),
         "selected_comic_themes":len({surprise_topic(story) for story in selected}),
         "recent_category_counts":dict(category_history),
+        "immediate_country_cooldown":dict(cooldown),
         "history_articles":sum(country_history.values())
     },sort_keys=True),flush=True)
     # A fresh closing line is generated from this edition's verified summaries.
