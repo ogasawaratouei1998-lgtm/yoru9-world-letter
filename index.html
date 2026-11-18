@@ -707,7 +707,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #atlasHero .eyebrow{font-size:.68rem!important}
  .atlas-title{font-size:clamp(1.18rem,5vw,1.35rem)}
  .atlas-lede{font-size:.8rem}
- .atlas-brand{display:none}
+ .atlas-brand{display:block}
  .atlas-map-caption{font-size:.73rem}
  #atlasHero .issue-countries{gap:5px 5px}
  #atlasHero .country-chip{font-size:.73rem;padding:5px 9px;min-height:44px}
@@ -845,6 +845,58 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #closing .closing-afterword{font-size:.94rem;margin-top:10px;padding-top:10px}
  #closing .bye{font-size:.82rem}
 }
+
+/* Brand promise: real international blunders, with a playful AI punchline.
+   The geography remains factual; no fake joke or other invented reporting. */
+#atlasHero .atlas-title{font-size:clamp(1.28rem,4.8vw,1.92rem);
+ line-height:1.36;letter-spacing:-.025em;margin:5px 0 8px}
+#atlasHero .atlas-title-second{display:block;margin-top:2px;letter-spacing:-.015em}
+#atlasHero .atlas-oops{position:relative;display:inline-block;color:#ffdda2;
+ isolation:isolate;white-space:nowrap}
+#atlasHero .atlas-oops::after{content:"";position:absolute;z-index:-1;
+ left:9%;right:6%;height:6px;bottom:2px;border-radius:50%;
+ background:#cc9e555c;transform:rotate(-2deg);pointer-events:none}
+#atlasHero #atlasStoryCount{color:#ffdda2;font-variant-numeric:tabular-nums}
+#atlasHero .atlas-lede{font-size:.84rem;line-height:1.68;
+ color:#e0e9f2;margin:0 0 12px;max-width:42rem}
+#atlasHero .atlas-concept{display:flex;align-items:center;gap:8px;
+ max-width:100%;margin:0 0 13px}
+#atlasHero .atlas-real-stamp{flex:0 0 auto;padding:6px 9px;border-radius:9px;
+ background:#f6ddb0;color:#1c2b42;border:1px solid #ffefce;
+ font-size:.76rem;line-height:1.45;font-weight:900;transform:rotate(-4deg)}
+#atlasHero .atlas-concept-arrow{flex:0 0 auto;color:#ffdba2;
+ font-size:1.05rem;line-height:1}
+#atlasHero .atlas-brand{display:block!important;position:relative;flex:1 1 auto;
+ min-width:0;margin:0;padding:9px 12px 10px;
+ background:linear-gradient(135deg,#2f4866,#27405e);
+ border:1px solid #8ca1b8;border-radius:12px;
+ color:#fff2df;font-size:.82rem;line-height:1.55;font-weight:680;
+ overflow-wrap:anywhere}
+#atlasHero .atlas-brand::after{content:"";position:absolute;width:8px;height:8px;
+ left:-5px;top:17px;background:#2f4866;border-left:1px solid #8ca1b8;
+ border-bottom:1px solid #8ca1b8;transform:rotate(45deg)}
+#atlasHero .atlas-bubble-tag{display:block;width:max-content;
+ color:#ffdfab;font-size:.68rem;font-weight:850;line-height:1.35;
+ letter-spacing:.05em;margin-bottom:2px}
+.spotlight-joke{position:relative}
+.spotlight-joke::after{content:"”";position:absolute;right:13px;top:-16px;
+ font-family:Georgia,serif;font-size:3rem;line-height:1;
+ color:#ffddab;opacity:.25;pointer-events:none}
+@media(max-width:520px){
+ #atlasHero .atlas-title{font-size:clamp(1.25rem,5.3vw,1.45rem);
+  line-height:1.36;margin:4px 0 6px}
+ #atlasHero .atlas-title-second{margin-top:1px}
+ #atlasHero .atlas-lede{font-size:.8rem;line-height:1.63;margin:0 0 11px}
+ #atlasHero .atlas-concept{gap:7px;margin:0 0 11px}
+ #atlasHero .atlas-real-stamp{font-size:.71rem;padding:6px 8px}
+ #atlasHero .atlas-concept-arrow{font-size:.95rem}
+ #atlasHero .atlas-brand{display:block!important;
+  font-size:.77rem;line-height:1.55;padding:8px 10px 9px}
+ #atlasHero .atlas-bubble-tag{font-size:.68rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #atlasHero .atlas-real-stamp{transition:none}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -855,9 +907,12 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <section class="hero" id="atlasHero" aria-label="世界から届くニュースの舞台">
  <div class="atlas-heading">
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
-  <h2 class="atlas-title">世界から届いた、<span id="atlasStoryCount">3</span>つの実話。</h2>
-  <p class="atlas-lede" id="atlasLede">この号の「まさか」は、どこの国から？</p>
-  <p class="atlas-brand">世界の「やらかし」に、AIが本気でツッコむ。</p>
+  <h2 class="atlas-title">世界の<span class="atlas-oops">「やらかし」</span><span class="atlas-title-second">ニュース、<span id="atlasStoryCount">3</span>本。</span></h2>
+  <p class="atlas-lede" id="atlasLede">この号に収録された、世界の失敗・勘違い・珍事件。</p>
+  <div class="atlas-concept" role="group" aria-label="報道された実話にAIがユーモアのあるツッコミを添える">
+   <span class="atlas-real-stamp">実話</span><span class="atlas-concept-arrow" aria-hidden="true">→</span>
+   <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span>世界の「やらかし」に、AIが本気でツッコむ。</p>
+  </div>
  </div>
  <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
   <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
@@ -1806,11 +1861,11 @@ function render(){const d=edition.stories;
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
  const datedPrevious=!archive&&!currentIssue;
- $('atlasLede').textContent=currentIssue?'今夜の「まさか」は、どこの国から？':'この号の「まさか」は、どこの国から？';
+ $('atlasLede').textContent=archive?'体験版に収録された、世界の失敗・勘違い・珍事件。':currentIssue?'世界で報じられた、思わず「まさか」な失敗と珍事件。':'この号に収録された、世界の失敗・勘違い・珍事件。';
  lastRenderedLocalDate=localDate(now);
  displayReleaseStatus();
  $('editionTag').textContent=archive?`保存済みの体験版 · 実話${d.length}本`:datedPrevious?`前回の配信号 · 実話${d.length}本`:special?`創刊特集号 · 実話${d.length}本`:`今夜の配信号 · 実話${d.length}本`;
- $('storyHeading').textContent=archive?'体験版のほかのニュース':d.length===2?'もうひとつ、世界のどこかから':`世界から届いた、あと${Math.max(0,d.length-1)}本`;
+ $('storyHeading').textContent=archive?'体験版のほかのニュース':d.length===2?'世界の「やらかし」、もう1本。':`世界の「やらかし」、あと${Math.max(0,d.length-1)}本。`;
  document.querySelector('.sectionhead').hidden=d.length<=1;
  $('intro').textContent='続きも、報道に基づく小さな「まさか」です。';
  $('intro').hidden=d.length<=1;
