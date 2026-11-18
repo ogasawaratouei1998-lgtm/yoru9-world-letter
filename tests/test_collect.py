@@ -22,8 +22,12 @@ class CollectionTest(unittest.TestCase):
             }]}).encode()
         with patch.object(c,"fetch_bytes",side_effect=fetch):
             leads=c.get_gdelt()
-        self.assertEqual(len(queries),6)
-        self.assertEqual(len(leads),6)
+        self.assertEqual(len(queries),10)
+        self.assertEqual(len(leads),10)
+        self.assertTrue(any("per sbaglio" in query for query in queries))
+        self.assertTrue(any("por engano" in query for query in queries))
+        self.assertTrue(any("salah kirim" in query for query in queries))
+        self.assertTrue(any("실수로" in query for query in queries))
         self.assertTrue(any("wrong recipient" in item for item in queries))
         self.assertTrue(any("AI-generated mural" in item for item in queries))
         self.assertTrue(any("misspelled" in item for item in queries))
@@ -93,10 +97,67 @@ class CollectionTest(unittest.TestCase):
             }]}).encode()
         with patch.object(c,"fetch_bytes",side_effect=fetch):
             leads=c.get_gdelt(extra_searches=['("Fiji") ("mistake" OR "blunder")'])
-        self.assertEqual(len(queries),7)
+        self.assertEqual(len(queries),11)
         self.assertIn('"Fiji"',queries[0])
-        self.assertEqual(len(leads),7)
+        self.assertEqual(len(leads),11)
         self.assertTrue(all(lead["status"]=="unverified" for lead in leads))
+
+
+    def test_original_comedy_search_is_reserved_even_when_feeds_fill_budget(self):
+        """Generic publisher headlines cannot starve targeted original discovery."""
+        import tempfile, os, json
+        from unittest.mock import patch
+        from urllib.error import URLError
+        from pathlib import Path
+        focused={
+            "title":"A cafe mixed up its order","url":"https://localstory.example.org/real",
+            "status":"unverified","seendate":"2026-11-18T01:00:00+00:00",
+            "provider":"GDELT DOC API","sourcecountry":"Italy","language":"Italian",
+        }
+        registry=[{
+            "title":f"Local general story {i}",
+            "url":f"https://publisher{i}.example.net/story",
+            "status":"unverified","seendate":"2026-11-18T01:00:00+00:00",
+            "provider":"Local publisher RSS","sourcecountry":"US","language":"en",
+        } for i in range(750)]
+        import news_sources
+        counter=[0]
+        def local_feed(url,timeout=20):
+            counter[0]+=1
+            i=counter[0]
+            body="".join(
+                f"<item><title>General update {i}/{n}</title>"
+                f"<link>https://broad{i}.example.net/story/{n}</link></item>"
+                for n in range(18))
+            return ("<rss><channel>"+body+"</channel></rss>").encode()
+        with tempfile.TemporaryDirectory() as temp:
+            previous=os.getcwd()
+            try:
+                os.chdir(temp)
+                with (patch.object(c,"get_gdelt",return_value=[focused]),
+                      patch.object(news_sources,"fetch_registry_feeds",
+                                   return_value=registry),
+                      patch.object(c,"fetch_bytes",side_effect=local_feed),
+                      patch.object(c.time,"sleep",return_value=None)):
+                    self.assertEqual(c.main(),0)
+                payload=json.loads(Path("data/candidates.json").read_text())
+            finally:
+                os.chdir(previous)
+        self.assertEqual(len(payload["candidates"]),750)
+        self.assertEqual(payload["candidates"][0]["url"],focused["url"])
+        self.assertEqual(payload["candidates"][0]["provider"],"GDELT DOC API")
+        self.assertEqual(sum(x["provider"]=="GDELT DOC API"
+                             for x in payload["candidates"]),1)
+        # No article or location can be reported verified by this discovery.
+        self.assertEqual(payload["candidates"][0]["status"],"unverified")
+        self.assertNotIn("country",payload["candidates"][0])
+
+    def test_original_publisher_search_precedes_broad_feed_collection(self):
+        import inspect
+        code=inspect.getsource(c.main)
+        self.assertLess(code.index("focused=get_gdelt("),
+                        code.index("registered=fetch_registry_feeds("))
+        self.assertIn("keep(focused,limit=90)",code)
 
     def test_gdelt_caps_each_search_and_deduplicates(self):
         import json
