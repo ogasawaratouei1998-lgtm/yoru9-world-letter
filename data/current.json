@@ -1,72 +1,66 @@
 {
   "status": "published",
-  "editionDate": "2026-11-17",
-  "title": "2026-11-17｜世界のちょっと意外な失敗3本",
+  "editionDate": "2026-11-18",
+  "title": "2026-11-18｜世界の「まさか」3本",
   "editionType": "regular",
-  "nightlyMessage": "",
+  "nightlyMessage": "タイヤをパンクさせまくったコンクリート車止め、撤去にも多額の費用がかかる。",
   "stories": [
     {
-      "id": "cheonan-painters-coffee-rescue-2026",
-      "country": "韓国",
-      "category": "work",
-      "categoryLabel": "職場・会社員",
-      "label": "配達注文が救助依頼に",
-      "title": "仕事中、外からしか開かない部屋に3人が閉じ込められた。頼ったのはコーヒー配達",
-      "summary": "韓国・天安市でペンキ塗り作業中の3人が、内側から開けられない部屋に閉じ込められました。そこでコーヒー4杯を配達注文し、備考欄に「ドアを開けてください」。配達員に助けてもらい、1杯をお礼に渡したと報じられています。",
-      "detail": "2026年11月10日、韓国・忠清南道天安市の集合住宅で、ペンキ塗り作業をしていた3人が洗濯室に閉じ込められたと、当事者のSNS投稿を基に複数の韓国メディアが伝えました。ドアの留め具が外側にあり、内側からは開けられない状態でした。3人は管理事務所や緊急通報も考えた末、配達アプリからコーヒー4杯を注文。配達先へのメモに、閉じ込められているのでドアを開けてほしいと書きました。到着した配達員がドアを開け、3人は無事に外へ。4杯のうち1杯をお礼として渡したそうです。なお、この出来事の経緯は当事者のSNS投稿が主な情報源です。",
-      "quip": "コーヒー4杯頼んで、いちばん先に欲しかったのが出口。",
-      "sourceName": "韓国YTN（2026年11月16日）",
-      "sourceUrl": "https://www.ytn.co.kr/_ln/0103_202611161226008434",
-      "reported": "2026-11-16",
-      "verificationUrls": [
-        "https://www.ytn.co.kr/_ln/0103_202611161226008434",
-        "https://imnews.imbc.com/replay/2026/nwtoday/article/6865869_37012.html",
-        "https://www.koreaherald.com/article/10936968"
-      ],
-      "quipSecond": "ドアを開けた配達員にコーヒー1杯。届けた人が、届けられる側かい。"
-    },
-    {
-      "id": "guaira-degavar-road-marking-2026",
-      "country": "ブラジル",
+      "id": "new-plymouth-cycleway-2026",
+      "country": "ニュージーランド",
       "category": "company",
       "categoryLabel": "企業・組織",
-      "label": "道路にまさかのスペルミス",
-      "title": "道路に「ゆっくり」と書くはずが誤字に。市は失敗を交通安全キャンペーンへ",
-      "summary": "ブラジル・グアイラ市で「ゆっくり」を意味する「DEVAGAR」が、道路に「DEGAVAR」と誤記されました。市は標示を直したうえで、誤字を読もうとして運転手が速度を落としたという反応を交通安全キャンペーンに生かしました。",
-      "detail": "ブラジル・パラナ州グアイラ市のシンギロ・マツヤマ通り付近で、道路に速度を落とすよう促す「DEVAGAR（ゆっくり）」が「DEGAVAR」と誤ってペイントされました。市の公式発表によると、11月9日夜に標示を修正。翌10日、市の交通部門は誤字が注目されたことを逆手に取り、「間違った文字で減速できたなら、正しい標示にも注意を」という交通安全キャンペーンを開始しました。報道機関の取材でも、誤字が地元で話題になったことが伝えられています。誰の作業ミスだったか、なぜ文字が入れ替わったかは公表されていません。",
-      "quip": "「ゆっくり」を間違えて書いたら、読むほうが本当にゆっくり。",
-      "sourceName": "グアイラ市公式発表（2026年11月13日）",
-      "sourceUrl": "https://www.guaira.pr.gov.br/noticias/noticia/7722",
-      "reported": "2026-11-13",
+      "label": "撤去が決まった「特製」の自転車レーン",
+      "title": "住民の怒りとパンク続出で、ニュージーランドの自治体が約1年前に設置した名物コンクリート車止めを撤去へ",
+      "summary": "ニュージーランドのニュープリマスで、設置直後からタイヤ破損や駐車場不足の苦情が相次いだ物議の自転車レーンについて、市議会がわずか1年余りで撤去する決定を下しました。市長の選挙公約でもあったこの撤去作業には、さらに多額の費用がかかる見通しとなっています。",
+      "detail": "ニュージーランドのニュープリマス地区議会は、市内の通りに設置されていた物議を醸す自転車レーンを撤去することを特別会議で可決した。2025年7月に完成したこの自転車レーンは、クッキーの形に似たコンクリート製分離帯が特徴で「ティム・タム・アレー」の愛称で呼ばれていたが、設置直後からドライバーのタイヤ破損、私道へのアクセス困難、駐車スペースの喪失を巡る苦情が殺到していた。さらに自転車利用者の中でも意見が分かれ、一部の利用者が分離帯に接触して転倒事故を起こすなどトラブルが続いていた。マックス・ブラフ市長は2025年の選挙戦で撤去を掲げて当選しており、今回の決定により、学校の休暇期間中にコンクリート製分離帯を撤去し、塗装された通常のレーンに戻す方針を固めた。撤去には最大30万ニュージーランドドルの費用が見込まれており、市側は交通局との調整を進めている。\n\nここからはAIの見方。\n安全のためのコンクリートが、ドライバーの財布とタイヤを削り取る障害物になるとは、道路行政も曲がり角である。",
+      "quip": "安全を守るはずの車止めが、ドライバーの財布とタイヤを削る特等席になっていたとは。",
+      "sourceName": "RNZ",
+      "sourceUrl": "https://www.rnz.co.nz/news/regions_taranaki/2667565/new-plymouth-councillors-vote-to-rip-up-tim-tam-cycleway",
+      "reported": "2026-11-18",
       "verificationUrls": [
-        "https://www.guaira.pr.gov.br/noticias/noticia/7722",
-        "https://www.itatiaia.com.br/brasil/sul/pr/prefeitura-escreve-degavar-ao-inves-de-devagar-e-erro-na-pintura-de-transito-viraliza/",
-        "https://www.guaira.pr.gov.br/noticias/noticia/7697"
-      ],
-      "quipSecond": "路面でクビになった誤字、交通安全の広報で再雇用。"
+        "https://www.rnz.co.nz/news/regions_taranaki/2667565/new-plymouth-councillors-vote-to-rip-up-tim-tam-cycleway",
+        "https://haveyoursay.npdc.govt.nz/devon-st-west-trial/councillors-decide-future-devon-street-west-cycle-separators"
+      ]
     },
     {
-      "id": "albert-lea-mcnugget-monkey-diaper-police-2026",
-      "country": "アメリカ",
-      "category": "person",
-      "categoryLabel": "個人・暮らし",
-      "label": "「不審な存在」の正体はサル",
-      "title": "「不審者」を探す警察官。現場にいたのは、おむつ姿のサル「マックナゲット」",
-      "summary": "米国ミネソタ州で警察が通報を受けて駆けつけると、現れたのはおむつ姿のクモザル。名前は「マックナゲット」。立ち寄ったトラック運転手の飼い主とはぐれましたが、警察に保護され、パトカーで暖まったあと無事に再会しました。",
-      "detail": "2026年11月14日早朝、米ミネソタ州アルバートリーのサービスエリア付近で、おむつを着けたサルが歩き回っていると通報がありました。現場に向かった警察官が発見したのは、クモザルの「マックナゲット」。トラック運転手の飼い主と一緒に移動中、立ち寄った場所ではぐれていたことを、地元記者が警察の担当者に取材して確認しました。市の公式サイトに転載された警察の投稿では、この来訪者をユーモラスに「不審な存在」と表現し、「弁護士とバナナを要求した」と冗談も。もちろん、サルが実際にしゃべったわけではありません。サルは警察のパトカーで寒さをしのぎ、飼い主と無事に再会。現地報道によると人にもサルにもけがはありませんでした。",
-      "quip": "「不審者」の名はマックナゲット。警察の事件簿、急にお子さまメニュー。",
-      "sourceName": "Bring Me The News（2026年11月14日）",
-      "sourceUrl": "https://bringmethenews.com/minnesota-lifestyle/diaper-wearing-monkey-captured-near-service-station-in-albert-lea",
-      "reported": "2026-11-14",
+      "id": "oy-bar-studio-city-closure-2026",
+      "country": "United States",
+      "category": "work",
+      "categoryLabel": "仕事",
+      "label": "店舗経営",
+      "title": "新地主との出会いを期待した飲食店、建物ごと解体され集合住宅に変わる計画が判明",
+      "summary": "米ロサンゼルスの人気飲食店オーナーらは建物の売却後も営業を続けられると期待していたが、直後にビル全体の解体とアパート建設の計画を知らされた。約2年の存続闘争の末、2027年1月16日に閉店することが決まった。",
+      "detail": "ロサンゼルス・スタジオシティで営業する飲食店「Oy Bar」のオーナーであるジェフ・ストラウス氏とピーター・ジャージュール氏は、2024年末に店舗の入る建物が売却された際、単に新しい大家を迎えるものだと考えていた。しかし売却から数日後、その建物が解体されて101戸の新しい集合住宅へと生まれ変わる計画であることを知らされた。約2年間にわたる存続のための交渉や奮闘も実らず、同店は2027年1月16日に閉店して新たなアパートプロジェクトへ道を譲ることになった。\n\nここからはAIの見方。\n建物の新しい主を探していたら、建物ごと消滅する予定だったとは、賃貸契約における最悪の「間取り変更」である。",
+      "quip": "大家の挨拶を待っていたら、ビルごと更地になるサプライズ。",
+      "sourceName": "Los Angeles Times",
+      "sourceUrl": "https://www.latimes.com/food/story/2026-11-17/oy-bar-studio-city-closure",
+      "reported": "2026-11-17",
       "verificationUrls": [
-        "https://bringmethenews.com/minnesota-lifestyle/diaper-wearing-monkey-captured-near-service-station-in-albert-lea",
-        "https://www.cityofalbertlea.org/social-media-feeds/",
-        "https://www.valleynewslive.com/2026/11/14/albert-lea-police-rescue-lost-spider-monkey/",
-        "https://www.upi.com/Odd_News/2026/11/16/albert-lea-minnesota-spider-monkey/5631794844324/"
-      ],
-      "quipSecond": "警察が冗談で「弁護士とバナナを要求」。本人の供述、全部警察が代筆。"
+        "https://www.latimes.com/food/story/2026-11-17/oy-bar-studio-city-closure",
+        "https://la.eater.com/maps/highland-park-best-restaurants-los-angeles"
+      ]
+    },
+    {
+      "id": "blackburn-mcdonalds-ai-mural-mixups-2026",
+      "country": "イギリス",
+      "category": "company",
+      "categoryLabel": "企業・組織",
+      "label": "地元の壁画、別の街だらけ",
+      "title": "地元愛を描いたAI壁画、名所は別の街から集合。優勝の英単語まで誤字に",
+      "summary": "英国ブラックバーンのマクドナルドが、地域の名所とサッカークラブの歴史を紹介する壁画をAIの助けで制作。ところが他都市の大聖堂や市庁舎に似た建物が混ざり、優勝を祝う英語の「champions」も「crampions」に。店は地元アーティストに描き直しを依頼する方針です。",
+      "detail": "英国イングランド北西部ブラックバーンのマクドナルド店舗で、スタッフがAIを使って地元の名所やサッカークラブの歴史を紹介する壁画を制作しました。ところがブラックバーン大聖堂として描かれたのはリバプールの大聖堂に見える建物で、市庁舎も別都市の建物に似た姿でした。地元クラブ「ブラックバーン・ローヴァーズ」の1995年のリーグ優勝を祝う文字は、本来の「champions（王者）」ではなく「crampions」と誤記。BBCが店舗と本部の説明を報じ、マクドナルド側は誤りを認め、地元アーティストに新しい壁画を依頼する予定だと説明しています。",
+      "quip": "地元愛を描いたら、建物が全員よその街から通勤してきた。",
+      "sourceName": "BBC News（2026年11月16日）",
+      "sourceUrl": "https://www.bbc.com/news/articles/cqp86e116ek3o",
+      "reported": "2026-11-16",
+      "verificationUrls": [
+        "https://www.bbc.com/news/articles/cqp86e116ek3o",
+        "https://blackburnlife.com/local-news/we-asked-ai-to-fix-mcdonalds-blackburn-mural-we-wish-we-hadnt_494818/",
+        "https://www.ndtv.com/world-news/mcdonalds-faces-backlash-over-ai-generated-mural-with-landmark-mistakes-spelling-blunders-12342367"
+      ]
     }
   ],
-  "nightQuote": "うまくいかなかったことも、明日には少し違って見えるかも。",
+  "nightQuote": "ひとつの失敗で、今日のあなた全部は決まりません。",
   "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts."
 }
