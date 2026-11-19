@@ -1240,6 +1240,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .today-map-intro-photo[hidden]{display:none}
 .today-map-intro-photo img{display:block;width:100%;height:auto;aspect-ratio:16/10;max-height:440px;object-fit:cover;object-position:center}
 .today-map-intro-photo figcaption{font-size:.8rem;line-height:1.7;color:#E1EBF0;padding:10px 13px}
+.today-map-intro-photo-status,.today-map-intro-place-note{
+ margin:10px 0 14px!important;color:#c3dfe0!important;font-size:.87rem!important;line-height:1.7!important}
+.today-map-intro-news{margin:15px 0 17px;padding:13px 14px;
+ border-radius:12px;border:1px solid #76a9b1;background:#223f55}
+.today-map-intro-news[hidden]{display:none}
+.today-map-intro-news strong{display:block;color:#fff0c9;font-size:.83rem;letter-spacing:.02em}
+.today-map-intro-news p{font-size:.92rem!important;line-height:1.8!important;
+ margin:7px 0 0!important;color:#eaf5f6!important}
 .today-map-intro-facts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .today-map-intro-facts span{border:1px solid #89BDB9;border-radius:10px;padding:7px 10px;color:#E9F6F4;font-size:.78rem;line-height:1.5;background:#29465B}
 .today-map-intro p{margin:12px 0 17px;font-size:1.04rem;line-height:2;color:#E5EEF2}
@@ -1394,7 +1402,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
    <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="lazy" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
    <p id="todayMapIntroBody"></p>
+   <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
+   <p class="today-map-intro-place-note" id="todayMapIntroPlaceNote" hidden></p>
    <div class="today-map-intro-facts" id="todayMapIntroFacts"></div>
+   <aside class="today-map-intro-news" id="todayMapIntroNews" hidden><strong>この国から届いた実話</strong><p id="todayMapIntroNewsBody"></p></aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
   <p class="today-map-game-lead">国名をタップして、世界の「へぇ！」3択クイズ。今夜のパスポートにスタンプを集めよう。</p>
@@ -1573,78 +1584,136 @@ const displayedCountryCoverAssets=new Map();
 // landscape; below 60 = contextual only, unsuitable as a lead image.
 // Maintain at least two high-quality, independently hosted options per country.
 
+// Every catalogued country has a substantive, evidence-based introduction.
+// Curated guides remain richer; new countries use the released article and
+// geographic catalog rather than returning to the old one-line placeholder.
+let todayCountryIntroRequest=0;
 function todayCountryIntro(item){
  if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
  const region=countryRecord(item.code)?.region;
  return region
-  ?item.name+'は'+region+'に位置する国・地域です。地図のピンから、この号で紹介した場所を確かめてみましょう。'
-  :item.name+'の代表位置を地図で示しています。この号に掲載された国・地域のひとつです。';
+  ?item.name+'は'+region+'に位置する国・地域です。以下の代表位置は地図表示用で、ニュースの発生場所ではありません。'
+  :item.name+'は今号に掲載された国・地域です。位置や名所を確認できていない情報で補いません。';
 }
 function hideTodayCountryIntro(){
+ todayCountryIntroRequest++;
  $('todayMapIntro').hidden=true;
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
 }
 function showTodayCountryIntro(item){
  closeWorldPassport();
+ const requestId=++todayCountryIntroRequest;
+ const currentCode=item.code;
+ const guide=TODAY_COUNTRY_GUIDES[currentCode];
+ const record=countryRecord(currentCode);
+ const related=[...new Set(item.indices)].map(index=>edition.stories[index]).filter(Boolean);
+ $('todayMapIntro').dataset.countryCode=currentCode;
  $('todayMapIntroName').textContent=item.name;
- const guide=TODAY_COUNTRY_GUIDES[item.code];
- $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'を少し旅してみましょう';
- $('todayMapIntroBody').textContent=guide?todayCountryIntro(item)+' '+guide.body:todayCountryIntro(item);
+ $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'を地図と今号の実話から知る';
+ $('todayMapIntroBody').textContent=guide
+  ?todayCountryIntro(item)+' '+guide.body
+  :todayCountryIntro(item)+' 写真や名所の紹介は、出典・撮影地・利用条件を確認できたものから追加します。';
  const facts=$('todayMapIntroFacts');
  facts.replaceChildren();
- (guide?guide.facts:['地域：'+(countryRecord(item.code)?.region||'位置情報を確認中')]).forEach(value=>{
-  const chip=document.createElement('span');chip.textContent=value;facts.append(chip);
- });
+ const labels=guide?guide.facts:[
+  '地域：'+(record?.region||'確認中'),
+  '今号の掲載：'+related.length+'本'
+ ];
+ if(!guide&&record&&Number.isFinite(record.lat)&&Number.isFinite(record.lon)){
+  const latitude=(record.lat>=0?'北緯':'南緯')+Math.abs(record.lat).toFixed(1)+'°';
+  const longitude=(record.lon>=0?'東経':'西経')+Math.abs(record.lon).toFixed(1)+'°';
+  labels.push('地図の代表位置：'+latitude+'・'+longitude);
+ }
+ labels.forEach(value=>{const chip=document.createElement('span');chip.textContent=value;facts.append(chip);});
+ const news=$('todayMapIntroNews'),newsBody=$('todayMapIntroNewsBody');
+ news.hidden=!related.length;
+ if(related.length){
+  const first=related[0];
+  newsBody.textContent='「'+String(first.title||'掲載記事')+'」'
+   +(first.summary?' '+String(first.summary):'')
+   +(related.length>1?' ほか'+(related.length-1)+'本を掲載しています。':'');
+ }
  const figure=$('todayMapIntroFigure'),photo=$('todayMapIntroImage');
- const currentCode=item.code;
- $('todayMapIntro').dataset.countryCode=currentCode;
+ const photoStatus=$('todayMapIntroPhotoStatus'),placeNote=$('todayMapIntroPlaceNote');
+ placeNote.hidden=true;placeNote.textContent='';
+ displayedCountryCoverAssets.delete(currentCode);
+ photo.removeAttribute('src');photo.onload=null;photo.onerror=null;
+ figure.hidden=true;
+ photoStatus.hidden=false;photoStatus.textContent='権利確認済みの風景写真を探しています…';
  const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
   .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption
     &&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
- // Reuse an already-viewed licensed country photo if no unused cover remains.
- // Otherwise a country introduction can unexpectedly become text-only.
  const unusedPhotos=approvedPhotos.filter(p=>!travelUsedPhotos.has(p.asset));
  const photos=unusedPhotos.length?unusedPhotos:approvedPhotos;
- // Country introductions reject photographs below the 80-point editorial
- // threshold, even as fallbacks. Never replace a failed iconic photo with
- // an unrecognizable view simply to fill space.
- displayedCountryCoverAssets.delete(currentCode);
- photo.removeAttribute('src');
- photo.onload=null;photo.onerror=null;
- figure.hidden=!photos.length;
- $('todayMapIntroCaption').textContent=photos.length?'写真を読み込んでいます…':'この国の写真を準備中です。';
- // Use a local licensed image first, then a different licensed image or Wikimedia source.
- // Never silently hide the entire photo panel on a loading failure.
- let photoIndex=0,sourceIndex=0;
+ let photoIndex=0,sourceIndex=0,checkedTravelStops=false;
+ function isStale(){
+  return requestId!==todayCountryIntroRequest||
+   $('todayMapIntro').hidden||$('todayMapIntro').dataset.countryCode!==currentCode;
+ }
  function loadNextCountryPhoto(){
-  if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+  if(isStale())return;
   const chosen=photos[photoIndex];
-  if(!chosen){displayedCountryCoverAssets.delete(currentCode);$('todayMapIntroCaption').textContent='写真を表示できませんでした。通信状況をご確認ください。';return;}
+  if(!chosen&&!checkedTravelStops){
+   checkedTravelStops=true;
+   // A newly published country automatically reuses locally bundled,
+   // rights-checked travel postcards from that *same* country. No random
+   // Commons lookup, misleading national cover or unlicensed image.
+   loadTravelStops().then(stops=>{
+    if(isStale())return;
+    const seen=new Set(photos.map(p=>p.asset));
+    const matches=travelPhotoOptions(stops)
+     .filter(stop=>countryKeys(stop.country).includes(currentCode))
+     .sort((a,b)=>Number(b.countryOnly===true)-Number(a.countryOnly===true));
+    for(const stop of matches){
+     if(seen.has(stop.photoAsset))continue;
+     seen.add(stop.photoAsset);
+     photos.push({
+      asset:stop.photoAsset,url:stop.photo,caption:stop.photoCaption||stop.place,
+      author:stop.author,license:stop.license,place:stop.place,
+      note:stop.note||'',contextPhoto:true
+     });
+    }
+    loadNextCountryPhoto();
+   });
+   return;
+  }
+  if(!chosen){
+   displayedCountryCoverAssets.delete(currentCode);
+   figure.hidden=true;
+   photoStatus.hidden=false;
+   photoStatus.textContent=photos.length
+    ?'写真を表示できませんでした。通信状態をご確認ください。'
+    :'この国の利用条件を確認した写真は、まだ準備中です。';
+   return;
+  }
   const src=sourceIndex===0?'./'+chosen.asset:chosen.url;
   photo.alt=chosen.place+'の実際の風景写真';
   photo.onload=()=>{
-   if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+   if(isStale())return;
    figure.hidden=false;
+   photoStatus.hidden=true;
    displayedCountryCoverAssets.set(currentCode,chosen.asset);
-   $('todayMapIntroCaption').textContent='この国を象徴する風景｜'+chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+   $('todayMapIntroCaption').textContent=(chosen.contextPhoto?'現地の風景｜':'この国を象徴する風景｜')
+    +chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+   placeNote.hidden=!chosen.note;
+   placeNote.textContent=chosen.note||'';
   };
   photo.onerror=()=>{
-   if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+   if(isStale())return;
    sourceIndex++;
    if(sourceIndex>1){sourceIndex=0;photoIndex++;}
    loadNextCountryPhoto();
   };
   photo.src=src;
  }
- if(photos.length)loadNextCountryPhoto();
- $('todayMapIntro').dataset.countryCode=item.code;
  const read=$('todayMapIntroRead');
  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
  read.dataset.storyIndex=String(item.indices[0]);
  $('todayMapIntro').hidden=false;
  document.querySelectorAll('.today-map-pin').forEach(pin=>
-  pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===item.code)));
+  pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
+ loadNextCountryPhoto();
  $('todayMapIntro').scrollIntoView({block:'nearest'});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
