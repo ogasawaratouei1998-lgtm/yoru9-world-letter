@@ -1856,7 +1856,7 @@ function travelPhotoOptions(stops){
  // Several article IDs can refer to the same photograph; never count it twice.
  const seen=new Set();
  return Object.values(stops||{}).filter(stop=>{
-  if(!stop||typeof stop!=='object'||typeof stop.country!=='string'||
+  if(!stop||typeof stop!=='object'||stop.coverOnly===true||typeof stop.country!=='string'||
      typeof stop.place!=='string'||!Number.isFinite(stop.latitude)||
      !Number.isFinite(stop.longitude)||Math.abs(stop.latitude)>90||
      Math.abs(stop.longitude)>180||
@@ -1879,7 +1879,7 @@ function travelStoryKey(story){
 // Apply the same visual-quality gate to photographs in already-published
 // travel postcards, not only the map's country-introduction cover.
 function approvedTravelCover(stop){
- if(!stop||!stop.country||!stop.place)return false;
+ if(!stop||stop.coverOnly===true||!stop.country||!stop.place)return false;
  const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
   stop.country==='アメリカ合衆国'?'US':null;
  if(!code)return true;
