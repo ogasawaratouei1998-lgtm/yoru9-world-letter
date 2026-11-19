@@ -1248,6 +1248,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .today-map-intro-news strong{display:block;color:#fff0c9;font-size:.83rem;letter-spacing:.02em}
 .today-map-intro-news p{font-size:.92rem!important;line-height:1.8!important;
  margin:7px 0 0!important;color:#eaf5f6!important}
+.country-portrait-kicker{font-size:.76rem!important;letter-spacing:.07em;
+ font-weight:850!important;color:#a9e9d8!important;margin:0 0 9px!important}
+.today-map-intro-current{margin:16px 0;padding:15px 16px;border-radius:13px;
+ border:1px solid #8bc7d0;background:linear-gradient(140deg,#24495c,#1d3a4f)}
+.today-map-intro-current[hidden]{display:none}
+.today-map-intro-current .today-country-current-kicker{font-size:.77rem!important;
+ color:#b9f1dc!important;font-weight:850;margin:0 0 6px!important}
+.today-map-intro-current strong{display:block;color:#fff1c8;font-size:1.04rem;line-height:1.6}
+.today-map-intro-current p{font-size:.9rem!important;line-height:1.85!important;
+ margin:8px 0!important;color:#ecf5f6!important}
+.today-map-intro-current small{display:block;color:#b9cfd8;font-size:.74rem;line-height:1.6}
+.today-map-intro-current a{display:inline-block;margin-top:10px;color:#ffe0a7;
+ min-height:36px;text-decoration:underline;text-underline-offset:3px;font-weight:700;font-size:.83rem}
 .today-map-intro-facts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .today-map-intro-facts span{border:1px solid #89BDB9;border-radius:10px;padding:7px 10px;color:#E9F6F4;font-size:.78rem;line-height:1.5;background:#29465B}
 .today-map-intro p{margin:12px 0 17px;font-size:1.04rem;line-height:2;color:#E5EEF2}
@@ -1398,14 +1411,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <div class="today-map-pins" id="todayMapPins" role="group" aria-label="掲載国のピン"></div>
   </div>
   <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
+   <p class="country-portrait-kicker">COUNTRY PORTRAIT · 国の魅力</p>
    <div class="today-map-intro-head"><h4 id="todayMapIntroName"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国の紹介を閉じる">閉じる</button></div>
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
    <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="lazy" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
    <p id="todayMapIntroBody"></p>
    <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
-   <p class="today-map-intro-place-note" id="todayMapIntroPlaceNote" hidden></p>
    <div class="today-map-intro-facts" id="todayMapIntroFacts"></div>
-   <aside class="today-map-intro-news" id="todayMapIntroNews" hidden><strong>この国から届いた実話</strong><p id="todayMapIntroNewsBody"></p></aside>
+   <aside class="today-map-intro-current" id="todayMapIntroCurrent" hidden aria-label="この国の最近の文化・時事トピック">
+    <p class="today-country-current-kicker">いま、この国で · 出典確認済み</p>
+    <strong id="todayMapIntroCurrentTitle"></strong>
+    <p id="todayMapIntroCurrentBody"></p>
+    <small id="todayMapIntroCurrentDate"></small>
+    <a id="todayMapIntroCurrentSource" target="_blank" rel="noopener noreferrer">公式情報を確認</a>
+   </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
   <p class="today-map-game-lead">国名をタップして、世界の「へぇ！」3択クイズ。今夜のパスポートにスタンプを集めよう。</p>
@@ -1573,7 +1592,10 @@ const TODAY_COUNTRY_GUIDES=Object.freeze({
  GB:{lead:'古城と湖水地方、4つの地域をめぐる旅',body:'ロンドンのテムズ川に架かるタワーブリッジは、英国を代表する街の風景です。スコットランドでは岩山の上のエディンバラ城、ウェールズでは古城や緑の丘に出会えます。イングランド北西部の湖水地方には、穏やかな湖と山並みが広がります。伝統的なアフタヌーンティーや各地で育まれた音楽・文学も、英国を知る手がかりです。',facts:['首都：ロンドン','風景：タワーブリッジ・湖水地方','文化：文学・紅茶・音楽']},
  ES:{lead:'個性的な建築と食文化が息づくイベリアの国',body:'バルセロナのサグラダ・ファミリアは、ガウディが設計を手掛けた独創的な聖堂です。首都マドリードには美術館と大きな広場があり、南部アンダルシアではイスラム文化の影響を受けた建築が残っています。地域ごとに特色のある料理や祭りも見どころで、パエリアやタパスなどの食文化が親しまれています。',facts:['首都：マドリード','風景：サグラダ・ファミリア','文化：フラメンコ・タパス']},
  JP:{lead:'山と海、古都と大都市が近くにある島国',body:'東京の浅草寺では古くからの寺社文化と街のにぎわいが交わり、京都の金閣寺には池に映る歴史的建築の美しさがあります。富士山は日本を代表する山で、春には桜との風景も親しまれています。列島は南北に長く、北海道の雪景色から沖縄の海まで、季節や土地による違いが魅力です。',facts:['首都：東京','風景：富士山・京都・瀬戸内海','文化：祭り・寺社・多様な郷土料理']},
- NZ:{lead:'フィヨルドと山々、海に囲まれた南太平洋の島国',body:'南島のミルフォード・サウンドでは、氷河が削った深い入り江に切り立った山と滝が迫ります。北島には地熱地帯や火山地形があり、豊かな自然のなかで暮らしとアウトドアが結びついています。先住民マオリの言語や芸術、文化は、国の大切な一部として受け継がれています。',facts:['首都：ウェリントン','風景：ミルフォード・サウンド','文化：マオリ文化・自然体験']}
+ NZ:{lead:'フィヨルドと山々、海に囲まれた南太平洋の島国',body:'南島のミルフォード・サウンドでは、氷河が削った深い入り江に切り立った山と滝が迫ります。北島には地熱地帯や火山地形があり、豊かな自然のなかで暮らしとアウトドアが結びついています。先住民マオリの言語や芸術、文化は、国の大切な一部として受け継がれています。',facts:['首都：ウェリントン','風景：ミルフォード・サウンド','文化：マオリ文化・自然体験']},
+ KR:{lead:'伝統とポップカルチャーが交差する、活気ある日常',body:'韓国では、伝統的な市場の食堂や発酵食の食卓と、現代の音楽・映画・デザイン文化が自然に並んでいます。ソウルでは古い街並みを大切にする地区と新しい文化拠点が共存し、地域によって方言や郷土料理も豊かに異なります。キムチや韓国料理を囲む時間、家族や仲間と食卓を共有する習慣も、暮らしの魅力を知る入口です。',facts:['首都：ソウル','食：キムチ・多彩な郷土料理','文化：映画・音楽・市場']},
+ BR:{lead:'音楽と多様な文化が息づく、広大な南米の国',body:'ブラジルの魅力は、サンバやボサノバといった音楽だけではありません。先住民、アフリカ、ヨーロッパなどにルーツを持つ文化が地域ごとの暮らしや食卓を形づくっています。北部と南部、内陸と沿岸の風土も大きく異なり、フェイジョアーダのような料理や、地域ごとに受け継がれる祭りが、人々の生活に彩りを加えています。',facts:['首都：ブラジリア','食：フェイジョアーダ','文化：サンバ・多様な地域文化']},
+ AG:{lead:'海と音楽、島のコミュニティが身近なカリブの国',body:'アンティグア・バーブーダはカリブ海の島国。鮮やかな海辺の風景の一方で、首都セントジョンズの市場、地元の食文化、カリプソやスティールパンに親しむ祭りなどに日常の表情があります。船と海の歴史が地域の暮らしに深く結びつき、島ごとに違う時間の流れを感じられます。',facts:['首都：セントジョンズ','文化：カリプソ・音楽と祭り','特色：島々の暮らしと海の歴史']}
 });
 // Track the photograph that actually loaded, including a fallback after failure.
 const displayedCountryCoverAssets=new Map();
@@ -1587,13 +1609,41 @@ const displayedCountryCoverAssets=new Map();
 // Every catalogued country has a substantive, evidence-based introduction.
 // Curated guides remain richer; new countries use the released article and
 // geographic catalog rather than returning to the old one-line placeholder.
+// Country Portrait: culture and everyday appeal, with a separately
+// verified, time-bounded current topic. Tourist destinations live ONLY in
+// the article's independent 30-second microtravel module.
 let todayCountryIntroRequest=0;
+let countryHighlightsPromise=null;
+function loadCountryHighlights(){
+ if(!countryHighlightsPromise)countryHighlightsPromise=fetch('./country-highlights.json',{cache:'no-store'})
+  .then(response=>{if(!response.ok)throw Error('country highlights unavailable');return response.json();})
+  .then(data=>data&&data.version===1&&data.highlights&&typeof data.highlights==='object'
+   &&!Array.isArray(data.highlights)?data.highlights:{})
+  .catch(()=>{countryHighlightsPromise=null;return {}});
+ return countryHighlightsPromise;
+}
+function currentCountryHighlight(highlights,code,today=localDate(new Date())){
+ const rows=highlights?.[code];
+ if(!Array.isArray(rows))return null;
+ // Reject stale/future-dated stories, invalid sources, and unsigned editorial claims.
+ const valid=rows.filter(item=>item&&typeof item.title==='string'&&item.title.trim()
+  &&typeof item.body==='string'&&item.body.trim()
+  &&/^\d{4}-\d{2}-\d{2}$/.test(item.validFrom||'')
+  &&/^\d{4}-\d{2}-\d{2}$/.test(item.validThrough||'')
+  &&/^\d{4}-\d{2}-\d{2}$/.test(item.checkedOn||'')
+  &&item.validFrom<=today&&today<=item.validThrough&&item.checkedOn<=today
+  &&item.checkedOn<=item.validThrough
+  &&typeof item.sourceName==='string'&&item.sourceName.trim()
+  &&typeof item.sourceUrl==='string'&&/^https:\/\//.test(item.sourceUrl)
+  &&safeUrl(item.sourceUrl)!=='#');
+ return valid.sort((a,b)=>b.checkedOn.localeCompare(a.checkedOn))[0]||null;
+}
 function todayCountryIntro(item){
  if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
  const region=countryRecord(item.code)?.region;
  return region
-  ?item.name+'は'+region+'に位置する国・地域です。以下の代表位置は地図表示用で、ニュースの発生場所ではありません。'
-  :item.name+'は今号に掲載された国・地域です。位置や名所を確認できていない情報で補いません。';
+  ?item.name+'は'+region+'に位置しています。文化や日常の魅力について、確かな資料を確認しながら紹介を充実させています。'
+  :item.name+'の暮らしや文化について、確認できた情報から紹介を準備しています。';
 }
 function hideTodayCountryIntro(){
  todayCountryIntroRequest++;
@@ -1602,110 +1652,78 @@ function hideTodayCountryIntro(){
 }
 function showTodayCountryIntro(item){
  closeWorldPassport();
- const requestId=++todayCountryIntroRequest;
- const currentCode=item.code;
+ const requestId=++todayCountryIntroRequest,currentCode=item.code;
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
- const record=countryRecord(currentCode);
- const related=[...new Set(item.indices)].map(index=>edition.stories[index]).filter(Boolean);
  $('todayMapIntro').dataset.countryCode=currentCode;
  $('todayMapIntroName').textContent=item.name;
- $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'を地図と今号の実話から知る';
+ $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'の魅力を、文化と暮らしから';
  $('todayMapIntroBody').textContent=guide
-  ?todayCountryIntro(item)+' '+guide.body
-  :todayCountryIntro(item)+' 写真や名所の紹介は、出典・撮影地・利用条件を確認できたものから追加します。';
+  ?guide.body
+  :todayCountryIntro(item)+' 観光名所を案内する「30秒の小旅行」とは別に、この国の特色を紹介します。';
  const facts=$('todayMapIntroFacts');
  facts.replaceChildren();
- const labels=guide?guide.facts:[
-  '地域：'+(record?.region||'確認中'),
-  '今号の掲載：'+related.length+'本'
- ];
- if(!guide&&record&&Number.isFinite(record.lat)&&Number.isFinite(record.lon)){
-  const latitude=(record.lat>=0?'北緯':'南緯')+Math.abs(record.lat).toFixed(1)+'°';
-  const longitude=(record.lon>=0?'東経':'西経')+Math.abs(record.lon).toFixed(1)+'°';
-  labels.push('地図の代表位置：'+latitude+'・'+longitude);
- }
- labels.forEach(value=>{const chip=document.createElement('span');chip.textContent=value;facts.append(chip);});
- const news=$('todayMapIntroNews'),newsBody=$('todayMapIntroNewsBody');
- news.hidden=!related.length;
- if(related.length){
-  const first=related[0];
-  newsBody.textContent='「'+String(first.title||'掲載記事')+'」'
-   +(first.summary?' '+String(first.summary):'')
-   +(related.length>1?' ほか'+(related.length-1)+'本を掲載しています。':'');
- }
+ (guide?guide.facts:['地域：'+(countryRecord(currentCode)?.region||'確認中')])
+  .forEach(value=>{const chip=document.createElement('span');chip.textContent=value;facts.append(chip);});
+ // News articles are never silently repurposed into a cultural description.
+ // A current topic appears only after date/source verification.
+ const current=$('todayMapIntroCurrent');
+ current.hidden=true;
+ $('todayMapIntroCurrentTitle').textContent='';
+ $('todayMapIntroCurrentBody').textContent='';
+ $('todayMapIntroCurrentSource').removeAttribute('href');
+ const source=$('todayMapIntroCurrentSource');
+ loadCountryHighlights().then(all=>{
+  if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
+     $('todayMapIntro').dataset.countryCode!==currentCode)return;
+  const topic=currentCountryHighlight(all,currentCode);
+  if(!topic)return;
+  $('todayMapIntroCurrentTitle').textContent=topic.title;
+  $('todayMapIntroCurrentBody').textContent=topic.body;
+  $('todayMapIntroCurrentDate').textContent='確認：'+topic.checkedOn+' ／ 掲載期限：'+topic.validThrough;
+  source.href=safeUrl(topic.sourceUrl);
+  source.textContent='出典：'+topic.sourceName;
+  current.hidden=false;
+ });
+ // National portrait photographs are an independently reviewed editorial
+ // collection. NEVER import travel-stops here: those show famous attractions
+ // in a different module and are not the same as a national portrait.
  const figure=$('todayMapIntroFigure'),photo=$('todayMapIntroImage');
- const photoStatus=$('todayMapIntroPhotoStatus'),placeNote=$('todayMapIntroPlaceNote');
- placeNote.hidden=true;placeNote.textContent='';
- displayedCountryCoverAssets.delete(currentCode);
- photo.removeAttribute('src');photo.onload=null;photo.onerror=null;
- figure.hidden=true;
- photoStatus.hidden=false;photoStatus.textContent='権利確認済みの風景写真を探しています…';
+ const status=$('todayMapIntroPhotoStatus');
+ photo.onload=null;photo.onerror=null;
+ photo.removeAttribute('src');
  const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
   .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption
     &&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
- const unusedPhotos=approvedPhotos.filter(p=>!travelUsedPhotos.has(p.asset));
- const photos=unusedPhotos.length?unusedPhotos:approvedPhotos;
- let photoIndex=0,sourceIndex=0,checkedTravelStops=false;
- function isStale(){
-  return requestId!==todayCountryIntroRequest||
-   $('todayMapIntro').hidden||$('todayMapIntro').dataset.countryCode!==currentCode;
- }
+ displayedCountryCoverAssets.delete(currentCode);
+ figure.hidden=!approvedPhotos.length;
+ status.hidden=!!approvedPhotos.length;
+ status.textContent=approvedPhotos.length?'':'国の写真は準備中です。文化の紹介はご覧いただけます。';
+ let photoIndex=0,sourceIndex=0;
  function loadNextCountryPhoto(){
-  if(isStale())return;
-  const chosen=photos[photoIndex];
-  if(!chosen&&!checkedTravelStops){
-   checkedTravelStops=true;
-   // A newly published country automatically reuses locally bundled,
-   // rights-checked travel postcards from that *same* country. No random
-   // Commons lookup, misleading national cover or unlicensed image.
-   loadTravelStops().then(stops=>{
-    if(isStale())return;
-    const seen=new Set(photos.map(p=>p.asset));
-    const matches=travelPhotoOptions(stops)
-     .filter(stop=>countryKeys(stop.country).includes(currentCode))
-     .sort((a,b)=>Number(b.countryOnly===true)-Number(a.countryOnly===true));
-    for(const stop of matches){
-     if(seen.has(stop.photoAsset))continue;
-     seen.add(stop.photoAsset);
-     photos.push({
-      asset:stop.photoAsset,url:stop.photo,caption:stop.photoCaption||stop.place,
-      author:stop.author,license:stop.license,place:stop.place,
-      note:stop.note||'',contextPhoto:true
-     });
-    }
-    loadNextCountryPhoto();
-   });
-   return;
-  }
+  if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
+    $('todayMapIntro').dataset.countryCode!==currentCode)return;
+  const chosen=approvedPhotos[photoIndex];
   if(!chosen){
-   displayedCountryCoverAssets.delete(currentCode);
    figure.hidden=true;
-   photoStatus.hidden=false;
-   photoStatus.textContent=photos.length
-    ?'写真を表示できませんでした。通信状態をご確認ください。'
-    :'この国の利用条件を確認した写真は、まだ準備中です。';
+   status.hidden=false;
+   status.textContent='写真を読み込めませんでした。文章の国紹介は引き続きご覧いただけます。';
    return;
   }
-  const src=sourceIndex===0?'./'+chosen.asset:chosen.url;
-  photo.alt=chosen.place+'の実際の風景写真';
+  photo.alt=chosen.place+'の風景写真';
   photo.onload=()=>{
-   if(isStale())return;
+   if(requestId!==todayCountryIntroRequest)return;
    figure.hidden=false;
-   photoStatus.hidden=true;
    displayedCountryCoverAssets.set(currentCode,chosen.asset);
-   $('todayMapIntroCaption').textContent=(chosen.contextPhoto?'現地の風景｜':'この国を象徴する風景｜')
-    +chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
-   placeNote.hidden=!chosen.note;
-   placeNote.textContent=chosen.note||'';
+   $('todayMapIntroCaption').textContent=chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
   };
   photo.onerror=()=>{
-   if(isStale())return;
+   if(requestId!==todayCountryIntroRequest)return;
    sourceIndex++;
    if(sourceIndex>1){sourceIndex=0;photoIndex++;}
    loadNextCountryPhoto();
   };
-  photo.src=src;
+  photo.src=sourceIndex===0?'./'+chosen.asset:chosen.url;
  }
  const read=$('todayMapIntroRead');
  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
@@ -1713,7 +1731,7 @@ function showTodayCountryIntro(item){
  $('todayMapIntro').hidden=false;
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
- loadNextCountryPhoto();
+ if(approvedPhotos.length)loadNextCountryPhoto();
  $('todayMapIntro').scrollIntoView({block:'nearest'});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
