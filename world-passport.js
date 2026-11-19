@@ -15,7 +15,7 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  ],
  FR:[
   {question:'モン・サン＝ミシェルの景色を変えるのは？',options:['火山の噴火','オーロラ','潮の満ち引き'],answer:2,
-   photoKey:'fr-mont-saint-michel-postcard',photoLabel:'正解の景色｜潮の満ち引きの影響を受ける干潟',
+   photoKey:'fr-mont-low-tide-quiz-image',photoLabel:'正解の景色｜潮の満ち引きの影響を受ける干潟',
    fact:'ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで周囲の景色が変わります。',
    quip:'景色の模様替え係は海。毎日、無給で大仕事。'},
   {question:'フランス南部の海岸が面するのは？',options:['地中海','カリブ海','北極海'],answer:0,
@@ -29,7 +29,7 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
    fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',
    quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,
-   photoKey:'jensen-huang-nvidia-resignation-2026',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',
+   photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',
    fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',
    quip:'地球のプロフィール写真、岩肌の圧が強い。'}
  ]
