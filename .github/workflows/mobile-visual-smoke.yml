@@ -27,7 +27,7 @@ jobs:
           # upstream Noto repository; avoid slow APT mirrors on hosted runners.
           mkdir -p "$HOME/.local/share/fonts"
           curl --fail --location --retry 2 --connect-timeout 10 --max-time 90 --silent --show-error \
-            "https://raw.githubusercontent.com/googlefonts/noto-cjk/main/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf" \
+            "https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf" \
             --output "$HOME/.local/share/fonts/NotoSansCJKjp-Regular.otf"
           fc-cache -f "$HOME/.local/share/fonts"
           fc-list :lang=ja | grep -q 'Noto Sans CJK JP'
