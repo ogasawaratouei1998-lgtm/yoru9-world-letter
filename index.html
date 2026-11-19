@@ -1256,6 +1256,8 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
 .today-map-pin[aria-expanded="true"]{outline:3px solid #283E56;outline-offset:2px;z-index:2}
 .today-map-pin:focus-visible{outline:3px solid #283E56;outline-offset:3px}
 .today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
+/* The stamp album is the one visible quiz launcher; avoid a duplicated button row. */
+#todayMapLegend{display:none!important}
 .today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
  padding:8px 12px;background:var(--country-color,#FFF0C9);color:#283E56;
  font-size:.79rem;font-weight:860;text-align:center;line-height:1.4;max-width:100%;white-space:normal}
@@ -1975,7 +1977,7 @@ function renderTodayMap(){
   $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
  }else{
   const extra=marked<countries.length?' 一部の国は位置が未登録でも、国名ボタンのクイズには参加できます。':'';
-  $('todayMapNote').textContent='地図のピンは国の紹介、下の国名ボタンはクイズです。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
+  $('todayMapNote').textContent='地図のピンは国の紹介、下のスタンプ帳は国ごとのクイズです。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
  updateWorldPassportButtons();
  positionTodayMapPins();
