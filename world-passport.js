@@ -107,6 +107,12 @@ function passportProgressText(){
   ?'世界パスポート完成！ '+count+'か国のスタンプを集めました。'
   :'世界パスポート：'+count+' / '+countries.length+'か国のスタンプ';
 }
+function worldPassportGrade(score,total){
+ return score===total?'gold':score>0?'silver':'bronze';
+}
+function worldPassportGradeLabel(score,total){
+ return score===total?'ゴールド':score>0?'シルバー':'チャレンジ';
+}
 function updateWorldPassportBoard(){
  const countries=currentIssueCountries();
  const earned=countries.filter(item=>!!worldPassportStamps[item.code]).length;
@@ -133,6 +139,7 @@ function updateWorldPassportBoard(){
   stamp.type='button';stamp.className='today-passport-stamp';
   stamp.dataset.countryCode=item.code;
   stamp.dataset.earned=String(completed);
+  stamp.dataset.grade=completed?worldPassportGrade(result.score,result.total):'none';
   stamp.dataset.ever=String(!completed&&!!worldPassportLifetime[item.code]);
   stamp.dataset.fresh=String(completed&&worldPassportLastAwarded===item.code);
   stamp.setAttribute('aria-controls','todayCountryQuiz');
@@ -148,7 +155,7 @@ function updateWorldPassportBoard(){
   const status=document.createElement('span');
   status.className='today-passport-stamp-status';
   status.textContent=completed
-   ?'獲得済 · '+result.score+'/'+result.total+'問正解'
+   ?'★ '+worldPassportGradeLabel(result.score,result.total)+' · '+result.score+'/'+result.total+'問正解'
    :worldPassportLifetime[item.code]?'前の号で訪問済 · 今号に挑戦':'まだ空欄 · 挑戦する';
   stamp.append(seal,country,status);
   stamp.addEventListener('click',()=>startWorldPassport(item));
@@ -324,9 +331,10 @@ function answerWorldPassport(picked){
   const reward=$('todayQuizStampReward');
   reward.hidden=false;
   reward.dataset.new=String(firstStamp);
+  reward.dataset.grade=worldPassportGrade(run.score,run.questions.length);
   $('todayQuizRewardSeal').textContent='★';
   $('todayQuizRewardTitle').textContent=firstStamp
-   ?'スタンプ獲得！ '+run.item.name
+   ?worldPassportGradeLabel(run.score,run.questions.length)+'スタンプ獲得！ '+run.item.name
    :newBest?'自己ベスト更新！ '+run.item.name:'スタンプ確認！ '+run.item.name;
   $('todayQuizRewardText').textContent=run.score===run.questions.length
    ?'全問正解！ '+run.score+'/'+run.questions.length+'問。今日の世界をよく知りました。'
