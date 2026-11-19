@@ -201,8 +201,10 @@ try{
    assert.ok(grid.scrollOverflow<=2,
     'no clipped/scrollable illustration inside gallery: '+grid.scrollOverflow+'px');
    assert.ok(grid.pageOverflow<2,'no page-wide horizontal overflow: '+grid.pageOverflow+'px');
-   assert.ok(grid.hint.right<=grid.hero.right+2,
-    'gallery header hint stays entirely inside the hero');
+   assert.ok(grid.hint.left>=grid.hero.left-2&&grid.hint.right<=grid.hero.right+2,
+    'gallery header hint stays inside the hero: '+JSON.stringify({
+      viewport:viewport.name,hero:grid.hero,hint:grid.hint
+    }));
    for(const [i,item] of grid.tiles.entries()){
     assert.ok(item.tile.left>=grid.track.left-2&&item.tile.right<=grid.track.right+2,
      'every article tile fits inside the gallery: '+(i+1));
@@ -371,6 +373,43 @@ try{
     'centroid pins are not misrepresented as news incident locations');
    await today.screenshot({path:'mobile-screenshots/today-map-'+viewport.name+'.png',
     animations:'disabled'});
+   // The country introduction is a separate, substantial visual feature.
+   // Its iconic photo must actually render, not merely appear in the HTML.
+   const countryCoverAssets=new Map();
+   for(let i=0;i<await pins.count();i++){
+    const pin=pins.nth(i);
+    const code=await pin.getAttribute('data-country-code');
+    await pin.click();
+    const intro=today.locator('#todayMapIntro');
+    assert.equal(await intro.isVisible(),true,'map pin opens the country guide: '+code);
+    assert.ok((await intro.locator('#todayMapIntroBody').textContent()).length>35,
+     'country guide explains the place, not just the name: '+code);
+    if(['AR','FR','US'].includes(code)){
+     await page.waitForFunction(expected=>{
+      const intro=document.querySelector('#todayMapIntro');
+      const img=document.querySelector('#todayMapIntroImage');
+      return intro?.dataset.countryCode===expected&&img?.complete&&img.naturalWidth>0&&
+       !document.querySelector('#todayMapIntroFigure').hidden;
+     },code,{timeout:30000});
+     const img=intro.locator('#todayMapIntroImage');
+     const src=await img.getAttribute('src');
+     assert.ok(src?.startsWith('./assets/travel/'),
+      'country hero uses the packaged iconic photo: '+code+' '+src);
+     const bounds=await img.boundingBox();
+     assert.ok(bounds?.width>=240&&bounds?.height>=190,
+      'country photo is large enough to enjoy on mobile: '+code+' '+JSON.stringify(bounds));
+     assert.ok((await intro.locator('#todayMapIntroBody').textContent()).length>140,
+      'featured country has a detailed, useful introduction: '+code);
+     assert.ok((await intro.locator('#todayMapIntroCaption').textContent()).includes('撮影：'),
+      'country photo identifies the photographer: '+code);
+     countryCoverAssets.set(code,src);
+     if(viewport.name==='standard'){
+      await intro.screenshot({path:'mobile-screenshots/country-'+code+'.png',
+       animations:'disabled'});
+     }
+    }
+    await intro.locator('#todayMapIntroClose').click();
+   }
    await countryButtons.first().click();
    assert.equal(await articleReader.isVisible(),true,
     'country label opens one of the actual current news articles');
@@ -390,6 +429,11 @@ try{
     'tourist photography is labeled separately from actual reportage');
    const photoSource=await postcard.locator('.travel-photo').getAttribute('src');
    assert.ok(photoSource?.includes('assets/travel/'),'travel photo is locally bundled');
+   const firstCountryCode=await pins.first().getAttribute('data-country-code');
+   if(countryCoverAssets.has(firstCountryCode)){
+    assert.notEqual(photoSource,countryCoverAssets.get(firstCountryCode),
+     'country introduction and 30-second travel must use DIFFERENT real photographs');
+   }
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<2,'no horizontal overflow: '+overflow+'px');
    assert.deepEqual(errors,[],'no JavaScript uncaught errors');
