@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v22",worker)
+        self.assertIn("yoru9-shell-v23",worker)
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
@@ -52,33 +52,74 @@ class ReaderFrontendTest(unittest.TestCase):
             self.assertIn(asset, page)
             self.assertIn(asset, worker)
             self.assertTrue(any(stop.get("photoAsset") == asset for stop in stops.values()))
-        self.assertIn("const photos=unusedPhotos.length?unusedPhotos:approvedPhotos;", page)
+        self.assertIn("const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])", page)
 
-    def test_future_published_countries_get_a_contextual_guide_and_verified_photo_fallback(self):
-        """The next previously unseen country must not revert to a one-line intro."""
+    def test_country_portrait_and_destination_tour_are_separate(self):
+        """A portrait is about culture and fresh verified notes, not tourist cards."""
         import json
-
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
         catalog = json.loads((ROOT / "country-catalog.json").read_text(encoding="utf-8"))
-        stops = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
         self.assertGreaterEqual(len(catalog), 190)
-        self.assertIn("todayMapIntroNewsBody", page)
-        self.assertIn("item.indices", page)
-        self.assertIn("todayMapIntroPhotoStatus", page)
-        self.assertIn("この国から届いた実話", page)
-        self.assertIn("loadTravelStops().then(stops=>", page)
-        self.assertIn("travelPhotoOptions(stops)", page)
-        self.assertIn("countryKeys(stop.country).includes(currentCode)", page)
-        self.assertIn("stop.photoAsset", page)
-        self.assertIn("chosen.contextPhoto?'現地の風景｜'", page)
+        self.assertIn("COUNTRY PORTRAIT · 国の魅力", page)
+        self.assertIn("todayMapIntroCurrent", page)
+        self.assertIn("todayMapIntroCurrentSource", page)
+        self.assertIn("いま、この国で · 出典確認済み", page)
+        self.assertIn("currentCountryHighlight(all,currentCode)", page)
         self.assertIn("requestId!==todayCountryIntroRequest", page)
-        self.assertIn("yoru9-shell-v22", worker)
-        self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)", worker)
-        # Korea is not among the seven hand-authored guides, but it already has
-        # licensed postcards. The automatic country lookup must find them.
-        self.assertTrue(any(stop.get("country") == "韓国" for stop in stops.values()))
-        self.assertTrue(any(record["code"] == "KR" for record in catalog))
+        self.assertIn(" KR:{lead:", page)
+        self.assertIn(" BR:{lead:", page)
+        self.assertIn(" AG:{lead:", page)
+        self.assertIn("WORLD POSTCARD · 有名観光地の小旅行", page)
+        self.assertIn("FAMOUS_TOURIST_LANDMARKS", page)
+        portrait=page[page.index("function showTodayCountryIntro("):
+                      page.index("// Country centroid pins stay geographically anchored.")]
+        self.assertNotIn("loadTravelStops(", portrait)
+        self.assertNotIn("travelPhotoOptions(", portrait)
+        self.assertNotIn("story.summary", portrait)
+        self.assertNotIn("todayMapIntroNewsBody", page)
+        self.assertIn("TODAY_COUNTRY_PHOTOS[currentCode]",portrait)
+        self.assertIn("yoru9-shell-v23",worker)
+        self.assertIn("'country-highlights.json'",worker)
+        self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)",worker)
+
+    def test_country_highlights_are_verified_bounded_and_public(self):
+        """Country notes are separate from the nightly blunder article feed."""
+        import json
+        from datetime import date
+        from build_site import validate_country_highlights
+        data=validate_country_highlights(ROOT)
+        self.assertEqual(data["version"],1)
+        self.assertEqual(set(data["highlights"]),{"GB","ES","JP","NZ"})
+        self.assertEqual(data["updatedOn"],"2026-11-19")
+        self.assertTrue(all(
+            date.fromisoformat(row["validFrom"])<=date(2026,11,19)<=date.fromisoformat(row["validThrough"])
+            for rows in data["highlights"].values() for row in rows))
+        build=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        self.assertIn("'country-highlights.json'",build)
+        self.assertIn("validate_country_highlights(root)",build)
+        deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
+        check=(ROOT/".github/workflows/test-publishing.yml").read_text(encoding="utf-8")
+        for pipeline in (deploy,check):
+            self.assertIn("      - 'country-highlights.json'",pipeline)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_country_highlights_expire_and_require_sources(self):
+        import json
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        begin=page.index("function currentCountryHighlight(")
+        end=page.index("function todayCountryIntro(",begin)
+        script=("function safeUrl(url){return url.startsWith('https://')?url:'#';}\n"
+             +page[begin:end]
+             +"\nconst row={title:'文化イベント',body:'説明',validFrom:'2026-11-18',"
+              "validThrough:'2026-11-22',checkedOn:'2026-11-19',"
+              "sourceName:'公式観光局',sourceUrl:'https://example.org/event'};\n"
+              "if(!currentCountryHighlight({JP:[row]},'JP','2026-11-19'))process.exit(2);"
+              "if(currentCountryHighlight({JP:[row]},'JP','2026-11-23'))process.exit(3);"
+              "if(currentCountryHighlight({JP:[{...row,sourceUrl:'javascript:alert(1)'}]},'JP','2026-11-19'))process.exit(4);"
+              "if(currentCountryHighlight({JP:[{...row,checkedOn:'2026-11-25'}]},'JP','2026-11-19'))process.exit(5);")
+        run=subprocess.run(["node","-e",script],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
 
     def test_visual_first_digests_are_local_original_art_not_news_photos(self):
         import xml.etree.ElementTree as ET
@@ -293,7 +334,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("firstIntro=!travelExplainerShown",page)
         self.assertIn("function mountPhoto(stop,attempt=0)",page)
         self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
-        self.assertIn("ニュースをきっかけに、世界の街角へ。",page)
+        self.assertIn("ニュースをきっかけに、その国の有名な観光名所へ。",page)
         self.assertIn("この写真はニュース現場の記録ではなく、旅先の風景です。",page)
         self.assertIn("(showIntro?'<p class=\"travel-disclaimer\">",page)
         self.assertNotIn("観光案内ではなく、実際の場所へ視線を向ける短い寄り道",page)
@@ -374,7 +415,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("class=\"travel-trust\" role=\"note\"",block)
         self.assertIn("この写真はニュース現場の記録ではなく、旅先の風景です。",block)
         self.assertIn("写真や地図は記事の証拠ではなく",block)
-        self.assertIn("この国の写真はまだ準備中。",block)
+        self.assertIn("この国の有名観光地は確認中。",block)
         self.assertIn("掲載国を地図で見る",block)
         self.assertIn("旅先を地図で見る",block)
         self.assertIn("countryRecord(countryKeys(story.country)[0]||'')",block)
@@ -392,7 +433,7 @@ class ReaderFrontendTest(unittest.TestCase):
         end=page.index("function travelPostcardHtml(",start)
         logic=page[start:end]
         row=lambda country,asset: {
-          "country":country,"place":"観光の写真","region":"風景",
+          "country":country,"place":("京都・金閣寺" if asset=="kyoto" else "東京・浅草寺" if asset=="tokyo" else "ニューヨークの街並み"),"region":"風景",
           "latitude":35,"longitude":135,
           "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/x/photo.jpg",
           "photoAsset":"assets/travel/"+asset+".jpg",
@@ -414,6 +455,22 @@ class ReaderFrontendTest(unittest.TestCase):
         )
         run=subprocess.run(["node","-e",script],capture_output=True,text=True)
         self.assertEqual(run.returncode,0,run.stderr)
+
+    def test_microtravel_selects_famous_attractions_only(self):
+        import json
+        from country_codes import country_codes
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        photos=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertIn("famousAttractionScore(stop)<80",page)
+        self.assertIn("FAMOUS_TOURIST_LANDMARKS",page)
+        # Each current-edition country has a verified landmark photograph.
+        names={
+          "イギリス":"エディンバラ城","スペイン":"サグラダ・ファミリア",
+          "日本":"富士山","ニュージーランド":"ミルフォード・サウンド"
+        }
+        for country,landmark in names.items():
+            self.assertTrue(any(stop["country"]==country and
+                                landmark in stop["place"] for stop in photos.values()))
 
     def test_travel_data_changes_trigger_validation_and_site_deploy(self):
         deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
@@ -445,7 +502,7 @@ class ReaderFrontendTest(unittest.TestCase):
                   "photoAsset":"assets/travel/usa.jpg",
                   "photoPage":"https://commons.wikimedia.org/wiki/File:USA.jpg",
                   "licenseUrl":"https://creativecommons.org/licenses/by/4.0/"},
-          "two":{"country":"日本","place":"B","region":"日本","latitude":35,"longitude":139,
+          "two":{"country":"日本","place":"東京・浅草寺","region":"日本","latitude":35,"longitude":139,
                   "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/y/photo.jpg",
                   "photoAsset":"assets/travel/japan.jpg",
                   "photoPage":"https://commons.wikimedia.org/wiki/File:Japan.jpg",
