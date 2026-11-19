@@ -157,7 +157,7 @@ jobs:
       - name: Collect fresh leads when no approved issue exists
         if: steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         run: python collect_candidates.py
-      - name: Aim for three independently audited stories (publish one or two if verified)
+      - name: Aim for up to five independently audited stories (publish any 1-5 verified)
         if: steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -168,7 +168,7 @@ jobs:
           else
             python auto_editorial.py
           fi
-      - name: Release today's one-to-three verified stories (skip only if none)
+      - name: Release today's one-to-five verified stories (skip only if none)
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |
