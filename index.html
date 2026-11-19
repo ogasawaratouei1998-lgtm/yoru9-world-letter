@@ -2036,45 +2036,39 @@ $('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();loadMonthRetrospective();loadMonthlyVerified();
-async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length>=1&&x.stories.length<=5;const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}else if(archiveMenu.value==='current'){displayReleaseStatus()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
-checkPublished();
-
-// The archive manifest contains *released* editions only; approval drafts are never copied to public/.
-const archiveMenu=$('archiveSelect');
-const archiveStatus=$('archiveStatus');
 let newestPublished=null;
-async function loadArchives(){
-  if(location.protocol==='file:')return;
-  try{
-    const res=await fetch('./data/archive/index.json',{cache:'no-store'});
-    if(!res.ok)return;
-    const m=await res.json();
-    if(!Array.isArray(m.issues))return;
-    archiveMenu.innerHTML='<option value="current">現在の配信号</option>';
-    m.issues.forEach(issue=>{
-      if(!/^\d{4}-\d{2}-\d{2}$/.test(issue.date))return;
-      const o=document.createElement('option');o.value=issue.date;o.textContent=issue.date+' — '+String(issue.title||'世界のニュース').slice(0,45);archiveMenu.append(o);
-    });
-    loadCountryIndex(m.issues);
-    updateMonthFromArchives(m.issues).catch(err=>console.info('特集の配信済み記事を取得できませんでした',err));
-    archiveStatus.textContent=m.issues.length?`${m.issues.length}日分の公開号から選べます。`:'まだ過去の公開号はありません。';
-  }catch(_){ archiveStatus.textContent='アーカイブは公開後に利用できます。'; }
+async function checkPublished(){
+ if(location.protocol==='file:')return;
+ try{
+  const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});
+  if(!response.ok)return;
+  const x=await response.json(),now=new Date();
+  const published=x?.status==='published'&&Array.isArray(x.stories)&&
+   x.stories.length>=1&&x.stories.length<=5;
+  const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);
+  if(!published||!releaseOk)return;
+  const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;
+  newestPublished=x;
+  if(fresh){edition=x;filter='all';loadState();render()}
+  else displayReleaseStatus();
+ }catch(err){console.info('最新の公開号を取得できませんでした',err)}
 }
-archiveMenu.addEventListener('change',async()=>{
-  const chosen=archiveMenu.value;
-  if(chosen==='current'){
-    edition=newestPublished||demo;filter='all';loadState();render();return;
+checkPublished();
+// Previous-edition reader is removed; rolling monthly digest consumes
+// released dates without exposing archive-selection or world-map controls.
+async function loadPublishedMonthDates(){
+ if(location.protocol==='file:')return;
+ try{
+  const res=await fetch('./data/archive/index.json',{cache:'no-store'});
+  if(!res.ok)return;
+  const m=await res.json();
+  if(Array.isArray(m.issues)){
+   updateMonthFromArchives(m.issues).catch(err=>
+    console.info('30日間の特集を取得できませんでした',err));
   }
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(chosen))return;
-  try{
-    const response=await fetch(`./data/archive/${chosen}.json`,{cache:'no-store'});
-    if(!response.ok)throw Error('HTTP '+response.status);
-    const item=await response.json();
-    if(item.status!=='published'||item.editionDate!==chosen||!Array.isArray(item.stories)||item.stories.length<1||item.stories.length>5)throw Error('invalid issue');
-    edition=item;filter='all';loadState();render();window.scrollTo({top:0,behavior:'smooth'});
-  }catch(_){archiveStatus.textContent='この配信号を読み込めませんでした。';}
-});
-loadArchives();
+ }catch(_){/* Current edition remains available. */}
+}
+loadPublishedMonthDates();
 function updateOnlineState(){$('offlineNotice').hidden=navigator.onLine!==false}
 window.addEventListener('online',()=>{updateOnlineState();checkPublished()});
 window.addEventListener('offline',updateOnlineState);
@@ -2118,7 +2112,7 @@ async function refreshOnForeground(){
  if(now-lastForegroundCheck<15000)return;
  lastForegroundCheck=now;
  await checkPublished();
- loadArchives();
+ loadPublishedMonthDates();
  loadMonthlyVerified();
  if('serviceWorker' in navigator){
   navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});
