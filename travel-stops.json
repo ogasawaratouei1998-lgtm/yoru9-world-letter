@@ -31,6 +31,22 @@
     "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_Falls_from_the_Argentinian_side.JPG",
     "photoAsset": "assets/travel/iguazu-argentina.jpg"
   },
+  "ar-iguazu-rainbow-postcard": {
+    "country": "アルゼンチン",
+    "countryOnly": true,
+    "place": "イグアスの滝・虹の大パノラマ",
+    "region": "ミシオネス州・イグアス国立公園",
+    "latitude": -25.6953,
+    "longitude": -54.4367,
+    "note": "密林の向こうへ幾重にも連なる大瀑布。水しぶきが光を受け、滝の上に大きな虹が弧を描きます。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Foz_de_Iguacu_Panorama_AR01.jpg/500px-Foz_de_Iguacu_Panorama_AR01.jpg",
+    "photoCaption": "アルゼンチン側のイグアスの滝と虹（2009年撮影）",
+    "author": "Mariordo / Mario Roberto Duran Ortiz",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Foz_de_Iguacu_Panorama_AR01.jpg",
+    "photoAsset": "assets/travel/iguazu-rainbow-panorama.jpg"
+  },
   "fr-eiffel-postcard": {
     "country": "フランス",
     "countryOnly": true,
