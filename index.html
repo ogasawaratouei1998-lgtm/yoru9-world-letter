@@ -1411,6 +1411,22 @@ const TODAY_COUNTRY_GUIDES=Object.freeze({
  FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリの美術館やカフェはもちろん、フランスの魅力は地方にも広がります。ノルマンディーの海辺には潮の満ち引きで表情を変えるモン・サン＝ミシェルがあり、南には地中海沿岸の陽光、東にはアルプスの山並み。パンやチーズ、郷土料理にも地域ごとの個性が息づいています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-eiffel-postcard','fr-mont-saint-michel-postcard']},
  US:{lead:'大自然から大都市まで、景色が劇的に変わる旅',body:'ニューヨークの摩天楼やサンフランシスコの湾岸から、ヨセミテの花崗岩の谷、グランドキャニオンの地層まで、同じ国とは思えないほど多彩な風景が続きます。音楽、映画、食文化にも地域ごとの歴史が反映され、旅先によってまったく異なる表情に出会えます。',facts:['首都：ワシントンD.C.','風景：ヨセミテ・グランドキャニオン','文化：ジャズ・映画・多彩な食文化'],photos:['us-golden-gate-postcard','us-waikiki-postcard']}
 });
+// Editorial photo selection standard (v2): recognition > scenic ambiguity.
+// All approved country-cover photographs must be licensed and attributed.
+// Rank within each country; never let JSON insertion order choose the cover.
+// 100 = iconic, instantly identifiable landmark; 80 = recognizable national
+// landscape; below 60 = contextual only, unsuitable as a lead image.
+// Maintain at least two high-quality, independently hosted options per country.
+const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
+ AR:[['イグアスの滝',100],['カサ・ロサダ',85]],
+ FR:[['エッフェル塔',100],['モン・サン＝ミシェル',70]],
+ US:[['ゴールデンゲートブリッジ',100],['ワイキキ',75]]
+});
+function countryPhotoPriority(code,photo){
+ const rules=TODAY_COUNTRY_PHOTO_RULES[code]||[];
+ const match=rules.find(([landmark])=>photo.place.includes(landmark));
+ return match?match[1]:0;
+}
 function todayCountryIntro(item){
  if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
  const region=countryRecord(item.code)?.region;
@@ -1435,10 +1451,11 @@ function showTodayCountryIntro(item){
  const figure=$('todayMapIntroFigure'),photo=$('todayMapIntroImage');
  const currentCode=item.code;
  $('todayMapIntro').dataset.countryCode=currentCode;
- const photos=(TODAY_COUNTRY_PHOTOS[currentCode]||[]).slice();
- // The first image must immediately communicate the country; scenic but
- // visually ambiguous secondary destinations remain fallbacks only.
- if(currentCode==='FR')photos.sort((a,b)=>Number(b.place.includes('エッフェル塔'))-Number(a.place.includes('エッフェル塔')));
+ const photos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
+  .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place)
+  .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
+ // The cover must be recognizable even without a caption. Secondary scenic
+ // photos are only fallbacks and never outrank an iconic national landmark.
  photo.removeAttribute('src');
  photo.onload=null;photo.onerror=null;
  figure.hidden=!photos.length;
