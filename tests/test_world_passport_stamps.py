@@ -94,7 +94,10 @@ if(worldPassportStamps.AR.score!==2)process.exit(22);
 const newCountryButton=$('todayQuizNextCountry');
 newCountryButton.handlers.click();
 if(worldPassportActive.item.code!=='JP')process.exit(23);
-answerWorldPassport(worldPassportActive.questions[0].answer);
+for(let i=0;i<worldPassportActive.questions.length;i++){
+ answerWorldPassport(worldPassportActive.questions[i].answer);
+ if(i<worldPassportActive.questions.length-1)nextWorldPassportRound();
+}
 if($('todayPassportCount').textContent!=='2 / 2')process.exit(24);
 if($('todayPassportBoard').dataset.complete!=='true')process.exit(25);
 if(!$('todayPassportMessage').textContent.includes('世界パスポート完成'))process.exit(26);
