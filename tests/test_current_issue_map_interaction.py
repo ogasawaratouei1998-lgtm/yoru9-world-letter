@@ -129,6 +129,50 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("world-passport.js", bundle)
         self.assertIn("world-passport.js", worker)
 
+    def test_passport_correct_answer_photos_match_licensed_manifest(self):
+        import json
+        import re
+        game = (ROOT / "world-passport.js").read_text(encoding="utf-8")
+        catalog = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
+        worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
+        photo_keys = re.findall(r"photoKey:'([^']+)'", game)
+        labels = re.findall(r"photoLabel:'([^']+)'", game)
+        self.assertEqual(len(photo_keys), 6, "One authentic answer image per curated quiz")
+        self.assertEqual(len(labels), 6)
+        self.assertEqual(len(set(photo_keys)), 6)
+        covers = {
+            "assets/travel/iguazu-rainbow-cover.jpg",
+            "assets/travel/mont-saint-michel-sunset-cover.jpg",
+            "assets/travel/golden-gate-sunset-cover.jpg",
+        }
+        for key, label in zip(photo_keys, labels):
+            with self.subTest(quiz_image=key):
+                photo = catalog[key]
+                self.assertNotIn(photo["photoAsset"], covers)
+                self.assertTrue(label.startswith("正解"))
+                self.assertTrue(photo["photo"].startswith(
+                    "https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
+                self.assertTrue(photo["photoPage"].startswith(
+                    "https://commons.wikimedia.org/wiki/File:"))
+                self.assertTrue(photo["licenseUrl"].startswith(
+                    "https://creativecommons.org/"))
+                self.assertTrue(photo["author"])
+                self.assertTrue(photo["photoCaption"])
+                self.assertIn(photo["photoAsset"], worker,
+                    "All six correct answer pictures should be cached offline")
+        self.assertTrue(catalog["ar-mate-quiz-image"].get("quizOnly"))
+        self.assertTrue(catalog["fr-mediterranean-quiz-image"].get("quizOnly"))
+        self.assertIn("stop.quizOnly===true", self.page,
+            "Quiz answer images must not pollute travel-photo rotation")
+        self.assertIn('id="todayQuizPhotoFigure" hidden', self.page,
+            "Do not spoil answers with a photograph before a choice")
+        self.assertIn('id="todayQuizPhotoDialog"', self.page)
+        self.assertIn("revealWorldPassportAnswerPhoto(question)", game)
+        self.assertIn("picture.src='./'+stop.photoAsset", game)
+        self.assertIn("photoPage", game)
+        self.assertIn("licenseUrl", game)
+        self.assertIn("resetWorldPassportPhoto()", game)
+
     def test_passport_country_questions_are_factual_and_have_valid_answers(self):
         import json
         import re
