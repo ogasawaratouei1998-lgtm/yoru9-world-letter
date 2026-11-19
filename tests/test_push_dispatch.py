@@ -26,6 +26,30 @@ class PushDispatchTest(unittest.TestCase):
                 self.assertIn(str(count)+"本",payload["body"])
                 self.assertEqual(payload["editionDate"],"2026-11-17")
 
+    def test_november_19_onwards_one_to_five_published_stories_are_eligible(self):
+        for count in (1, 2, 3, 4, 5):
+            with self.subTest(stories=count):
+                issue={"status":"published","editionDate":"2026-11-19",
+                       "editionType":"regular","stories":[{}]*count}
+                payload=notice_for(issue,datetime(2026,11,19,21,51,tzinfo=JST))
+                self.assertIsNotNone(payload)
+                self.assertEqual(payload["editionDate"],"2026-11-19")
+                self.assertIn(str(count)+"本",payload["body"])
+
+    def test_november_19_zero_or_six_stories_never_notify(self):
+        for count in (0, 6):
+            with self.subTest(stories=count):
+                self.assertIsNone(notice_for(
+                    {"status":"published","editionDate":"2026-11-19",
+                     "editionType":"regular","stories":[{}]*count},
+                    datetime(2026,11,19,21,51,tzinfo=JST)))
+
+    def test_four_story_notice_not_sent_prior_to_nine(self):
+        self.assertIsNone(notice_for(
+            {"status":"published","editionDate":"2026-11-19",
+             "editionType":"regular","stories":[{}]*4},
+            datetime(2026,11,19,20,59,tzinfo=JST)))
+
     def test_legacy_regular_four_or_five_and_empty_do_not_notify(self):
         for count in (0,4,5):
             with self.subTest(stories=count):
