@@ -24,8 +24,12 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
     def test_preview_handoff_never_runs_duplicate_ai_or_premature_pages(self):
         self.assertEqual(WORKFLOW.count(
             "steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')"),2)
+        # The four Pages/build steps require a newly published edition.
+        # The final notification step may retry an already published edition;
+        # the notifier and Supabase backend both guard duplicate delivery.
         self.assertEqual(WORKFLOW.count(
-            "steps.release.outputs.published == 'true' && success()"),5)
+            "steps.release.outputs.published == 'true' && success()"),4)
+        self.assertIn("- name: Dispatch optional release notification (server must be configured)\n        if: success()",WORKFLOW)
         self.assertIn('echo "published=true" >> "$GITHUB_OUTPUT"',WORKFLOW)
         self.assertIn('echo "published=false" >> "$GITHUB_OUTPUT"',WORKFLOW)
 
