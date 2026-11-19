@@ -52,46 +52,79 @@ class TodayWorldMapTest(unittest.TestCase):
         self.assertNotIn("data/monthly/index.json",worker)
 
     def test_current_issue_country_centroids_ground_pin_placements(self):
+        from country_codes import country_codes
         issue=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
         catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
-        assert len(issue["stories"])>=1
+        by_code={entry["code"]:entry for entry in catalog}
+        self.assertTrue(1<=len(issue["stories"])<=5)
         for story in issue["stories"]:
-            name=story["country"].lower()
-            matched=[x for x in catalog if x["name"].lower()==name
-                     or x["code"].lower()==name
-                     or name in [a.lower() for a in x["aliases"]]]
-            self.assertEqual(len(matched),1,story["country"])
-            x=matched[0]
-            self.assertTrue(-180<=x["lon"]<=180)
-            self.assertTrue(-90<=x["lat"]<=90)
-            px=(x["lon"]+180)/360*100
-            py=(90-x["lat"])/180*100
-            self.assertTrue(0<=px<=100 and 0<=py<=100)
+            # A factual story may be cross-border; unknown geographies are
+            # listed without a fabricated pin rather than blocking releases.
+            for code in country_codes(story["country"]):
+                with self.subTest(country=story["country"],code=code):
+                    self.assertIn(code,by_code)
+                    item=by_code[code]
+                    self.assertTrue(-180<=item["lon"]<=180)
+                    self.assertTrue(-90<=item["lat"]<=90)
+                    px=(item["lon"]+180)/360*100
+                    py=(90-item["lat"])/180*100
+                    self.assertTrue(0<=px<=100 and 0<=py<=100)
 
     @unittest.skipUnless(shutil.which("node"),"Node.js required")
     def test_runtime_pins_come_only_from_current_issue_no_extra_countries(self):
-        # Extract the actual production country/mapping code, not a duplicate.
+        # Run production mapping functions against the ACTUAL published issue.
+        # This regression must survive future 1, 2, 3, 4 and 5-story nights.
         start=HTML.index("function countryRecord(name){")
         end=HTML.index("function setReleaseStatus(message){",start)
         code=HTML[start:end]
         catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
         issue=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
-        # Separately isolate only pure functions, without browser-dependent catalog loading.
         pure=code.split("async function loadCountryCatalog()")[0]
-        maplogic="function currentIssueCountries(){"+code.split("function currentIssueCountries(){")[1].split("function renderTodayMap(){")[0]
-        script=("const countryCatalog="+json.dumps(catalog,ensure_ascii=False)+";\n"+
-                "const edition="+json.dumps(issue,ensure_ascii=False)+";\n"+
+        maplogic="function currentIssueCountries(){"+code.split(
+            "function currentIssueCountries(){")[1].split(
+            "function renderTodayMap(){")[0]
+        script=("const countryCatalog="+json.dumps(catalog,ensure_ascii=False)+";\\n"+
+                "let edition="+json.dumps(issue,ensure_ascii=False)+";\\n"+
                 pure+maplogic+
-                "\nconst results=currentIssueCountries();"+
-                "if(results.length!==3)throw Error('expected 3 unique countries, got '+results.length);"+
-                "for(const c of results){"+
-                "if(!c.point||c.indices.length!==1||c.point.x<0||c.point.x>100||c.point.y<0||c.point.y>100)"+
-                "throw Error('invalid current country pin '+c.name);"+
-                "}"+
-                "if(!results.some(c=>c.name==='アルゼンチン')||"+
-                "!results.some(c=>c.name==='フランス')||"+
-                "!results.some(c=>c.name==='アメリカ合衆国'))"+
-                "throw Error('country centroids missing');")
+                """
+function verify(label){
+ const expected=new Map();
+ edition.stories.forEach((story,index)=>{
+  const codes=countryKeys(story.country);
+  const keys=codes.length?codes:['unmapped:'+String(story.country||'国名未登録')];
+  for(const code of keys){
+   if(!expected.has(code))expected.set(code,[]);
+   expected.get(code).push(index);
+  }
+ });
+ const actual=currentIssueCountries();
+ if(actual.length!==expected.size)
+   throw Error(label+': wrong unique country count '+actual.length+' vs '+expected.size);
+ for(const row of actual){
+  const indices=expected.get(row.code);
+  if(!indices||JSON.stringify(indices)!==JSON.stringify(row.indices))
+   throw Error(label+': wrong country/story association '+row.code);
+  if(row.point){
+   if(row.point.x<0||row.point.x>100||row.point.y<0||row.point.y>100)
+    throw Error(label+': invalid centroid '+row.code);
+  }else if(!row.code.startsWith('unmapped:')){
+   throw Error(label+': missing centroid '+row.code);
+  }
+ }
+}
+verify('current published edition');
+for(let n=1;n<=5;n++){
+ edition.stories=countryCatalog.slice(0,n).map((c,i)=>({id:'synthetic-'+i,country:c.name}));
+ verify('synthetic '+n);
+}
+edition.stories=[
+ {id:'a',country:'アメリカ'},{id:'b',country:'アメリカ'},
+ {id:'c',country:'イギリス・アメリカ'},
+ {id:'d',country:'未登録の国'}
+];
+verify('same-country deduplication, cross-border and unknown location');
+if(currentIssueCountries().length!==3)throw Error('deduplication failed');
+""")
         r=subprocess.run(["node","-e",script],capture_output=True,text=True)
         self.assertEqual(r.returncode,0,r.stderr)
 
