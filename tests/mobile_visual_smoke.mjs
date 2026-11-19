@@ -476,7 +476,20 @@ try{
       const item=worldPassportActive?.questions?.[round];
       return Number.isInteger(item?.answer)?item.answer:0;
      },{code,round});
+     const animateCorrect=viewport.name==='standard'&&index===0&&round===0;
+     if(animateCorrect)await page.emulateMedia({reducedMotion:'no-preference'});
      await quiz.locator('#todayQuizChoices button').nth(correctIndex).click();
+     if(animateCorrect){
+      const sparkle=quiz.locator('.quiz-answer-sparks span').first();
+      const motionName=await sparkle.evaluate(el=>getComputedStyle(el).animationName);
+      assert.ok(motionName.includes('quiz-sparkle-fly'),
+       'normal-motion users see real flying sparkles on each correct answer');
+      const bounce=await quiz.locator('#todayQuizChoices button[data-popped="true"]')
+       .evaluate(el=>getComputedStyle(el).animationName);
+      assert.ok(bounce.includes('quiz-choice-pop'),
+       'the correct button physically bounces rather than only changing text');
+      await page.emulateMedia({reducedMotion:'reduce'});
+     }
      assert.equal(await quiz.locator('#todayQuizCorrectFlash').isVisible(),true,
       'every correct answer immediately celebrates: '+code+' / '+round);
      assert.equal(await quiz.locator('#todayQuizChoices button[data-popped="true"]').count(),1,
