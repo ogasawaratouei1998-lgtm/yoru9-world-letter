@@ -622,7 +622,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("el.closest('.story').dataset.storyIndex", page)
         self.assertNotIn("first.scrollIntoView", page)
         self.assertIn("$('spotlightBody').addEventListener('click',handleStoryAction)", page)
-        self.assertIn("data-share=\"0\"", page)
+        self.assertIn('data-share="${selectedArticleIndex}"', page)
 
     def test_filter_buttons_match_available_secondary_categories(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
