@@ -8,6 +8,7 @@ on:
       - 'build_site.py'
       - 'travel-stops.json'
       - 'index.html'
+      - 'tests/**'
       - 'manifest.webmanifest'
       - 'notifications.js'
       - 'notification-config.json'
