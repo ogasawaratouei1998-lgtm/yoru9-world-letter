@@ -413,10 +413,34 @@ try{
     }
     await intro.locator('#todayMapIntroClose').click();
    }
+   // A country chip opens a separate, quick geography quiz, not a news article.
+   const previouslySelected=await page.locator('#readerSelected').textContent();
    await countryButtons.first().click();
-   assert.equal(await articleReader.isVisible(),true,
-    'country label opens one of the actual current news articles');
-   await page.locator('#readerBack').click();
+   const quiz=today.locator('#todayCountryQuiz');
+   assert.equal(await quiz.isVisible(),true,
+    'country chip launches a World Passport game');
+   assert.equal(await quiz.locator('#todayQuizChoices button').count(),3,
+    'the quiz has three real answer choices');
+   assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
+    'quiz button never selects an article');
+   for(let round=0;round<2;round++){
+    await quiz.locator('#todayQuizChoices button').first().click();
+    assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true,
+     'answer reveals the result');
+    assert.ok((await quiz.locator('#todayQuizExplanation').textContent()).length>14,
+     'answer includes factual local context');
+    assert.ok((await quiz.locator('#todayQuizJoke').textContent()).includes('創作の冗談'),
+     'fictional humor is clearly labeled');
+    const next=quiz.locator('#todayQuizNext');
+    if((await next.textContent()).includes('次の問題へ'))await next.click();
+    else break;
+   }
+   assert.ok((await quiz.locator('#todayQuizPassport').textContent()).includes('1 / '),
+    'the country awards a passport stamp');
+   assert.equal(await countryButtons.first().getAttribute('data-quiz-done'),'true',
+    'the country chip visually records the collected stamp');
+   await quiz.locator('#todayQuizClose').click();
+   assert.equal(await quiz.isHidden(),true,'quiz can be closed');
    await gallery.first().click();
    const travelButton=page.locator('#spotlight .travel-open');
    assert.equal(await travelButton.getAttribute('aria-expanded'),'false',
