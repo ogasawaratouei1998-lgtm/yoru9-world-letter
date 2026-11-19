@@ -92,9 +92,11 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertEqual(data["version"],1)
         self.assertEqual(set(data["highlights"]),{"GB","ES","JP","NZ"})
         self.assertEqual(data["updatedOn"],"2026-11-19")
-        self.assertTrue(all(
-            date.fromisoformat(row["validFrom"])<=date(2026,11,19)<=date.fromisoformat(row["validThrough"])
-            for rows in data["highlights"].values() for row in rows))
+        for calendar_day in (date(2026,11,19), date(2026,11,24), date(2026,11,27)):
+            for country, rows in data["highlights"].items():
+                self.assertTrue(any(date.fromisoformat(row["validFrom"])<=calendar_day<=
+                                    date.fromisoformat(row["validThrough"]) for row in rows),
+                                f"{country}: no checked cultural topic for {calendar_day}")
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
         self.assertIn("'country-highlights.json'",build)
         self.assertIn("validate_country_highlights(root)",build)
