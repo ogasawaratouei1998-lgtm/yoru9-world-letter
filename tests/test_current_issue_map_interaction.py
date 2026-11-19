@@ -53,6 +53,15 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("FR:'ヨーロッパ西部", page)
         self.assertIn("US:'北アメリカ", page)
 
+    def test_iconic_photo_priority_is_consistent_across_countries(self):
+        page = self.page
+        self.assertIn("const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({", page)
+        for landmark in ("イグアスの滝", "エッフェル塔", "ゴールデンゲートブリッジ"):
+            self.assertIn("['" + landmark + "',100]", page)
+        self.assertIn("function countryPhotoPriority(code,photo)", page)
+        self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
+        self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place)", page)
+
     def test_country_buttons_still_open_their_news(self):
         page = self.page
         self.assertIn("button.addEventListener('click',()=>openAtlasStory(item.indices[0]))", page)
