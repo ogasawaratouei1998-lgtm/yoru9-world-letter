@@ -1277,6 +1277,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .today-map-intro-photo img{aspect-ratio:4/3;max-height:none}
  .today-map-intro h4{font-size:1.55rem}
 }
+/* Use the cover's full inner width for country scenery on narrow phones.
+   A larger 6:5 photograph is still contained within the cover, without page overflow. */
+@media(max-width:520px){
+ #atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;
+  max-width:calc(100% + 24px);box-sizing:border-box;padding:12px 7px}
+ #atlasHero .today-map-intro-photo img{aspect-ratio:6/5;max-height:400px}
+}
 </style>
 </head>
 <body><div class="wrap">
