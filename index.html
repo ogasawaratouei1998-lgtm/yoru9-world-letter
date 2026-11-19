@@ -1689,7 +1689,7 @@ function positionTodayMapPins(){
   layer.insertBefore(tether,pin);
  }
 }
-window.addEventListener('resize',()=>requestAnimationFrame(positionTodayMapPins));
+if(typeof window!=='undefined')window.addEventListener('resize',()=>requestAnimationFrame(positionTodayMapPins));
 function renderTodayMap(){
  const section=$('todayMapSection');
  if(!section)return;
