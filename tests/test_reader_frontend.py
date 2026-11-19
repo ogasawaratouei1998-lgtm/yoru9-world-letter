@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v21",worker)
+        self.assertIn("yoru9-shell-v22",worker)
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
@@ -53,6 +53,32 @@ class ReaderFrontendTest(unittest.TestCase):
             self.assertIn(asset, worker)
             self.assertTrue(any(stop.get("photoAsset") == asset for stop in stops.values()))
         self.assertIn("const photos=unusedPhotos.length?unusedPhotos:approvedPhotos;", page)
+
+    def test_future_published_countries_get_a_contextual_guide_and_verified_photo_fallback(self):
+        """The next previously unseen country must not revert to a one-line intro."""
+        import json
+
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
+        catalog = json.loads((ROOT / "country-catalog.json").read_text(encoding="utf-8"))
+        stops = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(catalog), 190)
+        self.assertIn("todayMapIntroNewsBody", page)
+        self.assertIn("item.indices", page)
+        self.assertIn("todayMapIntroPhotoStatus", page)
+        self.assertIn("今日の実話", page.replace("この国から届いた実話", "今日の実話"))
+        self.assertIn("loadTravelStops().then(stops=>", page)
+        self.assertIn("travelPhotoOptions(stops)", page)
+        self.assertIn("countryKeys(stop.country).includes(currentCode)", page)
+        self.assertIn("stop.photoAsset", page)
+        self.assertIn("chosen.contextPhoto?'現地の風景｜'", page)
+        self.assertIn("requestId!==todayCountryIntroRequest", page)
+        self.assertIn("yoru9-shell-v22", worker)
+        self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)", worker)
+        # Korea is not among the seven hand-authored guides, but it already has
+        # licensed postcards. The automatic country lookup must find them.
+        self.assertTrue(any(stop.get("country") == "韓国" for stop in stops.values()))
+        self.assertTrue(any(record["code"] == "KR" for record in catalog))
 
     def test_visual_first_digests_are_local_original_art_not_news_photos(self):
         import xml.etree.ElementTree as ET
