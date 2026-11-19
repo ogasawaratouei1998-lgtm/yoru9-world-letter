@@ -399,10 +399,16 @@ class PublishingTest(unittest.TestCase):
         (self.root/'world-passport.js').write_text('/* test passport */')
         (self.root/'notification-config.json').write_text('{"enabled":false}')
         (self.root/'country-catalog.json').write_text('[{"code":"JP","name":"日本"}]', encoding='utf-8')
+        # The production build requires the separately reviewed cultural
+        # highlights and their country-specific official source allowlist.
+        # An empty registry is valid for this isolated packaging/privacy test.
+        (self.root/'country-highlights.json').write_text('{"version":1,"highlights":{}}', encoding='utf-8')
+        (self.root/'country-highlight-sources.json').write_text('{"version":1,"sources":{}}', encoding='utf-8')
         (self.root/'assets'/'world-today-illustrated.svg').write_text('<svg></svg>')
         (self.root/'travel-stops.json').write_text('{}', encoding='utf-8')
         out=build(self.root,self.root/'_site')
         self.assertTrue((out/'country-catalog.json').exists())
+        self.assertTrue((out/'country-highlights.json').is_file())
         self.assertTrue((out/'assets'/'world-today-illustrated.svg').is_file())
         self.assertFalse((out/'data'/'retrospective').exists())
         self.assertFalse((out/'data'/'monthly').exists())
