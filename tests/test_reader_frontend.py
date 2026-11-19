@@ -221,7 +221,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('class="travel-slot" data-travel-slot="0"',page)
         self.assertIn('class="travel-slot" data-travel-slot="${i}"',page)
         self.assertIn("function renderTravelSlots()",page)
-        self.assertIn("renderTravelSlots();updateFilters();",page)
+        self.assertIn("renderTravelSlots();renderTodayMap();updateFilters();",page)
         self.assertIn("class=\"travel-open\" data-travel=",page)
         self.assertIn('aria-expanded="false" aria-controls="travel-panel-',page)
         self.assertIn("panel.hidden=!opening",page)
@@ -508,7 +508,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("controls.hidden=edition.stories.length<=3||available.size<=1", page)
         self.assertIn("button.hidden=button.dataset.filter!=='all'&&!available.has(", page)
         self.assertIn(".filters[hidden],.filter[hidden]", page)
-        self.assertIn("updateSpotlight();renderTravelSlots();updateFilters();applyFilter();", page)
+        self.assertIn("updateSpotlight();renderTravelSlots();renderTodayMap();updateFilters();applyFilter();", page)
         self.assertIn("document.querySelector('.sectionhead').hidden=d.length<=1", page)
         self.assertIn("$('intro').hidden=d.length<=1", page)
 
