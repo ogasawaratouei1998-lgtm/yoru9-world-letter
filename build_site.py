@@ -114,7 +114,7 @@ def build(root, output):
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
-    for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'notification-config.json', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg',
+    for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'world-passport.js', 'notification-config.json', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg',
                      'data/current.json', 'data/archive/index.json', 'assets/world-today-illustrated.svg'):
         source = root / relative
         if not source.is_file():
