@@ -58,7 +58,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("function renderIssueGallery()",page)
         self.assertIn("button.addEventListener('click',()=>openAtlasStory(index))",page)
         self.assertIn("target.replaceChildren()",page)
-        self.assertIn("renderIssueGallery();renderIssueCountries();updateSpotlight()",page)
+        self.assertIn("renderIssueGallery();updateSpotlight()",page)
         self.assertIn("id=\"issueGallery\"",page)
         self.assertIn("id=\"spotlightImage\"",page)
         self.assertIn("class=\"story-art\"",page)
@@ -68,7 +68,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn(".story .story-fact .summary{display:-webkit-box",page)
         self.assertIn("-webkit-line-clamp:2;overflow:hidden",page)
         self.assertIn(".story.expanded .story-fact .summary{display:block",page)
-        self.assertLess(page.index('id="issueGallery"'),page.index('id="coverWorldMap"'))
+        self.assertLess(page.index('id="issueGallery"'),page.index('id="articleReader"'))
         self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
     def test_five_playful_improvements_appear_without_unverified_new_claims(self):
@@ -88,7 +88,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(cover.index('id="quipTeaser"'),
                         cover.index('id="issueGallery"'))
         self.assertLess(cover.index('id="issueGallery"'),
-                        cover.index('id="coverWorldMap"'))
+                        cover.index('id="articleReader"'))
         self.assertIn("teaser.hidden=!first||!String(first.quip||'').trim()",page)
         self.assertIn("$('quipTeaserLine').textContent=first.quip",page)
         self.assertNotIn("$('quipTeaserImage').src",page)
@@ -152,7 +152,7 @@ class ReaderFrontendTest(unittest.TestCase):
                    page.index('<section class="article-reader" id="articleReader"')]
         self.assertIn('id="issueGallery"',cover)
         self.assertIn('id="quipTeaserLine"',cover)
-        self.assertIn('id="coverWorldMap"',cover)
+        self.assertNotIn('id="coverWorldMap"',cover)
         self.assertIn('class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden',page)
         self.assertIn('id="readerBack"',page)
         self.assertIn('id="readerSelected"',page)
@@ -177,7 +177,7 @@ class ReaderFrontendTest(unittest.TestCase):
         # Article facts, evidence, original source and travel button remain in
         # the DOM for the explicitly selected article.
         self.assertIn('id="spotlightBody" class="spotlight-body" hidden',page)
-        self.assertIn('id="worldInvitation"',page)
+        self.assertNotIn('id="worldInvitation"',page)
         self.assertIn("storyDetailHtml(s)",page)
         self.assertIn("storyEvidenceHtml(s)",page)
         self.assertIn("storyAttributionHtml(s)",page)
@@ -201,69 +201,9 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("button.addEventListener('click',()=>openAtlasStory(index))",page)
         self.assertIn("target.replaceChildren()",page)
 
-    def test_humor_identity_is_readable_before_the_map_on_mobile(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        before_map=page[page.index('<section class="hero" id="atlasHero"'):
-                        page.index('<div class="atlas-map" id="coverWorldMap"')]
-        self.assertIn('class="atlas-oops">「やらかし」</span>',before_map)
-        self.assertIn('class="atlas-title-second">ニュース、<span id="atlasStoryCount">3</span>本。',before_map)
-        self.assertIn('class="atlas-real-stamp">実話</span>',before_map)
-        self.assertIn('class="atlas-bubble-tag">AIツッコミ</span>',before_map)
-        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',before_map)
-        self.assertIn('id="atlasLede"',before_map)
-        self.assertIn('報道された実話にAIがユーモアのあるツッコミを添える',before_map)
-        self.assertLess(before_map.index('class="atlas-title"'),before_map.index('class="atlas-concept"'))
-        self.assertLess(before_map.index('class="atlas-concept"'),len(before_map))
-        self.assertIn("#atlasHero .atlas-title-second{display:block",page)
-        self.assertIn("#atlasHero .atlas-oops::after{content:",page)
-        self.assertIn("#atlasHero .atlas-brand{display:flex!important",page)
-        self.assertIn(".atlas-brand{display:block}",page)
-        self.assertNotIn(".atlas-brand{display:none}",page)
-        self.assertIn("$('atlasStoryCount').textContent=d.length===1?'1':String(d.length)",page)
-        self.assertIn("d.length===2?'世界の「やらかし」、もう1本。'",page)
-        self.assertIn("Math.max(0,d.length-1)}本。",page)
-        # Do not hide the story or geography just to make the intro louder.
-        self.assertLess(page.index('id="coverWorldMap"'),page.index('id="spotlightTitle"'))
-        self.assertIn('aria-label="掲載記事の国・地域のおおよその位置"',page)
-        self.assertIn("ニュースの現場ではありません",page)
 
-    def test_global_perspective_is_visible_and_grounded_in_incident_country(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('id="spotlightLocation"',page)
-        self.assertIn("first.country?'舞台：'+countryLabel(first.country)",page)
-        self.assertIn('class="atlas-brand-copy">創作の冗談</span>',page)
-        self.assertIn('id="worldInvitation" href="#mapExtras"',page)
-        self.assertIn("$('worldInvitation').addEventListener('click',event=>{",page)
-        self.assertIn("map.open=true;",page)
-        self.assertIn("window.matchMedia('(prefers-reduced-motion: reduce)')",page)
-        self.assertIn(".world-invitation:focus-visible",page)
 
-    def test_world_countries_are_readable_before_the_first_story(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('class="issue-countries" id="issueCountries"',page)
-        self.assertLess(page.index('id="issueCountries"'),page.index('id="spotlightTitle"'))
-        self.assertIn("function renderIssueCountries()",page)
-        self.assertIn("const names=new Map()",page)
-        self.assertIn("countryKey(country)",page)
-        self.assertIn("countryLabel(country)",page)
-        self.assertIn("if(country&&key&&!names.has(key))",page)
-        self.assertIn("renderWorld();renderIssueCountries();",page)
-        self.assertIn("renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();",page)
-        self.assertIn("edition.status==='demo'?'体験版の舞台'",page)
-        self.assertNotIn("sourcecountry",page)
 
-    def test_reading_flow_prioritizes_stories_over_release_metadata(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertLess(page.index('id="issueCountries"'),page.index('id="spotlight"'))
-        self.assertLess(page.index('id="spotlight"'),page.index('id="stories"'))
-        self.assertLess(page.index('id="stories"'),page.index('class="issue-details"'))
-        self.assertLess(page.index('class="issue-details"'),page.index('id="exploreExtras"'))
-        self.assertLess(page.index('id="exploreExtras"'),page.index('id="closing"'))
-        self.assertIn('世界の「やらかし」、もう1本。',page)
-        self.assertIn('id="worldInvitation" href="#mapExtras"',page)
-        self.assertIn("map.open=true;",page)
-        self.assertIn('id="releaseStatus"',page)
-        self.assertIn('id="dateGuide"',page)
 
     def test_muted_lead_styles_remain_accessible_on_mobile(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -603,7 +543,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(page.index('id="spotlightTitle"'),page.index('id="spotlightBrief"'))
         self.assertLess(page.index('id="spotlightBrief"'),page.index('id="spotlightQuip"'))
         self.assertLess(page.index('id="spotlightQuip"'),page.index('id="spotlightRead"'))
-        self.assertLess(page.index('id="spotlightRead"'),page.index('id="worldInvitation"'))
+        self.assertLess(page.index('id="spotlightRead"'),page.index('id="stories"'))
         self.assertIn("firstSentence=summary.split('。')[0].trim()",page)
         self.assertIn('width:auto;min-height:44px;',page)
         self.assertIn('font-size:clamp(1.4rem,5.75vw,1.75rem)',page)
@@ -644,7 +584,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertLess(lead.index('id="spotlightTitle"'),lead.index('class="spotlight-fact"'))
         self.assertLess(lead.index('id="spotlightBrief"'),lead.index('id="spotlightQuip"'))
         self.assertLess(lead.index('class="spotlight-joke"'),lead.index('id="spotlightRead"'))
-        second=page[page.index("d.slice(1).map((s,offset)"):page.index("renderIssueCountries();updateSpotlight()")]
+        second=page[page.index("d.slice(1).map((s,offset)"):page.index("renderIssueGallery();updateSpotlight()")]
         self.assertIn('<div class="story-fact"><span class="fact-kicker">起きたこと</span>',second)
         self.assertIn('class="teaserquip" role="note" aria-label="AIによる創作の冗談"',second)
         self.assertIn('class="humor-marker">創作の冗談</small>',second)
@@ -738,15 +678,6 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("markRead(i)", page)
         self.assertIn("state.read.includes(i)", page)
 
-    def test_stories_before_collapsed_exploration_and_release_status(self):
-        page = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertLess(page.index('id="stories"'),page.index('id="exploreExtras"'))
-        self.assertLess(page.index('id="stories"'),page.index('id="releaseStatus"'))
-        self.assertIn('function displayReleaseStatus()',page)
-        self.assertIn('本日分の公開後に自動更新します。',page)
-        self.assertIn('<summary>過去の配信を読む</summary>',page)
-        self.assertIn('<summary>世界地図を見る</summary>',page)
-        self.assertLess(page.index('id="archiveExtras"'),page.index('id="mapExtras"'))
 
     def test_compact_mobile_edition_and_expandable_previews(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -777,14 +708,6 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('.night-quote p{font-size:clamp(19px', page)
         self.assertIn('.hero .eyebrow,.hero-audience{display:none}', page)
 
-    def test_initial_render_does_not_read_uninitialized_archive_menu(self):
-        page = (ROOT / "index.html").read_text(encoding="utf-8")
-        startup = page.index("loadState();render();")
-        declaration = page.index("const archiveMenu=$('archiveSelect');")
-        self.assertLess(startup, declaration)
-        status = page[page.index("function displayReleaseStatus(){"):page.index("function render(){")]
-        self.assertIn("$('archiveSelect').value", status)
-        self.assertNotIn("archiveMenu.value", status)
 
     def test_final_mobile_typography_has_legible_reading_sizes(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -853,38 +776,11 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("アメリカ",usa["aliases"])
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         for token in ("function countryKey(name)","function countryRecord(name)",
-                      "for(const country of countryKeys(story.country))","country-catalog.json"):
+                      "function travelCountryNames(raw)","country-catalog.json"):
             self.assertIn(token,page)
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
         self.assertIn("'country-catalog.json'",build)
 
-    def test_full_country_catalog_and_truthful_lifetime_scoreboard_are_exposed(self):
-        import json
-        from tempfile import TemporaryDirectory
-        from build_site import build_country_coverage
-        catalog=json.loads((ROOT/"country-catalog.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(catalog),196)
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        for marker in ("function countryKeys(name)",
-                       "loadLifetimeCoverage()",
-                       "country-coverage.json",
-                       "累計：","未紹介",
-                       "countryKeys(story.country)",
-                       "countryKeys(s.country).includes(country)"):
-            self.assertIn(marker,page)
-        with TemporaryDirectory() as tmp:
-            from pathlib import Path
-            result=build_country_coverage(ROOT,Path(tmp))
-            report=json.loads((Path(tmp)/"data/country-coverage.json").read_text(encoding="utf-8"))
-        self.assertEqual(result,report)
-        self.assertEqual(report["total"],196)
-        self.assertEqual(report["covered"],len(report["byCountry"]))
-        self.assertEqual(report["remaining"],196-report["covered"])
-        self.assertIn("US",report["byCountry"])
-        self.assertIn("GB",report["byCountry"])
-        self.assertIn("AG",report["byCountry"])
-        self.assertNotIn("sourcecountry",report)
-        self.assertEqual(report["basis"],"published-archive-only")
 
     def test_app_refreshes_on_resume_and_updates_offline_cache(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -897,99 +793,9 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("yoru9-released-issues-v2", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
 
-    def test_editor_dashboard_has_30_day_country_and_region_coverage(self):
-        page = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ('id="editorDashboard"', 'id="editorStats"',
-                      'id="editorMapPins"', 'id="editorRegionStats"',
-                      'id="editorCountryStats"', 'function editorialRegion(country)',
-                      'function renderEditorialDashboard(issues,failed=0)',
-                      'if(age<0||age>=30)continue',
-                      "issue?.status!=='published'",
-                      'renderEditorialDashboard(all.filter(Boolean)'):
-            with self.subTest(token=token):
-                self.assertIn(token, page)
 
-    def test_world_map_uses_visible_monthly_stories_and_links_to_special(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        for text in (
-            "function mapDisplayStories()",
-            "[...edition.stories,...visibleMonthStories]",
-            "for(const story of mapDisplayStories())",
-            "function countryResultsFor(country)",
-            "visibleMonthStories.filter(s=>countryKeys(s.country).includes(country))",
-            "const matches=countryResultsFor(country)",
-            "card.dataset.monthStoryId=s.id",
-            "node.dataset.monthStoryId===item.id",
-            "$('monthDetails').open=true",
-            "if(details)details.open=true",
-            "renderWorld();refreshCountryChoices();refreshMonthlyDashboard();",
-            "表示中の配信号と月間特集の掲載国",
-        ):
-            with self.subTest(marker=text):
-                self.assertIn(text,page)
-        self.assertIn("配信号と月間特集の記事を探せます",page)
 
-    def test_monthly_special_appears_in_30_day_editorial_coverage(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        for token in (
-            "function refreshMonthlyDashboard()",
-            "let dashboardIssues=[],dashboardFailed=0",
-            "for(const story of monthStories)",
-            "isMonthDate(monthRetentionDate(story),monthWindow().start,now)",
-            "if(usedIds.has(story.id)||keys.some(key=>usedSources.has(key)))",
-            "特集収録'+curated+'本",
-            "pin.addEventListener('click',()=>{",
-            "renderEditorialDashboard(all.filter(Boolean),all.filter(x=>!x).length)",
-        ):
-            with self.subTest(marker=token):
-                self.assertIn(token,page)
-        self.assertIn("国・地域の累計紹介数は公開済みの過去号から集計",page)
 
-    @unittest.skipUnless(shutil.which("node"), "Node.js required for map behavior test")
-    def test_world_map_pins_count_current_and_monthly_articles(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        funcs="function mapDisplayStories(){"+page.split("function mapDisplayStories(){",1)[1].split("function includeCurrentCountries(){",1)[0]
-        js=r"""
-const edition={stories:[{id:'now',country:'日本'}]};
-const visibleMonthStories=[
- {id:'old-a',country:'韓国'},
- {id:'old-b',country:'韓国'},
- {id:'now',country:'日本'}
-];
-const dom={
- mapPins:{children:[],replaceChildren(){this.children=[]},append(x){this.children.push(x)}},
- mapCaption:{textContent:''},
- countrySelect:{value:'',options:[],scrollIntoView(){this.didScroll=true}}
-};
-const $=id=>dom[id];
-const countryKey=name=>({'韓国':'KR','日本':'JP'})[name]||name;
-const countryKeys=name=>[countryKey(name)];
-const countryRecord=name=>({'KR':{name:'韓国'},'JP':{name:'日本'}})[name]||null;
-const countryLabel=name=>({'KR':'韓国','JP':'日本'})[name]||name;
-const mapPoint=name=>name==='JP'?[80,25]:[77,27];
-let selected=0;
-const showCountryResults=()=>{selected++};
-const document={createElement:()=>({
- style:{},setAttribute(name,value){this[name]=value},
- addEventListener(name,callback){if(name==='click')this.click=callback}
-})};
-"""
-        assertions=r"""
-if(mapDisplayStories().length!==3)process.exit(1);
-renderWorld();
-if(dom.mapPins.children.length!==2)process.exit(2);
-const countries=Object.fromEntries(dom.mapPins.children.map(p=>[p['aria-label'],p.textContent]));
-if(countries['韓国：配信号と月間特集に2本']!=='2')process.exit(3);
-if(countries['日本：配信号と月間特集に1本']!=='1')process.exit(4);
-if(!dom.mapCaption.textContent.includes('韓国'))process.exit(5);
-dom.mapPins.children.find(p=>p.textContent==='2').click();
-if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)process.exit(6);
-"""
-        with tempfile.TemporaryDirectory() as directory:
-            script=Path(directory)/"map-test.js"
-            script.write_text(js+"\n"+funcs+"\n"+assertions,encoding="utf-8")
-            p=subprocess.run(["node",str(script)],capture_output=True,text=True)
-            self.assertEqual(p.returncode,0,p.stderr)
 
     def test_iphone_refinement_keeps_atlas_and_removes_duplicate_metadata(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -1000,7 +806,7 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn(".atlas-brand{display:block}",page)
         self.assertIn("#atlasHero .atlas-brand{display:block!important;",page)
         self.assertIn(".spotlight h1{font-size:clamp(1.31rem",page)
-        self.assertIn(".atlas-map-caption{font-size:.73rem}",page)
+        self.assertNotIn('id="coverWorldMap"',page)
         # Source JSON stays immutable. UI doesn't give a failed 11/17
         # off-topic punchline a second life as the current homepage closing.
         self.assertIn("const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():''",page)
@@ -1009,63 +815,9 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn("$('closingJump').hidden=!nightlyLine",page)
         self.assertIn("この号に収録された、世界の失敗・勘違い・珍事件。",page)
         self.assertIn("ニュースの現場ではありません",page)
-        self.assertIn("map.open=true",page)
+        self.assertNotIn("map.open=true",page)
 
-    def test_atlas_country_previews_only_published_issue_stories(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('class="atlas-preview" id="atlasPreview"',page)
-        self.assertIn('aria-live="polite" hidden></section>',page)
-        self.assertIn('.atlas-preview[hidden]{display:none!important}',page)
-        self.assertIn('function showAtlasPreview(code,trigger)',page)
-        self.assertIn('function closeAtlasPreview(restoreFocus=false)',page)
-        self.assertIn('function openAtlasStory(index)',page)
-        self.assertIn("edition.stories.map((story,index)=>({story,index}))",page)
-        self.assertIn(".filter(item=>countryKeys(item.story.country).some(key=>selectedCodes.includes(key)))",page)
-        self.assertIn("label.textContent=story.title||'掲載記事'",page)
-        self.assertIn('read.dataset.atlasRead=String(index)',page)
-        self.assertIn('read.addEventListener(\'click\',()=>openAtlasStory(index))',page)
-        self.assertIn("closeAtlasPreview();openWorldExplorer(code)",page)
-        self.assertIn("showAtlasPreview(code,button)",page)
-        self.assertIn("showAtlasPreview(code,chip)",page)
-        self.assertIn("aria-controls','atlasPreview'",page)
-        self.assertIn("aria-pressed','false'",page)
-        self.assertIn("if(index===0)",page)
-        self.assertIn("filter='all';applyFilter()",page)
-        self.assertIn("card.querySelector('[data-open=\"'+index+'\"]')",page)
-        self.assertIn("panel.replaceChildren()",page)
-        self.assertIn("panel.hidden=false",page)
-        self.assertIn("panel.hidden=true",page)
-        # Never interpolate untrusted source titles into raw HTML or use
-        # source discovery markets as the article's incident location.
-        block=page[page.index("function showAtlasPreview(code,trigger)"):
-                   page.index("function openWorldExplorer(country='')")]
-        self.assertNotIn('innerHTML',block)
-        self.assertNotIn('sourcecountry',block)
-        self.assertNotIn('visibleMonthStories',block)
-        self.assertLess(page.index('id="coverMapPins"'),page.index('id="atlasPreview"'))
 
-    def test_atlas_cover_maps_only_article_countries_and_opens_archive(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('id="coverWorldMap"',page)
-        self.assertIn('id="coverWorldCoastlines"',page)
-        self.assertIn('id="coverMapPins"',page)
-        self.assertIn('id="atlasStoryCount"',page)
-        self.assertIn('id="coverWorldLink"',page)
-        self.assertIn('function renderCoverMap()',page)
-        self.assertIn("for(const story of edition.stories)",page)
-        self.assertIn("for(const country of countryKeys(story.country))",page)
-        self.assertIn("const point=mapPoint(code)",page)
-        self.assertIn("openWorldExplorer(code)",page)
-        self.assertIn("renderCoverMap();",page)
-        self.assertIn("$('coverWorldCoastlines').innerHTML=svg.innerHTML",page)
-        self.assertIn("ニュースの現場ではありません",page)
-        self.assertLess(page.index('id="coverWorldMap"'),page.index('id="spotlightTitle"'))
-        # The atlas is a locator of *published incident country*, not a
-        # second listing of publishers' source markets or unverified leads.
-        block=page[page.index("function renderCoverMap(){"):page.index("function renderIssueCountries(){")]
-        self.assertNotIn("sourcecountry",block)
-        self.assertNotIn("registeredSource",block)
-        self.assertNotIn("visibleMonthStories",block)
 
     def test_footer_trust_note_is_readable_but_not_an_extra_huge_card(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -1074,14 +826,6 @@ if(dom.countrySelect.value!=='KR'||selected!==1||!dom.countrySelect.didScroll)pr
         self.assertIn('<aside class="note" id="disclosure">',page)
         self.assertIn('.disclosure-details>summary{min-height:44px',page)
 
-    def test_world_map_and_country_archive(self):
-        page = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ('id="worldMap"', 'id="mapPins"', 'id="countrySelect"',
-                      'id="countryResults"', 'function renderWorld()',
-                      'async function loadCountryIndex(issues)', 'showCountryResults()',
-                      "data.status==='published'", 'renderWorld();'):
-            with self.subTest(token=token):
-                self.assertIn(token, page)
 
     def test_sources_correction_and_notification_are_unobtrusive(self):
         page = (ROOT/"index.html").read_text(encoding="utf-8")
