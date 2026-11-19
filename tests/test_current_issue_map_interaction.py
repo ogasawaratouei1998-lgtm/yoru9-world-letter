@@ -141,7 +141,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
         photo_keys = re.findall(r"photoKey:'([^']+)'", game)
         labels = re.findall(r"photoLabel:'([^']+)'", game)
-        self.assertEqual(len(photo_keys), 6, "One authentic answer image per curated quiz")
+        self.assertEqual(len(photo_keys), 12, "Each available answer image must be vetted and correctly attributed")
         self.assertEqual(len(labels), 6)
         self.assertEqual(len(set(photo_keys)), 6)
         covers = {
@@ -163,7 +163,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
                 self.assertTrue(photo["author"])
                 self.assertTrue(photo["photoCaption"])
                 self.assertIn(photo["photoAsset"], worker,
-                    "All six correct answer pictures should be cached offline")
+                    "All answer images must be cached offline")
         self.assertTrue(catalog["ar-mate-quiz-image"].get("quizOnly"))
         self.assertTrue(catalog["fr-mediterranean-quiz-image"].get("quizOnly"))
         self.assertIn("stop.quizOnly===true", self.page,
