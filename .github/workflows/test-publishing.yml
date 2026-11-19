@@ -20,6 +20,7 @@ on:
       - 'data/news-source-registry.json'
       - 'news_sources.py'
       - 'tests/test_news_sources.py'
+      - 'country-highlights.json'
       - 'travel-stops.json'
       - 'prepare_editorial.py'
       - 'suggest_ai_quips.py'
