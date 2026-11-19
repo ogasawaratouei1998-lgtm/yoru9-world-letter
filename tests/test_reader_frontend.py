@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v14",worker)
+        self.assertIn("yoru9-shell-v15",worker)
 
     def test_visual_first_digests_are_local_original_art_not_news_photos(self):
         import xml.etree.ElementTree as ET
