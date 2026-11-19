@@ -508,5 +508,37 @@
     "photoPage": "https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg",
     "photoAsset": "assets/travel/golden-gate-sunset-cover.jpg",
     "coverOnly": true
+  },
+  "ar-mate-quiz-image": {
+    "country": "アルゼンチン",
+    "quizOnly": true,
+    "place": "伝統的なマテ茶の器とボンビージャ",
+    "region": "アルゼンチンの飲料文化",
+    "latitude": -34.6037,
+    "longitude": -58.3816,
+    "note": "マテ茶に使う器、金属のストロー（ボンビージャ）、茶葉。人物の交流場面を撮影したものではありません。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg/500px-Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg",
+    "photoAsset": "assets/travel/argentina-mate-quiz.jpg",
+    "photoCaption": "実物のマテ茶セット：器・ボンビージャ・茶葉（交流の場面ではありません）",
+    "author": "Siarhei V / Siarhei Besarab",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "fr-mediterranean-quiz-image": {
+    "country": "フランス",
+    "quizOnly": true,
+    "place": "ニースの地中海・天使の湾",
+    "region": "南フランス・コートダジュール",
+    "latitude": 43.695,
+    "longitude": 7.266,
+    "note": "ニースの城跡公園側から見た地中海とプロムナード・デ・ザングレ。海と街並みを一望できる。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Baie_des_Anges_and_Promenade_des_Anglais_Nice_2026.JPG/500px-Baie_des_Anges_and_Promenade_des_Anglais_Nice_2026.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Baie_des_Anges_and_Promenade_des_Anglais_Nice_2026.JPG",
+    "photoAsset": "assets/travel/france-nice-mediterranean-quiz.jpg",
+    "photoCaption": "南フランス・ニースの地中海と天使の湾（2026年撮影）",
+    "author": "Mike is Michi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   }
 }
