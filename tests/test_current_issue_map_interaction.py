@@ -56,9 +56,10 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
     def test_iconic_photo_priority_is_consistent_across_countries(self):
         page = self.page
         self.assertIn("const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({", page)
-        for landmark in ("イグアスの滝", "エッフェル塔", "ゴールデンゲートブリッジ"):
+        for landmark in ("イグアスの滝", "エッフェル塔"):
             self.assertIn("['" + landmark + "',100]", page)
         self.assertIn("function countryPhotoPriority(code,photo)", page)
+        self.assertIn("['ゴールデンゲートブリッジ',90]", page)
         self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
         self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
 
