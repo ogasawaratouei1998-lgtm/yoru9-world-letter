@@ -6,7 +6,10 @@ import fs from 'node:fs/promises';
 
 const url='https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/';
 await fs.mkdir('mobile-screenshots',{recursive:true});
-const browser=await chromium.launch({headless:true});
+// GitHub's Ubuntu 24.04 runner already ships Google Chrome. Use that in CI
+// instead of downloading a second browser and running a slow APT setup.
+// Local developers continue to use Playwright's pinned Chromium.
+const browser=await chromium.launch({headless:true,...(process.env.CI?{channel:'chrome'}:{})});
 try{
  for(const viewport of [{width:320,height:667,name:'narrow'},{width:375,height:667,name:'small'},{width:393,height:852,name:'standard'}]){
   const context=await browser.newContext({
