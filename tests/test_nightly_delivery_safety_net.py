@@ -9,10 +9,11 @@ class NightlyDeliverySafetyNetTest(unittest.TestCase):
     def test_publisher_has_timezone_schedule_and_separate_utc_fallback(self):
         workflow=(ROOT/'.github/workflows/publish-nightly.yml').read_text(encoding='utf-8')
         self.assertIn("timezone: 'Asia/Tokyo'",workflow)
-        # UTC slots include late 21:53 / 22:23 recovery checks, not only
-        # the original 21:13 / 21:43 and 22:13 schedule.
-        self.assertIn("cron: '13,43,53 12 * * *'",workflow)
-        self.assertIn("cron: '13,23 13 * * *'",workflow)
+        # Dedicated UTC recovery windows cover the usual and delayed 21:53 / 22:23 slots.
+        self.assertIn("cron: '13,43 12 * * *'",workflow)
+        self.assertIn("cron: '13 13 * * *'",workflow)
+        self.assertIn("cron: '53 12 * * *'",workflow)
+        self.assertIn("cron: '23 13 * * *'",workflow)
         self.assertIn("if [ -f \"data/archive/$DAY.json\" ]; then",workflow)
         self.assertIn('python publish_approved.py',workflow)
 
