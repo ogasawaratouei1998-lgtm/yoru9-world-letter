@@ -41,7 +41,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             'id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden',
             "function todayCountryIntro(item)",
             "countryRecord(item.code)?.region",
-            "$('todayMapIntroBody').textContent=todayCountryIntro(item)",
+            "$('todayMapIntroBody').textContent=guide?todayCountryIntro(item)+' '+guide.body:todayCountryIntro(item)",
             "$('todayMapIntro').scrollIntoView({block:'nearest'})",
             "function hideTodayCountryIntro()",
             "read.dataset.storyIndex=String(item.indices[0])",
