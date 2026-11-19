@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v23",worker)
+        self.assertIn("yoru9-shell-v24",worker)
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
@@ -79,7 +79,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertNotIn("story.summary", portrait)
         self.assertNotIn("todayMapIntroNewsBody", page)
         self.assertIn("TODAY_COUNTRY_PHOTOS[currentCode]",portrait)
-        self.assertIn("yoru9-shell-v23",worker)
+        self.assertIn("yoru9-shell-v24",worker)
         self.assertIn("'country-highlights.json'",worker)
         self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)",worker)
 
@@ -242,38 +242,47 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("safeUrl(first.sourceUrl)",page)
         self.assertIn("updateQuipTeaser();",page)
 
-    def test_gallery_is_the_only_default_news_index_and_detail_is_on_demand(self):
+    def test_gallery_opens_one_independent_story_screen_and_supports_history(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         cover=page[page.index('<section class="hero" id="atlasHero"'):
                    page.index('<section class="article-reader" id="articleReader"')]
         self.assertIn('id="issueGallery"',cover)
         self.assertIn('id="quipTeaserLine"',cover)
-        self.assertNotIn('id="coverWorldMap"',cover)
         self.assertIn('class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden',page)
-        self.assertIn('id="readerBack"',page)
-        self.assertIn('id="readerSelected"',page)
-        self.assertIn("button.setAttribute('aria-controls','articleReader')",page)
-        self.assertIn("button.setAttribute('aria-expanded','false')",page)
-        self.assertIn("$('articleReader').hidden=true;",page)
-        self.assertIn("const stage=$('articleReader');",page)
-        self.assertIn("stage.hidden=false;",page)
-        self.assertIn("stage.hidden=true;",page)
-        self.assertIn("card.hidden=Number(card.dataset.storyIndex)!==index;",page)
-        self.assertIn("$('spotlight').hidden=index!==0;",page)
-        self.assertIn("$('stories').hidden=index===0;",page)
-        self.assertIn("document.querySelector('.sectionhead').hidden=true;",page)
-        self.assertIn("document.querySelector('.filters').hidden=true;",page)
-        self.assertIn("$('intro').hidden=true;",page)
-        self.assertIn("if(index===0)$('spotlightAward').textContent='このニュースの詳しい話';",page)
-        self.assertIn("$('readerBack').addEventListener('click',closeArticleReader);",page)
+        for token in ('id="readerBack"','id="readerSelected"',
+                      'id="readerPrev"','id="readerNext"',
+                      'id="spotlightBody" class="spotlight-body" hidden',
+                      'id="spotlightTitle"'):
+            self.assertIn(token,page)
+        for token in (
+            "button.setAttribute('aria-controls','articleReader')",
+            "button.addEventListener('click',()=>openAtlasStory(index))",
+            "function openAtlasStory(index,fromRoute=false)",
+            "function closeArticleReader(fromRoute=false)",
+            "function articleIndexFromRoute()",
+            "window.addEventListener('popstate',syncArticleRoute)",
+            "window.addEventListener('hashchange',syncArticleRoute)",
+            "history.pushState({newsArticleId:edition.stories[index].id}",
+            "history.replaceState(null,'','#issueGallery')",
+            "document.body.classList.add('news-detail-mode')",
+            "document.body.classList.remove('news-detail-mode')",
+            "$('stories').hidden=true;",
+            "selectedArticleIndex=index;",
+            "const first=Array.isArray(edition.stories)?edition.stories[selectedArticleIndex]:null;",
+            "if(travel)travel.dataset.travelSlot=String(index);",
+            "markRead(index);",
+            "renderIssueGallery();updateSpotlight();renderTravelSlots();renderTodayMap();updateFilters();applyFilter();update();observeStories();syncArticleRoute();"
+        ):
+            self.assertIn(token,page)
+        # With an article open, map/gallery/other stories must be completely
+        # absent from layout and accessibility, not just further down the page.
+        self.assertIn("body.news-detail-mode main > :not(#articleReader):not(#offlineNotice){display:none!important}",page)
+        self.assertIn("body.news-detail-mode #articleReader #stories,",page)
+        self.assertIn("body.news-detail-mode #articleReader .spotlight-visual{display:block}",page)
+        self.assertIn("body.news-detail-mode #articleReader .article-reader-toolbar{",page)
+        self.assertIn("position:sticky;top:env(safe-area-inset-top,0px)",page)
+        self.assertIn("body.news-detail-mode #articleReader .spotlight{display:block",page)
         self.assertIn("#articleReader[hidden]{display:none!important}",page)
-        self.assertIn("#articleReader .spotlight-visual,#articleReader .story-visual{display:none}",page)
-        self.assertIn("#articleReader #stories .story[hidden]{display:none!important}",page)
-        self.assertIn('<a class="skip-link" href="#issueGallery">ニュースを選ぶ</a>',page)
-        # Article facts, evidence, original source and travel button remain in
-        # the DOM for the explicitly selected article.
-        self.assertIn('id="spotlightBody" class="spotlight-body" hidden',page)
-        self.assertNotIn('id="worldInvitation"',page)
         self.assertIn("storyDetailHtml(s)",page)
         self.assertIn("storyEvidenceHtml(s)",page)
         self.assertIn("storyAttributionHtml(s)",page)
@@ -604,7 +613,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody"', page)
         self.assertIn("body.innerHTML=", page)
         self.assertIn("storyDetailHtml(first)", page)
-        self.assertIn("if(show){markRead(0);panel.scrollIntoView(", page)
+        self.assertIn("if(show){markRead(selectedArticleIndex);panel.scrollIntoView(", page)
         self.assertIn("d.slice(1).map((s,offset)", page)
         self.assertNotIn('.story:first-child{', page)
         self.assertNotIn('今夜の１本目', page)
