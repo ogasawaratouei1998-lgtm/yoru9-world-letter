@@ -25,7 +25,13 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v16",worker)
+        self.assertIn("yoru9-shell-v17",worker)
+        for photo in (
+            "assets/travel/iguazu-rainbow-cover.jpg",
+            "assets/travel/mont-saint-michel-sunset-cover.jpg",
+            "assets/travel/golden-gate-sunset-cover.jpg",
+        ):
+            self.assertIn(photo, worker, "Country photo must survive offline PWA visits")
 
     def test_visual_first_digests_are_local_original_art_not_news_photos(self):
         import xml.etree.ElementTree as ET
