@@ -12,6 +12,15 @@
         "checkedOn": "2026-11-19",
         "sourceName": "英国政府観光局 VisitBritain",
         "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      },
+      {
+        "title": "ロンドンの冬、ハイドパークが光の広場に",
+        "body": "11月19日から2027年1月3日まで、ロンドンのハイドパークで冬のイベント「Winter Wonderland」が予定されています。市場や観覧車など、冬の街の楽しみが集まります。",
+        "validFrom": "2026-11-23",
+        "validThrough": "2026-12-15",
+        "checkedOn": "2026-11-19",
+        "sourceName": "英国政府観光局 VisitBritain",
+        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
       }
     ],
     "ES": [
@@ -23,6 +32,15 @@
         "checkedOn": "2026-11-19",
         "sourceName": "マドリード市公式観光案内",
         "sourceUrl": "https://www.esmadrid.com/en/whats-on/autumn-festival"
+      },
+      {
+        "title": "マドリードで骨董品とアートの見本市",
+        "body": "11月21〜29日、マドリードのIFEMAで「FERIARTE」が開催予定。アンティークや美術作品が集まり、スペインのアートとコレクション文化に触れられる催しです。",
+        "validFrom": "2026-11-27",
+        "validThrough": "2026-11-29",
+        "checkedOn": "2026-11-19",
+        "sourceName": "マドリード市公式観光案内",
+        "sourceUrl": "https://www.esmadrid.com/en/whats-on/feriarte-ifema-madrid"
       }
     ],
     "JP": [
@@ -34,6 +52,15 @@
         "checkedOn": "2026-11-19",
         "sourceName": "福岡県公式観光サイト VISIT FUKUOKA",
         "sourceUrl": "https://www.crossroadfukuoka.jp/en/articles/november"
+      },
+      {
+        "title": "久留米で秋バラと紅葉の彩り",
+        "body": "福岡県久留米市の石橋文化センターでは、10月23日〜12月6日に秋バラと紅葉を楽しむ催しが案内されています。庭園と季節の文化に親しむ時期です。",
+        "validFrom": "2026-11-23",
+        "validThrough": "2026-12-06",
+        "checkedOn": "2026-11-19",
+        "sourceName": "福岡県公式観光サイト VISIT FUKUOKA",
+        "sourceUrl": "https://www.crossroadfukuoka.jp/en/articles/november"
       }
     ],
     "NZ": [
@@ -42,6 +69,15 @@
         "body": "11月21〜22日、ダニーデンでロイヤル・ニュージーランド・バレエの『眠れる森の美女』が上演予定です。初夏を迎える街で、舞台芸術も楽しみのひとつに。",
         "validFrom": "2026-11-19",
         "validThrough": "2026-11-22",
+        "checkedOn": "2026-11-19",
+        "sourceName": "ダニーデン公式観光案内",
+        "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      },
+      {
+        "title": "ダニーデンで食と音楽の週末",
+        "body": "11月27〜28日にダニーデンで地元の食やライブ音楽などを楽しむフェスティバルが予定されています。南島の街の食文化と音楽シーンに触れる催しです。",
+        "validFrom": "2026-11-23",
+        "validThrough": "2026-11-28",
         "checkedOn": "2026-11-19",
         "sourceName": "ダニーデン公式観光案内",
         "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
