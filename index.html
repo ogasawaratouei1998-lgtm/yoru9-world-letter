@@ -1726,6 +1726,7 @@ $('spotlightRead').addEventListener('click',()=>{
 let travelStopsPromise=null;
 let travelExplainerShown=false;
 // Reserve one different postcard per article in the current reading session.
+const travelSelections=new Map();
 const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
  AR:[['イグアスの滝',100],['カサ・ロサダ',85]],
  FR:[['エッフェル塔',100],['モン・サン＝ミシェル',70]],
@@ -1737,7 +1738,7 @@ function countryPhotoPriority(code,photo){
  const match=rules.find(([landmark])=>photo.place.includes(landmark));
  return match?match[1]:0;
 }
-const travelSelections=new Map();
+
 const travelUsedPhotos=new Set();
 const travelFailedPhotos=new Set();
 // Rotate within each verified country, not just within one page visit. A
