@@ -29,9 +29,6 @@ on:
       - 'service-worker.js'
       - 'tests/**'
       - 'data/approved/*.json'
-      - 'data/retrospective/**'
-      - 'data/monthly/**'
-      - 'monthly_research.py'
       - '.github/workflows/test-publishing.yml'
   workflow_dispatch:
 

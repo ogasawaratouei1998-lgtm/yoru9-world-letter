@@ -33,6 +33,8 @@ try{
     freshDesign=await page.locator('#coverWorldMap').count()===0&&
      await page.locator('#archiveExtras').count()===0&&
      await page.locator('#mapExtras').count()===0&&
+     await page.locator('#todayMapSection').count()===1&&
+     await page.locator('#monthRetrospective').count()===0&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
      await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
      await page.locator('#quipTeaserLine').count()===1&&
@@ -348,45 +350,46 @@ try{
    }
    await closing.scrollIntoViewIfNeeded();
    await page.screenshot({path:'mobile-screenshots/closing-'+viewport.name+'.png',animations:'disabled'});
-   const article=page.locator('#monthCards .month-story').first();
-   await article.waitFor({state:'attached',timeout:30000});
-   const shelf=page.locator('#monthRetrospective > details');
-   assert.equal(await shelf.getAttribute('open'),null,'monthly shelf begins closed');
-   await shelf.locator('summary').first().click();
-   const details=article.locator('details').first();
-   await details.locator('summary').first().click();
-   const travelButton=article.locator('[data-month-travel]').first();
-   const travelPanel=article.locator('.travel-panel').first();
+   // Only the current edition is mapped: real country centroids over a
+   // pastel illustrated map; neither monthly shelf nor past issue map exists.
+   const today=page.locator('#todayMapSection');
+   assert.equal(await today.count(),1,'current-edition map is visible');
+   assert.equal(await page.locator('#monthRetrospective').count(),0,
+    'monthly shelf is fully removed');
+   await page.waitForFunction(()=>document.querySelectorAll('#todayMapLegend .today-map-country').length>0,
+    null,{timeout:30000});
+   const mapArt=today.locator('.today-map-art');
+   await mapArt.evaluate(img=>img.decode());
+   assert.equal(await mapArt.evaluate(img=>img.naturalWidth>0),true,
+    'bundled map artwork must load on mobile');
+   const pins=today.locator('.today-map-pin');
+   const countryButtons=today.locator('.today-map-country');
+   assert.ok(await pins.count()>=1,'published countries have visible map pins');
+   assert.equal(await pins.count(),await countryButtons.count(),
+    'one country pin corresponds to one named country button');
+   assert.ok((await today.locator('#todayMapNote').textContent()).includes('ニュースの発生現場'),
+    'centroid pins are not misrepresented as news incident locations');
+   await today.screenshot({path:'mobile-screenshots/today-map-'+viewport.name+'.png',
+    animations:'disabled'});
+   await countryButtons.first().click();
+   assert.equal(await articleReader.isVisible(),true,
+    'country label opens one of the actual current news articles');
+   await page.locator('#readerBack').click();
+   await gallery.first().click();
+   const travelButton=page.locator('#spotlight .travel-open');
    assert.equal(await travelButton.getAttribute('aria-expanded'),'false',
-    'monthly travel remains closed when an article opens');
-   assert.equal(await travelPanel.isHidden(),true,
-    'travel photos are opt-in rather than auto-shown');
+    'today article travel is optional and initially closed');
    await travelButton.click();
-   assert.equal(await travelButton.getAttribute('aria-expanded'),'true',
-    'tapping the travel button opens its postcard');
    await page.waitForFunction(()=>{
-    const img=document.querySelector('#monthCards .month-story .travel-photo');
+    const img=document.querySelector('#spotlight .travel-photo');
     return !!img&&img.complete&&img.naturalWidth>0;
    },null,{timeout:30000});
-   const postcard=article.locator('.travel-card');
-   assert.equal(await postcard.count(),1,'one optional postcard for selected story');
-   assert.ok((await postcard.locator('.travel-context-story').textContent()).includes('記事の舞台（国）'),
-    'article-country geography is labeled separately');
-   assert.ok((await postcard.locator('.travel-context-destination').textContent()).includes('旅先'),
-    'tourist destination has a separate country label');
+   const postcard=page.locator('#spotlight .travel-card');
+   assert.equal(await postcard.count(),1,'today article has its travel photo');
    assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
-    'every photograph is explicitly distinguished from incident footage');
-   assert.ok((await postcard.locator('.travel-links a').first().getAttribute('href')).includes('openstreetmap.org'),
-    'map opens the destination rather than inventing news-site coordinates');
-   const photo=article.locator('.travel-photo');
-   const photoSource=await photo.getAttribute('src');
-   assert.ok(photoSource?.includes('assets/travel/'),'must use bundled photo');
-   await photo.scrollIntoViewIfNeeded();
-   await page.screenshot({path:'mobile-screenshots/monthly-'+viewport.name+'.png',animations:'disabled'});
-   await details.locator('summary').first().click();
-   assert.equal(await details.getAttribute('open'),null,'article collapses');
-   await details.locator('summary').first().click();
-   assert.equal(await photo.getAttribute('src'),photoSource,'reopening keeps same photo');
+    'tourist photography is labeled separately from actual reportage');
+   const photoSource=await postcard.locator('.travel-photo').getAttribute('src');
+   assert.ok(photoSource?.includes('assets/travel/'),'travel photo is locally bundled');
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<2,'no horizontal overflow: '+overflow+'px');
    assert.deepEqual(errors,[],'no JavaScript uncaught errors');

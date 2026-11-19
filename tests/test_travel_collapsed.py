@@ -1,4 +1,4 @@
-"""Regression checks for opt-in travel panels on the nightly and monthly reader."""
+"""Regression checks for opt-in travel panels on the nightly reader."""
 from pathlib import Path
 import unittest
 
@@ -12,10 +12,9 @@ class TravelDefaultCollapsedTests(unittest.TestCase):
         self.assertIn('class="travel-panel" id="travel-panel-', HTML)
         self.assertIn("""'" hidden></div>';""", HTML)
 
-    def test_monthly_story_travel_starts_closed(self):
-        self.assertIn('aria-expanded="false" aria-controls="month-travel-', HTML)
-        self.assertIn('class="travel-panel" id="month-travel-', HTML)
-        self.assertIn("INITIAL_MONTHLY_COLLAPSED", HTML)
+    def test_retired_monthly_travel_does_not_exist(self):
+        self.assertNotIn("data-month-travel",HTML)
+        self.assertNotIn("visibleMonthStories",HTML)
 
     def test_reopening_ios_app_closes_all_optional_travel(self):
         self.assertIn("function closeOptionalTravelPanels()", HTML)
@@ -24,7 +23,7 @@ class TravelDefaultCollapsedTests(unittest.TestCase):
         self.assertIn("control.setAttribute('aria-expanded','false');", HTML)
         self.assertIn("closeOptionalTravelPanels();\n if(!navigator.onLine)return;", HTML)
 
-    def test_monthly_article_does_not_programmatically_expand_travel(self):
+    def test_daily_article_does_not_programmatically_expand_travel(self):
         self.assertNotIn("if(button&&button.getAttribute('aria-expanded')==='false')button.click();", HTML)
 
 

@@ -518,13 +518,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         from pathlib import Path
         root=Path(__file__).resolve().parents[1]
         preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
-        monthly=(root/".github/workflows/monthly-editorial.yml").read_text(encoding="utf-8")
         nightly=(root/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
-        for name,text in (("preview",preview),("monthly",monthly)):
-            with self.subTest(workflow=name):
-                self.assertNotIn("\n  push:\n",text)
-                self.assertIn("workflow_dispatch:",text)
-                self.assertIn("schedule:",text)
+        self.assertNotIn("\n  push:\n",preview)
+        self.assertIn("workflow_dispatch:",preview)
+        self.assertIn("schedule:",preview)
+        self.assertFalse((root/".github/workflows/monthly-editorial.yml").exists())
         self.assertIn("workflow_run:",nightly)
         self.assertIn("github.event.workflow_run.event != 'push'",nightly)
         self.assertIn("- 'data/approved/*.json'",nightly)

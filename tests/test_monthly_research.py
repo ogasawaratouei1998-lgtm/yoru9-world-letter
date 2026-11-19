@@ -330,21 +330,18 @@ class MonthlyResearchTest(unittest.TestCase):
             self.assertFalse(m.plausible_new(sample_story(),known))
             self.assertIn(sample_story()["eventKey"],known[3])
 
-    def test_monthly_reader_and_public_bundle_only_load_approved_records(self):
+    def test_monthly_research_is_historical_only_and_not_shipped_to_reader(self):
         root=Path(__file__).resolve().parents[1]
         html=(root/"index.html").read_text(encoding="utf-8")
         build=(root/"build_site.py").read_text(encoding="utf-8")
         worker=(root/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("async function loadMonthlyVerified()",html)
-        self.assertIn("source-quality-two-stage-AI",html)
-        self.assertIn("s.sourceBasis==='original-report'",html)
-        self.assertIn("...monthRollingStories,...monthPublishedStories,...monthStories",html)
-        self.assertIn("loadMonthlyVerified();",html)
-        self.assertIn("data/monthly/index.json",build)
-        self.assertIn("validate_story(story, story.get('verificationUrls', []), day)",build)
-        self.assertIn("data/monthly/index.json",worker)
-        self.assertIn("data/monthly/",worker)
-        self.assertIn("published-monthly-index",json.loads((root/"data/monthly/index.json").read_text())["status"])
+        for content in (html,build,worker):
+            self.assertNotIn("data/monthly/index.json",content)
+            self.assertNotIn("data/retrospective/2026-11-17.json",content)
+        self.assertNotIn("loadMonthlyVerified()",html)
+        self.assertFalse((root/".github/workflows/monthly-editorial.yml").exists())
+        self.assertIn("published-monthly-index",
+            json.loads((root/"data/monthly/index.json").read_text())["status"])
 
 
 if __name__ == "__main__":

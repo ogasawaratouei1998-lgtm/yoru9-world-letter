@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v15",worker)
+        self.assertIn("yoru9-shell-v16",worker)
 
     def test_visual_first_digests_are_local_original_art_not_news_photos(self):
         import xml.etree.ElementTree as ET
@@ -221,7 +221,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('class="travel-slot" data-travel-slot="0"',page)
         self.assertIn('class="travel-slot" data-travel-slot="${i}"',page)
         self.assertIn("function renderTravelSlots()",page)
-        self.assertIn("renderTravelSlots();updateFilters();",page)
+        self.assertIn("renderTravelSlots();renderTodayMap();updateFilters();",page)
         self.assertIn("class=\"travel-open\" data-travel=",page)
         self.assertIn('aria-expanded="false" aria-controls="travel-panel-',page)
         self.assertIn("panel.hidden=!opening",page)
@@ -230,7 +230,7 @@ class ReaderFrontendTest(unittest.TestCase):
     def test_photos_load_only_after_explicit_travel_click(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn("document.querySelector('main').addEventListener('click',async event=>{",page)
-        self.assertIn("event.target.closest('[data-travel],[data-month-travel]')",page)
+        self.assertIn("event.target.closest('[data-travel]')",page)
         self.assertIn("const stops=await loadTravelStops()",page)
         self.assertIn("fetch('./travel-stops.json',{cache:'no-store'})",page)
         self.assertIn('loading="lazy" decoding="async"',page)
@@ -245,7 +245,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("(showIntro?'<p class=\"travel-disclaimer\">",page)
         self.assertNotIn("観光案内ではなく、実際の場所へ視線を向ける短い寄り道",page)
         self.assertIn("if(!img.dataset.remoteTried&&img.dataset.remotePhoto)",page)
-        self.assertIn("(!isMonth&&edition.stories[i]!==story)",page)
+        self.assertIn("edition.stories[i]!==story",page)
         self.assertIn("img.addEventListener('error',()=>{",page)
         self.assertNotIn("<audio autoplay",page)
         self.assertNotIn("<video autoplay",page)
@@ -283,7 +283,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertEqual("東京・浅草寺",payload["japan-country-postcard"]["place"])
         self.assertEqual("天安・独立記念館",payload["cheonan-painters-coffee-rescue-2026"]["place"])
         self.assertEqual("エディンバラ城",payload["flight-wrong-country"]["place"])
-        self.assertIn("(!isMonth&&edition.stories[i]!==story)",(ROOT/"index.html").read_text(encoding="utf-8"))
+        self.assertIn("edition.stories[i]!==story",(ROOT/"index.html").read_text(encoding="utf-8"))
         self.assertIn("travelCountryNames(story.country).includes(stop.country)",(ROOT/"index.html").read_text(encoding="utf-8"))
 
     def test_all_november_18_reissued_stories_have_valid_destination_photo(self):
@@ -376,107 +376,6 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("bundle_travel_photos(root, output)",build)
         self.assertIn("data-remote-photo=", (ROOT/"index.html").read_text(encoding="utf-8"))
 
-    def test_monthly_special_is_separate_from_the_nightly_issue(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('id="monthRetrospective" hidden',page)
-        self.assertIn('id="monthCards"',page)
-        self.assertLess(page.index('id="stories"'),page.index('id="monthRetrospective"'))
-        self.assertLess(page.index('id="monthRetrospective"'),page.index('id="releaseStatus"'))
-        self.assertIn("function validMonthStory(s)",page)
-        self.assertIn("function renderMonthRetrospective()",page)
-        self.assertIn("function loadMonthRetrospective()",page)
-        self.assertIn("loadState();render();loadMonthRetrospective();",page)
-        self.assertIn("isMonthDate(monthRetentionDate(s),start,end)",page)
-        self.assertIn("new Set(edition.stories.map(s=>s.id))",page)
-        self.assertIn("if(seen.has(s.id)||keys.some(key=>seenSources.has(key)))return false",page)
-        self.assertIn("過去に報道された実話です。今日起きた出来事ではありません。",page)
-        self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"build_site.py").read_text(encoding="utf-8"))
-        self.assertIn("data/retrospective/2026-11-17.json",(ROOT/"service-worker.js").read_text(encoding="utf-8"))
-
-    def test_monthly_expanders_explicitly_show_open_and_close(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        for text in ('month-closed-label','month-open-label',
-                     'month-story-closed','month-story-opened',
-                     'month-chevron','month-story-chevron','記事を開く','記事を閉じる'):
-            self.assertIn(text,page)
-        self.assertIn('.month-story>details[open] .month-story-opened',page)
-        self.assertIn('.month-retrospective>details[open] .month-open-label',page)
-        self.assertIn('transform:rotate(180deg)',page)
-        self.assertIn(':focus-visible',page)
-        self.assertIn('prefers-reduced-motion:reduce',page)
-
-    def test_monthly_collection_updates_only_from_published_archives(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('function monthWindow()',page)
-        self.assertIn('now.getTime()-29*86400000',page)
-        self.assertIn('async function updateMonthFromArchives(issues)',page)
-        self.assertIn("issue.status!=='published'",page)
-        self.assertIn('issue.editionDate!==item.date',page)
-        self.assertIn("item.stories.map(s=>({...s,monthOrigin:'published',publishedAt:item.editionDate}))",page)
-        self.assertIn('updateMonthFromArchives(m.issues)',page)
-        self.assertIn('...monthPublishedStories,...monthStories',page)
-        self.assertIn('if(seen.has(s.id)||keys.some(key=>seenSources.has(key)))return false',page)
-        self.assertIn('配信・特集収録から30日 · ',page)
-        self.assertIn('30日を過ぎるとこの一覧から外れます',page)
-        self.assertIn("cache:'no-store'",page)
-
-
-    def test_monthly_trip_uses_shared_postcard_component(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn('data-month-travel=',page)
-        self.assertIn('id="month-travel-',page)
-        self.assertIn("control.nextElementSibling",page)
-        self.assertIn("visibleMonthStories.find(s=>s.id===control.dataset.monthTravel)",page)
-        self.assertIn("panel.innerHTML=travelPostcardHtml(story,stop,firstIntro)",page)
-        self.assertIn("const stops=await loadTravelStops()",page)
-        self.assertIn("control.firstChild.textContent=opening?'小旅行を閉じる ':",page)
-        self.assertIn("ニュースの余韻で、30秒の小旅行",page)
-        self.assertNotIn("ニュースとは別の旅先へ",page)
-        self.assertNotIn("この場所に30秒だけ寄り道",page)
-        self.assertNotIn("この国へ30秒だけ寄り道",page)
-        self.assertIn("(isMonth&&!visibleMonthStories.includes(story))",page)
-        self.assertIn('aria-expanded="false"',page)
-
-    def test_monthly_travel_requires_explicit_reader_action(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn("addEventListener('toggle',event=>{",page)
-        self.assertIn("details.matches?.('.month-story > details')",page)
-        self.assertNotIn("if(button&&button.getAttribute('aria-expanded')==='false')button.click()",page)
-        self.assertIn('aria-expanded="false" aria-controls="month-travel-',page)
-        self.assertIn("document.querySelector('main').addEventListener('click',async event=>{",page)
-        self.assertIn("const control=event.target.closest('[data-travel],[data-month-travel]')",page)
-        self.assertIn("const next=chooseTravelPhoto(story,stops)",page)
-        self.assertIn("travelFailedPhotos.add(stop.photoAsset)",page)
-
-    def test_monthly_countries_have_photographic_coverage(self):
-        import json
-        stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
-        curated=json.loads((ROOT/"data/retrospective/2026-11-17.json").read_text(encoding="utf-8"))
-        needed={story["country"] for story in curated["stories"]}
-        covered={stop["country"] for stop in stops.values() if stop.get("countryOnly")}
-        self.assertTrue(needed.issubset(covered),needed-covered)
-        photos={stop["photoAsset"] for stop in stops.values()}
-        self.assertGreaterEqual(len(photos),len(curated["stories"]))
-        self.assertEqual(len(photos),len({stop["photo"] for stop in stops.values()}))
-
-    def test_monthly_postcard_appears_before_detailed_article_and_disclaimer_once(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        month=page.split("function renderMonthRetrospective(){",1)[1].split(
-            "async function updateMonthFromArchives(issues)",1)[0]
-        self.assertLess(month.index("'<p class=\"month-quip\">"),
-                        month.index("class=\"travel-slot month-travel-slot"))
-        self.assertLess(month.index("class=\"travel-slot month-travel-slot"),
-                        month.index("storyDetailHtml(s)+"))
-        self.assertEqual(page.count("過去に報道された実話です。今日起きた出来事ではありません。"),1)
-
-    def test_monthly_live_updates_preserve_open_cards(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn("const monthlyExpandedStories=new Set()",page)
-        self.assertIn("if(details.open)monthlyExpandedStories.add(card.dataset.monthStoryId)",page)
-        self.assertIn("details.open=monthlyExpandedStories.has(s.id)",page)
-        self.assertIn("if(details.open)monthlyExpandedStories.add(storyId)",page)
-        self.assertIn("else monthlyExpandedStories.delete(storyId)",page)
-
     @unittest.skipUnless(shutil.which("node"), "Node.js required")
     def test_photo_selection_never_switches_country_just_to_avoid_repetition(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -506,32 +405,6 @@ class ReaderFrontendTest(unittest.TestCase):
         )
         p=subprocess.run(["node","-e",script],capture_output=True,text=True)
         self.assertEqual(p.returncode,0,p.stderr)
-
-    def test_monthly_retention_uses_actual_publish_or_collection_date(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn("function isMonthDate(date,start,end)",page)
-        self.assertIn("s.monthOrigin==='curated'?s.collectionDate:s.publishedAt",page)
-        self.assertIn("monthOrigin:'published',publishedAt:item.editionDate",page)
-        self.assertIn("monthOrigin:'curated',collectionDate:data.collectionDate",page)
-        self.assertIn("s.reported.replaceAll('.','-')>monthRetentionDate(s)",page)
-        self.assertNotIn("s.reported<start||s.reported>end",page)
-        self.assertIn("monthRetentionDate(b).localeCompare(monthRetentionDate(a))",page)
-        self.assertIn("item&&isMonthDate(item.date,start,end)",page)
-        self.assertIn("配信日 ",page)
-        self.assertIn("特集収録日 ",page)
-
-    @unittest.skipUnless(shutil.which("node"), "Node.js required for boundary test")
-    def test_month_window_is_exactly_thirty_japan_dates(self):
-        page=(ROOT/"index.html").read_text(encoding="utf-8")
-        body=page.split("function isMonthDate(date,start,end){",1)[1].split("\n}",1)[0]
-        code="function isMonthDate(date,start,end){"+body+"\n}\n"+\
-             "if(!isMonthDate('2026-11-17','2026-10-19','2026-11-17'))process.exit(1);"+\
-             "if(!isMonthDate('2026-10-19','2026-10-19','2026-11-17'))process.exit(2);"+\
-             "if(isMonthDate('2026-10-18','2026-10-19','2026-11-17'))process.exit(3);"+\
-             "if(isMonthDate('2026-11-18','2026-10-19','2026-11-17'))process.exit(4);"
-        result=subprocess.run(["node","-e",code],capture_output=True,text=True)
-        self.assertEqual(result.returncode,0,result.stderr)
-
 
     def test_mobile_cover_puts_verified_story_above_quip_without_intrusive_intro(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -635,7 +508,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("controls.hidden=edition.stories.length<=3||available.size<=1", page)
         self.assertIn("button.hidden=button.dataset.filter!=='all'&&!available.has(", page)
         self.assertIn(".filters[hidden],.filter[hidden]", page)
-        self.assertIn("updateSpotlight();renderTravelSlots();updateFilters();applyFilter();", page)
+        self.assertIn("updateSpotlight();renderTravelSlots();renderTodayMap();updateFilters();applyFilter();", page)
         self.assertIn("document.querySelector('.sectionhead').hidden=d.length<=1", page)
         self.assertIn("$('intro').hidden=d.length<=1", page)
 
@@ -790,7 +663,7 @@ class ReaderFrontendTest(unittest.TestCase):
             with self.subTest(token=token):
                 self.assertIn(token, page)
         self.assertRegex(worker,r"yoru9-shell-v(?:[3-9]|[1-9][0-9]+)")
-        self.assertIn("yoru9-released-issues-v2", worker)
+        self.assertIn("yoru9-released-issues-v3", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
 
 

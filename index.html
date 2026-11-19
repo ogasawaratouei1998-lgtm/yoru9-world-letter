@@ -332,72 +332,11 @@ footer{font-size:.8125rem;line-height:1.7}
 .travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
 .travel-credit a{color:#d2eadd}
 .travel-elsewhere{font-size:.875rem;line-height:1.65;color:#e1e8f1;margin:4px 0 10px}
-.month-travel-slot{margin:5px 0 13px}
-.month-travel-slot .travel-open{padding:6px 0;margin-bottom:2px}
-.month-travel-slot .travel-card{margin-top:4px}
 @media(max-width:520px){
  .travel-card{padding:14px 13px}
  .travel-photo{max-height:220px}
  .travel-note,.travel-figure figcaption{font-size:1rem}
 }
-
-/* Quiet, opt-in, historical reading shelf. Never label as today's issue. */
-.month-retrospective{margin:23px 0 18px}
-.month-retrospective>details{border:1px solid #5c7087;border-radius:17px;background:linear-gradient(140deg,#1a2b42,#142238);padding:10px 14px 13px}
-.month-retrospective>details>summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;min-height:55px;font-size:1.0625rem;line-height:1.65;font-weight:790;color:#f9e4bd}
-#monthCount{font-size:.875rem;color:#e3e9f1;font-weight:650}
-.month-intro{font-size:.9375rem;line-height:1.75;margin:10px 0 16px;color:#e1e8f1}
-.month-cards{display:grid;gap:11px}
-.month-story{border:1px solid #485c77;border-radius:13px;background:#203047;overflow:hidden}
-.month-story>details>summary{cursor:pointer;display:flex;flex-direction:column;align-items:start;gap:6px;padding:15px 14px 13px;min-height:44px}
-.month-country{font-size:.875rem;color:#d5dff0;font-weight:720;line-height:1.5}
-.month-story>details>summary strong{font-size:1.0625rem;line-height:1.65;color:#fff4e0}
-.month-preview{font-size:.9375rem;line-height:1.8;color:#d8e2ed}
-.month-more{font-size:.9375rem;line-height:1.6;color:#f5d8a1;text-decoration:underline;text-underline-offset:3px}
-.month-story>details[open]>summary .month-more{display:none}
-.month-story-body{padding:2px 14px 18px;border-top:1px solid #40536d}
-.month-story-body .detailtext{font-size:1rem;line-height:1.85;white-space:pre-line}
-.month-quip-label{font-size:.875rem;font-weight:800;color:#f3d7a4;margin:12px 0 4px}
-.month-quip{font-size:1.0625rem;line-height:1.75;font-weight:750;margin:0 0 13px}
-.month-second{font-size:1rem;line-height:1.8;color:#f3dfc2;margin:14px 0}
-.month-source,.month-notice{font-size:.875rem;line-height:1.8;color:#dce3ee}
-.month-story a{color:#e3cb9d;text-underline-offset:4px;overflow-wrap:anywhere}
-.month-map a{min-height:44px;display:inline-flex;align-items:center;font-size:.9375rem;line-height:1.6}
-@media(max-width:520px){
- .month-retrospective>details{padding:9px 11px 12px}
- .month-retrospective>details>summary{gap:5px;font-size:1rem}
- .month-story>details>summary{padding:13px 12px}
- .month-story-body{padding:2px 12px 16px}
-}
-
-/* Native details: clearly distinguish opened vs closed states on mobile. */
-.month-summary-right{display:inline-flex;align-items:center;justify-content:flex-end;gap:11px;flex-wrap:wrap}
-.month-disclosure,.month-story-disclosure{display:inline-flex;align-items:center;gap:7px;
- border:1px solid #9baec5;border-radius:9px;padding:6px 10px;
- color:#f8e3ba;background:#283c58;font-size:.9375rem;font-weight:800;line-height:1.5}
-.month-chevron,.month-story-chevron{display:inline-block;font-size:1.1875rem;line-height:1;
- transition:transform .18s ease}
-.month-open-label,.month-story-opened{display:none}
-.month-retrospective>details[open] .month-open-label,
-.month-story>details[open] .month-story-opened{display:inline}
-.month-retrospective>details[open] .month-closed-label,
-.month-story>details[open] .month-story-closed{display:none}
-.month-retrospective>details[open] .month-chevron,
-.month-story>details[open] .month-story-chevron{transform:rotate(180deg)}
-.month-story>details>summary{position:relative}
-.month-story-disclosure{align-self:flex-end;margin-top:6px}
-.month-retrospective>details>summary:focus-visible,
-.month-story>details>summary:focus-visible{outline:3px solid #ffdf9e;outline-offset:3px}
-.month-story>details[open]{border-left:3px solid #efcc8c}
-@media(prefers-reduced-motion:reduce){.month-chevron,.month-story-chevron{transition:none}}
-@media(max-width:520px){.month-summary-right{width:100%;justify-content:space-between;gap:7px}
- .month-story-disclosure{margin-top:4px}
-}
-/* Travel stays optional in the already-expanded monthly story. */
-.month-travel-slot{margin:14px 0 15px}
-.month-story .month-travel-slot .travel-open{padding:8px 0;min-height:48px}
-.month-story .travel-panel:not([hidden]){margin:8px 0 16px}
-.month-story .travel-card{margin:0}
 
 /* v8: the lead incident is the cover; no oversized mission explainer. */
 :root{--safe-top:env(safe-area-inset-top,0px)}
@@ -538,8 +477,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  font-size:.95rem;padding:12px 13px;line-height:1.7;margin-top:14px}
 .story .teaserquip span{color:#ffe0ae;font-size:.8rem}
 .story .readbtn{font-size:.9375rem}
-.month-retrospective>details{border-color:#70849b}
-.month-retrospective>details>summary{color:#ffe4b5}
 .reader-tool{border-color:#637c98}
 .reader-tool>summary{font-size:.975rem}
 .footerpanel{border-color:#7084a0}
@@ -1239,6 +1176,44 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #articleReader .story-cover h3{-webkit-line-clamp:unset;display:block;overflow:visible;
  font-size:1.18rem;line-height:1.5}
 }
+
+/* New current-issue map. Palette follows the illustrated news cards. */
+.today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
+ background:linear-gradient(135deg,#264964,#2C5266 65%,#31465E);padding:13px 13px 12px;
+ box-shadow:0 9px 21px #0D203B28}
+.today-map-header{display:flex;justify-content:space-between;align-items:center;
+ gap:8px 14px;flex-wrap:wrap;margin-bottom:10px}
+.today-map-kicker{font-size:.65rem;color:#A6E6DB;letter-spacing:.1em;font-weight:850;margin:0 0 3px}
+.today-map-header h3{font-size:1.03rem;color:#FFF0C9;line-height:1.4;margin:0;font-weight:900}
+.today-map-date{color:#FFF5DE;border:1px solid #BBD7CE;border-radius:999px;
+ font-size:.7rem;font-weight:760;line-height:1.4;padding:5px 10px;white-space:nowrap}
+.today-map-canvas{position:relative;width:100%;aspect-ratio:2/1;overflow:hidden;
+ border:2px solid #8AC9C7;border-radius:13px;background:#CBEFF0}
+.today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.today-map-pins{position:absolute;inset:0;pointer-events:none}
+.today-map-pin{position:absolute;display:flex;justify-content:center;align-items:center;
+ width:25px;height:25px;transform:translate(-50%,-50%);border:2.5px solid #fff;
+ border-radius:50%;background:#F47769;color:white;box-shadow:0 3px 7px #233F5999;
+ font:900 .78rem system-ui,sans-serif;line-height:1}
+.today-map-pin::after{content:'';position:absolute;inset:5px;
+ border-radius:100%;border:1px solid #FFE8C4A0;pointer-events:none}
+.today-map-pin:nth-child(5n+2){background:#277F7B}
+.today-map-pin:nth-child(5n+3){background:#D38B35}
+.today-map-pin:nth-child(5n+4){background:#9A6FAA}
+.today-map-pin:nth-child(5n+5){background:#D47796}
+.today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
+.today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
+ padding:8px 12px;background:#FFF0C9;color:#283E56;font-size:.79rem;font-weight:860;
+ text-align:center;line-height:1.4;max-width:100%;white-space:normal}
+.today-map-country:nth-child(5n+2){background:#B5EBD6}
+.today-map-country:nth-child(5n+3){background:#FFCFB8}
+.today-map-country:nth-child(5n+4){background:#E4D3EE}
+.today-map-country:nth-child(5n+5){background:#F6CFDC}
+.today-map-country:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.today-map-note{font-size:.73rem;color:#D5E6E7;line-height:1.6;margin:5px 1px 0}
+@media(max-width:520px){.today-map-card{padding:10px 9px;margin-top:3px;border-radius:15px}
+ .today-map-header h3{font-size:.94rem}.today-map-pin{width:22px;height:22px;font-size:.68rem}
+ .today-map-country{font-size:.73rem;padding:7px 10px}.today-map-note{font-size:.7rem}}
 </style>
 </head>
 <body><div class="wrap">
@@ -1268,6 +1243,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-responsive"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
+ <section class="today-map-card" id="todayMapSection" aria-labelledby="todayMapTitle">
+  <header class="today-map-header">
+   <div><p class="today-map-kicker">WORLD LETTER · ON THE MAP</p><h3 id="todayMapTitle">配信国マップ</h3></div>
+   <span id="todayMapDate" class="today-map-date">公開号を確認中</span>
+  </header>
+  <div class="today-map-canvas">
+   <img class="today-map-art" src="./assets/world-today-illustrated.svg" alt="" width="960" height="480" decoding="async">
+   <div class="today-map-pins" id="todayMapPins" aria-hidden="true"></div>
+  </div>
+  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="掲載国から記事を選ぶ"></div>
+  <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
+ </section>
  </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
  <div class="article-reader-toolbar"><p id="readerSelected">記事を読む</p><button id="readerBack" type="button">‹ ニュース一覧に戻る</button></div>
@@ -1294,11 +1281,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <ol class="list" id="stories" aria-label="ニュース記事"></ol><p class="empty" id="empty" hidden>このカテゴリの記事はありません。</p>
 </section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
-<section class="month-retrospective" id="monthRetrospective" hidden aria-label="過去1か月の特集">
- <details id="monthDetails"><summary><span class="month-title">この1か月の世界の「まさか」</span><span class="month-summary-right"><span id="monthCount">記事を準備中</span><span class="month-disclosure" aria-hidden="true"><span class="month-closed-label">開く</span><span class="month-open-label">閉じる</span><span class="month-chevron">⌄</span></span></span></summary>
- <p class="month-intro" id="monthIntro">過去1か月の実話をまとめています。今夜起きたニュースではありません。</p>
- <div class="month-cards" id="monthCards"></div></details>
-</section>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
 <section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
 <summary>夜9時のお知らせ・通知設定</summary>
@@ -1359,7 +1341,74 @@ async function loadCountryCatalog(){
   countryCatalog=records;
  }catch(err){console.info('国・地域の一覧を読み込めませんでした',err)}
 }
-loadCountryCatalog();
+loadCountryCatalog().then(()=>renderTodayMap());
+// Today's/current published issue only. Pins are real country centroids,
+// never invented article locations or a route to past editions.
+function currentIssueCountries(){
+ const result=new Map();
+ if(!Array.isArray(edition.stories))return [];
+ edition.stories.forEach((story,index)=>{
+  const codes=countryKeys(story.country);
+  if(!codes.length){
+   const key='unmapped:'+String(story.country||'国名未登録');
+   if(!result.has(key))result.set(key,{code:key,name:countryLabel(story.country),point:null,indices:[]});
+   result.get(key).indices.push(index);
+   return;
+  }
+  codes.forEach(code=>{
+   const record=countryRecord(code);
+   if(!result.has(code))result.set(code,{
+    code,name:record?.name||code,
+    point:record&&Number.isFinite(record.lon)&&Number.isFinite(record.lat)
+      ?{x:(record.lon+180)/360*100,y:(90-record.lat)/180*100}:null,
+    indices:[]
+   });
+   result.get(code).indices.push(index);
+  });
+ });
+ return [...result.values()];
+}
+function renderTodayMap(){
+ const section=$('todayMapSection');
+ if(!section)return;
+ const published=edition.status==='published';
+ const actuallyToday=published&&edition.editionDate===localDate(new Date());
+ $('todayMapTitle').textContent=actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台';
+ $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
+ const pins=$('todayMapPins'),legend=$('todayMapLegend');
+ pins.replaceChildren();legend.replaceChildren();
+ if(!countryCatalog.length){
+  $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
+  return;
+ }
+ const countries=currentIssueCountries();
+ let marked=0;
+ countries.forEach((item,i)=>{
+  if(item.point){
+   marked++;
+   const pin=document.createElement('span');
+   pin.className='today-map-pin';
+   pin.dataset.countryCode=item.code;
+   pin.textContent=String(i+1);
+   pin.title=item.name+' · '+item.indices.length+'本';
+   pin.style.left=item.point.x.toFixed(3)+'%';
+   pin.style.top=item.point.y.toFixed(3)+'%';
+   pins.append(pin);
+  }
+  const button=document.createElement('button');
+  button.type='button';button.className='today-map-country';
+  button.textContent=(i+1)+' · '+item.name+'（'+item.indices.length+'本）';
+  button.setAttribute('aria-label',item.name+'の掲載記事を読む');
+  button.addEventListener('click',()=>openAtlasStory(item.indices[0]));
+  legend.append(button);
+ });
+ if(!countries.length){
+  $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
+ }else{
+  const extra=marked<countries.length?' 一部の国は座標が未登録のため、一覧から記事を開けます。':'';
+  $('todayMapNote').textContent='国・地域の代表位置です。ニュースの発生現場を示すものではありません。'+extra;
+ }
+}
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 function displayReleaseStatus(){
  const today=localDate(new Date());
@@ -1394,179 +1443,6 @@ function storyAttributionHtml(story){
  const note=story.sourceBasis==='original-report'&&typeof story.attributionNote==='string'
   ?story.attributionNote.trim():'';
  return note?'<p class="source-attribution"><strong>情報源について：</strong>'+escapeHtml(note)+'</p>':'';
-}
-/* Archived research collection is not a fake old daily edition. */
-/* History shelf: 30 JST dates by actual release/collection, not reporting date. */
-let monthStories=[],monthPublishedStories=[],monthRollingStories=[],visibleMonthStories=[];
-// Preserve expanded monthly articles when live archive updates re-render this shelf.
-const monthlyExpandedStories=new Set();
-// INITIAL_MONTHLY_COLLAPSED: the monthly shelf is opt-in even when a browser restores prior <details> state.
-$('monthDetails').open=false;
-function monthWindow(){
- const now=new Date();
- return {start:localDate(new Date(now.getTime()-29*86400000)),end:localDate(now)};
-}
-function isMonthDate(date,start,end){
- return /^\d{4}-\d{2}-\d{2}$/.test(date||'')&&date>=start&&date<=end;
-}
-function monthRetentionDate(s){
- return s.monthOrigin==='monthly'?s.collectionDate:s.monthOrigin==='curated'?s.collectionDate:s.publishedAt;
-}
-function validMonthStory(s){
- if(!s||!s.id||!/^[a-zA-Z0-9-]+$/.test(s.id)||!s.country||!s.title||!s.summary||
-    !s.detail||!isJapaneseText(s.summary)||
-    !/^\d{4}[-.]\d{2}[-.]\d{2}$/.test(s.reported||'')||
-    !/^\d{4}-\d{2}-\d{2}$/.test(monthRetentionDate(s)||'')||
-    s.reported.replaceAll('.','-')>monthRetentionDate(s)||
-    safeUrl(s.sourceUrl)==='#')return false;
- // Archives can contain legacy verified issues predating the new 2-source rule.
- // Their public 'published' status is confirmed separately from the archive.
- if(s.monthOrigin==='published')return true;
- const urls=s.verificationUrls;
- if(!Array.isArray(urls)||!urls.includes(s.sourceUrl)||
-    urls.some(u=>typeof u!=='string'||safeUrl(u)==='#'))return false;
- // Monthly collections may contain one trusted original publisher report.
- // Historic curated stories retain their original 2-publisher rule.
- if(s.monthOrigin==='monthly'){
-  if(s.sourceBasis==='original-report')return urls.length===1;
-  if(s.sourceBasis!=='independent-reports'||urls.length!==2)return false;
- }else if(urls.length<2)return false;
- try{return new Set(urls.map(u=>new URL(u).hostname.replace(/^www\./,''))).size>=
-  (s.monthOrigin==='monthly'?urls.length:2);}
- catch(_){return false;}
-}
-function monthSourceKeys(s){
- return [s.sourceUrl,...(Array.isArray(s.verificationUrls)?s.verificationUrls:[])]
-  .filter(u=>typeof u==='string'&&safeUrl(u)!=='#')
-  .map(u=>{try{const p=new URL(u);return p.hostname.replace(/^www\./,'')+p.pathname.replace(/\/$/,'');}
-   catch(_){return '';}}).filter(Boolean);
-}
-function renderMonthRetrospective(){
- const target=$('monthCards');
- // Capture the current choice before DOM replacement. Some archives arrive
- // asynchronously, but a reader's open article should not suddenly collapse.
- target.querySelectorAll('.month-story').forEach(card=>{
-  const details=card.querySelector('details');
-  if(!details)return;
-  if(details.open)monthlyExpandedStories.add(card.dataset.monthStoryId);
-  else monthlyExpandedStories.delete(card.dataset.monthStoryId);
- });
- target.replaceChildren();
- const {start,end}=monthWindow();
- const seen=new Set(edition.stories.map(s=>s.id));
- const seenSources=new Set(edition.stories.flatMap(monthSourceKeys));
- const stories=[...monthRollingStories,...monthPublishedStories,...monthStories]
-  .filter(s=>validMonthStory(s)&&isMonthDate(monthRetentionDate(s),start,end))
-  .sort((a,b)=>monthRetentionDate(b).localeCompare(monthRetentionDate(a))||
-   b.reported.replaceAll('.','-').localeCompare(a.reported.replaceAll('.','-')))
-  .filter(s=>{
-   const keys=monthSourceKeys(s);
-   if(seen.has(s.id)||keys.some(key=>seenSources.has(key)))return false;
-   seen.add(s.id);keys.forEach(key=>seenSources.add(key));return true;
-  });
- visibleMonthStories=stories;
- // The map and country links must update when either source of stories loads,
- // and when the rolling 30-day window changes.
- $('monthRetrospective').hidden=!stories.length;
- if(!stories.length)return;
- $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
- $('monthIntro').textContent='過去に報道された実話です。今日起きた出来事ではありません。'+start+'〜'+end+'の配信・特集収録から30日間表示します。報道日と配信日は異なります。新しく確認された公開記事は自動的に加わり、30日を過ぎるとこの一覧から外れます。';
- for(const s of stories){
-  const card=document.createElement('article');card.className='month-story';card.dataset.monthStoryId=s.id;
-  const recorded=(s.monthOrigin==='curated'||s.monthOrigin==='monthly')?'特集収録日 ':'配信日 ';
-  card.innerHTML='<details><summary><span class="month-country">'+escapeHtml(countryLabel(s.country))+
-   ' · '+recorded+escapeHtml(monthRetentionDate(s))+' · 報道日 '+escapeHtml(s.reported.replaceAll('.','-'))+
-   '</span><strong>'+escapeHtml(s.title)+'</strong><span class="month-preview">'+escapeHtml(s.summary)+
-   '</span><span class="month-story-disclosure" aria-hidden="true"><span class="month-story-closed">記事を開く</span><span class="month-story-opened">記事を閉じる</span><span class="month-story-chevron">⌄</span></span></summary>'+
-   '<div class="month-story-body"><p class="month-quip-label">AIツッコミ</p>'+
-   '<p class="month-quip">'+escapeHtml(s.quip||'')+'</p>'+
-   '<div class="travel-slot month-travel-slot"><button type="button" class="travel-open" data-month-travel="'+
-     escapeHtml(s.id)+'" aria-expanded="false" aria-controls="month-travel-'+escapeHtml(s.id)+
-     '">ニュースの余韻で、30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
-   '<div class="travel-panel" id="month-travel-'+escapeHtml(s.id)+'" hidden></div></div>'+
-   storyDetailHtml(s)+
-   (s.quipSecond?'<p class="month-second">'+escapeHtml(s.quipSecond)+'</p>':'')+
-   (s.attributionNote?'<p class="month-notice">'+escapeHtml(s.attributionNote)+'</p>':'')+
-   '<p class="month-source">出典：<a href="'+escapeHtml(safeUrl(s.sourceUrl))+
-     '" target="_blank" rel="noopener noreferrer">'+escapeHtml(s.sourceName||'出典元')+' ↗</a></p>'+
-   storyEvidenceHtml(s)+
-   '</div></details>';
-  const details=card.querySelector('details');
-  details.open=monthlyExpandedStories.has(s.id);
-  target.append(card);
- }
-}
-// Expanding a monthly article must not automatically open its optional travel panel.
-// Travel remains collapsed until the reader explicitly taps its button.
-$('monthCards').addEventListener('toggle',event=>{
- const details=event.target;
- if(!details.matches?.('.month-story > details'))return;
- const storyId=details.closest('.month-story')?.dataset.monthStoryId;
- if(storyId){
-  if(details.open)monthlyExpandedStories.add(storyId);
-  else monthlyExpandedStories.delete(storyId);
- }
-},true);
-async function updateMonthFromArchives(issues){
- // Only completed public releases listed in the archive manifest are eligible.
- const {start,end}=monthWindow();
- const recent=issues.filter(item=>item&&isMonthDate(item.date,start,end)).slice(0,30);
- const entries=await Promise.all(recent.map(async item=>{
-  try{
-   const response=await fetch('./data/archive/'+item.date+'.json',{cache:'no-store'});
-   if(!response.ok)return null;
-   const issue=await response.json();
-   if(issue.status!=='published'||issue.editionDate!==item.date||!Array.isArray(issue.stories))return null;
-   return issue;
-  }catch(_){return null;}
- }));
- monthPublishedStories=entries.filter(Boolean).flatMap(item=>
-  item.stories.map(s=>({...s,monthOrigin:'published',publishedAt:item.editionDate}))
-   .filter(validMonthStory));
- renderMonthRetrospective();
-}
-async function loadMonthRetrospective(){
- try{
-  const response=await fetch('./data/retrospective/2026-11-17.json',{cache:'no-store'});
-  if(!response.ok)throw Error('monthly collection unavailable');
-  const data=await response.json();
-  if(data.status!=='published-retrospective'||data.collectionDate!=='2026-11-17'||
-     !Array.isArray(data.stories)||!isMonthDate(data.collectionDate,data.windowStart,data.windowEnd))return;
-  monthStories=data.stories.map(s=>({...s,monthOrigin:'curated',collectionDate:data.collectionDate}))
-   .filter(validMonthStory);
-  renderMonthRetrospective();
- }catch(error){console.info('過去1か月の特集を読み込めませんでした',error);}
-}
-async function loadMonthlyVerified(){
- // The monthly workflow publishes only audited original publisher reports
- // or independently corroborated incidents.
- // Unverified candidates, private previews and drafts are never fetched here.
- const {start,end}=monthWindow();
- try{
-  const response=await fetch('./data/monthly/index.json',{cache:'no-store'});
-  if(!response.ok)throw Error('monthly index unavailable');
-  const index=await response.json();
-  if(index.status!=='published-monthly-index'||!Array.isArray(index.issues))return;
-  const dates=[...new Set(index.issues.map(i=>i&&i.date))]
-   .filter(day=>isMonthDate(day,start,end)).sort().reverse().slice(0,30);
-  const verified=await Promise.all(dates.map(async date=>{
-   try{
-    const res=await fetch('./data/monthly/'+date+'.json',{cache:'no-store'});
-    if(!res.ok)return [];
-    const document=await res.json();
-    if(document.status!=='published-monthly'||document.collectionDate!==date||
-       !['two-source-two-stage-AI','source-quality-two-stage-AI'].includes(document.reviewMethod)||
-       !Array.isArray(document.stories))return [];
-    return document.stories.map(story=>({...story,monthOrigin:'monthly',collectionDate:date}))
-     .filter(validMonthStory);
-   }catch(_){return [];}
-  }));
-  monthRollingStories=verified.flat();
-  renderMonthRetrospective();
- }catch(_){
-  // Keep previously displayed verified stories during an intermittent outage.
-  // The 30-day filter still applies at render time.
- }
 }
 // Safe, locally bundled editorial illustrations. None are documentary
 // photos; never substitute travel photography or publisher portraits.
@@ -1898,13 +1774,12 @@ function travelPostcardHtml(story,stop,showIntro=false){
   '</section>';
 }
 document.querySelector('main').addEventListener('click',async event=>{
- const control=event.target.closest('[data-travel],[data-month-travel]');
+ const control=event.target.closest('[data-travel]');
  if(!control)return;
- const isMonth=control.hasAttribute('data-month-travel'),i=isMonth?null:Number(control.dataset.travel);
- const story=isMonth?visibleMonthStories.find(s=>s.id===control.dataset.monthTravel):edition.stories[i];
+ const i=Number(control.dataset.travel);
+ const story=edition.stories[i];
  const panel=control.nextElementSibling;
- if(!story||!panel||!panel.classList.contains('travel-panel')||
-    (!isMonth&&!Number.isInteger(i)))return;
+ if(!Number.isInteger(i)||!story||!panel||!panel.classList.contains('travel-panel'))return;
  const opening=panel.hidden;
  panel.hidden=!opening;
  control.setAttribute('aria-expanded',String(opening));
@@ -1915,9 +1790,7 @@ document.querySelector('main').addEventListener('click',async event=>{
  panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
  const stops=await loadTravelStops();
  // Never insert a postcard into a card that has already been closed/replaced.
- if(!panel.isConnected||panel.hidden||
-    (!isMonth&&edition.stories[i]!==story)||
-    (isMonth&&!visibleMonthStories.includes(story)))return;
+ if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return;
  const firstIntro=!travelExplainerShown;
  travelExplainerShown=true;
  const maxRetries=travelPhotoOptions(stops).length;
@@ -1986,7 +1859,7 @@ function render(){const d=edition.stories;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;const art=newsArt(s);return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="story-cover"><figure class="story-visual"><img class="story-art" src="${escapeHtml(art)}" alt="記事を象徴した創作イラスト。報道写真ではありません。" loading="lazy" decoding="async" width="800" height="480"><figcaption>イメージイラスト</figcaption></figure><div class="story-headline"><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3></div></div><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
- renderIssueGallery();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
+ renderIssueGallery();updateSpotlight();renderTravelSlots();renderTodayMap();updateFilters();applyFilter();update();observeStories();}
 function update(){const count=Math.max(0,edition.stories.length-1);$('progress').hidden=count<=3;$('progress').textContent=count>3?`ほかに${count}本`:'';$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
@@ -2035,7 +1908,7 @@ $('atlasHero').addEventListener('click',handleStoryAction);
 $('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
-loadState();render();loadMonthRetrospective();loadMonthlyVerified();
+loadState();render();
 let newestPublished=null;
 async function checkPublished(){
  if(location.protocol==='file:')return;
@@ -2054,21 +1927,6 @@ async function checkPublished(){
  }catch(err){console.info('最新の公開号を取得できませんでした',err)}
 }
 checkPublished();
-// Previous-edition reader is removed; rolling monthly digest consumes
-// released dates without exposing archive-selection or world-map controls.
-async function loadPublishedMonthDates(){
- if(location.protocol==='file:')return;
- try{
-  const res=await fetch('./data/archive/index.json',{cache:'no-store'});
-  if(!res.ok)return;
-  const m=await res.json();
-  if(Array.isArray(m.issues)){
-   updateMonthFromArchives(m.issues).catch(err=>
-    console.info('30日間の特集を取得できませんでした',err));
-  }
- }catch(_){/* Current edition remains available. */}
-}
-loadPublishedMonthDates();
 function updateOnlineState(){$('offlineNotice').hidden=navigator.onLine!==false}
 window.addEventListener('online',()=>{updateOnlineState();checkPublished()});
 window.addEventListener('offline',updateOnlineState);
@@ -2112,8 +1970,6 @@ async function refreshOnForeground(){
  if(now-lastForegroundCheck<15000)return;
  lastForegroundCheck=now;
  await checkPublished();
- loadPublishedMonthDates();
- loadMonthlyVerified();
  if('serviceWorker' in navigator){
   navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});
  }
