@@ -1832,12 +1832,23 @@ function approvedTravelCover(stop){
  const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
   stop.country==='アメリカ合衆国'?'US':null;
  if(!code)return true;
- return countryPhotoPriority(code,stop)>=80;
+ // Travel postcards are a separate visual experience from the country hero.
+ // A secondary licensed landmark may score below the hero's stricter threshold.
+ return countryPhotoPriority(code,stop)>=70;
+}
+function countryHeroAsset(country){
+ const code=country==='アルゼンチン'?'AR':country==='フランス'?'FR':
+  country==='アメリカ合衆国'?'US':null;
+ if(!code)return null;
+ const candidates=(TODAY_COUNTRY_PHOTOS[code]||[]).filter(p=>
+  p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption&&countryPhotoPriority(code,p)>=80);
+ candidates.sort((a,b)=>countryPhotoPriority(code,b)-countryPhotoPriority(code,a));
+ return candidates[0]?.asset||null;
 }
 function chooseTravelPhoto(story,stops){
  const key=travelStoryKey(story),prior=travelSelections.get(key);
- if(prior&&!travelFailedPhotos.has(prior.photoAsset))return prior;
- const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s));
+ if(prior&&!travelFailedPhotos.has(prior.photoAsset)&&approvedTravelCover(prior)&&prior.photoAsset!==countryHeroAsset(prior.country))return prior;
+ const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s)&&s.photoAsset!==countryHeroAsset(s.country));
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
  const sameCountry=available.filter(s=>countries.includes(s.country));
