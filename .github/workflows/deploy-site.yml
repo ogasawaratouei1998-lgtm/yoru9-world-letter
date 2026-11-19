@@ -15,8 +15,6 @@ on:
       - 'assets/**'
       - 'data/current.json'
       - 'data/archive/**'
-      - 'data/retrospective/**'
-      - 'data/monthly/**'
   workflow_dispatch:
 
 permissions:
@@ -37,7 +35,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           # Always build the latest verified main, not a stale event SHA.
-          # A monthly release may have been pushed while this job was queued.
+          # An approved nightly release may have been pushed while this job was queued.
           ref: main
       - uses: actions/setup-python@v5
         with:
