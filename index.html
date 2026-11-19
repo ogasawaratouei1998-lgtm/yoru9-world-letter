@@ -1822,10 +1822,19 @@ function travelPhotoOptions(stops){
 function travelStoryKey(story){
  return String(story.id||story.title||'')+'|'+String(story.country||'');
 }
+// Apply the same visual-quality gate to photographs in already-published
+// travel postcards, not only the map's country-introduction cover.
+function approvedTravelCover(stop){
+ if(!stop||!stop.country||!stop.place)return false;
+ const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
+  stop.country==='アメリカ合衆国'?'US':null;
+ if(!code)return true;
+ return countryPhotoPriority(code,stop)>=80;
+}
 function chooseTravelPhoto(story,stops){
  const key=travelStoryKey(story),prior=travelSelections.get(key);
  if(prior&&!travelFailedPhotos.has(prior.photoAsset))return prior;
- const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset));
+ const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s));
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
  const sameCountry=available.filter(s=>countries.includes(s.country));
