@@ -106,7 +106,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("$('galleryHeading').textContent='世界の「まさか」'+edition.stories.length+'コマ劇場'",page)
         self.assertIn("#atlasHero .gallery-tile:last-child:nth-child(odd)",page)
         self.assertIn("#atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}",page)
-        self.assertIn("掲載国の代表位置です。ニュースの現場ではありません。",page)
+        self.assertNotIn("掲載国の代表位置です。ニュースの現場ではありません。",page)
         # CSS has physically identifiable comic bubble tails and one-tap
         # sparkle feedback, with motion disabled when requested.
         self.assertIn(".spotlight .spotlight-joke::before{content:",page)
@@ -814,7 +814,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
         self.assertIn("$('closingJump').hidden=!nightlyLine",page)
         self.assertIn("この号に収録された、世界の失敗・勘違い・珍事件。",page)
-        self.assertIn("ニュースの現場ではありません",page)
+        self.assertIn("この写真はニュース現場の記録ではなく、旅先の風景です。",page)
         self.assertNotIn("map.open=true",page)
 
 
