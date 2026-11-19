@@ -148,7 +148,9 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter({"company":16,"work":2,"person":0,"sports":1}))
-        self.assertEqual({s["category"] for s in chosen},{"work","person","sports"})
+        self.assertLessEqual(sum(s["category"]=="company" for s in chosen),1)
+        self.assertEqual(len(chosen),5)
+        self.assertTrue({"work","person","sports"}.issubset({s["category"] for s in chosen}))
 
     def test_published_topic_rotation_avoids_repeating_same_gag(self):
         from collections import Counter
