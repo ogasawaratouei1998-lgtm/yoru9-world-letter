@@ -83,8 +83,8 @@ class TodayWorldMapTest(unittest.TestCase):
         maplogic="function currentIssueCountries(){"+code.split(
             "function currentIssueCountries(){")[1].split(
             "function renderTodayMap(){")[0]
-        script=("const countryCatalog="+json.dumps(catalog,ensure_ascii=False)+";\\n"+
-                "let edition="+json.dumps(issue,ensure_ascii=False)+";\\n"+
+        script=("const countryCatalog="+json.dumps(catalog,ensure_ascii=False)+";\n"+
+                "let edition="+json.dumps(issue,ensure_ascii=False)+";\n"+
                 pure+maplogic+
                 """
 function verify(label){
