@@ -1405,6 +1405,7 @@ const TODAY_COUNTRY_INTROS=Object.freeze({
  FR:'ヨーロッパ西部に位置し、大西洋と地中海の両方に面しています。地域ごとに文化や風景が多彩です。',
  US:'北アメリカに広がり、大西洋と太平洋に面する国。大都市から山岳地帯まで、地域によって風景が大きく異なります。'
 });
+const TODAY_COUNTRY_PHOTOS=Object.freeze({"AR":[{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側"},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ"},{"asset":"assets/travel/hawaii-waikiki.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Waikiki_Beach%2C_Hawaii.jpg/500px-Waikiki_Beach%2C_Hawaii.jpg","caption":"ハワイ・ワイキキの海と波（2018年撮影）","author":"Julianibarra","license":"CC0 1.0","place":"ワイキキビーチ"}]});
 const TODAY_COUNTRY_GUIDES=Object.freeze({
  AR:{lead:'氷河とタンゴ、雄大な自然が息づく南米の国',body:'首都ブエノスアイレスでは、ヨーロッパの面影を残す街並みとタンゴの文化が出迎えてくれます。北東部のイグアスの滝は熱帯の森に包まれ、南へ向かえばパタゴニアの氷河や風の強い大地が広がります。牛肉料理のアサードやマテ茶も日常に根づく楽しみです。',facts:['首都：ブエノスアイレス','風景：イグアスの滝・パタゴニア','文化：タンゴ・マテ茶'],photos:['ar-iguazu-postcard','ar-casa-rosada-postcard']},
  FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリの美術館やカフェはもちろん、フランスの魅力は地方にも広がります。ノルマンディーの海辺には潮の満ち引きで表情を変えるモン・サン＝ミシェルがあり、南には地中海沿岸の陽光、東にはアルプスの山並み。パンやチーズ、郷土料理にも地域ごとの個性が息づいています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-mont-saint-michel-postcard','fr-eiffel-postcard']},
@@ -1432,25 +1433,36 @@ function showTodayCountryIntro(item){
   const chip=document.createElement('span');chip.textContent=value;facts.append(chip);
  });
  const figure=$('todayMapIntroFigure'),photo=$('todayMapIntroImage');
- photo.removeAttribute('src');figure.hidden=true;
- // Reuse locally bundled, licensed destination photos; never substitute another country.
  const currentCode=item.code;
- loadTravelStops().then(stops=>{
-  if($('todayMapIntro').hidden||$('todayMapIntro').dataset.countryCode!==currentCode)return;
-  const choices=guide?.photos||[];
-  const matching=Object.entries(stops).filter(([key,stop])=>
-   (choices.includes(key)||(!guide&&travelCountryNames(stop.country).includes(item.name)))&&
-   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
-   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
-   typeof stop.license==='string'&&typeof stop.author==='string');
-  matching.sort((a,b)=>choices.indexOf(a[0])-choices.indexOf(b[0]));
-  const picked=matching[0]?.[1];if(!picked)return;
-  photo.alt=picked.place+'の実際の風景写真';
-  photo.onload=()=>{if($('todayMapIntro').dataset.countryCode===currentCode)figure.hidden=false};
-  photo.onerror=()=>{figure.hidden=true};
-  $('todayMapIntroCaption').textContent=picked.photoCaption+'　撮影：'+picked.author+' ／ '+picked.license;
-  photo.src='./'+picked.photoAsset;
- });
+ $('todayMapIntro').dataset.countryCode=currentCode;
+ const photos=TODAY_COUNTRY_PHOTOS[currentCode]||[];
+ photo.removeAttribute('src');
+ photo.onload=null;photo.onerror=null;
+ figure.hidden=!photos.length;
+ $('todayMapIntroCaption').textContent=photos.length?'写真を読み込んでいます…':'この国の写真を準備中です。';
+ // Use a local licensed image first, then a different licensed image or Wikimedia source.
+ // Never silently hide the entire photo panel on a loading failure.
+ let photoIndex=0,sourceIndex=0;
+ function loadNextCountryPhoto(){
+  if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+  const chosen=photos[photoIndex];
+  if(!chosen){$('todayMapIntroCaption').textContent='写真を表示できませんでした。通信状況をご確認ください。';return;}
+  const src=sourceIndex===0?'./'+chosen.asset:chosen.url;
+  photo.alt=chosen.place+'の実際の風景写真';
+  photo.onload=()=>{
+   if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+   figure.hidden=false;
+   $('todayMapIntroCaption').textContent=chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+  };
+  photo.onerror=()=>{
+   if($('todayMapIntro').dataset.countryCode!==currentCode)return;
+   sourceIndex++;
+   if(sourceIndex>1){sourceIndex=0;photoIndex++;}
+   loadNextCountryPhoto();
+  };
+  photo.src=src;
+ }
+ if(photos.length)loadNextCountryPhoto();
  $('todayMapIntro').dataset.countryCode=item.code;
  const read=$('todayMapIntroRead');
  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
