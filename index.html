@@ -1422,11 +1422,7 @@ const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
  FR:[['エッフェル塔',100],['モン・サン＝ミシェル',70]],
  US:[['ニューヨークの街並み',100],['ゴールデンゲートブリッジ',90],['ワイキキ',55]]
 });
-function countryPhotoPriority(code,photo){
- const rules=TODAY_COUNTRY_PHOTO_RULES[code]||[];
- const match=rules.find(([landmark])=>photo.place.includes(landmark));
- return match?match[1]:0;
-}
+
 function todayCountryIntro(item){
  if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
  const region=countryRecord(item.code)?.region;
@@ -1735,6 +1731,11 @@ $('spotlightRead').addEventListener('click',()=>{
 let travelStopsPromise=null;
 let travelExplainerShown=false;
 // Reserve one different postcard per article in the current reading session.
+function countryPhotoPriority(code,photo){
+ const rules=TODAY_COUNTRY_PHOTO_RULES[code]||[];
+ const match=rules.find(([landmark])=>photo.place.includes(landmark));
+ return match?match[1]:0;
+}
 const travelSelections=new Map();
 const travelUsedPhotos=new Set();
 const travelFailedPhotos=new Set();
