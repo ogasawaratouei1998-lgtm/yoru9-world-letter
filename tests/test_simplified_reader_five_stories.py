@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from publish_approved import publish, validate_approved
-from tests.test_publish import fixture
+from test_publish import fixture
 
 ROOT=Path(__file__).resolve().parents[1]
 
