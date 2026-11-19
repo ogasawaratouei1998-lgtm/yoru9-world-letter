@@ -1452,10 +1452,12 @@ function showTodayCountryIntro(item){
  const currentCode=item.code;
  $('todayMapIntro').dataset.countryCode=currentCode;
  const photos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
-  .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place)
+  .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption
+    &&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
- // The cover must be recognizable even without a caption. Secondary scenic
- // photos are only fallbacks and never outrank an iconic national landmark.
+ // Country introductions reject photographs below the 80-point editorial
+ // threshold, even as fallbacks. Never replace a failed iconic photo with
+ // an unrecognizable view simply to fill space.
  photo.removeAttribute('src');
  photo.onload=null;photo.onerror=null;
  figure.hidden=!photos.length;
