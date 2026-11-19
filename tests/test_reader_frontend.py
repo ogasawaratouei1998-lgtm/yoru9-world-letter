@@ -296,7 +296,9 @@ class ReaderFrontendTest(unittest.TestCase):
         import json
         from country_codes import country_codes
         stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
-        issue=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        # Historical November 18 photos are tested against the immutable
+        # archive, not against today's current issue after nightly rollover.
+        issue=json.loads((ROOT/"data/archive/2026-11-18.json").read_text(encoding="utf-8"))
         self.assertEqual(issue["editionDate"],"2026-11-18")
         self.assertEqual(len(issue["stories"]),3)
         for story in issue["stories"]:
