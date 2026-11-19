@@ -857,7 +857,8 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertNotIn(".night-quote button{", page)
         # Article-level sharing remains available for source-attributed news.
         self.assertIn("data-share", page)
-        self.assertIn("navigator.share({title:s.title,text:txt,url:articleUrl})", page)\n        self.assertIn("const articleUrl=new URL(articleRouteHash(s),location.href).href", page)
+        self.assertIn("navigator.share({title:s.title,text:txt,url:articleUrl})", page)
+        self.assertIn("const articleUrl=new URL(articleRouteHash(s),location.href).href", page)
 
     def test_editor_can_prepare_regular_or_special_issue(self):
         page = (ROOT / "editor.html").read_text(encoding="utf-8")
