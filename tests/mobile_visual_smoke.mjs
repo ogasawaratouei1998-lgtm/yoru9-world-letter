@@ -465,8 +465,11 @@ try{
      'answer photos must never reveal the solution before a choice: '+code);
     assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
      'quiz button never selects an article');
-    const curated=['AR','FR','US'].includes(code);
-    for(let round=0;round<(curated?2:1);round++){
+    const curated=['AR','FR','US','GB','ES','JP','NZ'].includes(code);
+    const totalRounds=await quiz.locator('#todayQuizSteps .today-quiz-step').count();
+    assert.equal(totalRounds,curated?2:1,
+     'curated destinations have two meaningful quiz rounds: '+code);
+    for(let round=0;round<totalRounds;round++){
      // The first response can be correct or incorrect; both reveal the answer image.
      await quiz.locator('#todayQuizChoices button').first().click();
      assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true,
@@ -475,7 +478,8 @@ try{
       'answer includes factual local context');
      assert.ok((await quiz.locator('#todayQuizJoke').textContent()).includes('創作の冗談'),
       'fictional humor is clearly labeled');
-     if(curated){
+     const hasPhoto=curated&&!(['ES','NZ'].includes(code)&&round===1);
+     if(hasPhoto){
       await page.waitForFunction(()=>{
        const image=document.querySelector('#todayQuizPhotoImage');
        const frame=document.querySelector('#todayQuizPhotoFigure');
@@ -503,6 +507,9 @@ try{
       await page.locator('#todayQuizPhotoDialogClose').click();
       assert.equal(await page.locator('#todayQuizPhotoDialog').isHidden(),true,
        'photo modal closes');
+     }else if(curated){
+      assert.equal(await quiz.locator('#todayQuizPhotoNotice').isVisible(),true,
+       'when no verified image exists, the quiz explains the omission without a fake photo');
      }
      const next=quiz.locator('#todayQuizNext');
      if((await next.textContent()).includes('次の問題へ'))await next.click();
