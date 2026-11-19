@@ -12,6 +12,7 @@ class VisualQAConfigTests(unittest.TestCase):
         )
         self.assertIn("google-chrome --version", workflow)
         self.assertIn("fonts-noto-cjk", workflow)
+        self.assertNotIn("apt-get update -qq", workflow)
         self.assertIn("fc-list :lang=ja", workflow)
         self.assertIn("node tests/mobile_visual_smoke.mjs", workflow)
 
