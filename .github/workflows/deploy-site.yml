@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'country-highlights.json'
       - 'travel-stops.json'
       - 'index.html'
       - 'tests/**'
