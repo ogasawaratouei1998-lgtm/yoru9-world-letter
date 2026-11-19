@@ -86,6 +86,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
                             if p.get("country") == country and
                             p.get("photoAsset") == hero["asset"]]
                 self.assertEqual(len(matching), 1)
+                self.assertIs(matching[0].get("coverOnly"), True)
                 self.assertTrue(matching[0]["photoPage"].startswith(
                     "https://commons.wikimedia.org/wiki/File:"))
                 self.assertTrue(matching[0]["licenseUrl"].startswith(
