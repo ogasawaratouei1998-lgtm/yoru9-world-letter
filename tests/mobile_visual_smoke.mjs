@@ -446,15 +446,15 @@ try{
     'the passport begins with a visible zero count');
    assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),'0',
     'the accessible collection meter starts at zero');
-   // A country chip opens a separate, quick geography quiz, not a news article.
+   // The stamp album is the only visible quiz launcher; hidden country buttons track completion.
    const previouslySelected=await page.locator('#readerSelected').textContent();
    const quiz=today.locator('#todayCountryQuiz');
    for(let index=0;index<await countryButtons.count();index++){
     const chip=countryButtons.nth(index);
     const code=await chip.getAttribute('data-country-code');
-    await chip.click();
+    await stamps.nth(index).click();
     assert.equal(await quiz.isVisible(),true,
-     'country chip launches a World Passport game: '+code);
+     'visible passport stamp opens the country quiz: '+code);
     assert.equal(await quiz.locator('#todayQuizChoices button').count(),3,
      'the quiz has three real answer choices: '+code);
     assert.ok(await quiz.locator('#todayQuizSteps .today-quiz-step').count()>=1,
