@@ -64,6 +64,8 @@ class HealthCheckTest(unittest.TestCase):
         day="2026-11-20"
         (self.root/"data"/"approved"/(day+".json")).write_text(
             json.dumps({"editionType":"regular","stories":[{}]*6}))
+        (self.root/"data"/"current.json").write_text(
+            json.dumps({"status":"published","editionDate":day,"stories":[{}]*6}))
         ok,message=check_release(
             self.root,datetime.fromisoformat(day+"T22:27:00+09:00"))
         self.assertFalse(ok)
@@ -74,6 +76,8 @@ class HealthCheckTest(unittest.TestCase):
         day="2026-11-18"
         (self.root/"data"/"approved"/(day+".json")).write_text(
             json.dumps({"editionType":"regular","stories":[{}]*4}))
+        (self.root/"data"/"current.json").write_text(
+            json.dumps({"status":"published","editionDate":day,"stories":[{}]*4}))
         ok,message=check_release(
             self.root,datetime.fromisoformat(day+"T22:27:00+09:00"))
         self.assertFalse(ok)
