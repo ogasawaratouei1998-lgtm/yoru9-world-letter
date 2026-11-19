@@ -49,8 +49,13 @@ class HardSurpriseEditionTest(unittest.TestCase):
         expected=validate_approved(approved,'2026-11-18')
         current=json.loads((ROOT/'data/current.json').read_text())
         archive=json.loads((ROOT/'data/archive/2026-11-18.json').read_text())
-        self.assertEqual(expected,current)
+        # A reissued historic edition is immutable, but CURRENT must advance
+        # after newer nightly news is published. Never require a permanent
+        # November 18 current edition (it would break the next release).
         self.assertEqual(expected,archive)
+        self.assertGreaterEqual(current['editionDate'],'2026-11-18')
+        if current['editionDate']=='2026-11-18':
+            self.assertEqual(expected,current)
 
     def test_editorial_immutability_still_blocks_unapproved_replacement(self):
         from datetime import datetime
