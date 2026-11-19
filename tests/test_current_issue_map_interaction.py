@@ -67,7 +67,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         import json
         import re
         page = self.page
-        match = re.search(r"const TODAY_COUNTRY_PHOTOS=Object.freeze\\((\\{.*?\\})\\);", page)
+        match = re.search(r"const TODAY_COUNTRY_PHOTOS=Object.freeze\((\{.*?\})\);", page)
         self.assertIsNotNone(match)
         heroes = json.loads(match.group(1))
         catalog = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
