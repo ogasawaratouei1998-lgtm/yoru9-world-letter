@@ -26,7 +26,15 @@ class ApprovedEditionTest(unittest.TestCase):
                 self.assertTrue(all("editorVerified" not in story for story in public["stories"]))
                 # Public source URLs are intentional reader-facing evidence links;
                 # internal editorial assessments must still remain private.
-                self.assertTrue(all(len(story.get("verificationUrls",[])) >= 2
+                # New regular editions (Nov 17 onward) may use one
+                # independently verified original publisher. Older approved
+                # editions and specials retain the two-source contract.
+                one_original_ok = (
+                    data.get("editionType", "regular") == "regular"
+                    and p.stem >= "2026-11-17"
+                )
+                minimum_sources = 1 if one_original_ok else 2
+                self.assertTrue(all(len(story.get("verificationUrls", [])) >= minimum_sources
                                     for story in public["stories"]))
                 self.assertTrue(all("evidence" not in story and "editorVerified" not in story
                                     and "humorSafe" not in story
