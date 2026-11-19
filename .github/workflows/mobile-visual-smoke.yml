@@ -19,10 +19,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Prepare Playwright with preinstalled Chrome
+      - name: Prepare Playwright, Chrome and Japanese fonts
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1
           google-chrome --version
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          fc-list :lang=ja | grep -q 'Noto Sans CJK JP'
       - name: Check mobile layout, monthly image, reopen behavior
         run: node tests/mobile_visual_smoke.mjs
       - name: Keep diagnostic screenshots
