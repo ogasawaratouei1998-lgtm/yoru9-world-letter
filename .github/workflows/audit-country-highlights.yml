@@ -9,6 +9,7 @@ on:
     branches: [main]
     paths:
       - 'country-highlights.json'
+      - 'country-highlight-sources.json'
       - 'audit_country_highlights.py'
       - 'tests/test_country_highlights_monitor.py'
       - 'data/current.json'
@@ -42,7 +43,7 @@ jobs:
           script: |
             const fs = require('fs');
             const report = JSON.parse(fs.readFileSync('country-highlights-audit.json', 'utf8'));
-            const registry = JSON.parse(fs.readFileSync('country-highlights.json', 'utf8'));
+            const registry = JSON.parse(fs.readFileSync('country-highlight-sources.json', 'utf8'));
             const { owner, repo } = context.repo;
             const title = '国紹介｜時事トピックの補充が必要';
             const marker = '<!-- yoru9-country-highlights-audit -->';
@@ -65,7 +66,7 @@ jobs:
               '国紹介は文化・暮らし中心、小旅行は有名観光地のみ。両者の文章・写真は流用しません。',
               '', '### 補充対象'];
             for (const item of report.urgent) {
-              const source = (registry.highlights[item.country] || []).at(-1)?.sourceUrl;
+              const source = (registry.sources[item.country] || [])[0]?.url;
               lines.push('- **' + item.country + '**：確認済みの新しい文化・社会トピックが必要' +
                 (source ? '（[以前の公式資料](' + source + ')）' : '（公式情報源の選定から必要）'));
             }
