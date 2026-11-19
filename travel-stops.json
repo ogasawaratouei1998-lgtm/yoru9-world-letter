@@ -441,5 +441,53 @@
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Lake_Windermere_Panoramic.jpg",
     "photoAsset": "assets/travel/england-windermere.jpg"
+  },
+  "ar-iguazu-rainbow-hero-postcard": {
+    "country": "アルゼンチン",
+    "countryOnly": true,
+    "place": "イグアスの滝・虹の大瀑布",
+    "region": "ミシオネス州・イグアス国立公園",
+    "latitude": -25.6953,
+    "longitude": -54.4367,
+    "note": "熱帯の緑に囲まれた巨大な滝と、水しぶきの中にかかる虹。アルゼンチン側のイグアスを象徴する壮大な眺めです。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg",
+    "photoCaption": "アルゼンチン側のイグアスの滝と虹（2017年撮影）",
+    "author": "Pipovci",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_.jpg",
+    "photoAsset": "assets/travel/iguazu-rainbow-cover.jpg"
+  },
+  "fr-mont-sunset-hero-postcard": {
+    "country": "フランス",
+    "countryOnly": true,
+    "place": "モン・サン＝ミシェルの夕景",
+    "region": "ノルマンディー・モン・サン＝ミシェル湾",
+    "latitude": 48.6361,
+    "longitude": -1.5115,
+    "note": "夕陽と水面に映る修道院のシルエット。潮の満ち引きが生み出す、フランス屈指の幻想的な風景です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
+    "photoCaption": "夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）",
+    "author": "Giles Laurent",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
+    "photoAsset": "assets/travel/mont-saint-michel-sunset-cover.jpg"
+  },
+  "us-golden-gate-sunset-hero-postcard": {
+    "country": "アメリカ合衆国",
+    "countryOnly": true,
+    "place": "ゴールデンゲートブリッジ・夕景",
+    "region": "カリフォルニア州・サンフランシスコ",
+    "latitude": 37.8199,
+    "longitude": -122.4783,
+    "note": "夕暮れの海峡を横切る赤い大橋と、穏やかなサンフランシスコ湾。アメリカ西海岸を象徴する眺めです。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg",
+    "photoCaption": "夕暮れのゴールデンゲートブリッジ（2007年撮影）",
+    "author": "Rich Niewiroski Jr.",
+    "license": "CC BY 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg",
+    "photoAsset": "assets/travel/golden-gate-sunset-cover.jpg"
   }
 }
