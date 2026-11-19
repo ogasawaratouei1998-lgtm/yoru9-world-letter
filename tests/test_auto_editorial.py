@@ -56,7 +56,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             pool,Counter(),Counter(),Counter(),
             Counter({"US":50,"FR":12,"JP":3}))
         self.assertIn("TW",{item["country"] for item in chosen})
-        self.assertEqual(len(chosen),3)
+        self.assertEqual(len(chosen),4)
 
     def test_older_cross_border_editions_contribute_two_real_locations(self):
         from datetime import date
@@ -123,16 +123,16 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ])
         chosen=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
         from country_codes import country_region
-        self.assertEqual(len(chosen),3)
-        self.assertEqual(len({country_region(s["country"]) for s in chosen}),3)
-        self.assertEqual(len({s["category"] for s in chosen}),3)
+        self.assertEqual(len(chosen),5)
+        self.assertEqual(len({country_region(s["country"]) for s in chosen}),5)
+        self.assertEqual(len({s["category"] for s in chosen}),4)
 
     def test_verified_selection_prioritizes_underrepresented_countries_in_tie(self):
         from collections import Counter
-        pool=[{"id":v,"country":v,"category":"work"} for v in ("US","CA","MX","FR")]
+        pool=[{"id":v,"country":v,"category":"work"} for v in ("US","CA","MX","FR","JP","BR")]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter({"US":18,"CA":1,"MX":2,"FR":1}),Counter())
-        self.assertEqual({s["country"] for s in chosen},{"CA","MX","FR"})
+        self.assertEqual({s["country"] for s in chosen},{"CA","MX","FR","JP","BR"})
 
     def test_final_selection_prioritizes_neglected_categories_not_corporate_volume(self):
         from collections import Counter
@@ -143,6 +143,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             {"id":"sp","country":"BR","category":"sports","title":"Referee makes a mistake"},
             {"id":"pe","country":"JP","category":"person","title":"Tourist mistaken identity"},
             {"id":"wo","country":"GB","category":"work","title":"Chef wrong order"},
+            {"id":"pe2","country":"IT","category":"person","title":"Funny personal decision"},
+            {"id":"sp2","country":"CA","category":"sports","title":"Sports surprise"},
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter({"company":16,"work":2,"person":0,"sports":1}))
@@ -155,6 +157,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             {"id":"order","country":"JP","category":"person","title":"注文が別の人へ"},
             {"id":"work","country":"GB","category":"work","title":"店員が勘違い"},
             {"id":"sports","country":"BR","category":"sports","title":"審判の珍事"},
+            {"id":"other","country":"US","category":"work","title":"仕事の珍事"},
+            {"id":"bonus","country":"FR","category":"person","title":"家族の勘違い"},
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter(),Counter({"signs":12,"orders":0}))
@@ -697,12 +701,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),20),2):",source)
-        self.assertIn("Three eligible comedy drafts reserved: moving to independent fact review.",source)
+        self.assertIn("Five eligible comedy drafts reserved: moving to independent fact review.",source)
 
     def test_draft_recovery_targets_three_before_fact_review_and_respects_quota(self):
         import inspect
         code=inspect.getsource(editorial.main)
-        self.assertIn('draft_preflight_viable(item,now) for item in draft)<3',code)
+        self.assertIn('draft_preflight_viable(item,now) for item in draft)<5',code)
         self.assertIn('for start in range(0,min(len(retry_candidates),20),2):',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
@@ -804,7 +808,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
-    def test_four_or_more_verified_candidates_result_in_three_selected_stories(self):
+    def test_four_or_more_verified_candidates_are_not_discarded_until_five(self):
         import auto_editorial
         from collections import Counter
         pool=[
@@ -813,23 +817,28 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             {'id':'Brazil','country':'ブラジル','category':'company'},
             {'id':'France','country':'フランス','category':'sports'},
         ]
-        # Four articles may be vetted; selection must reduce to three.
+        # Four independently verified articles are all eligible; five is the cap.
         selected=auto_editorial.select_diverse_verified_stories(pool,Counter(),Counter())
-        self.assertEqual(len(selected),3)
+        self.assertEqual(len(selected),4)
         self.assertTrue(all(story in pool for story in selected))
-        self.assertEqual(len({story['id'] for story in selected}),3)
+        self.assertEqual(len({story['id'] for story in selected}),4)
+        expanded=pool+[
+            {"id":"India","country":"インド","category":"person"},
+            {"id":"UK","country":"イギリス","category":"work"},
+        ]
+        self.assertEqual(len(auto_editorial.select_diverse_verified_stories(expanded,Counter(),Counter())),5)
         # Publishing a short edition must remain possible: neither one nor
         # two should be discarded merely because the target is three.
         for count in (1,2):
             self.assertEqual(len(auto_editorial.select_diverse_verified_stories(
                 pool[:count],Counter(),Counter())),count)
 
-    def test_new_editorial_caps_three_and_legacy_publisher_supports_five(self):
+    def test_new_editorial_caps_five_and_publisher_supports_five(self):
         from pathlib import Path
         root = Path(__file__).resolve().parents[1]
         editorial = (root / "auto_editorial.py").read_text(encoding="utf-8")
         publisher = (root / "publish_approved.py").read_text(encoding="utf-8")
-        self.assertIn("min(3,len(pool))", editorial)
+        self.assertIn("min(5,len(pool))", editorial)
         self.assertIn("1 <= len(stories) <= 5", publisher)
         self.assertIn("if not selected:", editorial)
 
