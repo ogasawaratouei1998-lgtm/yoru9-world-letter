@@ -1252,6 +1252,31 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .today-map-intro .today-map-intro-lead{font-size:1.1rem}
  .today-map-intro-photo img{aspect-ratio:4/3;max-height:360px}
  .today-map-intro p{font-size:1rem;line-height:1.9}}
+/* Narrow iPhone layout: prevent the gallery hint from overflowing its cover. */
+@media(max-width:520px){
+ #atlasHero .issue-gallery{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ #atlasHero .gallery-heading{display:grid!important;grid-template-columns:minmax(0,1fr);
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden;gap:3px}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  flex:none;overflow-wrap:anywhere;white-space:normal;word-break:normal;text-align:left}
+}
+/* Country features deserve a large landscape and generous editorial typography. */
+.today-map-intro{padding:clamp(16px,3.8vw,27px);border-radius:17px;
+ background:linear-gradient(155deg,#18334b,#122738);box-shadow:0 12px 32px #07142638}
+.today-map-intro h4{font-size:clamp(1.5rem,4.5vw,2rem);letter-spacing:-.015em}
+.today-map-intro .today-map-intro-lead{font-size:clamp(1.04rem,3.25vw,1.22rem);line-height:1.75}
+.today-map-intro-photo{margin:16px 0 17px;border:1px solid #9cc5c1;
+ box-shadow:0 9px 23px #0714264d;background:#243f54}
+.today-map-intro-photo img{width:100%;height:auto;aspect-ratio:16/10;
+ object-fit:cover;object-position:center;max-height:440px}
+.today-map-intro-photo figcaption{font-size:.75rem;line-height:1.65;padding:9px 12px}
+.today-map-intro p{font-size:1rem;line-height:2}
+@media(max-width:520px){
+ .today-map-intro{padding:16px 13px}
+ .today-map-intro-photo img{aspect-ratio:4/3;max-height:none}
+ .today-map-intro h4{font-size:1.55rem}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1461,11 +1486,12 @@ function showTodayCountryIntro(item){
  $('todayMapIntro').dataset.countryCode=currentCode;
  const photos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
   .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption
-    &&countryPhotoPriority(currentCode,p)>=80)
+    &&countryPhotoPriority(currentCode,p)>=80&&!travelUsedPhotos.has(p.asset))
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
  // Country introductions reject photographs below the 80-point editorial
  // threshold, even as fallbacks. Never replace a failed iconic photo with
  // an unrecognizable view simply to fill space.
+ displayedCountryCoverAssets.delete(currentCode);
  photo.removeAttribute('src');
  photo.onload=null;photo.onerror=null;
  figure.hidden=!photos.length;
@@ -1476,7 +1502,7 @@ function showTodayCountryIntro(item){
  function loadNextCountryPhoto(){
   if($('todayMapIntro').dataset.countryCode!==currentCode)return;
   const chosen=photos[photoIndex];
-  if(!chosen){$('todayMapIntroCaption').textContent='写真を表示できませんでした。通信状況をご確認ください。';return;}
+  if(!chosen){displayedCountryCoverAssets.delete(currentCode);$('todayMapIntroCaption').textContent='写真を表示できませんでした。通信状況をご確認ください。';return;}
   const src=sourceIndex===0?'./'+chosen.asset:chosen.url;
   photo.alt=chosen.place+'の実際の風景写真';
   photo.onload=()=>{
