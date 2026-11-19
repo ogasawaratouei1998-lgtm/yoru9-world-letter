@@ -1,11 +1,13 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v16';
+const SHELL_CACHE = 'yoru9-shell-v17';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'country-catalog.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
  'assets/news/coffee-rescue.svg', 'assets/news/road-typo.svg', 'assets/news/monkey-patrol.svg',
  'assets/news/own-goal-keeper.svg', 'assets/news/police-sweets-wanted.svg',
  'assets/news/mouse-83-tattoos.svg',
+ 'assets/travel/iguazu-rainbow-cover.jpg', 'assets/travel/mont-saint-michel-sunset-cover.jpg',
+ 'assets/travel/golden-gate-sunset-cover.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
