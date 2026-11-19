@@ -1211,11 +1211,17 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill}
 .today-map-pins{position:absolute;inset:0;pointer-events:none}
 .today-map-pin{position:absolute;display:flex;justify-content:center;align-items:center;
- width:36px;height:36px;padding:0;transform:translate(-50%,-50%);
+ width:36px;height:36px;padding:0;
+ transform:translate(calc(-50% + var(--map-dx,0px)),calc(-50% + var(--map-dy,0px)));
+ scroll-margin-top:116px;
  border:2.5px solid #fff;border-radius:50%;background:var(--country-color,#FFF0C9);
  color:#283E56;box-shadow:0 3px 7px #233F5999;font:900 .9rem system-ui,sans-serif;
  line-height:1;z-index:1;cursor:pointer;pointer-events:auto;touch-action:manipulation}
 .today-map-pin::before{content:'';position:absolute;inset:-5px;border-radius:50%}
+.today-map-tether{position:absolute;height:2px;background:#213E59AA;pointer-events:none;
+ transform-origin:left center;z-index:0}
+.today-map-tether::before{content:'';position:absolute;left:-3px;top:-3px;
+ width:8px;height:8px;border-radius:50%;background:#22455B;border:1px solid #F5F9E9}
 .today-map-pin[aria-expanded="true"]{outline:3px solid #283E56;outline-offset:2px;z-index:2}
 .today-map-pin:focus-visible{outline:3px solid #283E56;outline-offset:3px}
 .today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
@@ -1629,6 +1635,61 @@ function showTodayCountryIntro(item){
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===item.code)));
  $('todayMapIntro').scrollIntoView({block:'nearest'});
 }
+// Country centroid pins stay geographically anchored. On narrow displays,
+// push only the visible marker aside when two 44px tap targets would overlap,
+// then draw a leader from the true representative point to its displaced pin.
+function positionTodayMapPins(){
+ const layer=$('todayMapPins');
+ if(!layer||!layer.clientWidth||!layer.clientHeight)return;
+ layer.querySelectorAll('.today-map-tether').forEach(element=>element.remove());
+ const width=layer.clientWidth,height=layer.clientHeight;
+ const used=[];
+ const offsets=[[0,0],[24,30],[-24,30],[24,-30],[-24,-30],
+  [-49,0],[49,0],[0,49],[0,-49],[50,30],[-50,30],
+  [50,-30],[-50,-30],[0,74],[0,-74],[74,0],[-74,0]];
+ for(const pin of layer.querySelectorAll('.today-map-pin')){
+  const anchorX=Number(pin.dataset.mapX)*width/100;
+  const anchorY=Number(pin.dataset.mapY)*height/100;
+  const radius=22;
+  let chosen=null;
+  for(const [dx,dy] of offsets){
+   const x=anchorX+dx,y=anchorY+dy;
+   if(x<radius||y<radius||x>width-radius||y>height-radius)continue;
+   if(used.every(point=>Math.hypot(point.x-x,point.y-y)>=46)){
+    chosen={x,y,dx,dy};break;
+   }
+  }
+  if(!chosen){
+   // Fallback for unusually crowded editions: keep the marker within the
+   // map and choose the largest separation instead of covering another pin.
+   const options=offsets.map(([dx,dy])=>({
+    x:Math.max(radius,Math.min(width-radius,anchorX+dx)),
+    y:Math.max(radius,Math.min(height-radius,anchorY+dy))
+   }));
+   options.sort((a,b)=>{
+    const gap=point=>used.length?Math.min(...used.map(p=>Math.hypot(p.x-point.x,p.y-point.y))):10000;
+    return gap(b)-gap(a);
+   });
+   chosen={...options[0],dx:options[0].x-anchorX,dy:options[0].y-anchorY};
+  }
+  used.push(chosen);
+  pin.style.setProperty('--map-dx',chosen.dx+'px');
+  pin.style.setProperty('--map-dy',chosen.dy+'px');
+  if(Math.hypot(chosen.dx,chosen.dy)<2){
+   pin.removeAttribute('aria-description');
+   continue;
+  }
+  pin.setAttribute('aria-description','近接する国との重複を避けています。線の起点が国の代表位置です。');
+  const tether=document.createElement('span');
+  tether.className='today-map-tether';
+  tether.setAttribute('aria-hidden','true');
+  tether.style.left=anchorX+'px';tether.style.top=anchorY+'px';
+  tether.style.width=Math.hypot(chosen.dx,chosen.dy)+'px';
+  tether.style.transform='rotate('+Math.atan2(chosen.dy,chosen.dx)+'rad)';
+  layer.insertBefore(tether,pin);
+ }
+}
+window.addEventListener('resize',()=>requestAnimationFrame(positionTodayMapPins));
 function renderTodayMap(){
  const section=$('todayMapSection');
  if(!section)return;
@@ -1661,6 +1722,8 @@ function renderTodayMap(){
    pin.style.setProperty('--country-color',color);
    pin.style.left=item.point.x.toFixed(3)+'%';
    pin.style.top=item.point.y.toFixed(3)+'%';
+   pin.dataset.mapX=String(item.point.x);
+   pin.dataset.mapY=String(item.point.y);
    pin.addEventListener('click',()=>showTodayCountryIntro(item));
    pins.append(pin);
   }
@@ -1682,6 +1745,7 @@ function renderTodayMap(){
   $('todayMapNote').textContent='地図のピンは国の紹介、下の国名ボタンはクイズです。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
  updateWorldPassportButtons();
+ positionTodayMapPins();
 }
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 // Bind UI events outside the pure country-coordinate module used by regression tests.
