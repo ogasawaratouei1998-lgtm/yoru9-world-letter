@@ -1459,6 +1459,67 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
  .today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
  .today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:none}}
 
+/* Every correct quiz answer gets a non-blocking, immediate sparkle burst. */
+#todayQuizChoices{position:relative;isolation:isolate}
+#todayQuizChoices button{position:relative;overflow:visible;transform-origin:center center}
+#todayQuizChoices button[data-popped="true"]{
+ z-index:2;border-color:#FFF6BA;background:linear-gradient(110deg,#286F5B,#3D8570);
+ box-shadow:0 0 0 2px #F3DF9A,0 0 23px #FFD97C99;
+ animation:quiz-choice-pop .52s cubic-bezier(.22,1.45,.32,1) 1 both}
+.quiz-answer-sparks{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:visible}
+.quiz-answer-sparks span{position:absolute;left:50%;top:50%;opacity:0;
+ color:#FFE5A1;font-size:clamp(1.1rem,4vw,1.6rem);font-weight:950;
+ text-shadow:0 1px 8px #F0D18DD0;line-height:1;white-space:nowrap}
+.quiz-answer-sparks span:nth-child(1){--x:-104px;--y:-58px;--r:-60deg;--delay:0ms}
+.quiz-answer-sparks span:nth-child(2){--x:-62px;--y:-76px;--r:65deg;--delay:50ms}
+.quiz-answer-sparks span:nth-child(3){--x:6px;--y:-84px;--r:15deg;--delay:95ms}
+.quiz-answer-sparks span:nth-child(4){--x:72px;--y:-66px;--r:80deg;--delay:30ms}
+.quiz-answer-sparks span:nth-child(5){--x:108px;--y:-26px;--r:125deg;--delay:65ms}
+.quiz-answer-sparks span:nth-child(6){--x:104px;--y:49px;--r:60deg;--delay:85ms}
+.quiz-answer-sparks span:nth-child(7){--x:48px;--y:70px;--r:110deg;--delay:40ms}
+.quiz-answer-sparks span:nth-child(8){--x:-18px;--y:68px;--r:-45deg;--delay:95ms}
+.quiz-answer-sparks span:nth-child(9){--x:-85px;--y:52px;--r:-95deg;--delay:30ms}
+.quiz-answer-sparks span:nth-child(10){--x:-109px;--y:-8px;--r:-120deg;--delay:70ms}
+.quiz-answer-sparks[data-active="true"] span{
+ animation:quiz-sparkle-fly .78s ease-out var(--delay) 1 both}
+@keyframes quiz-sparkle-fly{
+ 0%{opacity:0;transform:translate(-50%,-50%) rotate(0deg) scale(.3)}
+ 24%{opacity:1;transform:translate(-50%,-50%) rotate(8deg) scale(1.28)}
+ 100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(.72)}}
+@keyframes quiz-choice-pop{
+ 0%{transform:scale(.97)} 40%{transform:scale(1.055)} 75%{transform:scale(.99)} 100%{transform:scale(1)}}
+.today-quiz-correct-flash[hidden]{display:none!important}
+.today-quiz-correct-flash{display:flex;align-items:center;justify-content:center;gap:10px;
+ margin:10px auto 0;padding:8px 12px;max-width:285px;min-height:44px;
+ border:1px solid #FFE6A1;border-radius:40px;background:linear-gradient(125deg,#3A7767,#2C554E);
+ color:#FFF2BF;font-size:1.05rem;line-height:1.4;text-align:center;
+ box-shadow:0 4px 18px #FAD17F44;animation:quiz-flash-appear .5s ease-out both}
+.today-quiz-correct-flash span{font-size:1.4rem;line-height:1;color:#FFE5A1}
+@keyframes quiz-flash-appear{
+ 0%{opacity:0;transform:translateY(10px) scale(.84)}
+ 75%{opacity:1;transform:translateY(-2px) scale(1.055)}
+ 100%{opacity:1;transform:translateY(0) scale(1)}}
+.today-quiz-reward[data-perfect="true"]{border-color:#FFF4BE;
+ box-shadow:0 0 0 3px #F9D99199,0 0 35px #FFD77B6B}
+.today-quiz-reward[data-perfect="true"] .passport-sparkles span{
+ animation:passport-sparkle 1.15s ease-out var(--delay) 1 both}
+.today-passport-board[data-celebrate="true"] .today-passport-count{
+ animation:quiz-collection-victory .8s cubic-bezier(.18,1.25,.34,1) both}
+@keyframes quiz-collection-victory{
+ 0%{transform:scale(.7)}45%{transform:scale(1.3);box-shadow:0 0 28px #FFE4AAB0}
+ 100%{transform:scale(1)}}
+@media(max-width:520px){.quiz-answer-sparks span{font-size:1.22rem}
+ .today-quiz-correct-flash{font-size:.99rem}}
+@media(prefers-reduced-motion:reduce){
+ #todayQuizChoices button[data-popped="true"],
+ .quiz-answer-sparks[data-active="true"] span,
+ .today-quiz-correct-flash,
+ .today-quiz-reward[data-perfect="true"] .passport-sparkles span,
+ .today-passport-board[data-celebrate="true"] .today-passport-count{
+  animation:none!important}
+ .quiz-answer-sparks{display:none}
+}
+
 /* Answer photos are visually prominent but never reveal the solution before answering. */
 .today-quiz-photo{margin:14px 0 12px;border:1px solid #A1DAD0;border-radius:15px;
  overflow:hidden;background:#24425A;box-shadow:0 10px 24px #061F3150}
@@ -1562,6 +1623,7 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
    <div class="today-quiz-steps" id="todayQuizSteps" role="group" aria-label="問題の進み具合"></div>
    <p class="today-quiz-question" id="todayQuizQuestion"></p>
    <div class="today-quiz-choices" id="todayQuizChoices" role="group" aria-label="3択の回答"></div>
+   <div class="today-quiz-correct-flash" id="todayQuizCorrectFlash" aria-hidden="true" hidden><span>✦</span><strong id="todayQuizCorrectFlashLabel">正解！</strong><span>✦</span></div>
    <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>
     <p class="today-quiz-verdict" id="todayQuizVerdict"></p>
     <div class="today-quiz-reward" id="todayQuizStampReward" role="status" aria-live="polite" hidden>
