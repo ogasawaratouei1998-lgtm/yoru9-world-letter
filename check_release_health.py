@@ -23,8 +23,17 @@ def check_release(root: Path, now: datetime):
     current = json.loads(current_file.read_text(encoding="utf-8"))
     approved_data=json.loads(approved.read_text(encoding="utf-8"))
     expected_count=len(approved_data.get("stories",[]))
-    is_legacy=issue_date<"2026-11-17" or approved_data.get("editionType")=="special"
-    if not ((expected_count==5) if is_legacy else (1<=expected_count<=3)):
+    kind=approved_data.get("editionType","regular")
+    if kind=="special":
+        valid_count=expected_count==5
+    elif kind=="regular":
+        # Match the nightly publisher and notification sender: November 19
+        # onward permits one to five carefully reviewed stories.
+        max_regular=5 if now.date().isoformat()>="2026-11-19" else 3
+        valid_count=1<=expected_count<=max_regular
+    else:
+        valid_count=False
+    if not valid_count:
         return False, "承認済み記事数が配信ルールを満たしません"
     if not (current.get("status") == "published" and
             current.get("editionDate") == issue_date and
