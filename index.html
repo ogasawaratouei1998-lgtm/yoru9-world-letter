@@ -1408,7 +1408,7 @@ const TODAY_COUNTRY_INTROS=Object.freeze({
 const TODAY_COUNTRY_PHOTOS=Object.freeze({"AR":[{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側"},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ"},{"asset":"assets/travel/hawaii-waikiki.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Waikiki_Beach%2C_Hawaii.jpg/500px-Waikiki_Beach%2C_Hawaii.jpg","caption":"ハワイ・ワイキキの海と波（2018年撮影）","author":"Julianibarra","license":"CC0 1.0","place":"ワイキキビーチ"}]});
 const TODAY_COUNTRY_GUIDES=Object.freeze({
  AR:{lead:'氷河とタンゴ、雄大な自然が息づく南米の国',body:'首都ブエノスアイレスでは、ヨーロッパの面影を残す街並みとタンゴの文化が出迎えてくれます。北東部のイグアスの滝は熱帯の森に包まれ、南へ向かえばパタゴニアの氷河や風の強い大地が広がります。牛肉料理のアサードやマテ茶も日常に根づく楽しみです。',facts:['首都：ブエノスアイレス','風景：イグアスの滝・パタゴニア','文化：タンゴ・マテ茶'],photos:['ar-iguazu-postcard','ar-casa-rosada-postcard']},
- FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリの美術館やカフェはもちろん、フランスの魅力は地方にも広がります。ノルマンディーの海辺には潮の満ち引きで表情を変えるモン・サン＝ミシェルがあり、南には地中海沿岸の陽光、東にはアルプスの山並み。パンやチーズ、郷土料理にも地域ごとの個性が息づいています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-mont-saint-michel-postcard','fr-eiffel-postcard']},
+ FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリの美術館やカフェはもちろん、フランスの魅力は地方にも広がります。ノルマンディーの海辺には潮の満ち引きで表情を変えるモン・サン＝ミシェルがあり、南には地中海沿岸の陽光、東にはアルプスの山並み。パンやチーズ、郷土料理にも地域ごとの個性が息づいています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-eiffel-postcard','fr-mont-saint-michel-postcard']},
  US:{lead:'大自然から大都市まで、景色が劇的に変わる旅',body:'ニューヨークの摩天楼やサンフランシスコの湾岸から、ヨセミテの花崗岩の谷、グランドキャニオンの地層まで、同じ国とは思えないほど多彩な風景が続きます。音楽、映画、食文化にも地域ごとの歴史が反映され、旅先によってまったく異なる表情に出会えます。',facts:['首都：ワシントンD.C.','風景：ヨセミテ・グランドキャニオン','文化：ジャズ・映画・多彩な食文化'],photos:['us-golden-gate-postcard','us-waikiki-postcard']}
 });
 function todayCountryIntro(item){
@@ -1435,7 +1435,10 @@ function showTodayCountryIntro(item){
  const figure=$('todayMapIntroFigure'),photo=$('todayMapIntroImage');
  const currentCode=item.code;
  $('todayMapIntro').dataset.countryCode=currentCode;
- const photos=TODAY_COUNTRY_PHOTOS[currentCode]||[];
+ const photos=(TODAY_COUNTRY_PHOTOS[currentCode]||[]).slice();
+ // The first image must immediately communicate the country; scenic but
+ // visually ambiguous secondary destinations remain fallbacks only.
+ if(currentCode==='FR')photos.sort((a,b)=>Number(b.place.includes('エッフェル塔'))-Number(a.place.includes('エッフェル塔')));
  photo.removeAttribute('src');
  photo.onload=null;photo.onerror=null;
  figure.hidden=!photos.length;
