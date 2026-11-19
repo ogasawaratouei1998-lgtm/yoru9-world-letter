@@ -66,7 +66,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("todayMapIntroNewsBody", page)
         self.assertIn("item.indices", page)
         self.assertIn("todayMapIntroPhotoStatus", page)
-        self.assertIn("今日の実話", page.replace("この国から届いた実話", "今日の実話"))
+        self.assertIn("この国から届いた実話", page)
         self.assertIn("loadTravelStops().then(stops=>", page)
         self.assertIn("travelPhotoOptions(stops)", page)
         self.assertIn("countryKeys(stop.country).includes(currentCode)", page)
