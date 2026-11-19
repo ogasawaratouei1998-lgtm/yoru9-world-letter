@@ -246,7 +246,9 @@ jobs:
       # This recovers a push that failed after a successful Pages deployment.
       - name: Dispatch optional release notification (server must be configured)
         if: success()
+        timeout-minutes: 3
         env:
           PUSH_DISPATCH_URL: ${{ secrets.PUSH_DISPATCH_URL }}
           PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
+          PYTHONUNBUFFERED: '1'
         run: python send_release_notice.py
