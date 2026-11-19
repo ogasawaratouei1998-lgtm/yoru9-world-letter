@@ -42,6 +42,43 @@ class HealthCheckTest(unittest.TestCase):
         self.assertTrue(ok,detail)
         self.assertIn("3本",detail)
 
+    def test_four_and_five_story_editions_are_healthy_after_november_19(self):
+        import json
+        for count in (4, 5):
+            with self.subTest(approved_count=count):
+                day="2026-11-20"
+                now=datetime.fromisoformat(day+"T22:27:00+09:00")
+                issue={"status":"published","editionDate":day,"stories":[{}]*count}
+                (self.root/"data"/"approved"/(day+".json")).write_text(
+                    json.dumps({"editionType":"regular","stories":[{}]*count}))
+                (self.root/"data"/"current.json").write_text(json.dumps(issue))
+                (self.root/"data"/"archive"/(day+".json")).write_text(json.dumps(issue))
+                (self.root/"data"/"archive"/"index.json").write_text(
+                    json.dumps({"issues":[{"date":day}]}))
+                ok,message=check_release(self.root,now)
+                self.assertTrue(ok,message)
+                self.assertIn(str(count)+"本",message)
+
+    def test_six_story_edition_is_invalid_and_alerts(self):
+        import json
+        day="2026-11-20"
+        (self.root/"data"/"approved"/(day+".json")).write_text(
+            json.dumps({"editionType":"regular","stories":[{}]*6}))
+        ok,message=check_release(
+            self.root,datetime.fromisoformat(day+"T22:27:00+09:00"))
+        self.assertFalse(ok)
+        self.assertIn("配信ルール",message)
+
+    def test_previous_three_story_limit_is_preserved(self):
+        import json
+        day="2026-11-18"
+        (self.root/"data"/"approved"/(day+".json")).write_text(
+            json.dumps({"editionType":"regular","stories":[{}]*4}))
+        ok,message=check_release(
+            self.root,datetime.fromisoformat(day+"T22:27:00+09:00"))
+        self.assertFalse(ok)
+        self.assertIn("配信ルール",message)
+
     def test_archive_difference_triggers_failure(self):
         import json
         self.time=datetime.fromisoformat("2026-11-17T22:27:00+09:00")
