@@ -68,7 +68,7 @@ self.addEventListener('fetch', event => {
 
   // New countries may have licensed, build-bundled postcards not in the fixed
   // offline shell. Cache these on first use, then keep a last-known-good copy.
-  if (/^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(relative)) {
+  if (/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)) {
     event.respondWith(fetch(req).then(response => {
       if (response.ok) {
         const copy = response.clone();
