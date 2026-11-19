@@ -28,7 +28,7 @@ function element(){
   getAttribute(k){return this.attrs[k]},
   querySelector(x){return x==='[data-travel-slot]'?this.travelSlot:null;},
   querySelectorAll(){return []},
-  focus(){},scrollIntoView(){}};
+  addEventListener(){},focus(){},scrollIntoView(){}};
 }
 const dom={};
 const $=id=>(dom[id]??=element());
