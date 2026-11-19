@@ -1375,6 +1375,62 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
 @media(max-width:520px){.today-country-quiz{padding:14px 12px}
  .today-map-game-lead{font-size:.8rem}.today-quiz-question{font-size:1.05rem}}
 
+/* Country quiz collection is visible before and after playing, not only in the quiz. */
+.today-passport-board{margin:12px 0 14px;padding:15px 13px;border-radius:17px;border:2px solid #CEAC73;
+ background:radial-gradient(circle at 92% 5%,#D3AB6033,transparent 55%),linear-gradient(145deg,#244259,#142B43);
+ box-shadow:0 8px 22px #06162955}
+.today-passport-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.today-passport-eyebrow{font-size:.65rem;letter-spacing:.09em;color:#B7E3DF;margin:0 0 4px;font-weight:900}
+.today-passport-head h4{margin:0;color:#FFF0C9;font-size:1.15rem;font-weight:900}
+.today-passport-count{border-radius:22px;padding:7px 11px;background:#FFDE9D;color:#1A3041;font-weight:950;white-space:nowrap}
+.today-passport-meter{height:13px;margin:13px 0 9px;overflow:hidden;border-radius:40px;background:#102839;border:1px solid #93B7B3}
+.today-passport-meter-fill{height:100%;width:0;background:linear-gradient(90deg,#92DEC6,#FFE7AB);border-radius:40px;transition:width .4s ease}
+.today-passport-message{margin:0 0 13px;color:#FFE6B0;font-size:.85rem;line-height:1.55;font-weight:850}
+.today-passport-stamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(101px,1fr));gap:8px}
+.today-passport-stamp{min-width:0;min-height:109px;border:2px dashed #829CAB;border-radius:14px;background:#22374A;
+ padding:8px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;
+ font:inherit;color:#E5EBEF;touch-action:manipulation}
+.today-passport-stamp[data-earned="true"]{border:2px solid #FFDE9E;background:linear-gradient(155deg,#55503D,#294947);box-shadow:inset 0 0 0 2px #9A8158}
+.today-passport-stamp-seal{height:51px;width:51px;border-radius:50%;display:grid;place-items:center;
+ background:#193347;border:2px dashed #95A9B4;color:#B8CDD4;transform:rotate(-10deg);font-size:1.55rem}
+.today-passport-stamp[data-earned="true"] .today-passport-stamp-seal{border:4px double #805638;outline:2px solid #F6D198;
+ background:radial-gradient(circle,#FFE9B3,#DFA267);color:#614127;transform:rotate(-13deg)}
+.today-passport-stamp-country{font-size:.79rem;font-weight:900;line-height:1.4;overflow-wrap:anywhere;text-align:center}
+.today-passport-stamp-status{font-size:.68rem;color:#CFDEDF;line-height:1.3;text-align:center}
+.today-passport-stamp[data-earned="true"] .today-passport-stamp-status{color:#FFECB7}
+.today-passport-hint{font-size:.73rem;color:#BED7DA;line-height:1.55;margin:10px 0 0}
+.today-passport-board[data-complete="true"]{border-color:#FFE4A0;box-shadow:0 0 0 2px #B78C5B55,0 9px 25px #09182D}
+.today-quiz-steps{display:flex;gap:7px;margin:8px 0 13px}
+.today-quiz-step{flex:1;height:9px;border-radius:12px;background:#47647A;border:1px solid #68939A}
+.today-quiz-step[data-step="current"]{background:#FFE3A7;border-color:#FFF0CC}
+.today-quiz-step[data-step="done"]{background:#97E6C8;border-color:#D2FAE8}
+.today-quiz-reward[hidden],.today-quiz-next-country[hidden]{display:none!important}
+.today-quiz-reward{margin:15px 0 11px;padding:13px;display:flex;align-items:center;gap:13px;
+ border-radius:16px;border:2px solid #FFE4A9;background:linear-gradient(135deg,#665235,#2C5353);box-shadow:0 6px 20px #0B1B2D60}
+.today-quiz-reward-seal{flex:none;width:73px;height:73px;border:5px double #7E5434;outline:2px solid #F9D394;
+ border-radius:50%;background:radial-gradient(circle,#FFF2CC,#E1A56B);color:#53381F;
+ display:grid;place-items:center;font-size:.9rem;font-weight:950;text-align:center;transform:rotate(-12deg)}
+.today-quiz-reward strong{display:block;color:#FFF2BF;font-size:1.08rem;line-height:1.5}
+.today-quiz-reward p{font-size:.81rem;color:#EFF7EE;line-height:1.5;margin:5px 0 0}
+.today-quiz-next-country{display:block;width:100%;min-height:48px;margin-top:9px;
+ background:#306957;color:#fff;border:1px solid #B2EAD2;border-radius:11px;font-size:.94rem;font-weight:850;padding:9px}
+.today-quiz-choices button[data-correct="true"]::after{content:" ✓";color:#BFFFF1;font-weight:950}
+.today-quiz-choices button[data-picked-wrong="true"]::after{content:" ✕";color:#FFE4DA;font-weight:950}
+.today-passport-stamp:focus-visible,.today-quiz-next-country:focus-visible{outline:3px solid white;outline-offset:3px}
+.today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
+.today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:passport-stamp-drop .65s cubic-bezier(.18,1.35,.27,1)}
+@keyframes passport-stamp-drop{0%{opacity:0;transform:translateY(-29px) rotate(-28deg) scale(1.4)}
+ 55%{opacity:1;transform:translateY(3px) rotate(-7deg) scale(.84)}
+ 100%{transform:rotate(-12deg) scale(1)}}
+@media(max-width:520px){.today-passport-board{padding:13px 10px}
+ .today-passport-stamps{grid-template-columns:repeat(auto-fit,minmax(87px,1fr));gap:7px}
+ .today-passport-stamp{min-height:105px;padding:7px 4px}
+ .today-passport-stamp-seal{height:46px;width:46px}
+ .today-quiz-reward-seal{height:63px;width:63px;font-size:.76rem}}
+@media(prefers-reduced-motion:reduce){.today-passport-meter-fill{transition:none}
+ .today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
+ .today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:none}}
+
 /* Answer photos are visually prominent but never reveal the solution before answering. */
 .today-quiz-photo{margin:14px 0 12px;border:1px solid #A1DAD0;border-radius:15px;
  overflow:hidden;background:#24425A;box-shadow:0 10px 24px #061F3150}
@@ -1458,12 +1514,23 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
    <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
-  <p class="today-map-game-lead">国名をタップして、世界の「へぇ！」3択クイズ。今夜のパスポートにスタンプを集めよう。</p>
+  <p class="today-map-game-lead">国名をタップして3択クイズ。スタンプを集めて世界パスポートを完成させよう。</p>
+  <section class="today-passport-board" id="todayPassportBoard" aria-labelledby="todayPassportHeading">
+   <div class="today-passport-head">
+    <div><p class="today-passport-eyebrow">WORLD PASSPORT · COLLECTION</p><h4 id="todayPassportHeading">今夜のスタンプ帳</h4></div>
+    <strong class="today-passport-count" id="todayPassportCount" aria-live="polite">0 / 0</strong>
+   </div>
+   <div class="today-passport-meter" id="todayPassportMeter" role="progressbar" aria-label="国別スタンプの収集進捗" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><div class="today-passport-meter-fill" id="todayPassportMeterFill"></div></div>
+   <p id="todayPassportMessage" class="today-passport-message" aria-live="polite">今日のスタンプを集めてみよう。</p>
+   <div class="today-passport-stamps" id="todayPassportStamps" role="group" aria-label="国別スタンプ帳・タップでクイズに挑戦"></div>
+   <p class="today-passport-hint">スタンプをタップすると、その国のクイズに挑戦できます。</p>
+  </section>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="世界のへぇ！国別3択クイズ"></div>
   <section class="today-country-quiz" id="todayCountryQuiz" aria-labelledby="todayQuizTitle" hidden>
    <div class="today-quiz-top"><div><p class="today-quiz-kicker">WORLD PASSPORT · へぇ！3択</p><h4 id="todayQuizTitle"></h4></div>
     <button class="today-quiz-close" id="todayQuizClose" type="button">閉じる</button></div>
    <p class="today-quiz-progress" id="todayQuizProgress"></p>
+   <div class="today-quiz-steps" id="todayQuizSteps" role="group" aria-label="問題の進み具合"></div>
    <p class="today-quiz-question" id="todayQuizQuestion"></p>
    <div class="today-quiz-choices" id="todayQuizChoices" role="group" aria-label="3択の回答"></div>
    <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>
@@ -1480,7 +1547,12 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
     <p class="today-quiz-photo-notice" id="todayQuizPhotoNotice" role="status" hidden></p>
     <p class="today-quiz-explain" id="todayQuizExplanation"></p>
     <p class="today-quiz-joke" id="todayQuizJoke"></p>
+    <div class="today-quiz-reward" id="todayQuizStampReward" role="status" aria-live="polite" hidden>
+     <span class="today-quiz-reward-seal" id="todayQuizRewardSeal" aria-hidden="true">STAMP</span>
+     <div><strong id="todayQuizRewardTitle">スタンプ獲得！</strong><p id="todayQuizRewardText"></p></div>
+    </div>
     <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>次へ</button>
+    <button class="today-quiz-next-country" id="todayQuizNextCountry" type="button" hidden>次の国に挑戦する →</button>
    </div>
    <p class="today-quiz-passport" id="todayQuizPassport"></p>
    <dialog class="today-quiz-photo-dialog" id="todayQuizPhotoDialog" aria-label="正解の実写真・拡大表示">
