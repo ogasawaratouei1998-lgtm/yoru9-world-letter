@@ -32,7 +32,46 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
    photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',
    fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',
    quip:'地球のプロフィール写真、岩肌の圧が強い。'}
+ ],
+ GB:[
+  {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,
+   photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',
+   fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',
+   quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
+  {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,
+   photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',
+   fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',
+   quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'}
+ ],
+ ES:[
+  {question:'サグラダ・ファミリアがあるスペインの都市は？',options:['マドリード','バルセロナ','セビリア'],answer:1,
+   photoKey:'spain-barcelona-postcard',photoLabel:'正解の建築｜バルセロナのサグラダ・ファミリア',
+   fact:'サグラダ・ファミリアはバルセロナにあるガウディゆかりの聖堂です。',
+   quip:'街の名刺代わりが世界級の建築。自己紹介のスケールが大きい。'},
+  {question:'スペインの「タパス」とは、一般に何のこと？',options:['小皿料理','伝統的な船','夜行列車'],answer:0,
+   fact:'タパスとはスペインのバルなどで親しまれる小皿料理やおつまみです。',
+   quip:'料理は小皿でも、会話は特大サイズになりがち。'}
+ ],
+ JP:[
+  {question:'富士山がまたがる2つの県は？',options:['長野県と岐阜県','京都府と滋賀県','山梨県と静岡県'],answer:2,
+   photoKey:'japan-fuji-postcard',photoLabel:'正解の山｜山梨県・静岡県にまたがる富士山',
+   fact:'富士山は山梨県と静岡県にまたがる日本で最も高い山です。',
+   quip:'存在感が大きすぎて二つの県にまたがってしまった。'},
+  {question:'東京・浅草の浅草寺があるのはどこ？',options:['京都府','東京都','奈良県'],answer:1,
+   photoKey:'japan-country-postcard',photoLabel:'正解の寺院｜東京・浅草寺',
+   fact:'浅草寺は東京都台東区浅草にあり、雷門などで知られています。',
+   quip:'雷門は人気者。記念写真の行列まで名物になりそう。'}
+ ],
+ NZ:[
+  {question:'ミルフォード・サウンドがあるのは？',options:['北島','南島','チャタム諸島'],answer:1,
+   photoKey:'nz-milford-sound-postcard',photoLabel:'正解の景色｜南島のミルフォード・サウンド',
+   fact:'ミルフォード・サウンドはニュージーランド南島のフィヨルドランド国立公園にあります。',
+   quip:'山と海の共演が大迫力。観客は静かに見上げるしかない。'},
+  {question:'ニュージーランドの先住民族として知られるのは？',options:['サーミ','イヌイット','マオリ'],answer:2,
+   fact:'マオリはニュージーランドの先住民族で、言葉や芸術などの文化を受け継いでいます。',
+   quip:'文化の積み重ねは、世界地図のピンだけでは収まりません。'}
  ]
+
 });
 let worldPassportEdition='',worldPassportStamps={},worldPassportActive=null;
 let worldPassportLastAwarded='',worldPassportLifetime={};
