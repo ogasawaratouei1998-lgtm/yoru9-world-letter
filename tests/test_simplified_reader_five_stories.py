@@ -43,7 +43,7 @@ class SimplifiedReaderTest(unittest.TestCase):
             'id="issueGallery"','id="articleReader"',
             'id="todayMapSection"','id="notificationSection"',
             'data-travel-slot="0"','id="releaseStatus"',
-            "function loadPublishedMonthDates()",
+            "function renderTodayMap()",
             "function renderIssueGallery()",
         ):
             self.assertIn(required,page,required)
