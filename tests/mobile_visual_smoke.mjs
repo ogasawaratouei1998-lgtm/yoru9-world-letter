@@ -470,8 +470,19 @@ try{
     assert.equal(totalRounds,curated?2:1,
      'curated destinations have two meaningful quiz rounds: '+code);
     for(let round=0;round<totalRounds;round++){
-     // The first response can be correct or incorrect; both reveal the answer image.
-     await quiz.locator('#todayQuizChoices button').first().click();
+     // Play a genuinely correct answer: its immediate sparkle action must
+     // happen on every question, not just after the passport stamp is awarded.
+     const correctIndex=await page.evaluate(({code,round})=>{
+      const item=worldPassportActive?.questions?.[round];
+      return Number.isInteger(item?.answer)?item.answer:0;
+     },{code,round});
+     await quiz.locator('#todayQuizChoices button').nth(correctIndex).click();
+     assert.equal(await quiz.locator('#todayQuizCorrectFlash').isVisible(),true,
+      'every correct answer immediately celebrates: '+code+' / '+round);
+     assert.equal(await quiz.locator('#todayQuizChoices button[data-popped="true"]').count(),1,
+      'exactly the chosen correct option gets a bounce: '+code+' / '+round);
+     assert.equal(await quiz.locator('#todayQuizChoices .quiz-answer-sparks span').count(),10,
+      'the answer creates ten noninteractive sparkle particles: '+code+' / '+round);
      assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true,
       'answer reveals the result');
      assert.ok((await quiz.locator('#todayQuizExplanation').textContent()).length>14,
@@ -517,6 +528,8 @@ try{
     }
     assert.equal(await quiz.locator('#todayQuizStampReward').isVisible(),true,
      'finishing the challenge displays a large tangible stamp reward: '+code);
+    assert.equal(await quiz.locator('#todayQuizStampReward').getAttribute('data-perfect'),'true',
+     'a perfect two-round run receives the stronger gold celebration');
     assert.equal(await quiz.locator('#todayQuizStampReward').getAttribute('data-new'),'true',
      'the first country completion has a distinct earned-stamp moment: '+code);
     assert.equal(await album.locator('#todayPassportCount').textContent(),(index+1)+' / '+countryTotal,
@@ -534,6 +547,8 @@ try{
     'all mapped countries collected to finish the passport');
    assert.equal(await album.getAttribute('data-complete'),'true',
     'the completed stamp book is visibly distinct');
+   assert.equal(await album.getAttribute('data-celebrate'),'true',
+    'collecting the final country triggers a separate full-passport celebration');
    assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),String(countryTotal),
     'the collection meter reaches the complete number of countries');
    assert.ok((await album.locator('#todayPassportMessage').textContent()).includes('世界パスポート完成'),
