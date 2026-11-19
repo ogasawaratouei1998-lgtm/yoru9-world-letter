@@ -6,6 +6,10 @@ on:
     branches: [main]
     paths:
       - 'data/approved/*.json'
+      # Changes to the notifier also retry any already-published issue.
+      # The backend atomically deduplicates by editionDate.
+      - 'send_release_notice.py'
+      - '.github/workflows/publish-nightly.yml'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
@@ -233,8 +237,11 @@ jobs:
           path: _site
       - uses: actions/deploy-pages@v4
         if: steps.release.outputs.published == 'true' && success()
+      # Recheck dispatch even if the publication already exists.
+      # The notifier gates by TODAY and after 21:00; the backend deduplicates.
+      # This recovers a push that failed after a successful Pages deployment.
       - name: Dispatch optional release notification (server must be configured)
-        if: steps.release.outputs.published == 'true' && success()
+        if: success()
         env:
           PUSH_DISPATCH_URL: ${{ secrets.PUSH_DISPATCH_URL }}
           PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
