@@ -145,5 +145,5 @@ function nextWorldPassportRound(){
  else run.step++;
  renderWorldPassportRound();
 }
-$('todayQuizClose').addEventListener('click',closeWorldPassport);
-$('todayQuizNext').addEventListener('click',nextWorldPassportRound);
+document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
+document.getElementById('todayQuizNext').addEventListener('click',nextWorldPassportRound);
