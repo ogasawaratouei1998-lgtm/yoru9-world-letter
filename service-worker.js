@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v21';
+const SHELL_CACHE = 'yoru9-shell-v22';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'country-catalog.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
@@ -63,6 +63,19 @@ self.addEventListener('fetch', event => {
       }
       return response;
     }).catch(async () => (await caches.match(new URL('index.html', SCOPE).href)) || Response.error()));
+    return;
+  }
+
+  // New countries may have licensed, build-bundled postcards not in the fixed
+  // offline shell. Cache these on first use, then keep a last-known-good copy.
+  if (/^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(relative)) {
+    event.respondWith(fetch(req).then(response => {
+      if (response.ok) {
+        const copy = response.clone();
+        event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(req, copy)));
+      }
+      return response;
+    }).catch(async () => (await caches.match(req)) || Response.error()));
     return;
   }
 
