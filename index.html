@@ -1779,9 +1779,9 @@ let travelExplainerShown=false;
 // Reserve one different postcard per article in the current reading session.
 const travelSelections=new Map();
 const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
- AR:[['イグアスの滝・虹の大瀑布',115],['イグアスの滝',100],['カサ・ロサダ',85]],
+ AR:[['イグアスの滝・虹の大瀑布',115],['イグアスの滝',100],['カサ・ロサダ',85],['オベリスコ',80]],
  FR:[['モン・サン＝ミシェルの夕景',115],['エッフェル塔',100],['モン・サン＝ミシェル',70]],
- US:[['ゴールデンゲートブリッジ・夕景',115],['ニューヨークの街並み',100],['ゴールデンゲートブリッジ',90],['ワイキキ',55]]
+ US:[['ゴールデンゲートブリッジ・夕景',115],['ニューヨークの街並み',100],['ゴールデンゲートブリッジ',90],['ヨセミテ国立公園',90],['グランドキャニオン',90],['ワイキキ',85]]
 });
 
 function countryPhotoPriority(code,photo){
@@ -1899,7 +1899,10 @@ function countryHeroAsset(country){
 function conflictsWithCountryCover(stop){
  const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
   stop.country==='アメリカ合衆国'?'US':null;
+ const coverLandmark=code==='AR'?'イグアスの滝':code==='FR'?'モン・サン＝ミシェル':
+  code==='US'?'ゴールデンゲートブリッジ':null;
  return stop.photoAsset===countryHeroAsset(stop.country)||
+  (coverLandmark&&stop.place.includes(coverLandmark))||
   (code&&typeof displayedCountryCoverAssets!=='undefined'&&
    stop.photoAsset===displayedCountryCoverAssets.get(code));
 }
