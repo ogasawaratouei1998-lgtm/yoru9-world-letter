@@ -1177,6 +1177,14 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  font-size:1.18rem;line-height:1.5}
 }
 
+/* Mobile gallery header: keep the hint within the hero at 320–393px widths. */
+@media(max-width:520px){
+ #atlasHero .gallery-heading{display:flex;flex-wrap:wrap;min-width:0;max-width:100%;align-items:flex-start}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:normal;white-space:normal
+ }
+ #atlasHero .gallery-heading span{display:block;flex:0 1 100%;text-align:left}
+}
 /* Current-issue map: enlarge the latitude axis for mobile legibility.
    Artwork and pin coordinates share the same stretched canvas, so pins remain aligned. */
 .today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
