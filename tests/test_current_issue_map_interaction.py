@@ -108,11 +108,39 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
 
-    def test_country_buttons_still_open_their_news(self):
+    def test_country_buttons_launch_passport_game_not_the_article(self):
         page = self.page
-        self.assertIn("button.addEventListener('click',()=>openAtlasStory(item.indices[0]))", page)
+        game = (ROOT / "world-passport.js").read_text(encoding="utf-8")
+        worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
+        bundle = (ROOT / "build_site.py").read_text(encoding="utf-8")
+        self.assertIn('id="todayCountryQuiz"', page)
+        self.assertIn('id="todayQuizChoices"', page)
+        self.assertIn('id="todayQuizPassport"', page)
+        self.assertIn('world-passport.js', page)
+        self.assertIn("button.addEventListener('click',()=>startWorldPassport(item))", page)
+        self.assertNotIn("button.addEventListener('click',()=>openAtlasStory(item.indices[0]))", page)
+        self.assertIn("pin.addEventListener('click',()=>showTodayCountryIntro(item))", page)
         self.assertIn("legend.append(button)", page)
         self.assertIn("renderIssueGallery();updateSpotlight();renderTravelSlots();renderTodayMap();", page)
+        self.assertIn("WORLD_PASSPORT_QUIZZES", game)
+        self.assertIn("AIツッコミ（創作の冗談）", game)
+        self.assertIn("passportQuizQuestions(item)", game)
+        self.assertIn("persistWorldPassport()", game)
+        self.assertIn("world-passport.js", bundle)
+        self.assertIn("world-passport.js", worker)
+
+    def test_passport_country_questions_are_factual_and_have_valid_answers(self):
+        import json
+        import re
+        game = (ROOT / "world-passport.js").read_text(encoding="utf-8")
+        # Real-world key facts in published country guides must also be present
+        # in quiz answer explanations: no fake country trivia.
+        for term in ("イグアスの滝", "マテ茶", "モン・サン＝ミシェル",
+                     "地中海", "ゴールデンゲートブリッジ", "ヨセミテ"):
+            self.assertIn(term, game)
+            self.assertIn(term, self.page)
+        self.assertNotIn("openAtlasStory(", game)
+        self.assertNotIn("newsArticle", game)
 
 
 if __name__ == "__main__":
