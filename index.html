@@ -1633,6 +1633,7 @@ function currentCountryHighlight(highlights,code,today=localDate(new Date())){
   &&/^\d{4}-\d{2}-\d{2}$/.test(item.checkedOn||'')
   &&item.validFrom<=today&&today<=item.validThrough&&item.checkedOn<=today
   &&item.checkedOn<=item.validThrough
+  &&(Date.parse(today+'T00:00:00Z')-Date.parse(item.checkedOn+'T00:00:00Z'))/86400000<=30
   &&typeof item.sourceName==='string'&&item.sourceName.trim()
   &&typeof item.sourceUrl==='string'&&/^https:\/\//.test(item.sourceUrl)
   &&safeUrl(item.sourceUrl)!=='#');
