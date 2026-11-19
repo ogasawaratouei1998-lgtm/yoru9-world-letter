@@ -40,6 +40,8 @@ try{
      await page.locator('#monthRetrospective').count()===0&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
      await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
+     await page.locator('#todayCountryQuiz[hidden]').count()===1&&
+     await page.locator('script[src="./world-passport.js"]').count()===1&&
      await page.locator('#quipTeaserLine').count()===1&&
      await page.locator('#articleReader[hidden]').count()===1&&
      await page.locator('#readerBack').count()===1&&
