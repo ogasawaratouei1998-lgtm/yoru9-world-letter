@@ -396,6 +396,7 @@ class PublishingTest(unittest.TestCase):
         (self.root/'manifest.webmanifest').write_text('{}')
         (self.root/'service-worker.js').write_text('/* test worker */')
         (self.root/'notifications.js').write_text('/* test notifications */')
+        (self.root/'world-passport.js').write_text('/* test passport */')
         (self.root/'notification-config.json').write_text('{"enabled":false}')
         (self.root/'country-catalog.json').write_text('[{"code":"JP","name":"日本"}]', encoding='utf-8')
         (self.root/'assets'/'world-today-illustrated.svg').write_text('<svg></svg>')
