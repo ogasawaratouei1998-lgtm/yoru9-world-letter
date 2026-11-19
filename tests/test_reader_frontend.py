@@ -391,7 +391,7 @@ class ReaderFrontendTest(unittest.TestCase):
         # Small deterministic catalog: the second American article should
         # reuse a US photograph rather than mislabel a Japan photograph as US.
         payload={
-          "one":{"country":"アメリカ合衆国","place":"ゴールデンゲートブリッジ","region":"USA","latitude":40,"longitude":-70,
+          "one":{"country":"アメリカ合衆国","place":"ニューヨークの街並み","region":"USA","latitude":40,"longitude":-70,
                   "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/x/photo.jpg",
                   "photoAsset":"assets/travel/usa.jpg",
                   "photoPage":"https://commons.wikimedia.org/wiki/File:USA.jpg",
