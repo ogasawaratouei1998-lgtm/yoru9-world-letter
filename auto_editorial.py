@@ -799,8 +799,8 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
         # A country used yesterday is penalized heavily BEFORE any long-run
         # frequency and genre tie-breakers, not silently treated as "fresh".
         return (len(set(known_countries)),len(categories),
-                len(set(known_regions)),
                 -sum(recent_country_cooldown[country] for country in known_countries),
+                len(set(known_regions)),
                 len({country for country in known_countries
                      if lifetime_country_history[country]==0}),
                 -sum(category_history[story["category"]] for story in stories),
