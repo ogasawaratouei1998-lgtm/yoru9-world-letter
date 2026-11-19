@@ -16,7 +16,13 @@ class ApprovedEditionTest(unittest.TestCase):
                 data=json.loads(p.read_text(encoding="utf-8"))
                 public=validate_approved(data,p.stem)
                 self.assertEqual(public["status"],"published")
-                self.assertTrue(1 <= len(public["stories"]) <= 3 if data.get("editionType", "regular") == "regular" else len(public["stories"]) == 5)
+                # Mirror the publisher's date-scoped limits: normal editions
+                # from Nov 19 onward permit 1–5 independently checked stories.
+                if data.get("editionType", "regular") == "regular":
+                    ceiling = 3 if "2026-11-17" <= p.stem < "2026-11-19" else 5
+                    self.assertTrue(1 <= len(public["stories"]) <= ceiling)
+                else:
+                    self.assertEqual(len(public["stories"]), 5)
                 self.assertTrue(all("editorVerified" not in story for story in public["stories"]))
                 # Public source URLs are intentional reader-facing evidence links;
                 # internal editorial assessments must still remain private.
