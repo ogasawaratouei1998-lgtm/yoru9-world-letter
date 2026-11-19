@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "purpose": "Editorial allowlist of official cultural and travel authorities for Country Portrait topics. Candidate sources do not authorize automatic publication.",
+  "sources": {
+    "AR": [
+      {
+        "name": "Visit Argentina",
+        "url": "https://www.argentina.travel/en"
+      }
+    ],
+    "FR": [
+      {
+        "name": "Explore France",
+        "url": "https://www.france.fr/en/"
+      }
+    ],
+    "US": [
+      {
+        "name": "Brand USA / Visit The USA",
+        "url": "https://www.visittheusa.com/"
+      }
+    ],
+    "GB": [
+      {
+        "name": "VisitBritain official events",
+        "url": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      }
+    ],
+    "ES": [
+      {
+        "name": "Madrid official events",
+        "url": "https://www.esmadrid.com/en/whats-on-madrid"
+      },
+      {
+        "name": "Spanish official tourism",
+        "url": "https://www.spain.info/en/"
+      }
+    ],
+    "JP": [
+      {
+        "name": "Visit Fukuoka official events",
+        "url": "https://www.crossroadfukuoka.jp/en/articles/november"
+      },
+      {
+        "name": "Japan National Tourism Organization",
+        "url": "https://www.japan.travel/en/"
+      }
+    ],
+    "NZ": [
+      {
+        "name": "Dunedin official events",
+        "url": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      },
+      {
+        "name": "Tourism New Zealand",
+        "url": "https://www.newzealand.com/int/"
+      }
+    ],
+    "KR": [
+      {
+        "name": "Korea Tourism Organization",
+        "url": "https://english.visitkorea.or.kr/svc/main/index.do"
+      }
+    ],
+    "BR": [
+      {
+        "name": "Visit Brasil / Embratur",
+        "url": "https://www.visitbrasil.com/"
+      }
+    ],
+    "AG": [
+      {
+        "name": "Antigua and Barbuda Tourism Authority",
+        "url": "https://www.visitantiguabarbuda.com/"
+      }
+    ]
+  }
+}
