@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v18",worker)
+        self.assertIn("yoru9-shell-v19",worker)
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
