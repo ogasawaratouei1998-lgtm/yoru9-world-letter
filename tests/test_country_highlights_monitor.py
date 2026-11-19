@@ -17,7 +17,7 @@ class CountryHighlightMonitorTest(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
         (self.root / "data").mkdir()
-        for name in ("country-catalog.json", "country-highlights.json"):
+        for name in ("country-catalog.json", "country-highlights.json", "country-highlight-sources.json"):
             shutil.copy2(ROOT / name, self.root / name)
         shutil.copy2(ROOT / "data/current.json", self.root / "data/current.json")
 
@@ -57,6 +57,17 @@ class CountryHighlightMonitorTest(unittest.TestCase):
         self.assertFalse(report["editionIsRecent"])
         self.assertEqual(report["countriesChecked"], [])
         self.assertFalse(report["needsEditorialReview"])
+
+
+    def test_rejects_a_official_site_from_the_wrong_country(self):
+        from build_site import validate_country_highlights
+        payload = json.loads((self.root / "country-highlights.json").read_text(encoding="utf-8"))
+        payload["highlights"]["JP"][0]["sourceUrl"] = "https://www.esmadrid.com/en/whats-on/autumn-festival"
+        (self.root / "country-highlights.json").write_text(
+            json.dumps(payload, ensure_ascii=False), encoding="utf-8"
+        )
+        with self.assertRaisesRegex(ValueError, "JP:"):
+            validate_country_highlights(self.root)
 
     def test_invalid_horizon_is_rejected(self):
         with self.assertRaises(ValueError):
