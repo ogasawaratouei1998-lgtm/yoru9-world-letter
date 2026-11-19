@@ -381,9 +381,24 @@ try{
    // The country introduction is a separate, substantial visual feature.
    // Its iconic photo must actually render, not merely appear in the HTML.
    const countryCoverAssets=new Map();
+   // Two nearby country centroids (e.g. UK and Spain) must not overlap as
+   // finger targets on narrow iPhones. Only their markers may be nudged;
+   // small leader lines preserve the exact representative map locations.
+   const pinCenters=[];
+   for(let i=0;i<await pins.count();i++){
+    const bounds=await pins.nth(i).boundingBox();
+    assert.ok(bounds,'map pin has a bounding box');
+    const center={x:bounds.x+bounds.width/2,y:bounds.y+bounds.height/2};
+    for(const other of pinCenters){
+     assert.ok(Math.hypot(center.x-other.x,center.y-other.y)>=43,
+      'country pins must not overlap on mobile: '+JSON.stringify({center,other}));
+    }
+    pinCenters.push(center);
+   }
    for(let i=0;i<await pins.count();i++){
     const pin=pins.nth(i);
     const code=await pin.getAttribute('data-country-code');
+    await pin.evaluate(element=>element.scrollIntoView({block:'center'}));
     await pin.click();
     const intro=today.locator('#todayMapIntro');
     assert.equal(await intro.isVisible(),true,'map pin opens the country guide: '+code);
