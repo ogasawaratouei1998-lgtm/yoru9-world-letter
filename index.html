@@ -1284,6 +1284,38 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   max-width:calc(100% + 24px);box-sizing:border-box;padding:12px 7px}
  #atlasHero .today-map-intro-photo img{aspect-ratio:6/5;max-height:400px}
 }
+/* WORLD PASSPORT — playful country quiz, visually separate from news. */
+.today-map-game-lead{margin:11px 2px 8px;color:#FFE6BA;font-size:.85rem;line-height:1.7;font-weight:780}
+.today-map-country[data-quiz-done="true"]{box-shadow:inset 0 0 0 2px #30816B}
+.today-map-country[aria-expanded="true"]{outline:3px solid #fff;outline-offset:2px}
+.today-country-quiz{margin:13px 0 8px;padding:17px 16px;border:2px solid #E9CA95;
+ border-radius:17px;background:linear-gradient(145deg,#19364E,#142B43);color:#FAF4ED}
+.today-country-quiz[hidden],.today-quiz-result[hidden],.today-quiz-next[hidden]{display:none!important}
+.today-quiz-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.today-quiz-kicker{font-size:.72rem;letter-spacing:.055em;color:#B2EEE2;font-weight:900;margin:0 0 4px}
+.today-country-quiz h4{margin:0;color:#FFE9B9;font-size:1.28rem;line-height:1.5}
+.today-quiz-close{min-height:44px;flex:none;background:#315065;color:#FAFAF2;
+ border:1px solid #A9C8C1;border-radius:99px;padding:8px 12px}
+.today-quiz-progress{margin:12px 0 6px;color:#C7E8E2;font-size:.83rem}
+.today-quiz-question{margin:6px 0 12px;font-size:1.12rem;font-weight:850;line-height:1.7}
+.today-quiz-choices{display:grid;gap:9px}
+.today-quiz-choices button{min-height:48px;width:100%;padding:11px 13px;text-align:left;
+ color:#FCFAF3;background:#28526B;border:1px solid #92C4BD;border-radius:11px;
+ font-size:1rem;font-weight:750;line-height:1.5}
+.today-quiz-choices button:disabled{opacity:.8;cursor:default}
+.today-quiz-choices button[data-correct="true"]{background:#245F53;border:2px solid #B2F1D1;opacity:1}
+.today-quiz-choices button[data-picked-wrong="true"]{background:#75464B;border:2px solid #FFC1BA;opacity:1}
+.today-quiz-result{margin-top:12px;padding-top:12px;border-top:1px solid #719C9C}
+.today-quiz-verdict{font-size:1.03rem;font-weight:900;color:#FFE6AE;line-height:1.6;margin:0 0 8px}
+.today-quiz-explain{font-size:.94rem;line-height:1.85;margin:7px 0}
+.today-quiz-joke{padding:10px 12px;background:#2A4858;border-left:3px solid #B3ECDC;
+ border-radius:0 10px 10px 0;font-size:.93rem;line-height:1.75;margin:10px 0}
+.today-quiz-next{width:100%;min-height:47px;background:#FFE0AB;color:#283D51;
+ border:1px solid #FFF2CF;border-radius:11px;font-size:.95rem;font-weight:850;padding:9px}
+.today-quiz-passport{font-size:.82rem;line-height:1.75;color:#C7F2E6;margin:12px 0 0;font-weight:800}
+.today-quiz-choices button:focus-visible,.today-quiz-next:focus-visible{outline:3px solid white;outline-offset:2px}
+@media(max-width:520px){.today-country-quiz{padding:14px 12px}
+ .today-map-game-lead{font-size:.8rem}.today-quiz-question{font-size:1.05rem}}
 </style>
 </head>
 <body><div class="wrap">
@@ -1330,7 +1362,22 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <div class="today-map-intro-facts" id="todayMapIntroFacts"></div>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
-  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="掲載国から記事を選ぶ"></div>
+  <p class="today-map-game-lead">国名をタップして、世界の「へぇ！」3択クイズ。今夜のパスポートにスタンプを集めよう。</p>
+  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="世界のへぇ！国別3択クイズ"></div>
+  <section class="today-country-quiz" id="todayCountryQuiz" aria-labelledby="todayQuizTitle" hidden>
+   <div class="today-quiz-top"><div><p class="today-quiz-kicker">WORLD PASSPORT · へぇ！3択</p><h4 id="todayQuizTitle"></h4></div>
+    <button class="today-quiz-close" id="todayQuizClose" type="button">閉じる</button></div>
+   <p class="today-quiz-progress" id="todayQuizProgress"></p>
+   <p class="today-quiz-question" id="todayQuizQuestion"></p>
+   <div class="today-quiz-choices" id="todayQuizChoices" role="group" aria-label="3択の回答"></div>
+   <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>
+    <p class="today-quiz-verdict" id="todayQuizVerdict"></p>
+    <p class="today-quiz-explain" id="todayQuizExplanation"></p>
+    <p class="today-quiz-joke" id="todayQuizJoke"></p>
+    <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>次へ</button>
+   </div>
+   <p class="today-quiz-passport" id="todayQuizPassport"></p>
+  </section>
   <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
  </section>
  </section>
@@ -1372,6 +1419,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
 <script id="embedded-demo" type="application/json">{"status":"demo","editionDate":null,"title":"創刊準備号｜過去の大失敗ニュース5本","stories":[{"id":"flight-wrong-country","country":"イギリス","category":"company","categoryLabel":"企業・職場の大失敗","label":"国ごと間違えた","title":"ドイツ行きの飛行機、到着したのはスコットランド。","summary":"乗客はドイツに向かっていたはず。ところが着陸後の機内アナウンスは「エディンバラへようこそ」。国が違います。","detail":"2019年3月、ロンドン発デュッセルドルフ行きの便が、誤った飛行計画書に従ってスコットランドのエディンバラに着陸。乗客は最初、機長の冗談だと思ったそうです。乗客の話では、機長が「デュッセルドルフに行きたい人は？」と手を挙げてもらうと、全員が手を挙げました。飛行機はその後、給油をして本来の目的地に向かいました。","quip":"旅先を決めるのは乗客、と思っていたら、書類が先に旅先を決めていた。","sourceName":"ABC News（2019年3月26日）","sourceUrl":"https://www.abc.net.au/news/2019-03-26/british-airways-plane-edinburgh-scotland-dusseldorf-germany/10938796","reported":"2019.03.26","disclaimer":"安全上の問題はなかったと運航会社が説明。乗客の遅延・不便は発生。","flag":"🇬🇧"},{"id":"lollipops-70000","country":"アメリカ","category":"person","categoryLabel":"個人の大失敗","label":"約70,000個","title":"8歳の少年が「友達への景品」を注文。届いたキャンディー、約7万個。","summary":"お母さんのスマホから注文したのは、小さな縁日で配るためのお菓子。自宅に届いたのは、およそ4,000ドル分の巨大な箱の山でした。","detail":"米ケンタッキー州で、8歳の少年がお母さんのスマートフォンを使ってキャンディー約7万個を発注。玄関には22ケースが届き、残りのケースも配送手続き中でした。少年の目的は、友達と開く縁日で配る景品を用意すること。お母さんは驚きましたが、返品対応などを進め、最終的に返金を受けられたとAP通信は報じました。","quip":"「みんなにお菓子をあげたい」は素敵。ただし、学校ひとつ分でも足りそうな量ではない。","sourceName":"AP通信 / Spectrum News（2025年5月7日）","sourceUrl":"https://ny1.com/nyc/all-boroughs/ap-top-news/2025/05/06/kentucky-boy-uses-mothers-phone-to-order-70k-dum-dum-suckers-to-share-with-his-friends","reported":"2025.05.07","disclaimer":"注文額は報道時の概算。保護者への返金が報じられています。","flag":"🇺🇸"},{"id":"spain-trains-too-big","country":"スペイン","category":"company","categoryLabel":"企業・組織の大失敗","label":"31編成","title":"新しい列車を31編成発注。ところがトンネルの寸法に合わない。","summary":"列車を新しくして便利にする計画。ところが設計段階で、トンネルを通れないサイズだと判明。まさかの設計やり直しに。","detail":"スペイン北部向けに2020年に発注された31編成の列車について、当初の設計では地域の一部トンネルを通れないことが分かりました。問題は製造完了前に発覚し、設計変更が必要に。政府側は公金の無駄は生じていないと説明しましたが、納入は2〜3年ほど遅れる見通しとなり、幹部の辞任にも発展しました。","quip":"列車を走らせる前に、最初に通るべきだったのは「寸法の確認」だった。","sourceName":"AP通信（2023年2月20日）","sourceUrl":"https://apnews.com/article/a4d3e2fc2eb80af8561215eba931105b","reported":"2023.02.20","disclaimer":"「完成した列車がつかえた」わけではありません。設計段階で発覚した問題です。","flag":"🇪🇸"},{"id":"welsh-out-of-office","country":"イギリス・ウェールズ","category":"work","categoryLabel":"職場・会社員の大失敗","label":"自動返信が標識に","title":"道路標識の翻訳を依頼したら、「ただいま外出中」をそのまま印刷。","summary":"大型車の進入禁止を示すはずだった標識。ウェールズ語部分には、担当者の不在自動返信が堂々と掲示されていました。","detail":"ウェールズのスウォンジー市で、道路標識に載せるウェールズ語訳をメールで依頼したところ、翻訳担当者の自動返信が届きました。担当者は不在で、返信の意味は「今は事務所にいません。翻訳作業は送ってください」というもの。ところが依頼側はそれを訳文だと思い込み、標識に印刷して設置。気づいたウェールズ語話者の指摘を受けて撤去されました。","quip":"看板は交通規制を伝えるはずが、翻訳担当者の勤務状況を全力で知らせていた。","sourceName":"The Guardian（2008年11月1日）","sourceUrl":"https://www.theguardian.com/theguardian/2008/nov/01/5","reported":"2008.11.01","disclaimer":"実際の標識に掲載された文章は翻訳担当者の自動返信でした。","flag":"🇬🇧"},{"id":"reporter-worker","country":"イギリス","category":"work","categoryLabel":"職場の勘違い","label":"生放送中","title":"BBC記者、生中継中に「すみません、店員さん？」と間違われる。","summary":"物価を伝える真剣なレポートの途中。安全ベストを着た記者が、目の前の人から店のスタッフだと思われて話しかけられました。","detail":"英国バーミンガムの卸売市場で、BBCの記者ベン・ブロスさんが物価のニュースを生中継。安全のため反射ベストを着ていたところ、一般の人が市場の従業員と勘違いして声をかけました。記者は「ここで働いていないんです。ニュースを伝えているだけです」と説明し、笑いをこらえながら中継を続行。スタジオ側も仕事ぶりをいじり、本人もジョークで返しました。","quip":"今日いちばん現場に溶け込んでいた人が、取材している人だった。","sourceName":"Evening Standard（2023年12月20日）","sourceUrl":"https://www.standard.co.uk/news/uk/bbc-presenter-ben-boulos-mistaken-worker-factory-tv-live-report-inflation-uk-b1128250.html","reported":"2023.12.20","disclaimer":"出典には当時の映像に関する説明があります。本人も笑って受け止めた場面です。","flag":"🇬🇧"}]}</script>
+<script src="./world-passport.js"></script>
 <script>
 'use strict';
 const demo=JSON.parse(document.querySelector('#embedded-demo').textContent);
@@ -1544,7 +1592,8 @@ function renderTodayMap(){
  $('todayMapTitle').textContent=actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台';
  $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
  const pins=$('todayMapPins'),legend=$('todayMapLegend');
- pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();
+ loadWorldPassport();
+ pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();closeWorldPassport();
  if(!countryCatalog.length){
   $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
   return;
@@ -1573,17 +1622,21 @@ function renderTodayMap(){
   const button=document.createElement('button');
   button.type='button';button.className='today-map-country';
   button.style.setProperty('--country-color',color);
-  button.textContent=(i+1)+' · '+item.name+'（'+item.indices.length+'本）';
-  button.setAttribute('aria-label',item.name+'の掲載記事を読む');
-  button.addEventListener('click',()=>openAtlasStory(item.indices[0]));
+  button.dataset.countryCode=item.code;
+  button.dataset.countryName=item.name;
+  button.dataset.countryLabel=(i+1)+' · '+item.name;
+  button.setAttribute('aria-controls','todayCountryQuiz');
+  button.setAttribute('aria-expanded','false');
+  button.addEventListener('click',()=>startWorldPassport(item));
   legend.append(button);
  });
  if(!countries.length){
   $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
  }else{
-  const extra=marked<countries.length?' 一部の国は座標が未登録のため、一覧から記事を開けます。':'';
-  $('todayMapNote').textContent='ピンを押すと国の紹介を表示します。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
+  const extra=marked<countries.length?' 一部の国は位置が未登録でも、国名ボタンのクイズには参加できます。':'';
+  $('todayMapNote').textContent='地図のピンは国の紹介、下の国名ボタンはクイズです。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
+ updateWorldPassportButtons();
 }
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 // Bind UI events outside the pure country-coordinate module used by regression tests.
