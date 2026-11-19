@@ -1417,11 +1417,6 @@ const TODAY_COUNTRY_GUIDES=Object.freeze({
 // 100 = iconic, instantly identifiable landmark; 80 = recognizable national
 // landscape; below 60 = contextual only, unsuitable as a lead image.
 // Maintain at least two high-quality, independently hosted options per country.
-const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
- AR:[['イグアスの滝',100],['カサ・ロサダ',85]],
- FR:[['エッフェル塔',100],['モン・サン＝ミシェル',70]],
- US:[['ニューヨークの街並み',100],['ゴールデンゲートブリッジ',90],['ワイキキ',55]]
-});
 
 function todayCountryIntro(item){
  if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
@@ -1731,6 +1726,12 @@ $('spotlightRead').addEventListener('click',()=>{
 let travelStopsPromise=null;
 let travelExplainerShown=false;
 // Reserve one different postcard per article in the current reading session.
+const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
+ AR:[['イグアスの滝',100],['カサ・ロサダ',85]],
+ FR:[['エッフェル塔',100],['モン・サン＝ミシェル',70]],
+ US:[['ニューヨークの街並み',100],['ゴールデンゲートブリッジ',90],['ワイキキ',55]]
+});
+
 function countryPhotoPriority(code,photo){
  const rules=TODAY_COUNTRY_PHOTO_RULES[code]||[];
  const match=rules.find(([landmark])=>photo.place.includes(landmark));
