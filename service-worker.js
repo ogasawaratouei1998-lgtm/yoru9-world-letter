@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v18';
+const SHELL_CACHE = 'yoru9-shell-v19';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const SCOPE = self.registration.scope;
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'country-catalog.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
@@ -8,6 +8,10 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/news/mouse-83-tattoos.svg',
  'assets/travel/iguazu-rainbow-cover.jpg', 'assets/travel/mont-saint-michel-sunset-cover.jpg',
  'assets/travel/golden-gate-sunset-cover.jpg',
+ // Correct-answer photographs should also work when installed readers are offline.
+ 'assets/travel/iguazu-argentina.jpg', 'assets/travel/argentina-mate-quiz.jpg',
+ 'assets/travel/france-mont-saint-michel.jpg', 'assets/travel/france-nice-mediterranean-quiz.jpg',
+ 'assets/travel/san-francisco-golden-gate.jpg', 'assets/travel/yosemite.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
