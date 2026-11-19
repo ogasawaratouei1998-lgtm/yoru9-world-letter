@@ -52,11 +52,15 @@ class RetrospectiveTest(unittest.TestCase):
                 self.assertGreaterEqual(len({urlsplit(u).hostname.removeprefix("www.") for u in urls}),2)
                 self.assertTrue(all(urlsplit(u).scheme=="https" for u in urls))
 
-    def test_publishing_and_deployment_include_only_public_collection(self):
+    def test_historical_collection_remains_auditable_but_is_not_public(self):
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")
-        self.assertIn("'data/retrospective/2026-11-17.json'",build)
-        for name in ("deploy-site.yml","test-publishing.yml"):
-            workflow=(ROOT/".github/workflows"/name).read_text(encoding="utf-8")
-            self.assertIn("      - 'data/retrospective/**'",workflow)
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertNotIn("data/retrospective/2026-11-17.json",build)
+        self.assertNotIn("data/retrospective/2026-11-17.json",worker)
+        self.assertNotIn("monthRetrospective",page)
+        self.assertFalse((ROOT/".github/workflows/monthly-editorial.yml").exists())
+
+
 if __name__=="__main__":
     unittest.main()
