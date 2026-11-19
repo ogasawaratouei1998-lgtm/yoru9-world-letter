@@ -33,15 +33,13 @@ class ReaderFrontendTest(unittest.TestCase):
         ):
             self.assertIn(photo, worker, "Country photo must survive offline PWA visits")
 
-    def test_newly_published_countries_have_full_introductions_and_photo_covers(self):
-        """The current issue must not fall back to generic one-line country intros."""
+    def test_november_country_intro_regression_has_full_guides_and_photo_covers(self):
+        """Retain the four new country guides across later nightly editions."""
         import json
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
         stops = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
-        current = json.loads((ROOT / "data/current.json").read_text(encoding="utf-8"))
         expected = {"イギリス": "GB", "スペイン": "ES", "日本": "JP", "ニュージーランド": "NZ"}
-        self.assertEqual(set(expected), {story["country"] for story in current["stories"]})
         for country, code in expected.items():
             with self.subTest(country=country):
                 self.assertIn(code + ":{lead:'", page)
