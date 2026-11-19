@@ -1527,6 +1527,7 @@ function hideTodayCountryIntro(){
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
 }
 function showTodayCountryIntro(item){
+ closeWorldPassport();
  $('todayMapIntroName').textContent=item.name;
  const guide=TODAY_COUNTRY_GUIDES[item.code];
  $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'を少し旅してみましょう';
