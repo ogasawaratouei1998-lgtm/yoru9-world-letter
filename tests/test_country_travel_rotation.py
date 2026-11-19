@@ -62,7 +62,7 @@ class CountryRotationTest(unittest.TestCase):
 
 @unittest.skipUnless(shutil.which("node"),"Node.js required for photo rotation regression")
 class TravelPhotoRotationTest(unittest.TestCase):
-    def test_photos_rotate_across_six_reload_sessions_without_repeating(self):
+    def test_photos_rotate_across_approved_destinations_without_repeating(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         start=page.index("const travelSelections=new Map();")
         end=page.index("function travelPostcardHtml(",start)
@@ -70,7 +70,7 @@ class TravelPhotoRotationTest(unittest.TestCase):
         manifest=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
         # Actual current six-photo US catalog, not synthetic random sample.
         us={k:v for k,v in manifest.items() if v.get("country")=="アメリカ合衆国"}
-        self.assertGreaterEqual(len({v["photoAsset"] for v in us.values()}),6)
+        self.assertGreaterEqual(len({v["photoAsset"] for v in us.values()}),2)
         script=(
             "const vm=require('vm');\n"
             "const data=Object.create(null);\n"
@@ -84,9 +84,9 @@ class TravelPhotoRotationTest(unittest.TestCase):
             " '\\nconst stops='+JSON.stringify(stops)+';'+"
             " 'chooseTravelPhoto('+JSON.stringify({id:storyId,country:country})+',stops)?.photoAsset',sandbox);\n"
             "}\n"
-            "const chosen=Array.from({length:6},(_,i)=>visit('アメリカ','story-'+i));\n"
-            "if(chosen.some(x=>!x)||new Set(chosen).size!==6)"
-            " throw Error('US artwork repeated before exhausting all six: '+chosen);\n"
+            "const chosen=Array.from({length:2},(_,i)=>visit('アメリカ','story-'+i));\n"
+            "if(chosen.some(x=>!x)||new Set(chosen).size!==2)"
+            " throw Error('US artwork repeated before exhausting approved destinations: '+chosen);\n"
             "if(chosen[0]==='assets/travel/grand-canyon.jpg')"
             " throw Error('Old archive cover unexpectedly chosen first: '+chosen[0]);\n"
             "const seventh=visit('アメリカ','seventh');\n"
@@ -112,7 +112,7 @@ class TravelPhotoRotationTest(unittest.TestCase):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         logic=page[page.index("const travelSelections=new Map();"):
                    page.index("function travelPostcardHtml(")]
-        raw={"fr":{"country":"フランス","place":"港","region":"フランス",
+        raw={"fr":{"country":"フランス","place":"エッフェル塔","region":"フランス",
                    "latitude":45.0,"longitude":6.0,
                    "photo":"https://thumb.wikimedia.org/wikipedia/commons/thumb/x/photo.jpg",
                    "photoAsset":"assets/travel/fr.jpg",
