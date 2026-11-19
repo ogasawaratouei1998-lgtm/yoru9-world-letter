@@ -5,7 +5,7 @@ Never sends unless both secrets are configured. Backend must atomically dedupe b
 editionDate: network retries must never result in duplicate alerts to readers.
 """
 from __future__ import annotations
-from datetime import datetime
+from datetime import datetime, date
 from pathlib import Path
 from urllib.parse import urlsplit
 from urllib.request import Request,urlopen
@@ -23,8 +23,12 @@ def notice_for(issue,now=None):
         return None
     stories=issue.get("stories")
     kind=issue.get("editionType","regular")
+    # Match publish_approved.validate_approved: since November 19, verified
+    # regular editions may have 1–5 stories (never an artificial five-story quota).
+    # Older nightly editions retain their historic one-to-three notification cap.
+    max_regular = 5 if now.date() >= date(2026, 11, 19) else 3
     if (not isinstance(stories,list)
-            or (kind=="regular" and not 1<=len(stories)<=3)
+            or (kind=="regular" and not 1<=len(stories)<=max_regular)
             or (kind=="special" and len(stories)!=5)
             or kind not in ("regular","special")):
         return None
