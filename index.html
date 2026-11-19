@@ -1840,7 +1840,7 @@ function countryHeroAsset(country){
  const code=country==='アルゼンチン'?'AR':country==='フランス'?'FR':
   country==='アメリカ合衆国'?'US':null;
  if(!code)return null;
- const candidates=(TODAY_COUNTRY_PHOTOS[code]||[]).filter(p=>
+ const candidates=((typeof TODAY_COUNTRY_PHOTOS==='undefined'?{}:TODAY_COUNTRY_PHOTOS)[code]||[]).filter(p=>
   p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption&&countryPhotoPriority(code,p)>=80);
  candidates.sort((a,b)=>countryPhotoPriority(code,b)-countryPhotoPriority(code,a));
  return candidates[0]?.asset||null;
