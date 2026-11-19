@@ -6,6 +6,7 @@ on:
     paths:
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'check_public_country_release.py'
       - 'country-highlights.json'
       - 'country-highlight-sources.json'
       - 'travel-stops.json'
@@ -51,4 +52,12 @@ jobs:
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      - uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Verify published country portraits and tourist microtravel
+        env:
+          PUBLISHED_SITE: ${{ steps.deployment.outputs.page_url }}
+          PUBLISHED_REVISION: ${{ github.sha }}
+        run: |
+          python check_public_country_release.py --site "$PUBLISHED_SITE" --revision "$PUBLISHED_REVISION"
