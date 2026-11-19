@@ -1185,6 +1185,16 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  }
  #atlasHero .gallery-heading span{display:block;flex:0 1 100%;text-align:left}
 }
+/* Ensure the gallery heading cannot overflow the 320px cover. */
+#atlasHero .issue-gallery{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+@media(max-width:520px){
+ #atlasHero .gallery-heading{display:grid;grid-template-columns:minmax(0,1fr);
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;gap:2px}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  white-space:normal;overflow-wrap:anywhere;text-align:left
+ }
+}
 /* Current-issue map: enlarge the latitude axis for mobile legibility.
    Artwork and pin coordinates share the same stretched canvas, so pins remain aligned. */
 .today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
@@ -1213,19 +1223,20 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  padding:8px 12px;background:var(--country-color,#FFF0C9);color:#283E56;
  font-size:.79rem;font-weight:860;text-align:center;line-height:1.4;max-width:100%;white-space:normal}
 .today-map-country:focus-visible{outline:3px solid #fff;outline-offset:3px}
-.today-map-intro{margin:10px 0 2px;padding:12px 13px;border-radius:12px;
- border:1px solid #A6E6DB;background:#182F46;color:#F8F4ED}
+.today-map-intro{margin:16px 0 10px;padding:clamp(17px,3.5vw,30px);border-radius:18px;
+ border:1px solid #A6E6DB;background:linear-gradient(150deg,#1E3C55,#152B41);color:#F8F4ED;
+ box-shadow:0 12px 30px #0D203B35}
 .today-map-intro[hidden]{display:none}
 .today-map-intro-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.today-map-intro h4{margin:0;font-size:1.4rem;color:#FFF0C9;line-height:1.4;font-weight:900}
-.today-map-intro .today-map-intro-lead{font-size:1.04rem;font-weight:850;color:#B5EBD6;line-height:1.65;margin:12px 0}
-.today-map-intro-photo{margin:14px 0 12px;border-radius:13px;overflow:hidden;background:#25475D}
+.today-map-intro h4{margin:0;font-size:clamp(1.75rem,5vw,2.4rem);color:#FFF0C9;line-height:1.35;font-weight:900}
+.today-map-intro .today-map-intro-lead{font-size:clamp(1.1rem,3vw,1.3rem);font-weight:850;color:#B5EBD6;line-height:1.7;margin:15px 0}
+.today-map-intro-photo{margin:19px 0 18px;border-radius:16px;overflow:hidden;background:#25475D;box-shadow:0 10px 25px #081B2B65}
 .today-map-intro-photo[hidden]{display:none}
-.today-map-intro-photo img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
-.today-map-intro-photo figcaption{font-size:.68rem;line-height:1.6;color:#D5E6E7;padding:8px 10px}
+.today-map-intro-photo img{display:block;width:100%;height:auto;aspect-ratio:16/10;max-height:440px;object-fit:cover;object-position:center}
+.today-map-intro-photo figcaption{font-size:.8rem;line-height:1.7;color:#E1EBF0;padding:10px 13px}
 .today-map-intro-facts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 .today-map-intro-facts span{border:1px solid #89BDB9;border-radius:10px;padding:7px 10px;color:#E9F6F4;font-size:.78rem;line-height:1.5;background:#29465B}
-.today-map-intro p{margin:10px 0 14px;font-size:.95rem;line-height:1.9;color:#E5EEF2}
+.today-map-intro p{margin:12px 0 17px;font-size:1.04rem;line-height:2;color:#E5EEF2}
 .today-map-intro-close{padding:5px 10px;min-height:36px;border:1px solid #9CCEC8;
  border-radius:999px;color:#E9F6F4;background:#2A5060;font-size:.74rem}
 .today-map-intro-read{min-height:44px;padding:9px 14px;border:1px solid #D9DFCE;
@@ -1236,7 +1247,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  .today-map-canvas{aspect-ratio:1.65/1;min-height:190px}
  .today-map-pin{width:36px;height:36px;font-size:.81rem}
  .today-map-country{font-size:.73rem;padding:7px 10px}.today-map-note{font-size:.7rem}
- .today-map-intro h4{font-size:1.3rem}.today-map-intro-photo img{aspect-ratio:5/4}}
+ .today-map-intro{padding:16px 14px;margin:14px 0 10px}
+ .today-map-intro h4{font-size:1.8rem}
+ .today-map-intro .today-map-intro-lead{font-size:1.1rem}
+ .today-map-intro-photo img{aspect-ratio:4/3;max-height:360px}
+ .today-map-intro p{font-size:1rem;line-height:1.9}}
 </style>
 </head>
 <body><div class="wrap">
@@ -1407,10 +1422,12 @@ const TODAY_COUNTRY_INTROS=Object.freeze({
 });
 const TODAY_COUNTRY_PHOTOS=Object.freeze({"AR":[{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側"},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/new-york-skyline.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg","caption":"ブルックリン側から見たマンハッタン（2025年撮影）","author":"Kidfly182","license":"CC BY 4.0","place":"ニューヨークの街並み"},{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ"}]});
 const TODAY_COUNTRY_GUIDES=Object.freeze({
- AR:{lead:'氷河とタンゴ、雄大な自然が息づく南米の国',body:'首都ブエノスアイレスでは、ヨーロッパの面影を残す街並みとタンゴの文化が出迎えてくれます。北東部のイグアスの滝は熱帯の森に包まれ、南へ向かえばパタゴニアの氷河や風の強い大地が広がります。牛肉料理のアサードやマテ茶も日常に根づく楽しみです。',facts:['首都：ブエノスアイレス','風景：イグアスの滝・パタゴニア','文化：タンゴ・マテ茶'],photos:['ar-iguazu-postcard','ar-casa-rosada-postcard']},
- FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリの美術館やカフェはもちろん、フランスの魅力は地方にも広がります。ノルマンディーの海辺には潮の満ち引きで表情を変えるモン・サン＝ミシェルがあり、南には地中海沿岸の陽光、東にはアルプスの山並み。パンやチーズ、郷土料理にも地域ごとの個性が息づいています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-eiffel-postcard','fr-mont-saint-michel-postcard']},
- US:{lead:'大自然から大都市まで、景色が劇的に変わる旅',body:'ニューヨークの摩天楼やサンフランシスコの湾岸から、ヨセミテの花崗岩の谷、グランドキャニオンの地層まで、同じ国とは思えないほど多彩な風景が続きます。音楽、映画、食文化にも地域ごとの歴史が反映され、旅先によってまったく異なる表情に出会えます。',facts:['首都：ワシントンD.C.','風景：ヨセミテ・グランドキャニオン','文化：ジャズ・映画・多彩な食文化'],photos:['us-newyork-postcard','us-golden-gate-postcard']}
+ AR:{lead:'氷河とタンゴ、雄大な自然が息づく南米の国',body:'旅の入口は首都ブエノスアイレス。色鮮やかな街角や歴史的建築のそばで、タンゴが育んだ音楽と踊りの文化に出会えます。北東部では熱帯の森を縫うイグアスの滝が圧倒的な水量で流れ落ち、南部パタゴニアには氷河、湖、風の吹き抜ける大地が続きます。広大なパンパの牧畜文化から生まれたアサード（炭火焼き）や、人と語らいながら楽しむマテ茶も、この国の日常を知る鍵です。',facts:['首都：ブエノスアイレス','風景：イグアスの滝・パタゴニア','文化：タンゴ・マテ茶'],photos:['ar-iguazu-postcard','ar-casa-rosada-postcard']},
+ FR:{lead:'芸術と美食、地方ごとの風景を旅する',body:'パリではエッフェル塔やセーヌ川沿いの風景、美術館、街角のカフェが旅人を迎えます。北西部ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで島の姿が変わる印象的な景勝地。南へ行けば地中海の港町や陽光に恵まれた丘陵、東にはアルプスの山岳風景が広がります。焼きたてのパン、地方ごとに異なるチーズや郷土料理、ワイン産地の景観まで、ひとつの国の中で多彩な文化を味わえます。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-eiffel-postcard','fr-mont-saint-michel-postcard']},
+ US:{lead:'大自然から大都市まで、景色が劇的に変わる旅',body:'東海岸のニューヨークには摩天楼が連なり、自由の女神や多彩な文化が大都市の魅力を形づくります。西海岸のサンフランシスコではゴールデンゲートブリッジが海峡を渡り、さらに内陸へ進むとヨセミテの花崗岩の谷やグランドキャニオンの幾重もの地層が現れます。ハワイの海辺、南部の音楽文化、各地の郷土料理まで、州や地域によって風景も暮らしも大きく異なるのがアメリカの面白さです。',facts:['首都：ワシントンD.C.','風景：ヨセミテ・グランドキャニオン','文化：ジャズ・映画・多彩な食文化'],photos:['us-newyork-postcard','us-golden-gate-postcard']}
 });
+// Track the photograph that actually loaded, including a fallback after failure.
+const displayedCountryCoverAssets=new Map();
 // Editorial photo selection standard (v2): recognition > scenic ambiguity.
 // All approved country-cover photographs must be licensed and attributed.
 // Rank within each country; never let JSON insertion order choose the cover.
@@ -1465,7 +1482,8 @@ function showTodayCountryIntro(item){
   photo.onload=()=>{
    if($('todayMapIntro').dataset.countryCode!==currentCode)return;
    figure.hidden=false;
-   $('todayMapIntroCaption').textContent=chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+   displayedCountryCoverAssets.set(currentCode,chosen.asset);
+   $('todayMapIntroCaption').textContent='この国を象徴する風景｜'+chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
   };
   photo.onerror=()=>{
    if($('todayMapIntro').dataset.countryCode!==currentCode)return;
@@ -1845,10 +1863,16 @@ function countryHeroAsset(country){
  candidates.sort((a,b)=>countryPhotoPriority(code,b)-countryPhotoPriority(code,a));
  return candidates[0]?.asset||null;
 }
+function conflictsWithCountryCover(stop){
+ const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
+  stop.country==='アメリカ合衆国'?'US':null;
+ return stop.photoAsset===countryHeroAsset(stop.country)||
+  (code&&stop.photoAsset===displayedCountryCoverAssets.get(code));
+}
 function chooseTravelPhoto(story,stops){
  const key=travelStoryKey(story),prior=travelSelections.get(key);
- if(prior&&!travelFailedPhotos.has(prior.photoAsset)&&approvedTravelCover(prior)&&prior.photoAsset!==countryHeroAsset(prior.country))return prior;
- const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s)&&s.photoAsset!==countryHeroAsset(s.country));
+ if(prior&&!travelFailedPhotos.has(prior.photoAsset)&&approvedTravelCover(prior)&&!conflictsWithCountryCover(prior))return prior;
+ const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s)&&!conflictsWithCountryCover(s));
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
  const sameCountry=available.filter(s=>countries.includes(s.country));
