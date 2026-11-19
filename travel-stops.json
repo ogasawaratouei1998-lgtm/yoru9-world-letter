@@ -572,5 +572,21 @@
     "author": "Williamgayde",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "nz-milford-sound-postcard": {
+    "country": "ニュージーランド",
+    "countryOnly": true,
+    "place": "ミルフォード・サウンド",
+    "region": "南島・フィヨルドランド国立公園",
+    "latitude": -44.671,
+    "longitude": 167.928,
+    "note": "氷河が削った入り江に切り立つ山々と滝。ニュージーランド南島を代表するフィヨルドの風景です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/330px-Milford_Sound_-_New_Zealand.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Milford_Sound_-_New_Zealand.jpg",
+    "photoAsset": "assets/travel/nz-milford-sound.jpg",
+    "photoCaption": "ニュージーランド・ミルフォード・サウンドの滝（2005年撮影）",
+    "author": "Ryancoke2020",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
   }
 }
