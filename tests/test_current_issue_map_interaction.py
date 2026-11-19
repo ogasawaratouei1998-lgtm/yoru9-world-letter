@@ -142,8 +142,8 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         photo_keys = re.findall(r"photoKey:'([^']+)'", game)
         labels = re.findall(r"photoLabel:'([^']+)'", game)
         self.assertEqual(len(photo_keys), 12, "Each available answer image must be vetted and correctly attributed")
-        self.assertEqual(len(labels), 6)
-        self.assertEqual(len(set(photo_keys)), 6)
+        self.assertEqual(len(labels), 12)
+        self.assertEqual(len(set(photo_keys)), 12)
         covers = {
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
