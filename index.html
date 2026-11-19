@@ -1910,7 +1910,7 @@ function travelPhotoOptions(stops){
  // Several article IDs can refer to the same photograph; never count it twice.
  const seen=new Set();
  return Object.values(stops||{}).filter(stop=>{
-  if(!stop||typeof stop!=='object'||stop.coverOnly===true||typeof stop.country!=='string'||
+  if(!stop||typeof stop!=='object'||stop.coverOnly===true||stop.quizOnly===true||typeof stop.country!=='string'||
      typeof stop.place!=='string'||!Number.isFinite(stop.latitude)||
      !Number.isFinite(stop.longitude)||Math.abs(stop.latitude)>90||
      Math.abs(stop.longitude)>180||
