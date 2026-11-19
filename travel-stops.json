@@ -456,7 +456,8 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_.jpg",
-    "photoAsset": "assets/travel/iguazu-rainbow-cover.jpg"
+    "photoAsset": "assets/travel/iguazu-rainbow-cover.jpg",
+    "coverOnly": true
   },
   "fr-mont-sunset-hero-postcard": {
     "country": "フランス",
@@ -472,7 +473,8 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
-    "photoAsset": "assets/travel/mont-saint-michel-sunset-cover.jpg"
+    "photoAsset": "assets/travel/mont-saint-michel-sunset-cover.jpg",
+    "coverOnly": true
   },
   "us-golden-gate-sunset-hero-postcard": {
     "country": "アメリカ合衆国",
@@ -488,6 +490,7 @@
     "license": "CC BY 2.5",
     "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg",
-    "photoAsset": "assets/travel/golden-gate-sunset-cover.jpg"
+    "photoAsset": "assets/travel/golden-gate-sunset-cover.jpg",
+    "coverOnly": true
   }
 }
