@@ -70,6 +70,45 @@ def bundle_travel_photos(root, output):
     return len(required)
 
 
+def validate_country_highlights(root):
+    """Reject ungrounded, future-dated or invalid Country Portrait topics."""
+    from datetime import datetime, timedelta
+    known = {record['code'] for record in json.loads(
+        (root / 'country-catalog.json').read_text(encoding='utf-8'))}
+    data = json.loads((root / 'country-highlights.json').read_text(encoding='utf-8'))
+    if data.get('version') != 1 or not isinstance(data.get('highlights'), dict):
+        raise ValueError('invalid country-highlights registry')
+    allowed_hosts = {'www.visitbritain.com', 'www.esmadrid.com',
+                     'www.crossroadfukuoka.jp', 'www.dunedinnz.com'}
+    for country, rows in data['highlights'].items():
+        if country not in known or not isinstance(rows, list):
+            raise ValueError('invalid country highlight: ' + str(country))
+        for item in rows:
+            try:
+                if not isinstance(item, dict):
+                    raise ValueError('not an object')
+                for key in ('title', 'body', 'sourceName', 'sourceUrl',
+                            'validFrom', 'validThrough', 'checkedOn'):
+                    if not isinstance(item.get(key), str) or not item[key].strip():
+                        raise ValueError('missing ' + key)
+                start, stop, checked = [
+                    datetime.strptime(item[key], '%Y-%m-%d').date()
+                    for key in ('validFrom', 'validThrough', 'checkedOn')
+                ]
+                if start > stop or (stop - start) > timedelta(days=60):
+                    raise ValueError('invalid publication window')
+                if checked > stop or checked < start - timedelta(days=30):
+                    raise ValueError('invalid source check date')
+                url = urlparse(item['sourceUrl'])
+                if url.scheme != 'https' or url.hostname not in allowed_hosts:
+                    raise ValueError('unapproved source host')
+                if len(item['title']) > 80 or len(item['body']) > 350:
+                    raise ValueError('oversized editorial text')
+            except (KeyError, TypeError, ValueError) as exc:
+                raise ValueError(f'{country}: unsafe or unsupported current topic: {exc}') from exc
+    return data
+
+
 def build_country_coverage(root,output):
     """Publish a truthful all-time 196-location scoreboard from released issues.
 
@@ -114,7 +153,7 @@ def build(root, output):
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
-    for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'world-passport.js', 'notification-config.json', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg',
+    for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'world-passport.js', 'notification-config.json', 'country-catalog.json', 'country-highlights.json', 'travel-stops.json', 'assets/icon.svg',
                      'data/current.json', 'data/archive/index.json', 'assets/world-today-illustrated.svg'):
         source = root / relative
         if not source.is_file():
@@ -122,6 +161,7 @@ def build(root, output):
         target = output / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    validate_country_highlights(root)
     # Original in-house SVG illustrations are editorial artwork, NOT incident
     # photographs. Bundle each verified static asset; no outside image server
     # or mutable media URL is needed to render the news cards.
