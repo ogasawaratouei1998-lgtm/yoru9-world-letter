@@ -1177,7 +1177,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  font-size:1.18rem;line-height:1.5}
 }
 
-/* New current-issue map. Palette follows the illustrated news cards. */
+/* Current-issue map: enlarge the latitude axis for mobile legibility.
+   Artwork and pin coordinates share the same stretched canvas, so pins remain aligned. */
 .today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
  background:linear-gradient(135deg,#264964,#2C5266 65%,#31465E);padding:13px 13px 12px;
  box-shadow:0 9px 21px #0D203B28}
@@ -1187,32 +1188,38 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .today-map-header h3{font-size:1.03rem;color:#FFF0C9;line-height:1.4;margin:0;font-weight:900}
 .today-map-date{color:#FFF5DE;border:1px solid #BBD7CE;border-radius:999px;
  font-size:.7rem;font-weight:760;line-height:1.4;padding:5px 10px;white-space:nowrap}
-.today-map-canvas{position:relative;width:100%;aspect-ratio:2/1;overflow:hidden;
+.today-map-canvas{position:relative;width:100%;aspect-ratio:1.8/1;overflow:hidden;
  border:2px solid #8AC9C7;border-radius:13px;background:#CBEFF0}
-.today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill}
 .today-map-pins{position:absolute;inset:0;pointer-events:none}
 .today-map-pin{position:absolute;display:flex;justify-content:center;align-items:center;
- width:25px;height:25px;transform:translate(-50%,-50%);border:2.5px solid #fff;
- border-radius:50%;background:#F47769;color:white;box-shadow:0 3px 7px #233F5999;
- font:900 .78rem system-ui,sans-serif;line-height:1}
-.today-map-pin::after{content:'';position:absolute;inset:5px;
- border-radius:100%;border:1px solid #FFE8C4A0;pointer-events:none}
-.today-map-pin:nth-child(5n+2){background:#277F7B}
-.today-map-pin:nth-child(5n+3){background:#D38B35}
-.today-map-pin:nth-child(5n+4){background:#9A6FAA}
-.today-map-pin:nth-child(5n+5){background:#D47796}
+ width:36px;height:36px;padding:0;transform:translate(-50%,-50%);
+ border:2.5px solid #fff;border-radius:50%;background:var(--country-color,#FFF0C9);
+ color:#283E56;box-shadow:0 3px 7px #233F5999;font:900 .9rem system-ui,sans-serif;
+ line-height:1;z-index:1;cursor:pointer;pointer-events:auto;touch-action:manipulation}
+.today-map-pin::before{content:'';position:absolute;inset:-5px;border-radius:50%}
+.today-map-pin[aria-expanded="true"]{outline:3px solid #283E56;outline-offset:2px;z-index:2}
+.today-map-pin:focus-visible{outline:3px solid #283E56;outline-offset:3px}
 .today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
 .today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
- padding:8px 12px;background:#FFF0C9;color:#283E56;font-size:.79rem;font-weight:860;
- text-align:center;line-height:1.4;max-width:100%;white-space:normal}
-.today-map-country:nth-child(5n+2){background:#B5EBD6}
-.today-map-country:nth-child(5n+3){background:#FFCFB8}
-.today-map-country:nth-child(5n+4){background:#E4D3EE}
-.today-map-country:nth-child(5n+5){background:#F6CFDC}
+ padding:8px 12px;background:var(--country-color,#FFF0C9);color:#283E56;
+ font-size:.79rem;font-weight:860;text-align:center;line-height:1.4;max-width:100%;white-space:normal}
 .today-map-country:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.today-map-intro{margin:10px 0 2px;padding:12px 13px;border-radius:12px;
+ border:1px solid #A6E6DB;background:#182F46;color:#F8F4ED}
+.today-map-intro[hidden]{display:none}
+.today-map-intro-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.today-map-intro h4{margin:0;font-size:.91rem;color:#FFF0C9;line-height:1.5}
+.today-map-intro p{margin:7px 0 10px;font-size:.79rem;line-height:1.7;color:#E5EEF2}
+.today-map-intro-close{padding:5px 10px;min-height:36px;border:1px solid #9CCEC8;
+ border-radius:999px;color:#E9F6F4;background:#2A5060;font-size:.74rem}
+.today-map-intro-read{min-height:44px;padding:9px 14px;border:1px solid #D9DFCE;
+ border-radius:999px;background:#FFF0C9;color:#283E56;font-size:.78rem;font-weight:800}
 .today-map-note{font-size:.73rem;color:#D5E6E7;line-height:1.6;margin:5px 1px 0}
 @media(max-width:520px){.today-map-card{padding:10px 9px;margin-top:3px;border-radius:15px}
- .today-map-header h3{font-size:.94rem}.today-map-pin{width:22px;height:22px;font-size:.68rem}
+ .today-map-header h3{font-size:.94rem}
+ .today-map-canvas{aspect-ratio:1.65/1;min-height:190px}
+ .today-map-pin{width:36px;height:36px;font-size:.81rem}
  .today-map-country{font-size:.73rem;padding:7px 10px}.today-map-note{font-size:.7rem}}
 </style>
 </head>
@@ -1250,8 +1257,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   </header>
   <div class="today-map-canvas">
    <img class="today-map-art" src="./assets/world-today-illustrated.svg" alt="" width="960" height="480" decoding="async">
-   <div class="today-map-pins" id="todayMapPins" aria-hidden="true"></div>
+   <div class="today-map-pins" id="todayMapPins" role="group" aria-label="掲載国のピン"></div>
   </div>
+  <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
+   <div class="today-map-intro-head"><h4 id="todayMapIntroName"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国の紹介を閉じる">閉じる</button></div>
+   <p id="todayMapIntroBody"></p>
+   <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
+  </section>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="掲載国から記事を選ぶ"></div>
   <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
  </section>
@@ -1368,6 +1380,39 @@ function currentIssueCountries(){
  });
  return [...result.values()];
 }
+const TODAY_MAP_COLORS=Object.freeze(['#FFF0C9','#B5EBD6','#FFCFB8','#E4D3EE','#F6CFDC']);
+const TODAY_COUNTRY_INTROS=Object.freeze({
+ AR:'南アメリカ南部に広がる国。西にはアンデス山脈が連なり、広大な草原パンパもあります。',
+ FR:'ヨーロッパ西部に位置し、大西洋と地中海の両方に面しています。地域ごとに文化や風景が多彩です。',
+ US:'北アメリカに広がり、大西洋と太平洋に面する国。大都市から山岳地帯まで、地域によって風景が大きく異なります。'
+});
+function todayCountryIntro(item){
+ if(TODAY_COUNTRY_INTROS[item.code])return TODAY_COUNTRY_INTROS[item.code];
+ const region=countryRecord(item.code)?.region;
+ return region
+  ?item.name+'は'+region+'に位置する国・地域です。地図のピンから、この号で紹介した場所を確かめてみましょう。'
+  :item.name+'の代表位置を地図で示しています。この号に掲載された国・地域のひとつです。';
+}
+function hideTodayCountryIntro(){
+ $('todayMapIntro').hidden=true;
+ document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
+}
+function showTodayCountryIntro(item){
+ $('todayMapIntroName').textContent=item.name;
+ $('todayMapIntroBody').textContent=todayCountryIntro(item);
+ const read=$('todayMapIntroRead');
+ read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
+ read.dataset.storyIndex=String(item.indices[0]);
+ $('todayMapIntro').hidden=false;
+ document.querySelectorAll('.today-map-pin').forEach(pin=>
+  pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===item.code)));
+ $('todayMapIntro').scrollIntoView({block:'nearest'});
+}
+$('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
+$('todayMapIntroRead').addEventListener('click',()=>{
+ const index=Number($('todayMapIntroRead').dataset.storyIndex);
+ if(Number.isInteger(index)&&index>=0&&index<edition.stories.length)openAtlasStory(index);
+});
 function renderTodayMap(){
  const section=$('todayMapSection');
  if(!section)return;
@@ -1376,7 +1421,7 @@ function renderTodayMap(){
  $('todayMapTitle').textContent=actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台';
  $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
  const pins=$('todayMapPins'),legend=$('todayMapLegend');
- pins.replaceChildren();legend.replaceChildren();
+ pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();
  if(!countryCatalog.length){
   $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
   return;
@@ -1384,19 +1429,27 @@ function renderTodayMap(){
  const countries=currentIssueCountries();
  let marked=0;
  countries.forEach((item,i)=>{
+  const color=TODAY_MAP_COLORS[i%TODAY_MAP_COLORS.length];
   if(item.point){
    marked++;
-   const pin=document.createElement('span');
+   const pin=document.createElement('button');
+   pin.type='button';
    pin.className='today-map-pin';
    pin.dataset.countryCode=item.code;
    pin.textContent=String(i+1);
-   pin.title=item.name+' · '+item.indices.length+'本';
+   pin.title=item.name+'の紹介を表示';
+   pin.setAttribute('aria-label',item.name+'の紹介を表示');
+   pin.setAttribute('aria-controls','todayMapIntro');
+   pin.setAttribute('aria-expanded','false');
+   pin.style.setProperty('--country-color',color);
    pin.style.left=item.point.x.toFixed(3)+'%';
    pin.style.top=item.point.y.toFixed(3)+'%';
+   pin.addEventListener('click',()=>showTodayCountryIntro(item));
    pins.append(pin);
   }
   const button=document.createElement('button');
   button.type='button';button.className='today-map-country';
+  button.style.setProperty('--country-color',color);
   button.textContent=(i+1)+' · '+item.name+'（'+item.indices.length+'本）';
   button.setAttribute('aria-label',item.name+'の掲載記事を読む');
   button.addEventListener('click',()=>openAtlasStory(item.indices[0]));
@@ -1406,7 +1459,7 @@ function renderTodayMap(){
   $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
  }else{
   const extra=marked<countries.length?' 一部の国は座標が未登録のため、一覧から記事を開けます。':'';
-  $('todayMapNote').textContent='国・地域の代表位置です。ニュースの発生現場を示すものではありません。'+extra;
+  $('todayMapNote').textContent='ピンを押すと国の紹介を表示します。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
 }
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
