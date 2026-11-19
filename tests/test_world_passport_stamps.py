@@ -17,7 +17,8 @@ class WorldPassportStampsTest(unittest.TestCase):
             'id="todayPassportMeterFill"', 'id="todayPassportStamps"',
             'id="todayQuizSteps"', 'id="todayQuizStampReward"',
             'id="todayQuizRewardSeal"', 'id="todayQuizNextCountry"',
-            'id="todayPassportLifetime"', 'class="passport-sparkles"'
+            'id="todayPassportLifetime"', 'class="passport-sparkles"',
+            'id="todayQuizCorrectFlash"', 'id="todayQuizCorrectFlashLabel"'
         ):
             self.assertIn(marker,page)
         for marker in (
@@ -28,7 +29,10 @@ class WorldPassportStampsTest(unittest.TestCase):
             "firstStamp=!previous", "todayQuizStampReward",
             "todayQuizNextCountry", "run.streak++",
             "WORLD_PASSPORT_LIFETIME_KEY", "rememberWorldPassportCountry(",
-            "worldPassportGrade(", "stamp.dataset.ever=String("
+            "worldPassportGrade(", "stamp.dataset.ever=String(",
+            "function celebrateWorldPassportCorrect(",
+            "if(correct)celebrateWorldPassportCorrect(",
+            "worldPassportJustCompleted=firstStamp"
         ):
             self.assertIn(marker,game)
         self.assertIn("@media(prefers-reduced-motion:reduce)",page)
@@ -78,9 +82,18 @@ startWorldPassport(countries[0]);
 if(worldPassportActive.questions.length!==2)process.exit(14);
 answerWorldPassport(worldPassportActive.questions[0].answer);
 if(!$('todayQuizStampReward').hidden)process.exit(15);
+const firstCorrect=$('todayQuizChoices').children[worldPassportActive.questions[0].answer];
+if(firstCorrect.dataset.popped!=='true')process.exit(40);
+if(firstCorrect.children[0]?.className!=='quiz-answer-sparks')process.exit(41);
+if(firstCorrect.children[0]?.children.length!==10)process.exit(42);
+if($('todayQuizCorrectFlash').hidden)process.exit(43);
+if(!$('todayQuizCorrectFlashLabel').textContent.includes('正解'))process.exit(44);
 nextWorldPassportRound();
+if(!$('todayQuizCorrectFlash').hidden)process.exit(45);
 answerWorldPassport(worldPassportActive.questions[1].answer);
+if(!$('todayQuizCorrectFlashLabel').textContent.includes('連続正解'))process.exit(46);
 if($('todayQuizStampReward').dataset.new!=='true')process.exit(16);
+if($('todayQuizStampReward').dataset.perfect!=='true')process.exit(47);
 if(!worldPassportStamps.AR||worldPassportStamps.AR.score!==2)process.exit(17);
 if($('todayPassportCount').textContent!=='1 / 2')process.exit(18);
 if($('todayPassportMeter').attributes['aria-valuenow']!=='1')process.exit(19);
@@ -88,6 +101,8 @@ if($('todayPassportStamps').children[0].dataset.earned!=='true')process.exit(20)
 if($('todayQuizNextCountry').hidden)process.exit(21);
 nextWorldPassportRound();
 answerWorldPassport(2);
+if(!$('todayQuizCorrectFlash').hidden)process.exit(48);
+if($('todayQuizChoices').children[2].dataset.popped==='true')process.exit(49);
 nextWorldPassportRound();
 answerWorldPassport(1);
 if(worldPassportStamps.AR.score!==2)process.exit(22);
@@ -100,6 +115,7 @@ for(let i=0;i<worldPassportActive.questions.length;i++){
 }
 if($('todayPassportCount').textContent!=='2 / 2')process.exit(24);
 if($('todayPassportBoard').dataset.complete!=='true')process.exit(25);
+if($('todayPassportBoard').dataset.celebrate!=='true')process.exit(50);
 if(!$('todayPassportMessage').textContent.includes('世界パスポート完成'))process.exit(26);
 if(!$('todayQuizNextCountry').hidden)process.exit(27);
 worldPassportEdition='';worldPassportStamps={};
@@ -114,6 +130,7 @@ if($('todayPassportCount').textContent!=='0 / 2')process.exit(32);
 if($('todayPassportLifetime').textContent!=='通算訪問国：2か国（この端末に保存）')process.exit(33);
 if($('todayPassportStamps').children[0].dataset.ever!=='true')process.exit(34);
 if($('todayPassportStamps').children[0].dataset.earned!=='false')process.exit(35);
+if($('todayPassportBoard').dataset.celebrate!=='false')process.exit(51);
 """
         run=subprocess.run(['node','-e',mock+'\n'+game+'\n'+check],
                            capture_output=True,text=True)
