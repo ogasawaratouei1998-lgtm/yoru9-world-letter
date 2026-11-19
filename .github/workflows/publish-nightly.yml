@@ -19,8 +19,10 @@ on:
       timezone: 'Asia/Tokyo'
     # UTC fallback slots supplement the local-time schedule. Each release is
     # idempotent and immutable; if the JST schedule runs, these are no-ops.
-    - cron: '13,43 12 * * *' # 21:13 / 21:43 JST
-    - cron: '13 13 * * *'    # 22:13 JST
+    - cron: '13,43,53 12 * * *' # 21:13 / 21:43 / 21:53 JST
+    - cron: '13,23 13 * * *' # 22:13 / 22:23 JST
+    # If GitHub delays the first scheduled release, retry with no duplicate
+    # content or push: archive immutability and backend day-level dedupe apply.
   workflow_dispatch:
   workflow_run:
     workflows: ['Free-tier AI editorial double-check (safe preview)']
