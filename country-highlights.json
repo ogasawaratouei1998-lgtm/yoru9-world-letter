@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "updatedOn": "2026-11-19",
+  "description": "Editorially verified cultural and current-affairs notes for country introductions. Never derive these from unverified news leads or tourist postcard records.",
+  "highlights": {
+    "GB": [
+      {
+        "title": "ロンドンはジャズが街に広がる11月",
+        "body": "11月13〜22日のロンドン・ジャズ・フェスティバルでは、世界的な演奏家や新進アーティストによるコンサート、トーク、ワークショップなどが街の会場で開催されます。",
+        "validFrom": "2026-11-13",
+        "validThrough": "2026-11-22",
+        "checkedOn": "2026-11-19",
+        "sourceName": "英国政府観光局 VisitBritain",
+        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      }
+    ],
+    "ES": [
+      {
+        "title": "マドリードで舞台芸術の秋祭り",
+        "body": "11月6〜26日、マドリード自治州の第44回秋の芸術祭が開催。演劇、ダンス、パフォーマンスなど、多彩な国際舞台芸術が街の劇場を彩ります。",
+        "validFrom": "2026-11-06",
+        "validThrough": "2026-11-26",
+        "checkedOn": "2026-11-19",
+        "sourceName": "マドリード市公式観光案内",
+        "sourceUrl": "https://www.esmadrid.com/en/whats-on/autumn-festival"
+      }
+    ],
+    "JP": [
+      {
+        "title": "福岡で大相撲九州場所",
+        "body": "11月8〜22日、福岡国際センターで大相撲の九州場所が開催。11月の福岡では相撲文化に触れる季節が続いています。",
+        "validFrom": "2026-11-08",
+        "validThrough": "2026-11-22",
+        "checkedOn": "2026-11-19",
+        "sourceName": "福岡県公式観光サイト VISIT FUKUOKA",
+        "sourceUrl": "https://www.crossroadfukuoka.jp/en/articles/november"
+      }
+    ],
+    "NZ": [
+      {
+        "title": "南島ダニーデンでバレエ公演を予定",
+        "body": "11月21〜22日、ダニーデンでロイヤル・ニュージーランド・バレエの『眠れる森の美女』が上演予定です。初夏を迎える街で、舞台芸術も楽しみのひとつに。",
+        "validFrom": "2026-11-19",
+        "validThrough": "2026-11-22",
+        "checkedOn": "2026-11-19",
+        "sourceName": "ダニーデン公式観光案内",
+        "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      }
+    ]
+  }
+}
