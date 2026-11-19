@@ -1408,11 +1408,6 @@ function showTodayCountryIntro(item){
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===item.code)));
  $('todayMapIntro').scrollIntoView({block:'nearest'});
 }
-$('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
-$('todayMapIntroRead').addEventListener('click',()=>{
- const index=Number($('todayMapIntroRead').dataset.storyIndex);
- if(Number.isInteger(index)&&index>=0&&index<edition.stories.length)openAtlasStory(index);
-});
 function renderTodayMap(){
  const section=$('todayMapSection');
  if(!section)return;
@@ -1463,6 +1458,13 @@ function renderTodayMap(){
  }
 }
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
+// Bind UI events outside the pure country-coordinate module used by regression tests.
+$('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
+$('todayMapIntroRead').addEventListener('click',()=>{
+ const index=Number($('todayMapIntroRead').dataset.storyIndex);
+ if(Number.isInteger(index)&&index>=0&&index<edition.stories.length)openAtlasStory(index);
+});
+
 function displayReleaseStatus(){
  const today=localDate(new Date());
  if(edition.status==='demo'){setReleaseStatus('公開号を確認できないため、体験版を表示しています。');return}
