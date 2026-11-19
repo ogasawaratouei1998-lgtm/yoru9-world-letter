@@ -157,18 +157,25 @@ try{
     'redundant "あと2本" heading is not displayed');
    assert.equal(await page.locator('#spotlightAward').textContent(),'このニュースの詳しい話',
     'redundant prior-edition label is replaced by a detail label');
-   const earlySmile=page.locator('#quipTeaser .teaser-smile');
-   await earlySmile.click();
-   assert.equal(await earlySmile.getAttribute('aria-pressed'),'true',
-    'a happy reaction persists using the already existing reader state');
-   assert.ok(!(await earlySmile.evaluate(el=>el.classList.contains('smile-burst'))),
-    'reduced-motion mobile users never get forced sparkle movement');
-   await earlySmile.click();
-   assert.equal(await earlySmile.getAttribute('aria-pressed'),'false',
-    'the opt-in reaction can be undone without a fake vote count');
-   await teaser.scrollIntoViewIfNeeded();
-   await page.screenshot({path:'mobile-screenshots/first-laugh-'+viewport.name+'.png',
-     animations:'disabled'});
+   assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('news-detail-mode')),true,
+    'opening an article enters a dedicated reading screen');
+   assert.equal(await page.locator('#atlasHero').isHidden(),true,
+    'the news gallery cannot stack behind an opened article');
+   assert.equal(await page.locator('#todayMapSection').isHidden(),true,
+    'the country map cannot overlap with the separate article screen');
+   const firstSmile=page.locator('#spotlightBody .smile');
+   await firstSmile.click();
+   assert.equal(await firstSmile.getAttribute('aria-pressed'),'true',
+    'the article reaction follows the selected news item');
+   assert.ok(!(await firstSmile.evaluate(el=>el.classList.contains('smile-burst'))),
+    'reduced-motion users never get forced sparkle movement');
+   await firstSmile.click();
+   assert.equal(await firstSmile.getAttribute('aria-pressed'),'false');
+   await page.screenshot({path:'mobile-screenshots/first-laugh-'+viewport.name+'.png',animations:'disabled'});
+   await page.locator('#readerBack').click();
+   assert.equal(await articleReader.isHidden(),true);
+   assert.equal(await page.locator('#atlasHero').isVisible(),true);
+   assert.equal(await page.locator('#quipTeaser .teaser-smile').getAttribute('aria-pressed'),'false');
    const gallery=page.locator('#issueGallery .gallery-tile');
    assert.equal(await page.locator('#galleryHeading').textContent(),
     '世界の「まさか」'+editorialCover.storyCount+'コマ劇場',
@@ -251,27 +258,29 @@ try{
    assert.ok((await gallery.first().locator('.gallery-art').evaluate(el=>el.naturalWidth))>0,
     'the gallery retains the visible, fully loaded first illustration');
    if(await gallery.count()>1){
+    const expectedTitle=await page.locator('#stories [data-story-index="1"] .story-headline h3').textContent();
     await gallery.nth(1).click();
-    assert.equal(await page.locator('#stories [data-story-index="1"] [data-open="1"]').getAttribute('aria-expanded'),
-     'true','gallery opens the exact supporting story, not unrelated articles');
-    assert.equal(await page.locator('#spotlight').isHidden(),true,
-     'the lead article disappears when another news story is selected');
-    assert.equal(await page.locator('#stories [data-story-index="1"]').isVisible(),true,
-     'only the selected supporting article is visible');
-    assert.equal(await page.locator('#stories [data-story-index="1"] .story-art').isHidden(),true,
-     'the repeated supporting illustration is hidden in the detailed reader');
-    const visibleStories=await page.locator('#stories .story:visible').count();
-    assert.equal(visibleStories,1,'no duplicate supporting news cards');
-    assert.ok((await page.locator('#stories .story-visual figcaption').first().textContent()).includes('イメージイラスト'),
-     'original news art retains truthful labeling in its accessible markup');
-    assert.ok(await page.locator('#stories [data-story-index="1"] .readbtn').evaluate(el=>
-      el.getBoundingClientRect().height>=44),'selected story has a full-sized reading action');
+    assert.equal(await page.locator('#spotlightTitle').textContent(),expectedTitle,
+     'second gallery card opens its own story screen');
+    assert.equal(await page.locator('#spotlight').isVisible(),true);
+    assert.equal(await page.locator('#stories').isHidden(),true,
+     'no other articles stack under the selected news');
+    assert.equal(await page.locator('#atlasHero').isHidden(),true);
+    assert.equal(await page.locator('#spotlightImage').isVisible(),true);
+    assert.equal(await page.locator('#readerSelected').textContent(),
+     'ニュース 2 / '+editorialCover.storyCount);
+    assert.equal(await page.locator('#spotlightBody').isVisible(),true);
+    if(await gallery.count()>2){
+     await page.locator('#readerNext').click();
+     assert.equal(await page.locator('#readerSelected').textContent(),
+      'ニュース 3 / '+editorialCover.storyCount);
+     await page.locator('#readerPrev').click();
+     assert.equal(await page.locator('#spotlightTitle').textContent(),expectedTitle);
+    }
     await page.screenshot({path:'mobile-screenshots/selected-story-'+viewport.name+'.png',animations:'disabled'});
     await page.locator('#readerBack').click();
-    assert.equal(await articleReader.isHidden(),true,
-     'the reader can return to the picture-only issue overview');
-    assert.equal(await gallery.nth(1).getAttribute('aria-expanded'),'false',
-     'the selection is cleared accessibly when returning to the gallery');
+    assert.equal(await articleReader.isHidden(),true);
+    assert.equal(await gallery.nth(1).getAttribute('aria-expanded'),'false');
    }
    await page.locator('#issueGallery').scrollIntoViewIfNeeded();
    await page.screenshot({path:'mobile-screenshots/visual-gallery-'+viewport.name+'.png',animations:'disabled'});
