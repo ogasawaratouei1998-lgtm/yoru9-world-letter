@@ -30,6 +30,7 @@ on:
       - 'notifications.js'
       - 'notification-config.json'
       - 'service-worker.js'
+      - 'world-passport.js'
       - 'tests/**'
       - 'data/approved/*.json'
       - '.github/workflows/test-publishing.yml'
