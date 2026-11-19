@@ -41,7 +41,7 @@ class AppIconTest(unittest.TestCase):
         self.assertIn('class="skip-link"', html)
         self.assertIn("controls.hidden=edition.stories.length<=3||available.size<=1", html)
         self.assertIn('id="spotlightRead"', html)
-        self.assertIn('id="worldInvitation"', html)
+        self.assertNotIn('id="worldInvitation"', html)
 
     def test_icons_do_not_require_external_fonts_or_network_services(self):
         code = (ROOT / "app_icon.py").read_text(encoding="utf-8")

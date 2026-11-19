@@ -43,12 +43,13 @@ class CountryRotationTest(unittest.TestCase):
         pool=[{"id":id,"country":country,"category":"work","title":"verified event"}
               for id,country in [
                   ("us","アメリカ"),("fr","フランス"),
-                  ("jp","日本"),("ar","アルゼンチン")
+                  ("jp","日本"),("ar","アルゼンチン"),
+                  ("de","ドイツ"),("in","インド")
               ]]
         picks=select_diverse_verified_stories(
             pool,Counter(),Counter(),recent_country_cooldown=Counter({"US":9}),
             selection_seed="2026-11-19")
-        self.assertEqual({p["id"] for p in picks},{"fr","jp","ar"})
+        self.assertEqual({p["id"] for p in picks},{"fr","jp","ar","de","in"})
         self.assertEqual(picks,select_diverse_verified_stories(
             pool,Counter(),Counter(),recent_country_cooldown=Counter({"US":9}),
             selection_seed="2026-11-19"))

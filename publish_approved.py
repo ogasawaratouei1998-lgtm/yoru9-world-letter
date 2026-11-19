@@ -165,12 +165,15 @@ def validate_approved(data, expected_date):
             '編集承認・事実確認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
-    if edition_type == 'regular' and issue_day >= date(2026, 11, 17):
-        # Three is the editorial goal, not a minimum or an exact quota.
-        # The editorial process selects at most three from a larger vetted
-        # candidate pool; release all 1-3 verified approved stories.
+    if edition_type == 'regular' and issue_day >= date(2026, 11, 19):
+        # Five is the ceiling, never a quota. Publish 1-5 independently
+        # checked articles, with no filler and no zero-story issue.
+        require(isinstance(stories, list) and 1 <= len(stories) <= 5,
+                '通常号は検証・編集承認済みニュース1〜5本を公開します。0本と6本以上は公開できません')
+    elif edition_type == 'regular' and issue_day >= date(2026, 11, 17):
+        # Preserve the immutable Nov 17-18 approval contracts (1-3).
         require(isinstance(stories, list) and 1 <= len(stories) <= 3,
-                '通常号は検証・編集承認済みのニュース1〜3本を公開します。0本と4本以上は公開用の最終選定を確認してください')
+                '2026年11月17〜18日の通常号は検証済みニュース1〜3本とします')
     else:
         # Historical regular issues and the five-article specials are immutable.
         require(isinstance(stories, list) and

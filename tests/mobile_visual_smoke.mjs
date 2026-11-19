@@ -30,9 +30,11 @@ try{
     freshUrl.searchParams.set('visual_smoke',String(Date.now())+'-'+attempt);
     res=await page.goto(freshUrl.toString(),{waitUntil:'domcontentloaded',timeout:35000});
     assert.equal(res?.status(),200,'reader page must be reachable');
-    freshDesign=await page.locator('#coverWorldMap').count()===1&&
+    freshDesign=await page.locator('#coverWorldMap').count()===0&&
+     await page.locator('#archiveExtras').count()===0&&
+     await page.locator('#mapExtras').count()===0&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
-     await page.locator('#issueGallery[data-layout="mobile-grid-2plus1"]').count()===1&&
+     await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
      await page.locator('#quipTeaserLine').count()===1&&
      await page.locator('#articleReader[hidden]').count()===1&&
      await page.locator('#readerBack').count()===1&&
@@ -40,7 +42,7 @@ try{
     if(freshDesign)break;
     await page.waitForTimeout(6000);
    }
-   assert.ok(freshDesign,'GitHub Pages must serve the latest world-atlas cover');
+   assert.ok(freshDesign,'GitHub Pages must serve the latest simplified live news reader');
    await page.waitForFunction(()=>{
     const el=document.querySelector('#spotlightTitle');
     return el&&el.textContent&&!el.textContent.includes('準備中');
@@ -50,8 +52,7 @@ try{
     const h2=hero?.querySelector('.atlas-title');
     const bubble=hero?.querySelector('.atlas-brand');
     const lede=hero?.querySelector('#atlasLede');
-    const map=hero?.querySelector('#coverWorldMap');
-    const box=el=>el?.getBoundingClientRect();
+     const box=el=>el?.getBoundingClientRect();
     return {
       headline:h2?.textContent?.replace(/\s+/g,'').trim(),
       storyNumber:hero?.querySelector('#atlasStoryCount')?.textContent?.trim(),
@@ -65,7 +66,7 @@ try{
       headlineBottom:box(h2)?.bottom,
       conceptTop:box(hero?.querySelector('.atlas-concept'))?.top,
       conceptBottom:box(hero?.querySelector('.atlas-concept'))?.bottom,
-      mapTop:box(map)?.top
+      galleryTop:box(hero?.querySelector('#issueGallery'))?.top
     };
    });
    assert.equal(editorialCover.storyNumber,String(editorialCover.storyCount),
@@ -81,8 +82,8 @@ try{
    assert.ok(editorialCover.bubble.includes('創作の冗談'),
     'the condensed concept identifies the AI comment as fictional humor');
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
-    editorialCover.conceptBottom<=editorialCover.mapTop+2,
-    'the reading order is concept, joke, then countries');
+    editorialCover.conceptBottom<=editorialCover.galleryTop+2,
+    'the reader opens with the editorial concept and story gallery');
    // The three-comic gallery replaces a repeated always-visible article list.
    const articleReader=page.locator('#articleReader');
    assert.equal(await articleReader.isHidden(),true,
@@ -106,23 +107,20 @@ try{
    const teaserGeometry=await page.evaluate(()=>{
     const r=id=>document.querySelector(id)?.getBoundingClientRect();
     const a=r('#atlasHero .atlas-concept'),t=r('#quipTeaser'),
-          g=r('#issueGallery'),m=r('#coverWorldMap');
+          g=r('#issueGallery');
     const buttons=[...document.querySelectorAll('#quipTeaser .quip-teaser-actions button')]
       .map(el=>el.getBoundingClientRect());
     const teaser=t?.toJSON();
     const hero=r('#atlasHero')?.toJSON();
     return {conceptBottom:a?.bottom,teaserTop:t?.top,teaserBottom:t?.bottom,
       teaserHeight:t?.height,teaserLeft:t?.left,teaserRight:t?.right,
-      galleryTop:g?.top,galleryBottom:g?.bottom,mapTop:m?.top,
-      mapHeight:m?.height,windowWidth:window.innerWidth,
+      galleryTop:g?.top,galleryBottom:g?.bottom,windowWidth:window.innerWidth,
       teaser,hero,buttons:buttons.map(x=>({left:x.left,right:x.right,top:x.top,bottom:x.bottom,height:x.height}))};
    });
    assert.ok(teaserGeometry.conceptBottom<=teaserGeometry.teaserTop+2&&
      teaserGeometry.teaserBottom<=teaserGeometry.galleryTop+2&&
-     teaserGeometry.galleryBottom<=teaserGeometry.mapTop+2,
-     'the comedy payoff is visible before choosing a picture or visiting a map');
-   assert.ok(teaserGeometry.mapHeight<=168,
-    'the small mobile atlas is compressed so readers reach a story sooner');
+     teaserGeometry.galleryBottom<=teaserGeometry.hero.bottom+2,
+     'the comedy payoff and gallery are correctly ordered without a map');
    assert.ok(teaserGeometry.teaserHeight<=225,
     'opening laugh should be a compact speech bubble, not another full illustration card: '+
       teaserGeometry.teaserHeight+'px');
@@ -272,48 +270,19 @@ try{
    assert.equal(await appIcon.count(),1,'the redesigned home-screen mark is shown');
    await appIcon.evaluate(img=>img.decode());
    assert.equal(await appIcon.evaluate(img=>img.naturalWidth>0),true,'brand icon loads');
-   await page.waitForFunction(()=>{
-    const pagePins=document.querySelectorAll('#coverMapPins .atlas-pin');
-    return pagePins.length>0&&document.querySelector('#coverMapCaption')?.textContent.includes('ニュースの現場ではありません');
-   },null,{timeout:30000});
-   const pins=page.locator('#coverMapPins .atlas-pin');
-   assert.ok(await pins.count()>=1,'published story locations are represented');
-   const preview=page.locator('#atlasPreview');
-   assert.equal(await preview.isHidden(),true,'country preview starts closed');
-   await pins.first().click();
-   assert.equal(await preview.isVisible(),true,'country pin previews this edition without leaving atlas');
-   assert.ok(await preview.locator('.atlas-preview-title').count()>=1,'preview has a real news title');
-   assert.equal(await pins.first().getAttribute('aria-pressed'),'true',
-    'active map selection is accessible');
-   const firstCountry=await preview.locator('.atlas-preview-heading h3').textContent();
-   if(await pins.count()>1){
-    await pins.nth(1).click();
-    assert.equal(await pins.nth(1).getAttribute('aria-pressed'),'true');
-    assert.notEqual(await preview.locator('.atlas-preview-heading h3').textContent(),firstCountry,
-     'different country pin selects its own country, even for multi-country stories');
+   // The retired archive and map are absent, while the gallery still works.
+   for(const removed of ['#archiveExtras','#mapExtras','#coverWorldMap',
+                          '#coverWorldLink','#worldInvitation','#atlasPreview']){
+    assert.equal(await page.locator(removed).count(),0,
+      'retired map/archive control must not exist: '+removed);
    }
-   const read=preview.locator('[data-atlas-read]').first();
-   const storyIndex=Number(await read.getAttribute('data-atlas-read'));
-   await read.click();
-   assert.equal(await preview.isHidden(),true,'preview closes when a story opens');
-   assert.equal(await articleReader.isVisible(),true,'map previews also open the on-demand reader');
-   assert.equal(await page.locator('#stories .story:visible').count(),storyIndex===0?0:1,
-    'the country preview never reveals a second list of unrelated stories');
-   if(storyIndex===0){
-    assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
-     'lead preview expands the original lead article');
-   }else{
-    assert.equal(await page.locator('#stories [data-story-index="'+storyIndex+'"] [data-open]').getAttribute('aria-expanded'),'true',
-     'country preview opens the exact supporting article');
-   }
-   await page.locator('#coverWorldLink').click();
-   assert.equal(await page.locator('#mapExtras').getAttribute('open'),'',
-    'full country archive remains reachable independently');
+   await gallery.first().click();
+   assert.equal(await articleReader.isVisible(),true,
+     'gallery must open a full source-backed article after map removal');
    await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
-   // Typography checks need the lead article selected explicitly: the map
-   // preview above can select another country and hide the lead stage.
+   // Typography checks use the lead article selected directly from the gallery.
    await gallery.first().click();
    assert.equal(await page.locator('#spotlight').isVisible(),true);
    // Phase 2: typography, editorial labeling and touch targets.

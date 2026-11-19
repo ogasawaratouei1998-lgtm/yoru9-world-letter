@@ -1249,7 +1249,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 <section class="hero" id="atlasHero" aria-label="世界から届くニュースの舞台">
  <div class="atlas-heading">
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
-  <h2 class="atlas-title">世界の<span class="atlas-oops">「やらかし」</span><span class="atlas-title-second">ニュース、<span id="atlasStoryCount">3</span>本。</span></h2>
+  <h2 class="atlas-title">世界の<span class="atlas-oops">「やらかし」</span><span class="atlas-title-second">ニュース、<span id="atlasStoryCount">…</span>本。</span></h2>
   <p class="atlas-lede" id="atlasLede">この号に収録された、世界の失敗・勘違い・珍事件。</p>
   <div class="atlas-concept" role="group" aria-label="報道された実話にAIがユーモアのあるツッコミを添える">
    <span class="atlas-real-stamp">実話</span><span class="atlas-concept-arrow" aria-hidden="true">→</span>
@@ -1264,22 +1264,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   </div>
  </section>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
-  <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」3コマ劇場</strong><span>気になる絵から読む</span></div>
-  <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
+  <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」劇場</strong><span>気になる絵から読む</span></div>
+  <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-responsive"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
- <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
-  <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
-  <div id="coverMapPins" class="atlas-pins"></div>
-  <span class="atlas-map-symbol" aria-hidden="true">◌</span>
- </div>
- <section class="atlas-preview" id="atlasPreview" aria-label="選択した国のニュース" aria-live="polite" hidden></section>
- <p class="atlas-map-caption" id="coverMapCaption">掲載国の代表位置です。ニュースの現場ではありません。</p>
- <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
- <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
-</section>
+ </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
- <div class="article-reader-toolbar"><p id="readerSelected">記事を読む</p><button id="readerBack" type="button">‹ 3コマ劇場に戻る</button></div>
+ <div class="article-reader-toolbar"><p id="readerSelected">記事を読む</p><button id="readerBack" type="button">‹ ニュース一覧に戻る</button></div>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
  <div class="spotlight-topline"><div class="spotlight-award" aria-hidden="true"><span class="evening-moon">☾</span></div><div class="spotlight-kicker"><span id="spotlightAward">今夜のひと話</span></div><p class="spotlight-location" id="spotlightLocation">国・地域を確認中</p></div>
  <figure class="news-visual spotlight-visual" id="spotlightVisual">
@@ -1296,7 +1287,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  </div>
  <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button>
  <div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
- <a class="world-invitation" id="worldInvitation" href="#mapExtras">この話の舞台を地図で見る</a>
+ 
 </section>
 <div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の人間の失敗談に、一読で笑えるAIツッコミを。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
@@ -1309,9 +1300,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  <div class="month-cards" id="monthCards"></div></details>
 </section>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
-<div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
-<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜と、この30日の世界地図</h2><p class="small" id="mapCaption" aria-live="polite">公開された配信号と月間特集の掲載国を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・196カ国の掲載状況</summary><p class="small">国・地域の累計紹介数は公開済みの過去号から集計。地図と地域別の本数は直近30日間です。未掲載とは、その30日間に掲載がない地域です。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国・地域から記事を探す</h2><p class="small">配信号と月間特集の記事を探せます。地図の数字をタップすると、この国の記事が一覧表示されます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
-</div>
 <section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
 <summary>夜9時のお知らせ・通知設定</summary>
 <div class="notification-settings"><p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
@@ -1341,7 +1329,6 @@ let toastTimer;
 function toast(s){$('toast').textContent=s;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,2300)}
 // Approximate country centroids, not article-event coordinates.
 let countryCatalog=[];
-let countryIndex=new Map();
 function countryRecord(name){
  const key=String(name||'').trim().toLocaleLowerCase();
  return countryCatalog.find(item=>item.code.toLowerCase()===key||item.name.toLocaleLowerCase()===key||item.aliases.some(alias=>alias.toLocaleLowerCase()===key))||null;
@@ -1370,251 +1357,14 @@ async function loadCountryCatalog(){
   const records=await response.json();
   if(!Array.isArray(records)||!records.length)throw Error('invalid country catalog');
   countryCatalog=records;
-  loadLifetimeCoverage();
-  renderWorld();renderIssueCountries();
-  if(Array.isArray(cachedCountryIssues))loadCountryIndex(cachedCountryIssues);
  }catch(err){console.info('国・地域の一覧を読み込めませんでした',err)}
 }
-let cachedCountryIssues=null;
-let lifetimeCountryCoverage=null;
-async function loadLifetimeCoverage(){
- try{
-  const response=await fetch('./data/country-coverage.json',{cache:'no-store'});
-  if(!response.ok)throw Error('country scoreboard unavailable');
-  const report=await response.json();
-  if(report.basis!=='published-archive-only'||report.total!==countryCatalog.length||
-     !Number.isInteger(report.covered)||report.covered<0||report.covered>report.total)
-   throw Error('invalid country scoreboard');
-  lifetimeCountryCoverage=report;
-  renderEditorialDashboard(dashboardIssues,dashboardFailed);
- }catch(err){console.info('累計の掲載国集計を読み込めませんでした',err)}
-}
-// Natural Earth-derived country boundaries are loaded as GeoJSON.
-// Drawn with an equirectangular projection matching the country marker positions.
-async function loadWorldBoundaries(){
- const svg=$('worldCoastlines'),status=$('mapLoading');
- try{
-  const response=await fetch('https://raw.githubusercontent.com/holtzy/D3-graph-gallery/master/DATA/world.geojson',{cache:'force-cache'});
-  if(!response.ok)throw Error('Map HTTP '+response.status);
-  const geo=await response.json();
-  if(!Array.isArray(geo.features))throw Error('Invalid geography');
-  const ns='http://www.w3.org/2000/svg';
-  const fragment=document.createDocumentFragment();
-  function polygonPath(rings){
-   let path='';
-   for(const ring of rings){
-    let segment=[],lastLon=null;
-    function flush(){if(segment.length>2)path+='M'+segment.map(p=>p[0].toFixed(2)+','+p[1].toFixed(2)).join('L')+'Z';segment=[]}
-    for(const coord of ring){
-     const lon=Number(coord[0]),lat=Number(coord[1]);
-     if(!Number.isFinite(lon)||!Number.isFinite(lat))continue;
-     if(lastLon!==null&&Math.abs(lon-lastLon)>180)flush();
-     segment.push([lon+180,90-lat]);lastLon=lon;
-    }
-    flush();
-   }
-   return path;
-  }
-  for(const feature of geo.features){
-   const geometry=feature.geometry;if(!geometry)continue;
-   const polygons=geometry.type==='Polygon'?[geometry.coordinates]:geometry.type==='MultiPolygon'?geometry.coordinates:[];
-   for(const rings of polygons){
-    const d=polygonPath(rings);if(!d)continue;
-    const path=document.createElementNS(ns,'path');path.setAttribute('d',d);fragment.append(path);
-   }
-  }
-  svg.replaceChildren(fragment);$('editorWorldCoastlines').innerHTML=svg.innerHTML;$('coverWorldCoastlines').innerHTML=svg.innerHTML;status.hidden=true;
- }catch(err){
-  status.textContent='地図の形を取得できません。国別アーカイブは利用できます。';
- }
-}
-loadWorldBoundaries();
 loadCountryCatalog();
-function mapDisplayStories(){
- // Merge the selected edition with the published 30-day collection.
- // This uses the same selection as the monthly reading cards.
- return [...edition.stories,...visibleMonthStories]
-  .filter((s,i,all)=>all.findIndex(x=>x.id===s.id)===i);
-}
-function renderWorld(){
- const counts=new Map();
- for(const story of mapDisplayStories()){
-  for(const country of countryKeys(story.country))
-   counts.set(country,(counts.get(country)||0)+1);
- }
- const pins=$('mapPins');pins.replaceChildren();
- counts.forEach((count,country)=>{
-  const point=mapPoint(country);if(!point)return;
-  const btn=document.createElement('button');btn.type='button';btn.className='map-pin';
-  btn.style.left=point[0]+'%';btn.style.top=point[1]+'%';btn.textContent=String(count);
-  btn.title=countryLabel(country)+'：配信号と月間特集に'+count+'本';
-  btn.setAttribute('aria-label',btn.title);
-  btn.addEventListener('click',()=>{
-   const select=$('countrySelect');select.value=country;showCountryResults();
-   select.scrollIntoView({behavior:'smooth',block:'center'});
-  });
-  pins.append(btn);
- });
- $('mapCaption').textContent='表示中の配信号と月間特集の掲載国：'+
-  ([...counts.keys()].map(countryLabel).join('、')||'確認中')+
-  '（'+[...counts.values()].reduce((sum,count)=>sum+count,0)+
-  '記事）。ピンは記事が発生した都市ではなく、国・地域のおおよその中心です。';
-}
-function includeCurrentCountries(){
- if(!edition||edition.status==='demo'||!Array.isArray(edition.stories))return;
- for(const story of edition.stories){
-  for(const country of countryKeys(story.country)){
-   if(!countryIndex.has(country))countryIndex.set(country,[]);
-   const list=countryIndex.get(country);
-   if(!list.some(item=>item.date===edition.editionDate&&item.title===story.title))
-    list.push({date:edition.editionDate,title:story.title});
-  }
- }
-}
-function refreshCountryChoices(){
- includeCurrentCountries();
- const menu=$('countrySelect'),previous=menu.value;
- menu.innerHTML='<option value="">すべての国・地域</option>';
- const countries=new Set([...countryIndex.keys(),...visibleMonthStories.flatMap(s=>countryKeys(s.country))]);
- [...countries].filter(country=>countryRecord(country))
-  .sort((a,b)=>countryLabel(a).localeCompare(countryLabel(b),'ja')).forEach(country=>{
-   const option=document.createElement('option');option.value=country;
-   option.textContent=countryLabel(country)+' ('+countryResultsFor(country).length+')';menu.append(option);
-  });
- if([...menu.options].some(option=>option.value===previous))menu.value=previous;
- showCountryResults();
-}
-const EDITOR_REGIONS=['アジア','ヨーロッパ','北アメリカ','南アメリカ','アフリカ','オセアニア'];
-function editorialRegion(country){return countryRecord(country)?.region||null}
-let dashboardIssues=[],dashboardFailed=0;
-function refreshMonthlyDashboard(){
- renderEditorialDashboard(dashboardIssues,dashboardFailed);
-}
-function renderEditorialDashboard(issues,failed=0){
- const now=localDate(new Date()),end=new Date(now+'T00:00:00+09:00');
- const counts=new Map(),regions=new Map(EDITOR_REGIONS.map(x=>[x,0]));
- let articles=0,unknown=0,curated=0,dates=new Set();
- const usedIds=new Set(),usedSources=new Set();
- function countStory(story){
-  const keys=monthSourceKeys(story);
-  if(usedIds.has(story.id)||keys.some(key=>usedSources.has(key)))return false;
-  usedIds.add(story.id);keys.forEach(key=>usedSources.add(key));
-  articles++;
-  const codes=countryKeys(story.country);
-  if(!codes.length)unknown++;
-  for(const country of codes){
-   counts.set(country,(counts.get(country)||0)+1);
-   const region=editorialRegion(country);
-   if(region)regions.set(region,regions.get(region)+1);
-  }
-  return true;
- }
- for(const issue of issues){
-  if(issue?.status!=='published'||!Array.isArray(issue.stories)||!/^(?:\d{4})-\d{2}-\d{2}$/.test(issue.editionDate||''))continue;
-  const date=new Date(issue.editionDate+'T00:00:00+09:00');
-  const age=(end-date)/86400000;
-  if(age<0||age>=30)continue;
-  dates.add(issue.editionDate);
-  for(const story of issue.stories)countStory(story);
- }
- // Current release can become visible before the archive index refreshes.
- if(edition.status==='published'&&isMonthDate(edition.editionDate,monthWindow().start,now)){
-  dates.add(edition.editionDate);
-  for(const story of edition.stories)countStory(story);
- }
- // The hand-curated collection has its own real date, not a fabricated issue.
- for(const story of monthStories){
-  if(isMonthDate(monthRetentionDate(story),monthWindow().start,now)&&countStory(story))curated++;
- }
- const missing=[...regions].filter(([,n])=>n===0).map(([name])=>name);
- const lifetime=lifetimeCountryCoverage?'累計：'+lifetimeCountryCoverage.covered+'/'+lifetimeCountryCoverage.total+'か国・地域を紹介（未紹介'+lifetimeCountryCoverage.remaining+'）。 ':' ';
- $('editorStats').textContent=lifetime+'直近30日：'+dates.size+'配信号＋特集収録'+curated+'本／'+
-  articles+'記事／'+counts.size+'か国・地域。未掲載地域：'+missing.length+'。'+
-  (failed?'取得できなかった配信号：'+failed+'件。':'')+
-  (unknown?'地域を判定できない記事：'+unknown+'件。':'');
- const pins=$('editorMapPins');pins.replaceChildren();
- for(const [country,count] of counts){
-  const point=mapPoint(country);if(!point)continue;
-  const pin=document.createElement('button');pin.type='button';pin.className='map-pin';
-  pin.style.left=point[0]+'%';pin.style.top=point[1]+'%';pin.textContent=String(count);
-  pin.title=countryLabel(country)+'：30日間で'+count+'本';
-  pin.setAttribute('aria-label',pin.title);
-  pin.addEventListener('click',()=>{
-   $('editorDashboard').open=false;
-   $('countrySelect').value=country;showCountryResults();
-   $('countrySelect').scrollIntoView({behavior:'smooth',block:'center'});
-  });
-  pins.append(pin);
- }
- const regionBox=$('editorRegionStats');regionBox.replaceChildren();
- for(const [region,count] of regions){
-  const line=document.createElement('div');line.className='editor-region'+(count===0?' missing':'');
-  const name=document.createElement('span');name.textContent=region;
-  const value=document.createElement('span');value.textContent=count===0?'未掲載':'掲載 '+count+'本';
-  line.append(name,value);regionBox.append(line);
- }
- const countryBox=$('editorCountryStats');countryBox.replaceChildren();
- const title=document.createElement('strong');title.textContent='国・地域別の掲載数';countryBox.append(title);
- for(const [country,count] of [...counts].sort((a,b)=>b[1]-a[1]||countryLabel(a).localeCompare(countryLabel(b),'ja'))){
-  const line=document.createElement('div');line.className='editor-region';
-  const name=document.createElement('span');name.textContent=countryLabel(country);
-  const value=document.createElement('span');value.textContent=count+'本';
-  line.append(name,value);countryBox.append(line);
- }
- if(!counts.size){const p=document.createElement('p');p.textContent='対象期間に掲載記録がありません。';countryBox.append(p)}
-}
-function countryResultsFor(country){
- const fromMonth=visibleMonthStories.filter(s=>countryKeys(s.country).includes(country))
-  .map(s=>({kind:'month',id:s.id,date:monthRetentionDate(s),title:s.title}));
- const fromArchive=(countryIndex.get(country)||[]).filter(item=>
-  !fromMonth.some(s=>s.date===item.date&&s.title===item.title));
- return [...fromMonth,...fromArchive];
-}
-function showCountryResults(){
- const country=$('countrySelect').value;
- const result=$('countryResults');result.replaceChildren();
- if(!country){result.textContent='国を選ぶと、公開済みの配信号と月間特集の記事を表示します。';return}
- const matches=countryResultsFor(country);
- if(!matches.length){result.textContent='この国の公開済み記事はまだありません。';return}
- matches.forEach(item=>{
-  const row=document.createElement('div');row.className='country-result';
-  const button=document.createElement('button');button.type='button';
-  button.textContent=item.title;
-  button.addEventListener('click',()=>{
-   if(item.kind==='month'){
-    const card=[...$('monthCards').querySelectorAll('.month-story')]
-     .find(node=>node.dataset.monthStoryId===item.id);
-    if(!card)return;
-    $('monthDetails').open=true;
-    const details=card.querySelector('details');if(details)details.open=true;
-    card.scrollIntoView({behavior:'smooth',block:'center'});return;
-   }
-   archiveMenu.value=item.date==='current'?'current':item.date;
-   archiveMenu.dispatchEvent(new Event('change'));
-   window.scrollTo({top:0,behavior:'smooth'});
-  });
-  row.append(button,document.createTextNode(' · '+item.date+
-   (item.kind==='month'?'（月間特集）':'（配信号）')));
-  result.append(row);
- });
-}
-async function loadCountryIndex(issues){
- cachedCountryIssues=issues;
- const editions=[...issues].filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x.date)).slice(0,90);
- const all=await Promise.all(editions.map(async issue=>{try{const r=await fetch('./data/archive/'+issue.date+'.json',{cache:'no-store'});if(!r.ok)return null;const data=await r.json();return data.status==='published'&&data.editionDate===issue.date?data:null}catch(_){return null}}));
- dashboardIssues=all.filter(Boolean);dashboardFailed=all.filter(x=>!x).length;
- renderEditorialDashboard(all.filter(Boolean),all.filter(x=>!x).length);
- countryIndex=new Map();
- all.filter(Boolean).forEach(issue=>issue.stories.forEach(story=>{for(const country of countryKeys(story.country)){if(!countryIndex.has(country))countryIndex.set(country,[]);countryIndex.get(country).push({date:issue.editionDate,title:story.title})}}));
- refreshCountryChoices();
-}
-$('countrySelect').addEventListener('change',showCountryResults);
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 function displayReleaseStatus(){
  const today=localDate(new Date());
  if(edition.status==='demo'){setReleaseStatus('公開号を確認できないため、体験版を表示しています。');return}
  const date=edition.editionDate||'日付不明';
- if($('archiveSelect').value!=='current'){setReleaseStatus(date+'発行の過去号を閲覧中です。');return}
  if(date===today){setReleaseStatus('本日 '+date+' 公開 · '+edition.stories.length+'本。公開後の更新を自動確認します。');return}
  setReleaseStatus('前回の公開号 '+date+' · '+edition.stories.length+'本。本日分の公開後に自動更新します。');
 }
@@ -1717,7 +1467,6 @@ function renderMonthRetrospective(){
  visibleMonthStories=stories;
  // The map and country links must update when either source of stories loads,
  // and when the rolling 30-day window changes.
- renderWorld();refreshCountryChoices();refreshMonthlyDashboard();
  $('monthRetrospective').hidden=!stories.length;
  if(!stories.length)return;
  $('monthCount').textContent='配信・特集収録から30日 · '+stories.length+'本';
@@ -1885,29 +1634,9 @@ function renderIssueGallery(){
   target.append(button);
  }
 }
-// The cover map uses the SAME factual location catalog as the deep archive.
-// Pins represent countries or territories, NEVER the precise incident venue.
-let activeAtlasCountry=null;
-let lastAtlasTrigger=null;
-function atlasSetSelectedCountry(code){
- for(const button of document.querySelectorAll('#coverMapPins .atlas-pin, #issueCountries .country-chip')){
-  button.setAttribute('aria-pressed',String(!!code&&button.dataset.country===code));
- }
-}
-function closeAtlasPreview(restoreFocus=false){
- const panel=$('atlasPreview');
- panel.hidden=true;
- panel.replaceChildren();
- activeAtlasCountry=null;
- atlasSetSelectedCountry(null);
- if(restoreFocus&&lastAtlasTrigger?.isConnected)lastAtlasTrigger.focus({preventScroll:true});
- lastAtlasTrigger=null;
-}
 function openAtlasStory(index){
- // Gallery and map lead to ONE expanded source-backed story, never a
- // second always-visible news feed repeating every postcard.
+ // One illustration tile opens one source-backed story.
  if(!Number.isInteger(index)||index<0||index>=edition.stories.length)return;
- closeAtlasPreview();
  const stage=$('articleReader');
  stage.hidden=false;
  $('readerSelected').textContent='選んだニュース · '+(index+1)+' / '+edition.stories.length;
@@ -1956,122 +1685,6 @@ function closeArticleReader(){
  });
 }
 $('readerBack').addEventListener('click',closeArticleReader);
-function showAtlasPreview(code,trigger){
- // This preview reads approved/public story data only, not source markets.
- const known=countryKeys(code);
- const selectedCodes=known.length?known:[code];
- const stories=edition.stories.map((story,index)=>({story,index}))
-  .filter(item=>countryKeys(item.story.country).some(key=>selectedCodes.includes(key)));
- if(!stories.length){closeAtlasPreview();return}
- if(activeAtlasCountry===code){closeAtlasPreview(true);return}
- const panel=$('atlasPreview');panel.replaceChildren();
- const heading=document.createElement('div');heading.className='atlas-preview-heading';
- const title=document.createElement('h3');title.textContent=countryLabel(code)+'から届いた'+stories.length+'本';
- const close=document.createElement('button');close.type='button';
- close.className='atlas-preview-close';close.textContent='×';
- close.setAttribute('aria-label','ニュースのプレビューを閉じる');
- close.addEventListener('click',()=>closeAtlasPreview(true));
- heading.append(title,close);panel.append(heading);
- const list=document.createElement('ol');list.className='atlas-preview-list';
- for(const {story,index} of stories){
-  const item=document.createElement('li');
-  const label=document.createElement('p');label.className='atlas-preview-title';
-  label.textContent=story.title||'掲載記事';
-  const meta=document.createElement('p');meta.className='atlas-preview-meta';
-  meta.textContent='報道日：'+String(story.reported||'記事で確認').replaceAll('.','-');
-  const read=document.createElement('button');read.type='button';
-  read.className='atlas-preview-read';read.dataset.atlasRead=String(index);
-  read.textContent='この記事を読む';
-  read.setAttribute('aria-label',(story.title||'掲載記事')+'を読む');
-  read.addEventListener('click',()=>openAtlasStory(index));
-  item.append(label,meta,read);list.append(item);
- }
- panel.append(list);
- const archive=document.createElement('button');archive.type='button';
- archive.className='atlas-preview-history';archive.textContent=countryLabel(code)+'の過去記事も探す';
- archive.addEventListener('click',()=>{closeAtlasPreview();openWorldExplorer(code)});
- panel.append(archive);
- activeAtlasCountry=code;lastAtlasTrigger=trigger||null;
- atlasSetSelectedCountry(code);
- panel.hidden=false;
- panel.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
-}
-function openWorldExplorer(country=''){
- const map=$('mapExtras');
- map.open=true;
- const behavior=window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth';
- const select=$('countrySelect');
- if(country&&[...select.options].some(option=>option.value===country)){
-  select.value=country;
-  showCountryResults();
-  select.scrollIntoView({behavior,block:'center'});
- }else{
-  map.scrollIntoView({behavior,block:'start'});
- }
-}
-function renderCoverMap(){
- closeAtlasPreview();
- const pins=$('coverMapPins');
- pins.replaceChildren();
- if(!Array.isArray(edition.stories))return;
- const present=new Map();
- for(const story of edition.stories){
-  for(const country of countryKeys(story.country)){
-   if(!present.has(country))present.set(country,0);
-   present.set(country,present.get(country)+1);
-  }
- }
- for(const [code,count] of present){
-  const point=mapPoint(code);
-  if(!point)continue;
-  const button=document.createElement('button');
-  button.type='button';button.className='atlas-pin';
-  button.style.left=point[0]+'%';button.style.top=point[1]+'%';
-  button.dataset.country=code;
-  button.setAttribute('aria-controls','atlasPreview');
-  button.setAttribute('aria-pressed','false');
-  button.textContent=String(count);
-  button.title=countryLabel(code)+'の掲載記事をプレビュー（国の代表位置）';
-  button.setAttribute('aria-label',button.title);
-  button.addEventListener('click',()=>showAtlasPreview(code,button));
-  pins.append(button);
- }
- const caption=$('coverMapCaption');
- const names=[...present.keys()].map(countryLabel).join('・');
- caption.textContent=names
-  ?'掲載国の代表位置です。ニュースの現場ではありません。'
-  :'掲載国を確認中です。点はニュースの現場ではありません。';
-}
-function renderIssueCountries(){
- const target=$('issueCountries');
- target.replaceChildren();
- const names=new Map();
- for(const story of edition.stories){
-  const country=String(story.country||'').trim(),key=countryKey(country);
-  if(country&&key&&!names.has(key))names.set(key,countryLabel(country));
- }
- const intro=document.createElement('span');
- intro.className='countries-intro';
- const current=edition.status!=='demo'&&edition.editionDate===localDate(new Date())&&$('archiveSelect').value==='current';
- intro.textContent=current?'今夜の舞台':edition.status==='demo'?'体験版の舞台':'この号の舞台';
- target.append(intro);
- if(!names.size){
-  const pending=document.createElement('span');pending.className='country-pending';
-  pending.textContent='舞台の国・地域を確認中';target.append(pending);renderCoverMap();return;
- }
- for(const [code,name] of names){
-  const chip=document.createElement('button');
-  chip.type='button';chip.className='country-chip';
-  chip.textContent=name;
-  chip.dataset.country=code;
-  chip.setAttribute('aria-controls','atlasPreview');
-  chip.setAttribute('aria-pressed','false');
-  chip.setAttribute('aria-label',name+'の掲載記事をプレビュー');
-  chip.addEventListener('click',()=>showAtlasPreview(code,chip));
-  target.append(chip);
- }
- renderCoverMap();
-}
 function updateSpotlight(){
  const first=Array.isArray(edition.stories)?edition.stories[0]:null;
  $('spotlight').hidden=!first;
@@ -2099,17 +1712,6 @@ $('spotlightRead').addEventListener('click',()=>{
  $('spotlightRead').setAttribute('aria-expanded',String(show));
  $('spotlightRead').textContent=show?'閉じる ↑':(edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓');
  if(show){markRead(0);panel.scrollIntoView({behavior:'smooth',block:'nearest'})}
-});
-$('worldInvitation').addEventListener('click',event=>{
- event.preventDefault();openWorldExplorer();
-});
-$('coverWorldLink').addEventListener('click',event=>{
- event.preventDefault();openWorldExplorer();
-});
-$('atlasPreview').addEventListener('keydown',event=>{
- if(event.key==='Escape'&&!$('atlasPreview').hidden){
-  event.preventDefault();closeAtlasPreview(true);
- }
 });
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
@@ -2384,7 +1986,7 @@ function render(){const d=edition.stories;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
  $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;const art=newsArt(s);return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="story-cover"><figure class="story-visual"><img class="story-art" src="${escapeHtml(art)}" alt="記事を象徴した創作イラスト。報道写真ではありません。" loading="lazy" decoding="async" width="800" height="480"><figcaption>イメージイラスト</figcaption></figure><div class="story-headline"><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3></div></div><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
- renderIssueGallery();renderIssueCountries();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();renderWorld();refreshCountryChoices();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
+ renderIssueGallery();updateSpotlight();renderTravelSlots();updateFilters();applyFilter();update();observeStories();if(monthStories.length||monthPublishedStories.length)renderMonthRetrospective();}
 function update(){const count=Math.max(0,edition.stories.length-1);$('progress').hidden=count<=3;$('progress').textContent=count>3?`ほかに${count}本`:'';$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
 let readObserver=null;
@@ -2434,45 +2036,39 @@ $('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();loadMonthRetrospective();loadMonthlyVerified();
-async function checkPublished(){if(location.protocol==='file:')return;try{const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});if(!response.ok)return;const x=await response.json();const now=new Date();const published=x?.status==='published'&&Array.isArray(x.stories)&&x.stories.length>=1&&x.stories.length<=5;const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);if(published&&releaseOk){const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;newestPublished=x;if(fresh&&archiveMenu.value==='current'){edition=x;filter='all';loadState();render();loadArchives()}else if(archiveMenu.value==='current'){displayReleaseStatus()}}}catch(err){console.info('公開号は未取得です。準備号を表示します。')}}
-checkPublished();
-
-// The archive manifest contains *released* editions only; approval drafts are never copied to public/.
-const archiveMenu=$('archiveSelect');
-const archiveStatus=$('archiveStatus');
 let newestPublished=null;
-async function loadArchives(){
-  if(location.protocol==='file:')return;
-  try{
-    const res=await fetch('./data/archive/index.json',{cache:'no-store'});
-    if(!res.ok)return;
-    const m=await res.json();
-    if(!Array.isArray(m.issues))return;
-    archiveMenu.innerHTML='<option value="current">現在の配信号</option>';
-    m.issues.forEach(issue=>{
-      if(!/^\d{4}-\d{2}-\d{2}$/.test(issue.date))return;
-      const o=document.createElement('option');o.value=issue.date;o.textContent=issue.date+' — '+String(issue.title||'世界のニュース').slice(0,45);archiveMenu.append(o);
-    });
-    loadCountryIndex(m.issues);
-    updateMonthFromArchives(m.issues).catch(err=>console.info('特集の配信済み記事を取得できませんでした',err));
-    archiveStatus.textContent=m.issues.length?`${m.issues.length}日分の公開号から選べます。`:'まだ過去の公開号はありません。';
-  }catch(_){ archiveStatus.textContent='アーカイブは公開後に利用できます。'; }
+async function checkPublished(){
+ if(location.protocol==='file:')return;
+ try{
+  const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});
+  if(!response.ok)return;
+  const x=await response.json(),now=new Date();
+  const published=x?.status==='published'&&Array.isArray(x.stories)&&
+   x.stories.length>=1&&x.stories.length<=5;
+  const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);
+  if(!published||!releaseOk)return;
+  const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;
+  newestPublished=x;
+  if(fresh){edition=x;filter='all';loadState();render()}
+  else displayReleaseStatus();
+ }catch(err){console.info('最新の公開号を取得できませんでした',err)}
 }
-archiveMenu.addEventListener('change',async()=>{
-  const chosen=archiveMenu.value;
-  if(chosen==='current'){
-    edition=newestPublished||demo;filter='all';loadState();render();return;
+checkPublished();
+// Previous-edition reader is removed; rolling monthly digest consumes
+// released dates without exposing archive-selection or world-map controls.
+async function loadPublishedMonthDates(){
+ if(location.protocol==='file:')return;
+ try{
+  const res=await fetch('./data/archive/index.json',{cache:'no-store'});
+  if(!res.ok)return;
+  const m=await res.json();
+  if(Array.isArray(m.issues)){
+   updateMonthFromArchives(m.issues).catch(err=>
+    console.info('30日間の特集を取得できませんでした',err));
   }
-  if(!/^\d{4}-\d{2}-\d{2}$/.test(chosen))return;
-  try{
-    const response=await fetch(`./data/archive/${chosen}.json`,{cache:'no-store'});
-    if(!response.ok)throw Error('HTTP '+response.status);
-    const item=await response.json();
-    if(item.status!=='published'||item.editionDate!==chosen||!Array.isArray(item.stories)||item.stories.length<1||item.stories.length>5)throw Error('invalid issue');
-    edition=item;filter='all';loadState();render();window.scrollTo({top:0,behavior:'smooth'});
-  }catch(_){archiveStatus.textContent='この配信号を読み込めませんでした。';}
-});
-loadArchives();
+ }catch(_){/* Current edition remains available. */}
+}
+loadPublishedMonthDates();
 function updateOnlineState(){$('offlineNotice').hidden=navigator.onLine!==false}
 window.addEventListener('online',()=>{updateOnlineState();checkPublished()});
 window.addEventListener('offline',updateOnlineState);
@@ -2516,7 +2112,7 @@ async function refreshOnForeground(){
  if(now-lastForegroundCheck<15000)return;
  lastForegroundCheck=now;
  await checkPublished();
- loadArchives();
+ loadPublishedMonthDates();
  loadMonthlyVerified();
  if('serviceWorker' in navigator){
   navigator.serviceWorker.getRegistration('./').then(reg=>reg?.update()).catch(()=>{});

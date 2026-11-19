@@ -749,7 +749,7 @@ def recent_country_cooldown_counts(today, days=3):
 
 
 def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None, lifetime_country_history=None, recent_country_cooldown=None, selection_seed=None):
-    """Select up to three ALREADY audited stories, with regional fairness.
+    """Select up to five ALREADY audited stories, with regional fairness.
 
     Country is the fact-checked event country, not the RSS feed locale.
     Unknown event countries receive no fictitious diversity credit.
@@ -767,9 +767,9 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
     lifetime_country_history=lifetime_country_history or Counter()
     recent_country_cooldown=recent_country_cooldown or Counter()
     # A routine company-news pile is never a complete issue. Fewer superb
-    # verified stories beat filling three slots with corporate filler.
+    # verified stories beat forcing five stories by adding corporate filler.
     choices=[]
-    for size in range(min(3,len(pool)),0,-1):
+    for size in range(min(5,len(pool)),0,-1):
         eligible=[
             indices for indices in combinations(range(len(pool)),size)
             if sum(pool[i]["category"]=="company" for i in indices) <= 1
@@ -799,8 +799,8 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
         # A country used yesterday is penalized heavily BEFORE any long-run
         # frequency and genre tie-breakers, not silently treated as "fresh".
         return (len(set(known_countries)),len(categories),
-                len(set(known_regions)),
                 -sum(recent_country_cooldown[country] for country in known_countries),
+                len(set(known_regions)),
                 len({country for country in known_countries
                      if lifetime_country_history[country]==0}),
                 -sum(category_history[story["category"]] for story in stories),
@@ -984,7 +984,7 @@ def source_bound_batch_drafts(response, groups):
     Provenance-only prefilter: it does not verify a fact, a country, or the
     quality of a joke. Independent reviewer B still must approve everything.
     A model must not combine unrelated original articles from separate
-    groups or invent a URL to fill the three-story target.
+    groups or invent a URL to fill the five-story ceiling.
     """
     proposed=response.get("stories",[]) if isinstance(response,dict) else []
     if not isinstance(proposed,list) or not isinstance(groups,list):
@@ -1229,7 +1229,7 @@ def main():
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
       'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. The catalog supports 196 reporting locations. Seek neglected countries as sources permit, but NEVER assign the publication market to the news incident or invent a story to fill an unreported country. Never invent facts, URLs, or details. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
-      'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Propose incidents from ALL FOUR categories across multiple nights, prioritizing a neglected category whenever comparable source-supported funny stories exist; three published slots cannot cover four categories nightly. Make work about employees, operators and daily work mishaps, person about individual choices, sports about sporting decisions, and company only about organization-level choices. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
+      'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Propose incidents from ALL FOUR categories across multiple nights, prioritizing a neglected category whenever comparable source-supported funny stories exist; five published slots can represent all four categories on some nights. Make work about employees, operators and daily work mishaps, person about individual choices, sports about sporting decisions, and company only about organization-level choices. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic routine news without a 4/5 startling documented contrast; an intentional absurd choice is eligible if source-confirmed. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not select a merely verifiable incident when its actual human mistake lacks a clear, safe, incident-specific comic reversal. Rewrite weak jokes with a new angle; do not replace comedy with vague encouragement or a lesson. Serious stakes are NOT a selection advantage. NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have an original source-supported publication date within the preceding seven days including the edition day in Japan; keep that ACTUAL date intact and never relabel old reporting as new. Prioritize same-day reporting when otherwise comparable. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
@@ -1271,8 +1271,8 @@ def main():
     supplemental_attempts=0
     supplemental_generated=0
     supplemental_groups_examined=0
-    if sum(draft_preflight_viable(item,now) for item in draft)<3:
-        # Tonight's target is three separately reviewed stories, not two.
+    if sum(draft_preflight_viable(item,now) for item in draft)<5:
+        # Aim for up to five independent verifications, without a minimum quota.
         # The large first batch can return diagnostics only, with no actual
         # drafts: try additional *individual* incident reports without
         # weakening the original-text evidence or independent B audit gates.
@@ -1347,8 +1347,8 @@ def main():
                 print("Small-batch source-bound (NOT verified) drafts:",len(retry_stories),flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if sum(draft_preflight_viable(item,now) for item in draft)>=3:
-                print("Three eligible comedy drafts reserved: moving to independent fact review.",flush=True)
+            if sum(draft_preflight_viable(item,now) for item in draft)>=5:
+                print("Five eligible comedy drafts reserved: moving to independent fact review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
@@ -1521,7 +1521,7 @@ def main():
         recent_country_cooldown=cooldown,selection_seed=now.date().isoformat())
     checkpoint("selected",selected_for_edition=len(selected))
     print("Nightly verified selection:",len(selected),"source-checked stories;",
-          "target 3, release 1-3.",flush=True)
+          "target up to 5, release 1-5 verified stories.",flush=True)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
         "selected_countries":len({code for story in selected
