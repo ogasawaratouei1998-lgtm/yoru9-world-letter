@@ -74,7 +74,7 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
 
 });
 let worldPassportEdition='',worldPassportStamps={},worldPassportActive=null;
-let worldPassportLastAwarded='',worldPassportLifetime={};
+let worldPassportLastAwarded='',worldPassportLifetime={},worldPassportJustCompleted=false;
 const WORLD_PASSPORT_LIFETIME_KEY='yoru9-world-passport-lifetime-v1';
 function loadWorldPassportLifetime(){
  worldPassportLifetime={};
@@ -105,7 +105,7 @@ function passportKey(){return 'yoru9-world-passport-v1:'+String(edition.editionD
 function loadWorldPassport(){
  const key=passportKey();
  if(key===worldPassportEdition)return;
- worldPassportEdition=key;worldPassportActive=null;worldPassportStamps={};worldPassportLastAwarded='';
+ worldPassportEdition=key;worldPassportActive=null;worldPassportStamps={};worldPassportLastAwarded='';worldPassportJustCompleted=false;
  loadWorldPassportLifetime();
  try{
   const saved=JSON.parse(localStorage.getItem(key)||'{}');
@@ -158,6 +158,7 @@ function updateWorldPassportBoard(){
  const total=countries.length;
  const board=$('todayPassportBoard');
  board.dataset.complete=String(total>0&&earned===total);
+ board.dataset.celebrate=String(worldPassportJustCompleted&&total>0&&earned===total);
  $('todayPassportCount').textContent=earned+' / '+total;
  const meter=$('todayPassportMeter');
  meter.setAttribute('aria-valuemax',String(total));
@@ -307,6 +308,27 @@ document.getElementById('todayQuizPhotoDialogClose').addEventListener('click',()
 document.getElementById('todayQuizPhotoDialog').addEventListener('click',event=>{
  if(event.target===event.currentTarget)event.currentTarget.close();
 });
+/* Each correctly selected answer earns a separate burst, before any country stamp.
+   Decorations are aria-hidden, use no sound, and never intercept pointer events. */
+function celebrateWorldPassportCorrect(button,streak){
+ if(!button)return;
+ button.dataset.popped='true';
+ const burst=document.createElement('span');
+ burst.className='quiz-answer-sparks';
+ burst.dataset.active='true';
+ burst.setAttribute('aria-hidden','true');
+ const shapes=['✦','★','✧','✦','◆','★','✧','✦','★','✧'];
+ for(const shape of shapes){
+  const particle=document.createElement('span');
+  particle.textContent=shape;
+  burst.append(particle);
+ }
+ button.append(burst);
+ const flash=$('todayQuizCorrectFlash');
+ flash.hidden=false;
+ $('todayQuizCorrectFlashLabel').textContent=streak>1
+  ?streak+'連続正解！':'正解！ キラッとひらめいた！';
+}
 function renderWorldPassportRound(){
  const run=worldPassportActive;if(!run)return;
  const q=run.questions[run.step];
@@ -323,6 +345,8 @@ function renderWorldPassportRound(){
  });
  $('todayQuizStampReward').hidden=true;
  $('todayQuizStampReward').dataset.new='false';
+ $('todayQuizStampReward').dataset.perfect='false';
+ $('todayQuizCorrectFlash').hidden=true;
  $('todayQuizNextCountry').hidden=true;
  $('todayQuizQuestion').textContent=q.question;
  $('todayQuizResult').hidden=true;$('todayQuizNext').hidden=true;
@@ -348,6 +372,7 @@ function answerWorldPassport(picked){
   if(index===question.answer)button.dataset.correct='true';
   if(index===picked&&!correct)button.dataset.pickedWrong='true';
  });
+ if(correct)celebrateWorldPassportCorrect($('todayQuizChoices').querySelectorAll('button')[picked],run.streak);
  $('todayQuizVerdict').textContent=correct
   ?'正解！ '+(run.streak>1?run.streak+'問連続正解！':'スタンプに一歩近づいた！')
   :'惜しい！ 正解は「'+question.options[question.answer]+'」。次で挽回しよう！';
@@ -363,14 +388,17 @@ function answerWorldPassport(picked){
   const newBest=!previous||run.score>previous.score;
   // A stamp represents visiting/completing the country challenge; the score
   // and personal best remain truthful and are never weakened by a replay.
+  const missingBefore=currentIssueCountries().filter(item=>!worldPassportStamps[item.code]);
   if(newBest)worldPassportStamps[code]={score:run.score,total:run.questions.length};
   if(firstStamp)worldPassportLastAwarded=code;
+  worldPassportJustCompleted=firstStamp&&missingBefore.length===1&&missingBefore[0].code===code;
   rememberWorldPassportCountry(code,run.score,run.questions.length);
   persistWorldPassport();updateWorldPassportButtons();
   const reward=$('todayQuizStampReward');
   reward.hidden=false;
   reward.dataset.new=String(firstStamp);
   reward.dataset.grade=worldPassportGrade(run.score,run.questions.length);
+  reward.dataset.perfect=String(run.score===run.questions.length);
   $('todayQuizRewardSeal').textContent='★';
   $('todayQuizRewardTitle').textContent=firstStamp
    ?worldPassportGradeLabel(run.score,run.questions.length)+'スタンプ獲得！ '+run.item.name
