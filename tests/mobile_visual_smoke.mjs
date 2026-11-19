@@ -296,13 +296,11 @@ try{
    }
    await gallery.first().click();
    assert.equal(await articleReader.isVisible(),true,
-     'gallery must open a full source-backed article after map removal');
+    'gallery opens the selected full article in a separate reading screen');
+   assert.equal(await page.locator('#spotlight').isVisible(),true);
    await page.evaluate(()=>window.scrollTo(0,0));
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
-   // Typography checks use the lead article selected directly from the gallery.
-   await gallery.first().click();
-   assert.equal(await page.locator('#spotlight').isVisible(),true);
    // Phase 2: typography, editorial labeling and touch targets.
    const leadHierarchy=await page.evaluate(()=>{
     const title=document.querySelector('#spotlightTitle');
@@ -328,21 +326,17 @@ try{
     'facts and AI punchline are visually separated');
    assert.notEqual(leadHierarchy.factBackground,leadHierarchy.quipBackground,
     'AI joke uses a distinct editorial surface');
-   const supportingCards=page.locator('#stories .story');
-   if(await supportingCards.count()>0){
-    await gallery.nth(1).click();
-    const firstCard=supportingCards.first();
-    assert.equal(await firstCard.isVisible(),true);
-    assert.equal(await firstCard.locator('.story-fact .fact-kicker').textContent(),'起きたこと');
-    assert.equal(await firstCard.locator('.teaserquip .humor-marker').textContent(),'創作の冗談');
-    assert.ok(await firstCard.locator('[data-open]').evaluate(
-      el=>el.getBoundingClientRect().height>=44),
-     'secondary story reading action is touch-friendly');
-    assert.ok(await firstCard.locator('.story-fact').evaluate(el=>
-      el.getBoundingClientRect().bottom<el.closest('.story').querySelector('.teaserquip').getBoundingClientRect().top),
-     'secondary facts precede and remain separate from AI humor');
+   if(await gallery.count()>1){
+    const expectedTitle=await page.locator('#stories [data-story-index="1"] h3').textContent();
+    await page.locator('#readerNext').click();
+    assert.equal(await page.locator('#spotlightTitle').textContent(),expectedTitle,
+     'next-news opens the second story in its own view');
+    assert.equal(await page.locator('#spotlight .spotlight-fact .fact-kicker').textContent(),'起きたこと');
+    assert.equal(await page.locator('#spotlight .spotlight-joke .humor-marker').textContent(),'創作の冗談');
+    assert.equal(await page.locator('#stories').isHidden(),true,
+     'second story is never stacked as an extra card');
+    await page.locator('#readerPrev').click();
    }
-   await gallery.first().click();
    const primaryButton=page.locator('#spotlightRead');
    const buttonHeight=await primaryButton.evaluate(el=>el.getBoundingClientRect().height);
    assert.ok(buttonHeight>=44,'lead article action must be touch-friendly');
@@ -352,6 +346,9 @@ try{
     assert.ok(hidden,'1–3 article editions do not need five category filters');
    }
    await page.screenshot({path:'mobile-screenshots/cover-'+viewport.name+'.png',animations:'disabled'});
+   await page.locator('#readerBack').click();
+   assert.equal(await page.locator('#atlasHero').isVisible(),true,
+    'overview returns before moving to the closing note and country map');
    const closing=page.locator('#closing');
    assert.equal(await closing.locator('h2').textContent(),'世界からの便りは、ここまで。',
     'closing works for both day and night, today and archive');
