@@ -332,72 +332,11 @@ footer{font-size:.8125rem;line-height:1.7}
 .travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
 .travel-credit a{color:#d2eadd}
 .travel-elsewhere{font-size:.875rem;line-height:1.65;color:#e1e8f1;margin:4px 0 10px}
-.month-travel-slot{margin:5px 0 13px}
-.month-travel-slot .travel-open{padding:6px 0;margin-bottom:2px}
-.month-travel-slot .travel-card{margin-top:4px}
 @media(max-width:520px){
  .travel-card{padding:14px 13px}
  .travel-photo{max-height:220px}
  .travel-note,.travel-figure figcaption{font-size:1rem}
 }
-
-/* Quiet, opt-in, historical reading shelf. Never label as today's issue. */
-.month-retrospective{margin:23px 0 18px}
-.month-retrospective>details{border:1px solid #5c7087;border-radius:17px;background:linear-gradient(140deg,#1a2b42,#142238);padding:10px 14px 13px}
-.month-retrospective>details>summary{cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;min-height:55px;font-size:1.0625rem;line-height:1.65;font-weight:790;color:#f9e4bd}
-#monthCount{font-size:.875rem;color:#e3e9f1;font-weight:650}
-.month-intro{font-size:.9375rem;line-height:1.75;margin:10px 0 16px;color:#e1e8f1}
-.month-cards{display:grid;gap:11px}
-.month-story{border:1px solid #485c77;border-radius:13px;background:#203047;overflow:hidden}
-.month-story>details>summary{cursor:pointer;display:flex;flex-direction:column;align-items:start;gap:6px;padding:15px 14px 13px;min-height:44px}
-.month-country{font-size:.875rem;color:#d5dff0;font-weight:720;line-height:1.5}
-.month-story>details>summary strong{font-size:1.0625rem;line-height:1.65;color:#fff4e0}
-.month-preview{font-size:.9375rem;line-height:1.8;color:#d8e2ed}
-.month-more{font-size:.9375rem;line-height:1.6;color:#f5d8a1;text-decoration:underline;text-underline-offset:3px}
-.month-story>details[open]>summary .month-more{display:none}
-.month-story-body{padding:2px 14px 18px;border-top:1px solid #40536d}
-.month-story-body .detailtext{font-size:1rem;line-height:1.85;white-space:pre-line}
-.month-quip-label{font-size:.875rem;font-weight:800;color:#f3d7a4;margin:12px 0 4px}
-.month-quip{font-size:1.0625rem;line-height:1.75;font-weight:750;margin:0 0 13px}
-.month-second{font-size:1rem;line-height:1.8;color:#f3dfc2;margin:14px 0}
-.month-source,.month-notice{font-size:.875rem;line-height:1.8;color:#dce3ee}
-.month-story a{color:#e3cb9d;text-underline-offset:4px;overflow-wrap:anywhere}
-.month-map a{min-height:44px;display:inline-flex;align-items:center;font-size:.9375rem;line-height:1.6}
-@media(max-width:520px){
- .month-retrospective>details{padding:9px 11px 12px}
- .month-retrospective>details>summary{gap:5px;font-size:1rem}
- .month-story>details>summary{padding:13px 12px}
- .month-story-body{padding:2px 12px 16px}
-}
-
-/* Native details: clearly distinguish opened vs closed states on mobile. */
-.month-summary-right{display:inline-flex;align-items:center;justify-content:flex-end;gap:11px;flex-wrap:wrap}
-.month-disclosure,.month-story-disclosure{display:inline-flex;align-items:center;gap:7px;
- border:1px solid #9baec5;border-radius:9px;padding:6px 10px;
- color:#f8e3ba;background:#283c58;font-size:.9375rem;font-weight:800;line-height:1.5}
-.month-chevron,.month-story-chevron{display:inline-block;font-size:1.1875rem;line-height:1;
- transition:transform .18s ease}
-.month-open-label,.month-story-opened{display:none}
-.month-retrospective>details[open] .month-open-label,
-.month-story>details[open] .month-story-opened{display:inline}
-.month-retrospective>details[open] .month-closed-label,
-.month-story>details[open] .month-story-closed{display:none}
-.month-retrospective>details[open] .month-chevron,
-.month-story>details[open] .month-story-chevron{transform:rotate(180deg)}
-.month-story>details>summary{position:relative}
-.month-story-disclosure{align-self:flex-end;margin-top:6px}
-.month-retrospective>details>summary:focus-visible,
-.month-story>details>summary:focus-visible{outline:3px solid #ffdf9e;outline-offset:3px}
-.month-story>details[open]{border-left:3px solid #efcc8c}
-@media(prefers-reduced-motion:reduce){.month-chevron,.month-story-chevron{transition:none}}
-@media(max-width:520px){.month-summary-right{width:100%;justify-content:space-between;gap:7px}
- .month-story-disclosure{margin-top:4px}
-}
-/* Travel stays optional in the already-expanded monthly story. */
-.month-travel-slot{margin:14px 0 15px}
-.month-story .month-travel-slot .travel-open{padding:8px 0;min-height:48px}
-.month-story .travel-panel:not([hidden]){margin:8px 0 16px}
-.month-story .travel-card{margin:0}
 
 /* v8: the lead incident is the cover; no oversized mission explainer. */
 :root{--safe-top:env(safe-area-inset-top,0px)}
@@ -538,8 +477,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  font-size:.95rem;padding:12px 13px;line-height:1.7;margin-top:14px}
 .story .teaserquip span{color:#ffe0ae;font-size:.8rem}
 .story .readbtn{font-size:.9375rem}
-.month-retrospective>details{border-color:#70849b}
-.month-retrospective>details>summary{color:#ffe4b5}
 .reader-tool{border-color:#637c98}
 .reader-tool>summary{font-size:.975rem}
 .footerpanel{border-color:#7084a0}
@@ -1837,13 +1774,12 @@ function travelPostcardHtml(story,stop,showIntro=false){
   '</section>';
 }
 document.querySelector('main').addEventListener('click',async event=>{
- const control=event.target.closest('[data-travel],[data-month-travel]');
+ const control=event.target.closest('[data-travel]');
  if(!control)return;
- const isMonth=control.hasAttribute('data-month-travel'),i=isMonth?null:Number(control.dataset.travel);
- const story=isMonth?visibleMonthStories.find(s=>s.id===control.dataset.monthTravel):edition.stories[i];
+ const i=Number(control.dataset.travel);
+ const story=edition.stories[i];
  const panel=control.nextElementSibling;
- if(!story||!panel||!panel.classList.contains('travel-panel')||
-    (!isMonth&&!Number.isInteger(i)))return;
+ if(!Number.isInteger(i)||!story||!panel||!panel.classList.contains('travel-panel'))return;
  const opening=panel.hidden;
  panel.hidden=!opening;
  control.setAttribute('aria-expanded',String(opening));
@@ -1854,9 +1790,7 @@ document.querySelector('main').addEventListener('click',async event=>{
  panel.innerHTML='<p class="travel-loading" role="status">小さな旅の準備中…</p>';
  const stops=await loadTravelStops();
  // Never insert a postcard into a card that has already been closed/replaced.
- if(!panel.isConnected||panel.hidden||
-    (!isMonth&&edition.stories[i]!==story)||
-    (isMonth&&!visibleMonthStories.includes(story)))return;
+ if(!panel.isConnected||panel.hidden||edition.stories[i]!==story)return;
  const firstIntro=!travelExplainerShown;
  travelExplainerShown=true;
  const maxRetries=travelPhotoOptions(stops).length;
