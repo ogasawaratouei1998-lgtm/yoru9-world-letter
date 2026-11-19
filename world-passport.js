@@ -35,12 +35,39 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  ]
 });
 let worldPassportEdition='',worldPassportStamps={},worldPassportActive=null;
-let worldPassportLastAwarded='';
+let worldPassportLastAwarded='',worldPassportLifetime={};
+const WORLD_PASSPORT_LIFETIME_KEY='yoru9-world-passport-lifetime-v1';
+function loadWorldPassportLifetime(){
+ worldPassportLifetime={};
+ try{
+  const saved=JSON.parse(localStorage.getItem(WORLD_PASSPORT_LIFETIME_KEY)||'{}');
+  if(!saved||typeof saved!=='object'||Array.isArray(saved))return;
+  for(const [code,result] of Object.entries(saved)){
+   if(/^[A-Z]{2}$/.test(code)&&result&&Number.isInteger(result.score)&&
+      Number.isInteger(result.total)&&result.total>=1&&result.total<=2&&
+      result.score>=0&&result.score<=result.total){
+    worldPassportLifetime[code]={score:result.score,total:result.total};
+   }
+  }
+ }catch(_){}
+}
+function persistWorldPassportLifetime(){
+ try{localStorage.setItem(WORLD_PASSPORT_LIFETIME_KEY,JSON.stringify(worldPassportLifetime))}catch(_){}
+}
+function rememberWorldPassportCountry(code,score,total){
+ const old=worldPassportLifetime[code];
+ if(!old||score/total>old.score/old.total||
+    (score/total===old.score/old.total&&score>old.score)){
+  worldPassportLifetime[code]={score,total};
+ }
+ persistWorldPassportLifetime();
+}
 function passportKey(){return 'yoru9-world-passport-v1:'+String(edition.editionDate||'demo')}
 function loadWorldPassport(){
  const key=passportKey();
  if(key===worldPassportEdition)return;
  worldPassportEdition=key;worldPassportActive=null;worldPassportStamps={};worldPassportLastAwarded='';
+ loadWorldPassportLifetime();
  try{
   const saved=JSON.parse(localStorage.getItem(key)||'{}');
   if(saved&&typeof saved==='object'&&!Array.isArray(saved)){
@@ -98,6 +125,7 @@ function updateWorldPassportBoard(){
    :earned===0
     ?'まだ0枚。好きな国のスタンプを押しに行こう！'
     :'スタンプ'+earned+'枚獲得！ あと'+(total-earned)+'か国で完成。';
+ $('todayPassportLifetime').textContent='通算訪問国：'+Object.keys(worldPassportLifetime).length+'か国（この端末に保存）';
  const album=$('todayPassportStamps');album.replaceChildren();
  countries.forEach(item=>{
   const result=worldPassportStamps[item.code],completed=!!result;
@@ -105,6 +133,7 @@ function updateWorldPassportBoard(){
   stamp.type='button';stamp.className='today-passport-stamp';
   stamp.dataset.countryCode=item.code;
   stamp.dataset.earned=String(completed);
+  stamp.dataset.ever=String(!completed&&!!worldPassportLifetime[item.code]);
   stamp.dataset.fresh=String(completed&&worldPassportLastAwarded===item.code);
   stamp.setAttribute('aria-controls','todayCountryQuiz');
   stamp.setAttribute('aria-label',item.name+(completed
@@ -120,7 +149,7 @@ function updateWorldPassportBoard(){
   status.className='today-passport-stamp-status';
   status.textContent=completed
    ?'獲得済 · '+result.score+'/'+result.total+'問正解'
-   :'まだ空欄 · 挑戦する';
+   :worldPassportLifetime[item.code]?'前の号で訪問済 · 今号に挑戦':'まだ空欄 · 挑戦する';
   stamp.append(seal,country,status);
   stamp.addEventListener('click',()=>startWorldPassport(item));
   album.append(stamp);
@@ -290,6 +319,7 @@ function answerWorldPassport(picked){
   // and personal best remain truthful and are never weakened by a replay.
   if(newBest)worldPassportStamps[code]={score:run.score,total:run.questions.length};
   if(firstStamp)worldPassportLastAwarded=code;
+  rememberWorldPassportCountry(code,run.score,run.questions.length);
   persistWorldPassport();updateWorldPassportButtons();
   const reward=$('todayQuizStampReward');
   reward.hidden=false;
