@@ -23,7 +23,13 @@ jobs:
         run: |
           npm install --no-save --no-audit --no-fund playwright@1.56.1
           google-chrome --version
-          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+          # Fetch the single licensed Japanese font directly from the
+          # upstream Noto repository; avoid slow APT mirrors on hosted runners.
+          mkdir -p "$HOME/.local/share/fonts"
+          curl --fail --location --retry 2 --connect-timeout 10 --max-time 90 --silent --show-error \
+            "https://raw.githubusercontent.com/googlefonts/noto-cjk/main/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf" \
+            --output "$HOME/.local/share/fonts/NotoSansCJKjp-Regular.otf"
+          fc-cache -f "$HOME/.local/share/fonts"
           fc-list :lang=ja | grep -q 'Noto Sans CJK JP'
       - name: Check mobile layout, monthly image, reopen behavior
         run: node tests/mobile_visual_smoke.mjs
