@@ -60,7 +60,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             self.assertIn("['" + landmark + "',100]", page)
         self.assertIn("function countryPhotoPriority(code,photo)", page)
         self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
-        self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place)", page)
+        self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
 
     def test_country_buttons_still_open_their_news(self):
         page = self.page
