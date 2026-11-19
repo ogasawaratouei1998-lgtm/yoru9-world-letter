@@ -16,7 +16,8 @@ class WorldPassportStampsTest(unittest.TestCase):
             'id="todayPassportMeter" role="progressbar"',
             'id="todayPassportMeterFill"', 'id="todayPassportStamps"',
             'id="todayQuizSteps"', 'id="todayQuizStampReward"',
-            'id="todayQuizRewardSeal"', 'id="todayQuizNextCountry"'
+            'id="todayQuizRewardSeal"', 'id="todayQuizNextCountry"',
+            'id="todayPassportLifetime"', 'class="passport-sparkles"'
         ):
             self.assertIn(marker,page)
         for marker in (
@@ -25,7 +26,9 @@ class WorldPassportStampsTest(unittest.TestCase):
             "worldPassportStamps[code]={score:run.score,total:run.questions.length}",
             "persistWorldPassport();updateWorldPassportButtons()",
             "firstStamp=!previous", "todayQuizStampReward",
-            "todayQuizNextCountry", "run.streak++"
+            "todayQuizNextCountry", "run.streak++",
+            "WORLD_PASSPORT_LIFETIME_KEY", "rememberWorldPassportCountry(",
+            "worldPassportGrade(", "stamp.dataset.ever=String("
         ):
             self.assertIn(marker,game)
         self.assertIn("@media(prefers-reduced-motion:reduce)",page)
@@ -100,6 +103,14 @@ worldPassportEdition='';worldPassportStamps={};
 loadWorldPassport();updateWorldPassportBoard();
 if($('todayPassportCount').textContent!=='2 / 2')process.exit(28);
 if(worldPassportStamps.AR.score!==2)process.exit(29);
+if($('todayPassportLifetime').textContent!=='通算訪問国：2か国（この端末に保存）')process.exit(30);
+if($('todayPassportStamps').children[0].dataset.grade!=='gold')process.exit(31);
+edition.editionDate='2026-11-21';
+loadWorldPassport();updateWorldPassportBoard();
+if($('todayPassportCount').textContent!=='0 / 2')process.exit(32);
+if($('todayPassportLifetime').textContent!=='通算訪問国：2か国（この端末に保存）')process.exit(33);
+if($('todayPassportStamps').children[0].dataset.ever!=='true')process.exit(34);
+if($('todayPassportStamps').children[0].dataset.earned!=='false')process.exit(35);
 """
         run=subprocess.run(['node','-e',mock+'\n'+game+'\n'+check],
                            capture_output=True,text=True)
