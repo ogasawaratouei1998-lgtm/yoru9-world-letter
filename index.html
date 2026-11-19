@@ -1316,6 +1316,35 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
 .today-quiz-choices button:focus-visible,.today-quiz-next:focus-visible{outline:3px solid white;outline-offset:2px}
 @media(max-width:520px){.today-country-quiz{padding:14px 12px}
  .today-map-game-lead{font-size:.8rem}.today-quiz-question{font-size:1.05rem}}
+
+/* Answer photos are visually prominent but never reveal the solution before answering. */
+.today-quiz-photo{margin:14px 0 12px;border:1px solid #A1DAD0;border-radius:15px;
+ overflow:hidden;background:#24425A;box-shadow:0 10px 24px #061F3150}
+.today-quiz-photo[hidden],.today-quiz-photo-notice[hidden]{display:none!important}
+.today-quiz-photo-zoom{display:block;position:relative;width:100%;margin:0;padding:0;
+ border:0;background:#224057;color:#fff;cursor:zoom-in}
+.today-quiz-photo-zoom img{display:block;width:100%;height:auto;aspect-ratio:16/10;
+ object-fit:cover;object-position:center;max-height:420px}
+.today-quiz-photo-zoom span{position:absolute;bottom:10px;right:10px;padding:6px 10px;
+ border-radius:999px;background:#132E3BD9;color:#fff;font-size:.73rem;font-weight:780}
+.today-quiz-photo figcaption{padding:11px 12px 13px;display:grid;gap:6px;color:#E7F2EF;
+ line-height:1.65;font-size:.83rem}
+.today-quiz-photo figcaption strong{color:#FFF2CF;font-size:.94rem}
+.today-quiz-photo-credits{color:#D2E8E3;font-size:.75rem}
+.today-quiz-photo-credits a{color:#B4EAE6;text-decoration:underline;text-underline-offset:3px}
+.today-quiz-photo-notice{padding:10px 12px;margin:11px 0;border:1px solid #94ADA7;
+ border-radius:10px;color:#DFEDE9;font-size:.85rem;line-height:1.65}
+.today-quiz-photo-dialog{width:min(94vw,850px);max-width:94vw;max-height:88dvh;
+ padding:12px;background:#162B40;color:#fff;border:1px solid #B2E4D7;border-radius:16px}
+.today-quiz-photo-dialog::backdrop{background:#071423DE}
+.today-quiz-photo-dialog img{display:block;max-width:100%;width:100%;height:auto;
+ max-height:69dvh;object-fit:contain}
+.today-quiz-photo-dialog p{margin:11px 3px 4px;font-size:.89rem;line-height:1.65;color:#E0F0EC}
+.today-quiz-dialog-close{display:block;margin:0 0 9px auto;min-height:44px;padding:8px 14px;
+ border:1px solid #D6EEE9;border-radius:100px;color:#fff;background:#37566A}
+.today-quiz-photo-zoom:focus-visible,.today-quiz-dialog-close:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:520px){.today-quiz-photo-zoom img{aspect-ratio:5/4;max-height:340px}
+ .today-quiz-photo figcaption{padding:10px}.today-quiz-photo-dialog{padding:8px}}
 </style>
 </head>
 <body><div class="wrap">
@@ -1372,11 +1401,26 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
    <div class="today-quiz-choices" id="todayQuizChoices" role="group" aria-label="3択の回答"></div>
    <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>
     <p class="today-quiz-verdict" id="todayQuizVerdict"></p>
+    <figure class="today-quiz-photo" id="todayQuizPhotoFigure" hidden>
+     <button class="today-quiz-photo-zoom" id="todayQuizPhotoZoom" type="button" aria-label="正解の実写真を拡大">
+      <img id="todayQuizPhotoImage" alt="" width="760" height="480" loading="eager" decoding="async">
+      <span>写真を拡大</span>
+     </button>
+     <figcaption><strong id="todayQuizPhotoCaption"></strong>
+      <span class="today-quiz-photo-credits">撮影：<a id="todayQuizPhotoSource" target="_blank" rel="noopener noreferrer">出典・撮影者</a> ／ <a id="todayQuizPhotoLicense" target="_blank" rel="noopener noreferrer">ライセンス</a></span>
+     </figcaption>
+    </figure>
+    <p class="today-quiz-photo-notice" id="todayQuizPhotoNotice" role="status" hidden></p>
     <p class="today-quiz-explain" id="todayQuizExplanation"></p>
     <p class="today-quiz-joke" id="todayQuizJoke"></p>
     <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>次へ</button>
    </div>
    <p class="today-quiz-passport" id="todayQuizPassport"></p>
+   <dialog class="today-quiz-photo-dialog" id="todayQuizPhotoDialog" aria-label="正解の実写真・拡大表示">
+    <button id="todayQuizPhotoDialogClose" type="button" class="today-quiz-dialog-close">閉じる ×</button>
+    <img id="todayQuizPhotoLarge" alt="" width="960" height="640">
+    <p id="todayQuizPhotoDialogCaption"></p>
+   </dialog>
   </section>
   <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
  </section>
