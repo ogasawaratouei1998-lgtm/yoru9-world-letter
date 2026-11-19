@@ -1239,6 +1239,44 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #articleReader .story-cover h3{-webkit-line-clamp:unset;display:block;overflow:visible;
  font-size:1.18rem;line-height:1.5}
 }
+
+/* New current-issue map. Palette follows the illustrated news cards. */
+.today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
+ background:linear-gradient(135deg,#264964,#2C5266 65%,#31465E);padding:13px 13px 12px;
+ box-shadow:0 9px 21px #0D203B28}
+.today-map-header{display:flex;justify-content:space-between;align-items:center;
+ gap:8px 14px;flex-wrap:wrap;margin-bottom:10px}
+.today-map-kicker{font-size:.65rem;color:#A6E6DB;letter-spacing:.1em;font-weight:850;margin:0 0 3px}
+.today-map-header h3{font-size:1.03rem;color:#FFF0C9;line-height:1.4;margin:0;font-weight:900}
+.today-map-date{color:#FFF5DE;border:1px solid #BBD7CE;border-radius:999px;
+ font-size:.7rem;font-weight:760;line-height:1.4;padding:5px 10px;white-space:nowrap}
+.today-map-canvas{position:relative;width:100%;aspect-ratio:2/1;overflow:hidden;
+ border:2px solid #8AC9C7;border-radius:13px;background:#CBEFF0}
+.today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block}
+.today-map-pins{position:absolute;inset:0;pointer-events:none}
+.today-map-pin{position:absolute;display:flex;justify-content:center;align-items:center;
+ width:25px;height:25px;transform:translate(-50%,-50%);border:2.5px solid #fff;
+ border-radius:50%;background:#F47769;color:white;box-shadow:0 3px 7px #233F5999;
+ font:900 .78rem system-ui,sans-serif;line-height:1}
+.today-map-pin::after{content:'';position:absolute;inset:5px;
+ border-radius:100%;border:1px solid #FFE8C4A0;pointer-events:none}
+.today-map-pin:nth-child(5n+2){background:#277F7B}
+.today-map-pin:nth-child(5n+3){background:#D38B35}
+.today-map-pin:nth-child(5n+4){background:#9A6FAA}
+.today-map-pin:nth-child(5n+5){background:#D47796}
+.today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
+.today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
+ padding:8px 12px;background:#FFF0C9;color:#283E56;font-size:.79rem;font-weight:860;
+ text-align:center;line-height:1.4;max-width:100%;white-space:normal}
+.today-map-country:nth-child(5n+2){background:#B5EBD6}
+.today-map-country:nth-child(5n+3){background:#FFCFB8}
+.today-map-country:nth-child(5n+4){background:#E4D3EE}
+.today-map-country:nth-child(5n+5){background:#F6CFDC}
+.today-map-country:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.today-map-note{font-size:.73rem;color:#D5E6E7;line-height:1.6;margin:5px 1px 0}
+@media(max-width:520px){.today-map-card{padding:10px 9px;margin-top:3px;border-radius:15px}
+ .today-map-header h3{font-size:.94rem}.today-map-pin{width:22px;height:22px;font-size:.68rem}
+ .today-map-country{font-size:.73rem;padding:7px 10px}.today-map-note{font-size:.7rem}}
 </style>
 </head>
 <body><div class="wrap">
@@ -1267,6 +1305,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」劇場</strong><span>気になる絵から読む</span></div>
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-responsive"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
+ </section>
+ <section class="today-map-card" id="todayMapSection" aria-labelledby="todayMapTitle">
+  <header class="today-map-header">
+   <div><p class="today-map-kicker">WORLD LETTER · ON THE MAP</p><h3 id="todayMapTitle">配信国マップ</h3></div>
+   <span id="todayMapDate" class="today-map-date">公開号を確認中</span>
+  </header>
+  <div class="today-map-canvas">
+   <img class="today-map-art" src="./assets/world-today-illustrated.svg" alt="" width="960" height="480" decoding="async">
+   <div class="today-map-pins" id="todayMapPins" aria-hidden="true"></div>
+  </div>
+  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="掲載国から記事を選ぶ"></div>
+  <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
  </section>
  </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
@@ -1355,6 +1405,73 @@ async function loadCountryCatalog(){
  }catch(err){console.info('国・地域の一覧を読み込めませんでした',err)}
 }
 loadCountryCatalog().then(()=>renderTodayMap());
+// Today's/current published issue only. Pins are real country centroids,
+// never invented article locations or a route to past editions.
+function currentIssueCountries(){
+ const result=new Map();
+ if(!Array.isArray(edition.stories))return [];
+ edition.stories.forEach((story,index)=>{
+  const codes=countryKeys(story.country);
+  if(!codes.length){
+   const key='unmapped:'+String(story.country||'国名未登録');
+   if(!result.has(key))result.set(key,{code:key,name:countryLabel(story.country),point:null,indices:[]});
+   result.get(key).indices.push(index);
+   return;
+  }
+  codes.forEach(code=>{
+   const record=countryRecord(code);
+   if(!result.has(code))result.set(code,{
+    code,name:record?.name||code,
+    point:record&&Number.isFinite(record.lon)&&Number.isFinite(record.lat)
+      ?{x:(record.lon+180)/360*100,y:(90-record.lat)/180*100}:null,
+    indices:[]
+   });
+   result.get(code).indices.push(index);
+  });
+ });
+ return [...result.values()];
+}
+function renderTodayMap(){
+ const section=$('todayMapSection');
+ if(!section)return;
+ const published=edition.status==='published';
+ const actuallyToday=published&&edition.editionDate===localDate(new Date());
+ $('todayMapTitle').textContent=actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台';
+ $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
+ const pins=$('todayMapPins'),legend=$('todayMapLegend');
+ pins.replaceChildren();legend.replaceChildren();
+ if(!countryCatalog.length){
+  $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
+  return;
+ }
+ const countries=currentIssueCountries();
+ let marked=0;
+ countries.forEach((item,i)=>{
+  if(item.point){
+   marked++;
+   const pin=document.createElement('span');
+   pin.className='today-map-pin';
+   pin.dataset.countryCode=item.code;
+   pin.textContent=String(i+1);
+   pin.title=item.name+' · '+item.indices.length+'本';
+   pin.style.left=item.point.x.toFixed(3)+'%';
+   pin.style.top=item.point.y.toFixed(3)+'%';
+   pins.append(pin);
+  }
+  const button=document.createElement('button');
+  button.type='button';button.className='today-map-country';
+  button.textContent=(i+1)+' · '+item.name+'（'+item.indices.length+'本）';
+  button.setAttribute('aria-label',item.name+'の掲載記事を読む');
+  button.addEventListener('click',()=>openAtlasStory(item.indices[0]));
+  legend.append(button);
+ });
+ if(!countries.length){
+  $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
+ }else{
+  const extra=marked<countries.length?' 一部の国は座標が未登録のため、一覧から記事を開けます。':'';
+  $('todayMapNote').textContent='国・地域の代表位置です。ニュースの発生現場を示すものではありません。'+extra;
+ }
+}
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 function displayReleaseStatus(){
  const today=localDate(new Date());
