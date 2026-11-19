@@ -88,6 +88,14 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("!conflictsWithCountryCover(s)", page)
         self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
 
+    def test_featured_country_photo_is_prominent_on_narrow_phones(self):
+        page = self.page
+        self.assertIn("#atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;", page)
+        self.assertIn("#atlasHero .today-map-intro-photo img{aspect-ratio:6/5;", page)
+        self.assertIn("max-width:calc(100% + 24px)", page)
+        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
+        self.assertIn("!conflictsWithCountryCover(s)", page)
+
     def test_country_buttons_still_open_their_news(self):
         page = self.page
         self.assertIn("button.addEventListener('click',()=>openAtlasStory(item.indices[0]))", page)
