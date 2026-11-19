@@ -1268,16 +1268,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-2plus1"></div>
   <p class="gallery-clarity">記事をもとにした創作イラストです。ニュース現場の写真ではありません。</p>
  </section>
- <div class="atlas-map" id="coverWorldMap" role="group" aria-label="掲載記事の国・地域のおおよその位置">
-  <svg id="coverWorldCoastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg>
-  <div id="coverMapPins" class="atlas-pins"></div>
-  <span class="atlas-map-symbol" aria-hidden="true">◌</span>
- </div>
- <section class="atlas-preview" id="atlasPreview" aria-label="選択した国のニュース" aria-live="polite" hidden></section>
- <p class="atlas-map-caption" id="coverMapCaption">掲載国の代表位置です。ニュースの現場ではありません。</p>
- <div class="issue-countries" id="issueCountries" role="group" aria-label="この号の掲載国"><span class="countries-intro">舞台を確認中</span></div>
- <a class="atlas-explore" href="#mapExtras" id="coverWorldLink">世界地図から、記事を探す <span aria-hidden="true">›</span></a>
-</section>
+ </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
  <div class="article-reader-toolbar"><p id="readerSelected">記事を読む</p><button id="readerBack" type="button">‹ 3コマ劇場に戻る</button></div>
 <section class="spotlight" id="spotlight" aria-label="今夜のひと話">
@@ -1296,7 +1287,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  </div>
  <button type="button" id="spotlightRead" aria-expanded="false" aria-controls="spotlightBody">この話の続きへ ↓</button>
  <div id="spotlightBody" class="spotlight-body" hidden></div><div class="travel-slot" data-travel-slot="0"></div>
- <a class="world-invitation" id="worldInvitation" href="#mapExtras">この話の舞台を地図で見る</a>
+ 
 </section>
 <div class="sectionhead"><h2 id="storyHeading">今夜の「それ、本当に!?」</h2><span class="small" id="progress">読み込み中</span></div><p class="intro" id="intro">世界の人間の失敗談に、一読で笑えるAIツッコミを。</p>
 <div class="filters" role="group" aria-label="記事の種類"><button class="filter" data-filter="all" aria-pressed="true">すべて</button><button class="filter" data-filter="work" aria-pressed="false">職場・会社員</button><button class="filter" data-filter="person" aria-pressed="false">個人</button><button class="filter" data-filter="company" aria-pressed="false">企業・組織</button><button class="filter" data-filter="sports" aria-pressed="false">スポーツ</button></div>
@@ -1309,9 +1300,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  <div class="month-cards" id="monthCards"></div></details>
 </section>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
-<div class="reader-extras" id="exploreExtras"><details class="reader-tool" id="archiveExtras"><summary>過去の配信を読む</summary><section class="archivepanel" id="archivePanel"><label for="archiveSelect">配信号を選ぶ</label><select id="archiveSelect"><option value="current">現在の配信号</option></select><span id="archiveStatus" class="small" aria-live="polite">過去の配信号は公開後に表示されます。</span></section></details>
-<details class="reader-tool" id="mapExtras"><summary>世界地図を見る</summary><section class="worldpanel" aria-label="世界のニュース地図"><h2>今夜と、この30日の世界地図</h2><p class="small" id="mapCaption" aria-live="polite">公開された配信号と月間特集の掲載国を確認できます。</p><div class="worldmap" id="worldMap" role="group" aria-label="掲載国"><svg id="worldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="世界の国境と海岸線"></svg><div id="mapLoading" class="map-fallback">世界地図を読み込み中です…</div><div id="mapPins"></div></div><details class="editor-dashboard" id="editorDashboard"><summary>世界のニュース・196カ国の掲載状況</summary><p class="small">国・地域の累計紹介数は公開済みの過去号から集計。地図と地域別の本数は直近30日間です。未掲載とは、その30日間に掲載がない地域です。</p><div class="editor-stats" id="editorStats" aria-live="polite">掲載履歴を読み込み中です。</div><div class="worldmap editor-map" role="img" aria-label="直近30日の掲載国と掲載本数"><svg id="editorWorldCoastlines" class="world-coastlines" viewBox="0 0 360 180" preserveAspectRatio="none" aria-hidden="true"></svg><div id="editorMapPins"></div></div><div id="editorRegionStats" class="editor-regions"></div><div id="editorCountryStats" class="editor-regions"></div></details><h2>国・地域から記事を探す</h2><p class="small">配信号と月間特集の記事を探せます。地図の数字をタップすると、この国の記事が一覧表示されます。</p><label for="countrySelect">国・地域を選ぶ</label> <select id="countrySelect"><option value="">すべての国・地域</option></select><div id="countryResults" aria-live="polite"></div></section></details>
-</div>
 <section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
 <summary>夜9時のお知らせ・通知設定</summary>
 <div class="notification-settings"><p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
