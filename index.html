@@ -1432,7 +1432,7 @@ function showTodayCountryIntro(item){
   const choices=guide?.photos||[];
   const matching=Object.entries(stops).filter(([key,stop])=>
    (choices.includes(key)||(!guide&&travelCountryNames(stop.country).includes(item.name)))&&
-   typeof stop.photoAsset==='string'&&/^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(stop.photoAsset)&&
+   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
    typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
    typeof stop.license==='string'&&typeof stop.author==='string');
   matching.sort((a,b)=>choices.indexOf(a[0])-choices.indexOf(b[0]));
