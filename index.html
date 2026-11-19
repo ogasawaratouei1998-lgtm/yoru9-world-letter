@@ -1867,7 +1867,8 @@ function conflictsWithCountryCover(stop){
  const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
   stop.country==='アメリカ合衆国'?'US':null;
  return stop.photoAsset===countryHeroAsset(stop.country)||
-  (code&&stop.photoAsset===displayedCountryCoverAssets.get(code));
+  (code&&typeof displayedCountryCoverAssets!=='undefined'&&
+   stop.photoAsset===displayedCountryCoverAssets.get(code));
 }
 function chooseTravelPhoto(story,stops){
  const key=travelStoryKey(story),prior=travelSelections.get(key);
