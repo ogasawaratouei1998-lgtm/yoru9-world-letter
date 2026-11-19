@@ -436,6 +436,16 @@ try{
     }
     await intro.locator('#todayMapIntroClose').click();
    }
+   // The stamp album is always visible and interactive, even before the first quiz.
+   const album=today.locator('#todayPassportBoard');
+   const stamps=album.locator('.today-passport-stamp');
+   const countryTotal=await countryButtons.count();
+   assert.equal(await album.isVisible(),true,'the passport collection is permanently visible');
+   assert.equal(await stamps.count(),countryTotal,'every quiz country has its own visible stamp slot');
+   assert.equal((await album.locator('#todayPassportCount').textContent()).trim(),'0 / '+countryTotal,
+    'the passport begins with a visible zero count');
+   assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),'0',
+    'the accessible collection meter starts at zero');
    // A country chip opens a separate, quick geography quiz, not a news article.
    const previouslySelected=await page.locator('#readerSelected').textContent();
    const quiz=today.locator('#todayCountryQuiz');
@@ -447,6 +457,10 @@ try{
      'country chip launches a World Passport game: '+code);
     assert.equal(await quiz.locator('#todayQuizChoices button').count(),3,
      'the quiz has three real answer choices: '+code);
+    assert.ok(await quiz.locator('#todayQuizSteps .today-quiz-step').count()>=1,
+     'question-by-question progress is visible: '+code);
+    assert.equal(await quiz.locator('#todayQuizStampReward').isHidden(),true,
+     'no stamp is awarded before answering: '+code);
     assert.equal(await quiz.locator('#todayQuizPhotoFigure').isHidden(),true,
      'answer photos must never reveal the solution before a choice: '+code);
     assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
@@ -494,6 +508,16 @@ try{
      if((await next.textContent()).includes('次の問題へ'))await next.click();
      else break;
     }
+    assert.equal(await quiz.locator('#todayQuizStampReward').isVisible(),true,
+     'finishing the challenge displays a large tangible stamp reward: '+code);
+    assert.equal(await quiz.locator('#todayQuizStampReward').getAttribute('data-new'),'true',
+     'the first country completion has a distinct earned-stamp moment: '+code);
+    assert.equal(await album.locator('#todayPassportCount').textContent(),(index+1)+' / '+countryTotal,
+     'passport count increases immediately with every stamp');
+    assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),String(index+1),
+     'accessible passport meter matches the visible collection');
+    assert.equal(await album.locator('.today-passport-stamp[data-country-code="'+code+'"]').getAttribute('data-earned'),'true',
+     'the country stamp changes visibly from blank to earned');
     assert.equal(await chip.getAttribute('data-quiz-done'),'true',
      'country earns its stamp after the final question: '+code);
     await quiz.locator('#todayQuizClose').click();
@@ -501,6 +525,15 @@ try{
    }
    assert.ok((await quiz.locator('#todayQuizPassport').textContent()).includes('世界パスポート完成'),
     'all mapped countries collected to finish the passport');
+   assert.equal(await album.getAttribute('data-complete'),'true',
+    'the completed stamp book is visibly distinct');
+   assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),String(countryTotal),
+    'the collection meter reaches the complete number of countries');
+   assert.ok((await album.locator('#todayPassportMessage').textContent()).includes('世界パスポート完成'),
+    'the fully collected album announces the milestone');
+   if(viewport.name==='standard'){
+    await album.screenshot({path:'mobile-screenshots/stamp-album-complete.png',animations:'disabled'});
+   }
    await gallery.first().click();
    const travelButton=page.locator('#spotlight .travel-open');
    assert.equal(await travelButton.getAttribute('aria-expanded'),'false',
