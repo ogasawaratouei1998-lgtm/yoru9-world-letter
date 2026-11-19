@@ -63,6 +63,29 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
         self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
 
+    def test_country_hero_and_travel_postcard_use_distinct_assets(self):
+        import json
+        import re
+        page = self.page
+        match = re.search(r"const TODAY_COUNTRY_PHOTOS=Object.freeze\\((\\{.*?\\})\\);", page)
+        self.assertIsNotNone(match)
+        heroes = json.loads(match.group(1))
+        catalog = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
+        countries = {"AR": "アルゼンチン", "FR": "フランス", "US": "アメリカ合衆国"}
+        landmarks = {"AR": ("イグアスの滝", "カサ・ロサダ"),
+                     "FR": ("エッフェル塔", "モン・サン＝ミシェル"),
+                     "US": ("ニューヨークの街並み", "ゴールデンゲートブリッジ")}
+        for code, country in countries.items():
+            with self.subTest(country=country):
+                hero = next(p for landmark in landmarks[code][:1]
+                            for p in heroes[code] if landmark in p["place"])
+                alternatives = [p for p in catalog.values()
+                                if p.get("country") == country
+                                and p.get("photoAsset") != hero["asset"]
+                                and any(mark in p.get("place", "") for mark in landmarks[code])]
+                self.assertTrue(alternatives, "No distinct licensed travel image: " + country)
+        self.assertIn("s.photoAsset!==countryHeroAsset(s.country)", page)
+
     def test_country_buttons_still_open_their_news(self):
         page = self.page
         self.assertIn("button.addEventListener('click',()=>openAtlasStory(item.indices[0]))", page)
