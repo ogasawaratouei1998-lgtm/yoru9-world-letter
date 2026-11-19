@@ -78,8 +78,22 @@ def validate_country_highlights(root):
     data = json.loads((root / 'country-highlights.json').read_text(encoding='utf-8'))
     if data.get('version') != 1 or not isinstance(data.get('highlights'), dict):
         raise ValueError('invalid country-highlights registry')
-    allowed_hosts = {'www.visitbritain.com', 'www.esmadrid.com',
-                     'www.crossroadfukuoka.jp', 'www.dunedinnz.com'}
+    sources = json.loads((root / 'country-highlight-sources.json').read_text(encoding='utf-8'))
+    if sources.get('version') != 1 or not isinstance(sources.get('sources'), dict):
+        raise ValueError('invalid country highlight source allowlist')
+    trusted_hosts = {}
+    for country, records in sources['sources'].items():
+        if country not in known or not isinstance(records, list) or not records:
+            raise ValueError('invalid country-source mapping: ' + str(country))
+        approved = set()
+        for record in records:
+            if not isinstance(record, dict) or not isinstance(record.get('name'), str):
+                raise ValueError(country + ': invalid official publisher name')
+            source = urlparse(record.get('url', ''))
+            if source.scheme != 'https' or not source.hostname or source.username or source.password:
+                raise ValueError(country + ': invalid official source URL')
+            approved.add(source.hostname)
+        trusted_hosts[country] = approved
     for country, rows in data['highlights'].items():
         if country not in known or not isinstance(rows, list):
             raise ValueError('invalid country highlight: ' + str(country))
@@ -100,7 +114,7 @@ def validate_country_highlights(root):
                 if checked > stop or checked < start - timedelta(days=30):
                     raise ValueError('invalid source check date')
                 url = urlparse(item['sourceUrl'])
-                if url.scheme != 'https' or url.hostname not in allowed_hosts:
+                if url.scheme != 'https' or url.hostname not in trusted_hosts.get(country, set()) or url.username or url.password:
                     raise ValueError('unapproved source host')
                 if len(item['title']) > 80 or len(item['body']) > 350:
                     raise ValueError('oversized editorial text')
