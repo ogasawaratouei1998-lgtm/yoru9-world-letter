@@ -34,7 +34,7 @@ try{
      await page.locator('#archiveExtras').count()===0&&
      await page.locator('#mapExtras').count()===0&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
-     await page.locator('#issueGallery[data-layout="mobile-grid-2plus1"]').count()===1&&
+     await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
      await page.locator('#quipTeaserLine').count()===1&&
      await page.locator('#articleReader[hidden]').count()===1&&
      await page.locator('#readerBack').count()===1&&
