@@ -2097,7 +2097,7 @@ function renderTravelSlots(){
   if(!Number.isInteger(i)||!edition.stories[i])return;
   slot.innerHTML='<button type="button" class="travel-open" data-travel="'+i+
    '" aria-expanded="false" aria-controls="travel-panel-'+i+
-   '">ニュースの余韻で、30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
+   '">ニュースの余韻で、名所へ30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
    '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
  });
 }
@@ -2138,13 +2138,34 @@ function travelPhotoOptions(stops){
   return true;
  });
 }
+// The microtravel module is a destination guide, NOT an extension of
+// Country Portrait. Only explicitly approved, recognizable attractions
+// can be selected, even when a less famous licensed street photo exists.
+const FAMOUS_TOURIST_LANDMARKS=Object.freeze({
+ 'アルゼンチン':['イグアスの滝','カサ・ロサダ','オベリスコ'],
+ 'フランス':['エッフェル塔','モン・サン＝ミシェル'],
+ 'アメリカ合衆国':['グランドキャニオン','ヨセミテ','ゴールデンゲートブリッジ','ワイキキビーチ','ニューヨークの街並み'],
+ 'イギリス':['タワーブリッジ','エディンバラ城','カーディフ城','ウィンダミア湖'],
+ 'スペイン':['サグラダ・ファミリア'],
+ '日本':['富士山','浅草寺','金閣寺'],
+ 'ニュージーランド':['ミルフォード・サウンド'],
+ '韓国':['景福宮'],
+ 'ブラジル':['イグアスの滝'],
+ 'アンティグア・バーブーダ':['ネルソンズ・ドックヤード']
+});
+function famousAttractionScore(stop){
+ if(!stop||typeof stop.place!=='string')return 0;
+ const landmark=(FAMOUS_TOURIST_LANDMARKS[stop.country]||[])
+  .find(name=>stop.place.includes(name));
+ return landmark?100:stop.famousTourist===true?80:0;
+}
 function travelStoryKey(story){
  return String(story.id||story.title||'')+'|'+String(story.country||'');
 }
 // Apply the same visual-quality gate to photographs in already-published
 // travel postcards, not only the map's country-introduction cover.
 function approvedTravelCover(stop){
- if(!stop||stop.coverOnly===true||!stop.country||!stop.place)return false;
+ if(!stop||stop.coverOnly===true||!stop.country||!stop.place||famousAttractionScore(stop)<80)return false;
  const code=stop.country==='アルゼンチン'?'AR':stop.country==='フランス'?'FR':
   stop.country==='アメリカ合衆国'?'US':null;
  if(!code)return true;
@@ -2239,22 +2260,22 @@ function travelPostcardHtml(story,stop,showIntro=false){
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
  return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する30秒の小旅行">'+
-  '<p class="travel-kicker">WORLD POSTCARD · 30秒の小旅行</p>'+
+  '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
   '<div class="travel-context" aria-label="記事と旅先の違い">'+
    '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
    '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span>'+
   '</div>'+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
   '<p class="travel-trust" role="note">'+
-   (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の旅先写真はまだ準備中です。ニュースの現場を示すものではありません。')+
+   (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の有名観光地の写真はまだ準備中です。ニュースの現場を示すものではありません。')+
   '</p>'+
-  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、世界の街角へ。写真や地図は記事の証拠ではなく、別の旅のご案内です。</p>':'')+
+  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、その国の有名な観光名所へ。写真や地図は記事の証拠ではなく、独立した旅のご案内です。</p>':'')+
   (known&&!sameCountry?'<p class="travel-elsewhere">ニュースの舞台とは異なる国の旅先：'+escapeHtml(stop.country)+'</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
    '<figcaption><span class="travel-caption-label">この景色の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
-   '<p class="travel-empty">'+(known?'写真を読み込めませんでした。撮影元と地図を確認できます。':'この国の写真はまだ準備中。ニュースの舞台を国単位の地図でのぞけます。')+'</p>')+
+   '<p class="travel-empty">'+(known?'写真を読み込めませんでした。撮影元と地図を確認できます。':'この国の有名観光地は確認中。無名の写真や別の国の景色では代用しません。')+'</p>')+
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">'+(known?'旅先を地図で見る ↗':'掲載国を地図で見る ↗')+'</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
