@@ -1412,6 +1412,30 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
 .today-quiz-reward-seal{flex:none;width:73px;height:73px;border:5px double #7E5434;outline:2px solid #F9D394;
  border-radius:50%;background:radial-gradient(circle,#FFF2CC,#E1A56B);color:#53381F;
  display:grid;place-items:center;font-size:.9rem;font-weight:950;text-align:center;transform:rotate(-12deg)}
+/* Stamp quality distinguishes perfect rounds, partial scores and completed attempts. */
+.today-passport-stamp[data-grade="gold"]{border-color:#FFD27A;background:linear-gradient(145deg,#625235,#354445)}
+.today-passport-stamp[data-grade="silver"]{border-color:#D1DFEA;background:linear-gradient(145deg,#435A61,#243E4A)}
+.today-passport-stamp[data-grade="bronze"]{border-color:#D8A489;background:linear-gradient(145deg,#65504A,#294047)}
+.today-passport-stamp[data-grade="silver"] .today-passport-stamp-seal{background:radial-gradient(circle,#F5FCFF,#A8BAC5)}
+.today-passport-stamp[data-grade="bronze"] .today-passport-stamp-seal{background:radial-gradient(circle,#F8DECA,#BD8058)}
+.today-quiz-reward[data-grade="silver"]{border-color:#D3E5EF;background:linear-gradient(135deg,#4A6267,#29424D)}
+.today-quiz-reward[data-grade="bronze"]{border-color:#DBB19B;background:linear-gradient(135deg,#67504A,#344952)}
+.today-quiz-reward{position:relative;isolation:isolate;overflow:hidden}
+.today-quiz-reward > :not(.passport-sparkles){position:relative;z-index:1}
+.passport-sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
+.passport-sparkles span{position:absolute;left:43px;top:49px;opacity:0;color:#FFEAAF;
+ font-size:1.1rem;text-shadow:0 1px 5px #553720}
+.passport-sparkles span:nth-child(1){--dx:-49px;--dy:-32px;--delay:0ms}
+.passport-sparkles span:nth-child(2){--dx:40px;--dy:-33px;--delay:55ms}
+.passport-sparkles span:nth-child(3){--dx:-39px;--dy:30px;--delay:100ms}
+.passport-sparkles span:nth-child(4){--dx:51px;--dy:22px;--delay:35ms}
+.passport-sparkles span:nth-child(5){--dx:11px;--dy:-46px;--delay:120ms}
+.passport-sparkles span:nth-child(6){--dx:18px;--dy:37px;--delay:80ms}
+.today-quiz-reward[data-new="true"] .passport-sparkles span{
+ animation:passport-sparkle .85s ease-out var(--delay) 1 both}
+@keyframes passport-sparkle{0%{opacity:0;transform:translate(0,0) scale(.25) rotate(-10deg)}
+ 35%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.95) rotate(90deg)}}
+@media(prefers-reduced-motion:reduce){.passport-sparkles{display:none}}
 .today-quiz-reward strong{display:block;color:#FFF2BF;font-size:1.08rem;line-height:1.5}
 .today-quiz-reward p{font-size:.81rem;color:#EFF7EE;line-height:1.5;margin:5px 0 0}
 .today-quiz-next-country{display:block;width:100%;min-height:48px;margin-top:9px;
@@ -1552,6 +1576,7 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
     <p class="today-quiz-joke" id="todayQuizJoke"></p>
     <div class="today-quiz-reward" id="todayQuizStampReward" role="status" aria-live="polite" hidden>
      <span class="today-quiz-reward-seal" id="todayQuizRewardSeal" aria-hidden="true">STAMP</span>
+     <div class="passport-sparkles" aria-hidden="true"><span>✦</span><span>★</span><span>✦</span><span>◆</span><span>★</span><span>✧</span></div>
      <div><strong id="todayQuizRewardTitle">スタンプ獲得！</strong><p id="todayQuizRewardText"></p></div>
     </div>
     <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>次へ</button>
