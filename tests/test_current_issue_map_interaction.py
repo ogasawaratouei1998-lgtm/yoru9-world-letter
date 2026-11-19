@@ -84,7 +84,9 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
                                 and p.get("photoAsset") != hero["asset"]
                                 and any(mark in p.get("place", "") for mark in landmarks[code])]
                 self.assertTrue(alternatives, "No distinct licensed travel image: " + country)
-        self.assertIn("s.photoAsset!==countryHeroAsset(s.country)", page)
+        self.assertIn("function conflictsWithCountryCover(stop)", page)
+        self.assertIn("!conflictsWithCountryCover(s)", page)
+        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
 
     def test_country_buttons_still_open_their_news(self):
         page = self.page
