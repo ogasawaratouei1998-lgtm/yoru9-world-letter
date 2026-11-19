@@ -2482,7 +2482,7 @@ async function handleStoryAction(e){const open=e.target.closest('[data-open]');i
   }
   return
  }
- const share=e.target.closest('[data-share]');if(share){const s=edition.stories[Number(share.dataset.share)];const txt=`${s.title}\n出典：${s.sourceUrl}\nよる9じの世界便り`;try{if(navigator.share)await navigator.share({title:s.title,text:txt});else if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('記事の情報をコピーしました')}else toast('共有できない環境です')}catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}}}
+ const share=e.target.closest('[data-share]');if(share){const s=edition.stories[Number(share.dataset.share)];if(!s)return;const articleUrl=new URL(articleRouteHash(s),location.href).href;const txt=`${s.title}\n記事：${articleUrl}\n出典：${s.sourceUrl}\nよる9じの世界便り`;try{if(navigator.share)await navigator.share({title:s.title,text:txt,url:articleUrl});else if(navigator.clipboard){await navigator.clipboard.writeText(txt);toast('記事の情報をコピーしました')}else toast('共有できない環境です')}catch(err){if(err.name!=='AbortError')toast('共有できない環境です')}}}
 $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
 $('atlasHero').addEventListener('click',handleStoryAction);
