@@ -2024,6 +2024,7 @@ function openAtlasStory(index,fromRoute=false){
  filter='all';applyFilter();
  $('empty').hidden=true;
  updateSpotlight();
+ $('spotlightAward').textContent='このニュースの詳しい話';
  const travel=$('spotlight').querySelector('[data-travel-slot]');
  if(travel)travel.dataset.travelSlot=String(index);
  renderTravelSlots();
