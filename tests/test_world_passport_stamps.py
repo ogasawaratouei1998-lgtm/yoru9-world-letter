@@ -77,7 +77,7 @@ answerWorldPassport(worldPassportActive.questions[0].answer);
 if(!$('todayQuizStampReward').hidden)process.exit(15);
 nextWorldPassportRound();
 answerWorldPassport(worldPassportActive.questions[1].answer);
-if(!$('todayQuizStampReward').dataset.new==='true')process.exit(16);
+if($('todayQuizStampReward').dataset.new!=='true')process.exit(16);
 if(!worldPassportStamps.AR||worldPassportStamps.AR.score!==2)process.exit(17);
 if($('todayPassportCount').textContent!=='1 / 2')process.exit(18);
 if($('todayPassportMeter').attributes['aria-valuenow']!=='1')process.exit(19);
