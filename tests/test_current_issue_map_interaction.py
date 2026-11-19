@@ -72,18 +72,29 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         heroes = json.loads(match.group(1))
         catalog = json.loads((ROOT / "travel-stops.json").read_text(encoding="utf-8"))
         countries = {"AR": "アルゼンチン", "FR": "フランス", "US": "アメリカ合衆国"}
-        landmarks = {"AR": ("イグアスの滝", "カサ・ロサダ"),
-                     "FR": ("エッフェル塔", "モン・サン＝ミシェル"),
-                     "US": ("ニューヨークの街並み", "ゴールデンゲートブリッジ")}
+        hero_assets = {
+            "AR": "assets/travel/iguazu-rainbow-cover.jpg",
+            "FR": "assets/travel/mont-saint-michel-sunset-cover.jpg",
+            "US": "assets/travel/golden-gate-sunset-cover.jpg",
+        }
         for code, country in countries.items():
             with self.subTest(country=country):
-                hero = next(p for landmark in landmarks[code][:1]
-                            for p in heroes[code] if landmark in p["place"])
+                hero = next(p for p in heroes[code] if p["asset"] == hero_assets[code])
+                self.assertEqual(heroes[code][0]["asset"], hero["asset"])
+                self.assertTrue(hero["url"].startswith("https://thumb.wikimedia.org/"))
+                matching = [p for p in catalog.values()
+                            if p.get("country") == country and
+                            p.get("photoAsset") == hero["asset"]]
+                self.assertEqual(len(matching), 1)
+                self.assertTrue(matching[0]["photoPage"].startswith(
+                    "https://commons.wikimedia.org/wiki/File:"))
+                self.assertTrue(matching[0]["licenseUrl"].startswith(
+                    "https://creativecommons.org/licenses/"))
                 alternatives = [p for p in catalog.values()
-                                if p.get("country") == country
-                                and p.get("photoAsset") != hero["asset"]
-                                and any(mark in p.get("place", "") for mark in landmarks[code])]
-                self.assertTrue(alternatives, "No distinct licensed travel image: " + country)
+                                if p.get("country") == country and
+                                p.get("photoAsset") != hero["asset"]]
+                self.assertGreaterEqual(len({p["photoAsset"] for p in alternatives}), 2,
+                    "Not enough different licensed travel photos: " + country)
         self.assertIn("function conflictsWithCountryCover(stop)", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
         self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
