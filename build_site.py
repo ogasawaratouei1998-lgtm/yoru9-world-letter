@@ -115,7 +115,7 @@ def build(root, output):
         shutil.rmtree(output)
     output.mkdir(parents=True)
     for relative in ('index.html', 'manifest.webmanifest', 'service-worker.js', 'notifications.js', 'notification-config.json', 'country-catalog.json', 'travel-stops.json', 'assets/icon.svg',
-                     'data/current.json', 'data/archive/index.json', 'data/retrospective/2026-11-17.json'):
+                     'data/current.json', 'data/archive/index.json', 'assets/world-today-illustrated.svg'):
         source = root / relative
         if not source.is_file():
             raise FileNotFoundError(relative)
@@ -142,38 +142,8 @@ def build(root, output):
     render_icons(output / 'assets')
     for source in (root / 'data' / 'archive').glob('????-??-??.json'):
         shutil.copy2(source, output / 'data' / 'archive' / source.name)
-    # Only publish explicitly audited monthly collections. Immutable source
-    # files stay in Git, while the reader sees only recent collections.
-    monthly_index = root / 'data/monthly/index.json'
-    if monthly_index.exists():
-        from monthly_research import safe_day, validate_story, REVIEW_METHOD, LEGACY_REVIEW_METHOD
-        manifest = json.loads(monthly_index.read_text(encoding='utf-8'))
-        if (manifest.get('status') != 'published-monthly-index'
-                or not isinstance(manifest.get('issues'), list)):
-            raise ValueError('invalid published monthly index')
-        index_dest = output / 'data/monthly/index.json'
-        index_dest.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(monthly_index, index_dest)
-        for record in manifest['issues']:
-            date_str = record.get('date') if isinstance(record, dict) else None
-            day = safe_day(date_str)
-            if day is None or (date.today() - day).days > 400:
-                continue
-            source = root / 'data/monthly' / (date_str + '.json')
-            if not source.is_file():
-                raise FileNotFoundError('missing published monthly collection')
-            document = json.loads(source.read_text(encoding='utf-8'))
-            stories = document.get('stories')
-            if (document.get('status') != 'published-monthly'
-                    or document.get('collectionDate') != date_str
-                    or document.get('reviewMethod') not in (REVIEW_METHOD, LEGACY_REVIEW_METHOD)
-                    or not isinstance(stories, list) or not stories
-                    or len(stories) > 3):
-                raise ValueError('invalid monthly public collection')
-            if any(not validate_story(story, story.get('verificationUrls', []), day)
-                   for story in stories):
-                raise ValueError('monthly collection failed independent-source validation')
-            shutil.copy2(source, output / 'data/monthly' / source.name)
+    # Historical retrospective/monthly research stays in Git for audit,
+    # but is no longer shipped to readers as an optional 30-day shelf.
     build_country_coverage(root, output)
     bundle_travel_photos(root, output)
     print('公開用サイトを生成しました: ' + str(output))
