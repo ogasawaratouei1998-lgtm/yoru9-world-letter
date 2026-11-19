@@ -41,7 +41,7 @@ class SimplifiedReaderTest(unittest.TestCase):
             self.assertNotIn(forbidden,page,forbidden)
         for required in (
             'id="issueGallery"','id="articleReader"',
-            'id="monthRetrospective"','id="notificationSection"',
+            'id="todayMapSection"','id="notificationSection"',
             'data-travel-slot="0"','id="releaseStatus"',
             "function loadPublishedMonthDates()",
             "function renderIssueGallery()",
