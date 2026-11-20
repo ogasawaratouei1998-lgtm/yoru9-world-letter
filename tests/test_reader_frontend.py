@@ -54,6 +54,47 @@ class ReaderFrontendTest(unittest.TestCase):
             self.assertTrue(any(stop.get("photoAsset") == asset for stop in stops.values()))
         self.assertIn("const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])", page)
 
+    def test_country_portrait_photo_precedes_body_and_current_news(self):
+        """On mobile, show the country's visual introduction before long text."""
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        block=page[page.index('<section class="today-map-intro" id="todayMapIntro"'):
+                   page.index('id="todayMapIntroRead"', page.index('<section class="today-map-intro" id="todayMapIntro"'))]
+        self.assertLess(block.index('id="todayMapIntroName"'),
+                        block.index('id="todayMapIntroFigure"'))
+        self.assertLess(block.index('id="todayMapIntroFigure"'),
+                        block.index('id="todayMapIntroLead"'))
+        self.assertLess(block.index('id="todayMapIntroLead"'),
+                        block.index('id="todayMapIntroBody"'))
+        self.assertLess(block.index('id="todayMapIntroBody"'),
+                        block.index('id="todayMapIntroCurrent"'))
+        self.assertEqual(page.count('id="todayMapIntroFigure"'),1)
+        self.assertIn('#atlasHero .today-map-intro-photo img{aspect-ratio:16/10;',page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_country_cover_rejects_small_photos_and_prioritizes_clear_originals(self):
+        """Prevent upscaled small thumbnails from appearing as full-width portraits."""
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index("function countryPhotoSourceUrls(item){")
+        end=page.index("function showTodayCountryIntro(item){",start)
+        snippet=page[start:end]
+        script=snippet+"""
+const p={asset:'assets/travel/example.jpg',
+ url:'https://thumb.wikimedia.org/wikipedia/commons/thumb/x/x/example.jpg/500px-example.jpg'};
+const sources=countryPhotoSourceUrls(p);
+if(!sources[0].endsWith('/1280px-example.jpg'))process.exit(2);
+if(!sources[1].endsWith('/assets/travel/example.jpg'))process.exit(3);
+if(countryPhotoIsSharpEnough({naturalWidth:500,naturalHeight:360}))process.exit(4);
+if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exit(5);
+"""
+        run=subprocess.run(["node","-e",script],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+        self.assertIn('"GB":[{"remoteOnly":true',page)
+        self.assertIn('Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg',page)
+        self.assertIn('"author":"Hexapol","license":"CC BY-SA 4.0"',page)
+        self.assertIn('"avoidCover":true,"asset":"assets/travel/london-tower-bridge.jpg"',page)
+        self.assertIn("if(!countryPhotoIsSharpEnough(photo))",page)
+        self.assertIn("caption.append(link)",page)
+
     def test_country_portrait_and_destination_tour_are_separate(self):
         """A portrait is about culture and fresh verified notes, not tourist cards."""
         import json
