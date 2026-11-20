@@ -7,6 +7,8 @@ on:
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
       - 'check_public_country_release.py'
+      - 'check_country_experience.py'
+      - 'check_release_candidate.py'
       - 'country-highlights.json'
       - 'country-highlight-sources.json'
       - 'travel-stops.json'
@@ -50,6 +52,8 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Create safe public site bundle
         run: python build_site.py
+      - name: Validate every published reader feature and licensed image
+        run: python check_release_candidate.py --site _site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
