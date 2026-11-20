@@ -479,7 +479,7 @@ try{
     assert.equal(await intro.isVisible(),true,'map pin opens the country guide: '+code);
     assert.ok((await intro.locator('#todayMapIntroBody').textContent()).length>35,
      'country guide explains the place, not just the name: '+code);
-    if(['AR','FR','US'].includes(code)){
+    if(['AR','FR','US','IT','DE'].includes(code)){
      await page.waitForFunction(expected=>{
       const intro=document.querySelector('#todayMapIntro');
       const img=document.querySelector('#todayMapIntroImage');
@@ -534,7 +534,7 @@ try{
      'answer photos must never reveal the solution before a choice: '+code);
     assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
      'quiz button never selects an article');
-    const curated=['AR','FR','US','GB','ES','JP','NZ'].includes(code);
+    const curated=['AR','FR','US','GB','ES','JP','NZ','IT','DE'].includes(code);
     const totalRounds=await quiz.locator('#todayQuizSteps .today-quiz-step').count();
     assert.equal(totalRounds,curated?2:1,
      'curated destinations have two meaningful quiz rounds: '+code);
