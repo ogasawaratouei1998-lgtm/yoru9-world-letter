@@ -2,10 +2,10 @@
 const SHELL_CACHE = 'yoru9-shell-v32';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v1';
-const GENERATED_IMAGE = /^assets\\/news-generated\\/(\\d{4}-\\d{2}-\\d{2})\\/[a-z0-9-]+\\.webp$/;
+const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
 const SCOPE = self.registration.scope;
 async function expirePreviousGeneratedImages(day){
- if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(day))return;
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return;
  const cache=await caches.open(IMAGE_CACHE),requests=await cache.keys();
  await Promise.all(requests.filter(req=>{
   const path=new URL(req.url).pathname.slice(new URL(SCOPE).pathname.length);
