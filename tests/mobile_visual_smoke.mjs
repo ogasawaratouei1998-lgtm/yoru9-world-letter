@@ -445,7 +445,7 @@ try{
    assert.ok(mapExplanation.includes('実話'+issueStoryCount+'本・'+uniqueMappedCountries+'カ国'),
     'map states both published story count and deduplicated country count');
    assert.ok(mapExplanation.includes('重複を除いた国数'),
-    'country stamps are not misleadingly presented as one per article');
+    'deduplicated country buttons are not mistaken for separate news articles');
    assert.ok(await pins.count()>=1,'published countries have visible map pins');
    assert.equal(await pins.count(),await countryButtons.count(),
     'one country pin corresponds to one named country button');
@@ -509,150 +509,89 @@ try{
     }
     await intro.locator('#todayMapIntroClose').click();
    }
-   // The stamp album is always visible and interactive, even before the first quiz.
-   const album=today.locator('#todayPassportBoard');
-   const stamps=album.locator('.today-passport-stamp');
-   const countryTotal=await countryButtons.count();
-   assert.equal(await album.isVisible(),true,'the passport collection is permanently visible');
-   assert.equal(await stamps.count(),countryTotal,'every quiz country has its own visible stamp slot');
-   assert.equal((await album.locator('#todayPassportCount').textContent()).trim(),'0 / '+countryTotal,
-    'the passport begins with a visible zero count');
-   assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),'0',
-    'the accessible collection meter starts at zero');
-   // The stamp album is the only visible quiz launcher; hidden country buttons track completion.
-   const previouslySelected=await page.locator('#readerSelected').textContent();
+   // Stamps, scores and the album have been retired. Country-specific
+   // photographic trivia stays available via the visible map country chips.
+   assert.equal(await today.locator('#todayPassportBoard').count(),0,
+    'no obsolete passport collection is visible or mounted');
+   assert.equal(await today.locator('.today-passport-stamp').count(),0,
+    'no stamp controls remain');
    const quiz=today.locator('#todayCountryQuiz');
-   for(let index=0;index<await countryButtons.count();index++){
+   const previouslySelected=await page.locator('#readerSelected').textContent();
+   const countryTotal=await countryButtons.count();
+   assert.equal(await pins.count(),countryTotal);
+   for(let index=0;index<countryTotal;index++){
     const chip=countryButtons.nth(index);
     const code=await chip.getAttribute('data-country-code');
-    await stamps.nth(index).click();
-    assert.equal(await quiz.isVisible(),true,
-     'visible passport stamp opens the country quiz: '+code);
-    assert.equal(await quiz.locator('#todayQuizChoices button').count(),3,
-     'the quiz has three real answer choices: '+code);
-    assert.ok(await quiz.locator('#todayQuizSteps .today-quiz-step').count()>=1,
-     'question-by-question progress is visible: '+code);
-    assert.equal(await quiz.locator('#todayQuizStampReward').isHidden(),true,
-     'no stamp is awarded before answering: '+code);
+    assert.equal(await chip.isVisible(),true,'country quiz launcher visible: '+code);
+    assert.ok((await chip.textContent()).includes('クイズ'),'button invites trivia, not stamp collection');
+    await chip.click();
+    assert.equal(await quiz.isVisible(),true,'country chip opens standalone trivia: '+code);
+    assert.equal(await quiz.locator('#todayQuizChoices button').count(),3);
     assert.equal(await quiz.locator('#todayQuizPhotoFigure').isHidden(),true,
-     'answer photos must never reveal the solution before a choice: '+code);
+     'quiz answer photo is hidden until answer choice');
     assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
-     'quiz button never selects an article');
+     'quiz never opens a different news article');
     const curated=['AR','FR','US','GB','ES','JP','NZ','IT','DE'].includes(code);
     const totalRounds=await quiz.locator('#todayQuizSteps .today-quiz-step').count();
-    assert.equal(totalRounds,curated?2:1,
-     'curated destinations have two meaningful quiz rounds: '+code);
+    assert.equal(totalRounds,curated?2:1,'curated country has two real quizzes: '+code);
     for(let round=0;round<totalRounds;round++){
-     // Play a genuinely correct answer: its immediate sparkle action must
-     // happen on every question, not just after the passport stamp is awarded.
-     const correctIndex=await page.evaluate(({code,round})=>{
-      const item=worldPassportActive?.questions?.[round];
-      return Number.isInteger(item?.answer)?item.answer:0;
-     },{code,round});
+     const correctIndex=await page.evaluate(({round})=>{
+      const question=worldPassportActive?.questions?.[round];
+      return Number.isInteger(question?.answer)?question.answer:0;
+     },{round});
      const animateCorrect=viewport.name==='standard'&&index===0&&round===0;
      if(animateCorrect)await page.emulateMedia({reducedMotion:'no-preference'});
      await quiz.locator('#todayQuizChoices button').nth(correctIndex).click();
      if(animateCorrect){
       const sparkle=quiz.locator('.quiz-answer-sparks span').first();
-      const motionName=await sparkle.evaluate(el=>getComputedStyle(el).animationName);
-      assert.ok(motionName.includes('quiz-sparkle-fly'),
-       'normal-motion users see real flying sparkles on each correct answer');
-      const bounce=await quiz.locator('#todayQuizChoices button[data-popped="true"]')
-       .evaluate(el=>getComputedStyle(el).animationName);
-      assert.ok(bounce.includes('quiz-choice-pop'),
-       'the correct button physically bounces rather than only changing text');
+      assert.ok((await sparkle.evaluate(el=>getComputedStyle(el).animationName)).includes('quiz-sparkle-fly'));
       await page.emulateMedia({reducedMotion:'reduce'});
      }
      assert.equal(await quiz.locator('#todayQuizCorrectFlash').isVisible(),true,
-      'every correct answer immediately celebrates: '+code+' / '+round);
-     assert.equal(await quiz.locator('#todayQuizChoices button[data-popped="true"]').count(),1,
-      'exactly the chosen correct option gets a bounce: '+code+' / '+round);
-     assert.equal(await quiz.locator('#todayQuizChoices .quiz-answer-sparks span').count(),10,
-      'the answer creates ten noninteractive sparkle particles: '+code+' / '+round);
-     assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true,
-      'answer reveals the result');
-     assert.ok((await quiz.locator('#todayQuizExplanation').textContent()).length>14,
-      'answer includes factual local context');
-     assert.ok((await quiz.locator('#todayQuizJoke').textContent()).includes('創作の冗談'),
-      'fictional humor is clearly labeled');
+      'correct answers are celebrated without stamps');
+     assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true);
+     assert.ok((await quiz.locator('#todayQuizExplanation').textContent()).length>14);
+     assert.ok((await quiz.locator('#todayQuizJoke').textContent()).includes('創作の冗談'));
      const hasPhoto=curated&&!(['ES','NZ'].includes(code)&&round===1);
      if(hasPhoto){
       await page.waitForFunction(()=>{
-       const image=document.querySelector('#todayQuizPhotoImage');
-       const frame=document.querySelector('#todayQuizPhotoFigure');
-       return image&&image.complete&&image.naturalWidth>0&&frame&&!frame.hidden;
+       const img=document.querySelector('#todayQuizPhotoImage'),frame=document.querySelector('#todayQuizPhotoFigure');
+       return img&&img.complete&&img.naturalWidth>0&&frame&&!frame.hidden;
       },null,{timeout:30000});
       const frame=quiz.locator('#todayQuizPhotoFigure');
       const src=await frame.locator('img').getAttribute('src');
-      assert.ok(src.startsWith('./assets/travel/'),
-       'answer uses a bundled authentic photo: '+code+' / '+round+' '+src);
-      assert.ok((await frame.locator('#todayQuizPhotoCaption').textContent()).includes('正解'),
-       'answer picture has a meaningful caption');
-      assert.ok((await frame.locator('#todayQuizPhotoSource').getAttribute('href')).startsWith('https://commons.wikimedia.org/wiki/File:'),
-       'photo has linked original creator attribution');
-      assert.ok((await frame.locator('#todayQuizPhotoLicense').getAttribute('href')).startsWith('https://creativecommons.org/'),
-       'photo has linked reuse license');
+      assert.ok(src?.startsWith('./assets/travel/'),'quiz answer uses authentic bundled photo: '+code);
       assert.notEqual(src,countryCoverAssets.get(code),
-       'quiz photograph must differ from the country feature cover');
+       'quiz photo must not repeat country portrait cover');
+      assert.ok((await frame.locator('#todayQuizPhotoSource').getAttribute('href'))
+       .startsWith('https://commons.wikimedia.org/wiki/File:'));
+      assert.ok((await frame.locator('#todayQuizPhotoLicense').getAttribute('href'))
+       .startsWith('https://creativecommons.org/'));
       if(viewport.name==='standard'){
-       await frame.screenshot({path:'mobile-screenshots/quiz-'+code+'-'+round+'.png',
-        animations:'disabled'});
+       await frame.screenshot({path:'mobile-screenshots/quiz-'+code+'-'+round+'.png',animations:'disabled'});
       }
-      await frame.locator('#todayQuizPhotoZoom').click();
-      assert.equal(await page.locator('#todayQuizPhotoDialog').isVisible(),true,
-       'photo can be enlarged in an accessible modal');
-      await page.locator('#todayQuizPhotoDialogClose').click();
-      assert.equal(await page.locator('#todayQuizPhotoDialog').isHidden(),true,
-       'photo modal closes');
      }else if(curated){
       assert.equal(await quiz.locator('#todayQuizPhotoNotice').isVisible(),true,
-       'when no verified image exists, the quiz explains the omission without a fake photo');
+       'quiz explains when vetted answer photograph is not yet ready');
      }
      const next=quiz.locator('#todayQuizNext');
-     assert.equal((await next.textContent()).trim(),'閉じる',
-      'answer feedback offers a close button, not automatic next-question navigation');
      if(round<totalRounds-1){
+      assert.equal((await next.textContent()).trim(),'次の問題へ →');
       await next.click();
-      assert.equal(await quiz.isHidden(),true,
-       'closing an answered round returns to the passport album');
-      await stamps.nth(index).click();
-      assert.equal(await quiz.isVisible(),true,
-       'reopening the same country resumes the next unanswered question');
-      assert.equal(await quiz.locator('#todayQuizResult').isHidden(),true,
-       'the next question opens without leaking the previous answer');
-      assert.equal(await page.evaluate(()=>worldPassportActive?.step),round+1,
-       'the passport resumes at the next unanswered round rather than restarting');
+      assert.equal(await quiz.isVisible(),true,'quiz moves directly to the next question');
+      assert.equal(await page.evaluate(()=>worldPassportActive?.step),round+1);
+      assert.equal(await quiz.locator('#todayQuizResult').isHidden(),true);
+     }else{
+      assert.equal((await next.textContent()).trim(),'閉じる');
+      await next.click();
+      assert.equal(await quiz.isHidden(),true,'last answer returns to country map');
      }
     }
-    assert.equal(await quiz.locator('#todayQuizStampReward').isVisible(),true,
-     'finishing the challenge displays a large tangible stamp reward: '+code);
-    assert.equal(await quiz.locator('#todayQuizStampReward').getAttribute('data-perfect'),'true',
-     'a perfect two-round run receives the stronger gold celebration');
-    assert.equal(await quiz.locator('#todayQuizStampReward').getAttribute('data-new'),'true',
-     'the first country completion has a distinct earned-stamp moment: '+code);
-    assert.equal(await album.locator('#todayPassportCount').textContent(),(index+1)+' / '+countryTotal,
-     'passport count increases immediately with every stamp');
-    assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),String(index+1),
-     'accessible passport meter matches the visible collection');
-    assert.equal(await album.locator('.today-passport-stamp[data-country-code="'+code+'"]').getAttribute('data-earned'),'true',
-     'the country stamp changes visibly from blank to earned');
-    assert.equal(await chip.getAttribute('data-quiz-done'),'true',
-     'country earns its stamp after the final question: '+code);
-    await quiz.locator('#todayQuizClose').click();
-    assert.equal(await quiz.isHidden(),true,'quiz can be closed');
    }
-   assert.ok((await quiz.locator('#todayQuizPassport').textContent()).includes('世界パスポート完成'),
-    'all mapped countries collected to finish the passport');
-   assert.equal(await album.getAttribute('data-complete'),'true',
-    'the completed stamp book is visibly distinct');
-   assert.equal(await album.getAttribute('data-celebrate'),'true',
-    'collecting the final country triggers a separate full-passport celebration');
-   assert.equal(await album.locator('#todayPassportMeter').getAttribute('aria-valuenow'),String(countryTotal),
-    'the collection meter reaches the complete number of countries');
-   assert.ok((await album.locator('#todayPassportMessage').textContent()).includes('世界パスポート完成'),
-    'the fully collected album announces the milestone');
+   assert.equal(await today.locator('#todayPassportCount').count(),0,
+    'no completion counter is reintroduced');
    if(viewport.name==='standard'){
-    await album.screenshot({path:'mobile-screenshots/stamp-album-complete.png',animations:'disabled'});
+    await today.screenshot({path:'mobile-screenshots/map-without-stamp-book.png',animations:'disabled'});
    }
    await gallery.first().click();
    const travelButton=page.locator('#spotlight .travel-open');
@@ -666,17 +605,25 @@ try{
     return img?img.complete&&img.naturalWidth>0:!!card.querySelector('.travel-empty');
    },null,{timeout:30000});
    const postcard=page.locator('#spotlight .travel-card');
-   assert.equal(await postcard.count(),1,'optional 30-second journey opens');
+   assert.equal(await postcard.count(),1,'optional detailed journey opens');
    let photoSource='not-yet-curated';
    if(await postcard.locator('.travel-photo').count()){
     assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
      'tourist photography is labeled separately from actual reportage');
     photoSource=await postcard.locator('.travel-photo').getAttribute('src');
     assert.ok(photoSource?.startsWith('./assets/travel/'),'travel photo is locally bundled');
+    const detail=postcard.locator('.travel-story');
+    assert.equal(await detail.count(),1,'a complete destination has an extended travel essay');
+    assert.equal(await detail.locator('p').count(),2,
+     'every curated destination has two distinct explanatory paragraphs');
+    const paragraphs=await detail.locator('p').allTextContents();
+    assert.ok(paragraphs.every(text=>text.length>=70),
+     'landmark background and visitor viewpoint must be detailed, not one-line filler');
+    assert.ok((await detail.locator('h5').textContent()).includes('景色の向こう側へ'));
     const firstCountryCode=await pins.first().getAttribute('data-country-code');
     if(countryCoverAssets.has(firstCountryCode)){
      assert.notEqual(photoSource,countryCoverAssets.get(firstCountryCode),
-      'country introduction and 30-second travel must use DIFFERENT real photographs');
+      'country introduction and travel story must use DIFFERENT real photographs');
     }
    }else{
     // Newly sourced incidents may be from countries without licensed,

@@ -13,7 +13,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Casa_Rosada,_Buenos_Aires_(Argentina).jpg",
-    "photoAsset": "assets/travel/buenos-aires-casa-rosada.jpg"
+    "photoAsset": "assets/travel/buenos-aires-casa-rosada.jpg",
+    "travelStory": [
+      "五月広場に面して建つ淡いピンク色の大統領府、カサ・ロサダ。正面に立つと、政治の中心でありながら街の風景に溶け込むその色合いが目を引きます。広場と建物を一緒に眺めると、ブエノスアイレスの歴史的な中心地の広がりが感じられます。",
+      "建物だけでなく、周囲の広場や通りにも目を向けてみてください。記念碑、歴史的な建築、人々が行き交う街角がひと続きになり、アルゼンチンの首都が重ねてきた時間を想像できます。"
+    ]
   },
   "ar-iguazu-postcard": {
     "country": "アルゼンチン",
@@ -29,7 +33,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_Falls_from_the_Argentinian_side.JPG",
-    "photoAsset": "assets/travel/iguazu-argentina.jpg"
+    "photoAsset": "assets/travel/iguazu-argentina.jpg",
+    "travelStory": [
+      "イグアスの滝は、緑の森の奥から水が幾筋にも現れる巨大な滝群です。ひとつの滝を眺めるというより、森と川がつくる広い景色に包まれる場所。水の白さと熱帯の緑の対比に目を留めると、写真の迫力がいっそう伝わります。",
+      "アルゼンチン側では滝をさまざまな方向から見る楽しみがあります。場所によって川の流れや滝の重なりが違って見えるので、全景と細部を行き来するような気持ちで写真を眺めてみましょう。"
+    ]
   },
   "ar-iguazu-rainbow-postcard": {
     "country": "アルゼンチン",
@@ -45,7 +53,11 @@
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Foz_de_Iguacu_Panorama_AR01.jpg",
-    "photoAsset": "assets/travel/iguazu-rainbow-panorama.jpg"
+    "photoAsset": "assets/travel/iguazu-rainbow-panorama.jpg",
+    "travelStory": [
+      "熱帯の森の向こうに滝が何段にも連なり、白い水しぶきの上に虹がかかるイグアスの景色。滝だけでも圧巻ですが、光が加わると川の幅や流れの力強さまで浮かび上がるようです。遠くの滝と手前の緑を見比べてみてください。",
+      "虹は光と水滴が出会うことで生まれる一瞬の表情。写真に切り取られたその色を眺めながら、水音が絶えず響いている風景を想像すると、大瀑布のスケールをより身近に感じられます。"
+    ]
   },
   "fr-eiffel-postcard": {
     "country": "フランス",
@@ -61,7 +73,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Eiffel_Tower,Paris.jpg",
-    "photoAsset": "assets/travel/paris-eiffel-tower.jpg"
+    "photoAsset": "assets/travel/paris-eiffel-tower.jpg",
+    "travelStory": [
+      "エッフェル塔は、パリの街に軽やかな線を描く鉄の建築です。遠くから見る塔の輪郭と、近づいて見上げたときの細かな骨組みでは印象が大きく変わります。写真では脚部のアーチから塔の先端まで視線を上げ、構造の美しさを味わってみてください。",
+      "1889年のパリ万国博覧会に合わせて建てられた塔は、今では街を代表する風景になりました。周辺の広場やセーヌ川と一緒に眺めると、歴史的な建築と現代の都市生活が重なり合うパリらしさが見えてきます。"
+    ]
   },
   "fr-mont-saint-michel-postcard": {
     "country": "フランス",
@@ -77,7 +93,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Mont-saint-Michel_(France).jpg",
-    "photoAsset": "assets/travel/france-mont-saint-michel.jpg"
+    "photoAsset": "assets/travel/france-mont-saint-michel.jpg",
+    "travelStory": [
+      "ノルマンディーの湾に浮かぶモン・サン＝ミシェルは、海と陸の境目に立つ修道院の島です。小さな街並みから上へと伸びる建物の重なりを見ると、島全体がひとつの大きな建築作品のよう。空と干潟の広さが、その輪郭をいっそう際立たせます。",
+      "ここでは潮の満ち引きによって島の周りの景色が変わります。水があるときと広い干潟が姿を見せるときの違いを思い浮かべるだけでも面白い場所です。石造りの修道院が長い年月をかけて受け継がれてきたことにも思いを寄せてみましょう。"
+    ]
   },
   "argentina-goalkeeper-throws-own-goal-2026": {
     "country": "アルゼンチン",
@@ -93,7 +113,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Obelisco_de_Buenos_Aires,_Argentina.jpg",
-    "photoAsset": "assets/travel/buenos-aires-obelisco.jpg"
+    "photoAsset": "assets/travel/buenos-aires-obelisco.jpg",
+    "travelStory": [
+      "ブエノスアイレスの大通りに立つオベリスコは、都会の真ん中に空への目印をつくる白い塔です。周囲には交通が行き交い、高い建物と広い道路が重なります。塔を中心に街の線が遠くへ伸びていく構図を眺めると、首都の大きさが伝わってきます。",
+      "この記念碑は1936年、市の創設400周年を記念して建てられました。観光写真の定番でありながら、市民が集まる広場のような役割も担う場所です。街の歴史と日常のにぎわいを一枚の中で探してみてください。"
+    ]
   },
   "france-candy-police-mock-wanted-2026": {
     "country": "フランス",
@@ -108,7 +132,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Port_de_Rives_in_Thonon-les-Bains_01.jpg",
-    "photoAsset": "assets/travel/thonon-port-de-rives.jpg"
+    "photoAsset": "assets/travel/thonon-port-de-rives.jpg",
+    "travelStory": [
+      "レマン湖のほとりにあるトノン＝レ＝バンのリーヴ港。湖面に映る空と、水辺に並ぶ建物、係留された船を眺めると、アルプス周辺の湖畔の街が持つ穏やかな空気が伝わります。港の向こうに広がる水面の広さが、写真の主役です。",
+      "この湖はフランスとスイスにまたがっています。岸辺の街の生活と国境を越える大きな湖が隣り合うことも、この場所の魅力。港から視線を少し遠くへ移し、水辺と山々がつくる奥行きを感じてみてください。"
+    ]
   },
   "flight-wrong-country": {
     "country": "イギリス",
@@ -123,7 +151,11 @@
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_2000-1.jpg",
-    "photoAsset": "assets/travel/edinburgh-castle.jpg"
+    "photoAsset": "assets/travel/edinburgh-castle.jpg",
+    "travelStory": [
+      "エディンバラ城は、火山活動によって生まれた岩山の上に建つスコットランドを代表する城です。街から見上げると、高い石壁と城の建物が空を背景に浮かび上がります。旧市街の屋根と岩山を一緒に眺めると、城が都市の中心にあることがよく分かります。",
+      "城だけでなく、ふもとから続く石畳の街並みにも注目したいところ。長い歴史の層を感じさせる建築と、現在の街のにぎわいが隣り合っています。ゆっくり歩くような気持ちで、街から城へと目線を移してみてください。"
+    ]
   },
   "cheonan-painters-coffee-rescue-2026": {
     "country": "韓国",
@@ -138,7 +170,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Independence_Hall_of_Korea(main_hall).jpg",
-    "photoAsset": "assets/travel/cheonan-museum.jpg"
+    "photoAsset": "assets/travel/cheonan-museum.jpg",
+    "travelStory": [
+      "天安の独立記念館は、韓国の近現代史を伝える大きな展示施設です。広い敷地には象徴的な建築が配置され、建物の屋根の形や開けた空間が印象に残ります。写真では建築の線と周囲の緑との対比を楽しめます。",
+      "展示や記念の空間がある場所として知られ、単なる記念撮影の背景ではありません。大きな建物の前に広がる空間を眺めながら、歴史を学び、考えるために設計された場所なのだと想像すると、景色が違って見えてきます。"
+    ]
   },
   "guaira-degavar-road-marking-2026": {
     "country": "ブラジル",
@@ -154,7 +190,11 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaz%C3%BA_falls.jpg",
     "photoAsset": "assets/travel/iguazu-falls.jpg",
-    "countryOnly": true
+    "countryOnly": true,
+    "travelStory": [
+      "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
+      "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+    ]
   },
   "faa-router-ground-stop-2026": {
     "country": "アメリカ合衆国",
@@ -170,7 +210,11 @@
     "photoCaption": "米国アリゾナ州グランドキャニオンの景色",
     "author": "U.S. National Park Service（Wikimedia Commons経由）",
     "license": "パブリックドメイン",
-    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "travelStory": [
+      "グランドキャニオンでは、何層にも重なる岩の色と、深い谷が果てしなく続くように見えます。赤、茶、紫の地層に目を凝らせば、長い時間をかけて積み重なった地球の歴史が、一枚の風景に刻まれていることが伝わってきます。",
+      "アリゾナ州の高原をコロラド川が削り続けて生まれた峡谷です。遠景の大きな形だけでなく、手前の岩肌と谷の向こうの影にも注目してみてください。自然がつくった奥行きの豊かさに、思わず目を奪われます。"
+    ]
   },
   "jensen-huang-nvidia-resignation-2026": {
     "country": "アメリカ合衆国",
@@ -186,7 +230,11 @@
     "photoCaption": "米国カリフォルニア州のヨセミテ国立公園",
     "author": "Carol M. Highsmith（Library of Congress / Wikimedia Commons）",
     "license": "パブリックドメイン",
-    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "travelStory": [
+      "ヨセミテ渓谷には、切り立った花崗岩の壁、深い森、広い空が重なる壮大な景色があります。写真では谷を囲む岩壁の大きさと、足元に広がる木々の小ささを見比べてみてください。その対比だけでも、風景のスケールが伝わります。",
+      "この一帯は氷河などの働きによって形づくられた地形で知られます。明るい岩肌と森の色を追っていくと、硬い岩と緑の生命が同じ場所で共存していることに気づきます。目の前に立った気分で深呼吸したくなる景色です。"
+    ]
   },
   "spacex-starship-booster-failure-2026": {
     "country": "アメリカ合衆国",
@@ -202,7 +250,11 @@
     "photoCaption": "米国テキサス州のビッグベンド国立公園",
     "author": "U.S. National Park Service（Wikimedia Commons経由）",
     "license": "パブリックドメイン",
-    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/"
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "travelStory": [
+      "テキサス州南西部のビッグベンド国立公園では、乾いた地形の向こうに山並みが広がり、空が驚くほど大きく感じられます。砂漠の色と山の稜線を交互に眺めると、街とはまるで違う土地の広さが印象に残ります。",
+      "公園の名は、リオグランデ川が大きく曲がる地形に由来します。乾燥した大地と川のつくる景観が隣り合う場所です。写真に映る静かな稜線を追いながら、川と山が刻んだ地形を想像してみてください。"
+    ]
   },
   "korea-country-postcard": {
     "country": "韓国",
@@ -218,7 +270,11 @@
     "photoCaption": "ソウル・景福宮（2012年撮影）",
     "author": "螺钉",
     "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "ソウルの景福宮は、朝鮮王朝の歴史を伝える王宮です。色鮮やかな屋根の曲線や木造建築の細部、背景の山々を見渡すと、都の中心にありながら大きな景色の中に建てられていることが分かります。",
+      "かつての宮廷文化を感じられる場所として、現在も人々が訪れます。建物を正面から眺めるだけでなく、屋根の重なりや門から奥へと続く空間に注目すると、建築の配置がつくる落ち着いた雰囲気も味わえます。"
+    ]
   },
   "japan-country-postcard": {
     "country": "日本",
@@ -234,7 +290,11 @@
     "photoCaption": "東京・浅草寺（2016年撮影）",
     "author": "Mattias Hill",
     "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "東京・浅草寺は、雷門の大きな提灯と、参道に続く店々のにぎわいで知られる古い寺院です。朱色の門や屋根の形が街の景色に彩りを添え、寺院に向かう道そのものにも見どころがたくさんあります。",
+      "浅草は伝統的な下町の空気を感じられる地区です。観光客が行き交う通りの先に境内があり、祈りの場と商店街が自然につながっています。写真に映る建物の色や人の流れを、歩くような気持ちで追ってみてください。"
+    ]
   },
   "brazil-norris-champagne-podium-2026": {
     "country": "ブラジル",
@@ -249,7 +309,11 @@
     "photoCaption": "サンパウロの街並み（2023年撮影）",
     "author": "Boaventuravinicius",
     "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "サンパウロの街並みは、遠くまで続く高層ビル群が印象的です。さまざまな高さの建物が密集し、その間を通りが走っています。写真の手前から地平線の方まで視線を動かすと、南米最大級の都市圏が持つスケールを実感できます。",
+      "この街には多様な人々の文化が集まり、美術館や市場、食の風景も豊かです。遠くから見た街はビルの集まりでも、そのひとつひとつの通りには暮らしがあります。大都市の輪郭の向こうにある日常を想像してみてください。"
+    ]
   },
   "uk-penrith-church-sign-typo-2026": {
     "country": "イギリス",
@@ -264,7 +328,11 @@
     "photoCaption": "ペンリスのセント・アンドルーズ教会（2017年撮影）",
     "author": "AlasdairW",
     "license": "CC BY-SA 3.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "イングランド北部のペンリスは、石造りの建物が街に落ち着いた表情を与える町です。セント・アンドルーズ教会の存在感は、華やかな大都市とは少し違う、地域の歴史が日常の景色に残る町らしさを伝えています。",
+      "周辺は湖水地方やカンブリアの丘陵にも近い地域です。写真に写る教会の壁や屋根、街路の雰囲気を眺めると、観光の中心地だけではない英国の町並みにも目を向けたくなります。"
+    ]
   },
   "brazil-country-postcard": {
     "country": "ブラジル",
@@ -280,7 +348,11 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaz%C3%BA_falls.jpg",
     "photoAsset": "assets/travel/iguazu-falls.jpg",
-    "countryOnly": true
+    "countryOnly": true,
+    "travelStory": [
+      "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
+      "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+    ]
   },
   "uk-country-postcard": {
     "country": "イギリス",
@@ -296,7 +368,11 @@
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_2000-1.jpg",
     "photoAsset": "assets/travel/edinburgh-castle.jpg",
-    "countryOnly": true
+    "countryOnly": true,
+    "travelStory": [
+      "エディンバラ城は、火山活動によって生まれた岩山の上に建つスコットランドを代表する城です。街から見上げると、高い石壁と城の建物が空を背景に浮かび上がります。旧市街の屋根と岩山を一緒に眺めると、城が都市の中心にあることがよく分かります。",
+      "城だけでなく、ふもとから続く石畳の街並みにも注目したいところ。長い歴史の層を感じさせる建築と、現在の街のにぎわいが隣り合っています。ゆっくり歩くような気持ちで、街から城へと目線を移してみてください。"
+    ]
   },
   "japan-kyoto-postcard": {
     "country": "日本",
@@ -312,7 +388,11 @@
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Kinkaku-ji%2C_Kyoto.jpg",
-    "photoAsset": "assets/travel/kyoto-kinkakuji.jpg"
+    "photoAsset": "assets/travel/kyoto-kinkakuji.jpg",
+    "travelStory": [
+      "京都の金閣寺は、金色の舎利殿と庭園の池がつくる景色で広く知られています。水面に建物や木々の姿が映り込むと、建築を眺めるだけでなく、その周囲の自然まで含めてひとつの風景として楽しめます。",
+      "正式には鹿苑寺といい、金閣はその一部です。写真では、金色の建物と池の青み、背後の緑をゆっくり見比べてみてください。庭園が工夫してきた眺めの美しさが伝わってきます。"
+    ]
   },
   "japan-fuji-postcard": {
     "country": "日本",
@@ -328,7 +408,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_April_Cherry_Blossom.jpg",
-    "photoAsset": "assets/travel/fuji-cherry-blossom.jpg"
+    "photoAsset": "assets/travel/fuji-cherry-blossom.jpg",
+    "travelStory": [
+      "春の富士山は、雪をまとった山頂と淡い桜の色が同じ画面に重なります。遠くまで広がる空の中に山の輪郭が浮かび、手前の花が季節の近さを感じさせます。大きな山と小さな花の対比をじっくり味わいたい風景です。",
+      "富士山は山梨県と静岡県にまたがる日本最高峰で、古くから信仰や芸術の題材になってきました。桜越しに眺める景色には、日本の季節と風景を大切にする感覚が凝縮されているように感じられます。"
+    ]
   },
   "spain-barcelona-postcard": {
     "country": "スペイン",
@@ -344,7 +428,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:La_Sagrada_Familia%2C_Barcelona.jpg",
-    "photoAsset": "assets/travel/barcelona-sagrada.jpg"
+    "photoAsset": "assets/travel/barcelona-sagrada.jpg",
+    "travelStory": [
+      "バルセロナのサグラダ・ファミリアは、細く伸びる塔と、彫刻のように表情豊かな外壁が印象的な建築です。近づいて細部を眺めるほど、直線だけでは説明できない独特の造形に気づきます。写真では上から下まで、ひとつずつ形を探してみてください。",
+      "建築家アントニ・ガウディが関わったこの聖堂は、長い年月をかけて建設が続いてきました。宗教的な意味を持つ細部と大胆な建築表現が重なる姿は、バルセロナの街の創造性を象徴しています。"
+    ]
   },
   "antigua-dockyard-postcard": {
     "country": "アンティグア・バーブーダ",
@@ -360,7 +448,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Nelson's_Dockyard_Antigua.jpg",
-    "photoAsset": "assets/travel/antigua-dockyard.jpg"
+    "photoAsset": "assets/travel/antigua-dockyard.jpg",
+    "travelStory": [
+      "アンティグア島のネルソンズ・ドックヤードは、海と港の歴史が重なる場所です。ヤシの木の間に古い石造りの建物が並び、港町の景色に落ち着いた表情を与えています。明るい空や海辺の光と建物の質感を見比べると、独特の魅力が伝わります。",
+      "ここは18〜19世紀の海軍基地の歴史を伝えるエリアで、現在も歴史的な港の景観が残されています。カリブの自然と船の往来がつくってきた暮らしを思い浮かべながら眺めると、リゾートとは違う島の一面に出会えます。"
+    ]
   },
   "us-golden-gate-postcard": {
     "country": "アメリカ合衆国",
@@ -376,7 +468,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg",
-    "photoAsset": "assets/travel/san-francisco-golden-gate.jpg"
+    "photoAsset": "assets/travel/san-francisco-golden-gate.jpg",
+    "travelStory": [
+      "サンフランシスコのゴールデンゲートブリッジは、鮮やかな赤い色と大きな吊り橋の曲線が海峡を横切る風景で知られます。橋脚の高さ、ケーブルの線、対岸へと続く道路を追いかけると、橋の大きさがよく分かります。",
+      "太平洋とサンフランシスコ湾をつなぐ海峡に架かり、街を代表するランドマークです。写真の中では、橋そのものと海岸線の両方に注目してみてください。人がつくった構造物と自然の広がりが、鮮やかに響き合っています。"
+    ]
   },
   "us-waikiki-postcard": {
     "country": "アメリカ合衆国",
@@ -392,7 +488,11 @@
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Waikiki_Beach%2C_Hawaii.jpg",
-    "photoAsset": "assets/travel/hawaii-waikiki.jpg"
+    "photoAsset": "assets/travel/hawaii-waikiki.jpg",
+    "travelStory": [
+      "ホノルルのワイキキビーチは、なめらかな波が砂浜に寄せ、明るい海が遠くまで広がる風景で知られます。白い波、青い水、海岸沿いの街並みを眺めると、海と都市がすぐ隣り合うハワイらしい景色が伝わります。",
+      "ワイキキは長く人々が海に親しんできた場所です。近くにはダイヤモンドヘッドの山影も見え、泳ぐだけでなく散歩や夕方の景色を楽しむ海辺として親しまれています。海の色の変化をゆっくり眺めてみてください。"
+    ]
   },
   "us-newyork-postcard": {
     "country": "アメリカ合衆国",
@@ -408,7 +508,11 @@
     "license": "CC BY 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_Skyline_June_2025_008.jpg",
-    "photoAsset": "assets/travel/new-york-skyline.jpg"
+    "photoAsset": "assets/travel/new-york-skyline.jpg",
+    "travelStory": [
+      "ニューヨークの街並みを水辺から見ると、ビルの輪郭が折り重なり、都会のスケールが強く感じられます。川を行く船の手前と遠くの高層ビルを見比べると、街の奥行きや絶えず動き続ける都市の姿が伝わってきます。",
+      "ニューヨークは世界からさまざまな文化が集まってきた街。写真では建物の数や高さだけでなく、水辺と街を行き来する人の暮らしにも想像を広げてみてください。大都市の景色に小さな物語が隠れています。"
+    ]
   },
   "uk-cardiff-postcard": {
     "country": "イギリス",
@@ -424,7 +528,11 @@
     "license": "CC BY 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Cardiff_Castle%2C_Wales%2C_GB.jpg",
-    "photoAsset": "assets/travel/wales-cardiff-castle.jpg"
+    "photoAsset": "assets/travel/wales-cardiff-castle.jpg",
+    "travelStory": [
+      "ウェールズの首都カーディフにあるカーディフ城は、石造りの城壁や塔が街の中心に歴史の存在感を残す場所です。周囲の緑と古い建物の形を一緒に眺めると、街がいくつもの時代を重ねてきたことが伝わります。",
+      "城の敷地には異なる時代の建築が残り、ローマ時代から中世、近代へとつながる歴史を感じられます。観光名所でありながら、市街地から歩いて出会える距離感も魅力です。城壁の向こうの街の暮らしも想像してみてください。"
+    ]
   },
   "uk-towerbridge-postcard": {
     "country": "イギリス",
@@ -440,7 +548,11 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_Panorama.jpg",
-    "photoAsset": "assets/travel/london-tower-bridge.jpg"
+    "photoAsset": "assets/travel/london-tower-bridge.jpg",
+    "travelStory": [
+      "ロンドンのタワーブリッジは、二つの塔とその間をつなぐ橋がテムズ川にかかる姿で知られています。夜には橋の灯りが水面に映り、建築の輪郭が一層はっきり浮かびます。川の流れに沿って街の明かりを追うのも楽しい見方です。",
+      "19世紀末に完成したこの橋は、船を通すため中央の橋桁が開く仕組みを備えています。古い石造りのように見える塔と、機械仕掛けの橋が一体になっていることを知ると、写真の細部にも目を向けたくなります。"
+    ]
   },
   "uk-windermere-postcard": {
     "country": "イギリス",
@@ -456,7 +568,11 @@
     "license": "CC0 1.0",
     "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Lake_Windermere_Panoramic.jpg",
-    "photoAsset": "assets/travel/england-windermere.jpg"
+    "photoAsset": "assets/travel/england-windermere.jpg",
+    "travelStory": [
+      "英国湖水地方のウィンダミア湖は、緑の丘や木々に囲まれた細長い湖です。水面の静かな色と、遠くに重なる丘の輪郭を眺めると、街とは違うゆったりとした時間の流れが感じられます。",
+      "湖水地方は自然の景色や文学とのつながりでも知られます。歩道や湖畔の町から水面を眺める楽しみがあり、季節や天候によって光の表情が変わります。写真の湖面に映る空の色にも注目してみてください。"
+    ]
   },
   "ar-iguazu-rainbow-hero-postcard": {
     "country": "アルゼンチン",
@@ -587,7 +703,11 @@
     "photoCaption": "ニュージーランド・ミルフォード・サウンドの滝（2005年撮影）",
     "author": "Ryancoke2020",
     "license": "CC BY-SA 4.0",
-    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ニュージーランド南島のミルフォード・サウンドでは、深い入り江の両側に山々が迫り、切り立った岩壁が水面から立ち上がるように見えます。山の高さと、水面の静けさが一枚の写真の中で対照的に感じられます。",
+      "この地形は氷河の働きによって形づくられたフィヨルドです。雨が多い地域で、天候によっては岩壁を伝う滝が現れます。山と海、霧や雲がつくる風景を想像しながら眺めると、その奥深さが伝わります。"
+    ]
   },
   "italy-rome-colosseum-cover": {
     "country": "イタリア",
@@ -621,7 +741,11 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Pisa_-_Leaning_Tower.jpg",
     "photoAsset": "assets/travel/italy-pisa-tower.jpg",
-    "famousTourist": true
+    "famousTourist": true,
+    "travelStory": [
+      "ピサの斜塔は、大聖堂に付属する鐘楼です。傾いた姿が有名ですが、近づいて眺めると白い石の柱やアーチが幾層にも重なる美しさにも気づきます。まっすぐな地平線と塔の角度を比べるだけでも、独特の眺めが楽しめます。",
+      "塔が立つドゥオモ広場には、大聖堂や洗礼堂などの建物も集まっています。ひとつの塔だけではなく、広場全体の建築を一緒に見てみてください。ピサの街が受け継いできた中世の風景が浮かび上がります。"
+    ]
   },
   "italy-venice-grand-canal-postcard": {
     "country": "イタリア",
@@ -638,7 +762,11 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Grand_Canal,_Venice,_Italy.jpg",
     "photoAsset": "assets/travel/italy-venice-grand-canal.jpg",
-    "famousTourist": true
+    "famousTourist": true,
+    "travelStory": [
+      "ヴェネツィアの大運河では、水路の両側に歴史ある建物が立ち並び、船が街の道のように行き交います。橋の形や窓の並び、水面に映る色を一つずつ眺めると、水上の都市ならではの景色が見えてきます。",
+      "島々の上に築かれたヴェネツィアでは、運河が街をつなぐ大切な通りになってきました。写真の奥に続く水路をたどりながら、歩道とは異なる視点で街を移動する様子を想像してみてください。"
+    ]
   },
   "germany-berlin-brandenburg-cover": {
     "country": "ドイツ",
@@ -672,7 +800,11 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Cologne_Cathedral_Front_View.jpg",
     "photoAsset": "assets/travel/germany-cologne-cathedral.jpg",
-    "famousTourist": true
+    "famousTourist": true,
+    "travelStory": [
+      "ケルン大聖堂は、高く伸びる二つの塔と繊細な石の装飾が目を引くゴシック建築です。近くから見上げると塔が空へと続いていくように感じられ、遠くからでも街の目印になる大きさが分かります。",
+      "ライン川沿いの街ケルンに立つこの大聖堂は、長い年月をかけて建てられました。外壁の細部や塔の輪郭を追うと、建築に込められた時間の長さを感じられます。街の風景に溶け込む歴史の姿を楽しんでみてください。"
+    ]
   },
   "germany-neuschwanstein-castle-postcard": {
     "country": "ドイツ",
@@ -689,6 +821,10 @@
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "photoPage": "https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_in_Germany.jpg",
     "photoAsset": "assets/travel/germany-neuschwanstein-castle.jpg",
-    "famousTourist": true
+    "famousTourist": true,
+    "travelStory": [
+      "バイエルンのノイシュヴァンシュタイン城は、山々を背景に白い塔や屋根が立ち上がる、絵本のような風景で知られます。城の輪郭と周囲の深い緑を見比べると、山中の景色に建築が浮かび上がって見える理由が分かります。",
+      "19世紀にバイエルン王ルートヴィヒ2世の構想で建てられた城です。中世のお城のように見えながら、ロマン主義の時代に生まれた建物だと知ると、見方も変わります。遠景の山並みまで含めて、風景を味わってみてください。"
+    ]
   }
 }
