@@ -47,9 +47,17 @@ def country_coverage(root: Path, stories):
             raise ValueError(code+": no licensed country-cover photograph")
         verified_covers=[]
         for photo in images:
+            # The selected portrait must be a locally licensed, attributed
+            # destination photograph. Older vetted national portraits did not
+            # all use the newer coverOnly marker: the country + explicit
+            # non-quiz cover selection is the actual authority, not that flag.
+            if photo.get("avoidCover") or photo.get("remoteOnly"):
+                continue
             asset=photo.get("asset")
             stop=next((item for item in photos.values()
-                       if item.get("photoAsset")==asset and item.get("coverOnly") is True),None)
+                       if item.get("photoAsset")==asset and
+                       item.get("country")==COUNTRY_NAMES.get(code) and
+                       item.get("quizOnly") is not True),None)
             if (stop and _licensed_photo(stop) and stop.get("author")==photo.get("author") and
                 stop.get("license")==photo.get("license") and
                 (not photo.get("sourcePage") or photo["sourcePage"]==stop.get("photoPage"))):
