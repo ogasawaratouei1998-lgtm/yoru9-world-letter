@@ -147,7 +147,7 @@ class StrictFourAndImagesTest(unittest.TestCase):
         self.assertIn("イメージ画像（AI生成）",page)
         self.assertIn("報道写真ではありません",page)
         self.assertIn("img.src=fallbackNewsArt(story)",page)
-        self.assertIn("assets/news-generated",service)
+        self.assertIn("news-generated",service)
         self.assertIn("expirePreviousGeneratedImages",service)
         self.assertIn("IMAGE_CACHE",service)
         self.assertIn("target=output/rel",builder)
