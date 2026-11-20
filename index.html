@@ -2016,11 +2016,10 @@ function countryPhotoSourceUrls(item){
  return [];
 }
 function countryPhotoIsSharpEnough(image){
- // A bundled 500px thumbnail is still ~1.5x a typical 320px phone card.
- // The site builder attempts a 1280px version for country covers first.
- // Do not force the browser onto an external CDN merely to satisfy an
- // arbitrary 1000px threshold on already downloaded, verified images.
- return image.naturalWidth>=480&&image.naturalHeight>=260;
+ // Country portraits should be sharp on high-density phones.
+ // The publisher now prefers locally bundled 1280px photographs for every
+ // vetted country cover; a 500px image is not stretched into a large hero.
+ return image.naturalWidth>=1000&&image.naturalHeight>=540;
 }
 function showTodayCountryIntro(item){
  closeWorldPassport();

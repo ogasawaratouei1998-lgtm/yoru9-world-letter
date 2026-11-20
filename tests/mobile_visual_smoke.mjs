@@ -490,6 +490,10 @@ try{
      const src=await img.getAttribute('src');
      assert.ok(src?.startsWith('./assets/travel/'),
       'country hero uses the packaged iconic photo: '+code+' '+src);
+     const nativeSize=await img.evaluate(image=>({width:image.naturalWidth,height:image.naturalHeight}));
+     assert.ok(nativeSize.width>=1000&&nativeSize.height>=540,
+      'country cover must be a sharp, locally packaged high-resolution photograph: '+
+       code+' '+JSON.stringify(nativeSize));
      const bounds=await img.boundingBox();
      assert.ok(bounds?.width>=240&&bounds?.height>=190,
       'country photo is large enough to enjoy on mobile: '+code+' '+JSON.stringify(bounds));

@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-19",
+  "updatedOn": "2026-11-21",
   "description": "Editorially verified cultural and current-affairs notes for country introductions. Never derive these from unverified news leads or tourist postcard records.",
   "highlights": {
     "GB": [
@@ -81,6 +81,39 @@
         "checkedOn": "2026-11-19",
         "sourceName": "ダニーデン公式観光案内",
         "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      }
+    ],
+    "IT": [
+      {
+        "title": "ヴェネツィア、街を彩る冬の催し",
+        "body": "ヴェネツィア市の公式観光案内は、2026年11月20日から2027年1月6日までの「Natale Venezia 2026」を掲載。街の広場や周辺地域で冬の催しが案内され、歴史的な水の都にも季節の風景が広がります。",
+        "validFrom": "2026-11-21",
+        "validThrough": "2026-12-05",
+        "checkedOn": "2026-11-21",
+        "sourceName": "ヴェネツィア市公式観光案内 Venezia Unica",
+        "sourceUrl": "https://www.veneziaunica.it/en/things-to-do-in-venice/events/natale-venezia-2026"
+      }
+    ],
+    "DE": [
+      {
+        "title": "ベルリン、11月23日から伝統の冬市",
+        "body": "ベルリンの公式観光案内によると、ジャンダルメンマルクトのクリスマスマーケットは2026年11月23日から12月31日までの日程です。歴史的な広場を舞台に、工芸品や食の屋台などが紹介されています。",
+        "validFrom": "2026-11-21",
+        "validThrough": "2026-12-05",
+        "checkedOn": "2026-11-21",
+        "sourceName": "ベルリン公式観光案内 visitBerlin",
+        "sourceUrl": "https://www.visitberlin.de/en/christmas-market-weihnachtszauber-gendarmenmarkt-berlin"
+      }
+    ],
+    "US": [
+      {
+        "title": "2026年の感謝祭は11月26日",
+        "body": "米国政府の2026年連邦祝日一覧では、感謝祭（Thanksgiving Day）は11月26日（木）。11月の米国を代表する季節行事の一つで、家庭や地域で人が集い、食卓を囲む文化を知るきっかけになります。",
+        "validFrom": "2026-11-21",
+        "validThrough": "2026-12-01",
+        "checkedOn": "2026-11-21",
+        "sourceName": "米国人事管理局（OPM）連邦祝日一覧",
+        "sourceUrl": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
       }
     ]
   }
