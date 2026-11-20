@@ -73,6 +73,18 @@
         "name": "Antigua and Barbuda Tourism Authority",
         "url": "https://www.visitantiguabarbuda.com/"
       }
+    ],
+    "IT": [
+      {
+        "name": "Italia.it / Agenzia Nazionale del Turismo",
+        "url": "https://www.italia.it/en/"
+      }
+    ],
+    "DE": [
+      {
+        "name": "Germany Travel / German National Tourist Board",
+        "url": "https://www.germany.travel/en/"
+      }
     ]
   }
 }
