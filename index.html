@@ -1208,6 +1208,29 @@ body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
  .article-pager button{font-size:.84rem}
 }
 
+/* One story, one reading flow: do not repeat the cover teaser in article view. */
+body.news-detail-mode #articleReader .spotlight{display:flex;flex-direction:column}
+body.news-detail-mode #articleReader .spotlight-topline{order:0}
+body.news-detail-mode #articleReader .spotlight-visual{order:1}
+body.news-detail-mode #articleReader #spotlightTitle{order:2;margin-bottom:13px}
+body.news-detail-mode #articleReader .spotlight-fact,
+body.news-detail-mode #articleReader .spotlight-divider,
+body.news-detail-mode #articleReader #spotlightRead{display:none!important}
+body.news-detail-mode #articleReader #spotlightBody{order:3;margin:0;padding:0;border-top:0}
+body.news-detail-mode #articleReader .article-narrative{margin:0;padding:0;max-width:60ch}
+body.news-detail-mode #articleReader .article-narrative .detailtext{
+ font-size:clamp(1rem,3.8vw,1.1rem);line-height:1.83;
+ letter-spacing:.012em;color:#F5F5F1;margin:0 0 1em;
+ overflow-wrap:anywhere;white-space:pre-line}
+body.news-detail-mode #articleReader .article-narrative .detailtext:last-child{margin-bottom:.85em}
+body.news-detail-mode #articleReader .spotlight-joke{order:4;margin:16px 0 8px}
+body.news-detail-mode #articleReader .travel-slot{order:5}
+body.news-detail-mode #articleReader .reported{margin:2px 0 11px;color:#C6D9E4;font-size:.86rem}
+body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin:16px 0 12px;padding:12px 0 0}
+@media(max-width:520px){
+ body.news-detail-mode #articleReader .article-narrative .detailtext{font-size:1rem;line-height:1.8;letter-spacing:0}
+ body.news-detail-mode #articleReader .spotlight-joke{margin-top:13px}
+}
 /* Mobile gallery header: keep the hint within the hero at 320–393px widths. */
 @media(max-width:520px){
  #atlasHero .gallery-heading{display:flex;flex-wrap:wrap;min-width:0;max-width:100%;align-items:flex-start}
@@ -2063,7 +2086,8 @@ function displayReleaseStatus(){
 function isJapaneseText(value){return /[ぁ-んァ-ヶ一-龯々]/.test(String(value||''))}
 function storyDetailHtml(story){
  const detail=String(story.detail||'').trim();
- if(isJapaneseText(detail))return '<p class="detailtext">'+escapeHtml(detail)+'</p>';
+ if(isJapaneseText(detail))return detail.split(/\n\s*\n/).map(part=>part.trim()).filter(Boolean)
+  .map(part=>'<p class="detailtext">'+escapeHtml(part)+'</p>').join('');
  const overview=String(story.summary||'').trim();
  return '<p class="detail-language-note">日本語の詳しい本文は準備中です。以下は掲載済みの日本語概要です。英語の補足文は必要な場合のみ開いて確認できます。</p>'
   +'<p class="detailtext">'+escapeHtml(overview)+'</p>'
@@ -2259,7 +2283,7 @@ function updateSpotlight(){
  body.hidden=true;
  const second=first.quipSecond&&first.quipSecond.trim()&&first.quipSecond.trim()!==first.quip?.trim()
   ?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
- body.innerHTML=`${isJapaneseText(first.detail)?'<p class="summary">'+escapeHtml(first.summary||'')+'</p>':''}<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p>${storyDetailHtml(first)}${second}<p class="source">報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="${selectedArticleIndex}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${selectedArticleIndex}">この記事を共有</button></div>`;
+ body.innerHTML=`<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p><div class="article-narrative" aria-label="記事本文">${storyDetailHtml(first)}</div>${second}<p class="source">出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="${selectedArticleIndex}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${selectedArticleIndex}">この記事を共有</button></div>`;
 }
 $('spotlightRead').addEventListener('click',()=>{
  const panel=$('spotlightBody'),show=panel.hidden;
