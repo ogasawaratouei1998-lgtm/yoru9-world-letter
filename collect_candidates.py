@@ -19,6 +19,9 @@ SEARCHES = [
     # User preference: outsized but non-tragic PERSONAL mistakes, not tiny typos.
     # All hits are unverified leads; no claim of blame or amount is accepted here.
     ('(個人 OR 男性 OR 女性 OR 旅行者) (大失敗 OR 判断ミス OR 勘違い) (巨額 OR 高額 OR 大損 OR 全財産) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('("bizarre mistake" OR "major blunder" OR "costly miscalculation") when:7d','en','US','US:en'),
+    ('("false alarm" OR "AI hoax") (police OR firefighters OR search) when:7d','en','GB','GB:en'),
+    ('("price is right" OR "game show") (mistake OR blunder) when:7d','en','US','US:en'),
     ('(誤入札 OR 誤購入 OR 売却ミス OR 大損) (個人 OR 旅行者 OR 落札者) when:7d', 'ja', 'JP', 'JP:ja'),
     ('("costly mistake" OR "expensive blunder" OR "huge mistake") (man OR woman OR tourist OR employee) when:7d', 'en', 'US', 'US:en'),
     ('("accidentally bought" OR "accidentally sold" OR "wrong country") (man OR woman OR tourist) when:7d', 'en', 'GB', 'GB:en'),
@@ -238,30 +241,31 @@ def get_gdelt(extra_searches=(), min_interval_seconds=10.5, diagnostics=None,
     if day is None:
         day=datetime.now(timezone(timedelta(hours=9))).date()
     health=Counter()
-    # Search light, documented human mistakes first. Keep each search capped.
+    # Discover consequential personal blunders BEFORE tiny misspellings:
+    # 5 GDELT calls max, original article URL required, no headline-only approval.
     searches=(
-        '("misspelled" OR "misspelt" OR "typo" OR "sign error")',
-        '("wrong landmark" OR "wrong city" OR "AI-generated mural")',
-        '("wrong order" OR "wrong delivery" OR "accidentally delivered")',
-        '("wrong recipient" OR "accidentally ordered" OR "sent by mistake")',
-        '("mistaken identity" OR "by mistake" OR "mix-up")',
-        '("blunder" OR "fiasco" OR "misprint")',
-        # Local reporting often does NOT describe the mishap in English.
-        # Exact, bounded multilingual searches uncover original publisher
-        # article URLs even when generic world RSS is dominated by politics.
-        '("per errore" OR "per sbaglio" OR "aus Versehen" OR "Verwechslung")',
-        '("por engano" OR "erro de pedido" OR "por error" OR "se equivocó")',
-        '("par erreur" OR "méprise" OR "salah kirim" OR "keliru")',
-        '("giao nhầm" OR "nhầm địa chỉ" OR "실수로" OR "착각")',
+        '("million dollar mistake" OR "costly mistake" OR "expensive blunder")',
+        '("accidentally bought" OR "accidentally sold" OR "wrong bid")',
+        '("huge mistake" OR "spectacular mistake" OR "major blunder")',
+        '("AI hoax" OR "false alarm" OR "search for days")',
+        '("accidental purchase" OR "wrong country" OR "wrong house")',
+        '("costly error" OR "wrong price" OR "game show mistake")',
+        '("error millonario" OR "compra por error" OR "grave equivocación")',
+        '("teurer Fehler" OR "versehentlich verkauft" OR "großer Irrtum")',
+        '("失敗で大損" OR "数千万円のミス" OR "誤落札")',
+        # Backups only: small everyday slips do not displace large stories.
+        '("wrong delivery" OR "misprint" OR "mix-up")',
     )
     articles,seen=[],set()
-    country_queries=tuple(extra_searches)[:min(3,max_queries)]
+    # Always devote at least 3/5 queries to the higher-impact themes,
+    # while preserving one geographically diverse query each day.
+    country_queries=tuple(extra_searches)[:min(1,max(0,max_queries-3))]
     remaining=max_queries-len(country_queries)
     # Rotate the ten creative search themes rather than hammering all ten
     # every morning. The three country targets continue to cover nine
     # never-featured locations each day. Over several days all headline
     # languages and error motifs receive their turn.
-    offset=(day.toordinal()*max(1,remaining))%len(searches)
+    offset=(day.toordinal()*max(1,remaining))%9
     generic=tuple(searches[(offset+i)%len(searches)]
                   for i in range(remaining))
     queries=(*country_queries,*generic)
