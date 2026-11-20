@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="illustration-title">
+<title id="illustration-title">ムール貝を濾すざるとソースを作るフライパンの両方を描いた調理法の創作イラスト</title>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#FFE1A3"/><stop offset="1" stop-color="#F5A9A8"/></linearGradient>
+ <filter id="soft"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#102D44" flood-opacity=".21"/></filter>
+ <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#fff" opacity=".36"/></pattern>
+</defs>
+<rect width="800" height="480" rx="28" fill="url(#bg)"/>
+<circle cx="700" cy="54" r="130" fill="#fff" opacity=".17"/>
+<circle cx="85" cy="434" r="152" fill="#fff" opacity=".13"/>
+<path d="M0 418Q200 378 416 412T800 390V480H0Z" fill="#914D6F" opacity=".13"/>
+<path d="M76 85h45m-22-22v45M721 333h42m-21-21v42" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".63"/>
+
+<!-- kitchen-tile counter -->
+<rect x="36" y="314" width="730" height="118" rx="23" fill="#FBEFD6" opacity=".74"/>
+<path d="M65 347h672M66 386h672" stroke="#E5BFA6" stroke-width="4" opacity=".53"/>
+<!-- colander bowl with mussels on the left -->
+<g filter="url(#soft)">
+ <path d="M96 215h362q-18 171-180 175Q128 388 96 215Z" fill="#E5F5F1" stroke="#315A73" stroke-width="12"/>
+ <path d="M110 235q166 48 332 0" fill="none" stroke="#76B4AF" stroke-width="10" opacity=".8"/>
+ <path d="M114 219h-53q-16 0-16-22 0-20 20-20h55M452 219h54q16 0 16-22 0-20-20-20h-55" stroke="#315A73" stroke-width="12" fill="none" stroke-linecap="round"/>
+ <g fill="#72AEB0"><circle cx="194" cy="274" r="8"/><circle cx="255" cy="278" r="8"/><circle cx="323" cy="276" r="8"/><circle cx="385" cy="267" r="8"/><circle cx="221" cy="321" r="8"/><circle cx="288" cy="328" r="8"/><circle cx="346" cy="313" r="8"/></g>
+ <g stroke="#334C68" stroke-width="7">
+  <ellipse cx="165" cy="164" rx="26" ry="54" transform="rotate(-21 165 164)" fill="#406684"/>
+  <ellipse cx="236" cy="152" rx="27" ry="55" transform="rotate(13 236 152)" fill="#38536D"/>
+  <ellipse cx="306" cy="158" rx="27" ry="56" transform="rotate(-13 306 158)" fill="#496D83"/>
+  <ellipse cx="375" cy="167" rx="25" ry="49" transform="rotate(19 375 167)" fill="#355B73"/>
+ </g>
+ <path d="M140 167q20-19 41-5m40-14q19-18 41-5m43 15q15-20 34-3" fill="none" stroke="#A1D1C8" stroke-width="7" opacity=".9"/>
+</g>
+<!-- A separate sauce frying pan is visibly used too -->
+<g filter="url(#soft)" transform="translate(515 208)">
+ <path d="M-7 8Q10 160 122 159 230 158 237 8Z" fill="#2E526B" stroke="#203F5B" stroke-width="12"/>
+ <ellipse cx="113" cy="14" rx="130" ry="45" fill="#F6A65F" stroke="#26495F" stroke-width="12"/>
+ <path d="M231 7h125" stroke="#284B64" stroke-width="23" stroke-linecap="round"/>
+ <path d="M277 0h60" stroke="#F0D7A7" stroke-width="10" stroke-linecap="round"/>
+ <g fill="#E36654"><circle cx="59" cy="8" r="19"/><circle cx="128" cy="-3" r="21"/><circle cx="173" cy="25" r="15"/></g>
+ <g fill="#6A985C"><path d="M67-20l-13-14-12 15zM124 12l-12 13 19 6zM182-10l11-20 12 16z"/></g>
+</g>
+<!-- Sauce-making bubbles and aroma -->
+<path d="M580 166q-20-24 0-44t0-39m59 68q20-24 1-42t-1-24" fill="none" stroke="#FFF6DE" stroke-width="10" stroke-linecap="round"/>
+<!-- Two ingredients work together, not one replacing the other -->
+<path d="M415 101Q481 49 552 106" fill="none" stroke="#D66C65" stroke-width="11" stroke-linecap="round" stroke-dasharray="17 17"/>
+<path d="m528 81 25 27-39 5" fill="none" stroke="#D66C65" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+
+</svg>
