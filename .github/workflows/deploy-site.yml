@@ -9,6 +9,7 @@ on:
       - 'check_public_country_release.py'
       - 'check_country_experience.py'
       - 'check_release_candidate.py'
+      - 'run_mobile_preflight.sh'
       - 'country-highlights.json'
       - 'country-highlight-sources.json'
       - 'travel-stops.json'
