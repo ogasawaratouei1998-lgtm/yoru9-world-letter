@@ -178,6 +178,13 @@ jobs:
           fi
       - name: Generate photorealistic editorial imagery before releasing approved stories
         env:
+          # Add OPENAI_API_KEY in repository Actions secrets to enable automatic
+          # OpenAI image generation. In auto mode OpenAI is preferred, and Gemini
+          # remains a fallback only when its own paid image quota is available.
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_IMAGE_MODEL: gpt-image-2.6-flare
+          OPENAI_IMAGE_QUALITY: medium
+          IMAGE_PROVIDER: auto
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_IMAGE_API_KEY: ${{ secrets.GEMINI_IMAGE_API_KEY }}
           GEMINI_IMAGE_MODEL: gemini-3.1-flash-lite-image

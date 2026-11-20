@@ -151,3 +151,18 @@ RSSアドレスの参考資料：[Feederの動作確認済みニュースRSS一�
 
 代表写真の優先順位は `index.html` の `TODAY_COUNTRY_PHOTO_RULES` で管理します。国を象徴する名所を100点、認知度の高い景観を80点程度、補足的な景色を60点未満とし、同じ国の候補間で高得点を先に表示します。点数は編集上の優先順位であり、画像の画質を自動判定するものではありません。画像そのものの目視審査も必要です。
 
+
+
+## 画像生成APIの完全自動化（OpenAI優先・Gemini予備）
+
+2026年11月20日以降の当日追補号、11月21日以降の通常号で、**出典審査済み4〜5記事**が揃った場合にのみ画像を生成する。各記事1枚（実写風の創作イメージ、報道写真ではない）を生成し、1200×675 WebP に変換する。全画像を検証してからのみ公開する。公開後に旧画像を削除し、iPhone の画像キャッシュを更新する。
+
+設定手順：
+
+1. OpenAI Platform でAPI課金を有効にし、画像生成を利用できる **OpenAI APIキー**を発行する（ChatGPT Plus/Pro の契約とは別）。
+2. GitHub リポジトリの **Settings → Secrets and variables → Actions → New repository secret** に、名前 `OPENAI_API_KEY`、値にAPIキーを登録する。**キーをソースコード、PR、Issue、チャットに貼らない。**
+3. GitHub Actions の `Publish approved news at night (JST)` を次の定時実行に任せるか、`Run workflow` で再試行する。**キーが設定済みならOpenAIを最優先**し、利用可能なGemini画像キーがある場合に限って予備の画像APIを使用する。
+
+画像生成は `POST https://api.openai.com/v1/images/generations`、既定モデル `gpt-image-2.6-flare`、`medium`、16:9。ワークフローは `OPENAI_IMAGE_MODEL`、`OPENAI_IMAGE_QUALITY`、`IMAGE_PROVIDER`（`auto` / `openai` / `gemini`）で調整できる。**生成成功と全画像のファイル検証まで実際に完走した日だけ**サイトを更新し、記事に「イメージ画像（AI生成）」を明記する。API利用料金・モデルごとのクォータは画像API運営者側で管理される。画像作成は最大5記事分、既に有効な画像は再生成しない。APIが使えない場合は前の公開号を維持し、新号通知を行わない。
+
+OpenAI の画像API仕様: https://developers.openai.com/api/reference/resources/images/methods/generate
