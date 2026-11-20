@@ -134,7 +134,7 @@ function loadWorldPassport(){
   if(saved&&typeof saved==='object'&&!Array.isArray(saved)){
    for(const [code,result] of Object.entries(saved)){
     const max=Array.isArray(WORLD_PASSPORT_QUIZZES[code])?WORLD_PASSPORT_QUIZZES[code].length:1;
-    if(/^[A-Z]{2}$/.test(code)&&!worldPassportStamps[code]&&
+    if(/^[A-Z]{2}$/.test(code)&&
        Number.isInteger(result?.step)&&result.step>=1&&result.step<max&&
        Number.isInteger(result.score)&&result.score>=0&&result.score<=result.step&&
        Number.isInteger(result.streak)&&result.streak>=0&&result.streak<=result.score){
@@ -201,7 +201,7 @@ function updateWorldPassportBoard(){
  const album=$('todayPassportStamps');album.replaceChildren();
  countries.forEach(item=>{
   const result=worldPassportStamps[item.code],completed=!!result;
-  const partial=!completed&&worldPassportProgress[item.code];
+  const partial=worldPassportProgress[item.code];
   const stamp=document.createElement('button');
   stamp.type='button';stamp.className='today-passport-stamp';
   stamp.dataset.countryCode=item.code;
@@ -211,7 +211,7 @@ function updateWorldPassportBoard(){
   stamp.dataset.fresh=String(completed&&worldPassportLastAwarded===item.code);
   stamp.setAttribute('aria-controls','todayCountryQuiz');
   stamp.setAttribute('aria-label',item.name+(completed
-   ?'のスタンプ獲得済み。タップで再挑戦'
+   ?(partial?'の途中のクイズを再開':'のスタンプ獲得済み。タップで再挑戦')
    :partial?'の続きのクイズを再開':'のスタンプ未獲得。タップでクイズに挑戦'));
   const seal=document.createElement('span');
   seal.className='today-passport-stamp-seal';
@@ -222,7 +222,7 @@ function updateWorldPassportBoard(){
   const status=document.createElement('span');
   status.className='today-passport-stamp-status';
   status.textContent=completed
-   ?'★ '+worldPassportGradeLabel(result.score,result.total)+' · '+result.score+'/'+result.total+'問正解'
+   ?(partial?'第'+(partial.step+1)+'問から再開':'★ '+worldPassportGradeLabel(result.score,result.total)+' · '+result.score+'/'+result.total+'問正解')
    :partial?'第'+(partial.step+1)+'問から再開':worldPassportLifetime[item.code]?'前の号で訪問済 · 今号に挑戦':'まだ空欄 · 挑戦する';
   stamp.append(seal,country,status);
   stamp.addEventListener('click',()=>startWorldPassport(item));
@@ -264,7 +264,7 @@ function startWorldPassport(item){
  loadWorldPassport();
  hideTodayCountryIntro();
  const questions=passportQuizQuestions(item);
- const saved=!worldPassportStamps[item.code]&&worldPassportProgress[item.code];
+ const saved=worldPassportProgress[item.code];
  const resume=saved&&saved.step<questions.length?saved:null;
  worldPassportActive={item,questions,step:resume?resume.step:0,
   score:resume?resume.score:0,streak:resume?resume.streak:0,answered:false};
