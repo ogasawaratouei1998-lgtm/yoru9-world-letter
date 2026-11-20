@@ -942,7 +942,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         prefix="const DAILY_FAILURE_QUOTES=Object.freeze("
         start=page.index(prefix)+len(prefix)
-        end=page.index(");\\nfunction failureQuoteForDate(",start)
+        end=page.index(");",start)
         quotes=json.loads(page[start:end])
         self.assertGreaterEqual(len(quotes),12)
         self.assertGreaterEqual(len({q["person"] for q in quotes}),8)
@@ -981,7 +981,7 @@ if(new Set(firstTwelve).size!==12)process.exit(3);
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
         self.assertIn("updateDailyFailureQuote(localDate(new Date()))", page)
-        self.assertIn('今夜のひと言', page)
+        self.assertIn('今日のひと言 · 失敗と挑戦', page)
         self.assertNotIn('shareNightQuote', page)
         self.assertNotIn('この言葉を共有', page)
         self.assertNotIn(".night-quote button{", page)
