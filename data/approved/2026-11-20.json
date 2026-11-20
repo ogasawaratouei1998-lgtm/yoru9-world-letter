@@ -1,0 +1,49 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-20",
+  "editionType": "regular",
+  "title": "2026-11-20｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "factChecked": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "id": "sukuna-bowl-draw-2026",
+      "country": "Fiji",
+      "category": "sports",
+      "categoryLabel": "スポーツ",
+      "label": "土壇場のペナルティ外し",
+      "title": "スコナ・ボウル決勝、陸軍がロスタイムの逆転劇を目前で逃して警察が劇的ドロー防衛",
+      "summary": "フィジーの伝統的な警察対陸軍のラグビー対抗戦「スコナ・ボウル」で、警察が引き分けにより5年連続のタイトル防衛を果たしました。陸軍は試合終了間際に逆転のペナルティキックのチャンスを得たものの、イリケナ・ヴドゴがこれを外して土壇場での勝利を逃しました。",
+      "detail": "フィジーで開催された伝統の警察対陸軍ラグビー戦「スコナ・ボウル」において、前年王者である警察チームが圧倒的なプレッシャーの中、8対8の引き分けに持ち込みタイトルを防衛した。試合は前半を陸軍の5点リードで折り返したが、後半に警察がトライとペナルティキックで8対5と逆転。その後陸軍がペナルティで8対8の同点に追いつき、迎えた後半アディショナルタイムの84分、警察の危険なタックルにより陸軍へ劇的な逆転サヨナラのペナルティチャンスが訪れた。しかし、キッカーを務めたイリケナ・ヴドゴがこれを決め損ね、そのままノーサイドを迎えて警察の5連覇が決定した。\n\nここからはAIの見方。\n歴史的な逆転劇の主役になれる絶好の機会が、土壇場のプレッシャーでまさかの大気圏外へ飛んでいきました。",
+      "quip": "歴史を変えるキックがどこへ飛んでいこっとすんねん！",
+      "sourceName": "Fiji Broadcasting Corporation",
+      "sourceUrl": "https://www.fbcnews.com.fj/sports/rugby/police-retain-sukuna-bowl-title-with-dramatic-draw/",
+      "reported": "2026-11-20",
+      "humanActor": "Ilikena Vudogo",
+      "humanMistake": "試合終了間際の84分に得た逆転サヨナラのペナルティキックを成功させられなかったこと",
+      "expectedPlan": "ロスタイムのペナルティキックを決めて劇的な逆転勝利とタイトル奪還を果たすこと",
+      "observedOutcome": "キックを外し、8対8の引き分けで警察の5連覇を許したこと",
+      "verificationUrls": [
+        "https://www.fbcnews.com.fj/sports/rugby/police-retain-sukuna-bowl-title-with-dramatic-draw/"
+      ],
+      "eventKey": "sukuna-bowl-rugby-draw-2026",
+      "evidence": [
+        "Police retained the Vodafone Sukuna Bowl rugby title for a fifth consecutive year after holding Army to an 8-all draw",
+        "Army had the chance to steal the win and reclaim the title, but Ilikena Vudogo was unable to convert the penalty as Police survived the late scare",
+        "The decisive moment came deep into added time when a dangerous tackle by Marika Natau gifted Army a penalty opportunity in the 84th minute"
+      ],
+      "sourceBasis": "original-report",
+      "originalReportingVerified": true,
+      "attributionNote": "報道機関1社の独自取材記事を確認しています。別媒体による独立した裏付けは確認できていません。",
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true
+    }
+  ]
+}
