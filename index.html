@@ -1345,6 +1345,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 .today-map-country[data-quiz-done="true"]{box-shadow:inset 0 0 0 2px #30816B}
 .today-map-country[aria-expanded="true"]{outline:3px solid #fff;outline-offset:2px}
 .today-country-quiz{margin:13px 0 8px;padding:17px 16px;border:2px solid #E9CA95;
+ scroll-margin-top:calc(var(--safe-top) + 82px);
  border-radius:17px;background:linear-gradient(145deg,#19364E,#142B43);color:#FAF4ED}
 .today-country-quiz[hidden],.today-quiz-result[hidden],.today-quiz-next[hidden]{display:none!important}
 .today-quiz-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
@@ -1370,6 +1371,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
  border:1px solid #FFF2CF;border-radius:11px;font-size:.95rem;font-weight:850;padding:9px}
 .today-quiz-passport{font-size:.82rem;line-height:1.75;color:#C7F2E6;margin:12px 0 0;font-weight:800}
 .today-quiz-choices button:focus-visible,.today-quiz-next:focus-visible{outline:3px solid white;outline-offset:2px}
+.today-quiz-question:focus{outline:none}
 @media(max-width:520px){.today-country-quiz{padding:14px 12px}
  .today-map-game-lead{font-size:.8rem}.today-quiz-question{font-size:1.05rem}}
 
@@ -1767,7 +1769,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
     <button class="today-quiz-close" id="todayQuizClose" type="button">閉じる</button></div>
    <p class="today-quiz-progress" id="todayQuizProgress"></p>
    <div class="today-quiz-steps" id="todayQuizSteps" role="group" aria-label="問題の進み具合"></div>
-   <p class="today-quiz-question" id="todayQuizQuestion"></p>
+   <p class="today-quiz-question" id="todayQuizQuestion" tabindex="-1"></p>
    <div class="today-quiz-choices" id="todayQuizChoices" role="group" aria-label="3択の回答"></div>
    <div class="today-quiz-correct-flash" id="todayQuizCorrectFlash" aria-hidden="true" hidden><span>✦</span><strong id="todayQuizCorrectFlashLabel">正解！</strong><span>✦</span></div>
    <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>

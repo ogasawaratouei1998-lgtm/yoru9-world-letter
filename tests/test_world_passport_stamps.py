@@ -37,6 +37,24 @@ class WorldPassportStampsTest(unittest.TestCase):
             self.assertIn(marker,game)
         self.assertIn("@media(prefers-reduced-motion:reduce)",page)
 
+    def test_quiz_next_button_repositions_before_footer_and_avoids_focus_jump(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        game=(ROOT/"world-passport.js").read_text(encoding="utf-8")
+        self.assertIn('id="todayQuizQuestion" tabindex="-1"',page)
+        self.assertIn("scroll-margin-top:calc(var(--safe-top) + 82px)",page)
+        self.assertIn("function focusWorldPassportQuestion(run)",game)
+        self.assertIn("question.focus({preventScroll:true})",game)
+        self.assertIn("scrollIntoView({block:'start',behavior:'auto'})",game)
+        self.assertIn("requestAnimationFrame(reposition)",game)
+        self.assertIn("worldPassportActive!==run",game)
+        next_part=game[game.index("function nextWorldPassportRound(){"):
+                       game.index("document.getElementById('todayQuizClose')")]
+        self.assertIn("renderWorldPassportRound();",next_part)
+        self.assertIn("focusWorldPassportQuestion(run);",next_part)
+        self.assertLess(next_part.index("renderWorldPassportRound();"),
+                        next_part.index("focusWorldPassportQuestion(run);"))
+        self.assertNotIn("'closing'",next_part)
+
     @unittest.skipUnless(shutil.which("node"), "Node.js is required")
     def test_first_stamp_completion_replay_and_reload(self):
         game=(ROOT/"world-passport.js").read_text(encoding="utf-8")
@@ -51,7 +69,9 @@ function element(){
   querySelectorAll(selector){return selector==='button'?this.children:[]},
   append(...items){this.children.push(...items)},
   replaceChildren(){this.children=[]},
-  scrollIntoView(){},close(){this.open=false},
+  scrollIntoView(options){this.scrollCalls=(this.scrollCalls||0)+1;this.lastScrollOptions=options},
+  focus(options){this.focusCalls=(this.focusCalls||0)+1;this.lastFocusOptions=options},
+  close(){this.open=false},
   remove(){},getAttribute(k){return this.attributes[k]}
  };
 }
@@ -80,6 +100,8 @@ if($('todayPassportStamps').children.length!==2)process.exit(12);
 if($('todayPassportStamps').children[0].dataset.earned!=='false')process.exit(13);
 startWorldPassport(countries[0]);
 if(worldPassportActive.questions.length!==2)process.exit(14);
+if($('todayCountryQuiz').scrollCalls!==1||$('todayCountryQuiz').lastScrollOptions?.block!=='start')process.exit(52);
+if($('todayQuizQuestion').focusCalls!==1||$('todayQuizQuestion').lastFocusOptions?.preventScroll!==true)process.exit(53);
 answerWorldPassport(worldPassportActive.questions[0].answer);
 if(!$('todayQuizStampReward').hidden)process.exit(15);
 const firstCorrect=$('todayQuizChoices').children[worldPassportActive.questions[0].answer];
@@ -89,6 +111,10 @@ if(firstCorrect.children[0]?.children.length!==10)process.exit(42);
 if($('todayQuizCorrectFlash').hidden)process.exit(43);
 if(!$('todayQuizCorrectFlashLabel').textContent.includes('正解'))process.exit(44);
 nextWorldPassportRound();
+if(worldPassportActive.step!==1)process.exit(54);
+if($('todayCountryQuiz').scrollCalls!==2||$('todayCountryQuiz').lastScrollOptions?.block!=='start')process.exit(55);
+if($('todayQuizQuestion').focusCalls!==2)process.exit(56);
+if(!$('todayQuizResult').hidden)process.exit(57);
 if(!$('todayQuizCorrectFlash').hidden)process.exit(45);
 answerWorldPassport(worldPassportActive.questions[1].answer);
 if(!$('todayQuizCorrectFlashLabel').textContent.includes('連続正解'))process.exit(46);
@@ -100,15 +126,21 @@ if($('todayPassportMeter').attributes['aria-valuenow']!=='1')process.exit(19);
 if($('todayPassportStamps').children[0].dataset.earned!=='true')process.exit(20);
 if($('todayQuizNextCountry').hidden)process.exit(21);
 nextWorldPassportRound();
+if(worldPassportActive.step!==0||$('todayCountryQuiz').scrollCalls!==3)process.exit(58);
 answerWorldPassport(2);
+if(!$('todayQuizVerdict').textContent.includes('惜しい！'))process.exit(59);
 if(!$('todayQuizCorrectFlash').hidden)process.exit(48);
 if($('todayQuizChoices').children[2].dataset.popped==='true')process.exit(49);
 nextWorldPassportRound();
+if(worldPassportActive.step!==1||$('todayCountryQuiz').scrollCalls!==4)process.exit(60);
+if(!$('todayQuizResult').hidden)process.exit(61);
 answerWorldPassport(1);
 if(worldPassportStamps.AR.score!==2)process.exit(22);
 const newCountryButton=$('todayQuizNextCountry');
 newCountryButton.handlers.click();
 if(worldPassportActive.item.code!=='JP')process.exit(23);
+if($('todayCountryQuiz').scrollCalls!==5)process.exit(62);
+if($('closing').scrollCalls)process.exit(63);
 for(let i=0;i<worldPassportActive.questions.length;i++){
  answerWorldPassport(worldPassportActive.questions[i].answer);
  if(i<worldPassportActive.questions.length-1)nextWorldPassportRound();
