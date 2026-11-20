@@ -16,6 +16,14 @@ import xml.etree.ElementTree as ET
 # Different search editions prevent US/English-only headlines from occupying all slots.
 # These links are only leads; article details and harm must be reviewed manually.
 SEARCHES = [
+    # User preference: outsized but non-tragic PERSONAL mistakes, not tiny typos.
+    # All hits are unverified leads; no claim of blame or amount is accepted here.
+    ('(個人 OR 男性 OR 女性 OR 旅行者) (大失敗 OR 判断ミス OR 勘違い) (巨額 OR 高額 OR 大損 OR 全財産) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('(誤入札 OR 誤購入 OR 売却ミス OR 大損) (個人 OR 旅行者 OR 落札者) when:7d', 'ja', 'JP', 'JP:ja'),
+    ('("costly mistake" OR "expensive blunder" OR "huge mistake") (man OR woman OR tourist OR employee) when:7d', 'en', 'US', 'US:en'),
+    ('("accidentally bought" OR "accidentally sold" OR "wrong country") (man OR woman OR tourist) when:7d', 'en', 'GB', 'GB:en'),
+    ('(turista OR hombre OR mujer) ("error millonario" OR "compra por error") when:7d', 'es', 'ES', 'ES:es'),
+    ('(Mann OR Frau OR Tourist) ("teurer Fehler" OR "versehentlich gekauft") when:7d', 'de', 'DE', 'DE:de'),
     ('(手違い OR 誤発注 OR 間違えて) when:7d', 'ja', 'JP', 'JP:ja'),
     # Additional leads for underrepresented people, workplaces and sports.
     ('(職場 OR 店員 OR 従業員) (手違い OR 勘違い OR 失敗) when:7d', 'ja', 'JP', 'JP:ja'),

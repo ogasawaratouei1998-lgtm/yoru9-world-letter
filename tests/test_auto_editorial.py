@@ -891,13 +891,65 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertFalse(editorial.draft_preflight_viable({
             **acceptable,"reported":"2026-11-09"},now))
 
-    def test_primary_editor_prompt_prefers_small_sourced_blunders(self):
+    def test_primary_editor_prompt_prioritizes_large_individual_blunders(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("Small and harmless mistakes are ideal",code)
-        self.assertNotIn("Do not prioritize trivial typos",code)
+        self.assertIn("spectacular PERSONAL misjudgments",code)
+        self.assertIn("Routine typos, small orders",code)
+        self.assertNotIn("Small and harmless mistakes are ideal",code)
         self.assertIn("already_drafted_urls",code)
         self.assertIn("min(incident_priority(article)",code)
+
+    def test_major_individual_blunder_beats_small_typo_in_discovery(self):
+        major={"title":"Tourist accidentally bought a million dollar boat by mistake",
+               "url":"https://original.example/big"}
+        trivial={"title":"Shopkeeper accidentally delivered wrong order",
+                 "url":"https://original.example/tiny"}
+        company={"title":"Company million dollar market outlook",
+                 "url":"https://original.example/corporate"}
+        self.assertEqual(editorial.incident_priority(major)[0],-1)
+        self.assertEqual(editorial.incident_priority(trivial)[0],0)
+        self.assertGreater(editorial.incident_priority(company)[0],-1)
+        self.assertLess(editorial.incident_priority(major),
+                        editorial.incident_priority(trivial))
+        # The headline rank is discovery only, never factual endorsement.
+        source=(__import__("pathlib").Path(__file__).resolve().parents[1]/
+                "auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("Headline text NEVER proves blame",source)
+
+    def test_verified_major_personal_mistake_is_chosen_and_leads(self):
+        from collections import Counter
+        pool=[
+            {"id":"small-br","country":"BR","category":"person"},
+            {"id":"small-fr","country":"FR","category":"work"},
+            {"id":"small-de","country":"DE","category":"sports"},
+            {"id":"small-jp","country":"JP","category":"person"},
+            {"id":"small-gb","country":"GB","category":"work"},
+            {"id":"large-us","country":"US","category":"person",
+             "majorPersonalFailureVerified":True},
+        ]
+        chosen=editorial.select_diverse_verified_stories(
+            pool,Counter(),Counter(),selection_seed="2026-11-20")
+        self.assertEqual(len(chosen),5)
+        self.assertEqual(chosen[0]["id"],"large-us")
+        self.assertEqual({x["country"] for x in chosen if x["id"]=="large-us"},
+                         {"US"})
+        self.assertFalse(editorial.audited_major_personal_failure(
+            {"category":"person","title":"Lost $500000","majorPersonalFailureVerified":False}))
+        self.assertFalse(editorial.audited_major_personal_failure(
+            {"category":"company","majorPersonalFailureVerified":True}))
+        self.assertTrue(editorial.audited_major_personal_failure(
+            {"category":"sports","majorPersonalFailureVerified":True}))
+
+    def test_independent_reviewer_decides_major_personal_scale_from_source(self):
+        from pathlib import Path
+        source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("majorPersonalFailureConfirmed=true ONLY",source)
+        self.assertIn("ORIGINAL source explicitly documents",source)
+        self.assertIn('story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)',source)
+        self.assertIn("majorPersonalFailureConfirmed:boolean",source)
+        self.assertIn("select_diverse_verified_stories(selected,",source)
+        self.assertIn("sorted((pool[i] for i in best)",source)
 
     def test_light_human_blunders_get_retrieval_priority_over_disputes(self):
         ordinary={"title":"Company accidentally sent the wrong order to customers",
