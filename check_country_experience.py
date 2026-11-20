@@ -49,7 +49,9 @@ def country_coverage(root: Path, stories):
             asset=photo.get("asset")
             stop=next((item for item in photos.values()
                        if item.get("photoAsset")==asset and item.get("coverOnly") is True),None)
-            if stop and stop.get("author")==photo.get("author") and photo.get("sourcePage")==stop.get("photoPage"):
+            if (stop and _licensed_photo(stop) and stop.get("author")==photo.get("author") and
+                stop.get("license")==photo.get("license") and
+                (not photo.get("sourcePage") or photo["sourcePage"]==stop.get("photoPage"))):
                 verified_covers.append(asset)
         if not verified_covers:
             raise ValueError(code+": cover source/creator does not match local photo manifest")
