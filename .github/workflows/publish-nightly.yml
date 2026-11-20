@@ -250,6 +250,14 @@ jobs:
             # not only in the later post-deploy smoke.
             bash run_mobile_preflight.sh
           fi
+      - name: Preserve failed candidate screenshots for diagnosis
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rejected-nightly-reader-screenshots
+          path: mobile-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
       - name: Commit the released edition
         id: release
         shell: bash
