@@ -55,6 +55,34 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
+      - name: Complete the approved November 20 four-story SVG correction
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from publish_approved import publish
+
+          root=Path.cwd()
+          approved=root/"data/approved/2026-11-20.json"
+          current=root/"data/current.json"
+          if approved.is_file() and current.is_file():
+              draft=json.loads(approved.read_text(encoding="utf-8"))
+              live=json.loads(current.read_text(encoding="utf-8"))
+              if (live.get("editionDate")=="2026-11-20"
+                      and len(live.get("stories",[]))==2
+                      and draft.get("fourStoryStaticIllustrationReissue") is True
+                      and draft.get("approvedBy")=="editorial-source-checked-correction-2026-11-20"
+                      and len(draft.get("stories",[]))==4):
+                  # Explicitly approved correction to the dated Nov 20 issue;
+                  # do not mislabel it as Nov 21, create any AI image, or
+                  # replace a newer (Nov 21+) public edition.
+                  publish(root,datetime.fromisoformat("2026-11-20T23:59:00+09:00"))
+                  print("Completed the verified Nov 20 SVG correction.")
+              else:
+                  print("Nov 20 correction not eligible/already completed; preserve live edition.")
+          PY
       - name: Immediately publish explicitly requested approved November 16 edition
         shell: bash
         run: |
@@ -176,21 +204,7 @@ jobs:
           else
             python auto_editorial.py
           fi
-      - name: Generate photorealistic editorial imagery before releasing approved stories
-        env:
-          # Add OPENAI_API_KEY in repository Actions secrets to enable automatic
-          # OpenAI image generation. In auto mode OpenAI is preferred, and Gemini
-          # remains a fallback only when its own paid image quota is available.
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_IMAGE_MODEL: gpt-image-2.6-flare
-          OPENAI_IMAGE_QUALITY: medium
-          IMAGE_PROVIDER: auto
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_API_KEY: ${{ secrets.GEMINI_IMAGE_API_KEY }}
-          GEMINI_IMAGE_MODEL: gemini-3.1-flash-lite-image
-        run: |
-          python -m pip install --disable-pip-version-check Pillow
-          python prepare_news_images.py
+      # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release today's four-or-five verified stories (skip if fewer)
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
@@ -215,7 +229,7 @@ jobs:
           else
             python publish_approved.py
           fi
-      - name: Remove previous edition's unused generated images after verified release
+      - name: Remove stale generated images after verified SVG-illustrated release
         run: python prepare_news_images.py --rotate
       - name: Commit the released edition
         id: release

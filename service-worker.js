@@ -1,16 +1,17 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v32';
+const SHELL_CACHE = 'yoru9-shell-v33';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
-const IMAGE_CACHE = 'yoru9-generated-images-current-v1';
+const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
 const SCOPE = self.registration.scope;
-async function expirePreviousGeneratedImages(day){
+async function expirePreviousGeneratedImages(day,activePaths=[]){
  if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return;
+ const keep=new Set(activePaths);
  const cache=await caches.open(IMAGE_CACHE),requests=await cache.keys();
  await Promise.all(requests.filter(req=>{
   const path=new URL(req.url).pathname.slice(new URL(SCOPE).pathname.length);
   const match=path.match(GENERATED_IMAGE);
-  return match&&match[1]!==day;
+  return match&&(!keep.has(path)||match[1]!==day);
  }).map(req=>cache.delete(req)));
 }
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'country-catalog.json', 'country-highlights.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
@@ -64,7 +65,7 @@ self.addEventListener('fetch', event => {
         event.waitUntil(caches.open(ISSUE_CACHE).then(cache => cache.put(canonical, copy)));
         if(relative==='data/current.json'){
           event.waitUntil(response.clone().json()
-            .then(issue=>expirePreviousGeneratedImages(issue.editionDate))
+            .then(issue=>expirePreviousGeneratedImages(issue.editionDate,(issue.stories||[]).map(s=>s.imagePath).filter(Boolean)))
             .catch(()=>{}));
         }
       }

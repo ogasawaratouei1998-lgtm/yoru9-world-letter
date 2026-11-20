@@ -262,9 +262,9 @@ def prepare(root,day,key=None,render=None):
     if not approved_path.is_file():return 0
     doc=json.loads(approved_path.read_text(encoding="utf-8"))
     if doc.get("editionType","regular")!="regular":return 0
-    # Nov 20 historical drafts remain unchanged; only the explicitly requested
-    # four-story photorealistic reissue is eligible for new image generation.
-    if day=="2026-11-20" and doc.get("editionRequiresImages") is not True:return 0
+    # Zero-cost SVG mode: do not invoke paid image APIs. This legacy helper
+    # returns before reaching any provider unless explicitly opted in.
+    if doc.get("editionRequiresImages") is not True:return 0
     from publish_approved import validate_approved
     # A public image does NOT compensate for insufficient verified reporting.
     if not isinstance(doc.get("stories"),list):
@@ -301,9 +301,12 @@ def rotate_old_generated_images(root,day):
     doc=json.loads(current.read_text(encoding="utf-8"))
     if day<MIN_PUBLISH_DATE or doc.get("editionDate")!=day:return 0
     if doc.get("editionType")!="regular" or len(doc.get("stories",[]))<4:return 0
-    keep={expected_path(day,s) for s in doc["stories"]}
-    if not all(s.get("imagePath")==expected_path(day,s) and
-               valid_webp(root/expected_path(day,s)) for s in doc["stories"]):
+    # Static-illustration editions have no generated images to keep.
+    # Never delete the bundled assets/news SVG illustrations.
+    generated=[s for s in doc["stories"] if s.get("imageType")=="ai-generated-photorealistic-impression"]
+    keep={expected_path(day,s) for s in generated}
+    if generated and not all(s.get("imagePath")==expected_path(day,s) and
+                             valid_webp(root/expected_path(day,s)) for s in generated):
         raise ValueError("Cannot remove previous images before new issue is complete")
     parent=root/IMAGE_DIR
     if not parent.is_dir():return 0
