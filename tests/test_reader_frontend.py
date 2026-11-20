@@ -977,6 +977,66 @@ if(new Set(firstTwelve).size!==12)process.exit(3);
         run=subprocess.run(["node","-e",logic+checker],capture_output=True,text=True)
         self.assertEqual(run.returncode,0,run.stderr)
 
+    def test_past_quote_collection_is_below_today_and_above_farewell(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index('<section class="footerpanel" id="closing">')
+        end=page.index('</section>',start)
+        closing=page[start:end]
+        self.assertLess(closing.index('id="dailyQuoteSource"'),
+                        closing.index('id="pastQuoteArchive"'))
+        self.assertLess(closing.index('id="pastQuoteArchive"'),
+                        closing.index('class="closing-afterword"'))
+        self.assertIn('<summary>過去の名言集を見る',closing)
+        self.assertIn('id="pastQuoteList" aria-label="過去の日替わり名言"',closing)
+        self.assertIn('id="pastQuoteStatus" role="status"',closing)
+        self.assertIn('id="pastQuoteMore" hidden',closing)
+        self.assertEqual(closing.count('id="pastQuoteArchive"'),1)
+        self.assertIn('#closing .quote-archive summary{',page)
+        self.assertIn('#closing .quote-archive summary:focus-visible',page)
+        self.assertIn('min-height:48px',page)
+        self.assertIn('link.href=safeUrl(quote.url)',page)
+        self.assertIn("link.rel='noopener noreferrer'",page)
+        self.assertIn("source.append(link)",page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_past_quote_history_starts_on_actual_launch_date(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index("const DAILY_FAILURE_QUOTES=Object.freeze(")
+        end=page.index("function appendPastQuoteBatch(){",start)
+        pure=page[start:end]
+        checks="""
+function assert(ok,why){if(!ok)throw new Error(why);}
+assert(pastQuoteTotalDays('2026-11-19')===0,'prelaunch');
+assert(pastQuoteTotalDays('2026-11-20')===0,'launchday');
+assert(pastQuoteEntries('2026-11-20').length===0,'no fabricated prior quotes');
+const yesterday=pastQuoteEntries('2026-11-21');
+assert(yesterday.length===1,'one prior entry');
+assert(yesterday[0].date==='2026-11-20','correct prior date');
+assert(yesterday[0].quote===failureQuoteForDate('2026-11-20'),'same quotation');
+const twelve=pastQuoteEntries('2026-12-03');
+assert(twelve.length===12,'default batch size');
+assert(twelve[0].date==='2026-12-02','newest first');
+assert(twelve[11].date==='2026-11-21','end of first batch');
+const last=pastQuoteEntries('2026-12-03',12,12);
+assert(last.length===1 && last[0].date==='2026-11-20','pagination reaches first day');
+assert(pastQuoteEntries('2026-12-03',13).length===0,'no future pages');
+assert(pastQuoteEntries('2026-11-19').length===0,'no quote before launch');
+"""
+        run=subprocess.run(["node","-e",pure+checks],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+
+    def test_past_quote_archive_updates_daily_and_paginates_when_opened(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        self.assertIn("updatePastQuoteArchive(jstDate);",page)
+        self.assertIn("pastQuotesDate=jstDate;",page)
+        self.assertIn("pastQuotesRendered=0;",page)
+        self.assertIn("$('pastQuoteList').replaceChildren()",page)
+        self.assertIn("$('pastQuoteArchive').addEventListener('toggle'",page)
+        self.assertIn("$('pastQuoteMore').addEventListener('click',appendPastQuoteBatch)",page)
+        self.assertIn("pastQuotesRendered+=items.length",page)
+        self.assertIn("lastRenderedLocalDate!==localDate(now))render()",page)
+        self.assertNotIn("localStorage.setItem('pastQuotes",page)
+
     def test_nightly_message_is_rendered_without_share_button(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
