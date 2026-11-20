@@ -150,7 +150,8 @@ def audit(root: Path, site: Path | None = None) -> dict:
             require(not (site/relative).exists(),
                     "公開ビルドに承認用データ・有料画像が混入: "+relative)
         targets={row["cover"] for row in countries.values()}
-        targets.update(key for row in countries.values() for key in row["quizPhotoKeys"])
+        targets.update(stops[key]["photoAsset"] for row in countries.values()
+                       for key in row["quizPhotoKeys"])
         targets.update(row["postcard"] for row in countries.values())
         require(targets,"表示する写真がない")
         covers={row["cover"] for row in countries.values()}
