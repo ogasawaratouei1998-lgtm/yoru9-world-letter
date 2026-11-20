@@ -90,7 +90,7 @@ if(!$('articleReader').hidden)process.exit(21);
         self.assertIn("first.quip",block)
         self.assertIn("first.sourceUrl",block)
         self.assertIn('data-share="'+'$'+'{selectedArticleIndex}"',block)
-        self.assertIn('data-smile="'+'$'+'{selectedArticleIndex}"',block)
+        self.assertNotIn('data-smile',block)
         self.assertIn("markRead(selectedArticleIndex)",block)
         self.assertNotIn("markRead(0)",block)
 
