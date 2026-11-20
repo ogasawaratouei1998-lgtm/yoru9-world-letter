@@ -24,7 +24,9 @@ class NightlyDeliverySafetyNetTest(unittest.TestCase):
         push=workflow.index('- name: Dispatch optional release notification')
         self.assertLess(deploy,verify)
         self.assertLess(verify,push)
-        self.assertIn('python check_public_country_release.py --site "$PUBLISHED_SITE"',workflow)
+        self.assertIn('python check_public_country_release.py --site "$SITE"',workflow)
+        self.assertIn('if [ "$TODAY" = "$RELEASE_DAY" ]; then',workflow)
+        self.assertIn('No current-day release eligible for a notification',workflow)
         self.assertIn('PUBLISHED_SITE: ${{ steps.deployed_reader.outputs.page_url }}',workflow)
         self.assertIn('if: success()\n        timeout-minutes: 3',workflow)
 
