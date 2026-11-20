@@ -434,11 +434,11 @@ class November20EditorialCorrectionTest(unittest.TestCase):
         original=json.loads((root/"data/archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8"))
         self.assertEqual(approved["approvedBy"],"editorial-source-checked-correction-2026-11-20")
         self.assertEqual(len(original["stories"]),1)
-        # The PR is validated BEFORE publishing; after the real image run the
-        # current edition changes from the source-checked 2-story correction
-        # to the requested 4-story reissue. Both phases are intentional.
+        # Previously published two-story correction is preserved as a
+        # revision when the four-story free-illustration reissue goes live.
         published=validate_approved(approved,day)
-        self.assertTrue(approved["editionRequiresImages"])
+        self.assertTrue(approved["fourStoryStaticIllustrationReissue"])
+        self.assertTrue(all("imagePath" not in s for s in published["stories"]))
         self.assertEqual(len(published["stories"]),4)
         self.assertIn(len(current["stories"]),(2,4))
         if len(current["stories"])==4:
@@ -462,11 +462,8 @@ class November20EditorialCorrectionTest(unittest.TestCase):
             (dest/"data"/"current.json").write_text(json.dumps(previous,ensure_ascii=False),encoding="utf-8")
             (dest/"data"/"archive/revisions"/(day+"-before-correction.json")).write_text(
                 json.dumps(original,ensure_ascii=False),encoding="utf-8")
-            # Use simulated WEBP files ONLY in an isolated test directory.
-            for story in published["stories"]:
-                p=dest/story["imagePath"]
-                p.parent.mkdir(parents=True,exist_ok=True)
-                p.write_bytes(b"RIFF"+(22000).to_bytes(4,"little")+b"WEBP"+b"0"*21900)
+            # Release works even when no generated image directory exists.
+            self.assertFalse((dest/"assets/news-generated").exists())
             now=datetime(2026,11,20,22,0,tzinfo=ZoneInfo("Asia/Tokyo"))
             self.assertTrue(publish(dest,now))
             self.assertEqual(json.loads((dest/"data"/"current.json").read_text(encoding="utf-8")),published)
@@ -479,3 +476,5 @@ class November20EditorialCorrectionTest(unittest.TestCase):
             (dest/"data"/"approved"/(day+".json")).write_text(json.dumps(unauthorized,ensure_ascii=False),encoding="utf-8")
             with self.assertRaises(ValueError):
                 publish(dest,now)
+            self.assertEqual(len(json.loads((dest/"data/current.json").read_text())["stories"]),4)
+
