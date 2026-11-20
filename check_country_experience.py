@@ -38,7 +38,7 @@ def country_coverage(root: Path, stories):
             raise ValueError("Country not verified for story: "+str(story.get("id","")))
         codes.update(story_codes)
     for code in sorted(codes):
-        guide=re.search(r"(?m)^ "+re.escape(code)+r":\\{lead:'([^']+)',body:'([^']+)',facts:\\[([^\\]]+)",guide_section)
+        guide=re.search(r"(?m)^ "+re.escape(code)+r":\{lead:'([^']+)',body:'([^']+)',facts:\[([^\]]+)",guide_section)
         if not guide or len(guide.group(2))<145 or len(guide.group(1))<12:
             raise ValueError(code+": substantive country portrait is not curated")
         images=covers.get(code,[])
@@ -53,7 +53,7 @@ def country_coverage(root: Path, stories):
                 verified_covers.append(asset)
         if not verified_covers:
             raise ValueError(code+": cover source/creator does not match local photo manifest")
-        match=re.search(r"(?ms)^ "+re.escape(code)+r":\\[(.*?)^ \\],",quiz_section)
+        match=re.search(r"(?ms)^ "+re.escape(code)+r":\[(.*?)^ \],",quiz_section)
         if not match or match.group(1).count("question:")<2:
             raise ValueError(code+": two meaningful country quiz rounds required")
         keys=re.findall(r"photoKey:'([^']+)'",match.group(1))
@@ -87,7 +87,7 @@ def country_coverage(root: Path, stories):
 
 def _licensed_photo(photo):
     return (isinstance(photo,dict)
-            and bool(re.fullmatch(r"assets/travel/[a-z0-9-]+\\.jpg",
+            and bool(re.fullmatch(r"assets/travel/[a-z0-9-]+\.jpg",
                                   photo.get("photoAsset","")))
             and photo.get("photo","").startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/")
             and photo.get("photoPage","").startswith("https://commons.wikimedia.org/wiki/File:")
