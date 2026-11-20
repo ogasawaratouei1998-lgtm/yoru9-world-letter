@@ -40,7 +40,7 @@ class WorldPassportStampsTest(unittest.TestCase):
         self.assertNotIn("todayQuizNextCountry",page)
         self.assertNotIn("todayQuizNextCountry",game)
         self.assertNotIn("もう一度挑戦する",game)
-        self.assertIn("スタンプ帳へ戻る",game)
+        self.assertIn("textContent='閉じる'",game)
 
     def test_answer_close_button_returns_to_stamps_and_preserves_partial_progress(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
