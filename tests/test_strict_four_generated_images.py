@@ -160,6 +160,89 @@ class StrictFourAndImagesTest(unittest.TestCase):
             self.assertEqual(api.call_count,3)
             self.assertEqual(pause.call_count,2)
 
+    def test_openai_response_validation_and_request_contract(self):
+        from io import BytesIO
+        from unittest.mock import patch
+        from prepare_news_images import openai_image,extract_openai_image_bytes
+
+        raw=fake_webp()
+        response={"data":[{"b64_json":base64.b64encode(raw).decode("ascii")}]}
+        self.assertEqual(extract_openai_image_bytes(response),raw)
+        for invalid in ({},{"data":[]},{"data":[{"b64_json":"not base64"}]}):
+            with self.subTest(invalid=invalid),self.assertRaises(ValueError):
+                extract_openai_image_bytes(invalid)
+
+        class FakeResponse:
+            def __enter__(self):
+                return BytesIO(json.dumps(response).encode("utf-8"))
+            def __exit__(self,*args):
+                return False
+
+        with patch("prepare_news_images.urlopen",return_value=FakeResponse()) as urlopen:
+            self.assertEqual(openai_image("A fictional editorial scene","TEST_OPENAI_KEY"),raw)
+            request=urlopen.call_args.args[0]
+            self.assertEqual(request.full_url,"https://api.openai.com/v1/images/generations")
+            self.assertEqual(request.get_header("Authorization"),"Bearer TEST_OPENAI_KEY")
+            submitted=json.loads(request.data)
+            self.assertEqual(submitted["model"],"gpt-image-2.6-flare")
+            self.assertEqual(submitted["n"],1)
+            self.assertEqual(submitted["quality"],"medium")
+            self.assertEqual(submitted["size"],"1536x864")
+            self.assertEqual(submitted["output_format"],"webp")
+            self.assertNotIn("response_format",submitted)
+
+    def test_image_provider_prefers_openai_then_falls_back_once(self):
+        import os
+        from unittest.mock import patch
+        from prepare_news_images import image_with_fallback
+
+        raw=fake_webp()
+        env={"OPENAI_API_KEY":"TEST_OPENAI","GEMINI_IMAGE_API_KEY":"TEST_GEMINI",
+             "IMAGE_PROVIDER":"auto"}
+        with patch.dict(os.environ,env,clear=True), \
+             patch("prepare_news_images.openai_image",return_value=raw) as op, \
+             patch("prepare_news_images.gemini_image",return_value=raw) as gm:
+            self.assertEqual(image_with_fallback("fictional scene"),raw)
+            op.assert_called_once()
+            gm.assert_not_called()
+        with patch.dict(os.environ,env,clear=True), \
+             patch("prepare_news_images.openai_image",
+                   side_effect=RuntimeError("OpenAI image API HTTP 429")) as op, \
+             patch("prepare_news_images.gemini_image",return_value=raw) as gm:
+            self.assertEqual(image_with_fallback("fictional scene"),raw)
+            op.assert_called_once()
+            gm.assert_called_once()
+
+    def test_image_provider_safety_refusal_never_falls_back(self):
+        import os
+        from unittest.mock import patch
+        from prepare_news_images import image_with_fallback,ImageSafetyRefusal
+        env={"OPENAI_API_KEY":"TEST_OPENAI","GEMINI_IMAGE_API_KEY":"TEST_GEMINI",
+             "IMAGE_PROVIDER":"auto"}
+        with patch.dict(os.environ,env,clear=True), \
+             patch("prepare_news_images.openai_image",
+                   side_effect=ImageSafetyRefusal("safety rejection")), \
+             patch("prepare_news_images.gemini_image") as fallback:
+            with self.assertRaises(ImageSafetyRefusal):
+                image_with_fallback("unsafe request")
+            fallback.assert_not_called()
+
+    def test_openai_only_provider_and_missing_keys_fail_closed(self):
+        import os
+        from unittest.mock import patch
+        from prepare_news_images import image_with_fallback
+        raw=fake_webp()
+        with patch.dict(os.environ,{"OPENAI_API_KEY":"TEST_OPENAI",
+                                   "IMAGE_PROVIDER":"openai"},clear=True), \
+             patch("prepare_news_images.openai_image",return_value=raw) as op, \
+             patch("prepare_news_images.gemini_image") as gm:
+            self.assertEqual(image_with_fallback("fictional scene"),raw)
+            op.assert_called_once()
+            gm.assert_not_called()
+        with patch.dict(os.environ,{"IMAGE_PROVIDER":"auto"},clear=True):
+            with self.assertRaisesRegex(RuntimeError,"No configured image provider"):
+                image_with_fallback("fictional scene")
+
     def test_image_api_parser_and_non_documentary_prompt(self):
         raw=b"\xff\xd8\xff"+b"0"*22000
         response={"steps":[{"type":"model_output","content":[
