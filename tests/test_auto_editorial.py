@@ -321,7 +321,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertNotIn("missing compassionate reframing",code)
         self.assertNotIn("offer a specific perspective shift",code)
-        self.assertIn("prescriptive or humiliating reader commentary",code)
+        self.assertIn("Respect victims and private individuals",code)
 
     def test_nightly_fallback_avoids_recent_repetition(self):
         from publish_approved import nightly_message, NIGHT_MESSAGES
@@ -563,6 +563,57 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("legalStatusAccurate",code)
         self.assertIn("translationAccurate",code)
 
+    def test_streamlined_check_fails_closed_without_source_fidelity(self):
+        from editorial_quality import REVIEW_FIELDS, independent_editorial_quality_passed
+        self.assertEqual(set(REVIEW_FIELDS),{
+            "headlineGrounded","translationAccurate","legalStatusAccurate",
+            "humorRespectful","jokeClear","humanFailureConfirmed",
+            "comicPunchlineWorks","shockFactorConfirmed","stageTsukkomiConfirmed"})
+        ok={"approved":True,**{key:True for key in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(ok))
+        for key in REVIEW_FIELDS:
+            with self.subTest(required=key):
+                bad={**ok,key:False}
+                self.assertFalse(independent_editorial_quality_passed(bad))
+                missing={k:v for k,v in ok.items() if k!=key}
+                self.assertFalse(independent_editorial_quality_passed(missing))
+        self.assertFalse(independent_editorial_quality_passed({**ok,"approved":False}))
+        # Editorial stylistic micro-scores are not extra vetoes.
+        self.assertNotIn("firstQuipFinalBeat",REVIEW_FIELDS)
+        self.assertNotIn("firstQuipAngleEarned",REVIEW_FIELDS)
+
+    def test_original_reporting_keeps_one_short_source_comparison(self):
+        from pathlib import Path
+        source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        begin=source.index("audit=ai(")
+        end=source.index("except RuntimeError as exc:",begin)
+        check=source[begin:end]
+        self.assertLess(len(check),5000)
+        self.assertIn("SOURCE-FIDELITY CHECK",check)
+        self.assertIn("publisher's genuine first-hand reporting is sufficient",check)
+        self.assertIn("do NOT",check)
+        self.assertIn("translationAccurate:boolean",check)
+        self.assertIn("legalStatusAccurate:boolean",check)
+        self.assertIn("factsVerified:boolean",check)
+        self.assertIn("humanFailureConfirmed:boolean",check)
+        self.assertIn("stageTsukkomiConfirmed:boolean",check)
+        self.assertNotIn("EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_REVIEW",check)
+        self.assertIn("headline_fidelity_risk(story,evidence)",source)
+        self.assertIn("noncomic_incident_rejection(story,evidence)",source)
+        self.assertIn("trusted_original_domain(urls[0])",source)
+        self.assertIn("multi_source_fidelity_not_verified",source)
+        self.assertIn("validate_approved(payload,day)",source)
+        self.assertEqual(source.count("audit=ai("),1)
+
+    def test_unused_nightly_ai_comedy_no_longer_consumes_calls(self):
+        from pathlib import Path
+        source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        main=source[source.index("def main("):]
+        self.assertNotIn("compose_nightly_comedy(selected,recent_lines)",main)
+        self.assertNotIn('payload["nightlyMessage"]=nightly_text',main)
+        self.assertIn("The reader now displays a sourced quote by JST date",main)
+        self.assertIn('validate_approved(payload,day)',main)
+
     def test_semantic_matching_is_optional_to_preserve_fact_review_quota(self):
         from auto_editorial import semantic_matching_needed
         self.assertTrue(semantic_matching_needed(0))
@@ -701,7 +752,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),20),2):",source)
-        self.assertIn("Five eligible comedy drafts reserved: moving to independent fact review.",source)
+        self.assertIn("Five eligible comedy drafts reserved: moving to brief source-fidelity review.",source)
 
     def test_draft_recovery_targets_three_before_fact_review_and_respects_quota(self):
         import inspect
@@ -944,8 +995,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_independent_reviewer_decides_major_personal_scale_from_source(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("majorPersonalFailureConfirmed=true ONLY",source)
-        self.assertIn("ORIGINAL source explicitly documents",source)
+        self.assertIn("majorPersonalFailureConfirmed true ONLY",source)
+        self.assertIn("documented major individual error with extraordinary",source)
         self.assertIn('story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)',source)
         self.assertIn("majorPersonalFailureConfirmed:boolean",source)
         self.assertIn("select_diverse_verified_stories(selected,",source)

@@ -22,29 +22,32 @@ class EditorialQualityTests(unittest.TestCase):
         review["approved"]=False
         self.assertFalse(independent_editorial_quality_passed(review))
 
-    def test_first_quip_has_separate_nonrecap_and_incident_specific_verdicts(self):
-        self.assertIn("firstQuipIncidentSpecific", REVIEW_FIELDS)
-        self.assertIn("firstQuipNotRecap", REVIEW_FIELDS)
-        review={"approved":True, **{name:True for name in REVIEW_FIELDS}}
-        self.assertTrue(independent_editorial_quality_passed(review))
-        for field in ("firstQuipIncidentSpecific","firstQuipNotRecap"):
-            with self.subTest(field=field):
-                report={**review,field:False}
-                self.assertFalse(independent_editorial_quality_passed(report))
+    def test_compact_review_relies_on_specific_story_craft_without_micro_vetoes(self):
+        from auto_editorial import MANZAI_CRAFT, WRITING_CRAFT
+        self.assertIn("headline already tells WHO and WHAT",MANZAI_CRAFT)
+        self.assertIn("Clarity veto:",WRITING_CRAFT)
+        for redundant in ("firstQuipIncidentSpecific","firstQuipNotRecap",
+                          "firstQuipAngleEarned","firstQuipNaturalSpeech",
+                          "firstQuipFinalBeat"):
+            self.assertNotIn(redundant,REVIEW_FIELDS)
+        full={"approved":True, **{key:True for key in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(full))
+        # Missing optional second-opinion micro-scores must not block factual stories.
+        self.assertTrue(independent_editorial_quality_passed(
+            {**full,"firstQuipAngleEarned":False,"firstQuipFinalBeat":False}))
 
-    def test_manzai_requires_new_angle_spoken_rhythm_and_last_beat(self):
-        from editorial_quality import REVIEW_FIELDS, independent_editorial_quality_passed
-        mandatory=("firstQuipAngleEarned","firstQuipNaturalSpeech","firstQuipFinalBeat")
+    def test_tight_source_gate_still_requires_safe_specific_comedy(self):
+        mandatory=("jokeClear","comicPunchlineWorks","humorRespectful",
+                   "shockFactorConfirmed","stageTsukkomiConfirmed")
         for field in mandatory:
             self.assertIn(field,REVIEW_FIELDS)
-        complete={"approved":True, **{name:True for name in REVIEW_FIELDS}}
-        self.assertTrue(independent_editorial_quality_passed(complete))
+        full={"approved":True, **{key:True for key in REVIEW_FIELDS}}
+        self.assertTrue(independent_editorial_quality_passed(full))
         for field in mandatory:
             with self.subTest(field=field):
-                self.assertFalse(independent_editorial_quality_passed({**complete,field:False}))
-                unknown={k:v for k,v in complete.items() if k!=field}
-                self.assertFalse(independent_editorial_quality_passed(unknown))
-                self.assertFalse(independent_editorial_quality_passed({**complete,field:"true"}))
+                self.assertFalse(independent_editorial_quality_passed({**full,field:False}))
+                missing={k:v for k,v in full.items() if k!=field}
+                self.assertFalse(independent_editorial_quality_passed(missing))
 
     def test_interchangeable_lazy_tsukkomi_endings_are_vetoed_early(self):
         from editorial_identity import comic_line_rejection
