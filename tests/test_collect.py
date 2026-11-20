@@ -28,14 +28,14 @@ class CollectionTest(unittest.TestCase):
                                   day=day+timedelta(days=offset))
                 self.assertEqual(len(leads),5)
         self.assertEqual(len(queries),25)
-        self.assertEqual(len(set(queries)),10)
-        self.assertTrue(any("per sbaglio" in query for query in queries))
-        self.assertTrue(any("por engano" in query for query in queries))
-        self.assertTrue(any("salah kirim" in query for query in queries))
-        self.assertTrue(any("실수로" in query for query in queries))
-        self.assertTrue(any("wrong recipient" in item for item in queries))
-        self.assertTrue(any("AI-generated mural" in item for item in queries))
-        self.assertTrue(any("misspelled" in item for item in queries))
+        # Four of the five daily GDELT searches now favor substantial
+        # personally attributable mistakes; local-market queries remain.
+        self.assertGreaterEqual(len(set(queries)),10)
+        for phrase in ("million dollar mistake","accidentally bought",
+                       "major blunder","AI hoax","wrong country",
+                       "wrong price","error millonario","teurer Fehler","誤落札"):
+            self.assertTrue(any(phrase in q for q in queries),phrase)
+        self.assertTrue(any('"mistake"' in q and '"mix-up"' in q for q in queries))
 
     def test_unseen_country_discovery_rotates_without_claiming_publisher_origin(self):
         from datetime import date,timedelta
