@@ -71,7 +71,7 @@ SAME_PUBLISHER = (
 # domain. These domains are reviewed in code, not inferred from RSS names or AI
 # assertions. Other sites may still qualify when TWO independent reports agree.
 from trusted_originals import TRUSTED_ORIGINAL_PUBLISHERS
-REVIEW_METHOD = "source-quality-two-stage-AI"
+REVIEW_METHOD = "source-fidelity-two-stage-AI"
 LEGACY_REVIEW_METHOD = "two-source-two-stage-AI"
 # A concise monthly-only brief replaces the nightly pipeline's elaborate
 # editorial mission. The factual checks below remain independent and strict.
@@ -495,50 +495,38 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
     if editorial.noncomic_incident_rejection(story,evidence):
         return None
     try:
+        # One brief comparison of AI-generated Japanese against original
+        # reporting, not a second comprehensive investigation of the publisher.
         verdict = ask_ai(
-            MONTHLY_BRIEF +
-            " You are adversarial fact checker B, INDEPENDENT of editor A. "
-            "Check every substantive factual statement in the Japanese title, "
-            "summary, detail, expectedPlan, observedOutcome, reported date and "
-            "event country against the actual retrieved article body or bodies. "
-            "Reject vague anecdotes, unsupported motives, harmful jokes, "
-            "syndicated PR, stale news, uncertainty, omissions that change "
-            "meaning, and misleading certainty. For a ONE-PUBLISHER submission, "
-            "you MUST verify firsthand original publisher reporting rather "
-            "than a summary of SNS posts, rumors or other outlets; do not demand "
-            "another publisher or claim corroboration. For a TWO-PUBLISHER "
-            "submission, verify distinct independent reporting of the SAME "
-            "incident, not identical syndicated copy. A title and RSS date "
-            "alone NEVER verify a story. Reject if a source is incomplete, "
-            "does not explicitly support the precise expectation and outcome, "
-            "or fails to establish a reliable reported date. "
-            "Verify there really was a specific HUMAN ERROR with an "
-            "identified humanActor and humanMistake; the source must prove "
-            "the person's plan, error and contrasting result. Reject animal "
-            "sightings, rescues, wildlife antics, unusual discoveries and "
-            "generic happy or surprising news with no human mistake. "
-            "Set humanFailureConfirmed=false whenever the error is inferred. "
-            "Check quip as a JAPANESE COMEDY EDITOR: a recognizable setup "
-            "about the specific error followed by a concise unexpected "
-            "payoff, rather than simply repeating the title. Set "
-            "comicPunchlineWorks=false on bland paraphrases. "
-            "Be conservative on facts and favor significant person-driven blunders; "
-            "celebrity fame, publisher volume and raw suffering do not make a joke better. "
-            "Only approve substantiated, non-tragic, amusing human failures. "
-            "Return JSON with EXACT fields "
-            "{approved:boolean,factsVerified:boolean,originalReporting:boolean,"
-            "dateVerified:boolean,safeTone:boolean,"
+            "SOURCE-FIDELITY CHECK for a monthly Japanese news digest. "
+            "Use ONLY the retrieved publisher article BODY; do not search "
+            "elsewhere or independently re-investigate first-hand reporting. "
+            "For one vetted publisher, accept its original reporting without "
+            "demanding another source, but reject syndicated copies, press "
+            "release rewrites, SNS hearsay and headlines without firsthand "
+            "facts. For two publishers, both must report the SAME incident "
+            "independently. Check that the Japanese title, summary, detail, "
+            "actor, error, plan and actual outcome do not invent or distort "
+            "names, numbers, country, date, reasons, blame, quotes or legal "
+            "status; require the reported personal mistake and a substantial "
+            "source-backed, non-tragic outcome. Reject suffering, abuse, "
+            "private exposure and victim-directed jokes. The quip should "
+            "be a short, clear, grounded setup and unexpected payoff, not "
+            "a recap. Do not do an extra full comedy or style review. "
+            "Any unsupported essential assertion fails; mark uncertainty "
+            "false. JSON {approved:boolean,factsVerified:boolean,"
+            "originalReporting:boolean,dateVerified:boolean,safeTone:boolean,"
             "humanFailureConfirmed:boolean,comicPunchlineWorks:boolean,"
             "independent:boolean,bothSourcesSupport:boolean,reasonCode:string}. "
-            "For ONE source, independent and bothSourcesSupport should be false; "
-            "for TWO sources, both must be true. Draft: " +
+            "For a single source independent and bothSourcesSupport MUST "
+            "be false. Japanese draft: " +
             json.dumps(story, ensure_ascii=False) +
-            " Retrieved original article body or bodies: " +
+            " Original publisher bodies: " +
             json.dumps(evidence, ensure_ascii=False),
             temperature=0.1
         )
     except (OSError, RuntimeError, ValueError, TypeError, KeyError) as exc:
-        print("Monthly fact check unavailable:", type(exc).__name__, flush=True)
+        print("Monthly source-fidelity check unavailable:", type(exc).__name__, flush=True)
         return None
     if not isinstance(verdict, dict) or any(
         verdict.get(field) is not True
