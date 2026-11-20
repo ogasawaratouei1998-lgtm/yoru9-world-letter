@@ -321,6 +321,11 @@ footer{font-size:.8125rem;line-height:1.7}
  aspect-ratio:16/9;border-radius:11px;background:#1a2b40}
 .travel-figure figcaption{color:#f2efe8;font-size:.9375rem;line-height:1.85;margin:12px 0 0}
 .travel-caption-label{display:block;color:#f8dfb1;font-size:.75rem;font-weight:850;margin-bottom:4px}
+.travel-story{margin:15px 0 17px;padding:14px 15px;border-radius:13px;background:#203E55;border:1px solid #688CA0}
+.travel-story h5{margin:0 0 10px;color:#FCE0AE;font-size:1.06rem;line-height:1.5}
+.travel-story p{font-size:1rem;line-height:1.9;margin:0 0 13px;color:#F3F2EB}
+.travel-story p:last-child{margin-bottom:0}
+@media(max-width:520px){.travel-story{padding:13px 12px}.travel-story p{font-size:1rem;line-height:1.85}}
 .travel-photo-error,.travel-empty{font-size:.9375rem;line-height:1.75;padding:12px;
  border:1px dashed #6d8098;border-radius:10px;color:#e5e7ee}
 .travel-note{font-size:.9375rem;line-height:1.7;margin:12px 0}
@@ -2526,7 +2531,7 @@ function renderTravelSlots(){
   if(!Number.isInteger(i)||!edition.stories[i])return;
   slot.innerHTML='<button type="button" class="travel-open" data-travel="'+i+
    '" aria-expanded="false" aria-controls="travel-panel-'+i+
-   '">ニュースの余韻で、名所へ30秒の小旅行 <span aria-hidden="true">⌄</span></button>'+
+   '">ニュースの余韻で、名所への小旅行 <span aria-hidden="true">⌄</span></button>'+
    '<div class="travel-panel" id="travel-panel-'+i+'" hidden></div>';
  });
 }
@@ -2690,7 +2695,7 @@ function travelPostcardHtml(story,stop){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
- return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する30秒の小旅行">'+
+ return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する小旅行">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
   '<div class="travel-context" aria-label="記事と旅先の違い">'+
    '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
@@ -2706,6 +2711,11 @@ function travelPostcardHtml(story,stop){
    '<p class="travel-photo-error" hidden>写真を表示できませんでした。撮影元リンクから写真を開くことができます。</p>'+
    '<figcaption><span class="travel-caption-label">この景色の見どころ</span>'+escapeHtml(stop.note||stop.photoCaption)+'</figcaption></figure>':
    '<p class="travel-empty">'+(known?'写真を読み込めませんでした。撮影元と地図を確認できます。':'この国の有名観光地は確認中。無名の写真や別の国の景色では代用しません。')+'</p>')+
+  (known&&Array.isArray(stop.travelStory)&&stop.travelStory.length===2?
+   '<section class="travel-story" aria-label="名所の魅力と歴史">'+
+    '<h5>景色の向こう側へ</h5>'+
+    stop.travelStory.map(paragraph=>'<p>'+escapeHtml(paragraph)+'</p>').join('')+
+   '</section>':'')+
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">'+(known?'旅先を地図で見る ↗':'掲載国を地図で見る ↗')+'</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
@@ -2724,7 +2734,7 @@ document.querySelector('main').addEventListener('click',async event=>{
  const opening=panel.hidden;
  panel.hidden=!opening;
  control.setAttribute('aria-expanded',String(opening));
- control.firstChild.textContent=opening?'小旅行を閉じる ':'ニュースの余韻で、30秒の小旅行 ';
+ control.firstChild.textContent=opening?'小旅行を閉じる ':'ニュースの余韻で、名所への小旅行 ';
  const arrow=control.querySelector('span[aria-hidden="true"]');
  if(arrow)arrow.textContent=opening?'⌃':'⌄';
  if(!opening)return;
