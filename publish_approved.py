@@ -393,6 +393,14 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
         return False
     data = json.loads(approved_path.read_text(encoding='utf-8'))
     public_issue = validate_approved(data, date)
+    # New issues must have a genuinely usable country experience for EVERY
+    # fact-checked location: a substantial portrait, a licensed local cover,
+    # two illustrated quiz rounds and a separate verified destination.
+    # Never write an incomplete future issue merely to satisfy the news count.
+    if (date >= '2026-11-21' and all((root/name).is_file() for name in
+            ('index.html','world-passport.js','travel-stops.json'))):
+        from check_country_experience import country_coverage
+        country_coverage(root,public_issue['stories'])
     # No generated-image gate: source-checked stories can publish with the
     # bundled free SVG illustrations. A 4–5 story hard gate is still enforced
     # above and will never be bypassed due to missing images.

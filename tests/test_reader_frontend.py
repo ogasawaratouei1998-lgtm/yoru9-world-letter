@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertIn("yoru9-shell-v34",worker)
+        self.assertIn("yoru9-shell-v35",worker)
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
@@ -124,7 +124,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertNotIn("story.summary", portrait)
         self.assertNotIn("todayMapIntroNewsBody", page)
         self.assertIn("TODAY_COUNTRY_PHOTOS[currentCode]",portrait)
-        self.assertIn("yoru9-shell-v34",worker)
+        self.assertIn("yoru9-shell-v35",worker)
         self.assertIn("'country-highlights.json'",worker)
         self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)",worker)
 
@@ -424,7 +424,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn("flight-wrong-country",payload)
         for key,stop in payload.items():
             with self.subTest(event=key):
-                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ","アルゼンチン","フランス","ニュージーランド"))
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ","アルゼンチン","フランス","ニュージーランド","イタリア","ドイツ"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))

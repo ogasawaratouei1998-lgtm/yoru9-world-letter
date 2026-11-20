@@ -3,6 +3,30 @@
  * The AI one-liners are clearly marked as original fictional humor. */
 'use strict';
 const WORLD_PASSPORT_QUIZZES=Object.freeze({
+ IT:[
+  {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',
+   options:['ピサ','ローマ','ミラノ'],answer:0,
+   photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',
+   fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',
+   quip:'斜めに立っても、長年しっかり観光の主役。'},
+  {question:'ヴェネツィアの街を象徴する大きな水路は？',
+   options:['ライン川','大運河','テムズ川'],answer:1,
+   photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',
+   fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',
+   quip:'道路を探すより、舟を探したほうが早い日もある。'}
+ ],
+ DE:[
+  {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',
+   options:['ベルリン','ミュンヘン','ケルン'],answer:2,
+   photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',
+   fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',
+   quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
+  {question:'ノイシュヴァンシュタイン城があるドイツの州は？',
+   options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,
+   photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',
+   fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',
+   quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'}
+ ],
  AR:[
   {question:'イグアスの滝を包む風景は？',options:['熱帯の森','氷の洞窟','砂漠の砂丘'],answer:0,
    photoKey:'ar-iguazu-postcard',photoLabel:'正解の風景｜イグアスの滝と熱帯の森',

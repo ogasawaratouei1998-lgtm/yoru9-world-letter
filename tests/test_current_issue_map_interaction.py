@@ -141,13 +141,15 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         worker = (ROOT / "service-worker.js").read_text(encoding="utf-8")
         photo_keys = re.findall(r"photoKey:'([^']+)'", game)
         labels = re.findall(r"photoLabel:'([^']+)'", game)
-        self.assertEqual(len(photo_keys), 12, "Each available answer image must be vetted and correctly attributed")
-        self.assertEqual(len(labels), 12)
-        self.assertEqual(len(set(photo_keys)), 12)
+        self.assertGreaterEqual(len(photo_keys), 16, "Restored Italy/Germany answer photos must be vetted")
+        self.assertEqual(len(labels), len(photo_keys))
+        self.assertEqual(len(set(photo_keys)), len(photo_keys))
         covers = {
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
             "assets/travel/golden-gate-sunset-cover.jpg",
+            "assets/travel/italy-colosseum-cover.jpg",
+            "assets/travel/germany-brandenburg-cover.jpg",
         }
         for key, label in zip(photo_keys, labels):
             with self.subTest(quiz_image=key):
