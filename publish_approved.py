@@ -296,7 +296,7 @@ def validate_approved(data, expected_date):
             image_path=story.get('imagePath')
             required_image=f'assets/news-generated/{expected_date}/{story["id"]}.webp'
             require(isinstance(image_path,str) and image_path==required_image and
-                    bool(re.fullmatch(r'assets/news-generated/\\d{4}-\\d{2}-\\d{2}/[a-z0-9][a-z0-9-]{2,90}\\.webp',image_path)),
+                    bool(re.fullmatch(r'assets/news-generated/\d{4}-\d{2}-\d{2}/[a-z0-9][a-z0-9-]{2,90}\.webp',image_path)),
                     f'{i}本目に有効な当日専用の生成画像パスがありません')
             public_story['imagePath']=image_path
             public_story['imageType']='ai-generated-photorealistic-impression'
