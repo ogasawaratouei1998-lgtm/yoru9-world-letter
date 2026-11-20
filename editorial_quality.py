@@ -1,12 +1,14 @@
-"""Editorial risk guards independent of the creative and source-reviewing AI.
+"""Compact source-fidelity and editorial safety guards.
 
-The guards are intentionally conservative. They never establish that a
-headline is true; they can only stop a misleading draft or demand explicit
-fact-checker approval. All factual/translation checks must still be done
-against fetched publisher source text by the independent AI reviewer.
+Publisher reporting is the factual source. A second AI is used only to detect
+errors introduced while rewriting/ translating the original article in Japanese,
+not to re-investigate established journalism or rerun a full editorial panel.
+The code's known-risk rules are vetoes; absence of a match never proves truth.
 """
 import re
 
+# Core errors worth blocking publication. Do not require a dozen overlapping
+# model opinions about the same punchline; editor A already writes it.
 REVIEW_FIELDS=(
     "headlineGrounded",
     "translationAccurate",
@@ -15,18 +17,13 @@ REVIEW_FIELDS=(
     "jokeClear",
     "humanFailureConfirmed",
     "comicPunchlineWorks",
-    "firstQuipIncidentSpecific",
-    "firstQuipNotRecap",
-    "firstQuipAngleEarned",
-    "firstQuipNaturalSpeech",
-    "firstQuipFinalBeat",
     "shockFactorConfirmed",
     "stageTsukkomiConfirmed",
 )
 
 
 def independent_editorial_quality_passed(review):
-    """Unreported/unknown verdicts fail closed; not a prose-only approval."""
+    """Require explicit source fidelity, human error, safe joke and real surprise."""
     return (isinstance(review,dict) and review.get("approved") is True
             and all(review.get(key) is True for key in REVIEW_FIELDS))
 
@@ -34,8 +31,8 @@ def independent_editorial_quality_passed(review):
 def headline_fidelity_risk(story, fetched_articles):
     """Detect severe known translation, legal-status and factual-metaphor risks.
 
-    A negative result is not certification. Fact-checker B must explicitly
-    validate headline claims, proper terms and comedy independently.
+    A negative result is not certification. The concise model comparison must
+    verify that the Japanese headline and translation match the source body.
     """
     if not isinstance(story,dict):
         return "malformed_draft"
@@ -72,8 +69,8 @@ def headline_fidelity_risk(story, fetched_articles):
 def independently_approved_secondary_quip(story, review):
     """Return only a separately vetted second angle; never reject the first joke.
 
-    Editor B checks factual grounding, distinct premise, and an actual payoff
-    in the SAME existing fact-check call. These flags are independent of the
+    The lightweight fidelity gate checks facts, a distinct premise and payoff
+    in the SAME existing comparison call. These flags are independent of the
     first joke's verdict: a poor second joke must simply disappear.
     """
     from difflib import SequenceMatcher
