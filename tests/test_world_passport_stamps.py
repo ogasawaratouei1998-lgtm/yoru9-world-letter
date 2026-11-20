@@ -27,7 +27,7 @@ class WorldPassportStampsTest(unittest.TestCase):
             "worldPassportStamps[code]={score:run.score,total:run.questions.length}",
             "persistWorldPassport();updateWorldPassportButtons()",
             "firstStamp=!previous", "todayQuizStampReward",
-            "nextWorldPassportRound", "finishWorldPassport", "run.streak++",
+            "recordWorldPassportNextQuestion", "finishWorldPassport", "run.streak++",
             "WORLD_PASSPORT_LIFETIME_KEY", "rememberWorldPassportCountry(",
             "worldPassportGrade(", "stamp.dataset.ever=String(",
             "function celebrateWorldPassportCorrect(",
