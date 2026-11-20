@@ -50,7 +50,6 @@ class StrictFourAndImagesTest(unittest.TestCase):
                 self.assertEqual(len(validate_approved(approved(n),DAY)["stories"]),n)
         # An old two-story issue stays a valid historical archive.
         old=approved(2,"2026-11-20")
-        for story in old["stories"]:story.pop("imagePath")
         self.assertEqual(len(validate_approved(old,"2026-11-20")["stories"]),2)
 
     def test_static_four_story_issue_needs_no_image_files_or_api(self):
@@ -246,7 +245,8 @@ class StrictFourAndImagesTest(unittest.TestCase):
         self.assertIn("news-generated",service)
         self.assertIn("expirePreviousGeneratedImages",service)
         self.assertIn("IMAGE_CACHE",service)
-        self.assertIn("target=output/rel",builder)
+        self.assertIn("shutil.copytree(artwork_dir,output/",builder)
+        self.assertNotIn("target=output/rel",builder)
         self.assertNotIn("python prepare_news_images.py\n",workflow)
         self.assertNotIn("OPENAI_API_KEY:",workflow)
         self.assertNotIn("GEMINI_IMAGE_API_KEY:",workflow)
