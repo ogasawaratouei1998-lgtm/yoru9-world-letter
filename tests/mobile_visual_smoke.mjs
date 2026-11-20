@@ -648,19 +648,34 @@ try{
     'today article travel is optional and initially closed');
    await travelButton.click();
    await page.waitForFunction(()=>{
-    const img=document.querySelector('#spotlight .travel-photo');
-    return !!img&&img.complete&&img.naturalWidth>0;
+    const card=document.querySelector('#spotlight .travel-card');
+    if(!card)return false;
+    const img=card.querySelector('.travel-photo');
+    return img?img.complete&&img.naturalWidth>0:!!card.querySelector('.travel-empty');
    },null,{timeout:30000});
    const postcard=page.locator('#spotlight .travel-card');
-   assert.equal(await postcard.count(),1,'today article has its travel photo');
-   assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
-    'tourist photography is labeled separately from actual reportage');
-   const photoSource=await postcard.locator('.travel-photo').getAttribute('src');
-   assert.ok(photoSource?.includes('assets/travel/'),'travel photo is locally bundled');
-   const firstCountryCode=await pins.first().getAttribute('data-country-code');
-   if(countryCoverAssets.has(firstCountryCode)){
-    assert.notEqual(photoSource,countryCoverAssets.get(firstCountryCode),
-     'country introduction and 30-second travel must use DIFFERENT real photographs');
+   assert.equal(await postcard.count(),1,'optional 30-second journey opens');
+   let photoSource='not-yet-curated';
+   if(await postcard.locator('.travel-photo').count()){
+    assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
+     'tourist photography is labeled separately from actual reportage');
+    photoSource=await postcard.locator('.travel-photo').getAttribute('src');
+    assert.ok(photoSource?.startsWith('./assets/travel/'),'travel photo is locally bundled');
+    const firstCountryCode=await pins.first().getAttribute('data-country-code');
+    if(countryCoverAssets.has(firstCountryCode)){
+     assert.notEqual(photoSource,countryCoverAssets.get(firstCountryCode),
+      'country introduction and 30-second travel must use DIFFERENT real photographs');
+    }
+   }else{
+    // Newly sourced incidents may be from countries without licensed,
+    // locally bundled tourist photos (e.g. Italy or Germany). No unrelated
+    // foreign-country photo or unverified image may be substituted.
+    assert.equal(await postcard.locator('.travel-empty').count(),1,
+     'uncurated country has an explicit and truthful no-photo state');
+    assert.ok((await postcard.locator('.travel-empty').textContent()).includes('別の国の景色では代用しません'),
+     'the reader never fabricates a foreign destination postcard');
+    assert.ok((await postcard.locator('.travel-trust').textContent()).includes('写真はまだ準備中'),
+     'the missing photo is distinguished from real news evidence');
    }
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<2,'no horizontal overflow: '+overflow+'px');
