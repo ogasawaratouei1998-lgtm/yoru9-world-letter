@@ -219,13 +219,27 @@ function closeWorldPassport(){
  resetWorldPassportPhoto();
  $('todayCountryQuiz').hidden=true;worldPassportActive=null;updateWorldPassportButtons();
 }
+function focusWorldPassportQuestion(run){
+ // The answer explanation/photo may be much taller than the next question.
+ // After replacing it, reset the viewport: otherwise iOS scroll anchoring can
+ // leave the visitor at the following "今日のひと言" footer.
+ const reposition=()=>{
+  if(worldPassportActive!==run||$('todayCountryQuiz').hidden)return;
+  const question=$('todayQuizQuestion');
+  if(typeof question.focus==='function')question.focus({preventScroll:true});
+  $('todayCountryQuiz').scrollIntoView({block:'start',behavior:'auto'});
+ };
+ // Let the browser finish laying out the newly shortened quiz first.
+ if(typeof requestAnimationFrame==='function')requestAnimationFrame(reposition);
+ else reposition();
+}
 function startWorldPassport(item){
  loadWorldPassport();
  hideTodayCountryIntro();
  worldPassportActive={item,questions:passportQuizQuestions(item),step:0,score:0,streak:0,answered:false};
  $('todayCountryQuiz').hidden=false;
  renderWorldPassportRound();updateWorldPassportButtons();
- $('todayCountryQuiz').scrollIntoView({block:'nearest'});
+ focusWorldPassportQuestion(worldPassportActive);
 }
 let passportPhotoTicket=0;
 function resetWorldPassportPhoto(){
@@ -420,6 +434,7 @@ function nextWorldPassportRound(){
  if(run.step===run.questions.length-1){run.step=0;run.score=0;run.streak=0}
  else run.step++;
  renderWorldPassportRound();
+ focusWorldPassportQuestion(run);
 }
 document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
 document.getElementById('todayQuizNext').addEventListener('click',nextWorldPassportRound);
