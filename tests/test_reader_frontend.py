@@ -72,7 +72,7 @@ class ReaderFrontendTest(unittest.TestCase):
 
     @unittest.skipUnless(shutil.which("node"), "Node.js required")
     def test_country_cover_rejects_small_photos_and_prioritizes_clear_originals(self):
-        """Prevent upscaled small thumbnails from appearing as full-width portraits."""
+        """Prefer packaged photos; reject thumbnails too small for mobile cards."""
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         start=page.index("function countryPhotoSourceUrls(item){")
         end=page.index("function showTodayCountryIntro(item){",start)
@@ -81,10 +81,14 @@ class ReaderFrontendTest(unittest.TestCase):
 const p={asset:'assets/travel/example.jpg',
  url:'https://thumb.wikimedia.org/wikipedia/commons/thumb/x/x/example.jpg/500px-example.jpg'};
 const sources=countryPhotoSourceUrls(p);
-if(!sources[0].endsWith('/1280px-example.jpg'))process.exit(2);
-if(!sources[1].endsWith('/assets/travel/example.jpg'))process.exit(3);
-if(countryPhotoIsSharpEnough({naturalWidth:500,naturalHeight:360}))process.exit(4);
-if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exit(5);
+if(sources.length!==1||sources[0]!=='./assets/travel/example.jpg')process.exit(2);
+const remote=countryPhotoSourceUrls({remoteOnly:true,
+ url:'https://thumb.wikimedia.org/example.jpg',
+ hiResUrl:'https://thumb.wikimedia.org/example-1280.jpg'});
+if(remote.length!==1||!remote[0].endsWith('example-1280.jpg'))process.exit(3);
+if(countryPhotoIsSharpEnough({naturalWidth:320,naturalHeight:200}))process.exit(4);
+if(!countryPhotoIsSharpEnough({naturalWidth:500,naturalHeight:360}))process.exit(5);
+if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exit(6);
 """
         run=subprocess.run(["node","-e",script],capture_output=True,text=True)
         self.assertEqual(run.returncode,0,run.stderr)

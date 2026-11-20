@@ -19,6 +19,7 @@ def bundle_travel_photos(root, output):
         return 0
     stops = json.loads(manifest.read_text(encoding='utf-8'))
     required = {}
+    country_covers = set()
     for key, stop in stops.items():
         asset = stop.get('photoAsset', '')
         url = stop.get('photo', '')
@@ -37,12 +38,20 @@ def bundle_travel_photos(root, output):
         if asset in required and required[asset] != url:
             raise ValueError(f'{key}: photo path is assigned to two different images')
         required[asset] = url
+        if stop.get('coverOnly') is True:
+            country_covers.add(asset)
 
     failures = []
     for asset, url in required.items():
         target = output / asset
         target.parent.mkdir(parents=True, exist_ok=True)
-        paths = [
+        # Country-portrait covers are shown prominently on retina phones.
+        # Package a 1280px licensed thumbnail locally when Wikimedia provides
+        # one; 500px and 330px originals remain safe fallback sources.
+        # No third-party URL is needed to display a successful bundled cover.
+        large = url.replace('/500px-', '/1280px-')
+        paths = ([large, large.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/')]
+                 if asset in country_covers and large != url else []) + [
             url,
             url.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/'),
             url.replace('/500px-', '/330px-'),

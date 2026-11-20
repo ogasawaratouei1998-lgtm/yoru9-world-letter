@@ -1998,15 +1998,24 @@ function hideTodayCountryIntro(){
  $('todayMapIntro').hidden=true;
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
 }
-// A country cover requires native pixels sufficient for retina display.
+// Country portraits use the locally bundled, rights-checked photo first.
+// Never replace an available packaged photograph with a remote thumbnail.
+// The UK remote-only legacy item remains explicitly marked remoteOnly.
 function countryPhotoSourceUrls(item){
- const highRes=item.hiResUrl||String(item.url||'').replace('/500px-','/1280px-');
- const urls=[highRes];
- if(item.asset)urls.push('./'+item.asset);
- return [...new Set(urls.filter(Boolean))];
+ if(item.asset&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(item.asset))
+  return ['./'+item.asset];
+ if(item.remoteOnly){
+  const highRes=item.hiResUrl||item.url;
+  return typeof highRes==='string'&&/^https:\/\//.test(highRes)?[highRes]:[];
+ }
+ return [];
 }
 function countryPhotoIsSharpEnough(image){
- return image.naturalWidth>=1000&&image.naturalHeight>=540;
+ // A bundled 500px thumbnail is still ~1.5x a typical 320px phone card.
+ // The site builder attempts a 1280px version for country covers first.
+ // Do not force the browser onto an external CDN merely to satisfy an
+ // arbitrary 1000px threshold on already downloaded, verified images.
+ return image.naturalWidth>=480&&image.naturalHeight>=260;
 }
 function showTodayCountryIntro(item){
  closeWorldPassport();
