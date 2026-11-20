@@ -180,7 +180,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('id="quipTeaserLine"',cover)
         self.assertIn('role="note" aria-label="AIによる創作の冗談"',cover)
         self.assertIn('id="quipTeaserRead"',cover)
-        self.assertIn('data-smile="0" aria-pressed="false"',cover)
+        self.assertNotIn('data-smile',cover)
         self.assertLess(cover.index('id="quipTeaser"'),
                         cover.index('id="issueGallery"'))
         self.assertLess(cover.index('id="issueGallery"'),
@@ -203,20 +203,31 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("#atlasHero .gallery-tile:last-child:nth-child(odd)",page)
         self.assertIn("#atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}",page)
         self.assertNotIn("掲載国の代表位置です。ニュースの現場ではありません。",page)
-        # CSS has physically identifiable comic bubble tails and one-tap
-        # sparkle feedback, with motion disabled when requested.
+        # Speech-bubble styling stays, but no optional smile feedback remains.
         self.assertIn(".spotlight .spotlight-joke::before{content:",page)
         self.assertIn(".story .teaserquip::after{content:",page)
-        self.assertIn("@keyframes tinyLaughStar{",page)
-        self.assertIn(".smile.smile-burst::before,.smile.smile-burst::after",page)
-        self.assertIn("!window.matchMedia('(prefers-reduced-motion: reduce)').matches",page)
-        self.assertIn("smile.classList.add('smile-burst')",page)
         self.assertIn("$('atlasHero').addEventListener('click',handleStoryAction)",page)
-        self.assertIn("const wasOn=state.smiles.includes(i)",page)
         self.assertIn("saveState();update();",page)
+        for removed in ("ふっと笑えた", "data-smile", "teaser-smile",
+                        "smile-burst", "state.smiles", "tinyLaughStar"):
+            self.assertNotIn(removed,page)
         # No new story is invented or an unpublished image or source inserted.
         self.assertIn("return './assets/news/'+name",page)
         self.assertIn("const first=Array.isArray(edition.stories)?edition.stories[0]:null;",page)
+
+    def test_smile_feedback_removed_from_every_article_surface(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        teaser=page[page.index('<section class="quip-teaser"'):
+                    page.index('<section class="issue-gallery"')]
+        self.assertIn('id="quipTeaserRead"',teaser)
+        self.assertNotIn("ふっと笑えた",teaser)
+        for removed in ("ふっと笑えた", "data-smile", "teaser-smile",
+                        "smile-burst", "state.smiles", "tinyLaughStar"):
+            self.assertNotIn(removed,page)
+        # Sharing and reading progress are unrelated and must remain available.
+        self.assertIn('class="share" data-share="${selectedArticleIndex}"',page)
+        self.assertIn('class="share" data-share="${i}"',page)
+        self.assertIn('state.read.push(i);saveState();update();',page)
 
     def test_compact_opening_teaser_does_not_duplicate_or_crop_illustrations(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
@@ -235,7 +246,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('#atlasHero .atlas-brand::after{content:none}',page)
         self.assertIn("#atlasHero .quip-teaser{\n display:block;",page)
         self.assertIn("flex-wrap:nowrap;gap:8px;",page)
-        self.assertIn('#atlasHero .teaser-smile{flex:0 0 auto;',page)
+        self.assertNotIn('teaser-smile',page)
         self.assertIn('min-height:44px',page)
         # The existing full news story remains intact, with an accessible source.
         self.assertIn("body.innerHTML=",page)
@@ -567,7 +578,7 @@ class ReaderFrontendTest(unittest.TestCase):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         for token in ('id="spotlightAward"', "今夜のひと話",
                       "公開済みの便りから", "体験版の実話",
-                      "data-smile=\"0\"", "d.slice(1).map((s,offset)"):
+                       "d.slice(1).map((s,offset)"):
             self.assertIn(token, page)
 
     def test_article_cards_separate_reported_facts_from_creative_ai_comedy(self):
@@ -739,7 +750,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn('詳しく読む ↓', page)
         self.assertIn('閉じる ↑', page)
         self.assertNotIn('補足文を見る（英語）', page)
-        self.assertIn('.filter,.readbtn,.smile,.share{min-height:44px', page)
+        self.assertIn('.filter,.readbtn,.share{min-height:44px', page)
         self.assertIn('.night-quote p{font-size:clamp(19px', page)
         self.assertIn('.hero .eyebrow,.hero-audience{display:none}', page)
 
