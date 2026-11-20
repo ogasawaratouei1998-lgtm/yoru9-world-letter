@@ -91,7 +91,7 @@ try{
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.galleryTop+2,
     'the reader opens with the editorial concept and story gallery');
-   // The three-comic gallery replaces a repeated always-visible article list.
+   // The visual gallery replaces a repeated always-visible article list.
    const articleReader=page.locator('#articleReader');
    assert.equal(await articleReader.isHidden(),true,
     'no second full news list appears before the reader chooses a picture');
@@ -131,12 +131,11 @@ try{
    assert.ok(teaserGeometry.teaserHeight<=225,
     'opening laugh should be a compact speech bubble, not another full illustration card: '+
       teaserGeometry.teaserHeight+'px');
-   assert.equal(teaserGeometry.buttons.length,2,'both opening controls remain usable');
-   assert.ok(Math.abs(teaserGeometry.buttons[0].top-teaserGeometry.buttons[1].top)<2,
-    'read and smile actions share the same row rather than stacking vertically');
+   assert.equal(teaserGeometry.buttons.length,1,
+    'the simplified opening joke has one clearly labeled read action');
    assert.ok(teaserGeometry.buttons.every(b=>b.height>=44&&
      b.left>=teaserGeometry.teaserLeft-1&&b.right<=teaserGeometry.teaserRight+1),
-    'both actions stay inside their teaser and meet minimum touch size');
+    'the single read action stays inside the teaser and meets minimum touch size');
    assert.ok(teaserGeometry.teaser.left>=teaserGeometry.hero.left-2&&
      teaserGeometry.teaser.right<=teaserGeometry.hero.right+2,
     'opening speech bubble never overflows the phone viewport');
@@ -175,7 +174,8 @@ try{
    await page.locator('#readerBack').click();
    assert.equal(await articleReader.isHidden(),true);
    assert.equal(await page.locator('#atlasHero').isVisible(),true);
-   assert.equal(await page.locator('#quipTeaser .teaser-smile').getAttribute('aria-pressed'),'false');
+   assert.equal(await page.locator('#quipTeaserRead').isVisible(),true,
+    'the single opening read action remains available after returning to the gallery');
    const gallery=page.locator('#issueGallery .gallery-tile');
    assert.equal(await page.locator('#galleryHeading').textContent(),
     '世界の「まさか」'+editorialCover.storyCount+'コマ劇場',
@@ -253,11 +253,27 @@ try{
     images.map(img=>img.getAttribute('src')));
    assert.equal(new Set(galleryArts).size,galleryArts.length,
     'every current news card must show different artwork rather than duplicate clipboards');
+   const newGeneratedIssue=await page.evaluate(()=>
+    edition.editionType==='regular'&&edition.editionDate>='2026-11-21');
    for(const path of galleryArts){
-    assert.ok(path.startsWith('./assets/news/')||path.startsWith('data:image/svg+xml;charset=utf-8,'),
-     'editorial illustration is local or generated offline, never an external photo');
+    assert.ok(path.startsWith('./assets/news/')||
+     path.startsWith('./assets/news-generated/')||
+     path.startsWith('data:image/svg+xml;charset=utf-8,'),
+     'editorial artwork is bundled locally or rendered offline, not fetched from news sites');
     assert.ok(!path.includes('/category-work.svg')&&!path.includes('/category-sports.svg'),
      'current stories must not repeat category placeholders');
+   }
+   if(newGeneratedIssue){
+    assert.ok(editorialCover.storyCount>=4&&editorialCover.storyCount<=5,
+     'new regular issues must have four or five verified stories');
+    assert.ok(galleryArts.every(path=>
+     /^\.\/assets\/news-generated\/\d{4}-\d{2}-\d{2}\/[a-z0-9-]+\.webp$/.test(path)),
+     'all current article pictures use edition-specific generated WebPs');
+    assert.equal(await page.locator('#issueGallery .gallery-image-label').count(),
+     editorialCover.storyCount,'every AI-generated picture has a visible disclosure');
+    assert.ok((await page.locator('#issueGallery .gallery-image-label').allTextContents())
+     .every(label=>label.includes('イメージ画像（AI生成）')),
+     'no photorealistic generated picture is mislabeled as a news photo');
    }
    const currentStoryIds=await page.evaluate(()=>edition.stories.map(s=>s.id));
    const bespokeArt={
@@ -271,14 +287,17 @@ try{
      'each news story uses its own matching illustration: '+id);
    }
    const firstImage=page.locator('#issueGallery .gallery-art').first();
-   assert.ok((await firstImage.getAttribute('src')).startsWith('./assets/news/'),
-    'visual assets are bundled locally, not from third-party news photos');
+   const firstArtSrc=await firstImage.getAttribute('src');
+   assert.ok(firstArtSrc.startsWith('./assets/news/')||
+    firstArtSrc.startsWith('data:image/svg+xml;charset=utf-8,'),
+    'first visual is a local WebP, bundled SVG or inline offline-safe illustration');
    assert.ok((await gallery.first().getAttribute('aria-label')).includes('を読む'),
     'a picture alone has a meaningful accessible reading action');
    const leadImage=page.locator('#spotlightImage');
    assert.equal(await leadImage.isHidden(),true,
     'news illustration is already visible in the gallery and must not repeat in detail');
-   assert.ok((await page.locator('#spotlightVisual figcaption').textContent()).includes('現場写真ではありません'),
+   const caption=await page.locator('#spotlightVisual figcaption').textContent();
+   assert.ok(caption.includes('報道写真ではありません')||caption.includes('現場写真ではありません'),
     'hidden original image still has an accurate source disclaimer');
    assert.ok((await gallery.first().locator('.gallery-art').evaluate(el=>el.naturalWidth))>0,
     'the gallery retains the visible, fully loaded first illustration');
