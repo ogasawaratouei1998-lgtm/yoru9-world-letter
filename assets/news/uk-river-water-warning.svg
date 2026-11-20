@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="illustration-title">
+<title id="illustration-title">遊泳に適さないと警告された川で水浴びを続ける人と水質検査を象徴した創作イラスト</title>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#BCE8D5"/><stop offset="1" stop-color="#9CC9EA"/></linearGradient>
+ <filter id="soft"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#102D44" flood-opacity=".21"/></filter>
+ <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#fff" opacity=".36"/></pattern>
+</defs>
+<rect width="800" height="480" rx="28" fill="url(#bg)"/>
+<circle cx="700" cy="54" r="130" fill="#fff" opacity=".17"/>
+<circle cx="85" cy="434" r="152" fill="#fff" opacity=".13"/>
+<path d="M0 418Q200 378 416 412T800 390V480H0Z" fill="#244D67" opacity=".13"/>
+<path d="M76 85h45m-22-22v45M721 333h42m-21-21v42" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".63"/>
+
+<!-- River, reeds and wave trails -->
+<path d="M0 289Q148 254 297 292T593 286T800 301V480H0Z" fill="#428EA7"/>
+<path d="M0 343Q116 318 231 350T466 344T800 358M0 412Q144 383 262 421T522 406T800 422" fill="none" stroke="#C8F3E5" stroke-width="9" opacity=".68" stroke-linecap="round"/>
+<path d="M0 290q83-48 170-21l-18 70-152 20z" fill="#77B97F"/>
+<path d="M90 291l-13-50m25 40 17-56m-45 72-33-35" fill="none" stroke="#397F68" stroke-width="10" stroke-linecap="round"/>
+<!-- A no-swimming pictogram sign, not a photo of an actual sign -->
+<g filter="url(#soft)">
+ <path d="M183 211v175" stroke="#294C62" stroke-width="19" stroke-linecap="round"/>
+ <rect x="77" y="70" width="214" height="184" rx="23" fill="#FFF9E5" stroke="#294C62" stroke-width="8"/>
+ <circle cx="183" cy="161" r="67" fill="#fff" stroke="#E86368" stroke-width="12"/>
+ <path d="M128 185q23-14 47 0t49 0" fill="none" stroke="#315F78" stroke-width="8" stroke-linecap="round"/>
+ <circle cx="190" cy="128" r="12" fill="#315F78"/>
+ <path d="m174 147-30 17 38 18" fill="none" stroke="#315F78" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+ <path d="m136 211 94-97" stroke="#E86368" stroke-width="12" stroke-linecap="round"/>
+</g>
+<!-- Swim cap and swimmer arms in the water -->
+<g filter="url(#soft)">
+ <circle cx="406" cy="273" r="42" fill="#F7BF93" stroke="#25516A" stroke-width="7"/>
+ <path d="M369 265q0-47 37-47t41 48" fill="#F2C469" stroke="#25516A" stroke-width="7"/>
+ <circle cx="419" cy="275" r="4" fill="#25516A"/>
+ <path d="M342 322q42-27 83-3 34 20 75 0" fill="none" stroke="#F5BE93" stroke-width="28" stroke-linecap="round"/>
+ <path d="M322 348q47-12 89 5" fill="none" stroke="#C3F0ED" stroke-width="9" stroke-linecap="round"/>
+</g>
+<!-- Magnifier + bacterial cells represent testing (not actual microbes) -->
+<g filter="url(#soft)">
+ <circle cx="625" cy="192" r="86" fill="#F4F6D7" stroke="#29506B" stroke-width="13"/>
+ <path d="m684 258 64 70" stroke="#29506B" stroke-width="29" stroke-linecap="round"/>
+ <g fill="#E47777" stroke="#A9536A" stroke-width="5">
+  <ellipse cx="585" cy="165" rx="23" ry="13" transform="rotate(-23 585 165)"/>
+  <ellipse cx="653" cy="206" rx="22" ry="13" transform="rotate(37 653 206)"/>
+  <ellipse cx="621" cy="232" rx="13" ry="20" transform="rotate(-12 621 232)"/>
+ </g>
+ <g fill="#65B7A5"><circle cx="635" cy="147" r="11"/><circle cx="584" cy="218" r="9"/><circle cx="670" cy="163" r="7"/></g>
+</g>
+<!-- Warm drink on bank -->
+<g transform="translate(220 329)"><path d="M0 0h55l-7 55H9z" fill="#FFE5AE" stroke="#2D5369" stroke-width="7"/><path d="M54 9h11q23 0 8 27H53" fill="none" stroke="#2D5369" stroke-width="8"/><path d="M17-12q-13-11 1-27m22 27q-13-11 1-27" fill="none" stroke="#fff" stroke-width="5" opacity=".8"/></g>
+
+</svg>
