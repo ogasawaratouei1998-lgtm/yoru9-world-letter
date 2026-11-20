@@ -46,7 +46,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             ":todayCountryIntro(item)+' 観光名所を案内する",
             "currentCountryHighlight(all,currentCode)",
             "COUNTRY PORTRAIT · 国の魅力",
-            "$('todayMapIntro').scrollIntoView({block:'nearest'})",
+            "$('todayMapIntro').scrollIntoView({block:'start'})",
             "function hideTodayCountryIntro()",
             "read.dataset.storyIndex=String(item.indices[0])",
             "openAtlasStory(index)",
@@ -65,7 +65,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("function countryPhotoPriority(code,photo)", page)
         self.assertIn("['ゴールデンゲートブリッジ',90]", page)
         self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
-        self.assertIn(".filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
+        self.assertIn(".filter(p=>(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
 
     def test_country_hero_and_travel_postcard_use_distinct_assets(self):
         import json
@@ -102,12 +102,12 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
                     "Not enough different licensed travel photos: " + country)
         self.assertIn("function conflictsWithCountryCover(stop)", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
-        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
+        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset||'')", page)
 
     def test_featured_country_photo_is_prominent_on_narrow_phones(self):
         page = self.page
         self.assertIn("#atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;", page)
-        self.assertIn("#atlasHero .today-map-intro-photo img{aspect-ratio:6/5;", page)
+        self.assertIn("#atlasHero .today-map-intro-photo img{aspect-ratio:16/10;", page)
         self.assertIn("max-width:calc(100% + 24px)", page)
         self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
