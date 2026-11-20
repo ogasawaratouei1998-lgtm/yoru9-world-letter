@@ -74,11 +74,19 @@ def country_coverage(root: Path, stories):
                 raise ValueError(code+": portrait cover reused as quiz photograph")
             if not _licensed_photo(stop):
                 raise ValueError(code+": quiz photograph license/attribution missing")
-        postcards=[p for p in photos.values()
+        # Older curated postcards predate the famousTourist flag. The
+        # exact keys in the reviewed country's guide also certify its
+        # independently licensed landmarks, without a blanket exemption.
+        guide_photos=set()
+        guide_match=re.search(r"(?m)^ "+re.escape(code)+r":\{[^\n]*?photos:\[([^\]]+)\]",guide_section)
+        if guide_match:
+            guide_photos=set(re.findall(r"'([^']+)'",guide_match.group(1)))
+        postcards=[p for key,p in photos.items()
                    if p.get("country")==name and
                    not p.get("coverOnly") and not p.get("quizOnly") and
                    p.get("photoAsset") not in verified_covers and
-                   p.get("famousTourist") is True and _licensed_photo(p)]
+                   (p.get("famousTourist") is True or key in guide_photos) and
+                   _licensed_photo(p)]
         # Older, manually reviewed countries use a validated recognisable
         # landmark list rather than an explicit famousTourist boolean.
         if not postcards:
