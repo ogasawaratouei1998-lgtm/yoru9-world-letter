@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v33';
+const SHELL_CACHE = 'yoru9-shell-v34';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -18,6 +18,8 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/news/coffee-rescue.svg', 'assets/news/road-typo.svg', 'assets/news/monkey-patrol.svg',
  'assets/news/own-goal-keeper.svg', 'assets/news/police-sweets-wanted.svg',
  'assets/news/mouse-83-tattoos.svg',
+ 'assets/news/ai-python-toilet.svg', 'assets/news/game-show-price-board.svg',
+ 'assets/news/drone-sewer-search.svg', 'assets/news/lost-handcuff-key.svg',
  'assets/news/uk-river-water-warning.svg', 'assets/news/spain-mussels-colander-pan.svg',
  'assets/news/japan-policy-youtuber-pr.svg', 'assets/news/nz-cricket-comeback.svg',
  'assets/travel/iguazu-rainbow-cover.jpg', 'assets/travel/mont-saint-michel-sunset-cover.jpg',
