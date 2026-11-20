@@ -253,11 +253,27 @@ try{
     images.map(img=>img.getAttribute('src')));
    assert.equal(new Set(galleryArts).size,galleryArts.length,
     'every current news card must show different artwork rather than duplicate clipboards');
+   const newGeneratedIssue=await page.evaluate(()=>
+    edition.editionType==='regular'&&edition.editionDate>='2026-11-21');
    for(const path of galleryArts){
-    assert.ok(path.startsWith('./assets/news/')||path.startsWith('data:image/svg+xml;charset=utf-8,'),
-     'editorial illustration is local or generated offline, never an external photo');
+    assert.ok(path.startsWith('./assets/news/')||
+     path.startsWith('./assets/news-generated/')||
+     path.startsWith('data:image/svg+xml;charset=utf-8,'),
+     'editorial artwork is bundled locally or rendered offline, not fetched from news sites');
     assert.ok(!path.includes('/category-work.svg')&&!path.includes('/category-sports.svg'),
      'current stories must not repeat category placeholders');
+   }
+   if(newGeneratedIssue){
+    assert.ok(editorialCover.storyCount>=4&&editorialCover.storyCount<=5,
+     'new regular issues must have four or five verified stories');
+    assert.ok(galleryArts.every(path=>
+     /^\.\/assets\/news-generated\/\d{4}-\d{2}-\d{2}\/[a-z0-9-]+\.webp$/.test(path)),
+     'all current article pictures use edition-specific generated WebPs');
+    assert.equal(await page.locator('#issueGallery .gallery-image-label').count(),
+     editorialCover.storyCount,'every AI-generated picture has a visible disclosure');
+    assert.ok((await page.locator('#issueGallery .gallery-image-label').allTextContents())
+     .every(label=>label.includes('イメージ画像（AI生成）')),
+     'no photorealistic generated picture is mislabeled as a news photo');
    }
    const currentStoryIds=await page.evaluate(()=>edition.stories.map(s=>s.id));
    const bespokeArt={
@@ -272,7 +288,7 @@ try{
    }
    const firstImage=page.locator('#issueGallery .gallery-art').first();
    assert.ok((await firstImage.getAttribute('src')).startsWith('./assets/news/'),
-    'visual assets are bundled locally, not from third-party news photos');
+    'first visual is a verified local generated WebP or bundled illustration');
    assert.ok((await gallery.first().getAttribute('aria-label')).includes('を読む'),
     'a picture alone has a meaningful accessible reading action');
    const leadImage=page.locator('#spotlightImage');
