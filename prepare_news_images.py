@@ -52,27 +52,29 @@ def visual_prompt(story):
     )
 
 def extract_image_bytes(response):
-    # Interactions API represents model output as content blocks in steps.
+    """Accept either the last model_output image block or output_image."""
     options=[]
-    image=response.get("output_image")
-    if isinstance(image,dict):options.append(image)
+    if isinstance(response.get("output_image"),dict):
+        options.append(response["output_image"])
     for step in response.get("steps",[]):
-        if not isinstance(step,dict) or step.get("type")!="model_output":continue
-        for part in step.get("content",[]):
-            if isinstance(part,dict) and part.get("type")=="image":options.append(part)
-    for item in reversed(options):
-        encoded=item.get("data")
+        if not isinstance(step,dict):continue
+        for block in step.get("content",[]):
+            if isinstance(block,dict) and block.get("type")=="image":
+                options.append(block)
+    for block in reversed(options):
+        encoded=block.get("data")
         if not isinstance(encoded,str) or len(encoded)>12_000_000:continue
-        if item.get("mime_type",item.get("mimeType","image/jpeg")) not in ("image/png","image/jpeg","image/webp"):continue
         try:
-            raw=base64.b64decode(encoded,validate=True)
+            payload=base64.b64decode(encoded,validate=True)
         except (ValueError,base64.binascii.Error):
             continue
-        if 20_000<=len(raw)<=9_000_000 and (
-            raw[:3]==b"\xff\xd8\xff" or raw[:8]==b"\x89PNG\r\n\x1a\n" or
-            (raw[:4]==b"RIFF" and raw[8:12]==b"WEBP")
-        ):
-            return raw
+        if 20_000<=len(payload)<=9_000_000:
+            if payload.startswith(bytes.fromhex("ffd8ff")):
+                return payload
+            if payload.startswith(bytes.fromhex("89504e470d0a1a0a")):
+                return payload
+            if payload[:4]==b"RIFF" and payload[8:12]==b"WEBP":
+                return payload
     raise ValueError("Image API returned no valid image output")
 
 def gemini_image(prompt,key,model=IMAGE_MODEL):
