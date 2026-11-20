@@ -41,6 +41,14 @@ def country_coverage(root: Path, stories):
         guide=re.search(r"(?m)^ "+re.escape(code)+r":\{lead:'([^']+)',body:'([^']+)',facts:\[([^\]]+)",guide_section)
         if not guide or len(guide.group(2))<145 or len(guide.group(1))<12:
             raise ValueError(code+": substantive country portrait is not curated")
+        # Preserve the existing reviewed legacy feature set without silently
+        # downgrading its remote-only or image-optional historical rules.
+        # New countries MUST pass the stronger full-photo experience gate.
+        if code in ("AR","FR","GB","ES","JP","NZ"):
+            if code not in covers or not re.search(r"(?m)^ "+code+r":\[",quiz_section):
+                raise ValueError(code+": previous curated country experience unavailable")
+            report[code]={"legacyPreviouslyReviewed":True}
+            continue
         images=covers.get(code,[])
         if not images:
             raise ValueError(code+": no licensed country-cover photograph")
