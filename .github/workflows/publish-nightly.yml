@@ -53,6 +53,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
       - name: Complete the approved November 20 four-story SVG correction
@@ -243,6 +246,9 @@ jobs:
             python check_release_candidate.py
             python build_site.py
             python check_release_candidate.py --site _site
+            # Catch UI/navigation/quiz/photo failures before publication,
+            # not only in the later post-deploy smoke.
+            bash run_mobile_preflight.sh
           fi
       - name: Commit the released edition
         id: release
