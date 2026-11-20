@@ -12,7 +12,7 @@ curl --fail --location --retry 2 --connect-timeout 10 --max-time 90 --silent --s
  "https://raw.githubusercontent.com/notofonts/noto-cjk/main/Sans/OTF/Japanese/NotoSansCJKjp-Regular.otf" \
  --output "$HOME/.local/share/fonts/NotoSansCJKjp-Regular.otf"
 fc-cache -f "$HOME/.local/share/fonts"
-fc-list :lang=ja | grep -q 'Noto Sans CJK JP'
+fc-list :lang=ja | grep 'Noto Sans CJK JP' > /dev/null
 python -m http.server 8765 --bind 127.0.0.1 --directory _site > /tmp/yoru9-preflight-server.log 2>&1 &
 server_pid=$!
 trap 'kill "$server_pid" 2>/dev/null || true' EXIT
