@@ -421,3 +421,42 @@ class PublishingTest(unittest.TestCase):
 
 
 if __name__ == '__main__': unittest.main()
+
+
+class November20EditorialCorrectionTest(unittest.TestCase):
+    def test_source_checked_correction_preserves_original_and_rejects_unauthorized(self):
+        from zoneinfo import ZoneInfo
+        import copy
+        root=Path(__file__).resolve().parents[1]
+        day="2026-11-20"
+        approved=json.loads((root/"data/approved"/(day+".json")).read_text(encoding="utf-8"))
+        current=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
+        original=json.loads((root/"data/archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8"))
+        self.assertEqual(approved["approvedBy"],"editorial-source-checked-correction-2026-11-20")
+        self.assertEqual(len(original["stories"]),1)
+        self.assertEqual(len(current["stories"]),2)
+        self.assertEqual(validate_approved(approved,day),current)
+        self.assertTrue(approved["stories"][0]["majorPersonalFailureVerified"])
+        self.assertFalse(approved["stories"][1]["majorPersonalFailureVerified"])
+        for story in approved["stories"]:
+            self.assertTrue(story["originalReportingVerified"] and story["editorQualityVerified"])
+            self.assertTrue(story["surpriseVerified"] and story["stageTsukkomiVerified"])
+            self.assertIn("差し替え",story["correctionNote"])
+        with tempfile.TemporaryDirectory() as temp:
+            dest=Path(temp)
+            (dest/"data"/"approved").mkdir(parents=True)
+            (dest/"data"/"archive").mkdir(parents=True)
+            (dest/"data"/"approved"/(day+".json")).write_text(json.dumps(approved,ensure_ascii=False),encoding="utf-8")
+            (dest/"data"/"archive"/(day+".json")).write_text(json.dumps(original,ensure_ascii=False),encoding="utf-8")
+            (dest/"data"/"current.json").write_text(json.dumps(original,ensure_ascii=False),encoding="utf-8")
+            now=datetime(2026,11,20,22,0,tzinfo=ZoneInfo("Asia/Tokyo"))
+            self.assertTrue(publish(dest,now))
+            self.assertEqual(json.loads((dest/"data"/"current.json").read_text(encoding="utf-8")),current)
+            self.assertEqual(json.loads((dest/"data"/"archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8")),original)
+            self.assertFalse(publish(dest,now))
+            unauthorized=copy.deepcopy(approved)
+            unauthorized["approvedBy"]="automated-two-stage-review"
+            unauthorized["stories"][0]["quip"]="別のツッコミを無断で入れてはならない！"
+            (dest/"data"/"approved"/(day+".json")).write_text(json.dumps(unauthorized,ensure_ascii=False),encoding="utf-8")
+            with self.assertRaises(ValueError):
+                publish(dest,now)
