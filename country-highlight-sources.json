@@ -18,6 +18,10 @@
       {
         "name": "Brand USA / Visit The USA",
         "url": "https://www.visittheusa.com/"
+      },
+      {
+        "name": "U.S. Office of Personnel Management (federal holidays)",
+        "url": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
       }
     ],
     "GB": [
@@ -78,12 +82,20 @@
       {
         "name": "Italia.it / Agenzia Nazionale del Turismo",
         "url": "https://www.italia.it/en/"
+      },
+      {
+        "name": "Venezia Unica / Venice official city events",
+        "url": "https://www.veneziaunica.it/en/"
       }
     ],
     "DE": [
       {
         "name": "Germany Travel / German National Tourist Board",
         "url": "https://www.germany.travel/en/"
+      },
+      {
+        "name": "visitBerlin / Berlin Tourism",
+        "url": "https://www.visitberlin.de/en/"
       }
     ]
   }
