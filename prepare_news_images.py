@@ -143,7 +143,7 @@ def extract_openai_image_bytes(payload):
         raise ValueError("OpenAI returned invalid base64 image data") from exc
     if not 20_000<=len(raw)<=9_000_000:
         raise ValueError("OpenAI generated image outside allowed byte range")
-    if not (raw[:3]==b"\\xff\\xd8\\xff" or raw[:8]==b"\\x89PNG\\r\\n\\x1a\\n"
+    if not (raw[:3]==b"\xff\xd8\xff" or raw[:8]==b"\x89PNG\r\n\x1a\n"
             or (raw[:4]==b"RIFF" and raw[8:12]==b"WEBP")):
         raise ValueError("OpenAI returned unsupported image bytes")
     return raw
