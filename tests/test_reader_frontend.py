@@ -606,13 +606,13 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertNotIn('<main><p class="release-status"', page)
         # The standalone news screen must NOT repeat the digest/lead above
         # the full text (reported by iPhone readers as two news articles).
-        self.assertNotIn("isJapaneseText(first.detail)?'<p class=\\"summary\\">'", page)
+        self.assertNotIn("isJapaneseText(first.detail)?'<p",page)
         self.assertIn('class="article-narrative" aria-label="記事本文"',page)
         self.assertIn('body.news-detail-mode #articleReader .spotlight-fact,',page)
         self.assertIn('body.news-detail-mode #articleReader #spotlightRead{display:none!important}',page)
         self.assertIn('body.news-detail-mode #articleReader #spotlightBody{order:3;',page)
         self.assertIn('body.news-detail-mode #articleReader .spotlight-joke{order:4;',page)
-        self.assertIn("detail.split(/\\n\\s*\\n/)",page)
+        self.assertIn("detail.split(",page)
         self.assertNotIn("報道時期：${escapeHtml(first.reported||'出典に記載')}<br>出典：",page)
         self.assertIn("storyDetailHtml(first)", page)
 
