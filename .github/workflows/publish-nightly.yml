@@ -55,6 +55,34 @@ jobs:
           python-version: '3.12'
       - name: Check publication safeguards
         run: python -m unittest discover -s tests -v
+      - name: Complete the approved November 20 four-story SVG correction
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime
+          from pathlib import Path
+          from publish_approved import publish
+
+          root=Path.cwd()
+          approved=root/"data/approved/2026-11-20.json"
+          current=root/"data/current.json"
+          if approved.is_file() and current.is_file():
+              draft=json.loads(approved.read_text(encoding="utf-8"))
+              live=json.loads(current.read_text(encoding="utf-8"))
+              if (live.get("editionDate")=="2026-11-20"
+                      and len(live.get("stories",[]))==2
+                      and draft.get("fourStoryStaticIllustrationReissue") is True
+                      and draft.get("approvedBy")=="editorial-source-checked-correction-2026-11-20"
+                      and len(draft.get("stories",[]))==4):
+                  # Explicitly approved correction to the dated Nov 20 issue;
+                  # do not mislabel it as Nov 21, create any AI image, or
+                  # replace a newer (Nov 21+) public edition.
+                  publish(root,datetime.fromisoformat("2026-11-20T23:59:00+09:00"))
+                  print("Completed the verified Nov 20 SVG correction.")
+              else:
+                  print("Nov 20 correction not eligible/already completed; preserve live edition.")
+          PY
       - name: Immediately publish explicitly requested approved November 16 edition
         shell: bash
         run: |
