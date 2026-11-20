@@ -4,7 +4,12 @@ import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 
-const url='https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/';
+// Release candidates run against their pre-deployment local bundle. The
+// post-deploy smoke keeps checking the actual public GitHub Pages origin.
+const previewUrl=process.env.READER_SITE_URL||'';
+if(previewUrl&&!/^http:\/\/127\.0\.0\.1:\d+\/$/.test(previewUrl))
+ throw new Error('Pre-release smoke URL must be a local loopback HTTP server');
+const url=previewUrl||'https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/';
 await fs.mkdir('mobile-screenshots',{recursive:true});
 // GitHub's Ubuntu 24.04 runner already ships Google Chrome. Use that in CI
 // instead of downloading a second browser and running a slow APT setup.
@@ -28,7 +33,7 @@ try{
    // misreporting a stale CDN page as a new-design regression.
    let res;
    let freshDesign=false;
-   for(let attempt=0;attempt<16;attempt++){
+   for(let attempt=0;attempt<(previewUrl?1:16);attempt++){
     const freshUrl=new URL(url);
     freshUrl.searchParams.set('visual_smoke',String(Date.now())+'-'+attempt);
     res=await page.goto(freshUrl.toString(),{waitUntil:'domcontentloaded',timeout:35000});
