@@ -424,7 +424,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn("flight-wrong-country",payload)
         for key,stop in payload.items():
             with self.subTest(event=key):
-                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ","アルゼンチン","フランス","ニュージーランド"))
+                self.assertIn(stop["country"],("韓国","ブラジル","イギリス","日本","アメリカ合衆国","スペイン","アンティグア・バーブーダ","アルゼンチン","フランス","ニュージーランド","イタリア","ドイツ"))
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
