@@ -166,7 +166,7 @@ def validate_approved(data, expected_date):
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
     if edition_type == 'regular' and issue_day >= date(2026, 11, 19):
-        # Five is the ceiling, never a quota. Publish 1-5 independently
+        # Five is the ceiling, never a quota. Publish 1-5 original-source
         # checked articles, with no filler and no zero-story issue.
         require(isinstance(stories, list) and 1 <= len(stories) <= 5,
                 '通常号は検証・編集承認済みニュース1〜5本を公開します。0本と6本以上は公開できません')
@@ -246,7 +246,7 @@ def validate_approved(data, expected_date):
         urls = story.get('verificationUrls')
         # Existing historical/special records retain their original two-source
         # contract. New regular issues may use ONE verified original publisher
-        # if the separate AI fact review confirmed its actual article text.
+        # if the concise source-fidelity check confirmed its original body.
         min_sources = 1 if edition_type == 'regular' and issue_day >= date(2026, 11, 17) else 2
         require(isinstance(urls, list) and len(urls) >= min_sources and all(valid_url(u) for u in urls),
                 f'{i}本目は{min_sources}件以上の検証用HTTPS URLが必要です')
@@ -258,7 +258,7 @@ def validate_approved(data, expected_date):
                     f'{i}本目の単独報道元は審査済み媒体ではありません')
             require(story.get('sourceBasis') == 'original-report' and
                     story.get('originalReportingVerified') is True,
-                    f'{i}本目の独自取材を独立審査で確認してください')
+                    f'{i}本目の独自取材を出典本文との照合で確認してください')
             require(story.get('attributionNote') == SINGLE_SOURCE_NOTE,
                     f'{i}本目の単独報道の注意書きがありません')
         else:
