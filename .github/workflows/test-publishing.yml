@@ -19,6 +19,7 @@ on:
       - 'build_site.py'
       - 'check_country_experience.py'
       - 'check_release_candidate.py'
+      - 'run_mobile_preflight.sh'
       - 'check_public_country_release.py'
       - 'check_release_health.py'
       - 'send_release_notice.py'
@@ -52,6 +53,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Run publishing and privacy tests
         run: python -m unittest discover -s tests -v
       - name: Check public site build
@@ -59,4 +63,14 @@ jobs:
           python build_site.py
           python check_release_candidate.py --site _site
           test -f _site/index.html
+      - name: Preview mobile navigation, photos and quiz at 320/375/393px before merge
+        run: bash run_mobile_preflight.sh
+      - name: Preserve pre-release visual diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-mobile-screenshots
+          path: mobile-screenshots/
+          if-no-files-found: ignore
+          retention-days: 7
           test ! -e _site/data/approved
