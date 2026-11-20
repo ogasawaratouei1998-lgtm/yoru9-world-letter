@@ -35,7 +35,7 @@ class CollectionTest(unittest.TestCase):
                        "major blunder","AI hoax","wrong country",
                        "wrong price","error millonario","teurer Fehler","誤落札"):
             self.assertTrue(any(phrase in q for q in queries),phrase)
-        self.assertTrue(any('"mistake"' in q and '"mix-up"' in q for q in queries))
+        self.assertEqual(len(queries),25)  # exact bounded five calls per day
 
     def test_unseen_country_discovery_rotates_without_claiming_publisher_origin(self):
         from datetime import date,timedelta
