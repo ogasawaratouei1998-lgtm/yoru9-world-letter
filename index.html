@@ -1644,11 +1644,61 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
  #closing .quote-archive summary{padding:12px 10px}
  #closing .quote-archive-list li{padding:12px 10px}
 }
+
+/* The nightly notification entry replaces the edition badge at the top right. */
+.nav{flex-wrap:nowrap;overflow:visible}
+.nav .logo{min-width:0;flex:0 1 auto;white-space:nowrap}
+.nav .notification-panel{position:relative;flex:0 0 auto;margin:0;padding:0;background:transparent;border:0}
+.nav .notification-details{position:relative}
+.nav .notification-details>summary{
+ display:flex;align-items:center;gap:7px;min-height:46px;padding:7px 12px;
+ list-style:none;cursor:pointer;border:1px solid #fff0bf;border-radius:12px;
+ background:linear-gradient(130deg,#ffe6a6,#f2b869);color:#14243b;
+ box-shadow:0 3px 12px #f1c6774d;font-size:.81rem;line-height:1.3;font-weight:900;
+ text-align:left}
+.nav .notification-details>summary::-webkit-details-marker{display:none}
+.nav .notification-details>summary::marker{content:""}
+.nav .notification-details>summary:focus-visible{outline:3px solid #c1f4e5;outline-offset:3px}
+.nav .notification-bell{font-size:1.13rem;line-height:1;flex:0 0 auto}
+.nav .notification-label{display:block;white-space:nowrap}
+.nav .notification-label small{display:block;margin-top:2px;font-size:.79rem;line-height:1.2;font-weight:800}
+.nav .notification-details[open]>summary{background:#ffe8b0;border-color:#fff4ce}
+.nav .notification-settings{
+ position:absolute;right:0;top:calc(100% + 8px);z-index:40;
+ width:min(350px,calc(100vw - 32px));max-width:calc(100vw - 32px);
+ padding:16px;border:1px solid #e9c57f;border-radius:14px;
+ background:#182b45;color:#fff0d8;text-align:left;
+ box-shadow:0 15px 36px #000a}
+.nav .notification-settings p{margin:0 0 10px;font-size:.875rem;line-height:1.7;color:#f3e9dc}
+.nav .notification-settings button{display:block;width:100%;margin-top:8px}
+.nav .notification-settings #notificationStatus{margin:11px 0 0;font-size:.82rem;color:#e0eaf3}
+@media(max-width:520px){
+ .nav{flex-wrap:nowrap;gap:6px}
+ .nav .logo{font-size:.79rem;gap:5px}
+ .nav .logo-mark{width:26px;height:26px;flex-basis:26px}
+ .nav .notification-details>summary{min-height:48px;padding:7px 8px;gap:5px;font-size:.74rem}
+ .nav .notification-label small{font-size:.73rem}
+ .nav .notification-bell{font-size:1rem}
+}
+@media(max-width:355px){
+ .nav .logo{font-size:.72rem;gap:4px}
+ .nav .logo-mark{width:24px;height:24px;flex-basis:24px}
+ .nav .notification-details>summary{padding:6px;gap:4px;font-size:.7rem}
+ .nav .notification-label small{font-size:.7rem}
+ .nav .notification-bell{font-size:.92rem}
+}
 </style>
 </head>
 <body><div class="wrap">
 <a class="skip-link" href="#issueGallery">ニュースを選ぶ</a>
-<header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><div class="tag" id="editionTag">公開号を読み込み中</div></header>
+<header class="nav"><div class="logo"><img class="logo-mark" src="./assets/icon.svg" alt="" width="32" height="32">よる9じの世界便り</div><span id="editionTag" hidden>公開号を読み込み中</span>
+<section class="notification-panel" id="notificationSection" aria-label="夜9時のお知らせ・通知設定"><details class="notification-details" id="notificationDetails">
+<summary><span class="notification-bell" aria-hidden="true">🔔</span><span class="notification-label">夜9時のお知らせ<small>通知設定</small></span></summary>
+<div class="notification-settings"><p id="notificationInfo">通知サービスの状態を確認しています。</p>
+<button id="notificationButton" type="button" disabled>夜9時の通知を受け取る</button>
+<button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
+<p role="status" aria-live="polite" id="notificationStatus">通知機能の利用可否を確認中です。</p></div>
+</details></section></header>
 <main>
 <section class="evening-entry" aria-label="今夜のごあいさつ"><p>今日も一日、おつかれさま。</p><a id="closingJump" href="#closing">今夜は、ひと言だけ読む</a></section>
 <section class="hero" id="atlasHero" aria-label="世界から届くニュースの舞台">
@@ -1780,13 +1830,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 </section>
 <div id="offlineNotice" class="offlineNotice" role="status" hidden>オフライン表示中です。保存済みの号を表示している場合があります。最新の記事はネットに接続してから確認してください。</div>
 <div class="issue-details" aria-label="配信と出典について"><div class="status" role="group" aria-label="配信情報"><div class="statusline"><strong id="editionTitle">公開号を読み込み中</strong><span id="editionMessage" hidden>事実確認済みの記事を準備中です</span><p class="release-status" id="releaseStatus" role="status" aria-live="polite">最新の公開号を確認しています…</p></div></div><details class="edition-context"><summary>配信日・報道期間について</summary><p id="dateGuide">「配信日」はこの号を届ける日です。記事が起きた日や報道された日とは異なります。</p><p id="clock">日本時間を確認中</p></details></div>
-<section class="notification-panel" id="notificationSection" hidden><details class="notification-details">
-<summary>夜9時のお知らせ・通知設定</summary>
-<div class="notification-settings"><p id="notificationInfo">新しい配信号が公開されたらお知らせします。</p>
-<button id="notificationButton" type="button" disabled>夜9時の通知を受け取る</button>
-<button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
-<p role="status" aria-live="polite" id="notificationStatus"></p></div>
-</details></section>
+
 <section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>世界からの便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今日のひと言 · 失敗と挑戦</span><small id="dailyQuoteDate" class="quote-date"></small><p id="nightlyMessage">出典を確認した言葉を紹介します。</p><p id="dailyQuoteAuthor" class="quote-attribution"></p><small class="quote-source">出典：<a id="dailyQuoteSource" target="_blank" rel="noopener noreferrer">原文を見る</a></small></div><details class="quote-archive" id="pastQuoteArchive">
  <summary>過去の名言集を見る <span class="quote-archive-hint" id="pastQuoteCount"></span></summary>
  <div class="quote-archive-content">
