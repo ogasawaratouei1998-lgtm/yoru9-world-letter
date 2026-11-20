@@ -69,7 +69,7 @@ def extract_image_bytes(response):
         except (ValueError,base64.binascii.Error):
             continue
         if 20_000<=len(raw)<=9_000_000 and (
-            raw[:3]==b"\\xff\\xd8\\xff" or raw[:8]==b"\\x89PNG\\r\\n\\x1a\\n" or
+            raw[:3]==b"\xff\xd8\xff" or raw[:8]==b"\x89PNG\r\n\x1a\n" or
             (raw[:4]==b"RIFF" and raw[8:12]==b"WEBP")
         ):
             return raw
