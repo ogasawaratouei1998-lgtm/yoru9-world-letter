@@ -302,30 +302,45 @@ try{
    const png=await page.request.get(new URL('assets/apple-touch-icon.png',url).toString());
    assert.equal(png.status(),200,'iPhone home screen PNG is deployed');
    // Phase 2: typography, editorial labeling and touch targets.
-   const leadHierarchy=await page.evaluate(()=>{
+   const articleHierarchy=await page.evaluate(()=>{
     const title=document.querySelector('#spotlightTitle');
-    const facts=document.querySelector('.spotlight-fact');
+    const fact=document.querySelector('.spotlight-fact');
+    const story=document.querySelector('#spotlightBody');
+    const narrative=document.querySelector('#spotlightBody .article-narrative');
     const quip=document.querySelector('.spotlight-joke');
+    const read=document.querySelector('#spotlightRead');
     return {
-      titleBottom:title?.getBoundingClientRect().bottom,
-      factTop:facts?.getBoundingClientRect().top,
-      factBottom:facts?.getBoundingClientRect().bottom,
-      quipTop:quip?.getBoundingClientRect().top,
-      quipBottom:quip?.getBoundingClientRect().bottom,
-      label:facts?.querySelector('.fact-kicker')?.textContent?.trim(),
-      disclaimer:quip?.querySelector('.humor-marker')?.textContent?.trim(),
-      factBackground:getComputedStyle(facts).backgroundImage,
-      quipBackground:getComputedStyle(quip).backgroundImage
+     titleBottom:title?.getBoundingClientRect().bottom,
+     articleTop:story?.getBoundingClientRect().top,
+     articleBottom:story?.getBoundingClientRect().bottom,
+     quipTop:quip?.getBoundingClientRect().top,
+     factHidden:getComputedStyle(fact).display==='none',
+     readHidden:getComputedStyle(read).display==='none',
+     quipDisclaimer:quip?.querySelector('.humor-marker')?.textContent?.trim(),
+     paragraphCount:narrative?.querySelectorAll('.detailtext').length,
+     repeatedSummaries:story?.querySelectorAll('p.summary').length,
+     repeatedDates:story?.querySelectorAll('p.reported').length,
+     sourceRepeated:story?.querySelector('.source')?.textContent?.includes('報道時期：')
     };
    });
-   assert.equal(leadHierarchy.label,'起きたこと','reporting is clearly labeled');
-   assert.equal(leadHierarchy.disclaimer,'創作の冗談','AI quip is explicitly marked as humor');
-   assert.ok(leadHierarchy.titleBottom<=leadHierarchy.factTop+2,
-    'headline precedes fact summary');
-   assert.ok(leadHierarchy.factBottom<leadHierarchy.quipTop,
-    'facts and AI punchline are visually separated');
-   assert.notEqual(leadHierarchy.factBackground,leadHierarchy.quipBackground,
-    'AI joke uses a distinct editorial surface');
+   assert.ok(articleHierarchy.titleBottom<=articleHierarchy.articleTop+2,
+    'the headline leads straight into the full article instead of a second synopsis');
+   assert.equal(articleHierarchy.factHidden,true,
+    'no short summary is repeated above the full article');
+   assert.equal(articleHierarchy.readHidden,true,
+    'the fully opened article needs no redundant read-more button');
+   assert.equal(articleHierarchy.repeatedSummaries,0,
+    'summary appears on the overview card only, never a second time in the article');
+   assert.ok(articleHierarchy.paragraphCount>=1,
+    'each opened story has one complete editorial narrative');
+   assert.equal(articleHierarchy.repeatedDates,1,
+    'reported date appears only once');
+   assert.equal(articleHierarchy.sourceRepeated,false,
+    'the source link does not repeat a second reported-date header');
+   assert.ok(articleHierarchy.articleBottom<=articleHierarchy.quipTop+2,
+    'the complete factual story precedes the separate AI joke');
+   assert.equal(articleHierarchy.quipDisclaimer,'創作の冗談',
+    'the creative joke is clearly distinct from reporting');
    if(await gallery.count()>1){
     const expectedTitle=await page.locator('#stories [data-story-index="1"] h3').textContent();
     await page.locator('#readerNext').click();
@@ -337,9 +352,10 @@ try{
      'second story is never stacked as an extra card');
     await page.locator('#readerPrev').click();
    }
-   const primaryButton=page.locator('#spotlightRead');
-   const buttonHeight=await primaryButton.evaluate(el=>el.getBoundingClientRect().height);
-   assert.ok(buttonHeight>=44,'lead article action must be touch-friendly');
+   assert.equal(await page.locator('#spotlightRead').isHidden(),true,
+    'the old expand/collapse control is absent on an already-open full article');
+   const backHeight=await page.locator('#readerBack').evaluate(el=>el.getBoundingClientRect().height);
+   assert.ok(backHeight>=44,'the news-list back control remains touch-friendly');
    const shortEdition=await page.evaluate(()=>document.querySelectorAll('#stories .story').length+1<=3);
    if(shortEdition){
     const hidden=await page.locator('.filters').evaluate(el=>getComputedStyle(el).display==='none');
