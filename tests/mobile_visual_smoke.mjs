@@ -91,7 +91,7 @@ try{
    assert.ok(editorialCover.headlineBottom<=editorialCover.conceptTop+2&&
     editorialCover.conceptBottom<=editorialCover.galleryTop+2,
     'the reader opens with the editorial concept and story gallery');
-   // The three-comic gallery replaces a repeated always-visible article list.
+   // The visual gallery replaces a repeated always-visible article list.
    const articleReader=page.locator('#articleReader');
    assert.equal(await articleReader.isHidden(),true,
     'no second full news list appears before the reader chooses a picture');
@@ -131,12 +131,11 @@ try{
    assert.ok(teaserGeometry.teaserHeight<=225,
     'opening laugh should be a compact speech bubble, not another full illustration card: '+
       teaserGeometry.teaserHeight+'px');
-   assert.equal(teaserGeometry.buttons.length,2,'both opening controls remain usable');
-   assert.ok(Math.abs(teaserGeometry.buttons[0].top-teaserGeometry.buttons[1].top)<2,
-    'read and smile actions share the same row rather than stacking vertically');
+   assert.equal(teaserGeometry.buttons.length,1,
+    'the simplified opening joke has one clearly labeled read action');
    assert.ok(teaserGeometry.buttons.every(b=>b.height>=44&&
      b.left>=teaserGeometry.teaserLeft-1&&b.right<=teaserGeometry.teaserRight+1),
-    'both actions stay inside their teaser and meet minimum touch size');
+    'the single read action stays inside the teaser and meets minimum touch size');
    assert.ok(teaserGeometry.teaser.left>=teaserGeometry.hero.left-2&&
      teaserGeometry.teaser.right<=teaserGeometry.hero.right+2,
     'opening speech bubble never overflows the phone viewport');
@@ -175,7 +174,8 @@ try{
    await page.locator('#readerBack').click();
    assert.equal(await articleReader.isHidden(),true);
    assert.equal(await page.locator('#atlasHero').isVisible(),true);
-   assert.equal(await page.locator('#quipTeaser .teaser-smile').getAttribute('aria-pressed'),'false');
+   assert.equal(await page.locator('#quipTeaserRead').isVisible(),true,
+    'the single opening read action remains available after returning to the gallery');
    const gallery=page.locator('#issueGallery .gallery-tile');
    assert.equal(await page.locator('#galleryHeading').textContent(),
     '世界の「まさか」'+editorialCover.storyCount+'コマ劇場',
