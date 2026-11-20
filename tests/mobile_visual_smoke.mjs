@@ -162,14 +162,15 @@ try{
     'the news gallery cannot stack behind an opened article');
    assert.equal(await page.locator('#todayMapSection').isHidden(),true,
     'the country map cannot overlap with the separate article screen');
-   const firstSmile=page.locator('#spotlightBody .smile');
-   await firstSmile.click();
-   assert.equal(await firstSmile.getAttribute('aria-pressed'),'true',
-    'the article reaction follows the selected news item');
-   assert.ok(!(await firstSmile.evaluate(el=>el.classList.contains('smile-burst'))),
-    'reduced-motion users never get forced sparkle movement');
-   await firstSmile.click();
-   assert.equal(await firstSmile.getAttribute('aria-pressed'),'false');
+   // The simplified reader no longer shows a reaction button. Instead,
+   // verify the source citation and one usable sharing action.
+   const articleSource=page.locator('#spotlightBody .source a');
+   assert.equal(await articleSource.count(),1,
+    'the article retains its original reporting source');
+   assert.ok((await articleSource.getAttribute('href')).startsWith('https://'),
+    'the source citation links to an HTTPS original');
+   assert.equal(await page.locator('#spotlightBody button.share').count(),1,
+    'the simplified reader keeps its share action');
    await page.screenshot({path:'mobile-screenshots/first-laugh-'+viewport.name+'.png',animations:'disabled'});
    await page.locator('#readerBack').click();
    assert.equal(await articleReader.isHidden(),true);
@@ -596,8 +597,20 @@ try{
        'when no verified image exists, the quiz explains the omission without a fake photo');
      }
      const next=quiz.locator('#todayQuizNext');
-     if((await next.textContent()).includes('次の問題へ'))await next.click();
-     else break;
+     assert.equal((await next.textContent()).trim(),'閉じる',
+      'answer feedback offers a close button, not automatic next-question navigation');
+     if(round<totalRounds-1){
+      await next.click();
+      assert.equal(await quiz.isHidden(),true,
+       'closing an answered round returns to the passport album');
+      await stamps.nth(index).click();
+      assert.equal(await quiz.isVisible(),true,
+       'reopening the same country resumes the next unanswered question');
+      assert.equal(await quiz.locator('#todayQuizResult').isHidden(),true,
+       'the next question opens without leaking the previous answer');
+      assert.equal(await page.evaluate(()=>worldPassportActive?.step),round+1,
+       'the passport resumes at the next unanswered round rather than restarting');
+     }
     }
     assert.equal(await quiz.locator('#todayQuizStampReward').isVisible(),true,
      'finishing the challenge displays a large tangible stamp reward: '+code);
