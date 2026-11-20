@@ -90,6 +90,11 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         self.assertLess(preflight,commit)
         self.assertIn("python check_release_candidate.py --site _site",workflow)
         self.assertIn("python build_site.py",workflow)
+        self.assertIn("bash run_mobile_preflight.sh",workflow)
+        preview=(ROOT/".github/workflows/test-publishing.yml").read_text(encoding="utf-8")
+        self.assertIn("bash run_mobile_preflight.sh",preview)
+        assert "READER_SITE_URL=http://127.0.0.1:8765/" in (
+            ROOT/"run_mobile_preflight.sh").read_text(encoding="utf-8")
         deploy=(ROOT/".github/workflows/deploy-site.yml").read_text(encoding="utf-8")
         self.assertIn("python check_release_candidate.py --site _site",deploy)
         self.assertLess(deploy.index("python check_release_candidate.py --site _site"),
