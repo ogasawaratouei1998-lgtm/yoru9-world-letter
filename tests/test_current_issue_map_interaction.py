@@ -109,7 +109,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("#atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;", page)
         self.assertIn("#atlasHero .today-map-intro-photo img{aspect-ratio:16/10;", page)
         self.assertIn("max-width:calc(100% + 24px)", page)
-        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset)", page)
+        self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset||'')", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
 
     def test_country_buttons_launch_passport_game_not_the_article(self):
