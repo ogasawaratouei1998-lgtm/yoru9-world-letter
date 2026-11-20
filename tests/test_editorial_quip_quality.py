@@ -70,11 +70,13 @@ class EditorialQuipQualityTest(unittest.TestCase):
         for flag in ("firstQuipAngleEarned","firstQuipNaturalSpeech",
                      "firstQuipFinalBeat"):
             self.assertIn(flag,MANZAI_REVIEW)
-            self.assertIn(flag,REVIEW_FIELDS)
-            self.assertIn(flag+":boolean",code)
+            # Drafting craft remains sharp, but redundant micro-score vetoes
+            # are no longer required in the second source-fidelity pass.
+            self.assertNotIn(flag,REVIEW_FIELDS)
         self.assertIn("MANZAI_CRAFT+' You are a Japanese comedy show writer",code)
         self.assertIn("MANZAI_CRAFT+\n",code)
-        self.assertIn('MANZAI_REVIEW+" You are independent adversarial',code)
+        self.assertIn("SOURCE-FIDELITY CHECK",code)
+        self.assertNotIn('audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_REVIEW',code)
         self.assertEqual(code.count("audit=ai("),1,
                          "quality upgrade must not add a scarce AI fact-review call")
         self.assertIn("no quip-worthy story",MANZAI_CRAFT)
@@ -88,7 +90,7 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertIn("Clarity veto:",WRITING_CRAFT)
         self.assertIn("the reader must understand both jokes on the first pass",WRITING_CRAFT)
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("Reject a quip that a Japanese reader cannot understand on the first read after the summary",code)
+        self.assertIn("be accurate, understandable on first read",code)
 
     def test_november_17_all_six_quips_and_closing_have_editorial_quality(self):
         day="2026-11-17"
