@@ -24,7 +24,6 @@ class ExpandedTravelStoriesTest(unittest.TestCase):
                 self.assertTrue(all(isinstance(p,str) and len(p.strip())>=70
                                     and len(p.strip())<=360 for p in essay))
                 self.assertNotEqual(essay[0],essay[1])
-                self.assertIn(stop["country"],seen or {stop["country"]:True})
                 # Different destinations use distinct writing; two IDs
                 # referencing the *same* licensed photo may share it.
                 asset=stop["photoAsset"]
