@@ -42,7 +42,7 @@ class CountryExperienceContractTest(unittest.TestCase):
                                         "country":"Nigeria"}])
 
     def test_legacy_country_does_not_bypass_new_country_quality_gate(self):
-        with self.assertRaisesRegex(ValueError,"GB: no licensed country-cover"):
+        with self.assertRaisesRegex(ValueError,"GB: cover source/creator"):
             country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"}])
 
     def test_two_paragraph_travel_story_is_required_for_published_country(self):
