@@ -1607,6 +1607,43 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
  margin:3px auto 8px;line-height:1.55}
 #closing .night-quote .quote-source{display:block;font-size:.72rem;color:#d8e5e9;line-height:1.7}
 #closing .night-quote .quote-source a{color:#c1e9d9;text-decoration:underline;text-underline-offset:3px}
+
+/* One compact, accessible archive immediately below the daily quotation. */
+#closing .quote-archive{max-width:28rem;margin:12px auto 10px;text-align:left}
+#closing .quote-archive summary{
+ cursor:pointer;min-height:48px;display:list-item;list-style-position:inside;
+ border:1px solid #8ba7ba;border-radius:12px;
+ background:#2b4560;color:#ffdeac;font-size:.91rem;font-weight:800;
+ line-height:1.5;padding:12px 13px;
+}
+#closing .quote-archive summary::marker{color:#c7e6db}
+#closing .quote-archive summary:focus-visible,
+#closing .quote-archive a:focus-visible,
+#closing .quote-archive button:focus-visible{outline:3px solid #b9f1de;outline-offset:3px}
+#closing .quote-archive-hint{font-size:.72rem;color:#d3e4e7;font-weight:600}
+#closing .quote-archive-content{padding:12px 3px 0}
+#closing .quote-archive-status{font-size:.77rem;font-weight:500;color:#cbd8e5;line-height:1.65;margin:0 7px 9px}
+#closing .quote-archive-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#closing .quote-archive-list li{border:1px solid #657f98;border-radius:12px;padding:13px 12px;background:#182b44}
+#closing .quote-archive-list time{display:block;font-size:.75rem;font-weight:750;color:#ffdda2}
+#closing .quote-archive-list .archive-quote-text{
+ font-size:clamp(.91rem,3.6vw,1.03rem);font-weight:680;line-height:1.7;
+ margin:9px 0 5px;text-align:left;overflow-wrap:anywhere
+}
+#closing .quote-archive-list .archive-quote-author{font-size:.79rem;font-weight:700;color:#f6d6a4;margin:0 0 7px}
+#closing .quote-archive-list .archive-quote-source{font-size:.75rem;color:#d1e2e5;line-height:1.65;margin:0}
+#closing .quote-archive-list a{color:#c3eadd;text-decoration:underline;text-underline-offset:3px}
+#closing .quote-archive-more{
+ width:100%;min-height:44px;margin:13px 0 3px;padding:10px 14px;
+ border:1px solid #89bfb4;border-radius:11px;background:#29485a;
+ color:#effff5;font-size:.89rem;font-weight:800;cursor:pointer
+}
+#closing .quote-archive-more[hidden]{display:none}
+@media(max-width:520px){
+ #closing .quote-archive{margin:11px auto 9px}
+ #closing .quote-archive summary{padding:12px 10px}
+ #closing .quote-archive-list li{padding:12px 10px}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -1750,7 +1787,14 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 <button id="notificationTestButton" type="button" hidden disabled>この端末で通知をテスト</button>
 <p role="status" aria-live="polite" id="notificationStatus"></p></div>
 </details></section>
-<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>世界からの便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今日のひと言 · 失敗と挑戦</span><small id="dailyQuoteDate" class="quote-date"></small><p id="nightlyMessage">出典を確認した言葉を紹介します。</p><p id="dailyQuoteAuthor" class="quote-attribution"></p><small class="quote-source">出典：<a id="dailyQuoteSource" target="_blank" rel="noopener noreferrer">原文を見る</a></small></div><p class="closing-afterword">次の「まさか」も、世界のどこかから。</p><p class="bye">また、次の便りで。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
+<section class="footerpanel" id="closing"><div class="closing-moon" aria-hidden="true">☾</div><h2>世界からの便りは、ここまで。</h2><div class="night-quote" id="closingQuote"><span>今日のひと言 · 失敗と挑戦</span><small id="dailyQuoteDate" class="quote-date"></small><p id="nightlyMessage">出典を確認した言葉を紹介します。</p><p id="dailyQuoteAuthor" class="quote-attribution"></p><small class="quote-source">出典：<a id="dailyQuoteSource" target="_blank" rel="noopener noreferrer">原文を見る</a></small></div><details class="quote-archive" id="pastQuoteArchive">
+ <summary>過去の名言集を見る <span class="quote-archive-hint" id="pastQuoteCount"></span></summary>
+ <div class="quote-archive-content">
+  <p class="quote-archive-status" id="pastQuoteStatus" role="status"></p>
+  <ol class="quote-archive-list" id="pastQuoteList" aria-label="過去の日替わり名言"></ol>
+  <button type="button" class="quote-archive-more" id="pastQuoteMore" hidden>さらに過去の名言を見る</button>
+ </div>
+</details><p class="closing-afterword">次の「まさか」も、世界のどこかから。</p><p class="bye">また、次の便りで。</p><div id="endprogress" class="small" aria-live="polite" hidden></div></section>
 <details class="disclosure-details"><summary>編集方針・出典と配信情報について</summary><aside class="note" id="disclosure">公開号を確認しています。記事は出典に基づいて独自に短く紹介し、AIツッコミは創作の冗談です。</aside></details>
 </main><footer>よる9じの世界便り · 世界のやらかしを集めて、誰かの夜に。</footer></div>
 <div id="toast" class="toast" role="status" hidden></div>
@@ -2741,6 +2785,71 @@ function failureQuoteForDate(jstDate){
  const index=Number.isFinite(day)?((Math.floor(day)%DAILY_FAILURE_QUOTES.length)+DAILY_FAILURE_QUOTES.length)%DAILY_FAILURE_QUOTES.length:0;
  return DAILY_FAILURE_QUOTES[index];
 }
+// No fictional past editions: the rotating quote feature began on 2026-11-20.
+const DAILY_FAILURE_QUOTES_FIRST_DAY='2026-11-20';
+const PAST_QUOTES_BATCH_SIZE=12;
+let pastQuotesDate='',pastQuotesRendered=0;
+function pastQuoteTotalDays(jstDate){
+ const current=Date.parse(jstDate+'T00:00:00Z');
+ const first=Date.parse(DAILY_FAILURE_QUOTES_FIRST_DAY+'T00:00:00Z');
+ return Number.isFinite(current)?Math.max(0,Math.floor((current-first)/86400000)):0;
+}
+function pastQuoteEntries(jstDate,offset=0,limit=PAST_QUOTES_BATCH_SIZE){
+ const current=Date.parse(jstDate+'T00:00:00Z');
+ const total=pastQuoteTotalDays(jstDate);
+ const start=Math.max(0,Math.floor(offset));
+ const count=Math.min(Math.max(0,Math.floor(limit)),Math.max(0,total-start));
+ return Array.from({length:count},(_,i)=>{
+  const date=new Date(current-(start+i+1)*86400000).toISOString().slice(0,10);
+  return {date,quote:failureQuoteForDate(date)};
+ });
+}
+function appendPastQuoteBatch(){
+ const items=pastQuoteEntries(pastQuotesDate,pastQuotesRendered);
+ const list=$('pastQuoteList');
+ for(const {date,quote} of items){
+  const item=document.createElement('li');
+  const when=document.createElement('time');
+  when.dateTime=date;
+  when.textContent=date.replaceAll('-','.')+' 掲載';
+  const saying=document.createElement('p');
+  saying.className='archive-quote-text';
+  saying.textContent='「'+quote.ja+'」';
+  const author=document.createElement('p');
+  author.className='archive-quote-author';
+  author.textContent='— '+quote.person;
+  const source=document.createElement('p');
+  source.className='archive-quote-source';
+  source.append('出典：');
+  const link=document.createElement('a');
+  link.textContent=quote.source+'（日本語意訳）';
+  link.href=safeUrl(quote.url);
+  link.target='_blank';
+  link.rel='noopener noreferrer';
+  source.append(link);
+  item.append(when,saying,author,source);
+  list.append(item);
+ }
+ pastQuotesRendered+=items.length;
+ $('pastQuoteMore').hidden=pastQuotesRendered>=pastQuoteTotalDays(pastQuotesDate);
+}
+function updatePastQuoteArchive(jstDate){
+ const total=pastQuoteTotalDays(jstDate);
+ pastQuotesDate=jstDate;
+ pastQuotesRendered=0;
+ $('pastQuoteList').replaceChildren();
+ $('pastQuoteCount').textContent=total?'（'+total+'日分）':'';
+ $('pastQuoteStatus').textContent=total?
+  '過去の日替わり名言を新しい日付から表示しています。出典から原文も確認できます。':
+  '名言の記録は2026年11月20日から。翌日以降、ここに過去の言葉が増えていきます。';
+ $('pastQuoteMore').hidden=true;
+ if(total&&$('pastQuoteArchive').open)appendPastQuoteBatch();
+}
+$('pastQuoteArchive').addEventListener('toggle',()=>{
+ if($('pastQuoteArchive').open && pastQuotesRendered===0 && pastQuoteTotalDays(pastQuotesDate)>0)
+  appendPastQuoteBatch();
+});
+$('pastQuoteMore').addEventListener('click',appendPastQuoteBatch);
 function updateDailyFailureQuote(jstDate){
  const quote=failureQuoteForDate(jstDate);
  $('nightlyMessage').textContent='「'+quote.ja+'」';
@@ -2750,6 +2859,7 @@ function updateDailyFailureQuote(jstDate){
  $('dailyQuoteDate').textContent=jstDate.replaceAll('-','.')+' / 今日のひと言';
  $('closingQuote').hidden=false;
  $('closingJump').hidden=false;
+ updatePastQuoteArchive(jstDate);
 }
 function render(){const d=edition.stories;
  selectedArticleIndex=0;
