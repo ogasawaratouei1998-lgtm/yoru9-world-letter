@@ -434,25 +434,44 @@ class November20EditorialCorrectionTest(unittest.TestCase):
         original=json.loads((root/"data/archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8"))
         self.assertEqual(approved["approvedBy"],"editorial-source-checked-correction-2026-11-20")
         self.assertEqual(len(original["stories"]),1)
-        self.assertEqual(len(current["stories"]),2)
-        self.assertEqual(validate_approved(approved,day),current)
+        # The PR is validated BEFORE publishing; after the real image run the
+        # current edition changes from the source-checked 2-story correction
+        # to the requested 4-story reissue. Both phases are intentional.
+        published=validate_approved(approved,day)
+        self.assertTrue(approved["editionRequiresImages"])
+        self.assertEqual(len(published["stories"]),4)
+        self.assertIn(len(current["stories"]),(2,4))
+        if len(current["stories"])==4:
+            self.assertEqual(published,current)
+        previous_path=root/"data/archive/revisions"/(day+"-before-four-image-reissue.json")
+        previous=(json.loads(previous_path.read_text(encoding="utf-8"))
+                  if previous_path.exists() else current)
+        self.assertEqual(len(previous["stories"]),2)
         self.assertTrue(approved["stories"][0]["majorPersonalFailureVerified"])
         self.assertFalse(approved["stories"][1]["majorPersonalFailureVerified"])
         for story in approved["stories"]:
             self.assertTrue(story["originalReportingVerified"] and story["editorQualityVerified"])
             self.assertTrue(story["surpriseVerified"] and story["stageTsukkomiVerified"])
-            self.assertIn("差し替え",story["correctionNote"])
+            self.assertTrue(any(word in story["correctionNote"] for word in ("差し替え","追補")))
         with tempfile.TemporaryDirectory() as temp:
             dest=Path(temp)
             (dest/"data"/"approved").mkdir(parents=True)
-            (dest/"data"/"archive").mkdir(parents=True)
+            (dest/"data"/"archive/revisions").mkdir(parents=True)
             (dest/"data"/"approved"/(day+".json")).write_text(json.dumps(approved,ensure_ascii=False),encoding="utf-8")
-            (dest/"data"/"archive"/(day+".json")).write_text(json.dumps(original,ensure_ascii=False),encoding="utf-8")
-            (dest/"data"/"current.json").write_text(json.dumps(original,ensure_ascii=False),encoding="utf-8")
+            (dest/"data"/"archive"/(day+".json")).write_text(json.dumps(previous,ensure_ascii=False),encoding="utf-8")
+            (dest/"data"/"current.json").write_text(json.dumps(previous,ensure_ascii=False),encoding="utf-8")
+            (dest/"data"/"archive/revisions"/(day+"-before-correction.json")).write_text(
+                json.dumps(original,ensure_ascii=False),encoding="utf-8")
+            # Use simulated WEBP files ONLY in an isolated test directory.
+            for story in published["stories"]:
+                p=dest/story["imagePath"]
+                p.parent.mkdir(parents=True,exist_ok=True)
+                p.write_bytes(b"RIFF"+(22000).to_bytes(4,"little")+b"WEBP"+b"0"*21900)
             now=datetime(2026,11,20,22,0,tzinfo=ZoneInfo("Asia/Tokyo"))
             self.assertTrue(publish(dest,now))
-            self.assertEqual(json.loads((dest/"data"/"current.json").read_text(encoding="utf-8")),current)
+            self.assertEqual(json.loads((dest/"data"/"current.json").read_text(encoding="utf-8")),published)
             self.assertEqual(json.loads((dest/"data"/"archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8")),original)
+            self.assertEqual(json.loads((dest/"data"/"archive/revisions"/(day+"-before-four-image-reissue.json")).read_text(encoding="utf-8")),previous)
             self.assertFalse(publish(dest,now))
             unauthorized=copy.deepcopy(approved)
             unauthorized["approvedBy"]="automated-two-stage-review"
