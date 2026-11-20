@@ -58,5 +58,5 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
             "WORLD POSTCARD · 有名観光地の小旅行",
             "WORLD POSTCARD missing"
         ).encode("utf-8")
-        with self.assertRaisesRegex(AssertionError, "separation"):
+        with self.assertRaisesRegex(AssertionError, "stale or altered|separation"):
             inspect_public_assets(self.assets, ROOT)
