@@ -16,7 +16,7 @@ import sys
 from urllib.request import Request, urlopen
 from zoneinfo import ZoneInfo
 
-MIN_PUBLISH_DATE="2026-11-21"
+MIN_PUBLISH_DATE="2026-11-20"
 IMAGE_MODEL=os.getenv("GEMINI_IMAGE_MODEL","gemini-3.1-flash-lite-image")
 IMAGE_DIR="assets/news-generated"
 IMAGE_RE=re.compile(r"assets/news-generated/(\d{4}-\d{2}-\d{2})/([a-z0-9][a-z0-9-]{2,90})\.webp\Z")
@@ -122,6 +122,9 @@ def prepare(root,day,key=None,render=None):
     if not approved_path.is_file():return 0
     doc=json.loads(approved_path.read_text(encoding="utf-8"))
     if doc.get("editionType","regular")!="regular":return 0
+    # Nov 20 historical drafts remain unchanged; only the explicitly requested
+    # four-story photorealistic reissue is eligible for new image generation.
+    if day=="2026-11-20" and doc.get("editionRequiresImages") is not True:return 0
     from publish_approved import validate_approved
     # A public image does NOT compensate for insufficient verified reporting.
     if not isinstance(doc.get("stories"),list):
