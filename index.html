@@ -2368,9 +2368,9 @@ function hasDailyGeneratedImage(story){
  const date=String(edition?.editionDate||'');
  return Boolean(story?.imageType==='ai-generated-photorealistic-impression'&&
   typeof story.imagePath==='string'&&
-  /^\\d{4}-\\d{2}-\\d{2}$/.test(date)&&
+  /^\d{4}-\d{2}-\d{2}$/.test(date)&&
   story.imagePath.startsWith('assets/news-generated/'+date+'/')&&
-  /^assets\\/news-generated\\/\\d{4}-\\d{2}-\\d{2}\\/[a-z0-9-]+\\.webp$/.test(story.imagePath));
+  /^assets\/news-generated\/\d{4}-\d{2}-\d{2}\/[a-z0-9-]+\.webp$/.test(story.imagePath));
 }
 function newsArt(story){
  if(hasDailyGeneratedImage(story))return './'+story.imagePath;
