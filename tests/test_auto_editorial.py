@@ -759,6 +759,31 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('country_queries=tuple(extra_searches)[:min(1,max(0,max_queries-3))]',leads)
         self.assertIn('min(incident_priority(article)[0] for article in g["articles"])',auto)
 
+    def test_unapproved_story_refills_from_unused_sources_after_source_checks(self):
+        from pathlib import Path
+        source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        begin=source.index("def candidates_with_after_review_refill():")
+        end=source.index("for story in candidates_with_after_review_refill():",begin)
+        recovery=source[begin:end]
+        self.assertIn("yield from draft",recovery)
+        self.assertIn("if len(selected)>=3 or AI_QUOTA_BLOCKED",recovery)
+        self.assertIn("editorial_seconds_remaining()<125",recovery)
+        self.assertIn('used_urls={url for candidate in draft',recovery)
+        self.assertIn('article["url"] in used_urls',recovery)
+        self.assertIn("min(incident_priority(article)[0]",recovery)
+        self.assertIn("spectacular but non-tragic reversal",recovery)
+        self.assertIn("source_bound_batch_drafts(response,batch)",recovery)
+        self.assertIn("yield candidate",recovery)
+        # Every recovered candidate passes the same source/fact/safety gates.
+        source_review=source[end:]
+        for check in ('noncomic_incident_rejection(story,evidence)',
+                      'headline_fidelity_risk(story,evidence)',
+                      'audit=ai(','independent_editorial_quality_passed(audit)',
+                      'validate_approved(payload,day)'):
+            self.assertIn(check,source_review)
+        self.assertEqual(source.count("audit=ai("),1)
+        self.assertIn("supplemental_generated=supplemental_generated",source)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")

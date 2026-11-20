@@ -1422,7 +1422,64 @@ def main():
     accepted_summaries=[]
     lead_urls={x['url'] for x in source_leads}
     publisher_titles={x['url']:x['title'] for x in source_leads}
-    for story in draft:
+
+    def candidates_with_after_review_refill():
+        nonlocal supplemental_attempts,supplemental_generated,supplemental_groups_examined
+        # Review initial candidates FIRST. Only then see if the source-fidelity
+        # vetoes left fewer than three usable stories. Refill from untouched,
+        # actually fetched publisher articles, never by inventing a news event.
+        yield from draft
+        if len(selected)>=3 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+            return
+        used_urls={url for candidate in draft if isinstance(candidate,dict)
+                   for url in (candidate.get("verificationUrls") or [])
+                   if isinstance(url,str)}
+        remaining=sorted(
+            (group for group in grouped_evidence
+             if not any(article["url"] in used_urls for article in group["articles"])),
+            key=lambda group:(
+                min(incident_priority(article)[0] for article in group["articles"]),
+                group["groupId"]))
+        print("After-review source-bound refill candidates:",len(remaining),flush=True)
+        for offset in range(0,min(len(remaining),12),2):
+            # Scarce free-tier quota belongs to factual fidelity before extra jokes.
+            if len(selected)>=3 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+                print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
+                break
+            batch=remaining[offset:offset+2]
+            retry_prompt=(
+                EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+
+                " Editor A: these independent original-article groups were NOT "
+                "approved or rejected yet. Seek a BIG, independently documented "
+                "individual mistake, spectacular but non-tragic reversal, or "
+                "extraordinary personal misjudgment. Do not select trivial "
+                "typos, everyday deliveries or generic corporate headlines "
+                "merely to fill slots. A real, verified mistake and its "
+                "documented consequence must BOTH be in that same article. "
+                "Produce at most one short Japanese story PER GROUP, with "
+                "the strongest fact-based punchline and no fabricated details. "
+                "Keep each group separate; do not mix countries, names or "
+                "sources across groups. Use original article dates and "
+                "the regular required fields, humanActor, humanMistake, "
+                "expectedPlan, observedOutcome, eventKey and verificationUrls "
+                "from that group. Return JSON {stories:[...]}, or an empty list "
+                "when evidence is missing, harmful or not funny. Edition date: "+
+                day+". Candidate publisher text: "+
+                json.dumps(batch,ensure_ascii=False))
+            try:
+                supplemental_attempts+=1
+                supplemental_groups_examined+=len(batch)
+                response=ai(retry_prompt,temperature=0.5)
+                new_drafts=source_bound_batch_drafts(response,batch)
+                supplemental_generated+=len(new_drafts)
+                print("After-review additional SOURCE-BOUND drafts:",len(new_drafts),flush=True)
+                for candidate in new_drafts:
+                    yield candidate  # re-enters every normal fact, safety and B check
+            except (RuntimeError,ValueError,TypeError,KeyError) as exc:
+                print("After-review refill paused safely:",type(exc).__name__,flush=True)
+                if AI_QUOTA_BLOCKED:break
+
+    for story in candidates_with_after_review_refill():
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):
             reject("missing_required_fields");continue
         if not valid_recent_reported(story["reported"],now):
@@ -1585,6 +1642,9 @@ def main():
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)>=9:break
     checkpoint("audit",independent_approved=len(selected),
+               supplemental_attempts=supplemental_attempts,
+               supplemental_generated=supplemental_generated,
+               supplemental_groups_examined=supplemental_groups_examined,
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
