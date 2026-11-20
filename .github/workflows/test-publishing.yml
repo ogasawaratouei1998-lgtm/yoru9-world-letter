@@ -17,6 +17,11 @@ on:
       - '.github/workflows/publish-nightly.yml'
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'check_country_experience.py'
+      - 'check_release_candidate.py'
+      - 'check_public_country_release.py'
+      - 'check_release_health.py'
+      - 'send_release_notice.py'
       - 'audit_country_highlights.py'
       - 'data/news-source-registry.json'
       - 'news_sources.py'
@@ -52,5 +57,6 @@ jobs:
       - name: Check public site build
         run: |
           python build_site.py
+          python check_release_candidate.py --site _site
           test -f _site/index.html
           test ! -e _site/data/approved
