@@ -1,4 +1,4 @@
-"""Four-story hard gate, generated-image integrity, safe cache rotation."""
+"""Four-story hard gate, free SVG illustration publishing, safe cache rotation."""
 import base64
 from datetime import datetime
 import json
@@ -33,7 +33,6 @@ def approved(count=4,date=DAY):
             "sourceName":"取材元","sourceUrl":url,"reported":date,
             "verificationUrls":[url,f"https://independent{i}.example.org/news-{i}"],
             "editorVerified":True,"humorSafe":True,
-            "imagePath":expected_path(date,{"id":f"verified-story-{i}"}),
         })
     return {"status":"approved","editionDate":date,"editionType":"regular",
             "title":date+"｜世界の大失敗ニュース",
@@ -54,45 +53,29 @@ class StrictFourAndImagesTest(unittest.TestCase):
         for story in old["stories"]:story.pop("imagePath")
         self.assertEqual(len(validate_approved(old,"2026-11-20")["stories"]),2)
 
-    def test_image_path_must_match_verified_story_and_day(self):
-        case=approved()
-        first=case["stories"][0]
-        for path in ("","/tmp/bad.webp","assets/news-generated/2026-11-20/verified-story-0.webp",
-                     "assets/news-generated/2026-11-21/../bad.webp",
-                     "assets/news-generated/2026-11-21/other.webp"):
-            with self.subTest(path=path):
-                first["imagePath"]=path
-                with self.assertRaises(ValueError):
-                    validate_approved(case,DAY)
-        first["imagePath"]=expected_path(DAY,first)
-        published=validate_approved(case,DAY)
-        self.assertEqual(published["stories"][0]["imagePath"],first["imagePath"])
-        self.assertEqual(published["stories"][0]["imageType"],
-                         "ai-generated-photorealistic-impression")
+    def test_static_four_story_issue_needs_no_image_files_or_api(self):
+        from unittest.mock import patch
+        document=approved()
+        document["stories"][0]["imagePath"]=expected_path(DAY,document["stories"][0])
+        public=validate_approved(document,DAY)
+        self.assertEqual(len(public["stories"]),4)
+        for story in public["stories"]:
+            self.assertNotIn("imagePath",story)
+            self.assertNotIn("imageType",story)
 
-    def test_cannot_publish_without_four_real_image_assets(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
             (root/"data/approved").mkdir(parents=True)
-            document=approved()
             (root/"data/approved"/(DAY+".json")).write_text(
                 json.dumps(document,ensure_ascii=False),encoding="utf-8")
             now=datetime(2026,11,21,21,20,tzinfo=ZoneInfo("Asia/Tokyo"))
-            with self.assertRaises(ValueError):
-                publish(root,now)
-            for story in document["stories"][:-1]:
-                path=root/story["imagePath"]
-                path.parent.mkdir(parents=True,exist_ok=True)
-                path.write_bytes(fake_webp())
-            with self.assertRaises(ValueError):
-                publish(root,now)
-            final=root/document["stories"][-1]["imagePath"]
-            final.write_bytes(fake_webp())
-            self.assertTrue(publish(root,now))
+            with patch("prepare_news_images.urlopen",side_effect=AssertionError("Paid API must not run")):
+                self.assertTrue(publish(root,now))
             current=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
             self.assertEqual(len(current["stories"]),4)
+            self.assertFalse((root/"assets/news-generated").exists())
 
-    def test_early_or_incomplete_edition_never_cleans_previous_image(self):
+    def test_static_release_cleans_old_images_only_after_publication(self):
         with tempfile.TemporaryDirectory() as td:
             root=Path(td)
             old=root/"assets/news-generated/2026-11-20/old.webp"
@@ -102,28 +85,23 @@ class StrictFourAndImagesTest(unittest.TestCase):
             (root/"data/current.json").write_text(json.dumps({"editionDate":"2026-11-20","stories":[]}))
             self.assertEqual(rotate_old_generated_images(root,DAY),0)
             self.assertTrue(old.is_file())
-            document=approved()
-            current=validate_approved(document,DAY)
+            doc=approved()
+            current=validate_approved(doc,DAY)
             (root/"data/current.json").write_text(json.dumps(current))
-            with self.assertRaises(ValueError):
-                rotate_old_generated_images(root,DAY)
-            self.assertTrue(old.is_file())
-            for story in current["stories"]:
-                path=root/story["imagePath"];path.parent.mkdir(parents=True,exist_ok=True)
-                path.write_bytes(fake_webp())
             self.assertEqual(rotate_old_generated_images(root,DAY),1)
             self.assertFalse(old.exists())
             self.assertEqual(rotate_old_generated_images(root,DAY),0)
-            for story in current["stories"]:
-                self.assertTrue(valid_webp(root/story["imagePath"]))
 
-    def test_preparation_never_uses_paid_model_before_four_articles(self):
+    def test_preparation_never_calls_image_api_in_free_mode(self):
+        from unittest.mock import patch
         with tempfile.TemporaryDirectory() as td:
             root=Path(td);(root/"data/approved").mkdir(parents=True)
-            (root/"data/approved"/(DAY+".json")).write_text(json.dumps(approved(3)))
-            with self.assertRaises(ValueError):
-                prepare(root,DAY,key="FAKE",render=lambda *_:self.fail("Should not call API"))
-            self.assertEqual(prepare(root,"2026-11-20",key="FAKE"),0)
+            for n in (3,4,5):
+                (root/"data/approved"/(DAY+".json")).write_text(json.dumps(approved(n)))
+                with patch("prepare_news_images.urlopen",
+                           side_effect=AssertionError("No image API allowed")):
+                    self.assertEqual(prepare(root,DAY,key="TEST",render=lambda *_:
+                                     self.fail("Never render in free mode")),0)
 
     def test_zero_image_quota_stops_without_retrying_or_publishing(self):
         from io import BytesIO
@@ -269,6 +247,8 @@ class StrictFourAndImagesTest(unittest.TestCase):
         self.assertIn("expirePreviousGeneratedImages",service)
         self.assertIn("IMAGE_CACHE",service)
         self.assertIn("target=output/rel",builder)
-        self.assertIn("python prepare_news_images.py",workflow)
+        self.assertNotIn("python prepare_news_images.py\n",workflow)
+        self.assertNotIn("OPENAI_API_KEY:",workflow)
+        self.assertNotIn("GEMINI_IMAGE_API_KEY:",workflow)
         self.assertIn("python prepare_news_images.py --rotate",workflow)
         self.assertIn("git add -A assets/news-generated/",workflow)
