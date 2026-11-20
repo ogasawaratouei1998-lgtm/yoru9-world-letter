@@ -2419,7 +2419,6 @@ $('spotlightRead').addEventListener('click',()=>{
 /* Optional 30-second journey: photo assets load only if the reader chooses to open it.
    Curated locations belong to incident IDs, not the publisher's country. */
 let travelStopsPromise=null;
-let travelExplainerShown=false;
 // Reserve one different postcard per article in the current reading session.
 const travelSelections=new Map();
 const TODAY_COUNTRY_PHOTO_RULES=Object.freeze({
@@ -2625,7 +2624,7 @@ function chooseTravelPhoto(story,stops){
  rememberTravelPhoto(picked.country,picked.photoAsset);
  return picked;
 }
-function travelPostcardHtml(story,stop,showIntro=false){
+function travelPostcardHtml(story,stop){
  const known=stop&&Number.isFinite(stop.latitude)&&Number.isFinite(stop.longitude)&&
   Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
  const sameCountry=known&&travelCountryNames(story.country).includes(stop.country);
@@ -2652,7 +2651,6 @@ function travelPostcardHtml(story,stop,showIntro=false){
   '<p class="travel-trust" role="note">'+
    (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の有名観光地の写真はまだ準備中です。ニュースの現場を示すものではありません。')+
   '</p>'+
-  (showIntro?'<p class="travel-disclaimer">ニュースをきっかけに、その国の有名な観光名所へ。写真や地図は記事の証拠ではなく、独立した旅のご案内です。</p>':'')+
   (known&&!sameCountry?'<p class="travel-elsewhere">ニュースの舞台とは異なる国の旅先：'+escapeHtml(stop.country)+'</p>':'')+
   (photo?'<figure class="travel-figure"><img class="travel-photo" loading="lazy" decoding="async" src="./'+
    escapeHtml(stop.photoAsset)+'" data-remote-photo="'+escapeHtml(stop.photo)+'" alt="'+escapeHtml(stop.photoCaption)+'">'+
@@ -2685,11 +2683,9 @@ document.querySelector('main').addEventListener('click',async event=>{
  const stops=await loadTravelStops();
  // Never insert a postcard into a card that has already been closed/replaced.
  if(!panel.isConnected||panel.hidden||edition.stories[i]!==story||!document.body.classList.contains('news-detail-mode')||selectedArticleIndex!==i)return;
- const firstIntro=!travelExplainerShown;
- travelExplainerShown=true;
  const maxRetries=travelPhotoOptions(stops).length;
  function mountPhoto(stop,attempt=0){
-  panel.innerHTML=travelPostcardHtml(story,stop,firstIntro);
+  panel.innerHTML=travelPostcardHtml(story,stop);
   const img=panel.querySelector('.travel-photo');
   if(!img)return;
   img.addEventListener('error',()=>{
