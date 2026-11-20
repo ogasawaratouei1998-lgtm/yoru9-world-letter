@@ -290,18 +290,18 @@ def source_title_is_policy_explainer(title):
 # Retrieval signal only: two distinct clues are needed to rank personal
 # LARGE mistakes above harmless typos. Headline text NEVER proves blame.
 PERSONAL_ACTOR_TERMS=re.compile(
-    r"\\b(?:man|woman|person|individual|tourist|traveler|traveller|driver|"
+    r"\b(?:man|woman|person|individual|tourist|traveler|traveller|driver|"
     r"employee|worker|customer|referee|athlete|artist|chef|owner|collector|"
-    r"investor|bidder|buyer|seller|gambler|pilot|student|teacher)\\b|"
+    r"investor|bidder|buyer|seller|gambler|pilot|student|teacher)\b|"
     r"個人|男性|女性|旅行者|観光客|運転手|店員|従業員|選手|審判|"
     r"職人|料理人|持ち主|所有者|購入者|出品者|落札者|投資家",re.I)
 LARGE_PERSONAL_CONSEQUENCE_TERMS=re.compile(
-    r"\\b(?:million|billion|thousand|six.figure|seven.figure|"
+    r"\b(?:million|billion|thousand|six.figure|seven.figure|"
     r"lost (?:everything|a fortune|his job|her job)|spent (?:a fortune|thousands)|"
     r"wrong (?:country|continent|house|flight)|huge|massive|record|"
     r"entire (?:collection|savings)|bankrupt|costly|expensive|"
-    r"accidental (?:bid|purchase|sale)|accidentally (?:sold|bought|deleted))\\b|"
-    r"数千万|数億|数千万円|数億円|\\d+億|\\d+万(?:円|ドル)|"
+    r"accidental (?:bid|purchase|sale)|accidentally (?:sold|bought|deleted))\b|"
+    r"数千万|数億|数千万円|数億円|\d+億|\d+万(?:円|ドル)|"
     r"全財産|大損|巨額|高額|破産|全て失|すべて失|"
     r"世界記録|誤落札|誤入札|全削除|売却ミス|購入ミス|"
     r"別の国|別の大陸",re.I)
