@@ -165,7 +165,12 @@ def validate_approved(data, expected_date):
             '編集承認・事実確認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
-    if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+    image_reissue_20 = (expected_date == '2026-11-20' and
+                        data.get('editionRequiresImages') is True and
+                        data.get('approvedBy') == 'editorial-source-checked-correction-2026-11-20')
+    require(data.get('editionRequiresImages') is not True or image_reissue_20,
+            '画像必須の追加訂正は2026年11月20日の承認済み再発行のみに限ります')
+    if edition_type == 'regular' and (issue_day >= date(2026, 11, 21) or image_reissue_20):
         require(isinstance(stories, list) and 4 <= len(stories) <= 5,
                 '2026年11月21日以降は、検証済みニュース4〜5本がない日は公開しません')
     elif edition_type == 'regular' and issue_day >= date(2026, 11, 19):
@@ -292,7 +297,7 @@ def validate_approved(data, expected_date):
                     and not any(ch in note for ch in '<>\r\n'),
                     f'{i}本目の編集訂正文が不正です')
             public_story['correctionNote'] = note.strip()
-        if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+        if edition_type == 'regular' and (issue_day >= date(2026, 11, 21) or image_reissue_20):
             image_path=story.get('imagePath')
             required_image=f'assets/news-generated/{expected_date}/{story["id"]}.webp'
             require(isinstance(image_path,str) and image_path==required_image and
@@ -390,7 +395,9 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
     data = json.loads(approved_path.read_text(encoding='utf-8'))
     public_issue = validate_approved(data, date)
     # Fail closed if even one new issue image has not been generated.
-    if date >= '2026-11-21' and public_issue['editionType']=='regular':
+    if (public_issue['editionType']=='regular' and
+            (date >= '2026-11-21' or (date == '2026-11-20' and
+             data.get('editionRequiresImages') is True))):
         for story in public_issue['stories']:
             path=root/story['imagePath']
             require(path.is_file() and 20_000<=path.stat().st_size<=2_500_000,
@@ -420,8 +427,19 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
             # Preserve the initially published text for transparent editorial history.
             previous_path = root / 'data' / 'archive' / 'revisions' / '2026-11-20-before-correction.json'
             if previous_path.exists():
-                require(json.loads(previous_path.read_text(encoding='utf-8')) == existing_issue,
-                        '元の公開号の記録が一致せず、訂正を中止しました')
+                original=json.loads(previous_path.read_text(encoding='utf-8'))
+                if original != existing_issue:
+                    # User explicitly requested a SECOND Nov 20 correction under the
+                    # 4-story + real-image contract. Never overwrite the first
+                    # revision record; preserve the intermediate two-story version.
+                    require(data.get('editionRequiresImages') is True,
+                            '過去の訂正号を無断で差し替えません')
+                    followup=root / 'data' / 'archive' / 'revisions' / '2026-11-20-before-four-image-reissue.json'
+                    if followup.exists():
+                        require(json.loads(followup.read_text(encoding='utf-8')) == existing_issue,
+                                '二度目の訂正履歴が一致しません')
+                    else:
+                        atomic_json(followup, existing_issue)
             else:
                 atomic_json(previous_path, existing_issue)
         if current == public_issue:
