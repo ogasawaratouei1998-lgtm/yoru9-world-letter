@@ -245,6 +245,31 @@ try{
     const image=document.querySelector('#issueGallery .gallery-art');
     return image&&image.complete&&image.naturalWidth>0;
    },null,{timeout:30000});
+   await page.waitForFunction(()=>{
+    const pictures=[...document.querySelectorAll('#issueGallery .gallery-art')];
+    return pictures.length>0&&pictures.every(img=>img.complete&&img.naturalWidth>0);
+   },null,{timeout:30000});
+   const galleryArts=await page.locator('#issueGallery .gallery-art').evaluateAll(images=>
+    images.map(img=>img.getAttribute('src')));
+   assert.equal(new Set(galleryArts).size,galleryArts.length,
+    'every current news card must show different artwork rather than duplicate clipboards');
+   for(const path of galleryArts){
+    assert.ok(path.startsWith('./assets/news/')||path.startsWith('data:image/svg+xml;charset=utf-8,'),
+     'editorial illustration is local or generated offline, never an external photo');
+    assert.ok(!path.includes('/category-work.svg')&&!path.includes('/category-sports.svg'),
+     'current stories must not repeat category placeholders');
+   }
+   const currentStoryIds=await page.evaluate(()=>edition.stories.map(s=>s.id));
+   const bespokeArt={
+    'uk-french-weir-swimming-2026':'uk-river-water-warning.svg',
+    'mussolini-colador-2026':'spain-mussels-colander-pan.svg',
+    'jp-gov-youtuber-pr-2026':'japan-policy-youtuber-pr.svg',
+    'nz-cricket-collapse-2026':'nz-cricket-comeback.svg'
+   };
+   for(const [index,id] of currentStoryIds.entries()){
+    if(bespokeArt[id])assert.ok(galleryArts[index].endsWith('/'+bespokeArt[id]),
+     'each news story uses its own matching illustration: '+id);
+   }
    const firstImage=page.locator('#issueGallery .gallery-art').first();
    assert.ok((await firstImage.getAttribute('src')).startsWith('./assets/news/'),
     'visual assets are bundled locally, not from third-party news photos');
