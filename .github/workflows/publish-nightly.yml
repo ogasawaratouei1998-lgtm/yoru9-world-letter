@@ -176,21 +176,7 @@ jobs:
           else
             python auto_editorial.py
           fi
-      - name: Generate photorealistic editorial imagery before releasing approved stories
-        env:
-          # Add OPENAI_API_KEY in repository Actions secrets to enable automatic
-          # OpenAI image generation. In auto mode OpenAI is preferred, and Gemini
-          # remains a fallback only when its own paid image quota is available.
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_IMAGE_MODEL: gpt-image-2.6-flare
-          OPENAI_IMAGE_QUALITY: medium
-          IMAGE_PROVIDER: auto
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_IMAGE_API_KEY: ${{ secrets.GEMINI_IMAGE_API_KEY }}
-          GEMINI_IMAGE_MODEL: gemini-3.1-flash-lite-image
-        run: |
-          python -m pip install --disable-pip-version-check Pillow
-          python prepare_news_images.py
+      # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release today's four-or-five verified stories (skip if fewer)
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
@@ -215,7 +201,7 @@ jobs:
           else
             python publish_approved.py
           fi
-      - name: Remove previous edition's unused generated images after verified release
+      - name: Remove stale generated images after verified SVG-illustrated release
         run: python prepare_news_images.py --rotate
       - name: Commit the released edition
         id: release
