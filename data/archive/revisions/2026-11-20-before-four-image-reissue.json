@@ -1,0 +1,51 @@
+{
+  "status": "published",
+  "editionDate": "2026-11-20",
+  "title": "2026-11-20｜世界の大失敗ニュース",
+  "editionType": "regular",
+  "nightlyMessage": "",
+  "stories": [
+    {
+      "id": "italy-toilet-ai-python-48-hour-search-2026",
+      "country": "Italy",
+      "category": "person",
+      "categoryLabel": "個人の大きな勘違い",
+      "label": "AI画像で48時間の捜索",
+      "title": "トイレに大蛇!? 生成AIの画像を本物と見間違え、消防などが48時間の捜索",
+      "summary": "イタリアのカステルフィダルドで、トイレから大蛇が出ているように見える画像をきっかけに消防や専門部隊が捜索。ところが約48時間後、画像は9歳の子が生成AIで作ったものだと判明した。",
+      "detail": "イタリア中部カステルフィダルドの住宅で、トイレからニシキヘビが現れたように見える画像が大人に共有され、消防隊が出動した。ヘビが見つからなかったため、現場では窓から逃げた可能性も考えられた。翌日には希少な動物の保護を扱う専門部隊も捜索に加わった。ところが捜索が約48時間続いた後、画像が生成AIで作られたものだと分かった。画像を作った9歳の子は大人に共有していたことを認め、年齢を理由に刑事責任は問われないと当局が説明している。故意に当局をだます目的があったとの確認はない。",
+      "quip": "大蛇は画像の中、捜索は48時間！ トイレから出たのヘビやなくて大騒動かい！",
+      "sourceName": "UPI",
+      "sourceUrl": "https://www.upi.com/Odd_News/2026/11/17/italy-castelfidardo-ai-generated-python-toilet/2661794933231",
+      "reported": "2026-11-17",
+      "verificationUrls": [
+        "https://www.upi.com/Odd_News/2026/11/17/italy-castelfidardo-ai-generated-python-toilet/2661794933231"
+      ],
+      "sourceBasis": "original-report",
+      "attributionNote": "報道機関1社の独自取材記事を確認しています。別媒体による独立した裏付けは確認できていません。",
+      "correctionNote": "2026年11月20日の初回公開から編集方針に沿って再選定した差し替え記事です。元記事と報道日を確認しています。"
+    },
+    {
+      "id": "drew-carey-price-right-early-reveal-2026",
+      "country": "United States",
+      "category": "work",
+      "categoryLabel": "仕事の大失敗",
+      "label": "高額賞品の値札を先出し",
+      "title": "司会20年のベテラン、高級車ゲームで価格を全部めくるミス　参加者は賞品12万8632ドル獲得",
+      "summary": "米テレビ番組『The Price Is Right』で、司会のドリュー・キャリーが車の価格の一桁を見せる場面で、価格カード全体を先に引き出してしまった。参加者が予想した番号は正解で、別の対決も勝ち抜き、番組を通じて合計12万8632ドル相当の賞品を獲得した。",
+      "detail": "11月17日放送の米CBSのゲーム番組『The Price Is Right』で、参加者ドロシア・ウェザーズ＝ヘンダーソンは高級車の価格を推理する『Golden Road』に挑戦。車の価格の隠れた一桁を選び、司会者ドリュー・キャリーが答え合わせをする場面で、キャリーは隠れた数字だけではなく価格カード全体を引き出してしまった。参加者が正しい数字を選んでいたことが確認され、キャリー本人も司会歴20年なのに進め方を間違えたと笑って振り返った。参加者はその後の対決にも勝利し、番組で獲得した賞品の総額は12万8632ドルになった。司会のミスによって賞品の総額が増えたという報道ではない。",
+      "quip": "司会20年でいちばん先走ったん、参加者やなくて値札のほうかい！",
+      "sourceName": "TV Insider",
+      "sourceUrl": "https://www.tvinsider.com/1304692/the-price-is-right-contestant-corrects-drew-careys-mistake/",
+      "reported": "2026-11-19",
+      "verificationUrls": [
+        "https://www.tvinsider.com/1304692/the-price-is-right-contestant-corrects-drew-careys-mistake/"
+      ],
+      "sourceBasis": "original-report",
+      "attributionNote": "報道機関1社の独自取材記事を確認しています。別媒体による独立した裏付けは確認できていません。",
+      "correctionNote": "2026年11月20日の初回公開から編集方針に沿って再選定した差し替え記事です。元記事と報道日を確認しています。"
+    }
+  ],
+  "nightQuote": "完璧じゃない一日にも、おやすみなさい。",
+  "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts."
+}
