@@ -39,7 +39,8 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true
+      "editorQualityVerified": true,
+      "imagePath": "assets/news-generated/2026-11-20/italy-toilet-ai-python-48-hour-search-2026.webp"
     },
     {
       "id": "drew-carey-price-right-early-reveal-2026",
@@ -72,7 +73,75 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true
+      "editorQualityVerified": true,
+      "imagePath": "assets/news-generated/2026-11-20/drew-carey-price-right-early-reveal-2026.webp"
+    },
+    {
+      "id": "mainz-sewer-search-lost-drone-2026",
+      "country": "Germany",
+      "category": "person",
+      "categoryLabel": "個人の大きな勘違い",
+      "label": "ドローン探しが地下探検に",
+      "title": "ドローンをなくした3人、深夜の下水道へ捜索に入る　見つかったのは機体ではなく本人たち",
+      "summary": "ドイツ・マインツで、なくしたドローンを探すため男性3人が深夜の下水道へ。通報を受けた警察と消防が安全を確かめて捜索し、3人は見つかったが、肝心のドローンは発見されなかった。",
+      "detail": "11月14日午前1時ごろ、マインツ中心部のミュンスター通りで、3人がマンホールのふたを持ち上げて下水道に入るのを目撃者が通報した。消防は有毒ガスの危険がないか測定してから警察とともに地下へ入り、ほどなく3人を発見した。3人は『なくしたドローンを探していた』と説明したが、機体は見つからなかった。警察は無断立ち入りの疑いで捜査し、ドローンがどのように下水道へ入ったかも確認している。けがや中毒は報告されていない。捜索に伴う費用負担の有無も検討されている。",
+      "quip": "空を飛ぶドローンを探しに地下へ!? 機体より先に操縦者たちが発見されとるやないか！",
+      "sourceName": "マインツ警察・SWR",
+      "sourceUrl": "https://www.presseportal.de/blaulicht/pm/117708/6391217",
+      "reported": "2026-11-16",
+      "humanActor": "紛失したドローンを探そうと下水道へ降りた成人男性3人",
+      "humanMistake": "ドローンを捜索するため立ち入りを許されていない下水道へ自ら入り、警察と消防の捜索を招いたこと",
+      "expectedPlan": "下水道に入って紛失したドローンを自分たちで見つけること",
+      "observedOutcome": "警察と消防に3人自身が発見され、ドローンは見つからなかったこと",
+      "verificationUrls": [
+        "https://www.presseportal.de/blaulicht/pm/117708/6391217",
+        "https://www.swr.de/swraktuell/rheinland-pfalz/mainz/polizeieinsatz-maenner-in-kanalisation-drohne-verloren-100.html"
+      ],
+      "eventKey": "mainz-muensterstrasse-sewer-drone-search-2026",
+      "majorPersonalFailureVerified": false,
+      "originalReportingVerified": true,
+      "correctionNote": "2026年11月20日号の4本以上・画像必須の訂正条件に合わせ、警察の原文発表と追加報道を確認して追補した記事です。",
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "imagePath": "assets/news-generated/2026-11-20/mainz-sewer-search-lost-drone-2026.webp"
+    },
+    {
+      "id": "kusel-lost-handcuff-key-police-help-2026",
+      "country": "Germany",
+      "category": "person",
+      "categoryLabel": "個人の大きな勘違い",
+      "label": "手錠の鍵が見つからない",
+      "title": "手錠は外れず、鍵は見つからず　ドイツのカップルが朝9時前に警察を訪ねて救助される",
+      "summary": "ドイツ・クーゼルで、47歳の女性の手首から手錠が外せなくなり、鍵も見つからなくなった。2人で警察署に相談すると、警察官が合う鍵を用意して手錠を外し、けがなく帰宅できた。",
+      "detail": "11月18日の朝、ドイツ・クーゼルの警察署に男女2人が訪れた。47歳の女性は上着を着た状態で、手首には手錠がかかったままだった。手錠を外す鍵が見つからず、2人では対処できなくなったため警察に助けを求めたという。警察官は適合する鍵を用意して手錠を外し、2人はけがをせずに帰宅した。警察の11月19日の公式発表は、手錠を使った事情や鍵がなくなった原因を説明していない。記事もその理由を推測しない。",
+      "quip": "合鍵のありかを探して最後は警察へ。手錠の『解決編』だけ本職に丸投げかい！",
+      "sourceName": "クーゼル警察・TAG24",
+      "sourceUrl": "https://www.presseportal.de/blaulicht/pm/178879/6394102",
+      "reported": "2026-11-19",
+      "humanActor": "手錠が外せなくなりクーゼル警察署を訪れた成人の男女2人",
+      "humanMistake": "手錠の鍵を見つけられず自分たちで女性の手錠を外せなくなり、警察官に解錠を頼んだこと",
+      "expectedPlan": "手錠を自分たちで外して日常に戻ること",
+      "observedOutcome": "手錠の鍵が見つからず、警察署で警察官が合う鍵を使って女性を解放したこと",
+      "verificationUrls": [
+        "https://www.presseportal.de/blaulicht/pm/178879/6394102",
+        "https://www.tag24.de/thema/kurioses/handschellen-dran-schluessel-weg-liebespaar-muss-zur-polizei-3550795"
+      ],
+      "eventKey": "kusel-police-lost-handcuff-key-2026",
+      "majorPersonalFailureVerified": false,
+      "originalReportingVerified": true,
+      "correctionNote": "2026年11月20日号の4本以上・画像必須の訂正条件に合わせ、警察の原文発表と追加報道を確認して追補した記事です。",
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "imagePath": "assets/news-generated/2026-11-20/kusel-lost-handcuff-key-police-help-2026.webp"
     }
-  ]
+  ],
+  "editionRequiresImages": true
 }
