@@ -2155,9 +2155,61 @@ function updateQuipTeaser(){
  $('quipTeaserRead').setAttribute('aria-label','1本目：'+String(first.title||'掲載記事')+'を読む');
 }
 
+/* Unmapped nightly stories get a distinct, offline-safe, generated vector.
+   This is symbolic editorial artwork, never a supposed scene photograph. */
+function fallbackNewsArt(story){
+ const key=String(story?.id||story?.title||'world-letter');
+ let hash=2166136261;
+ for(let i=0;i<key.length;i++)hash=Math.imul(hash^key.charCodeAt(i),16777619)>>>0;
+ const themes=[
+  ['#F9E2AB','#EFA1B9','#284D6B'],['#BEE7DF','#91C9DF','#264D69'],
+  ['#CEC6F6','#F3B8BD','#414575'],['#D8E7AD','#F7C59D','#476C5E'],
+  ['#A9E1EE','#E3C3F2','#375C75'],['#FBD7AF','#FFC4D1','#635076'],
+  ['#CCE5F4','#F6D7A3','#36566B'],['#A4DFCC','#F5AF99','#375E6B']
+ ];
+ const [a,b,ink]=themes[hash%themes.length];
+ const detail=String(story?.title||'')+' '+String(story?.summary||'');
+ const motifs=[
+  // Bubbles and waves.
+  '<path d="M130 312q62-31 124 0t125 0t125 0" fill="none" stroke="#7DC7C8" stroke-width="25" stroke-linecap="round"/><circle cx="340" cy="150" r="63" fill="#C3F2E9" stroke="#31536D" stroke-width="11"/><circle cx="580" cy="200" r="36" fill="#fff" opacity=".7"/>',
+  // Cooking pot and steam.
+  '<path d="M172 235h390q-9 139-180 139T172 235Z" fill="#FFF4DD" stroke="#31536D" stroke-width="13"/><path d="M174 234h394" stroke="#31536D" stroke-width="18"/><path d="M255 183q-28-36 3-65m97 67q-27-37 3-69m94 66q-27-38 3-69" fill="none" stroke="#E39C75" stroke-width="13" stroke-linecap="round"/>',
+  // Question mark and speech panel.
+  '<rect x="170" y="114" width="370" height="225" rx="37" fill="#FFF9EA" stroke="#31536D" stroke-width="13"/><path d="m330 335-25 58 91-59" fill="#FFF9EA" stroke="#31536D" stroke-width="13" stroke-linejoin="round"/><text x="365" y="282" font-family="system-ui,sans-serif" text-anchor="middle" font-size="205" font-weight="900" fill="#DC7481">?</text>',
+  // Score and moving ball.
+  '<rect x="135" y="110" width="281" height="179" rx="30" fill="#31536D"/><path d="m190 236 66-61 52 29 47-76" fill="none" stroke="#C1E9CC" stroke-width="17" stroke-linecap="round"/><circle cx="554" cy="260" r="89" fill="#fff" stroke="#31536D" stroke-width="14"/><path d="m516 217 40-14 44 38-13 50-48 11-39-36z" fill="#31536D"/>',
+  // Public transport and arrow.
+  '<rect x="147" y="148" width="382" height="189" rx="34" fill="#FFF6E3" stroke="#31536D" stroke-width="14"/><path d="M205 184h265M216 338v35m237-35v35" stroke="#31536D" stroke-width="16" stroke-linecap="round"/><circle cx="233" cy="329" r="26" fill="#31536D"/><circle cx="444" cy="329" r="26" fill="#31536D"/><path d="m526 130 69 45-68 42" fill="none" stroke="#D86D7B" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>',
+  // Office document and notification.
+  '<rect x="205" y="86" width="289" height="290" rx="24" fill="#FFF8EC" stroke="#31536D" stroke-width="13"/><path d="M250 156h190m-190 57h155m-155 55h174" stroke="#7CB7B6" stroke-width="17" stroke-linecap="round"/><circle cx="553" cy="320" r="80" fill="#F4C18D" stroke="#31536D" stroke-width="11"/><path d="M553 270v66" stroke="#31536D" stroke-width="18" stroke-linecap="round"/><circle cx="553" cy="366" r="10" fill="#31536D"/>'
+ ];
+ let motif=hash%motifs.length;
+ if(/川|水質|遊泳|泳|洪水|水浴/.test(detail))motif=0;
+ else if(/料理|調理|魚|食|レシピ|鍋|フライパン/.test(detail))motif=1;
+ else if(/動画|YouTub|SNS|広報|都市伝説/.test(detail))motif=2;
+ else if(story?.category==='sports'||/試合|得点|選手|大会/.test(detail))motif=3;
+ else if(/列車|鉄道|飛行機|車|道路|トンネル/.test(detail))motif=4;
+ const label=escapeHtml(String(story?.label||'世界のまさか').slice(0,14));
+ const country=escapeHtml(String(story?.country||'世界').slice(0,14));
+ const svg=[
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="記事内容を象徴する創作イラスト">',
+  '<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="',a,'"/><stop offset="1" stop-color="',b,'"/></linearGradient></defs>',
+  '<rect width="800" height="480" rx="28" fill="url(#bg)"/>',
+  '<circle cx="690" cy="70" r="141" fill="#fff" opacity=".22"/>',
+  '<path d="M0 426Q200 381 407 428T800 394V480H0Z" fill="',ink,'" opacity=".12"/>',
+  motifs[motif],
+  '<rect x="33" y="397" width="734" height="67" rx="20" fill="',ink,'" opacity=".95"/>',
+  '<text x="59" y="438" font-family="system-ui,sans-serif" font-size="29" font-weight="800" fill="#fff">',
+  country,' · ',label,'</text>',
+  '<path d="M87 76h45m-22-22v45M718 333h38m-19-19v38" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".8"/>',
+  '</svg>'
+ ].join('');
+ return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
 function newsArt(story){
  const name=NEWS_ARTWORK[story?.id]||NEWS_ART_FALLBACK[story?.category]||NEWS_ART_FALLBACK.person;
- return './assets/news/'+name;
+ if(NEWS_ARTWORK[story?.id])return './assets/news/'+name;
+ return fallbackNewsArt(story);
 }
 function renderIssueGallery(){
  const target=$('issueGallery');
