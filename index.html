@@ -1250,8 +1250,8 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 .today-map-pin[aria-expanded="true"]{outline:3px solid #283E56;outline-offset:2px;z-index:2}
 .today-map-pin:focus-visible{outline:3px solid #283E56;outline-offset:3px}
 .today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
-/* The stamp album is the one visible quiz launcher; avoid a duplicated button row. */
-#todayMapLegend{display:none!important}
+/* Country names open optional, sourced photo quizzes; no stamp collection. */
+#todayMapLegend{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 6px}
 .today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
  padding:8px 12px;background:var(--country-color,#FFF0C9);color:#283E56;
  font-size:.79rem;font-weight:860;text-align:center;line-height:1.4;max-width:100%;white-space:normal}
@@ -1340,9 +1340,8 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
   max-width:calc(100% + 24px);box-sizing:border-box;padding:12px 7px}
  #atlasHero .today-map-intro-photo img{aspect-ratio:16/10;max-height:400px}
 }
-/* WORLD PASSPORT — playful country quiz, visually separate from news. */
+/* WORLD QUIZ — a simple optional country quiz, separate from the news. */
 .today-map-game-lead{margin:11px 2px 8px;color:#FFE6BA;font-size:.85rem;line-height:1.7;font-weight:780}
-.today-map-country[data-quiz-done="true"]{box-shadow:inset 0 0 0 2px #30816B}
 .today-map-country[aria-expanded="true"]{outline:3px solid #fff;outline-offset:2px}
 .today-country-quiz{margin:13px 0 8px;padding:17px 16px;border:2px solid #E9CA95;
  scroll-margin-top:calc(var(--safe-top) + 82px);
@@ -1369,7 +1368,6 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
  border-radius:0 10px 10px 0;font-size:.93rem;line-height:1.75;margin:10px 0}
 .today-quiz-next{width:100%;min-height:47px;background:#FFE0AB;color:#283D51;
  border:1px solid #FFF2CF;border-radius:11px;font-size:.95rem;font-weight:850;padding:9px}
-.today-quiz-passport{font-size:.82rem;line-height:1.75;color:#C7F2E6;margin:12px 0 0;font-weight:800}
 .today-quiz-choices button:focus-visible,.today-quiz-next:focus-visible{outline:3px solid white;outline-offset:2px}
 .today-quiz-question:focus{outline:none}
 @media(max-width:520px){.today-country-quiz{padding:14px 12px}
@@ -1377,87 +1375,12 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 
 .today-map-intro-source{display:inline-block;color:#C4EFE7;text-decoration:underline;text-underline-offset:3px;font-size:.82rem;line-height:1.6;margin:6px 0 12px}
 .today-map-intro-source[hidden]{display:none!important}
-/* Country quiz collection is visible before and after playing, not only in the quiz. */
-.today-passport-board{margin:12px 0 14px;padding:15px 13px;border-radius:17px;border:2px solid #CEAC73;
- scroll-margin-top:calc(var(--safe-top) + 82px);
- background:radial-gradient(circle at 92% 5%,#D3AB6033,transparent 55%),linear-gradient(145deg,#244259,#142B43);
- box-shadow:0 8px 22px #06162955}
-.today-passport-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
-.today-passport-eyebrow{font-size:.65rem;letter-spacing:.09em;color:#B7E3DF;margin:0 0 4px;font-weight:900}
-.today-passport-head h4{margin:0;color:#FFF0C9;font-size:1.15rem;font-weight:900}
-.today-passport-count{border-radius:22px;padding:7px 11px;background:#FFDE9D;color:#1A3041;font-weight:950;white-space:nowrap}
-.today-passport-meter{height:13px;margin:13px 0 9px;overflow:hidden;border-radius:40px;background:#102839;border:1px solid #93B7B3}
-.today-passport-meter-fill{height:100%;width:0;background:linear-gradient(90deg,#92DEC6,#FFE7AB);border-radius:40px;transition:width .4s ease}
-.today-passport-message{margin:0 0 13px;color:#FFE6B0;font-size:.85rem;line-height:1.55;font-weight:850}
-.today-passport-lifetime{font-size:.73rem;color:#C9F1E4;font-weight:760;margin:-4px 0 12px;line-height:1.6}
-.today-passport-stamps{display:grid;grid-template-columns:repeat(auto-fit,minmax(101px,1fr));gap:8px}
-.today-passport-stamp{min-width:0;min-height:109px;border:2px dashed #829CAB;border-radius:14px;background:#22374A;
- padding:8px 5px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;
- font:inherit;color:#E5EBEF;touch-action:manipulation}
-.today-passport-stamp[data-ever="true"][data-earned="false"]{border-style:solid;border-color:#8EA991;background:#294545}
-.today-passport-stamp[data-earned="true"]{border:2px solid #FFDE9E;background:linear-gradient(155deg,#55503D,#294947);box-shadow:inset 0 0 0 2px #9A8158}
-.today-passport-stamp-seal{height:51px;width:51px;border-radius:50%;display:grid;place-items:center;
- background:#193347;border:2px dashed #95A9B4;color:#B8CDD4;transform:rotate(-10deg);font-size:1.55rem}
-.today-passport-stamp[data-earned="true"] .today-passport-stamp-seal{border:4px double #805638;outline:2px solid #F6D198;
- background:radial-gradient(circle,#FFE9B3,#DFA267);color:#614127;transform:rotate(-13deg)}
-.today-passport-stamp-country{font-size:.79rem;font-weight:900;line-height:1.4;overflow-wrap:anywhere;text-align:center}
-.today-passport-stamp-status{font-size:.68rem;color:#CFDEDF;line-height:1.3;text-align:center}
-.today-passport-stamp[data-earned="true"] .today-passport-stamp-status{color:#FFECB7}
-.today-passport-hint{font-size:.73rem;color:#BED7DA;line-height:1.55;margin:10px 0 0}
-.today-passport-board[data-complete="true"]{border-color:#FFE4A0;box-shadow:0 0 0 2px #B78C5B55,0 9px 25px #09182D}
 .today-quiz-steps{display:flex;gap:7px;margin:8px 0 13px}
 .today-quiz-step{flex:1;height:9px;border-radius:12px;background:#47647A;border:1px solid #68939A}
 .today-quiz-step[data-step="current"]{background:#FFE3A7;border-color:#FFF0CC}
 .today-quiz-step[data-step="done"]{background:#97E6C8;border-color:#D2FAE8}
-.today-quiz-reward[hidden]{display:none!important}
-.today-quiz-reward{margin:15px 0 11px;padding:13px;display:flex;align-items:center;gap:13px;
- border-radius:16px;border:2px solid #FFE4A9;background:linear-gradient(135deg,#665235,#2C5353);box-shadow:0 6px 20px #0B1B2D60}
-.today-quiz-reward-seal{flex:none;width:73px;height:73px;border:5px double #7E5434;outline:2px solid #F9D394;
- border-radius:50%;background:radial-gradient(circle,#FFF2CC,#E1A56B);color:#53381F;
- display:grid;place-items:center;font-size:.9rem;font-weight:950;text-align:center;transform:rotate(-12deg)}
-/* Stamp quality distinguishes perfect rounds, partial scores and completed attempts. */
-.today-passport-stamp[data-grade="gold"]{border-color:#FFD27A;background:linear-gradient(145deg,#625235,#354445)}
-.today-passport-stamp[data-grade="silver"]{border-color:#D1DFEA;background:linear-gradient(145deg,#435A61,#243E4A)}
-.today-passport-stamp[data-grade="bronze"]{border-color:#D8A489;background:linear-gradient(145deg,#65504A,#294047)}
-.today-passport-stamp[data-grade="silver"] .today-passport-stamp-seal{background:radial-gradient(circle,#F5FCFF,#A8BAC5)}
-.today-passport-stamp[data-grade="bronze"] .today-passport-stamp-seal{background:radial-gradient(circle,#F8DECA,#BD8058)}
-.today-quiz-reward[data-grade="silver"]{border-color:#D3E5EF;background:linear-gradient(135deg,#4A6267,#29424D)}
-.today-quiz-reward[data-grade="bronze"]{border-color:#DBB19B;background:linear-gradient(135deg,#67504A,#344952)}
-.today-quiz-reward{position:relative;isolation:isolate;overflow:hidden}
-.today-quiz-reward > :not(.passport-sparkles){position:relative;z-index:1}
-.passport-sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:2}
-.passport-sparkles span{position:absolute;left:43px;top:49px;opacity:0;color:#FFEAAF;
- font-size:1.1rem;text-shadow:0 1px 5px #553720}
-.passport-sparkles span:nth-child(1){--dx:-49px;--dy:-32px;--delay:0ms}
-.passport-sparkles span:nth-child(2){--dx:40px;--dy:-33px;--delay:55ms}
-.passport-sparkles span:nth-child(3){--dx:-39px;--dy:30px;--delay:100ms}
-.passport-sparkles span:nth-child(4){--dx:51px;--dy:22px;--delay:35ms}
-.passport-sparkles span:nth-child(5){--dx:11px;--dy:-46px;--delay:120ms}
-.passport-sparkles span:nth-child(6){--dx:18px;--dy:37px;--delay:80ms}
-.today-quiz-reward[data-new="true"] .passport-sparkles span{
- animation:passport-sparkle .85s ease-out var(--delay) 1 both}
-@keyframes passport-sparkle{0%{opacity:0;transform:translate(0,0) scale(.25) rotate(-10deg)}
- 35%{opacity:1}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.95) rotate(90deg)}}
-@media(prefers-reduced-motion:reduce){.passport-sparkles{display:none}}
-.today-quiz-reward strong{display:block;color:#FFF2BF;font-size:1.08rem;line-height:1.5}
-.today-quiz-reward p{font-size:.81rem;color:#EFF7EE;line-height:1.5;margin:5px 0 0}
 .today-quiz-choices button[data-correct="true"]::after{content:" ✓";color:#BFFFF1;font-weight:950}
 .today-quiz-choices button[data-picked-wrong="true"]::after{content:" ✕";color:#FFE4DA;font-weight:950}
-.today-passport-stamp:focus-visible{outline:3px solid white;outline-offset:3px}
-.today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
-.today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:passport-stamp-drop .65s cubic-bezier(.18,1.35,.27,1)}
-@keyframes passport-stamp-drop{0%{opacity:0;transform:translateY(-29px) rotate(-28deg) scale(1.4)}
- 55%{opacity:1;transform:translateY(3px) rotate(-7deg) scale(.84)}
- 100%{transform:rotate(-12deg) scale(1)}}
-@media(max-width:520px){.today-passport-board{padding:13px 10px}
- .today-passport-stamps{grid-template-columns:repeat(auto-fit,minmax(87px,1fr));gap:7px}
- .today-passport-stamp{min-height:105px;padding:7px 4px}
- .today-passport-stamp-seal{height:46px;width:46px}
- .today-quiz-reward-seal{height:63px;width:63px;font-size:.76rem}}
-@media(prefers-reduced-motion:reduce){.today-passport-meter-fill{transition:none}
- .today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
- .today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:none}}
-
 /* Every correct quiz answer gets a non-blocking, immediate sparkle burst. */
 #todayQuizChoices{position:relative;isolation:isolate}
 #todayQuizChoices button{position:relative;overflow:visible;transform-origin:center center}
@@ -1498,24 +1421,12 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
  0%{opacity:0;transform:translateY(10px) scale(.84)}
  75%{opacity:1;transform:translateY(-2px) scale(1.055)}
  100%{opacity:1;transform:translateY(0) scale(1)}}
-.today-quiz-reward[data-perfect="true"]{border-color:#FFF4BE;
- box-shadow:0 0 0 3px #F9D99199,0 0 35px #FFD77B6B}
-.today-quiz-reward[data-perfect="true"] .passport-sparkles span{
- animation:passport-sparkle 1.15s ease-out var(--delay) 1 both}
-.today-passport-board[data-celebrate="true"] .today-passport-count{
- animation:quiz-collection-victory .8s cubic-bezier(.18,1.25,.34,1) both}
-@keyframes quiz-collection-victory{
- 0%{transform:scale(.7)}45%{transform:scale(1.3);box-shadow:0 0 28px #FFE4AAB0}
- 100%{transform:scale(1)}}
 @media(max-width:520px){.quiz-answer-sparks span{font-size:1.22rem}
  .today-quiz-correct-flash{font-size:.99rem}}
 @media(prefers-reduced-motion:reduce){
  #todayQuizChoices button[data-popped="true"],
  .quiz-answer-sparks[data-active="true"] span,
- .today-quiz-correct-flash,
- .today-quiz-reward[data-perfect="true"] .passport-sparkles span,
- .today-passport-board[data-celebrate="true"] .today-passport-count{
-  animation:none!important}
+ .today-quiz-correct-flash{animation:none!important}
  .quiz-answer-sparks{display:none}
 }
 
@@ -1756,21 +1667,10 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
    </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
-  <p class="today-map-game-lead">国名をタップして3択クイズ。スタンプを集めて世界パスポートを完成させよう。</p>
-  <section class="today-passport-board" id="todayPassportBoard" aria-labelledby="todayPassportHeading">
-   <div class="today-passport-head">
-    <div><p class="today-passport-eyebrow">WORLD PASSPORT · COLLECTION</p><h4 id="todayPassportHeading" tabindex="-1">今夜のスタンプ帳</h4></div>
-    <strong class="today-passport-count" id="todayPassportCount" aria-live="polite">0 / 0</strong>
-   </div>
-   <div class="today-passport-meter" id="todayPassportMeter" role="progressbar" aria-label="国別スタンプの収集進捗" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><div class="today-passport-meter-fill" id="todayPassportMeterFill"></div></div>
-   <p id="todayPassportMessage" class="today-passport-message" aria-live="polite">今日のスタンプを集めてみよう。</p>
-   <p class="today-passport-lifetime" id="todayPassportLifetime">通算訪問国：0か国（この端末に保存）</p>
-   <div class="today-passport-stamps" id="todayPassportStamps" role="group" aria-label="国別スタンプ帳・タップでクイズに挑戦"></div>
-   <p class="today-passport-hint">スタンプをタップすると、その国のクイズに挑戦できます。</p>
-  </section>
-  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="世界のへぇ！国別3択クイズ"></div>
+  <p class="today-map-game-lead">地図の下にある国名をタップすると、名所や文化を知る写真付き3択クイズを楽しめます。</p>
+  <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>
   <section class="today-country-quiz" id="todayCountryQuiz" aria-labelledby="todayQuizTitle" hidden>
-   <div class="today-quiz-top"><div><p class="today-quiz-kicker">WORLD PASSPORT · へぇ！3択</p><h4 id="todayQuizTitle"></h4></div>
+   <div class="today-quiz-top"><div><p class="today-quiz-kicker">WORLD QUIZ · へぇ！3択</p><h4 id="todayQuizTitle"></h4></div>
     <button class="today-quiz-close" id="todayQuizClose" type="button">閉じる</button></div>
    <p class="today-quiz-progress" id="todayQuizProgress"></p>
    <div class="today-quiz-steps" id="todayQuizSteps" role="group" aria-label="問題の進み具合"></div>
@@ -1779,12 +1679,6 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
    <div class="today-quiz-correct-flash" id="todayQuizCorrectFlash" aria-hidden="true" hidden><span>✦</span><strong id="todayQuizCorrectFlashLabel">正解！</strong><span>✦</span></div>
    <div class="today-quiz-result" id="todayQuizResult" role="status" aria-live="polite" hidden>
     <p class="today-quiz-verdict" id="todayQuizVerdict"></p>
-    <div class="today-quiz-reward" id="todayQuizStampReward" role="status" aria-live="polite" hidden>
-     <span class="today-quiz-reward-seal" id="todayQuizRewardSeal" aria-hidden="true">STAMP</span>
-     <div class="passport-sparkles" aria-hidden="true"><span>✦</span><span>★</span><span>✦</span><span>◆</span><span>★</span><span>✧</span></div>
-     <div><strong id="todayQuizRewardTitle">スタンプ獲得！</strong><p id="todayQuizRewardText"></p></div>
-    </div>
-
     <figure class="today-quiz-photo" id="todayQuizPhotoFigure" hidden>
      <button class="today-quiz-photo-zoom" id="todayQuizPhotoZoom" type="button" aria-label="正解の実写真を拡大">
       <img id="todayQuizPhotoImage" alt="" width="760" height="480" loading="eager" decoding="async">
@@ -1799,7 +1693,6 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
     <p class="today-quiz-joke" id="todayQuizJoke"></p>
     <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>閉じる</button>
    </div>
-   <p class="today-quiz-passport" id="todayQuizPassport"></p>
    <dialog class="today-quiz-photo-dialog" id="todayQuizPhotoDialog" aria-label="正解の実写真・拡大表示">
     <button id="todayQuizPhotoDialogClose" type="button" class="today-quiz-dialog-close">閉じる ×</button>
     <img id="todayQuizPhotoLarge" alt="" width="960" height="640">
@@ -2191,7 +2084,6 @@ function renderTodayMap(){
  $('todayMapTitle').textContent=actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台';
  $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
  const pins=$('todayMapPins'),legend=$('todayMapLegend');
- loadWorldPassport();
  pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();closeWorldPassport();
  if(!countryCatalog.length){
   $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
@@ -2243,7 +2135,7 @@ function renderTodayMap(){
   $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
  }else{
   const extra=marked<countries.length?' 一部の国は位置が未登録でも、国名ボタンのクイズには参加できます。':'';
-  $('todayMapNote').textContent=countNote+'。地図のピンとスタンプは記事数ではなく、重複を除いた国数です。国の紹介・クイズに進めます。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
+  $('todayMapNote').textContent=countNote+'。地図のピンと国別クイズのボタンは、重複を除いた国数です。写真付きの国紹介やクイズを楽しめます。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
  updateWorldPassportButtons();
  positionTodayMapPins();
