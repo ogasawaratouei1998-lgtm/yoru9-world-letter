@@ -315,7 +315,15 @@ jobs:
         with:
           path: _site
       - uses: actions/deploy-pages@v4
+        id: deployed_reader
         if: steps.release.outputs.published == 'true' && success()
+      - name: Verify the actual public Pages data before any release notification
+        if: steps.release.outputs.published == 'true'
+        timeout-minutes: 4
+        env:
+          PUBLISHED_SITE: ${{ steps.deployed_reader.outputs.page_url }}
+          PUBLISHED_REVISION: ${{ github.sha }}
+        run: python check_public_country_release.py --site "$PUBLISHED_SITE" --revision "$PUBLISHED_REVISION"
       # Recheck dispatch even if the publication already exists.
       # The notifier gates by TODAY and after 21:00; the backend deduplicates.
       # This recovers a push that failed after a successful Pages deployment.
