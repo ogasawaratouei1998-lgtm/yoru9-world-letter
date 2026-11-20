@@ -2334,9 +2334,11 @@ function openAtlasStory(index,fromRoute=false){
  $('empty').hidden=true;
  updateSpotlight();
  const quipCard=$('spotlight').querySelector('.spotlight-joke');
- quipCard.classList.remove('quip-revealed');
- if(quipRevealObserver){quipRevealObserver.unobserve(quipCard);quipRevealObserver.observe(quipCard)}
- else quipCard.classList.add('quip-revealed');
+ if(quipCard){
+  quipCard.classList.remove('quip-revealed');
+  if(quipRevealObserver){quipRevealObserver.unobserve(quipCard);quipRevealObserver.observe(quipCard)}
+  else quipCard.classList.add('quip-revealed');
+ }
  $('spotlightAward').textContent='このニュースの詳しい話';
  const travel=$('spotlight').querySelector('[data-travel-slot]');
  if(travel)travel.dataset.travelSlot=String(index);
