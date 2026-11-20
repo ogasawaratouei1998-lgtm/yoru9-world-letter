@@ -73,7 +73,7 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  ]
 
 });
-let worldPassportEdition='',worldPassportStamps={},worldPassportActive=null;
+let worldPassportEdition='',worldPassportStamps={},worldPassportProgress={},worldPassportActive=null;
 let worldPassportLastAwarded='',worldPassportLifetime={},worldPassportJustCompleted=false;
 const WORLD_PASSPORT_LIFETIME_KEY='yoru9-world-passport-lifetime-v1';
 function loadWorldPassportLifetime(){
@@ -102,10 +102,20 @@ function rememberWorldPassportCountry(code,score,total){
  persistWorldPassportLifetime();
 }
 function passportKey(){return 'yoru9-world-passport-v1:'+String(edition.editionDate||'demo')}
+function passportProgressKey(){return passportKey()+':unanswered-next-v1'}
+function persistWorldPassportProgress(){
+ try{localStorage.setItem(passportProgressKey(),JSON.stringify(worldPassportProgress))}catch(_){}
+}
+function recordWorldPassportNextQuestion(run){
+ // Keep the next question ready when the revealed answer is closed.
+ if(run.step>=run.questions.length-1)return;
+ worldPassportProgress[run.item.code]={step:run.step+1,score:run.score,streak:run.streak};
+ persistWorldPassportProgress();
+}
 function loadWorldPassport(){
  const key=passportKey();
  if(key===worldPassportEdition)return;
- worldPassportEdition=key;worldPassportActive=null;worldPassportStamps={};worldPassportLastAwarded='';worldPassportJustCompleted=false;
+ worldPassportEdition=key;worldPassportActive=null;worldPassportStamps={};worldPassportProgress={};worldPassportLastAwarded='';worldPassportJustCompleted=false;
  loadWorldPassportLifetime();
  try{
   const saved=JSON.parse(localStorage.getItem(key)||'{}');
@@ -114,6 +124,22 @@ function loadWorldPassport(){
     if(/^[A-Z]{2}$/.test(code)&&Number.isInteger(result?.score)&&
        Number.isInteger(result?.total)&&result.total>=1&&result.total<=2&&
        result.score>=0&&result.score<=result.total)worldPassportStamps[code]=result;
+   }
+  }
+ }catch(_){}
+ // An answered question can be closed without throwing away the unfinished
+ // country's earned score, even after a reload on the same daily edition.
+ try{
+  const saved=JSON.parse(localStorage.getItem(passportProgressKey())||'{}');
+  if(saved&&typeof saved==='object'&&!Array.isArray(saved)){
+   for(const [code,result] of Object.entries(saved)){
+    const max=Array.isArray(WORLD_PASSPORT_QUIZZES[code])?WORLD_PASSPORT_QUIZZES[code].length:1;
+    if(/^[A-Z]{2}$/.test(code)&&
+       Number.isInteger(result?.step)&&result.step>=1&&result.step<max&&
+       Number.isInteger(result.score)&&result.score>=0&&result.score<=result.step&&
+       Number.isInteger(result.streak)&&result.streak>=0&&result.streak<=result.score){
+     worldPassportProgress[code]={step:result.step,score:result.score,streak:result.streak};
+    }
    }
   }
  }catch(_){}
@@ -175,6 +201,7 @@ function updateWorldPassportBoard(){
  const album=$('todayPassportStamps');album.replaceChildren();
  countries.forEach(item=>{
   const result=worldPassportStamps[item.code],completed=!!result;
+  const partial=worldPassportProgress[item.code];
   const stamp=document.createElement('button');
   stamp.type='button';stamp.className='today-passport-stamp';
   stamp.dataset.countryCode=item.code;
@@ -184,8 +211,8 @@ function updateWorldPassportBoard(){
   stamp.dataset.fresh=String(completed&&worldPassportLastAwarded===item.code);
   stamp.setAttribute('aria-controls','todayCountryQuiz');
   stamp.setAttribute('aria-label',item.name+(completed
-   ?'のスタンプ獲得済み。タップで再挑戦'
-   :'のスタンプ未獲得。タップでクイズに挑戦'));
+   ?(partial?'の途中のクイズを再開':'のスタンプ獲得済み。タップで再挑戦')
+   :partial?'の続きのクイズを再開':'のスタンプ未獲得。タップでクイズに挑戦'));
   const seal=document.createElement('span');
   seal.className='today-passport-stamp-seal';
   seal.setAttribute('aria-hidden','true');
@@ -195,8 +222,8 @@ function updateWorldPassportBoard(){
   const status=document.createElement('span');
   status.className='today-passport-stamp-status';
   status.textContent=completed
-   ?'★ '+worldPassportGradeLabel(result.score,result.total)+' · '+result.score+'/'+result.total+'問正解'
-   :worldPassportLifetime[item.code]?'前の号で訪問済 · 今号に挑戦':'まだ空欄 · 挑戦する';
+   ?(partial?'第'+(partial.step+1)+'問から再開':'★ '+worldPassportGradeLabel(result.score,result.total)+' · '+result.score+'/'+result.total+'問正解')
+   :partial?'第'+(partial.step+1)+'問から再開':worldPassportLifetime[item.code]?'前の号で訪問済 · 今号に挑戦':'まだ空欄 · 挑戦する';
   stamp.append(seal,country,status);
   stamp.addEventListener('click',()=>startWorldPassport(item));
   album.append(stamp);
@@ -236,7 +263,11 @@ function focusWorldPassportQuestion(run){
 function startWorldPassport(item){
  loadWorldPassport();
  hideTodayCountryIntro();
- worldPassportActive={item,questions:passportQuizQuestions(item),step:0,score:0,streak:0,answered:false};
+ const questions=passportQuizQuestions(item);
+ const saved=worldPassportProgress[item.code];
+ const resume=saved&&saved.step<questions.length?saved:null;
+ worldPassportActive={item,questions,step:resume?resume.step:0,
+  score:resume?resume.score:0,streak:resume?resume.streak:0,answered:false};
  $('todayCountryQuiz').hidden=false;
  renderWorldPassportRound();updateWorldPassportButtons();
  focusWorldPassportQuestion(worldPassportActive);
@@ -388,15 +419,17 @@ function answerWorldPassport(picked){
  if(correct)celebrateWorldPassportCorrect($('todayQuizChoices').querySelectorAll('button')[picked],run.streak);
  $('todayQuizVerdict').textContent=correct
   ?'正解！ '+(run.streak>1?run.streak+'問連続正解！':'スタンプに一歩近づいた！')
-  :'惜しい！ 正解は「'+question.options[question.answer]+'」。答えを確認して次へ進もう！';
+  :'惜しい！ 正解は「'+question.options[question.answer]+'」。答えを確認したら閉じられます。';
  $('todayQuizExplanation').textContent=question.fact;
  $('todayQuizJoke').textContent='AIツッコミ（創作の冗談）：'+question.quip;
  $('todayQuizResult').hidden=false;
  revealWorldPassportAnswerPhoto(question);
  $('todayQuizNext').hidden=false;
  const finished=run.step===run.questions.length-1;
+ if(!finished){recordWorldPassportNextQuestion(run);updateWorldPassportButtons()}
  if(finished){
   const code=run.item.code,previous=worldPassportStamps[code];
+  if(worldPassportProgress[code]){delete worldPassportProgress[code];persistWorldPassportProgress()}
   const firstStamp=!previous;
   const newBest=!previous||run.score>previous.score;
   // A stamp represents visiting/completing the country challenge; the score
@@ -420,11 +453,8 @@ function answerWorldPassport(picked){
    ?'全問正解！ '+run.score+'/'+run.questions.length+'問。今日の世界をよく知りました。'
    :'今回'+run.score+'/'+run.questions.length+'問正解。クイズ完走の記念スタンプです。';
  }
- // One forward button for every answer: next question, next unvisited
- // country, or the album after the whole passport has been completed.
- const remaining=finished?currentIssueCountries().filter(item=>!worldPassportStamps[item.code]):[];
- $('todayQuizNext').textContent=!finished?'次の問題へ →':
-  remaining.length?'次は'+remaining[0].name+'の問題へ →':'スタンプ帳へ戻る ✓';
+ // The answer is already shown; this button only closes the quiz.
+ $('todayQuizNext').textContent='閉じる';
 }
 function finishWorldPassport(){
  closeWorldPassport();
@@ -436,18 +466,5 @@ function finishWorldPassport(){
  if(typeof requestAnimationFrame==='function')requestAnimationFrame(showAlbum);
  else showAlbum();
 }
-function nextWorldPassportRound(){
- const run=worldPassportActive;
- if(!run||!run.answered)return;
- if(run.step<run.questions.length-1){
-  run.step++;
-  renderWorldPassportRound();
-  focusWorldPassportQuestion(run);
-  return;
- }
- const remaining=currentIssueCountries().filter(item=>!worldPassportStamps[item.code]);
- if(remaining.length){startWorldPassport(remaining[0]);return;}
- finishWorldPassport();
-}
 document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
-document.getElementById('todayQuizNext').addEventListener('click',nextWorldPassportRound);
+document.getElementById('todayQuizNext').addEventListener('click',finishWorldPassport);
