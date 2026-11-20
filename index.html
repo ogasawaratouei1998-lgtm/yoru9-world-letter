@@ -2845,11 +2845,6 @@ function updatePastQuoteArchive(jstDate){
  $('pastQuoteMore').hidden=true;
  if(total&&$('pastQuoteArchive').open)appendPastQuoteBatch();
 }
-$('pastQuoteArchive').addEventListener('toggle',()=>{
- if($('pastQuoteArchive').open && pastQuotesRendered===0 && pastQuoteTotalDays(pastQuotesDate)>0)
-  appendPastQuoteBatch();
-});
-$('pastQuoteMore').addEventListener('click',appendPastQuoteBatch);
 function updateDailyFailureQuote(jstDate){
  const quote=failureQuoteForDate(jstDate);
  $('nightlyMessage').textContent='「'+quote.ja+'」';
@@ -2861,6 +2856,11 @@ function updateDailyFailureQuote(jstDate){
  $('closingJump').hidden=false;
  updatePastQuoteArchive(jstDate);
 }
+$('pastQuoteArchive').addEventListener('toggle',()=>{
+ if($('pastQuoteArchive').open && pastQuotesRendered===0 && pastQuoteTotalDays(pastQuotesDate)>0)
+  appendPastQuoteBatch();
+});
+$('pastQuoteMore').addEventListener('click',appendPastQuoteBatch);
 function render(){const d=edition.stories;
  selectedArticleIndex=0;
  $('articleReader').hidden=true;
