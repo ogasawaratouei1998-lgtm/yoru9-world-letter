@@ -1571,6 +1571,58 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 .today-quiz-photo-zoom:focus-visible,.today-quiz-dialog-close:focus-visible{outline:3px solid #fff;outline-offset:2px}
 @media(max-width:520px){.today-quiz-photo-zoom img{aspect-ratio:5/4;max-height:340px}
  .today-quiz-photo figcaption{padding:10px}.today-quiz-photo-dialog{padding:8px}}
+
+/* Article-reader consistency: no accidental blue focus border and a vivid single punchline. */
+body.news-detail-mode #articleReader #spotlightTitle{
+  padding:0 0 14px;border-bottom:2px solid #f7d69b80;outline:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke{
+  position:relative;isolation:isolate;overflow:visible;
+  margin:25px 3px 23px;padding:21px 18px 22px;
+  border:3px solid #fff4d7;border-radius:20px 20px 20px 6px;
+  background:linear-gradient(145deg,#fff0c3 0%,#ffd28d 100%);
+  box-shadow:0 8px 0 #a26646,0 18px 30px #0614268c;
+  transform:rotate(-.7deg);
+}
+body.news-detail-mode #articleReader .spotlight-joke::before{
+  content:"";position:absolute;bottom:-17px;left:26px;width:23px;height:23px;
+  background:#ffd28d;border-right:3px solid #fff4d7;border-bottom:3px solid #fff4d7;
+  transform:rotate(45deg);pointer-events:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke::after{
+  content:"!!";position:absolute;right:14px;top:-19px;padding:2px 10px 3px;
+  background:#eb5b56;color:#fff;font-size:1.14rem;line-height:1.2;font-weight:950;
+  border:2px solid #fff4d7;border-radius:9px;transform:rotate(11deg);
+  box-shadow:0 3px 0 #963f3e;opacity:1;pointer-events:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke .quip-kicker{margin:0 0 9px;gap:6px 12px}
+body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip-label{
+  color:#692f25;font-size:1.01rem;font-weight:950;letter-spacing:.04em;
+}
+body.news-detail-mode #articleReader .spotlight-joke .humor-marker{
+  display:inline-block;color:#344861;background:#fff7e4;border:1px solid #e0bc86;
+  padding:3px 8px;border-radius:100px;font-size:.7rem;font-weight:800;
+}
+body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
+  color:#1c2940;font-size:clamp(1.3rem,5.5vw,1.87rem);line-height:1.48;
+  letter-spacing:-.025em;font-weight:950;margin:0;text-shadow:none;
+}
+@keyframes article-quip-pop{
+  0%{opacity:0;transform:translateY(22px) rotate(2deg) scale(.93)}
+  65%{opacity:1;transform:translateY(-5px) rotate(-1.3deg) scale(1.015)}
+  100%{opacity:1;transform:translateY(0) rotate(-.7deg) scale(1)}
+}
+body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{
+  animation:article-quip-pop .55s cubic-bezier(.2,1,.35,1) both;
+}
+@media(max-width:520px){
+  body.news-detail-mode #articleReader #spotlightTitle{padding-bottom:12px}
+  body.news-detail-mode #articleReader .spotlight-joke{padding:19px 14px 20px;margin:24px 2px 23px}
+  body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{font-size:clamp(1.2rem,5.25vw,1.55rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{animation:none}
+}
 </style>
 </head>
 <body><div class="wrap">
@@ -2085,7 +2137,9 @@ function displayReleaseStatus(){
 // English-only supplementary text is not a verified Japanese translation.
 function isJapaneseText(value){return /[ぁ-んァ-ヶ一-龯々]/.test(String(value||''))}
 function storyDetailHtml(story){
- const detail=String(story.detail||'').trim();
+ // Keep the reporting separate from legacy "AI's view" paragraphs.
+ const detail=String(story.detail||'').trim()
+  .replace(/\n\s*\n\s*ここからはAIの見方。[\s\S]*$/,'').trim();
  if(isJapaneseText(detail))return detail.split(/\n\s*\n/).map(part=>part.trim()).filter(Boolean)
   .map(part=>'<p class="detailtext">'+escapeHtml(part)+'</p>').join('');
  const overview=String(story.summary||'').trim();
@@ -2239,6 +2293,12 @@ function renderIssueGallery(){
 // News navigation is a separate reading screen with a shareable URL.
 // Only the selected story's original evidence, humor and microtravel display.
 let selectedArticleIndex=0;
+// Reveal the one AI punchline as it enters the viewport, including after paging.
+const quipRevealObserver='IntersectionObserver' in window
+ ?new IntersectionObserver(entries=>{
+   for(const entry of entries)if(entry.isIntersecting)entry.target.classList.add('quip-revealed');
+  },{threshold:.35})
+ :null;
 function articleRouteHash(story){
  return '#story/'+encodeURIComponent(String(story.id||''));
 }
@@ -2273,6 +2333,10 @@ function openAtlasStory(index,fromRoute=false){
  filter='all';applyFilter();
  $('empty').hidden=true;
  updateSpotlight();
+ const quipCard=$('spotlight').querySelector('.spotlight-joke');
+ quipCard.classList.remove('quip-revealed');
+ if(quipRevealObserver){quipRevealObserver.unobserve(quipCard);quipRevealObserver.observe(quipCard)}
+ else quipCard.classList.add('quip-revealed');
  $('spotlightAward').textContent='このニュースの詳しい話';
  const travel=$('spotlight').querySelector('[data-travel-slot]');
  if(travel)travel.dataset.travelSlot=String(index);
@@ -2341,9 +2405,7 @@ function updateSpotlight(){
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');
  body.hidden=true;
- const second=first.quipSecond&&first.quipSecond.trim()&&first.quipSecond.trim()!==first.quip?.trim()
-  ?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(first.quipSecond)}</p></div>`:'';
- body.innerHTML=`<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p><div class="article-narrative" aria-label="記事本文">${storyDetailHtml(first)}</div>${second}<p class="source">出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="${selectedArticleIndex}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${selectedArticleIndex}">この記事を共有</button></div>`;
+ body.innerHTML=`<p class="reported">報道日：${escapeHtml(String(first.reported||'出典を確認').replaceAll('.','-'))}</p><div class="article-narrative" aria-label="記事本文">${storyDetailHtml(first)}</div><p class="source">出典：<a href="${escapeHtml(safeUrl(first.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(first.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(first)}${storyCorrectionHtml(first)}<div class="actions"><button type="button" class="smile" data-smile="${selectedArticleIndex}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${selectedArticleIndex}">この記事を共有</button></div>`;
 }
 $('spotlightRead').addEventListener('click',()=>{
  const panel=$('spotlightBody'),show=panel.hidden;
@@ -2689,7 +2751,7 @@ function render(){const d=edition.stories;
  $('editionMessage').textContent=archive?'過去の実話を使った体験版':`${edition.editionDate} 発行 · ${d.length}本${special?'（特集）':''}`;
  $('dateGuide').textContent=archive?'過去に報道された実話の体験版です。各記事の「報道日」は配信日とは異なります。':datedPrevious?`これは${edition.editionDate}発行の前回・過去号です。今日発生したニュースではありません。掲載記事の報道期間：${range}。`:special?`創刊特集号です。過去の出来事から選んだ実話${d.length}本で、今日起きたニュースという意味ではありません。報道期間：${range}。`:`今夜お届けするのは原則直近7日間に報道された実話です。発生日と配信日は異なる場合があります。報道期間：${range}。`;
  $('disclosure').innerHTML=archive?'<strong>創刊準備号です。</strong> 収録したのは過去に報道された実話です。21時自動更新・プッシュ通知はまだ稼働していません。': `<strong>${datedPrevious?'前回・過去の配信号です。':special?'創刊特集号です。':'公開済み配信号です。'}</strong> 掲載日と出来事の発生日は異なります。編集者が確認済みとして登録した記事ですが、真偽の自動保証ではありません。記事本文は独自の紹介、AIツッコミは創作の冗談です。プッシュ通知は読者の任意設定です。通知を受け取る端末で登録できます。`;
- $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;const art=newsArt(s);return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="story-cover"><figure class="story-visual"><img class="story-art" src="${escapeHtml(art)}" alt="記事を象徴した創作イラスト。報道写真ではありません。" loading="lazy" decoding="async" width="800" height="480"><figcaption>イメージイラスト</figcaption></figure><div class="story-headline"><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3></div></div><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}${s.quipSecond&&s.quipSecond.trim()&&s.quipSecond.trim()!==s.quip?.trim()?`<div class="second-quip"><span>もうひとつ、AIのひと言</span><p>${escapeHtml(s.quipSecond)}</p></div>`:""}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
+ $('stories').innerHTML=d.slice(1).map((s,offset)=>{const i=offset+1;const art=newsArt(s);return `<li class="story" data-story-index="${i}" data-type="${escapeHtml(s.category)}"><div class="storytop"><span class="number">${i+1}</span><span>${escapeHtml(s.flag||'🌍')} ${escapeHtml(s.country)}</span><span class="type">${escapeHtml(s.categoryLabel||'大失敗')}</span></div><div class="story-cover"><figure class="story-visual"><img class="story-art" src="${escapeHtml(art)}" alt="記事を象徴した創作イラスト。報道写真ではありません。" loading="lazy" decoding="async" width="800" height="480"><figcaption>イメージイラスト</figcaption></figure><div class="story-headline"><div class="label">${escapeHtml(s.label||'世界のまさか')}</div><h3>${escapeHtml(s.title)}</h3></div></div><div class="story-fact"><span class="fact-kicker">起きたこと</span><p class="summary">${escapeHtml(s.summary)}</p></div>${s.correctionNote?'<span class="correction-flag">編集訂正あり</span>':''}<p class="reported">報道日：${escapeHtml(String(s.reported||'出典を確認').replaceAll('.','-'))}</p>${s.quip?`<div class="teaserquip" role="note" aria-label="AIによる創作の冗談"><span>AIツッコミ <small class="humor-marker">創作の冗談</small></span>${escapeHtml(s.quip)}</div>`:""}<div class="travel-slot" data-travel-slot="${i}"></div><button type="button" class="readbtn" data-open="${i}" aria-expanded="false" aria-controls="details-${i}">詳しく読む ↓</button><div class="details" hidden id="details-${i}">${storyDetailHtml(s)}<p class="source">報道時期：${escapeHtml(s.reported||'出典に記載')}<br>出典：<a href="${escapeHtml(safeUrl(s.sourceUrl))}" target="_blank" rel="noopener noreferrer">${escapeHtml(s.sourceName||'元記事を読む')} ↗</a></p>${storyEvidenceHtml(s)}${storyAttributionHtml(s)}${storyCorrectionHtml(s)}<div class="actions"><button type="button" class="smile" data-smile="${i}" aria-pressed="false">☺ ふっと笑えた</button><button type="button" class="share" data-share="${i}">この記事を共有</button></div></div></li>`}).join('');
  renderIssueGallery();updateSpotlight();renderTravelSlots();renderTodayMap();updateFilters();applyFilter();update();observeStories();syncArticleRoute();}
 function update(){const count=Math.max(0,edition.stories.length-1);$('progress').hidden=count<=3;$('progress').textContent=count>3?`ほかに${count}本`:'';$('endprogress').textContent='';document.querySelectorAll('[data-smile]').forEach(b=>{const on=state.smiles.includes(Number(b.dataset.smile));b.setAttribute('aria-pressed',String(on));b.textContent=on?'✓ ふっと笑えた':'☺ ふっと笑えた'})}
 // Count an article as read when its summary has been visible long enough to read.
