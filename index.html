@@ -1260,6 +1260,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
  border:1px solid #A6E6DB;background:linear-gradient(150deg,#1E3C55,#152B41);color:#F8F4ED;
  box-shadow:0 12px 30px #0D203B35}
 .today-map-intro[hidden]{display:none}
+.today-map-intro{scroll-margin-top:calc(var(--safe-top) + 74px)}
 .today-map-intro-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
 .today-map-intro h4{margin:0;font-size:clamp(1.75rem,5vw,2.4rem);color:#FFF0C9;line-height:1.35;font-weight:900}
 .today-map-intro .today-map-intro-lead{font-size:clamp(1.1rem,3vw,1.3rem);font-weight:850;color:#B5EBD6;line-height:1.7;margin:15px 0}
@@ -1951,9 +1952,9 @@ function showTodayCountryIntro(item){
     &&!p.avoidCover&&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
  displayedCountryCoverAssets.delete(currentCode);
- figure.hidden=!approvedPhotos.length;
- status.hidden=!!approvedPhotos.length;
- status.textContent=approvedPhotos.length?'':'国の写真は準備中です。文化の紹介はご覧いただけます。';
+ figure.hidden=true;
+ status.hidden=false;
+ status.textContent=approvedPhotos.length?'高画質の写真を読み込み中…':'国の写真は準備中です。文化の紹介はご覧いただけます。';
  let photoIndex=0,sourceIndex=0;
  function loadNextCountryPhoto(){
   if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
@@ -2006,7 +2007,7 @@ function showTodayCountryIntro(item){
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
- $('todayMapIntro').scrollIntoView({block:'nearest'});
+ $('todayMapIntro').scrollIntoView({block:'start'});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
 // push only the visible marker aside when two 44px tap targets would overlap,
