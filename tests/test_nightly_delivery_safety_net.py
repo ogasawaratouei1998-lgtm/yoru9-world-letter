@@ -17,6 +17,19 @@ class NightlyDeliverySafetyNetTest(unittest.TestCase):
         self.assertIn("if [ -f \"data/archive/$DAY.json\" ]; then",workflow)
         self.assertIn('python publish_approved.py',workflow)
 
+    def test_push_notification_waits_until_live_pages_data_is_verified(self):
+        workflow=(ROOT/'.github/workflows/publish-nightly.yml').read_text(encoding='utf-8')
+        deploy=workflow.index('- uses: actions/deploy-pages@v4')
+        verify=workflow.index('- name: Verify the actual public Pages data before any release notification')
+        push=workflow.index('- name: Dispatch optional release notification')
+        self.assertLess(deploy,verify)
+        self.assertLess(verify,push)
+        self.assertIn('python check_public_country_release.py --site "$SITE"',workflow)
+        self.assertIn('if [ "$TODAY" = "$RELEASE_DAY" ]; then',workflow)
+        self.assertIn('No current-day release eligible for a notification',workflow)
+        self.assertIn('PUBLISHED_SITE: ${{ steps.deployed_reader.outputs.page_url }}',workflow)
+        self.assertIn('if: success()\n        timeout-minutes: 3',workflow)
+
     def test_watchdog_checks_only_after_gate_and_requests_guarded_retry(self):
         workflow=(ROOT/'.github/workflows/check-release-health.yml').read_text(encoding='utf-8')
         checker=(ROOT/'check_release_health.py').read_text(encoding='utf-8')

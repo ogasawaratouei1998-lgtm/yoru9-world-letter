@@ -47,15 +47,26 @@ def country_coverage(root: Path, stories):
             raise ValueError(code+": no licensed country-cover photograph")
         verified_covers=[]
         for photo in images:
+            # The selected portrait must be a locally licensed, attributed
+            # destination photograph. Older vetted national portraits did not
+            # all use the newer coverOnly marker: the country + explicit
+            # non-quiz cover selection is the actual authority, not that flag.
+            if photo.get("avoidCover") or photo.get("remoteOnly"):
+                continue
             asset=photo.get("asset")
             stop=next((item for item in photos.values()
-                       if item.get("photoAsset")==asset and item.get("coverOnly") is True),None)
+                       if item.get("photoAsset")==asset and
+                       item.get("country")==COUNTRY_NAMES.get(code) and
+                       item.get("quizOnly") is not True),None)
             if (stop and _licensed_photo(stop) and stop.get("author")==photo.get("author") and
                 stop.get("license")==photo.get("license") and
                 (not photo.get("sourcePage") or photo["sourcePage"]==stop.get("photoPage"))):
                 verified_covers.append(asset)
         if not verified_covers:
             raise ValueError(code+": cover source/creator does not match local photo manifest")
+        # The first vetted photo is the selected national portrait. Other
+        # vetted photos remain independent options, including quiz answers.
+        lead_cover=verified_covers[0]
         match=re.search(r"(?ms)^ "+re.escape(code)+r":\[(.*?)^ \],",quiz_section)
         if not match or match.group(1).count("question:")<2:
             raise ValueError(code+": two meaningful country quiz rounds required")
@@ -70,7 +81,7 @@ def country_coverage(root: Path, stories):
             stop=photos.get(key)
             if not stop or stop.get("country")!=name:
                 raise ValueError(code+": quiz photograph missing or belongs to wrong country: "+key)
-            if stop.get("photoAsset") in verified_covers:
+            if stop.get("photoAsset")==lead_cover:
                 raise ValueError(code+": portrait cover reused as quiz photograph")
             if not _licensed_photo(stop):
                 raise ValueError(code+": quiz photograph license/attribution missing")
@@ -84,7 +95,7 @@ def country_coverage(root: Path, stories):
         postcards=[p for key,p in photos.items()
                    if p.get("country")==name and
                    not p.get("coverOnly") and not p.get("quizOnly") and
-                   p.get("photoAsset") not in verified_covers and
+                   p.get("photoAsset")!=lead_cover and
                    (p.get("famousTourist") is True or key in guide_photos) and
                    _licensed_photo(p)]
         # Older, manually reviewed countries use a validated recognisable
@@ -100,7 +111,7 @@ def country_coverage(root: Path, stories):
                           for text in p["travelStory"])]
         if not detailed:
             raise ValueError(code+": curated tourism postcard is missing its detailed essay")
-        report[code]={"cover":verified_covers[0],"quizPhotoKeys":keys,
+        report[code]={"cover":lead_cover,"quizPhotoKeys":keys,
                       "postcard":detailed[0]["photoAsset"],
                       "quizRounds":match.group(1).count("question:")}
     return report
