@@ -50,14 +50,8 @@ class ApprovedEditionTest(unittest.TestCase):
                 approved.mkdir(parents=True)
                 archive.mkdir(parents=True)
                 (approved/source.name).write_bytes(source.read_bytes())
-                # This test models the publisher after image preparation. The
-                # production workflow must still generate the actual JPEG/WebP
-                # artwork and verify all images before writing a public issue.
-                for story in json.loads(source.read_text(encoding="utf-8"))["stories"]:
-                    if story.get("imagePath"):
-                        target=root/story["imagePath"]
-                        target.parent.mkdir(parents=True,exist_ok=True)
-                        target.write_bytes(b"RIFF"+(22000).to_bytes(4,"little")+b"WEBP"+b"0"*21900)
+                # Free illustrations ship with the reader; no image-generation
+                # files or external API calls are required to publish an issue.
                 (root/"data"/"current.json").write_text(
                     json.dumps({"status":"draft","editionDate":None,"stories":[]}),encoding="utf-8")
                 (archive/"index.json").write_text(json.dumps({"issues":[]}),encoding="utf-8")
