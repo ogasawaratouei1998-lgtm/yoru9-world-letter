@@ -21,10 +21,24 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
     worker = assets["service-worker.js"].decode("utf-8")
     highlights = json.loads(assets["country-highlights.json"])
     current = json.loads(assets["data/current.json"])
+    published_travel=json.loads(assets["travel-stops.json"])
+    local_travel=json.loads((root/"travel-stops.json").read_text(encoding="utf-8"))
+    published_index=json.loads(assets["data/archive/index.json"])
+    local_index=json.loads((root/"data/archive/index.json").read_text(encoding="utf-8"))
     expected = json.loads((root / "country-highlights.json").read_text(encoding="utf-8"))
     expected_worker = (root / "service-worker.js").read_text(encoding="utf-8")
     if highlights != expected:
         raise AssertionError("Public source-backed country topics differ from main")
+    if published_travel != local_travel:
+        raise AssertionError("Public detailed travel stories differ from current source")
+    if published_index != local_index:
+        raise AssertionError("Public archive index differs from current release")
+    if current != json.loads((root/"data/current.json").read_text(encoding="utf-8")):
+        raise AssertionError("Public news issue differs from current release")
+    if assets["world-passport.js"] != (root/"world-passport.js").read_bytes():
+        raise AssertionError("Public country quiz script is stale or altered")
+    if assets["index.html"] != (root/"index.html").read_bytes():
+        raise AssertionError("Public reader page is stale or altered")
     for text in ("COUNTRY PORTRAIT · 国の魅力",
                  "WORLD POSTCARD · 有名観光地の小旅行",
                  "FAMOUS_TOURIST_LANDMARKS",
@@ -40,6 +54,19 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
         raise AssertionError("PWA does not cache checked country highlights")
     if current.get("status") != "published" or not isinstance(current.get("stories"), list):
         raise AssertionError("Latest released stories missing from public site")
+    if len(current["stories"]) < 4 and current.get("editionType")=="regular" and current.get("editionDate","")>="2026-11-21":
+        raise AssertionError("Public regular issue violates four-story release gate")
+    for obsolete in ('id="todayPassportBoard"','id="todayPassportStamps"',
+                     'id="todayPassportCount"'):
+        if obsolete in index:
+            raise AssertionError("Retired stamp album has reappeared on public reader")
+    if 'stop.travelStory.map(paragraph=>' not in index:
+        raise AssertionError("Detailed destination essays are missing from public reader")
+    from check_country_experience import country_coverage
+    checked=country_coverage(root,current["stories"])
+    for record in checked.values():
+        if record.get("quizRounds",0)<2 or not record.get("postcard"):
+            raise AssertionError("Public country guide lacks its full curated quiz/travel data")
 
 
 def fetch_assets(site_url: str, revision: str) -> dict[str, bytes]:
@@ -48,8 +75,9 @@ def fetch_assets(site_url: str, revision: str) -> dict[str, bytes]:
     if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("Deployment URL must be a secure public site")
     result = {}
-    for name in ("index.html", "service-worker.js", "country-highlights.json",
-                 "data/current.json"):
+    for name in ("index.html", "world-passport.js", "service-worker.js",
+                 "country-highlights.json", "travel-stops.json",
+                 "data/current.json", "data/archive/index.json"):
         url = urljoin(base, name) + "?deploy=" + quote(revision, safe="")
         request = Request(url, headers={"Cache-Control": "no-cache",
                                        "User-Agent": "Yoru9ReleaseSmoke/1.0"})

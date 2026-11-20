@@ -44,6 +44,14 @@ class PushDispatchTest(unittest.TestCase):
                      "editionType":"regular","stories":[{}]*count},
                     datetime(2026,11,19,21,51,tzinfo=JST)))
 
+    def test_november21_undercount_never_notifies_even_if_published_json_exists(self):
+        for count in (1,2,3,4,5,6):
+            with self.subTest(count=count):
+                doc={"status":"published","editionDate":"2026-11-21",
+                     "editionType":"regular","stories":[{}]*count}
+                result=notice_for(doc,datetime(2026,11,21,21,45,tzinfo=JST))
+                self.assertEqual(result is not None,count in (4,5))
+
     def test_four_story_notice_not_sent_prior_to_nine(self):
         self.assertIsNone(notice_for(
             {"status":"published","editionDate":"2026-11-19",

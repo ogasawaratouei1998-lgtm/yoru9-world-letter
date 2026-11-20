@@ -41,6 +41,20 @@ class CountryExperienceContractTest(unittest.TestCase):
             country_coverage(self.root,[{"id":"verified-news-example",
                                         "country":"Nigeria"}])
 
+    def test_legacy_country_does_not_bypass_new_country_quality_gate(self):
+        with self.assertRaisesRegex(ValueError,"GB: cover source/creator"):
+            country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"}])
+
+    def test_two_paragraph_travel_story_is_required_for_published_country(self):
+        path=self.root/"travel-stops.json"
+        manifest=json.loads(path.read_text(encoding="utf-8"))
+        for item in manifest.values():
+            if item.get("country")=="ドイツ" and not item.get("coverOnly") and not item.get("quizOnly"):
+                item.pop("travelStory",None)
+        path.write_text(json.dumps(manifest,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"DE.*detailed essay"):
+            country_coverage(self.root,self.issue["stories"])
+
     def test_wrong_country_photo_rejected(self):
         path=self.root/"travel-stops.json"
         manifest=json.loads(path.read_text(encoding="utf-8"))

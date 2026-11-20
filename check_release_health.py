@@ -27,10 +27,14 @@ def check_release(root: Path, now: datetime):
     if kind=="special":
         valid_count=expected_count==5
     elif kind=="regular":
-        # Match the nightly publisher and notification sender: November 19
-        # onward permits one to five carefully reviewed stories.
-        max_regular=5 if now.date().isoformat()>="2026-11-19" else 3
-        valid_count=1<=expected_count<=max_regular
+        # The four-story gate took effect on November 21. Historical
+        # November 19–20 editions keep their original rules.
+        if issue_date >= "2026-11-21":
+            valid_count=4<=expected_count<=5
+        elif issue_date >= "2026-11-19":
+            valid_count=1<=expected_count<=5
+        else:
+            valid_count=1<=expected_count<=3
     else:
         valid_count=False
     if not valid_count:

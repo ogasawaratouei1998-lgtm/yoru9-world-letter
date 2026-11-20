@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed when a published country's passport, portrait, or licensed images are unfinished.
+"""Fail closed when a published country's portrait, photographs or quiz are unfinished.
 
 Checks the editorially curated runtime artifacts that the shipped browser
 actually reads. Never selects a substitute image, invents a country fact,
@@ -12,6 +12,7 @@ import re
 from country_codes import country_codes
 
 COUNTRY_NAMES = {
+    "KR": "韓国", "BR": "ブラジル", "AG": "アンティグア・バーブーダ",
     "IT": "イタリア", "DE": "ドイツ", "US": "アメリカ合衆国",
     "AR": "アルゼンチン", "FR": "フランス", "GB": "イギリス",
     "ES": "スペイン", "JP": "日本", "NZ": "ニュージーランド",
@@ -41,14 +42,6 @@ def country_coverage(root: Path, stories):
         guide=re.search(r"(?m)^ "+re.escape(code)+r":\{lead:'([^']+)',body:'([^']+)',facts:\[([^\]]+)",guide_section)
         if not guide or len(guide.group(2))<145 or len(guide.group(1))<12:
             raise ValueError(code+": substantive country portrait is not curated")
-        # Preserve the existing reviewed legacy feature set without silently
-        # downgrading its remote-only or image-optional historical rules.
-        # New countries MUST pass the stronger full-photo experience gate.
-        if code in ("AR","FR","GB","ES","JP","NZ"):
-            if code not in covers or not re.search(r"(?m)^ "+code+r":\[",quiz_section):
-                raise ValueError(code+": previous curated country experience unavailable")
-            report[code]={"legacyPreviouslyReviewed":True}
-            continue
         images=covers.get(code,[])
         if not images:
             raise ValueError(code+": no licensed country-cover photograph")
@@ -81,16 +74,34 @@ def country_coverage(root: Path, stories):
                 raise ValueError(code+": portrait cover reused as quiz photograph")
             if not _licensed_photo(stop):
                 raise ValueError(code+": quiz photograph license/attribution missing")
-        postcards=[p for p in photos.values()
+        # Older curated postcards predate the famousTourist flag. The
+        # exact keys in the reviewed country's guide also certify its
+        # independently licensed landmarks, without a blanket exemption.
+        guide_photos=set()
+        guide_match=re.search(r"(?m)^ "+re.escape(code)+r":\{[^\n]*?photos:\[([^\]]+)\]",guide_section)
+        if guide_match:
+            guide_photos=set(re.findall(r"'([^']+)'",guide_match.group(1)))
+        postcards=[p for key,p in photos.items()
                    if p.get("country")==name and
                    not p.get("coverOnly") and not p.get("quizOnly") and
                    p.get("photoAsset") not in verified_covers and
-                   p.get("famousTourist") is True and _licensed_photo(p)]
+                   (p.get("famousTourist") is True or key in guide_photos) and
+                   _licensed_photo(p)]
         # Older, manually reviewed countries use a validated recognisable
         # landmark list rather than an explicit famousTourist boolean.
-        if not postcards and code not in ("AR","FR","US","GB","ES","JP","NZ"):
-            raise ValueError(code+": no independent locally bundled tourist postcard")
+        if not postcards:
+            raise ValueError(code+": no independent licensed tourist postcard")
+        # The postcard must also have the two rich, proofread paragraphs
+        # expected by the current optional microtravel reader. A one-line
+        # placeholder must never be introduced by the next nightly issue.
+        detailed=[p for p in postcards if isinstance(p.get("travelStory"),list)
+                  and len(p["travelStory"])==2
+                  and all(isinstance(text,str) and len(text.strip())>=70
+                          for text in p["travelStory"])]
+        if not detailed:
+            raise ValueError(code+": curated tourism postcard is missing its detailed essay")
         report[code]={"cover":verified_covers[0],"quizPhotoKeys":keys,
+                      "postcard":detailed[0]["photoAsset"],
                       "quizRounds":match.group(1).count("question:")}
     return report
 
