@@ -7,6 +7,23 @@ const status=document.getElementById('notificationStatus');
 const button=document.getElementById('notificationButton');
 const testButton=document.getElementById('notificationTestButton');
 const info=document.getElementById('notificationInfo');
+const details=document.getElementById('notificationDetails');
+function unavailable(reason){
+  button.disabled=true;
+  button.textContent='現在、通知を設定できません';
+  message(reason);
+}
+if(details){
+  document.addEventListener('pointerdown',event=>{
+    if(details.open&&!details.contains(event.target))details.open=false;
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'&&details.open){
+      details.open=false;
+      details.querySelector('summary')?.focus();
+    }
+  });
+}
 let configuration=null;
 const message=s=>{status.textContent=s};
 function validConfig(x){
@@ -97,12 +114,12 @@ if(testButton)testButton.addEventListener('click',async()=>{
   }
 });
 fetch('./notification-config.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('disabled');return r.json()}).then(async x=>{
-  if(!validConfig(x))return;
+  if(!validConfig(x)){unavailable('通知サービスは現在準備中です。');return;}
   const health=await fetch(x.backendUrl.replace(/\/+$/,'')+'/health',{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(Error('health')));
   if(!health.ready||!health.vapidPublicKey)throw Error('push_not_ready');
   x.vapidPublicKey=health.vapidPublicKey;
-  configuration=x;area.hidden=false;
+  configuration=x;
   info.textContent='通知は任意です。iPhoneではホーム画面への追加が必要です。';
   await refresh();
-}).catch(()=>{});
+}).catch(()=>{unavailable('通知サービスに接続できません。少し時間をおいて再度お試しください。');});
 })();
