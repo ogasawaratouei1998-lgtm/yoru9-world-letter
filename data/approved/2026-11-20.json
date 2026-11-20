@@ -39,8 +39,7 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true,
-      "imagePath": "assets/news-generated/2026-11-20/italy-toilet-ai-python-48-hour-search-2026.webp"
+      "editorQualityVerified": true
     },
     {
       "id": "drew-carey-price-right-early-reveal-2026",
@@ -73,8 +72,7 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true,
-      "imagePath": "assets/news-generated/2026-11-20/drew-carey-price-right-early-reveal-2026.webp"
+      "editorQualityVerified": true
     },
     {
       "id": "mainz-sewer-search-lost-drone-2026",
@@ -106,8 +104,7 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true,
-      "imagePath": "assets/news-generated/2026-11-20/mainz-sewer-search-lost-drone-2026.webp"
+      "editorQualityVerified": true
     },
     {
       "id": "kusel-lost-handcuff-key-police-help-2026",
@@ -139,9 +136,8 @@
       "humanFailureVerified": true,
       "surpriseVerified": true,
       "stageTsukkomiVerified": true,
-      "editorQualityVerified": true,
-      "imagePath": "assets/news-generated/2026-11-20/kusel-lost-handcuff-key-police-help-2026.webp"
+      "editorQualityVerified": true
     }
   ],
-  "editionRequiresImages": true
+  "fourStoryStaticIllustrationReissue": true
 }
