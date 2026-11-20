@@ -32,7 +32,6 @@ on:
       - 'travel-stops.json'
       - 'prepare_editorial.py'
       - 'suggest_ai_quips.py'
-      - 'send_release_notice.py'
       - 'notifications.js'
       - 'notification-config.json'
       - 'service-worker.js'
@@ -63,6 +62,7 @@ jobs:
           python build_site.py
           python check_release_candidate.py --site _site
           test -f _site/index.html
+          test ! -e _site/data/approved
       - name: Preview mobile navigation, photos and quiz at 320/375/393px before merge
         run: bash run_mobile_preflight.sh
       - name: Preserve pre-release visual diagnostics
@@ -73,4 +73,3 @@ jobs:
           path: mobile-screenshots/
           if-no-files-found: ignore
           retention-days: 7
-          test ! -e _site/data/approved
