@@ -254,7 +254,7 @@ try{
     images.map(img=>img.getAttribute('src')));
    assert.equal(new Set(galleryArts).size,galleryArts.length,
     'every current news card must show different artwork rather than duplicate clipboards');
-   const newGeneratedIssue=await page.evaluate(()=>
+   const newSvgIssue=await page.evaluate(()=>
     edition.editionType==='regular'&&edition.editionDate>='2026-11-21');
    for(const path of galleryArts){
     assert.ok(path.startsWith('./assets/news/')||
@@ -264,24 +264,25 @@ try{
     assert.ok(!path.includes('/category-work.svg')&&!path.includes('/category-sports.svg'),
      'current stories must not repeat category placeholders');
    }
-   if(newGeneratedIssue){
+   if(newSvgIssue){
     assert.ok(editorialCover.storyCount>=4&&editorialCover.storyCount<=5,
      'new regular issues must have four or five verified stories');
-    assert.ok(galleryArts.every(path=>
-     /^\.\/assets\/news-generated\/\d{4}-\d{2}-\d{2}\/[a-z0-9-]+\.webp$/.test(path)),
-     'all current article pictures use edition-specific generated WebPs');
-    assert.equal(await page.locator('#issueGallery .gallery-image-label').count(),
-     editorialCover.storyCount,'every AI-generated picture has a visible disclosure');
-    assert.ok((await page.locator('#issueGallery .gallery-image-label').allTextContents())
-     .every(label=>label.includes('イメージ画像（AI生成）')),
-     'no photorealistic generated picture is mislabeled as a news photo');
+    assert.ok(galleryArts.every(path=>path.startsWith('./assets/news/')||
+      path.startsWith('data:image/svg+xml;charset=utf-8,')),
+     'free illustrated news must not depend on paid generated WebPs');
+    assert.equal(await page.locator('#issueGallery .gallery-image-label').count(),0,
+     'non-AI illustrations must not be labeled AI-generated');
    }
    const currentStoryIds=await page.evaluate(()=>edition.stories.map(s=>s.id));
    const bespokeArt={
     'uk-french-weir-swimming-2026':'uk-river-water-warning.svg',
     'mussolini-colador-2026':'spain-mussels-colander-pan.svg',
     'jp-gov-youtuber-pr-2026':'japan-policy-youtuber-pr.svg',
-    'nz-cricket-collapse-2026':'nz-cricket-comeback.svg'
+    'nz-cricket-collapse-2026':'nz-cricket-comeback.svg',
+    'italy-toilet-ai-python-48-hour-search-2026':'ai-python-toilet.svg',
+    'drew-carey-price-right-early-reveal-2026':'game-show-price-board.svg',
+    'mainz-sewer-search-lost-drone-2026':'drone-sewer-search.svg',
+    'kusel-lost-handcuff-key-police-help-2026':'lost-handcuff-key.svg'
    };
    for(const [index,id] of currentStoryIds.entries()){
     if(bespokeArt[id])assert.ok(galleryArts[index].endsWith('/'+bespokeArt[id]),
@@ -438,6 +439,13 @@ try{
     'bundled map artwork must load on mobile');
    const pins=today.locator('.today-map-pin');
    const countryButtons=today.locator('.today-map-country');
+   const uniqueMappedCountries=await countryButtons.count();
+   const issueStoryCount=await page.evaluate(()=>edition.stories.length);
+   const mapExplanation=await today.locator('#todayMapNote').textContent();
+   assert.ok(mapExplanation.includes('実話'+issueStoryCount+'本・'+uniqueMappedCountries+'カ国'),
+    'map states both published story count and deduplicated country count');
+   assert.ok(mapExplanation.includes('重複を除いた国数'),
+    'country stamps are not misleadingly presented as one per article');
    assert.ok(await pins.count()>=1,'published countries have visible map pins');
    assert.equal(await pins.count(),await countryButtons.count(),
     'one country pin corresponds to one named country button');
