@@ -14,6 +14,8 @@ from pathlib import Path
 import re
 import sys
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+from time import sleep
 from zoneinfo import ZoneInfo
 
 MIN_PUBLISH_DATE="2026-11-20"
@@ -86,9 +88,38 @@ def gemini_image(prompt,key,model=IMAGE_MODEL):
                 json.dumps(payload,ensure_ascii=False).encode("utf-8"),
                 headers={"x-goog-api-key":key,"Content-Type":"application/json"},
                 method="POST")
-    with urlopen(req,timeout=110) as response:
-        result=json.load(response)
-    return extract_image_bytes(result)
+    # A 429 can mean either a brief rate limit or an image model with ZERO
+    # granted requests (often a free-tier key). Repeatedly hammering an
+    # unavailable paid model cannot create an image; protect quotas and the
+    # existing published edition. Never log credentials or raw API responses.
+    for attempt in range(3):
+        try:
+            with urlopen(req,timeout=110) as response:
+                result=json.load(response)
+            return extract_image_bytes(result)
+        except HTTPError as exc:
+            if exc.code!=429:
+                raise RuntimeError(f"Image API HTTP {exc.code}; previous issue preserved") from exc
+            try:
+                payload=json.loads(exc.read(8000))
+                problem=payload.get("error",{})
+                message=str(problem.get("message","")).lower()
+                details=str(problem.get("details",[])).lower()
+            except (ValueError,UnicodeDecodeError,TypeError,AttributeError):
+                message=details=""
+            if any(term in message+" "+details for term in
+                   ("free_tier_requests","freetier","free tier","limit: 0","limit=0",
+                    "quota limit 0")):
+                raise RuntimeError(
+                    "Image quota is zero (possibly free tier). Check the Gemini "
+                    "API project's paid-tier entitlement, billing, and AI Studio "
+                    "rate limits; no edition was published.") from None
+            if attempt==2:
+                raise RuntimeError(
+                    "Image API 429 persisted after bounded retries; check paid "
+                    "quota and rate limits; previous edition preserved.") from None
+            sleep((2,6)[attempt])
+    raise RuntimeError("Image generation did not complete")
 
 def encode_webp(raw,path):
     from PIL import Image,ImageOps

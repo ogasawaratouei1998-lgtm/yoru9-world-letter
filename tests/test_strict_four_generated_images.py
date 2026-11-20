@@ -125,6 +125,41 @@ class StrictFourAndImagesTest(unittest.TestCase):
                 prepare(root,DAY,key="FAKE",render=lambda *_:self.fail("Should not call API"))
             self.assertEqual(prepare(root,"2026-11-20",key="FAKE"),0)
 
+    def test_zero_image_quota_stops_without_retrying_or_publishing(self):
+        from io import BytesIO
+        from urllib.error import HTTPError
+        from unittest.mock import patch
+        from prepare_news_images import gemini_image
+
+        def denied(*args,**kwargs):
+            body=json.dumps({"error":{"code":429,
+                "message":"Quota exceeded for free_tier_requests, limit: 0"}}).encode()
+            raise HTTPError("https://example.com",429,"Too Many Requests",{},BytesIO(body))
+
+        with patch("prepare_news_images.urlopen",side_effect=denied) as api, \
+             patch("prepare_news_images.sleep") as pause:
+            with self.assertRaisesRegex(RuntimeError,"quota is zero"):
+                gemini_image("fictional safe editorial image","TEST_API_KEY")
+            self.assertEqual(api.call_count,1)
+            pause.assert_not_called()
+
+    def test_transient_image_rate_limit_retries_only_twice(self):
+        from io import BytesIO
+        from urllib.error import HTTPError
+        from unittest.mock import patch
+        from prepare_news_images import gemini_image
+
+        def rate_limited(*args,**kwargs):
+            body=b'{"error":{"code":429,"message":"rate limited for a minute"}}'
+            raise HTTPError("https://example.com",429,"Too Many Requests",{},BytesIO(body))
+
+        with patch("prepare_news_images.urlopen",side_effect=rate_limited) as api, \
+             patch("prepare_news_images.sleep") as pause:
+            with self.assertRaisesRegex(RuntimeError,"persisted after bounded retries"):
+                gemini_image("fictional safe editorial image","TEST_API_KEY")
+            self.assertEqual(api.call_count,3)
+            self.assertEqual(pause.call_count,2)
+
     def test_image_api_parser_and_non_documentary_prompt(self):
         raw=b"\xff\xd8\xff"+b"0"*22000
         response={"steps":[{"type":"model_output","content":[
