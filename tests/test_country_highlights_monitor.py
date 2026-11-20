@@ -53,11 +53,13 @@ class CountryHighlightMonitorTest(unittest.TestCase):
         self.assertTrue(report["needsEditorialReview"])
         self.assertIn("GB", [row["country"] for row in report["urgent"]])
 
-    def test_new_italy_us_issue_flags_missing_country_notes_without_invention(self):
-        shutil.copy2(ROOT / "data/current.json", self.root / "data/current.json")
+    def test_november20_four_story_issue_audits_all_countries_without_invention(self):
+        # Use the dated immutable release, not a changing latest-issue file.
+        # The Nov 20 edition was expanded to include two reports from Germany.
+        shutil.copy2(ROOT / "data/archive/2026-11-20.json", self.root / "data/current.json")
         report=audit(self.root,date(2026,11,20))
         self.assertTrue(report["editionIsRecent"])
-        self.assertEqual(report["countriesChecked"],["IT","US"])
+        self.assertEqual(report["countriesChecked"],["DE","IT","US"])
         if report["urgent"]:
             self.assertTrue(report["needsEditorialReview"])
 
