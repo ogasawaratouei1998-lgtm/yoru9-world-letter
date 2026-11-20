@@ -41,6 +41,24 @@ def bundle_travel_photos(root, output):
         if stop.get('coverOnly') is True:
             country_covers.add(asset)
 
+    # Also prefetch sharp covers for the existing, source-checked portraits
+    # (Spain/Japan/New Zealand and other older guides). Previously only items
+    # tagged coverOnly got the 1280px version; several legacy portrait photos
+    # were fetched at 500px and appeared blurry or disappeared on retina screens.
+    page = root / 'index.html'
+    if page.exists():
+        prefix='const TODAY_COUNTRY_PHOTOS=Object.freeze('
+        matches=[line for line in page.read_text(encoding='utf-8').splitlines()
+                 if line.startswith(prefix)]
+        if len(matches)!=1 or not matches[0].endswith(');'):
+            raise ValueError('Country cover registry missing from reader')
+        registry=json.loads(matches[0][len(prefix):-2])
+        for candidates in registry.values():
+            for photo in candidates:
+                asset=photo.get('asset')
+                if not photo.get('avoidCover') and asset in required:
+                    country_covers.add(asset)
+
     failures = []
     for asset, url in required.items():
         target = output / asset
