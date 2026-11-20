@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-labelledby="illustration-title">
+<title id="illustration-title">安全保障の政策広報と都市伝説系動画配信の組み合わせへの疑問を表す創作イラスト</title>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#B8C5F5"/><stop offset="1" stop-color="#E2ADE3"/></linearGradient>
+ <filter id="soft"><feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#102D44" flood-opacity=".21"/></filter>
+ <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="2" fill="#fff" opacity=".36"/></pattern>
+</defs>
+<rect width="800" height="480" rx="28" fill="url(#bg)"/>
+<circle cx="700" cy="54" r="130" fill="#fff" opacity=".17"/>
+<circle cx="85" cy="434" r="152" fill="#fff" opacity=".13"/>
+<path d="M0 418Q200 378 416 412T800 390V480H0Z" fill="#563A85" opacity=".13"/>
+<path d="M76 85h45m-22-22v45M721 333h42m-21-21v42" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity=".63"/>
+
+<!-- soft tech rings and stripes -->
+<circle cx="397" cy="248" r="195" fill="none" stroke="#FFF" stroke-width="12" opacity=".27"/>
+<circle cx="397" cy="248" r="238" fill="none" stroke="#FFF" stroke-width="5" opacity=".15" stroke-dasharray="10 18"/>
+<!-- Public policy document, generic not official insignia -->
+<g filter="url(#soft)" transform="rotate(-10 191 233)">
+ <rect x="77" y="120" width="220" height="276" rx="18" fill="#F8FAF8" stroke="#354B75" stroke-width="10"/>
+ <path d="M120 166h109M120 201h132M120 235h112" stroke="#A3B0CC" stroke-width="14" stroke-linecap="round"/>
+ <path d="M174 281l44-22 45 22-8 57-37 35-36-35z" fill="#86BEB5" stroke="#354B75" stroke-width="9"/>
+ <path d="m199 314 16 17 27-34" fill="none" stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<!-- Smartphone portrait video -->
+<g filter="url(#soft)">
+ <rect x="295" y="58" width="265" height="377" rx="38" fill="#203957" stroke="#172E4C" stroke-width="11"/>
+ <rect x="319" y="92" width="217" height="298" rx="19" fill="#D8DBF4"/>
+ <path d="M322 336q106-64 212 0v54H322Z" fill="#9BA7D9"/>
+ <circle cx="425" cy="200" r="76" fill="#F7C99B" stroke="#304B71" stroke-width="9"/>
+ <path d="M367 181q17-69 62-64t70 57q-34-26-60-21t-72 28" fill="#415178"/>
+ <rect x="347" y="283" width="154" height="35" rx="15" fill="#304C74"/>
+ <path d="m409 186 0 77 57-39z" fill="#E86F8B" stroke="#FFF9E9" stroke-width="8" stroke-linejoin="round"/>
+ <rect x="390" y="68" width="73" height="10" rx="5" fill="#7D8EAE"/>
+</g>
+<!-- Fact-checking magnifier asks if this pairing makes sense -->
+<g filter="url(#soft)">
+ <circle cx="634" cy="210" r="75" fill="#FFF4DB" stroke="#2C4B70" stroke-width="13"/>
+ <path d="m681 270 59 63" stroke="#2C4B70" stroke-width="26" stroke-linecap="round"/>
+ <text x="635" y="257" text-anchor="middle" font-size="130" font-family="system-ui,sans-serif" font-weight="900" fill="#E57785">?</text>
+</g>
+<path d="m569 68 28-20m10 57 31-2m-74 23-24 24" fill="none" stroke="#F8F4E6" stroke-width="11" stroke-linecap="round"/>
+<!-- attention/policy messaging speech marks -->
+<path d="M90 64h96q19 0 19 19v18q0 20-19 20h-35l-18 19-4-19H90q-18 0-18-20V83q0-19 18-19z" fill="#FFF1D3" stroke="#364B78" stroke-width="8"/>
+<text x="140" y="109" text-anchor="middle" font-size="50" font-family="system-ui,sans-serif" font-weight="900" fill="#424B7C">PR</text>
+
+</svg>
