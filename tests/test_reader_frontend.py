@@ -652,15 +652,45 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn(".spotlight #spotlightRead{", page)
         self.assertNotIn(".spotlight button{", page)
 
-    def test_two_stage_ai_joke_and_nightly_payoff(self):
+    def test_single_ai_punchline_and_nightly_payoff(self):
+        """Keep one punchline per article; archived second jokes remain editorial data."""
         page = (ROOT / "index.html").read_text(encoding="utf-8")
-        for token in ('もうひとつ、AIのひと言', 's.quipSecond',
-                      'class="second-quip"', '今夜のひと言',
-                      'id="nightlyMessage"'):
-            self.assertIn(token, page)
+        self.assertIn('id="spotlightQuip"', page)
+        self.assertIn('id="nightlyMessage"', page)
+        self.assertIn('今夜のひと言', page)
+        self.assertNotIn('もうひとつ、AIのひと言', page)
+        spotlight = page[page.index('function updateSpotlight(){'):
+                         page.index("$('spotlightRead').addEventListener")]
+        self.assertNotIn('quipSecond', spotlight)
+        self.assertIn('storyDetailHtml(first)', spotlight)
+        self.assertIn('ここからはAIの見方。', page)
+        self.assertIn('quipRevealObserver', page)
+        self.assertIn('article-quip-pop', page)
+        self.assertIn('body.news-detail-mode #articleReader #spotlightTitle{', page)
+        self.assertIn('body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{', page)
         editor = (ROOT / "auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn('quipSecond', editor)
         self.assertIn('distinct', editor)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_story_detail_keeps_report_facts_and_removes_legacy_ai_view(self):
+        """The older paragraph marked as AI opinion must not duplicate the punchline."""
+        import json
+        page = (ROOT / "index.html").read_text(encoding="utf-8")
+        detail_js = page[page.index('function storyDetailHtml(story){'):
+                         page.index('function storyEvidenceHtml(story){')]
+        runner = (
+            'function isJapaneseText(v){return /[ぁ-んァ-ヶ一-龯々]/.test(String(v||""));}\n'
+            'function escapeHtml(v){return String(v).replaceAll("&","&amp;").replaceAll("<","&lt;");}\n'
+            + detail_js
+            + '\nconst html=storyDetailHtml(JSON.parse(process.argv[1]));'
+              '\nif(!html.includes("事実を確認した。")||html.includes("これはAIの感想")) process.exit(1);'
+        )
+        case = {"detail": "事実を確認した。\n\nここからはAIの見方。\nこれはAIの感想。",
+                "summary": "事実の概要"}
+        proc = subprocess.run(["node", "-e", runner, json.dumps(case, ensure_ascii=False)],
+                              capture_output=True, text=True, check=False)
+        self.assertEqual(proc.returncode, 0, proc.stderr)
 
     def test_sports_filter_is_available(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
