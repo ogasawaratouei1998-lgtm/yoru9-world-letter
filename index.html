@@ -2190,6 +2190,14 @@ function renderTodayMap(){
   return;
  }
  const countries=currentIssueCountries();
+ // A four-story issue can legitimately cover only three distinct countries.
+ // Explain the deduplicated mapping instead of inventing a fourth country pin.
+ const repeated=countries.filter(c=>c.indices.length>1)
+  .map(c=>c.name+' '+c.indices.length+'本');
+ const countNote='実話'+edition.stories.length+'本・'+countries.length+'カ国'+
+   (repeated.length?'（'+repeated.join('、')+'）':'');
+ $('todayMapTitle').textContent=(actuallyToday?'本日の配信国':published?'最新配信号の国':'体験版のニュースの舞台')+
+  ' · '+countries.length+'カ国';
  let marked=0;
  countries.forEach((item,i)=>{
   const color=TODAY_MAP_COLORS[i%TODAY_MAP_COLORS.length];
@@ -2227,7 +2235,7 @@ function renderTodayMap(){
   $('todayMapNote').textContent='掲載国を特定できる記事はありません。';
  }else{
   const extra=marked<countries.length?' 一部の国は位置が未登録でも、国名ボタンのクイズには参加できます。':'';
-  $('todayMapNote').textContent='地図のピンは国の紹介、下のスタンプ帳は国ごとのクイズです。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
+  $('todayMapNote').textContent=countNote+'。地図のピンとスタンプは記事数ではなく、重複を除いた国数です。国の紹介・クイズに進めます。位置は国・地域の代表地点で、ニュースの発生現場ではありません。'+extra;
  }
  updateWorldPassportButtons();
  positionTodayMapPins();
@@ -2289,7 +2297,11 @@ const NEWS_ARTWORK=Object.freeze({
  'albert-lea-mcnugget-monkey-diaper-police-2026':'monkey-patrol.svg',
  'argentina-goalkeeper-throws-own-goal-2026':'own-goal-keeper.svg',
  'france-candy-police-mock-wanted-2026':'police-sweets-wanted.svg',
- 'mickey-83-tattoos-disney-unvisited-2026':'mouse-83-tattoos.svg'
+ 'mickey-83-tattoos-disney-unvisited-2026':'mouse-83-tattoos.svg',
+ 'italy-toilet-ai-python-48-hour-search-2026':'ai-python-toilet.svg',
+ 'drew-carey-price-right-early-reveal-2026':'game-show-price-board.svg',
+ 'mainz-sewer-search-lost-drone-2026':'drone-sewer-search.svg',
+ 'kusel-lost-handcuff-key-police-help-2026':'lost-handcuff-key.svg'
 });
 const NEWS_ART_FALLBACK=Object.freeze({
  work:'category-work.svg',company:'category-company.svg',
