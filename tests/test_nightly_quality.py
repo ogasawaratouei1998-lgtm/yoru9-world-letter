@@ -68,13 +68,17 @@ class NightlyLineQualityTests(unittest.TestCase):
         approved["nightlyMessage"]=BAD
         self.assertEqual(validate_approved(approved,"2026-11-17")["nightlyMessage"],BAD)
 
-    def test_reader_hides_empty_line_instead_of_fake_comedy_fallback(self):
+    def test_reader_uses_sourced_daily_quote_not_old_nightly_comedy(self):
         from pathlib import Path
         page=(Path(__file__).resolve().parents[1]/"index.html").read_text(encoding="utf-8")
-        self.assertIn("id=\"closingQuote\"",page)
-        self.assertIn("id=\"closingJump\"",page)
-        self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
-        self.assertIn("$('closingJump').hidden=!nightlyLine",page)
+        self.assertIn('id="closingQuote"',page)
+        self.assertIn('id="closingJump"',page)
+        self.assertIn("updateDailyFailureQuote(localDate(new Date()))",page)
+        self.assertIn("DAILY_FAILURE_QUOTES",page)
+        self.assertIn("日本語意訳",page)
+        self.assertIn("$('closingQuote').hidden=false",page)
+        self.assertIn("$('closingJump').hidden=false",page)
+        self.assertNotIn("const nightlyLine=",page)
 
 
 if __name__=="__main__":

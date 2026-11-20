@@ -709,7 +709,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="spotlightQuip"', page)
         self.assertIn('id="nightlyMessage"', page)
-        self.assertIn('今夜のひと言', page)
+        self.assertIn('今日のひと言 · 失敗と挑戦', page)
         self.assertNotIn('もうひとつ、AIのひと言', page)
         spotlight = page[page.index('function updateSpotlight(){'):
                          page.index("$('spotlightRead').addEventListener")]
@@ -850,8 +850,8 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn('#closing .closing-afterword{border-top:1px solid #637993;',page)
         self.assertIn('#closing .night-quote:not([hidden])~.closing-afterword',page)
         self.assertIn('#closing .night-quote p{font-size:clamp(.96rem',page)
-        self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
-        self.assertIn("$('closingJump').hidden=!nightlyLine",page)
+        self.assertIn("$('closingQuote').hidden=false",page)
+        self.assertIn("$('closingJump').hidden=false",page)
 
     def test_iso_country_catalog_is_used_across_reader(self):
         import json
@@ -894,12 +894,11 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn("#atlasHero .atlas-brand{display:block!important;",page)
         self.assertIn(".spotlight h1{font-size:clamp(1.31rem",page)
         self.assertNotIn('id="coverWorldMap"',page)
-        # Source JSON stays immutable. UI doesn't give a failed 11/17
-        # off-topic punchline a second life as the current homepage closing.
-        self.assertIn("const nightlyLine=typeof edition.nightlyMessage==='string'?edition.nightlyMessage.trim():''",page)
-        self.assertNotIn("staleClosing",page)
-        self.assertIn("$('closingQuote').hidden=!nightlyLine",page)
-        self.assertIn("$('closingJump').hidden=!nightlyLine",page)
+        # Edition's old nightly message is no longer the footer quotation.
+        self.assertIn("updateDailyFailureQuote(localDate(new Date()))",page)
+        self.assertNotIn("const nightlyLine=",page)
+        self.assertIn("$('closingQuote').hidden=false",page)
+        self.assertIn("$('closingJump').hidden=false",page)
         self.assertIn("この号に収録された、世界の失敗・勘違い・珍事件。",page)
         self.assertIn("この写真はニュース現場の記録ではなく、旅先の風景です。",page)
         self.assertNotIn("map.open=true",page)
@@ -938,11 +937,51 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn('.evening-entry',page)
         self.assertIn('min-height:44px',page)
 
+    def test_failure_quote_rotates_by_japan_date_and_keeps_real_sources(self):
+        import json
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        prefix="const DAILY_FAILURE_QUOTES=Object.freeze("
+        start=page.index(prefix)+len(prefix)
+        end=page.index(");",start)
+        quotes=json.loads(page[start:end])
+        self.assertGreaterEqual(len(quotes),12)
+        self.assertGreaterEqual(len({q["person"] for q in quotes}),8)
+        for entry in quotes:
+            self.assertTrue(entry["ja"] and entry["original"] and entry["person"])
+            self.assertTrue(entry["source"] and entry["url"].startswith("https://"))
+        self.assertIn("failureQuoteForDate(jstDate)",page)
+        self.assertIn("updateDailyFailureQuote(localDate(new Date()))",page)
+        self.assertIn("lastRenderedLocalDate!==localDate(now))render()",page)
+        self.assertIn("日本語意訳",page)
+        self.assertNotIn("const nightlyLine=",page)
+        self.assertIn('id="dailyQuoteSource"',page)
+        self.assertIn('id="dailyQuoteAuthor"',page)
+        self.assertIn('id="dailyQuoteDate"',page)
+        self.assertIn("text-align:center;text-wrap:balance;overflow-wrap:anywhere",page)
+
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_failure_quote_changes_on_next_jst_day_and_not_on_refresh(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        start=page.index("const DAILY_FAILURE_QUOTES=Object.freeze(")
+        end=page.index("function updateDailyFailureQuote(jstDate){",start)
+        logic=page[start:end]
+        checker="""
+const a=failureQuoteForDate('2026-11-20');
+const again=failureQuoteForDate('2026-11-20');
+const b=failureQuoteForDate('2026-11-21');
+if(a!==again)process.exit(1);
+if(a===b || a.ja===b.ja)process.exit(2);
+const firstTwelve=Array.from({length:12},(_,i)=>failureQuoteForDate('2026-11-'+String(i+1).padStart(2,'0')));
+if(new Set(firstTwelve).size!==12)process.exit(3);
+"""
+        run=subprocess.run(["node","-e",logic+checker],capture_output=True,text=True)
+        self.assertEqual(run.returncode,0,run.stderr)
+
     def test_nightly_message_is_rendered_without_share_button(self):
         page = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('id="nightlyMessage"', page)
-        self.assertIn("edition.nightlyMessage", page)
-        self.assertIn('今夜のひと言', page)
+        self.assertIn("updateDailyFailureQuote(localDate(new Date()))", page)
+        self.assertIn('今日のひと言 · 失敗と挑戦', page)
         self.assertNotIn('shareNightQuote', page)
         self.assertNotIn('この言葉を共有', page)
         self.assertNotIn(".night-quote button{", page)
