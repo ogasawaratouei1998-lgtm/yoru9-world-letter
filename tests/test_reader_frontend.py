@@ -135,10 +135,14 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         from build_site import validate_country_highlights
         data=validate_country_highlights(ROOT)
         self.assertEqual(data["version"],1)
-        self.assertEqual(set(data["highlights"]),{"GB","ES","JP","NZ"})
-        self.assertEqual(data["updatedOn"],"2026-11-19")
+        self.assertEqual(set(data["highlights"]),{"GB","ES","JP","NZ","IT","DE","US"})
+        self.assertEqual(data["updatedOn"],"2026-11-21")
         for calendar_day in (date(2026,11,19), date(2026,11,24), date(2026,11,27)):
             for country, rows in data["highlights"].items():
+                # The new Italy/Germany/US records start Nov 21 and cannot
+                # be retroactively treated as verified on Nov 19.
+                if country in ("IT","DE","US") and calendar_day<date(2026,11,21):
+                    continue
                 self.assertTrue(any(date.fromisoformat(row["validFrom"])<=calendar_day<=
                                     date.fromisoformat(row["validThrough"]) for row in rows),
                                 f"{country}: no checked cultural topic for {calendar_day}")
