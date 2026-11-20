@@ -605,17 +605,25 @@ try{
     return img?img.complete&&img.naturalWidth>0:!!card.querySelector('.travel-empty');
    },null,{timeout:30000});
    const postcard=page.locator('#spotlight .travel-card');
-   assert.equal(await postcard.count(),1,'optional 30-second journey opens');
+   assert.equal(await postcard.count(),1,'optional detailed journey opens');
    let photoSource='not-yet-curated';
    if(await postcard.locator('.travel-photo').count()){
     assert.ok((await postcard.locator('.travel-trust').textContent()).includes('ニュース現場の記録ではなく'),
      'tourist photography is labeled separately from actual reportage');
     photoSource=await postcard.locator('.travel-photo').getAttribute('src');
     assert.ok(photoSource?.startsWith('./assets/travel/'),'travel photo is locally bundled');
+    const detail=postcard.locator('.travel-story');
+    assert.equal(await detail.count(),1,'a complete destination has an extended travel essay');
+    assert.equal(await detail.locator('p').count(),2,
+     'every curated destination has two distinct explanatory paragraphs');
+    const paragraphs=await detail.locator('p').allTextContents();
+    assert.ok(paragraphs.every(text=>text.length>=70),
+     'landmark background and visitor viewpoint must be detailed, not one-line filler');
+    assert.ok((await detail.locator('h5').textContent()).includes('景色の向こう側へ'));
     const firstCountryCode=await pins.first().getAttribute('data-country-code');
     if(countryCoverAssets.has(firstCountryCode)){
      assert.notEqual(photoSource,countryCoverAssets.get(firstCountryCode),
-      'country introduction and 30-second travel must use DIFFERENT real photographs');
+      'country introduction and travel story must use DIFFERENT real photographs');
     }
    }else{
     // Newly sourced incidents may be from countries without licensed,
