@@ -68,7 +68,10 @@ def extract_image_bytes(response):
             raw=base64.b64decode(encoded,validate=True)
         except (ValueError,base64.binascii.Error):
             continue
-        if 20_000<=len(raw)<=9_000_000:
+        if 20_000<=len(raw)<=9_000_000 and (
+            raw[:3]==b"\\xff\\xd8\\xff" or raw[:8]==b"\\x89PNG\\r\\n\\x1a\\n" or
+            (raw[:4]==b"RIFF" and raw[8:12]==b"WEBP")
+        ):
             return raw
     raise ValueError("Image API returned no valid image output")
 
@@ -121,6 +124,8 @@ def prepare(root,day,key=None,render=None):
     if doc.get("editionType","regular")!="regular":return 0
     from publish_approved import validate_approved
     # A public image does NOT compensate for insufficient verified reporting.
+    if not isinstance(doc.get("stories"),list):
+        raise ValueError("Approved stories must be a list")
     if not (4<=len(doc.get("stories",[]))<=5):
         raise ValueError("Four source-checked articles required before image generation")
     validate_approved(doc,day)
