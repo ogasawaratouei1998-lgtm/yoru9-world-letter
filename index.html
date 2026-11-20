@@ -1325,6 +1325,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 .today-map-intro-photo img{width:100%;height:auto;aspect-ratio:16/10;
  object-fit:cover;object-position:center;max-height:440px}
 .today-map-intro-photo figcaption{font-size:.75rem;line-height:1.65;padding:9px 12px}
+.today-map-intro-photo figcaption a{color:#BDE9DB;text-decoration:underline;text-underline-offset:3px}
 .today-map-intro p{font-size:1rem;line-height:2}
 @media(max-width:520px){
  .today-map-intro{padding:16px 13px}
@@ -1336,7 +1337,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 @media(max-width:520px){
  #atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;
   max-width:calc(100% + 24px);box-sizing:border-box;padding:12px 7px}
- #atlasHero .today-map-intro-photo img{aspect-ratio:6/5;max-height:400px}
+ #atlasHero .today-map-intro-photo img{aspect-ratio:16/10;max-height:400px}
 }
 /* WORLD PASSPORT — playful country quiz, visually separate from news. */
 .today-map-game-lead{margin:11px 2px 8px;color:#FFE6BA;font-size:.85rem;line-height:1.7;font-weight:780}
@@ -1635,6 +1636,8 @@ body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{
   <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
    <p class="country-portrait-kicker">COUNTRY PORTRAIT · 国の魅力</p>
    <div class="today-map-intro-head"><h4 id="todayMapIntroName"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国の紹介を閉じる">閉じる</button></div>
+   <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="eager" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
+   <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
    <p id="todayMapIntroBody"></p>
    <div class="today-map-intro-facts" id="todayMapIntroFacts"></div>
@@ -1645,8 +1648,6 @@ body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{
     <small id="todayMapIntroCurrentDate"></small>
     <a id="todayMapIntroCurrentSource" target="_blank" rel="noopener noreferrer">公式情報を確認</a>
    </aside>
-   <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="lazy" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
-   <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
   </section>
   <p class="today-map-game-lead">国名をタップして3択クイズ。スタンプを集めて世界パスポートを完成させよう。</p>
@@ -1827,7 +1828,7 @@ const TODAY_COUNTRY_INTROS=Object.freeze({
  JP:'東アジアの太平洋に位置する島国。南北に長い列島には、山地、海辺、四季折々の景色が広がります。',
  NZ:'南太平洋に位置し、北島と南島を中心に構成される国。火山地形、湖、フィヨルドなどの自然景観で知られます。'
 });
-const TODAY_COUNTRY_PHOTOS=Object.freeze({"AR":[{"asset":"assets/travel/iguazu-rainbow-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg","caption":"アルゼンチン側のイグアスの滝と虹（2017年撮影）","author":"Pipovci","license":"CC BY-SA 4.0","place":"イグアスの滝・虹の大瀑布"},{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側"},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/mont-saint-michel-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg","caption":"夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）","author":"Giles Laurent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェルの夕景"},{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/golden-gate-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg","caption":"夕暮れのゴールデンゲートブリッジ（2007年撮影）","author":"Rich Niewiroski Jr.","license":"CC BY 2.5","place":"ゴールデンゲートブリッジ・夕景"},{"asset":"assets/travel/new-york-skyline.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg","caption":"ブルックリン側から見たマンハッタン（2025年撮影）","author":"Kidfly182","license":"CC BY 4.0","place":"ニューヨークの街並み"},{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ"}],"GB":[{"asset":"assets/travel/london-tower-bridge.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Tower_Bridge_Panorama.jpg/500px-Tower_Bridge_Panorama.jpg","caption":"テムズ川にかかるタワーブリッジの夜景（2013年撮影）","author":"Redbannana","license":"CC BY-SA 4.0","place":"ロンドン・タワーブリッジ"},{"asset":"assets/travel/edinburgh-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg","caption":"エディンバラ城の全景（2000年撮影）","author":"Libasstref","license":"CC0 1.0","place":"エディンバラ城"},{"asset":"assets/travel/wales-cardiff-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardiff_Castle%2C_Wales%2C_GB.jpg/500px-Cardiff_Castle%2C_Wales%2C_GB.jpg","caption":"カーディフ城の緑の丘と石造りの城（2010年撮影）","author":"Ввласенко / Volodymyr Vlasenko","license":"CC BY 4.0","place":"カーディフ城"}],"ES":[{"asset":"assets/travel/barcelona-sagrada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/La_Sagrada_Familia%2C_Barcelona.jpg/500px-La_Sagrada_Familia%2C_Barcelona.jpg","caption":"バルセロナ・サグラダ・ファミリア（2019年撮影）","author":"Veronika Bashak","license":"CC BY-SA 4.0","place":"サグラダ・ファミリア"}],"JP":[{"asset":"assets/travel/fuji-cherry-blossom.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Mount_Fuji_April_Cherry_Blossom.jpg/500px-Mount_Fuji_April_Cherry_Blossom.jpg","caption":"桜越しに眺める富士山（2025年撮影）","author":"SRP1998","license":"CC BY-SA 4.0","place":"富士山と桜"},{"asset":"assets/travel/tokyo-sensoji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Sens%C5%8D-ji_Tokyo.jpg/500px-Sens%C5%8D-ji_Tokyo.jpg","caption":"東京・浅草寺（2016年撮影）","author":"Mattias Hill","license":"CC BY-SA 3.0","place":"東京・浅草寺"},{"asset":"assets/travel/kyoto-kinkakuji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Kinkaku-ji%2C_Kyoto.jpg/500px-Kinkaku-ji%2C_Kyoto.jpg","caption":"京都・金閣寺と鏡湖池（2025年撮影）","author":"27curlyta","license":"CC0 1.0","place":"京都・金閣寺"}],"NZ":[{"asset":"assets/travel/nz-milford-sound.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg","caption":"ニュージーランド南島・ミルフォード・サウンドの滝（2005年撮影）","author":"Ryancoke2020","license":"CC BY-SA 4.0","place":"ミルフォード・サウンド"}]});
+const TODAY_COUNTRY_PHOTOS=Object.freeze({"AR":[{"asset":"assets/travel/iguazu-rainbow-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg","caption":"アルゼンチン側のイグアスの滝と虹（2017年撮影）","author":"Pipovci","license":"CC BY-SA 4.0","place":"イグアスの滝・虹の大瀑布"},{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側"},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/mont-saint-michel-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg","caption":"夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）","author":"Giles Laurent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェルの夕景"},{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/golden-gate-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg","caption":"夕暮れのゴールデンゲートブリッジ（2007年撮影）","author":"Rich Niewiroski Jr.","license":"CC BY 2.5","place":"ゴールデンゲートブリッジ・夕景"},{"asset":"assets/travel/new-york-skyline.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg","caption":"ブルックリン側から見たマンハッタン（2025年撮影）","author":"Kidfly182","license":"CC BY 4.0","place":"ニューヨークの街並み"},{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ"}],"GB":[{"remoteOnly":true,"url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg","hiResUrl":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg","sourcePage":"https://commons.wikimedia.org/wiki/File:Tower-bridge-in-london.jpg","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","caption":"ロンドン・タワーブリッジの昼景（2019年撮影）","author":"Hexapol","license":"CC BY-SA 4.0","place":"ロンドン・タワーブリッジ"},{"avoidCover":true,"asset":"assets/travel/london-tower-bridge.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Tower_Bridge_Panorama.jpg/500px-Tower_Bridge_Panorama.jpg","caption":"テムズ川にかかるタワーブリッジの夜景（2013年撮影）","author":"Redbannana","license":"CC BY-SA 4.0","place":"ロンドン・タワーブリッジ"},{"asset":"assets/travel/edinburgh-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg","caption":"エディンバラ城の全景（2000年撮影）","author":"Libasstref","license":"CC0 1.0","place":"エディンバラ城"},{"asset":"assets/travel/wales-cardiff-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardiff_Castle%2C_Wales%2C_GB.jpg/500px-Cardiff_Castle%2C_Wales%2C_GB.jpg","caption":"カーディフ城の緑の丘と石造りの城（2010年撮影）","author":"Ввласенко / Volodymyr Vlasenko","license":"CC BY 4.0","place":"カーディフ城"}],"ES":[{"asset":"assets/travel/barcelona-sagrada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/La_Sagrada_Familia%2C_Barcelona.jpg/500px-La_Sagrada_Familia%2C_Barcelona.jpg","caption":"バルセロナ・サグラダ・ファミリア（2019年撮影）","author":"Veronika Bashak","license":"CC BY-SA 4.0","place":"サグラダ・ファミリア"}],"JP":[{"asset":"assets/travel/fuji-cherry-blossom.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Mount_Fuji_April_Cherry_Blossom.jpg/500px-Mount_Fuji_April_Cherry_Blossom.jpg","caption":"桜越しに眺める富士山（2025年撮影）","author":"SRP1998","license":"CC BY-SA 4.0","place":"富士山と桜"},{"asset":"assets/travel/tokyo-sensoji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Sens%C5%8D-ji_Tokyo.jpg/500px-Sens%C5%8D-ji_Tokyo.jpg","caption":"東京・浅草寺（2016年撮影）","author":"Mattias Hill","license":"CC BY-SA 3.0","place":"東京・浅草寺"},{"asset":"assets/travel/kyoto-kinkakuji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Kinkaku-ji%2C_Kyoto.jpg/500px-Kinkaku-ji%2C_Kyoto.jpg","caption":"京都・金閣寺と鏡湖池（2025年撮影）","author":"27curlyta","license":"CC0 1.0","place":"京都・金閣寺"}],"NZ":[{"asset":"assets/travel/nz-milford-sound.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg","caption":"ニュージーランド南島・ミルフォード・サウンドの滝（2005年撮影）","author":"Ryancoke2020","license":"CC BY-SA 4.0","place":"ミルフォード・サウンド"}]});
 const TODAY_COUNTRY_GUIDES=Object.freeze({
  AR:{lead:'タンゴとマテ茶、人と語らう時間が息づく国',body:'街のカフェや公園で交わされる会話、親しい人と回すマテ茶、食卓を囲むアサード（炭火焼き）。アルゼンチンの暮らしには、人と時間をともにする文化があります。ブエノスアイレスで育まれたタンゴは、音楽と踊りを通じて移民の歴史や都市の感情を語り、南部パタゴニアと北部の熱帯地域では暮らしの風景も変わります。サッカーへの熱気や現代文学も、この国の多彩な顔です。',facts:['首都：ブエノスアイレス','風景：イグアスの滝・パタゴニア','文化：タンゴ・マテ茶'],photos:['ar-iguazu-postcard','ar-casa-rosada-postcard']},
  FR:{lead:'芸術と食卓を愛する、地域文化豊かな国',body:'フランスでは、パン屋に立ち寄る朝、カフェで語る午後、家族や友人と料理を囲む夜など、日常のなかに食と会話を楽しむ文化が息づいています。印象派から現代映画まで芸術表現の層も厚く、地方ごとに言葉の響きや郷土料理、祭りの表情が異なるのも魅力です。パリだけでは語れない多様な地域文化が、この国の個性を形づくっています。',facts:['首都：パリ','風景：モン・サン＝ミシェル・アルプス','文化：美術・パン・郷土料理'],photos:['fr-eiffel-postcard','fr-mont-saint-michel-postcard']},
@@ -1894,6 +1895,16 @@ function hideTodayCountryIntro(){
  $('todayMapIntro').hidden=true;
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
 }
+// A country cover requires native pixels sufficient for retina display.
+function countryPhotoSourceUrls(item){
+ const highRes=item.hiResUrl||String(item.url||'').replace('/500px-','/1280px-');
+ const urls=[highRes];
+ if(item.asset)urls.push('./'+item.asset);
+ return [...new Set(urls.filter(Boolean))];
+}
+function countryPhotoIsSharpEnough(image){
+ return image.naturalWidth>=1000&&image.naturalHeight>=540;
+}
 function showTodayCountryIntro(item){
  closeWorldPassport();
  const requestId=++todayCountryIntroRequest,currentCode=item.code;
@@ -1936,8 +1947,8 @@ function showTodayCountryIntro(item){
  photo.onload=null;photo.onerror=null;
  photo.removeAttribute('src');
  const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
-  .filter(p=>p.asset&&p.url&&p.author&&p.license&&p.place&&p.caption
-    &&countryPhotoPriority(currentCode,p)>=80)
+  .filter(p=>(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption
+    &&!p.avoidCover&&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
  displayedCountryCoverAssets.delete(currentCode);
  figure.hidden=!approvedPhotos.length;
@@ -1946,28 +1957,47 @@ function showTodayCountryIntro(item){
  let photoIndex=0,sourceIndex=0;
  function loadNextCountryPhoto(){
   if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
-    $('todayMapIntro').dataset.countryCode!==currentCode)return;
+     $('todayMapIntro').dataset.countryCode!==currentCode)return;
   const chosen=approvedPhotos[photoIndex];
   if(!chosen){
    figure.hidden=true;
    status.hidden=false;
-   status.textContent='写真を読み込めませんでした。文章の国紹介は引き続きご覧いただけます。';
+   status.textContent='鮮明な写真を読み込めませんでした。国の紹介は引き続きご覧いただけます。';
+   return;
+  }
+  const sources=countryPhotoSourceUrls(chosen);
+  if(sourceIndex>=sources.length){
+   sourceIndex=0;photoIndex++;
+   loadNextCountryPhoto();
    return;
   }
   photo.alt=chosen.place+'の風景写真';
   photo.onload=()=>{
    if(requestId!==todayCountryIntroRequest)return;
+   if(!countryPhotoIsSharpEnough(photo)){
+    sourceIndex++;
+    loadNextCountryPhoto();
+    return;
+   }
    figure.hidden=false;
-   displayedCountryCoverAssets.set(currentCode,chosen.asset);
-   $('todayMapIntroCaption').textContent=chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+   status.hidden=true;
+   displayedCountryCoverAssets.set(currentCode,chosen.asset||'');
+   const caption=$('todayMapIntroCaption');
+   caption.textContent=chosen.caption+'　撮影：'+chosen.author+' ／ '+chosen.license;
+   if(chosen.sourcePage&&safeUrl(chosen.sourcePage)!=='#'){
+    const link=document.createElement('a');
+    link.href=safeUrl(chosen.sourcePage);
+    link.target='_blank';link.rel='noopener noreferrer';
+    link.textContent=' ／ 写真の出典';
+    caption.append(link);
+   }
   };
   photo.onerror=()=>{
    if(requestId!==todayCountryIntroRequest)return;
    sourceIndex++;
-   if(sourceIndex>1){sourceIndex=0;photoIndex++;}
    loadNextCountryPhoto();
   };
-  photo.src=sourceIndex===0?'./'+chosen.asset:chosen.url;
+  photo.src=sources[sourceIndex];
  }
  const read=$('todayMapIntroRead');
  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
