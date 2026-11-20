@@ -361,7 +361,6 @@ function renderWorldPassportRound(){
  $('todayQuizStampReward').dataset.new='false';
  $('todayQuizStampReward').dataset.perfect='false';
  $('todayQuizCorrectFlash').hidden=true;
- $('todayQuizNextCountry').hidden=true;
  $('todayQuizQuestion').textContent=q.question;
  $('todayQuizResult').hidden=true;$('todayQuizNext').hidden=true;
  const options=$('todayQuizChoices');options.replaceChildren();
@@ -389,7 +388,7 @@ function answerWorldPassport(picked){
  if(correct)celebrateWorldPassportCorrect($('todayQuizChoices').querySelectorAll('button')[picked],run.streak);
  $('todayQuizVerdict').textContent=correct
   ?'正解！ '+(run.streak>1?run.streak+'問連続正解！':'スタンプに一歩近づいた！')
-  :'惜しい！ 正解は「'+question.options[question.answer]+'」。次で挽回しよう！';
+  :'惜しい！ 正解は「'+question.options[question.answer]+'」。答えを確認して次へ進もう！';
  $('todayQuizExplanation').textContent=question.fact;
  $('todayQuizJoke').textContent='AIツッコミ（創作の冗談）：'+question.quip;
  $('todayQuizResult').hidden=false;
@@ -420,26 +419,35 @@ function answerWorldPassport(picked){
   $('todayQuizRewardText').textContent=run.score===run.questions.length
    ?'全問正解！ '+run.score+'/'+run.questions.length+'問。今日の世界をよく知りました。'
    :'今回'+run.score+'/'+run.questions.length+'問正解。クイズ完走の記念スタンプです。';
-  const remaining=currentIssueCountries().filter(item=>!worldPassportStamps[item.code]);
-  $('todayQuizNextCountry').hidden=remaining.length===0;
-  if(remaining.length){
-   $('todayQuizNextCountry').textContent='次は'+remaining[0].name+'へ →';
-  }
  }
- $('todayQuizNext').textContent=finished?'もう一度挑戦する ↻':'次の問題へ →';
+ // One forward button for every answer: next question, next unvisited
+ // country, or the album after the whole passport has been completed.
+ const remaining=finished?currentIssueCountries().filter(item=>!worldPassportStamps[item.code]):[];
+ $('todayQuizNext').textContent=!finished?'次の問題へ →':
+  remaining.length?'次は'+remaining[0].name+'の問題へ →':'スタンプ帳へ戻る ✓';
+}
+function finishWorldPassport(){
+ closeWorldPassport();
+ const showAlbum=()=>{
+  const heading=$('todayPassportHeading');
+  if(typeof heading.focus==='function')heading.focus({preventScroll:true});
+  $('todayPassportBoard').scrollIntoView({block:'start',behavior:'auto'});
+ };
+ if(typeof requestAnimationFrame==='function')requestAnimationFrame(showAlbum);
+ else showAlbum();
 }
 function nextWorldPassportRound(){
  const run=worldPassportActive;
  if(!run||!run.answered)return;
- if(run.step===run.questions.length-1){run.step=0;run.score=0;run.streak=0}
- else run.step++;
- renderWorldPassportRound();
- focusWorldPassportQuestion(run);
+ if(run.step<run.questions.length-1){
+  run.step++;
+  renderWorldPassportRound();
+  focusWorldPassportQuestion(run);
+  return;
+ }
+ const remaining=currentIssueCountries().filter(item=>!worldPassportStamps[item.code]);
+ if(remaining.length){startWorldPassport(remaining[0]);return;}
+ finishWorldPassport();
 }
 document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
 document.getElementById('todayQuizNext').addEventListener('click',nextWorldPassportRound);
-document.getElementById('todayQuizNextCountry').addEventListener('click',()=>{
- if(!worldPassportActive?.answered)return;
- const remaining=currentIssueCountries().filter(item=>!worldPassportStamps[item.code]);
- if(remaining.length)startWorldPassport(remaining[0]);
-});

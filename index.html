@@ -1377,6 +1377,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 
 /* Country quiz collection is visible before and after playing, not only in the quiz. */
 .today-passport-board{margin:12px 0 14px;padding:15px 13px;border-radius:17px;border:2px solid #CEAC73;
+ scroll-margin-top:calc(var(--safe-top) + 82px);
  background:radial-gradient(circle at 92% 5%,#D3AB6033,transparent 55%),linear-gradient(145deg,#244259,#142B43);
  box-shadow:0 8px 22px #06162955}
 .today-passport-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
@@ -1406,7 +1407,7 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 .today-quiz-step{flex:1;height:9px;border-radius:12px;background:#47647A;border:1px solid #68939A}
 .today-quiz-step[data-step="current"]{background:#FFE3A7;border-color:#FFF0CC}
 .today-quiz-step[data-step="done"]{background:#97E6C8;border-color:#D2FAE8}
-.today-quiz-reward[hidden],.today-quiz-next-country[hidden]{display:none!important}
+.today-quiz-reward[hidden]{display:none!important}
 .today-quiz-reward{margin:15px 0 11px;padding:13px;display:flex;align-items:center;gap:13px;
  border-radius:16px;border:2px solid #FFE4A9;background:linear-gradient(135deg,#665235,#2C5353);box-shadow:0 6px 20px #0B1B2D60}
 .today-quiz-reward-seal{flex:none;width:73px;height:73px;border:5px double #7E5434;outline:2px solid #F9D394;
@@ -1438,11 +1439,9 @@ body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin
 @media(prefers-reduced-motion:reduce){.passport-sparkles{display:none}}
 .today-quiz-reward strong{display:block;color:#FFF2BF;font-size:1.08rem;line-height:1.5}
 .today-quiz-reward p{font-size:.81rem;color:#EFF7EE;line-height:1.5;margin:5px 0 0}
-.today-quiz-next-country{display:block;width:100%;min-height:48px;margin-top:9px;
- background:#306957;color:#fff;border:1px solid #B2EAD2;border-radius:11px;font-size:.94rem;font-weight:850;padding:9px}
 .today-quiz-choices button[data-correct="true"]::after{content:" ✓";color:#BFFFF1;font-weight:950}
 .today-quiz-choices button[data-picked-wrong="true"]::after{content:" ✕";color:#FFE4DA;font-weight:950}
-.today-passport-stamp:focus-visible,.today-quiz-next-country:focus-visible{outline:3px solid white;outline-offset:3px}
+.today-passport-stamp:focus-visible{outline:3px solid white;outline-offset:3px}
 .today-quiz-reward[data-new="true"] .today-quiz-reward-seal,
 .today-passport-stamp[data-fresh="true"] .today-passport-stamp-seal{animation:passport-stamp-drop .65s cubic-bezier(.18,1.35,.27,1)}
 @keyframes passport-stamp-drop{0%{opacity:0;transform:translateY(-29px) rotate(-28deg) scale(1.4)}
@@ -1754,7 +1753,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   <p class="today-map-game-lead">国名をタップして3択クイズ。スタンプを集めて世界パスポートを完成させよう。</p>
   <section class="today-passport-board" id="todayPassportBoard" aria-labelledby="todayPassportHeading">
    <div class="today-passport-head">
-    <div><p class="today-passport-eyebrow">WORLD PASSPORT · COLLECTION</p><h4 id="todayPassportHeading">今夜のスタンプ帳</h4></div>
+    <div><p class="today-passport-eyebrow">WORLD PASSPORT · COLLECTION</p><h4 id="todayPassportHeading" tabindex="-1">今夜のスタンプ帳</h4></div>
     <strong class="today-passport-count" id="todayPassportCount" aria-live="polite">0 / 0</strong>
    </div>
    <div class="today-passport-meter" id="todayPassportMeter" role="progressbar" aria-label="国別スタンプの収集進捗" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0"><div class="today-passport-meter-fill" id="todayPassportMeterFill"></div></div>
@@ -1793,7 +1792,6 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
     <p class="today-quiz-explain" id="todayQuizExplanation"></p>
     <p class="today-quiz-joke" id="todayQuizJoke"></p>
     <button class="today-quiz-next" id="todayQuizNext" type="button" hidden>次へ</button>
-    <button class="today-quiz-next-country" id="todayQuizNextCountry" type="button" hidden>次の国に挑戦する →</button>
    </div>
    <p class="today-quiz-passport" id="todayQuizPassport"></p>
    <dialog class="today-quiz-photo-dialog" id="todayQuizPhotoDialog" aria-label="正解の実写真・拡大表示">
