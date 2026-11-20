@@ -17,6 +17,8 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
     "independent.co.uk", "skynews.com", "spiegel.de",
     "scmp.com", "timesofindia.indiatimes.com", "ndtv.com",
     "theverge.com", "techcrunch.com", "wired.com", "latimes.com",
+    # Original game-show episode coverage with identifiable reporter and airing date.
+    "tvinsider.com",
     "pbs.org", "axios.com", "time.com", "foxnews.com",
     "abcnews.go.com", "nypost.com", "phys.org",
     "mashable.com", "quantamagazine.org", "newscientist.com",

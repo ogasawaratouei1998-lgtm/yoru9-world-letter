@@ -744,6 +744,21 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('trusted_original_domain(urls[0])',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
 
+    def test_fallback_editor_no_longer_prefers_small_harmless_mistakes(self):
+        from pathlib import Path
+        auto=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
+        leads=(Path(__file__).resolve().parents[1]/"collect_candidates.py").read_text(encoding="utf-8")
+        self.assertIn("FIRST seek a verifiable, significant PERSONAL miscalculation",auto)
+        self.assertNotIn("Prefer genuinely funny, low-stakes human mistakes",auto)
+        self.assertNotIn("two SMALL candidate groups",auto)
+        self.assertIn("Do NOT downgrade to trivial typos",auto)
+        self.assertIn("draft_preflight_viable(item,now) for item in draft)<8",auto)
+        self.assertIn('offset=(day.toordinal()*max(1,remaining))%9',leads)
+        self.assertIn('("million dollar mistake" OR "costly mistake"',leads)
+        self.assertIn('("AI hoax" OR "false alarm"',leads)
+        self.assertIn('country_queries=tuple(extra_searches)[:min(1,max(0,max_queries-3))]',leads)
+        self.assertIn('min(incident_priority(article)[0] for article in g["articles"])',auto)
+
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
@@ -752,12 +767,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),20),2):",source)
-        self.assertIn("Five eligible comedy drafts reserved: moving to brief source-fidelity review.",source)
+        self.assertIn("Eight eligible drafts reserved to support up to five verified stories.",source)
 
-    def test_draft_recovery_targets_three_before_fact_review_and_respects_quota(self):
+    def test_draft_recovery_buffers_eight_before_fact_review_and_respects_quota(self):
         import inspect
         code=inspect.getsource(editorial.main)
-        self.assertIn('draft_preflight_viable(item,now) for item in draft)<5',code)
+        self.assertIn('draft_preflight_viable(item,now) for item in draft)<8',code)
         self.assertIn('for start in range(0,min(len(retry_candidates),20),2):',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)

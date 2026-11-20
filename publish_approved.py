@@ -180,6 +180,16 @@ def validate_approved(data, expected_date):
                 ((1 <= len(stories) <= 5) if edition_type == 'regular' else len(stories) == 5),
                 '過去の通常号は1〜5本、特集号は5本の記事が必要です')
     hard_reissue = data.get('approvedBy') == 'editorial-hard-surprise-2026-11-18'
+    source_checked_correction = (data.get('approvedBy') ==
+                                 'editorial-source-checked-correction-2026-11-20')
+    if source_checked_correction:
+        require(expected_date == '2026-11-20' and edition_type == 'regular',
+                '編集者が依頼した当日分以外の差し替えは認められません')
+        require(len(stories) >= 2,
+                '記事差し替えでは、別々の検証済み実話を2本以上掲載してください')
+        require(any(story.get('majorPersonalFailureVerified') is True
+                    for story in stories if isinstance(story, dict)),
+                '差し替え号に裏付けのある重大な個人の失敗がありません')
     if hard_reissue:
         require(expected_date == '2026-11-18' and edition_type == 'regular',
                 '特別な編集差し替えは2026-11-18の通常号に限ります')
@@ -212,14 +222,14 @@ def validate_approved(data, expected_date):
         require(story.get('editorVerified') is True and story.get('humorSafe') is True,
                 f'{i}本目は個別の事実確認・危害配慮が未承認です')
         automated = data.get('approvedBy') == 'automated-two-stage-review'
-        if issue_day >= date(2026, 11, 18) and (automated or hard_reissue):
+        if issue_day >= date(2026, 11, 18) and (automated or hard_reissue or source_checked_correction):
             require(story.get('editorQualityVerified') is True,
                     f'{i}本目の事実・翻訳・漫才審査が未完了です')
-            if automated and issue_day >= date(2026, 11, 19):
+            if (automated or source_checked_correction) and issue_day >= date(2026, 11, 19):
                 require(story.get('surpriseVerified') is True and
                         story.get('stageTsukkomiVerified') is True,
                         f'{i}本目は驚きの強さと鋭いツッコミの独立審査が未完了です')
-            if automated:
+            if automated or source_checked_correction:
                 require(story.get('humanFailureVerified') is True and
                         isinstance(story.get('humanActor'), str) and
                         isinstance(story.get('humanMistake'), str),
@@ -285,7 +295,7 @@ def validate_approved(data, expected_date):
         if 'quipSecond' in story:
             # Automatic approval needs explicit second-joke review; matching
             # length and differing words are not sufficient comic standards.
-            if issue_day >= date(2026, 11, 18) and (automated or hard_reissue):
+            if issue_day >= date(2026, 11, 18) and (automated or hard_reissue or source_checked_correction):
                 require(story.get('secondQuipVerified') is True,
                         f'{i}本目の2本目のAIツッコミは独立審査で未承認です')
             second = story['quipSecond']
@@ -382,8 +392,18 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
     require(not old_date or old_date <= date, '現在より古い配信号で上書きすることは禁止です')
     archive_path = root / 'data' / 'archive' / f'{date}.json'
     if archive_path.exists():
-        require(json.loads(archive_path.read_text(encoding='utf-8')) == public_issue,
-                '同じ日付の公開号が既に存在し、内容が違います。無断の差し替えを中止しました')
+        existing_issue = json.loads(archive_path.read_text(encoding='utf-8'))
+        if existing_issue != public_issue:
+            require(date == '2026-11-20' and
+                    data.get('approvedBy') == 'editorial-source-checked-correction-2026-11-20',
+                    '同じ日付の公開号が既に存在し、内容が違います。無断の差し替えを中止しました')
+            # Preserve the initially published text for transparent editorial history.
+            previous_path = root / 'data' / 'archive' / 'revisions' / '2026-11-20-before-correction.json'
+            if previous_path.exists():
+                require(json.loads(previous_path.read_text(encoding='utf-8')) == existing_issue,
+                        '元の公開号の記録が一致せず、訂正を中止しました')
+            else:
+                atomic_json(previous_path, existing_issue)
         if current == public_issue:
             print('この配信号はすでに公開済みです。変更しません。')
             return False

@@ -182,7 +182,19 @@ jobs:
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
           if [ -f "data/archive/$DAY.json" ]; then
-            echo "Today's edition is already published; preserve its immutable archive and skip replacement."
+            # One user-requested, source-reviewed correction is explicitly gated
+            # to the original November 20 issue. Ordinary releases stay immutable.
+            if [ "$DAY" = "2026-11-20" ] && python - <<'PY'
+          import json
+          from pathlib import Path
+          doc=json.loads(Path("data/approved/2026-11-20.json").read_text(encoding="utf-8"))
+          assert doc.get("approvedBy")=="editorial-source-checked-correction-2026-11-20"
+          PY
+            then
+              python publish_approved.py
+            else
+              echo "Today's edition is already published; preserve its immutable archive and skip replacement."
+            fi
           elif [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$DAY" = '2026-11-16' ]; then
             python publish_approved.py --publish-now
           else

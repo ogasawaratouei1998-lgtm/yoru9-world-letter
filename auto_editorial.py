@@ -1306,8 +1306,8 @@ def main():
     supplemental_attempts=0
     supplemental_generated=0
     supplemental_groups_examined=0
-    if sum(draft_preflight_viable(item,now) for item in draft)<5:
-        # Aim for up to five independent verifications, without a minimum quota.
+    if sum(draft_preflight_viable(item,now) for item in draft)<8:
+        # Reserve up to eight viable drafts to survive source/safety vetoes; publish at most five.
         # The large first batch can return diagnostics only, with no actual
         # drafts: try additional *individual* incident reports without
         # weakening the original-text evidence or independent B audit gates.
@@ -1333,11 +1333,11 @@ def main():
             if not any(article["url"] in already_drafted_urls
                        for article in group["articles"])
         ),key=lambda g:(
-            0 if g["groupId"]>24 else 1,
             min(incident_priority(article)[0] for article in g["articles"]),
+            0 if g["groupId"]>24 else 1,
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
-        # Pair two *independent* small incident groups per Gemini request.
+        # Pair two independent significant-personal-incident groups per request.
         # The previous read-only run needed 12 separate A calls to obtain
         # three draftable stories, and B then hit HTTP 429. Halving these
         # drafting calls reserves more of the key's rate/quota budget for B.
@@ -1351,8 +1351,12 @@ def main():
                 break
             batch=retry_candidates[start:min(start+2,20,len(retry_candidates))]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+
-                " You are editor A. Review the two SMALL candidate groups SEPARATELY. "
-                "Prefer genuinely funny, low-stakes human mistakes. Draft up to one "
+                " You are editor A. Review two incident candidates SEPARATELY. "
+                "FIRST seek a verifiable, significant PERSONAL miscalculation or "
+                "large non-tragic outcome of a named individual's decision. "
+                "Do NOT downgrade to trivial typos, routine deliveries or minor "
+                "misprints merely because they are easy to joke about. "
+                "Draft up to one "
                 "Japanese news story PER GROUP, but ONLY when the publisher article "
                 "inside THAT SAME GROUP supports a specific real-world mistake. "
                 "NEVER merge facts, people, locations, or sources from different groups. "
@@ -1382,8 +1386,8 @@ def main():
                 print("Small-batch source-bound (NOT verified) drafts:",len(retry_stories),flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if sum(draft_preflight_viable(item,now) for item in draft)>=5:
-                print("Five eligible comedy drafts reserved: moving to brief source-fidelity review.",flush=True)
+            if sum(draft_preflight_viable(item,now) for item in draft)>=8:
+                print("Eight eligible drafts reserved to support up to five verified stories.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
@@ -1585,6 +1589,9 @@ def main():
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     if not selected:
         print("Source-text verification approved no stories; no publication.");return 0
+    # After source/safety review, select up to five. Never add unverified filler.
+    # When too few survive, the counted rejection reasons distinguish real scarcity
+    # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
     # Personal scale and diversity apply ONLY after factual fidelity and safety review.
     country_history,category_history=recent_diversity_counts(now.date())
     topic_history=recent_topic_counts(now.date())
