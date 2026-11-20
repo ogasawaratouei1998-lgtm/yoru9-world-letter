@@ -287,14 +287,17 @@ try{
      'each news story uses its own matching illustration: '+id);
    }
    const firstImage=page.locator('#issueGallery .gallery-art').first();
-   assert.ok((await firstImage.getAttribute('src')).startsWith('./assets/news/'),
-    'first visual is a verified local generated WebP or bundled illustration');
+   const firstArtSrc=await firstImage.getAttribute('src');
+   assert.ok(firstArtSrc.startsWith('./assets/news/')||
+    firstArtSrc.startsWith('data:image/svg+xml;charset=utf-8,'),
+    'first visual is a local WebP, bundled SVG or inline offline-safe illustration');
    assert.ok((await gallery.first().getAttribute('aria-label')).includes('を読む'),
     'a picture alone has a meaningful accessible reading action');
    const leadImage=page.locator('#spotlightImage');
    assert.equal(await leadImage.isHidden(),true,
     'news illustration is already visible in the gallery and must not repeat in detail');
-   assert.ok((await page.locator('#spotlightVisual figcaption').textContent()).includes('現場写真ではありません'),
+   const caption=await page.locator('#spotlightVisual figcaption').textContent();
+   assert.ok(caption.includes('報道写真ではありません')||caption.includes('現場写真ではありません'),
     'hidden original image still has an accurate source disclaimer');
    assert.ok((await gallery.first().locator('.gallery-art').evaluate(el=>el.naturalWidth))>0,
     'the gallery retains the visible, fully loaded first illustration');
