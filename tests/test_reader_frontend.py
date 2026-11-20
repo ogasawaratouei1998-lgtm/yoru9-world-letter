@@ -686,7 +686,7 @@ class ReaderFrontendTest(unittest.TestCase):
             + '\nconst html=storyDetailHtml(JSON.parse(process.argv[1]));'
               '\nif(!html.includes("事実を確認した。")||html.includes("これはAIの感想")) process.exit(1);'
         )
-        case = {"detail": "事実を確認した。\\n\\nここからはAIの見方。\\nこれはAIの感想。",
+        case = {"detail": "事実を確認した。\n\nここからはAIの見方。\nこれはAIの感想。",
                 "summary": "事実の概要"}
         proc = subprocess.run(["node", "-e", runner, json.dumps(case, ensure_ascii=False)],
                               capture_output=True, text=True, check=False)
