@@ -19,7 +19,8 @@ class CountryHighlightMonitorTest(unittest.TestCase):
         (self.root / "data").mkdir()
         for name in ("country-catalog.json", "country-highlights.json", "country-highlight-sources.json"):
             shutil.copy2(ROOT / name, self.root / name)
-        shutil.copy2(ROOT / "data/current.json", self.root / "data/current.json")
+        # Historical fixture: 2026-11-19 covered ES, GB, JP and NZ.
+        shutil.copy2(ROOT / "data/archive/2026-11-19.json", self.root / "data/current.json")
 
     def test_current_countries_have_a_verified_note_through_next_week(self):
         report = audit(self.root, date(2026, 11, 19))
@@ -51,6 +52,14 @@ class CountryHighlightMonitorTest(unittest.TestCase):
         report = audit(self.root, date(2026, 11, 19))
         self.assertTrue(report["needsEditorialReview"])
         self.assertIn("GB", [row["country"] for row in report["urgent"]])
+
+    def test_new_italy_us_issue_flags_missing_country_notes_without_invention(self):
+        shutil.copy2(ROOT / "data/current.json", self.root / "data/current.json")
+        report=audit(self.root,date(2026,11,20))
+        self.assertTrue(report["editionIsRecent"])
+        self.assertEqual(report["countriesChecked"],["IT","US"])
+        if report["urgent"]:
+            self.assertTrue(report["needsEditorialReview"])
 
     def test_stale_edition_never_triggers_a_spurious_alert(self):
         report = audit(self.root, date(2026, 11, 26))
