@@ -165,9 +165,11 @@ def validate_approved(data, expected_date):
             '編集承認・事実確認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
-    if edition_type == 'regular' and issue_day >= date(2026, 11, 19):
-        # Five is the ceiling, never a quota. Publish 1-5 original-source
-        # checked articles, with no filler and no zero-story issue.
+    if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+        require(isinstance(stories, list) and 4 <= len(stories) <= 5,
+                '2026年11月21日以降は、検証済みニュース4〜5本がない日は公開しません')
+    elif edition_type == 'regular' and issue_day >= date(2026, 11, 19):
+        # Keep the historical Nov 19–20 approved one-to-five issue contract.
         require(isinstance(stories, list) and 1 <= len(stories) <= 5,
                 '通常号は検証・編集承認済みニュース1〜5本を公開します。0本と6本以上は公開できません')
     elif edition_type == 'regular' and issue_day >= date(2026, 11, 17):
@@ -290,6 +292,14 @@ def validate_approved(data, expected_date):
                     and not any(ch in note for ch in '<>\r\n'),
                     f'{i}本目の編集訂正文が不正です')
             public_story['correctionNote'] = note.strip()
+        if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+            image_path=story.get('imagePath')
+            required_image=f'assets/news-generated/{expected_date}/{story["id"]}.webp'
+            require(isinstance(image_path,str) and image_path==required_image and
+                    bool(re.fullmatch(r'assets/news-generated/\\d{4}-\\d{2}-\\d{2}/[a-z0-9][a-z0-9-]{2,90}\\.webp',image_path)),
+                    f'{i}本目に有効な当日専用の生成画像パスがありません')
+            public_story['imagePath']=image_path
+            public_story['imageType']='ai-generated-photorealistic-impression'
         if isinstance(story.get('flag'), str):
             public_story['flag'] = story['flag']
         if 'quipSecond' in story:
@@ -379,6 +389,16 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
         return False
     data = json.loads(approved_path.read_text(encoding='utf-8'))
     public_issue = validate_approved(data, date)
+    # Fail closed if even one new issue image has not been generated.
+    if date >= '2026-11-21' and public_issue['editionType']=='regular':
+        for story in public_issue['stories']:
+            path=root/story['imagePath']
+            require(path.is_file() and 20_000<=path.stat().st_size<=2_500_000,
+                    '4本の生成画像が完了するまで配信しません')
+            with path.open('rb') as image:
+                header=image.read(12)
+            require(header[:4]==b'RIFF' and header[8:12]==b'WEBP',
+                    '生成画像がWebPファイルではありません')
     from difflib import SequenceMatcher
     recent = recent_nightly_messages(root, date)
     proposed = public_issue['nightlyMessage']
