@@ -1426,10 +1426,10 @@ def main():
     def candidates_with_after_review_refill():
         nonlocal supplemental_attempts,supplemental_generated,supplemental_groups_examined
         # Review initial candidates FIRST. Only then see if the source-fidelity
-        # vetoes left fewer than three usable stories. Refill from untouched,
+        # vetoes left fewer than four usable stories. Refill from untouched,
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
-        if len(selected)>=3 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+        if len(selected)>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
             return
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
@@ -1441,9 +1441,9 @@ def main():
                 min(incident_priority(article)[0] for article in group["articles"]),
                 group["groupId"]))
         print("After-review source-bound refill candidates:",len(remaining),flush=True)
-        for offset in range(0,min(len(remaining),12),2):
+        for offset in range(0,min(len(remaining),20),2):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
-            if len(selected)>=3 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+            if len(selected)>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
                 print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+2]
@@ -1647,6 +1647,11 @@ def main():
                supplemental_groups_examined=supplemental_groups_examined,
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
+    if len(selected)<4 and day>='2026-11-21':
+        checkpoint("four_story_gate",independent_approved=len(selected),
+                   target=4,rejection_reasons=rejection_counts)
+        print("No new edition: fewer than four original-source-verified stories.",flush=True)
+        return 0
     if not selected:
         print("Source-text verification approved no stories; no publication.");return 0
     # After source/safety review, select up to five. Never add unverified filler.
@@ -1662,7 +1667,7 @@ def main():
         recent_country_cooldown=cooldown,selection_seed=now.date().isoformat())
     checkpoint("selected",selected_for_edition=len(selected))
     print("Nightly verified selection:",len(selected),"source-checked stories;",
-          "target up to 5, release 1-5 verified stories.",flush=True)
+          "minimum 4 verified stories from Nov 21; otherwise keep previous.",flush=True)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
         "selected_countries":len({code for story in selected
@@ -1685,6 +1690,11 @@ def main():
              "title":day+"｜世界の大失敗ニュース","editorApproved":True,
              "factChecked":True,"humorReviewed":True,
              "approvedBy":"automated-two-stage-review","stories":selected}
+    if day >= '2026-11-21':
+        # Image paths are plans only; the release must create actual WebPs first.
+        from prepare_news_images import expected_path
+        for story in selected:
+            story['imagePath']=expected_path(day,story)
     # The publisher's exact validation contract is also the AI approval gate.
     from publish_approved import validate_approved
     try:

@@ -766,7 +766,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         end=source.index("for story in candidates_with_after_review_refill():",begin)
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
-        self.assertIn("if len(selected)>=3 or AI_QUOTA_BLOCKED",recovery)
+        self.assertIn("if len(selected)>=4 or AI_QUOTA_BLOCKED",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
         self.assertIn('used_urls={url for candidate in draft',recovery)
         self.assertIn('article["url"] in used_urls',recovery)

@@ -190,6 +190,26 @@ def build(root, output):
     if not required_artwork.issubset({x.name for x in artwork_dir.glob('*.svg')}):
         raise FileNotFoundError('A published news illustration is missing')
     shutil.copytree(artwork_dir,output/'assets'/'news',dirs_exist_ok=True)
+    # Ship ONLY the active issue's own generated photos. On the next issue,
+    # old WebPs never enter the public build even if the repository retained
+    # a file for audit. Historical article JSON falls back to its safe SVG.
+    from prepare_news_images import valid_webp,expected_path
+    current=json.loads((root/'data/current.json').read_text(encoding='utf-8'))
+    if (current.get('editionDate','')>='2026-11-21' and
+        current.get('editionType')=='regular'):
+        stories=current.get('stories',[])
+        if not (4<=len(stories)<=5):
+            raise ValueError('New published edition has fewer than four stories')
+        for story in stories:
+            if story.get('imagePath')!=expected_path(current['editionDate'],story):
+                raise ValueError('Missing or unexpected generated image path')
+            rel=story['imagePath']
+            source=root/rel
+            if not valid_webp(source):
+                raise FileNotFoundError('Published image is missing or invalid: '+rel)
+            target=output/rel
+            target.parent.mkdir(parents=True,exist_ok=True)
+            shutil.copy2(source,target)
     # The standalone iOS and Android icons are built locally from the same
     # Moon / envelope / 9 artwork. No third-party image processing needed.
     from app_icon import render_icons

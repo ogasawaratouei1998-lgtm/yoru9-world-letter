@@ -1,7 +1,18 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v31';
+const SHELL_CACHE = 'yoru9-shell-v32';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
+const IMAGE_CACHE = 'yoru9-generated-images-current-v1';
+const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
 const SCOPE = self.registration.scope;
+async function expirePreviousGeneratedImages(day){
+ if(!/^\d{4}-\d{2}-\d{2}$/.test(day))return;
+ const cache=await caches.open(IMAGE_CACHE),requests=await cache.keys();
+ await Promise.all(requests.filter(req=>{
+  const path=new URL(req.url).pathname.slice(new URL(SCOPE).pathname.length);
+  const match=path.match(GENERATED_IMAGE);
+  return match&&match[1]!==day;
+ }).map(req=>cache.delete(req)));
+}
 const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'country-catalog.json', 'country-highlights.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
  'assets/news/coffee-rescue.svg', 'assets/news/road-typo.svg', 'assets/news/monkey-patrol.svg',
  'assets/news/own-goal-keeper.svg', 'assets/news/police-sweets-wanted.svg',
@@ -30,7 +41,7 @@ self.addEventListener('install', event => {
 
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys
-    .filter(key => key.startsWith('yoru9-') && ![SHELL_CACHE, ISSUE_CACHE].includes(key))
+    .filter(key => key.startsWith('yoru9-') && ![SHELL_CACHE, ISSUE_CACHE, IMAGE_CACHE].includes(key))
     .map(key => caches.delete(key)))).then(() => self.clients.claim()));
 });
 
@@ -51,6 +62,11 @@ self.addEventListener('fetch', event => {
       if (response.ok) {
         const copy = response.clone();
         event.waitUntil(caches.open(ISSUE_CACHE).then(cache => cache.put(canonical, copy)));
+        if(relative==='data/current.json'){
+          event.waitUntil(response.clone().json()
+            .then(issue=>expirePreviousGeneratedImages(issue.editionDate))
+            .catch(()=>{}));
+        }
       }
       return response;
     }).catch(async () => (await caches.match(canonical)) || Response.error()));
@@ -68,6 +84,16 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  if(GENERATED_IMAGE.test(relative)){
+    event.respondWith(fetch(req).then(response=>{
+      if(response.ok){
+        const copy=response.clone();
+        event.waitUntil(caches.open(IMAGE_CACHE).then(cache=>cache.put(req,copy)));
+      }
+      return response;
+    }).catch(async ()=>(await caches.match(req))||Response.error()));
+    return;
+  }
   // New countries may have licensed, build-bundled postcards not in the fixed
   // offline shell. Cache these on first use, then keep a last-known-good copy.
   if (/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)) {
