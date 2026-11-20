@@ -2002,11 +2002,11 @@ function hideTodayCountryIntro(){
 // Never replace an available packaged photograph with a remote thumbnail.
 // The UK remote-only legacy item remains explicitly marked remoteOnly.
 function countryPhotoSourceUrls(item){
- if(item.asset&&/^assets\\/travel\\/[a-z0-9-]+\\.jpg$/.test(item.asset))
+ if(item.asset&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(item.asset))
   return ['./'+item.asset];
  if(item.remoteOnly){
   const highRes=item.hiResUrl||item.url;
-  return typeof highRes==='string'&&/^https:\\/\\//.test(highRes)?[highRes]:[];
+  return typeof highRes==='string'&&/^https:\/\//.test(highRes)?[highRes]:[];
  }
  return [];
 }
