@@ -23,12 +23,17 @@ def notice_for(issue,now=None):
         return None
     stories=issue.get("stories")
     kind=issue.get("editionType","regular")
-    # Match publish_approved.validate_approved: since November 19, verified
-    # regular editions may have 1–5 stories (never an artificial five-story quota).
-    # Older nightly editions retain their historic one-to-three notification cap.
-    max_regular = 5 if now.date() >= date(2026, 11, 19) else 3
+    # A notification must obey exactly the same minimum as publication:
+    # regular editions from 2026-11-21 require 4–5 verified stories.
+    # Keep older already-published issues under their historic policy.
+    if day >= "2026-11-21":
+        valid_regular=lambda n:4<=n<=5
+    elif day >= "2026-11-19":
+        valid_regular=lambda n:1<=n<=5
+    else:
+        valid_regular=lambda n:1<=n<=3
     if (not isinstance(stories,list)
-            or (kind=="regular" and not 1<=len(stories)<=max_regular)
+            or (kind=="regular" and not valid_regular(len(stories)))
             or (kind=="special" and len(stories)!=5)
             or kind not in ("regular","special")):
         return None
