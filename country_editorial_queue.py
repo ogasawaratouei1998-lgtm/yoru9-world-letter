@@ -14,7 +14,7 @@ from pathlib import Path
 import re
 from urllib.parse import urlsplit
 
-from country_content import load_country_content
+from country_content import load_country_content, country_quiz_problems
 from check_country_experience import verified_country_cover, _licensed_photo
 
 
@@ -81,24 +81,14 @@ def country_editorial_queue(root: Path) -> dict:
             missing.append("attributed_country_portrait_photo")
         if invalid_fallback:
             missing.append("invalid_selectable_portrait_photo")
-        quizzes=entry.get("quiz",[])
-        photo_keys=[q.get("photoKey") for q in quizzes if q.get("photoKey")]
-        quiz_photos=[stops.get(key) for key in photo_keys]
-        if (len(quizzes)<2 or len(set(photo_keys))<2
-                or not all(q and q.get("country")==entry["name"]
-                           and q.get("photoPage","").startswith(
-                               "https://commons.wikimedia.org/wiki/File:")
-                           and q.get("licenseUrl","").startswith(
-                               "https://creativecommons.org/")
-                           for q in quiz_photos)):
+        quiz_issues=set(country_quiz_problems(entry))
+        if "quiz_photos" in quiz_issues:
             missing.append("two_distinct_licensed_photo_quizzes")
-        selectable_covers=[cover for cover in entry.get("portraitPhotos",[])
-                           if isinstance(cover,dict)
-                           and not cover.get("avoidCover") and not cover.get("remoteOnly")]
-        if any(q and q.get("photoAsset")==cover.get("asset")
-               for q in quiz_photos for cover in selectable_covers):
-            # Quiz overlap and incorrect attribution are independent defects.
-            # Report both; a broken credit must not mask a reused photo.
+        if "quiz_content" in quiz_issues:
+            # A working photograph alone is not a valid 3-choice question.
+            missing.append("complete_three_choice_quiz")
+        if "quiz_cover_overlap" in quiz_issues:
+            # Exact photo identity is compared across all eligible fallbacks.
             missing.append("portrait_photo_reused_in_quiz")
         postcards=[s for s in entry.get("travelStops",{}).values()
                    if not s.get("quizOnly") and not s.get("coverOnly")
