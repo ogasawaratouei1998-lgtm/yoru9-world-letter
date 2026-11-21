@@ -25,7 +25,7 @@ class ReaderFrontendTest(unittest.TestCase):
         self.assertIn("世界の人間の失敗談に、一読で笑えるAIツッコミを。",page)
         self.assertIn("世界の人間の失敗・勘違い・手違いを、AIが鋭くツッコむ。",page)
         self.assertIn("世界の人間の失敗と勘違いに、鋭いAIツッコミ。",manifest)
-        self.assertRegex(worker,r"yoru9-shell-v\\d+")
+        self.assertRegex(worker,r"yoru9-shell-v\d+")
         for photo in (
             "assets/travel/iguazu-rainbow-cover.jpg",
             "assets/travel/mont-saint-michel-sunset-cover.jpg",
@@ -124,7 +124,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertNotIn("story.summary", portrait)
         self.assertNotIn("todayMapIntroNewsBody", page)
         self.assertIn("TODAY_COUNTRY_PHOTOS[currentCode]",portrait)
-        self.assertRegex(worker,r"yoru9-shell-v\\d+")
+        self.assertRegex(worker,r"yoru9-shell-v\d+")
         self.assertIn("'country-highlights.json'",worker)
         self.assertIn(r"/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(relative)",worker)
 
