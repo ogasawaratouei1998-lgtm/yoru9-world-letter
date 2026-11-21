@@ -160,8 +160,8 @@ def _replace_object(source,name,entries,kind):
             chunks.append(" "+code+":[\n"+content+"\n ],")
         else:
             chunks.append(" "+code+":"+_js(entry)+",")
-    if chunks:
-        chunks[-1]=chunks[-1][:-1]
+    # Retain trailing comma: the existing country release gate also expects
+    # the final quiz country to end with the same list terminator as others.
     return before+opening+"\n"+"\n".join(chunks)+"\n});"+after
 
 
