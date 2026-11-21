@@ -2640,11 +2640,10 @@ function chooseTravelPhoto(story,stops){
  // Avoid two copies in one session, unless it is the ONLY available photograph.
  // Prefer destinations backed by a separate historical/cultural reference.
  // A photo's CC license is not evidence for claims in the travel essay.
- const sourced=sameCountry.filter(s=>Array.isArray(s.historicalSources)&&
-  s.historicalSources.some(source=>source&&source.name&&/^https:\/\//.test(source.url)));
- const candidates=sourced.length?sourced:sameCountry;
- let pool=candidates.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(!pool.length)pool=candidates;
+ // Never repeat a country's photo before exhausting available vetted images.
+ // Source links enrich reading, but cannot override the trusted rotation.
+ let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
+ if(!pool.length)pool=sameCountry;
  // First exhaust every licensed photo within the country across page reloads.
  const unseen=pool.filter(s=>!(travelPhotoHistory[s.country]||[]).includes(s.photoAsset));
  if(unseen.length){
