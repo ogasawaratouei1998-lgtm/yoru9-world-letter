@@ -164,6 +164,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'アヤソフィアを含むイスタンブール歴史地区の世界遺産登録年は？',options:['1979年','1985年','2007年'],answer:1,photoLabel:'正解写真｜イスタンブールのアヤソフィア',fact:'UNESCOはイスタンブール歴史地区を1985年に世界文化遺産へ登録しました。',quip:'ドーム一つに幾つもの時代。建物の履歴書が長すぎる。',photoKey:'tr-hagia-sophia-postcard'},
   {question:'カッパドキアの塔のような奇岩ができた主な自然の働きは？',options:['火山性の地層が風雨で削られた','サンゴの成長','湖面の凍結だけ'],answer:0,photoLabel:'正解写真｜カッパドキアの奇岩',fact:'UNESCOは火山性の地形が浸食され、特異な谷や奇岩を生んだと解説しています。',quip:'地球の彫刻作品。しかも全部ちょっとずつ形が違う。',photoKey:'tr-cappadocia-rocks-postcard'},
  ],
+ TZ:[
+  {question:'ストーン・タウンの発展に重要だった役割は？',options:['北極探検基地','海上交易','高山の鉱山都市'],answer:1,fact:'UNESCOは東アフリカ沿岸の交易都市としての歴史を評価しています。',photoLabel:'正解写真｜ザンジバルのストーン・タウン',quip:'海を越えた交易の歴史が、曲がりくねった路地に残っている。最短経路だけでは、街の面白さは測れない。',photoKey:'tz-stone-town-postcard'},
+  {question:'キリマンジャロの特徴としてUNESCOが挙げるのは？',options:['世界最大の珊瑚礁','海底火山の島','アフリカ最高峰'],answer:2,fact:'UNESCOはキリマンジャロをアフリカで最も高い山として説明しています。',photoLabel:'正解写真｜キリマンジャロ国立公園・モシ市街からの遠望',quip:'標高5895メートル。アフリカの最高峰は、ビルの高さ競争に参加せずに圧勝している。',photoKey:'tz-kilimanjaro-postcard'},
+ ],
  US:[
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
