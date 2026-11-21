@@ -460,6 +460,29 @@ class CountryContentTest(unittest.TestCase):
                 self.assertIn(url,{s["url"] for s in stop["historicalSources"]})
                 self.assertNotEqual(stop["photoPage"],url)
 
+    def test_europe_microtravel_essays_have_verified_specific_history(self):
+        data=check_country_content(ROOT)
+        export=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        cases=(
+            ("DE","germany-cologne-cathedral-postcard","632年","https://www.koelner-dom.de/erleben/geschichte"),
+            ("DE","germany-neuschwanstein-castle-postcard","玉座そのもの","https://www.neuschwanstein.de/englisch/palace/thron.htm"),
+            ("ES","spain-park-guell-postcard","わずか2戸","https://parkguell.barcelona/en/park-guell/over-hundred-years-history"),
+            ("FR","fr-eiffel-postcard","無線通信","https://www.toureiffel.paris/en/the-monument/eiffel-tower-and-science"),
+            ("FR","fr-mont-saint-michel-postcard","創建伝説","https://www.abbaye-mont-saint-michel.fr/en/discover/history-of-the-monument"),
+        )
+        for country,key,fact,url in cases:
+            with self.subTest(country=country,key=key):
+                stop=data["countries"][country]["travelStops"][key]
+                self.assertEqual(stop,export[key])
+                self.assertEqual(len(stop["travelStory"]),2)
+                self.assertTrue(all(170<=len(p)<=360 for p in stop["travelStory"]))
+                self.assertIn(fact,"".join(stop["travelStory"]))
+                self.assertIn(url,{source["url"] for source in stop["historicalSources"]})
+                self.assertNotEqual(url,stop["photoPage"])
+                self.assertTrue(stop["author"] and stop["license"] and stop["photoAsset"])
+        self.assertEqual({code for code,c in data["countries"].items() if c["status"]=="approved"},
+                         {"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"})
+
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)
         country=doc["countries"]["NG"]
