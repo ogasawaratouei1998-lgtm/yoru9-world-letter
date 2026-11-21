@@ -80,6 +80,21 @@ class CountryExperienceContractTest(unittest.TestCase):
         self.assertTrue(all(manifest[key].get("quizOnly")
                             for key in nz["quizPhotoKeys"]))
 
+    def test_korean_portrait_and_photo_quiz_use_distinct_real_assets(self):
+        report=country_coverage(self.root,[{"country":"韓国"}])
+        self.assertEqual(set(report),{"KR"})
+        row=report["KR"]
+        self.assertEqual(row["cover"],"assets/travel/seoul-gyeongbokgung.jpg")
+        self.assertEqual(row["postcard"],"assets/travel/korea-bulguksa-stairs.jpg")
+        self.assertEqual(row["quizPhotoKeys"],
+                         ["korea-bulguksa-quiz-image","korea-seongsan-quiz-image"])
+        self.assertEqual(row["quizRounds"],2)
+        stops=json.loads((self.root/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertTrue(all(stops[key]["photoAsset"]!=row["cover"]
+                            for key in row["quizPhotoKeys"]))
+        self.assertEqual(stops["korea-bulguksa-postcard"]["author"],"Tae Hoon Kang")
+        self.assertEqual(stops["korea-bulguksa-postcard"]["license"],"CC BY 2.0")
+
     def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
         report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
                                           {"id":"verified-jp","country":"日本"}])
