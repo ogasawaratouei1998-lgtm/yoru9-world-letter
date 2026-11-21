@@ -70,7 +70,7 @@ class CountryContentTest(unittest.TestCase):
         data=json.loads(file.read_text(encoding="utf-8"))
         data["countries"]["NG"]["status"]="approved"
         file.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"NG: approval"):
+        with self.assertRaisesRegex(ValueError,"NG: approved portrait requires named cultural source|NG: approval"):
             load_country_content(self.root)
 
     def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
