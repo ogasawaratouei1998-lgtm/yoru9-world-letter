@@ -579,7 +579,7 @@
           ],
           "answer": 1,
           "photoKey": "au-opera-house-postcard",
-          "photoLabel": "建築の正解写真｜シドニー・オペラハウス",
+          "photoLabel": "正解写真｜シドニー・オペラハウス",
           "fact": "UNESCOの世界遺産一覧では、シドニー・オペラハウスの登録年は2007年とされています。",
           "quip": "屋根は帆の形。でも舞台は海上ではなく、ちゃんと劇場の中。"
         },
@@ -592,7 +592,7 @@
           ],
           "answer": 0,
           "photoKey": "au-great-barrier-reef-postcard",
-          "photoLabel": "自然の正解写真｜グレートバリアリーフ",
+          "photoLabel": "正解写真｜グレートバリアリーフ",
           "fact": "UNESCOはグレートバリアリーフを1981年に世界自然遺産として登録しています。",
           "quip": "青い海の中は大にぎわい。サンゴが街の主役になっている。"
         }
@@ -1125,7 +1125,7 @@
           ],
           "answer": 1,
           "photoKey": "ca-old-quebec-postcard",
-          "photoLabel": "街並みの正解写真｜ケベック旧市街",
+          "photoLabel": "正解写真｜ケベック旧市街",
           "fact": "ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。",
           "quip": "城壁の街。いまは観光客のカメラがあちこちに陣取っている。"
         },
@@ -1138,7 +1138,7 @@
           ],
           "answer": 0,
           "photoKey": "ca-banff-lake-louise-postcard",
-          "photoLabel": "湖の正解写真｜バンフ国立公園",
+          "photoLabel": "正解写真｜バンフ国立公園",
           "fact": "1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。",
           "quip": "カナダで最初の国立公園。絶景にも歴史にも先輩の貫禄。"
         }
@@ -2486,7 +2486,7 @@
           ],
           "answer": 0,
           "photoKey": "in-taj-mahal-postcard",
-          "photoLabel": "霊廟の正解写真｜タージ・マハル",
+          "photoLabel": "正解写真｜タージ・マハル",
           "fact": "UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。",
           "quip": "大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。"
         },
@@ -2499,7 +2499,7 @@
           ],
           "answer": 1,
           "photoKey": "in-qutb-minar-postcard",
-          "photoLabel": "塔の正解写真｜クトゥブ・ミナール",
+          "photoLabel": "正解写真｜クトゥブ・ミナール",
           "fact": "UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。",
           "quip": "高さ72.5メートル。見上げる首にも歴史の授業が始まる。"
         }
