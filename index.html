@@ -1609,6 +1609,19 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 
 #atlasHero .gallery-image-label{display:block;align-self:flex-start;font-size:.68rem;
  color:#e2f5ec;background:#26485e;padding:4px 8px;border-radius:8px;margin:4px 7px}
+
+/* Browse only editorially approved country guides, separately from news pins. */
+.approved-atlas{margin:18px 0 3px;padding:16px;border:1px solid #657a98;border-radius:17px;background:#152741}
+.approved-atlas h4{font-size:17px;line-height:1.55;color:#ffe0ac;margin:0 0 5px}
+.approved-atlas .approved-atlas-note{font-size:12px;line-height:1.85;color:#d5e3f4;margin:6px 0 12px}
+.approved-atlas details{border:1px solid #566b88;background:#1c304b;border-radius:12px;padding:9px 11px}
+.approved-atlas summary{cursor:pointer;color:#ffdfa9;font-weight:800;font-size:13px;min-height:38px;align-content:center}
+.approved-atlas-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 0 4px}
+.approved-atlas-country{background:#29405e;border:1px solid #8094ac;border-radius:10px;color:#f5f2e9;min-height:44px;padding:8px 9px;font-size:12px;font-weight:700;line-height:1.4;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.approved-atlas-country:hover,.approved-atlas-country:focus-visible{border-color:#ffdfab;background:#385474}
+.prepared-country-travel{margin-top:17px}
+.prepared-country-travel .travel-card{margin-top:9px}
+@media(max-width:520px){.approved-atlas{padding:13px 12px}.approved-atlas-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.approved-atlas-country{font-size:12px;min-height:48px}}
 </style>
 <link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
@@ -1673,6 +1686,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
     <a id="todayMapIntroCurrentSource" target="_blank" rel="noopener noreferrer">公式情報を確認</a>
    </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
+   <div id="todayMapIntroTravel" class="prepared-country-travel" aria-label="国紹介からの小旅行" hidden></div>
   </section>
   <p class="today-map-game-lead">地図の下にある国名をタップすると、名所や文化を知る写真付き3択クイズを楽しめます。</p>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>
@@ -1707,6 +1721,13 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
    </dialog>
   </section>
   <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
+  <section class="approved-atlas" id="approvedAtlas" aria-labelledby="approvedAtlasTitle">
+   <h4 id="approvedAtlasTitle">ニュースがなくても、世界を旅する</h4>
+   <p class="approved-atlas-note">配信国マップとは別に、出典と写真を確認して公開承認した国だけを紹介します。国を選ぶと、実写真・文化・歴史の小旅行と写真付き3択クイズを楽しめます。</p>
+   <details id="approvedAtlasChooser"><summary id="approvedAtlasCount">国の一覧を読み込み中…</summary>
+    <div class="approved-atlas-list" id="approvedAtlasList" role="group" aria-label="公開承認済みの国を選ぶ"></div>
+   </details>
+  </section>
  </section>
  </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
@@ -2021,9 +2042,21 @@ function showTodayCountryIntro(item){
   photo.src=sources[sourceIndex];
  }
  const read=$('todayMapIntroRead');
- read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
- read.dataset.storyIndex=String(item.indices[0]);
+ const hasNews=Array.isArray(item.indices)&&item.indices.length>0;
+ read.dataset.action=hasNews?'news':'quiz';
+ read.dataset.countryCode=currentCode;
+ if(hasNews){
+  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
+  read.dataset.storyIndex=String(item.indices[0]);
+ }else{
+  read.textContent='この国の写真付き3択クイズに挑戦';
+  read.removeAttribute('data-story-index');
+ }
+ const trip=$('todayMapIntroTravel');
+ trip.hidden=true;
+ trip.replaceChildren();
  $('todayMapIntro').hidden=false;
+ if(!hasNews)renderApprovedCountryTrip(item,requestId);
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
@@ -2032,6 +2065,93 @@ function showTodayCountryIntro(item){
 // Country centroid pins stay geographically anchored. On narrow displays,
 // push only the visible marker aside when two 44px tap targets would overlap,
 // then draw a leader from the true representative point to its displaced pin.
+function approvedAtlasItems(){
+ // Only the exact, canonical approval list can create standalone country links.
+ // A geographical catalog entry by itself does not authorize any content.
+ return APPROVED_COUNTRY_CODES.map(code=>{
+  const record=countryRecord(code);
+  return record?{code:record.code,name:record.name,indices:[]}:null;
+ }).filter(Boolean);
+}
+function renderApprovedAtlas(){
+ const list=$('approvedAtlasList');
+ list.replaceChildren();
+ const countries=approvedAtlasItems();
+ $('approvedAtlasCount').textContent=countries.length
+  ?'出典確認済み '+countries.length+'か国から選ぶ':'公開承認済みの国を読み込み中…';
+ countries.forEach(item=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.className='approved-atlas-country';
+  button.textContent=item.name+'の国紹介';
+  button.dataset.countryCode=item.code;
+  button.setAttribute('aria-controls','todayMapIntro');
+  button.setAttribute('aria-label',item.name+'の国紹介と小旅行を開く');
+  button.addEventListener('click',()=>showTodayCountryIntro(item));
+  list.append(button);
+ });
+}
+function approvedAtlasTravelOptions(item,stops){
+ const primaryCover=(TODAY_COUNTRY_PHOTOS[item.code]||[])
+  .filter(p=>p.asset&&!p.avoidCover&&!p.remoteOnly)
+  .sort((a,b)=>countryPhotoPriority(item.code,b)-countryPhotoPriority(item.code,a))[0]?.asset;
+ const chosenCover=displayedCountryCoverAssets.get(item.code)||primaryCover;
+ const questions=typeof WORLD_PASSPORT_QUIZZES==='undefined'?[]:
+  (WORLD_PASSPORT_QUIZZES[item.code]||[]);
+ const quizKeys=new Set(questions.map(q=>q.photoKey));
+ const options=Object.entries(stops||{}).filter(([key,stop])=>
+  stop&&stop.country===item.name&&!stop.coverOnly&&!stop.quizOnly
+  &&stop.photoAsset!==chosenCover&&approvedTravelCover(stop)
+  &&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset||'')
+  &&String(stop.photo||'').startsWith('https://thumb.wikimedia.org/wikipedia/commons/thumb/')
+  &&String(stop.photoPage||'').startsWith('https://commons.wikimedia.org/wiki/File:')
+  &&String(stop.licenseUrl||'').startsWith('https://creativecommons.org/')
+  &&stop.author&&stop.license&&stop.photoCaption
+  &&Array.isArray(stop.travelStory)&&stop.travelStory.length===2
+  &&stop.travelStory.every(text=>typeof text==='string'&&text.trim().length>=110)
+  &&Array.isArray(stop.historicalSources)&&stop.historicalSources.some(source=>
+    source?.name&&String(source.url||'').startsWith('https://')));
+ const independent=options.filter(([key])=>!quizKeys.has(key));
+ const choices=independent.length?independent:options;
+ // The named travel postcard is preferred to a photograph attached to an
+ // unrelated old news story; credits always come from the exact same stop.
+ return choices.sort((a,b)=>Number(b[0].endsWith('-postcard'))-
+  Number(a[0].endsWith('-postcard'))||a[0].localeCompare(b[0]));
+}
+async function renderApprovedCountryTrip(item,requestId){
+ const panel=$('todayMapIntroTravel');
+ panel.hidden=false;
+ panel.textContent='歴史資料を添えた小旅行を読み込み中…';
+ const stops=await loadTravelStops();
+ if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
+    $('todayMapIntro').dataset.countryCode!==item.code)return;
+ const options=approvedAtlasTravelOptions(item,stops);
+ if(!options.length){
+  panel.textContent='この国の出典確認済みの小旅行は準備中です。';
+  return;
+ }
+ function mount(at){
+  if(requestId!==todayCountryIntroRequest||!panel.isConnected||panel.hidden)return;
+  const stop=options[at]?.[1];
+  if(!stop){panel.textContent='旅行写真を読み込めませんでした。';return;}
+  panel.innerHTML=travelPostcardHtml({country:item.name},stop,true);
+  const img=panel.querySelector('.travel-photo');
+  if(!img)return;
+  img.addEventListener('error',()=>{
+   if(requestId!==todayCountryIntroRequest||!img.isConnected||panel.hidden)return;
+   if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
+    img.dataset.remoteTried='true';
+    img.src=img.dataset.remotePhoto;
+    return;
+   }
+   if(at+1<options.length){mount(at+1);return;}
+   img.hidden=true;
+   const message=panel.querySelector('.travel-photo-error');
+   if(message)message.hidden=false;
+  });
+ }
+ mount(0);
+}
 function positionTodayMapPins(){
  const layer=$('todayMapPins');
  if(!layer||!layer.clientWidth||!layer.clientHeight)return;
@@ -2093,6 +2213,7 @@ function renderTodayMap(){
  $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
  const pins=$('todayMapPins'),legend=$('todayMapLegend');
  pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();closeWorldPassport();
+ renderApprovedAtlas();
  if(!countryCatalog.length){
   $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
   return;
@@ -2152,8 +2273,15 @@ function setReleaseStatus(message){$('releaseStatus').textContent=message}
 // Bind UI events outside the pure country-coordinate module used by regression tests.
 $('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
 $('todayMapIntroRead').addEventListener('click',()=>{
- const index=Number($('todayMapIntroRead').dataset.storyIndex);
- if(Number.isInteger(index)&&index>=0&&index<edition.stories.length)openAtlasStory(index);
+ const read=$('todayMapIntroRead');
+ if(read.dataset.action==='quiz'){
+  const item=approvedAtlasItems().find(row=>row.code===read.dataset.countryCode);
+  if(item)startWorldPassport(item);
+  return;
+ }
+ const index=Number(read.dataset.storyIndex);
+ if(read.dataset.action==='news'&&Number.isInteger(index)&&
+    index>=0&&index<edition.stories.length)openAtlasStory(index);
 });
 
 function displayReleaseStatus(){
@@ -2685,7 +2813,8 @@ function chooseTravelPhoto(story,stops){
  rememberTravelPhoto(picked.country,picked.photoAsset);
  return picked;
 }
-function travelPostcardHtml(story,stop){
+function travelPostcardHtml(story,stop,standalone=false){
+
  const known=stop&&Number.isFinite(stop.latitude)&&Number.isFinite(stop.longitude)&&
   Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
  const sameCountry=known&&travelCountryNames(story.country).includes(stop.country);
@@ -2705,10 +2834,13 @@ function travelPostcardHtml(story,stop){
  const heritage=stop&&Array.isArray(stop.historicalSources)?
   stop.historicalSources.find(source=>source&&source.name&&
    typeof source.url==='string'&&source.url.startsWith('https://')):null;
- return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する小旅行">'+
+ return '<section class="travel-card" aria-label="'+
+   (standalone?'出典確認済みの国紹介からの小旅行':'ニュースとは別の旅先を紹介する小旅行')+'">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
-  '<div class="travel-context" aria-label="記事と旅先の違い">'+
-   '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
+  '<div class="travel-context" aria-label="'+
+   (standalone?'国紹介と旅先の関係':'記事と旅先の違い')+'">'+
+   '<span class="travel-context-story">'+
+    (standalone?'国紹介：':'記事の舞台（国） ')+escapeHtml(reportCountry)+'</span>'+
    '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span>'+
   '</div>'+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
