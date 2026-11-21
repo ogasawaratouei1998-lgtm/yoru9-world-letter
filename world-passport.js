@@ -250,3 +250,98 @@ document.getElementById('todayQuizPhotoZoom').addEventListener('click',openWorld
 document.getElementById('todayQuizPhotoDialogClose').addEventListener('click',()=>{
  const dialog=document.getElementById('todayQuizPhotoDialog');
  if(dialog.open)dialog.close();
+});
+document.getElementById('todayQuizPhotoDialog').addEventListener('click',event=>{
+ if(event.target===event.currentTarget)event.currentTarget.close();
+});
+/* Each correctly selected answer earns a separate burst, before any country stamp.
+   Decorations are aria-hidden, use no sound, and never intercept pointer events. */
+function celebrateWorldPassportCorrect(button,streak){
+ if(!button)return;
+ button.dataset.popped='true';
+ const burst=document.createElement('span');
+ burst.className='quiz-answer-sparks';
+ burst.dataset.active='true';
+ burst.setAttribute('aria-hidden','true');
+ const shapes=['✦','★','✧','✦','◆','★','✧','✦','★','✧'];
+ for(const shape of shapes){
+  const particle=document.createElement('span');
+  particle.textContent=shape;
+  burst.append(particle);
+ }
+ button.append(burst);
+ const flash=$('todayQuizCorrectFlash');
+ flash.hidden=false;
+ $('todayQuizCorrectFlashLabel').textContent=streak>1
+  ?streak+'連続正解！':'正解！ キラッとひらめいた！';
+}
+
+function renderWorldPassportRound(){
+ const run=worldPassportActive;if(!run)return;
+ const q=run.questions[run.step];
+ run.answered=false;
+ resetWorldPassportPhoto();
+ $('todayQuizTitle').textContent=run.item.name+'の「へぇ！」クイズ';
+ $('todayQuizProgress').textContent='第'+(run.step+1)+'問 / '+run.questions.length+'問 · 景色と文化の3択';
+ const steps=$('todayQuizSteps');steps.replaceChildren();
+ run.questions.forEach((_,i)=>{
+  const bar=document.createElement('span');bar.className='today-quiz-step';
+  bar.dataset.step=i<run.step?'done':i===run.step?'current':'waiting';
+  bar.setAttribute('aria-label','第'+(i+1)+'問');
+  steps.append(bar);
+ });
+ $('todayQuizCorrectFlash').hidden=true;
+ $('todayQuizResult').hidden=true;
+ $('todayQuizNext').hidden=true;
+ $('todayQuizQuestion').textContent=q.question;
+ const options=$('todayQuizChoices');options.replaceChildren();
+ q.options.forEach((answer,i)=>{
+  const button=document.createElement('button');
+  button.type='button';button.textContent=String(i+1)+' · '+answer;
+  button.addEventListener('click',()=>answerWorldPassport(i));
+  options.append(button);
+ });
+}
+function answerWorldPassport(picked){
+ const run=worldPassportActive;
+ if(!run||run.answered)return;
+ const question=run.questions[run.step];
+ if(!question||picked<0||picked>=question.options.length)return;
+ run.answered=true;
+ const correct=picked===question.answer;
+ if(correct)run.streak++;else run.streak=0;
+ const mark=$('todayQuizSteps').children[run.step];
+ if(mark)mark.dataset.step='done';
+ $('todayQuizChoices').querySelectorAll('button').forEach((button,index)=>{
+  button.disabled=true;
+  if(index===question.answer)button.dataset.correct='true';
+  if(index===picked&&!correct)button.dataset.pickedWrong='true';
+ });
+ if(correct)celebrateWorldPassportCorrect($('todayQuizChoices').querySelectorAll('button')[picked],run.streak);
+ $('todayQuizVerdict').textContent=correct
+  ?'正解！ '+(run.streak>1?run.streak+'問連続正解！':'その通り！')
+  :'惜しい！ 正解は「'+question.options[question.answer]+'」。';
+ $('todayQuizExplanation').textContent=question.fact;
+ $('todayQuizJoke').textContent='AIツッコミ（創作の冗談）：'+question.quip;
+ $('todayQuizResult').hidden=false;
+ revealWorldPassportAnswerPhoto(question);
+ const next=$('todayQuizNext');
+ next.textContent=run.step<run.questions.length-1?'次の問題へ →':'閉じる';
+ next.hidden=false;
+}
+function finishWorldPassport(){
+ const run=worldPassportActive;
+ if(!run||!run.answered)return;
+ if(run.step<run.questions.length-1){
+  run.step++;
+  renderWorldPassportRound();
+  focusWorldPassportQuestion(run);
+ }else{
+  closeWorldPassport();
+  const legend=$('todayMapLegend');
+  if(legend&&typeof legend.scrollIntoView==='function')
+   legend.scrollIntoView({block:'nearest',behavior:'auto'});
+ }
+}
+document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
+document.getElementById('todayQuizNext').addEventListener('click',finishWorldPassport);
