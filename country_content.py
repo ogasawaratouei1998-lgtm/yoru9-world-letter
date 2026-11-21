@@ -150,7 +150,7 @@ def load_country_content(root):
                 raise ValueError(code+": wrong-country postcard: "+key)
             asset=stop.get("photoAsset")
             if not isinstance(asset,str) or not re.fullmatch(
-                    r"assets/travel/[a-z0-9-]+\\.jpg",asset):
+                    r"assets/travel/[a-z0-9-]+\.jpg",asset):
                 raise ValueError(code+": invalid postcard photograph: "+key)
             provenance=(code,stop.get("photo"),stop.get("photoPage"),
                         stop.get("author"),stop.get("license"),
