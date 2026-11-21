@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v72';
+const SHELL_CACHE = 'yoru9-shell-v73';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -82,7 +82,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Slovenia: independent Ljubljana panorama, Skocjan caves and Plecnik's Triple Bridge.
  'assets/travel/si-ljubljana-panorama-cover.jpg', 'assets/travel/si-skocjan-caves-postcard.jpg', 'assets/travel/si-triple-bridge-postcard.jpg',
  // Ireland: Dublin, Newgrange and Skellig Michael.
- 'assets/travel/ie-dublin-hapenny-cover.jpg', 'assets/travel/ie-newgrange-postcard.jpg', 'assets/travel/ie-skellig-michael-postcard.jpg'];
+ 'assets/travel/ie-dublin-hapenny-cover.jpg', 'assets/travel/ie-newgrange-postcard.jpg', 'assets/travel/ie-skellig-michael-postcard.jpg',
+ // Iceland: Reykjavik, Thingvellir and Jokulsarlon.
+ 'assets/travel/is-reykjavik-cover.jpg', 'assets/travel/is-thingvellir-postcard.jpg', 'assets/travel/is-jokulsarlon-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>

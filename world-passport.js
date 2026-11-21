@@ -92,6 +92,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ブルー・ナ・ボーニャで知られる遺産は？',options:['近代の高層ビル','先史時代の巨石遺跡','海底の沈没船'],answer:1,fact:'UNESCOはこの地域を先史時代の巨石芸術の重要な集積地として紹介しています。',photoLabel:'正解写真｜ブルー・ナ・ボーニャの考古遺跡群・ニューグレンジ',quip:'文字がなくても石は語る。五千年先に残る説明書を作る技術、現代のアプリにも欲しい。',photoKey:'ie-newgrange-postcard'},
   {question:'スケリッグ・マイケルに残る主な遺構は？',options:['競馬場','巨大な造船所','修道院'],answer:2,fact:'UNESCOはスケリッグ・マイケルの修道院遺跡を文化遺産として評価しています。',photoLabel:'正解写真｜スケリッグ・マイケル',quip:'修道院の立地条件が厳しい。日常から離れるために、海まで越えるとは徹底している。',photoKey:'ie-skellig-michael-postcard'},
  ],
+ IS:[
+  {question:'シンクヴェトリルで930年に始まったものは？',options:['近代的な空港','野外議会','海底鉄道'],answer:1,fact:'UNESCOは930年にアルシングの野外集会が始まった場所として紹介しています。',photoLabel:'正解写真｜シンクヴェトリル国立公園・アルマンナギャウ',quip:'議事堂なしで法律を決めた。会議室の予約で揉める現代人には、耳の痛い話だ。',photoKey:'is-thingvellir-postcard'},
+  {question:'ヴァトナヨークトルの景観をつくる主な組み合わせは？',options:['珊瑚礁と熱帯雨林','砂丘とマングローブ','氷河と火山'],answer:2,fact:'UNESCOは氷河と火山活動の相互作用を重要な価値として挙げています。',photoLabel:'正解写真｜ヴァトナヨークトル国立公園・ヨークルスアゥルロゥン氷河湖',quip:'氷の下で火山が活動中。冷蔵庫の下にコンロを置くようなものを、地球は本気でやっている。',photoKey:'is-jokulsarlon-postcard'},
+ ],
  IT:[
   {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',options:['ピサ','ローマ','ミラノ'],answer:0,photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',quip:'斜めに立っても、長年しっかり観光の主役。'},
   {question:'ヴェネツィアの街を象徴する大きな水路は？',options:['ライン川','大運河','テムズ川'],answer:1,photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',quip:'道路を探すより、舟を探したほうが早い日もある。'},
