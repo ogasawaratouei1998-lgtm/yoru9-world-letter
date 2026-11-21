@@ -55,10 +55,10 @@ def country_coverage(root: Path, stories):
             raise ValueError(code+": no licensed country-cover photograph")
         verified_covers=[]
         for photo in images:
-            # The selected portrait must be a locally licensed, attributed
-            # destination photograph. Older vetted national portraits did not
-            # all use the newer coverOnly marker: the country + explicit
-            # non-quiz cover selection is the actual authority, not that flag.
+            # The browser may try every selectable fallback. Do not silently
+            # skip a malformed entry when at least one other photo is valid.
+            if not isinstance(photo,dict):
+                raise ValueError(code+": malformed selectable country portrait")
             if photo.get("avoidCover") or photo.get("remoteOnly"):
                 continue
             asset=photo.get("asset")
@@ -66,15 +66,9 @@ def country_coverage(root: Path, stories):
                        if item.get("photoAsset")==asset and
                        item.get("country")==COUNTRY_NAMES.get(code) and
                        item.get("quizOnly") is not True),None)
-            if (stop and _licensed_photo(stop) and stop.get("author")==photo.get("author") and
-                stop.get("license")==photo.get("license") and
-                (not photo.get("sourcePage") or photo["sourcePage"]==stop.get("photoPage"))):
-                verified_covers.append(asset)
-            elif (photo.get("asset") and photo.get("url") and photo.get("author")
-                  and photo.get("license") and photo.get("place") and photo.get("caption")):
-                # The browser can fall back to ANY selectable cover. Reject
-                # an unverified fallback instead of silently skipping it here.
+            if not verified_country_cover(photo,stop):
                 raise ValueError(code+": selectable cover source/creator does not match local photo manifest")
+            verified_covers.append(asset)
         if not verified_covers:
             raise ValueError(code+": cover source/creator does not match local photo manifest")
         # The first vetted photo is the selected national portrait. ALL other
@@ -140,6 +134,26 @@ def _licensed_photo(photo):
             and photo.get("licenseUrl","").startswith("https://creativecommons.org/")
             and bool(photo.get("author")) and bool(photo.get("license"))
             and bool(photo.get("photoCaption")))
+
+
+def verified_country_cover(cover, stop):
+    """The exact locally licensed postcard backs every displayed cover field.
+
+    A cover with a missing caption, URL, asset or attribution is not an
+    acceptable fallback, even when another cover in that country is valid.
+    """
+    return (isinstance(cover,dict) and isinstance(stop,dict)
+            and all(isinstance(cover.get(key),str) and cover[key].strip()
+                    for key in ("asset","url","author","license","place","caption"))
+            and _licensed_photo(stop)
+            and cover["asset"]==stop.get("photoAsset")
+            and cover["url"]==stop.get("photo")
+            and cover["caption"]==stop.get("photoCaption")
+            and cover["place"]==stop.get("place")
+            and cover["author"]==stop.get("author")
+            and cover["license"]==stop.get("license")
+            and (not cover.get("sourcePage")
+                 or cover["sourcePage"]==stop.get("photoPage")))
 
 
 def main():
