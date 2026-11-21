@@ -68,7 +68,7 @@ class CountryExperienceContractTest(unittest.TestCase):
         path=self.root/"index.html"
         page=path.read_text(encoding="utf-8")
         import re
-        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\\.freeze\\((.*)\\);$",page)
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\.freeze\((.*)\);$",page)
         self.assertIsNotNone(registry)
         covers=json.loads(registry.group(1))
         alternate=next(photo for photo in covers["US"]
