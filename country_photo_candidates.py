@@ -143,9 +143,11 @@ def draft_queries(root=ROOT):
             if code in seen:
                 raise ValueError("Duplicate active draft country: " + code)
             seen.add(code)
-            if canonical["countries"][code]["status"] == "approved":
-                # Previously promoted countries are not scanned as unpublished.
-                continue
+            # Draft-source research is independent of publication state. This
+            # also refreshes the original photograph provenance record after a
+            # country has already been promoted, without changing approval.
+            if code not in canonical["countries"]:
+                raise ValueError("Unknown ISO location: " + code)
             if len(country.get("travelDrafts", [])) != 2:
                 raise ValueError("Unfinished country draft: " + code)
             if code in LEGACY_SEARCH:
