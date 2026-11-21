@@ -28,6 +28,22 @@ class CountryExperienceContractTest(unittest.TestCase):
         for row in result.values():
             self.assertEqual(len(set(row["quizPhotoKeys"])),2)
 
+    def test_all_196_geographic_names_come_from_one_catalog(self):
+        from check_country_experience import COUNTRY_NAMES
+        from country_codes import catalog, country_codes
+        canonical={row["code"]:row["name"] for row in catalog()}
+        self.assertEqual(len(canonical),196)
+        self.assertEqual(COUNTRY_NAMES,canonical)
+        # Previously absent from the hardcoded dozen. These must be recognized
+        # correctly while remaining unapproved, rather than given a fake photo.
+        for code in ("NG","ID","IS","ZA","TT"):
+            self.assertEqual(country_codes(canonical[code]),[code])
+        self.assertNotIn("NG",{
+            code for code in ("IT","DE","US","FR","AR","JP","GB")
+        })
+        with self.assertRaisesRegex(ValueError,"NG: country content awaiting editorial approval"):
+            country_coverage(ROOT,[{"country":canonical["NG"]}])
+
     def test_missing_italian_photo_prevents_incomplete_release(self):
         path=self.root/"travel-stops.json"
         manifest=json.loads(path.read_text(encoding="utf-8"))
