@@ -24,6 +24,20 @@ class CountryEditorialQueueTest(unittest.TestCase):
         self.assertTrue(all(row["requiredRemaining"]>=0
                             for row in report["prioritizedPending"]))
 
+    def test_cover_licensing_is_inherited_from_exact_postcard_provenance(self):
+        report=country_editorial_queue(ROOT)
+        pending={x["code"]:x for x in report["prioritizedPending"]}
+        # All three source records are real, attributed local photographs.
+        # Their index-level cover entries predating sourcePage aren't missing.
+        for code in ("AR","FR","JP"):
+            self.assertNotIn("attributed_country_portrait_photo",
+                             pending[code]["missing"])
+        # A reused portrait/quiz image is a different and real release defect.
+        for code in ("ES","JP","GB","NZ"):
+            self.assertIn("portrait_photo_reused_in_quiz",pending[code]["missing"])
+        for code in ("FR","AR"):
+            self.assertNotIn("portrait_photo_reused_in_quiz",pending[code]["missing"])
+
     def test_missing_heritage_source_remains_an_actionable_review_item(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)

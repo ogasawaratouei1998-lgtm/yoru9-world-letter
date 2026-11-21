@@ -30,16 +30,45 @@ def country_editorial_queue(root: Path) -> dict:
             missing.append("substantive_portrait")
         if not portrait.get("sourceName") or not portrait.get("sourceUrl"):
             missing.append("portrait_history_culture_source")
-        local_covers=[p for p in entry.get("portraitPhotos",[])
-                      if not p.get("avoidCover") and not p.get("remoteOnly")
-                      and p.get("asset") and p.get("author") and p.get("license")
-                      and p.get("sourcePage")]
+        # Cover attribution lives in the postcard manifest for legacy photos.
+        # Never call it uncredited just because the optional cover-level
+        # sourcePage field was not duplicated in index.html.
+        stops=entry.get("travelStops",{})
+        local_covers=[]
+        for cover in entry.get("portraitPhotos",[]):
+            if cover.get("avoidCover") or cover.get("remoteOnly"):
+                continue
+            if not cover.get("asset") or not cover.get("author") or not cover.get("license"):
+                continue
+            licensed=next((stop for stop in stops.values()
+                if stop.get("country")==entry["name"]
+                and stop.get("photoAsset")==cover["asset"]
+                and stop.get("author")==cover["author"]
+                and stop.get("license")==cover["license"]
+                and stop.get("photoPage","").startswith(
+                    "https://commons.wikimedia.org/wiki/File:")
+                and (not cover.get("sourcePage")
+                     or cover["sourcePage"]==stop["photoPage"])),None)
+            if licensed:
+                local_covers.append(cover)
         if not local_covers:
             missing.append("attributed_country_portrait_photo")
         quizzes=entry.get("quiz",[])
         photo_keys=[q.get("photoKey") for q in quizzes if q.get("photoKey")]
-        if len(quizzes)<2 or len(set(photo_keys))<2:
+        quiz_photos=[stops.get(key) for key in photo_keys]
+        if (len(quizzes)<2 or len(set(photo_keys))<2
+                or not all(q and q.get("country")==entry["name"]
+                           and q.get("photoPage","").startswith(
+                               "https://commons.wikimedia.org/wiki/File:")
+                           and q.get("licenseUrl","").startswith(
+                               "https://creativecommons.org/")
+                           for q in quiz_photos)):
             missing.append("two_distinct_licensed_photo_quizzes")
+        if (local_covers and any(
+                q and q.get("photoAsset")==local_covers[0]["asset"]
+                for q in quiz_photos)):
+            # The reader deliberately needs a different hero and quiz reveal.
+            missing.append("portrait_photo_reused_in_quiz")
         postcards=[s for s in entry.get("travelStops",{}).values()
                    if not s.get("quizOnly") and not s.get("coverOnly")
                    and isinstance(s.get("travelStory"),list)
