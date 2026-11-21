@@ -98,7 +98,7 @@ def bundle_travel_photos(root, output):
                     if not 3000<=size<=2_000_000:
                         raise ValueError("cached image size invalid")
                     with cache_file.open("rb") as src:
-                        if src.read(3)!=b"\\xff\\xd8\\xff":
+                        if src.read(3)!=b"\xff\xd8\xff":
                             raise ValueError("cached JPEG header invalid")
                     w,h=jpeg_dimensions(cache_file)
                     if (w<1000 or h<540) if cover else (w<330 or h<200):
