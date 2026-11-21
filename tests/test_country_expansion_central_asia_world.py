@@ -56,7 +56,7 @@ class CentralAsiaWorldExpansionTests(unittest.TestCase):
                     self.assertEqual(len(stop["historicalSources"]), 1)
                     source = stop["historicalSources"][0]
                     self.assertRegex(
-                        source["url"], r"^https://whc\\.unesco\\.org/en/list/[0-9]+$"
+                        source["url"], r"^https://whc\.unesco\.org/en/list/[0-9]+$"
                     )
                     self.assertEqual(source["checkedOn"], "2026-11-21")
                     quiz = stop["quizDraft"]
