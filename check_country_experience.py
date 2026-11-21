@@ -115,7 +115,7 @@ def country_coverage(root: Path, stories):
         # placeholder must never be introduced by the next nightly issue.
         detailed=[p for p in postcards if isinstance(p.get("travelStory"),list)
                   and len(p["travelStory"])==2
-                  and all(isinstance(text,str) and len(text.strip())>=70
+                  and all(isinstance(text,str) and len(text.strip())>=110
                           for text in p["travelStory"])]
         if not detailed:
             raise ValueError(code+": curated tourism postcard is missing its detailed essay")
