@@ -213,10 +213,11 @@ def quip_candidates_ranked(story):
     return selected
 
 
-def choose_pre_review_quip(story):
-    """Make no ungrounded punchlines; return None when every draft is weak."""
+def choose_pre_review_quip(story, reviewed=()):
+    """Select a fresh existing candidate; all jokes still require source audit."""
+    from quip_variety import prefer_fresh_quip
     candidates=quip_candidates_ranked(story)
-    return candidates[0] if candidates else None
+    return prefer_fresh_quip(candidates,reviewed)
 
 
 
