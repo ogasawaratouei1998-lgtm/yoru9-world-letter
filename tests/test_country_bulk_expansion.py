@@ -22,7 +22,7 @@ class BulkCountryExpansionTests(unittest.TestCase):
         for code, draft in self.batch["countries"].items():
             with self.subTest(country=code):
                 country = self.doc["countries"][code]
-                if code in ("HR", "IE", "IS"):
+                if code in ("HR", "IE", "IS", "KH"):
                     # Original batch is a historical draft snapshot. Croatia is
                     # Ireland and Iceland are now released only after separately licensed photos.
                     self.assertEqual(country["status"], "approved")

@@ -104,6 +104,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'富士山がまたがる2つの県は？',options:['長野県と岐阜県','京都府と滋賀県','山梨県と静岡県'],answer:2,photoKey:'japan-fuji-postcard',photoLabel:'正解の山｜山梨県・静岡県にまたがる富士山',fact:'富士山は山梨県と静岡県にまたがる日本で最も高い山です。',quip:'存在感が大きすぎて二つの県にまたがってしまった。'},
   {question:'東京・浅草の浅草寺があるのはどこ？',options:['京都府','東京都','奈良県'],answer:1,photoKey:'japan-country-postcard',photoLabel:'正解の寺院｜東京・浅草寺',fact:'浅草寺は東京都台東区浅草にあり、雷門などで知られています。',quip:'雷門は人気者。記念写真の行列まで名物になりそう。'},
  ],
+ KH:[
+  {question:'アンコールの寺院群と結びつく歴史的な王朝は？',options:['ローマ帝国','クメール王朝','アステカ帝国'],answer:1,fact:'UNESCOはアンコールをクメール王朝の主要な遺産として扱っています。',photoLabel:'正解写真｜アンコール遺跡群・アンコール・ワット',quip:'寺院だけでなく都市全体が巨大だった。地図を拡大するたび、当時の建築計画の規模にこちらの想像力が負ける。',photoKey:'kh-angkor-wat-postcard'},
+  {question:'プレアヴィヒア寺院で特に重要な宗教的対象は？',options:['古代ローマの皇帝','北欧神話の神々','シヴァ神'],answer:2,fact:'UNESCOはプレアヴィヒア寺院をシヴァ神に捧げられた建築として説明しています。',photoLabel:'正解写真｜プレアヴィヒア寺院',quip:'山の形に合わせて寺院を設計した。平地に戻して効率化する、という発想ではこの傑作は生まれない。',photoKey:'kh-preah-vihear-postcard'},
+ ],
  KR:[
   {question:'石段と石塔で知られる、慶州の世界遺産の寺は？',options:['仏国寺','景福宮','海印寺'],answer:0,photoKey:'korea-bulguksa-quiz-image',photoLabel:'正解の寺院｜慶州・仏国寺',fact:'仏国寺は新羅時代の仏教建築を伝える寺で、石窟庵とともにUNESCO世界遺産に登録されています。',quip:'階段の先まで文化財。登る前から歴史が濃い。'},
   {question:'済州島の城山日出峰を形づくったのは何？',options:['サンゴ礁','人工の盛り土','火山の噴出'],answer:2,photoKey:'korea-seongsan-quiz-image',photoLabel:'正解の地形｜済州島・城山日出峰',fact:'城山日出峰は火山活動で生まれた凝灰丘で、済州島の火山地形の一部として世界自然遺産に登録されています。',quip:'海のそばの巨大な山。正体は火山の作品。'},
