@@ -84,7 +84,7 @@ class CountryExperienceContractTest(unittest.TestCase):
     def test_incomplete_selectable_us_fallback_is_never_silently_skipped(self):
         import re
         original=(self.root/"index.html").read_text(encoding="utf-8")
-        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\\.freeze\\((.*)\\);$",original)
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\.freeze\((.*)\);$",original)
         self.assertIsNotNone(registry)
         for missing_field in ("asset","url","caption","author","license","place"):
             with self.subTest(missing_field=missing_field):
@@ -104,7 +104,7 @@ class CountryExperienceContractTest(unittest.TestCase):
         import re
         path=self.root/"index.html"
         page=path.read_text(encoding="utf-8")
-        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\\.freeze\\((.*)\\);$",page)
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\.freeze\((.*)\);$",page)
         self.assertIsNotNone(registry)
         covers=json.loads(registry.group(1))
         covers["US"][1]["url"]=covers["US"][0]["url"]
