@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v56';
+const SHELL_CACHE = 'yoru9-shell-v57';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -54,6 +54,8 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // India: Jaipur representative photo, Taj Mahal and Qutb Minar quiz postcards.
  'assets/travel/in-jaipur-hawa-mahal-cover.jpg', 'assets/travel/in-taj-mahal-postcard.jpg', 'assets/travel/in-qutb-minar-postcard.jpg',
  'assets/travel/nl-rotterdam-city-cover.jpg', 'assets/travel/nl-amsterdam-canals-postcard.jpg', 'assets/travel/nl-kinderdijk-windmills-postcard.jpg', 'assets/travel/sg-marina-bay-cover.jpg', 'assets/travel/sg-botanic-gardens-postcard.jpg', 'assets/travel/sg-gardens-bay-postcard.jpg', 'assets/travel/mx-bellas-artes-cover.jpg', 'assets/travel/mx-teotihuacan-postcard.jpg', 'assets/travel/mx-chichen-itza-postcard.jpg',
+ // Greece: authentic distinct licensed Santorini cover, Acropolis and Delphi quiz photos.
+ 'assets/travel/gr-santorini-caldera-cover.jpg', 'assets/travel/gr-athens-acropolis-postcard.jpg', 'assets/travel/gr-delphi-apollo-postcard.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
