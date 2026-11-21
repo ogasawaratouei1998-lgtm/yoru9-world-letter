@@ -75,7 +75,7 @@ class EditorialQuipQualityTest(unittest.TestCase):
             self.assertNotIn(flag,REVIEW_FIELDS)
         self.assertIn("MANZAI_CRAFT+' You are a Japanese comedy show writer",code)
         self.assertIn("MANZAI_CRAFT+\n",code)
-        self.assertIn("SOURCE-FIDELITY CHECK",code)
+        self.assertIn("JAPANESE EDITORIAL AND HUMOR REVIEW",code)
         self.assertNotIn('audit=ai(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_REVIEW',code)
         self.assertEqual(code.count("audit=ai("),1,
                          "quality upgrade must not add a scarce AI fact-review call")
