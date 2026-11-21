@@ -5,7 +5,8 @@ import shutil
 import tempfile
 import unittest
 
-from country_readiness import ready_country_codes, select_ready_stories
+from country_readiness import (ready_country_codes, select_ready_stories,
+                               prioritize_ready_drafts, story_has_prepared_countries)
 from auto_editorial import save_editorial_funnel
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -32,6 +33,37 @@ class CountryReadinessTest(unittest.TestCase):
         self.assertEqual(prepared,ready)
         self.assertEqual(articles[1]["country"],"Nigeria",
                          "An unready story must not be reassigned to another country")
+
+    def test_unverified_drafts_are_only_reordered_not_promoted(self):
+        drafts=[
+            {"id":"a","country":"Nigeria"},
+            {"id":"b","country":"ドイツ"},
+            {"id":"c","country":"Italy"},
+            {"id":"d","country":"イタリア・ナイジェリア"},
+            {"id":"e","country":"US"},
+            {"id":"f","country":"不明な国"},
+        ]
+        snapshot=json.dumps(drafts,ensure_ascii=False,sort_keys=True)
+        ordered=prioritize_ready_drafts(drafts,{"DE","IT","US"})
+        self.assertEqual([s["id"] for s in ordered],["b","c","e","a","d","f"])
+        self.assertEqual(json.dumps(drafts,ensure_ascii=False,sort_keys=True),snapshot)
+        self.assertFalse(story_has_prepared_countries(drafts[0],{"IT","DE"}))
+        self.assertFalse(story_has_prepared_countries(drafts[3],{"IT"}))
+        self.assertTrue(story_has_prepared_countries(drafts[1],{"DE"}))
+        # This merely schedules independent article verification; a draft
+        # has no editorVerified flag and no approval/publishing side effects.
+        self.assertTrue(all("editorVerified" not in s for s in ordered))
+
+    def test_refill_gate_counts_ready_verified_stories_not_all_reviewed(self):
+        verified=[{"country":"Nigeria"},{"country":"US"},
+                  {"country":"ドイツ"},{"country":"Unknown"}]
+        self.assertEqual(sum(story_has_prepared_countries(s,{"US","DE","IT"})
+                             for s in verified),2)
+        pipeline=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertEqual(pipeline.count(
+            "if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED"),2)
+        self.assertIn("if len(selected)>=9:break",pipeline,
+                      "Review budget remains bounded by existing quota guard")
 
     def test_bad_license_blocks_that_country_only(self):
         with tempfile.TemporaryDirectory() as temp:
