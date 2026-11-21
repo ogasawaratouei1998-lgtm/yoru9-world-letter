@@ -13,7 +13,12 @@ RUNTIME_OPEN = "<script>\n'use strict';"
 RUNTIME_CLOSE = "\n</script>"
 STYLE_TAG = '<link rel="stylesheet" href="./assets/reader-core.css">'
 RUNTIME_TAG = '<script src="./assets/reader-core.js"></script>'
-ASSETS = ("assets/reader-core.css", "assets/reader-core.js")
+COUNTRY_TAG = '<script src="./assets/reader-country-data.js"></script>'
+COUNTRY_OPEN = "const TODAY_COUNTRY_PHOTOS=Object.freeze("
+COUNTRY_GUIDES = "const TODAY_COUNTRY_GUIDES=Object.freeze({"
+COUNTRY_END = "// Track the photograph that actually loaded"
+ASSETS = ("assets/reader-core.css", "assets/reader-core.js",
+          "assets/reader-country-data.js")
 
 
 def rendered_reader_assets(source: str) -> dict[str, bytes]:
@@ -36,13 +41,28 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
                      "function currentIssueCountries()", "checkPublished();"):
         if required not in runtime:
             raise ValueError("Reader runtime missing: " + required)
-    source = source[:start] + RUNTIME_TAG + source[end + len(RUNTIME_CLOSE):]
+    # The licensed country registries become an independent classic script.
+    # Its global lexical declarations remain available to the news runtime.
+    if (runtime.count(COUNTRY_OPEN) != 1 or
+            runtime.count(COUNTRY_GUIDES) != 1 or
+            runtime.count(COUNTRY_END) != 1):
+        raise ValueError("Country data anchors are missing or ambiguous")
+    country_start = runtime.index(COUNTRY_OPEN)
+    guide_start = runtime.index(COUNTRY_GUIDES, country_start)
+    country_end = runtime.index(COUNTRY_END, guide_start)
+    country_script = runtime[country_start:country_end].strip()
+    if not country_script.endswith("});"):
+        raise ValueError("Country guide registry is not terminated")
+    runtime = runtime[:country_start] + runtime[country_end:]
+    source = (source[:start] + COUNTRY_TAG + "\n" + RUNTIME_TAG +
+              source[end + len(RUNTIME_CLOSE):])
     if "<script>\n'use strict';" in source or "<style>\n" in source:
         raise ValueError("Inline reader assets remain unexpectedly")
     return {
         "index.html": source.encode("utf-8"),
         ASSETS[0]: (stylesheet + "\n").encode("utf-8"),
         ASSETS[1]: (runtime + "\n").encode("utf-8"),
+        ASSETS[2]: ("'use strict';\n" + country_script + "\n").encode("utf-8"),
     }
 
 
