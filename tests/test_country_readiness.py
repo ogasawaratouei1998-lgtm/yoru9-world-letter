@@ -17,6 +17,7 @@ class CountryReadinessTest(unittest.TestCase):
         ready,incomplete=ready_country_codes(ROOT)
         self.assertTrue({"IT","DE","US","FR","AR","JP","GB","ES","NZ"}.issubset(ready))
         self.assertNotIn("NG",ready)
+        self.assertNotIn("KR",ready, "No automatic approval of prepared Korean content")
         self.assertIn("ES",ready,
                       "Reviewed Spanish destination assets must be eligible")
         self.assertIn("NZ",ready,
