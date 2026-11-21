@@ -66,8 +66,11 @@ class ThirdEightCountryExpansionTests(unittest.TestCase):
 
     def test_autodiscovery_scans_next_batch_without_manual_python_whitelist(self):
         tasks = list(draft_queries(ROOT))
-        self.assertEqual(len(tasks), 96)
-        self.assertEqual(len({row["countryCode"] for row in tasks}), 32)
+        # The queue grows automatically as more editorial batches are added.
+        # Never freeze its global length to a previous country count.
+        country_codes = {row["countryCode"] for row in tasks}
+        self.assertGreaterEqual(len(country_codes), 32)
+        self.assertEqual(len(tasks), 3 * len(country_codes))
         for code in COUNTRIES:
             matching = [row for row in tasks if row["countryCode"] == code]
             self.assertEqual(len(matching), 3)

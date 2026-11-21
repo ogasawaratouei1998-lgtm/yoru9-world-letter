@@ -1,0 +1,640 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Fourth eight-country UNESCO sourced editorial batch: 8 Japanese portraits, 16 distinct two-paragraph destination essays and quizzes. No photograph, country, or quiz becomes public without individually validated real Commons images and source/licensing checks.",
+  "countries": {
+    "CN": {
+      "name": "中国",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cn",
+      "portrait": {
+        "lead": "長城の稜線と皇帝の宮殿から、広大な歴史をたどる",
+        "body": "中国では、山々の尾根を縫って連なる万里の長城と、北京の中心に築かれた紫禁城が、異なる視点から歴史を伝えています。長城では地形を利用した防衛の工夫が、宮殿では広場や門を軸線上に配置した権力の表現が印象に残ります。壮大な建築の規模に圧倒されるだけでなく、国土を守る仕組みと都を治める空間の違いを読み比べると、旅の景色が深まります。",
+        "facts": [
+          "世界遺産：万里の長城",
+          "世界遺産：北京の紫禁城"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：中国の登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cn"
+      },
+      "travelDrafts": [
+        {
+          "place": "万里の長城",
+          "travelStory": [
+            "山の上へ伸びる長城を眺めると、城壁が真っ直ぐではなく稜線の起伏に合わせて続いていることに気づきます。階段の傾斜や見張り台の位置に目を向ければ、写真に写る壮大な線が、険しい地形に対応した防衛施設であると実感できます。遠くまで一度に歩くことだけを目的にせず、ひとつの区間から地形と建築の関係を観察するのも魅力です。",
+            "UNESCOは、秦の始皇帝の時代に既存の防御施設がつながれ、その後も明代まで建設が続いたと説明しています。現在目にする壁が一度に同じ時代につくられたわけではない点は重要です。構造が違う区間や周囲の山の形を見比べると、長城が長い年月をかけて変化してきた歴史的な施設であることが伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・万里の長城",
+              "url": "https://whc.unesco.org/en/list/438/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "万里の長城が主に担ってきた役割は？",
+            "options": [
+              "北方からの侵入に備える防衛",
+              "皇帝の庭園を区切る装飾",
+              "河川の水量を測る観測"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは長城を北方からの侵入に対応する防衛施設として説明しています。",
+            "photoGoal": "万里の長城の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Great Wall Mutianyu China",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "北京の紫禁城",
+          "travelStory": [
+            "北京の紫禁城では、巨大な門を抜けた先にも広場と建物が続き、歩くほどに空間の規模が分かってきます。中央の軸線に沿って進みながら屋根の色、階段の高さ、建物の配置を見比べると、単に豪華な宮殿ではないことが見えてきます。外から見える建築の秩序と、建物の間に生まれる静けさをゆっくり味わいたい場所です。",
+            "UNESCOは、北京の宮殿が明清時代の最高権力の中心となり、五世紀以上にわたる中国文明の重要な証言であると記しています。登録資産には北京だけでなく瀋陽の清朝皇宮も含まれるため、二つの宮殿を混同しないことが大切です。北京で目にする中庭と門の連なりを、国家儀礼や統治のための空間として読み解くと印象が変わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・北京の紫禁城",
+              "url": "https://whc.unesco.org/en/list/439/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "UNESCO登録の明清皇宮に含まれる都市の組み合わせは？",
+            "options": [
+              "北京と瀋陽",
+              "北京と上海",
+              "西安と成都"
+            ],
+            "answer": 0,
+            "fact": "UNESCOの登録名は「北京と瀋陽の明清皇宮」です。",
+            "photoGoal": "北京の紫禁城の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Forbidden City Beijing Hall of Supreme Harmony",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Great Wall Mutianyu China panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "UZ": {
+      "name": "ウズベキスタン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/uz",
+      "portrait": {
+        "lead": "シルクロードの交差点に残る青いタイルと古い街路",
+        "body": "ウズベキスタンには、交易路を行き交う人と文化が築いてきた都市の記憶があります。サマルカンドでは装飾豊かなマドラサや壮大な広場が印象的で、ブハラでは古い街路と宗教建築が緊密に結びついています。ひとつの建築だけを鑑賞するのではなく、門から市場へ、礼拝の空間から生活の路地へと視点を移すと、シルクロードの都市が人々の営みとともに発展したことを感じられます。",
+        "facts": [
+          "世界遺産：サマルカンド歴史地区",
+          "世界遺産：ブハラ歴史地区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ウズベキスタンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/uz"
+      },
+      "travelDrafts": [
+        {
+          "place": "サマルカンド歴史地区",
+          "travelStory": [
+            "サマルカンドのレギスタン広場では、向かい合う壮大な建物の正面に青いタイルや幾何学模様が広がっています。遠くから全体の左右のバランスを眺めたあと、近くで小さな模様を追うと、建築の規模と職人の細かな仕事が同時に伝わります。広場だけで旅を終えず、シャーヒ・ズィンダ廟群などへ目を向ければ、都市の表情がさらに豊かになります。",
+            "UNESCOはサマルカンドを世界の文化が交差する都市とし、古代アフラシヤブを起源に十四〜十五世紀のティムール朝期に大きく発展したと説明しています。主要遺産にはレギスタンのマドラサ群だけでなく、ビービー・ハーヌム・モスクやウルグ・ベク天文台も含まれます。一つの広場が町の歴史のすべてではないと知ると、歩く順序も変わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サマルカンド歴史地区",
+              "url": "https://whc.unesco.org/en/list/603/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "サマルカンドが大きく発展した時代としてUNESCOが挙げるのは？",
+            "options": [
+              "ティムール朝期",
+              "産業革命期の英国統治",
+              "古代ローマ帝国期"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはサマルカンドの重要な発展期として十四〜十五世紀のティムール朝期を挙げています。",
+            "photoGoal": "サマルカンド歴史地区の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Registan Samarkand Uzbekistan madrasah",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ブハラ歴史地区",
+          "travelStory": [
+            "ブハラの旧市街では、日陰をつくる建物の間に広場や宗教施設が現れ、歩く方向によって景色が細かく変化します。高いミナレットを遠くから目印にしつつ、煉瓦の壁面や門の装飾を近くで確かめてみてください。大きな観光名所だけでなく、道と建物がつながる町全体に目を向けると、交易都市らしい落ち着いた魅力を感じられます。",
+            "UNESCOはブハラをシルクロード沿いに立地する二千年以上の歴史を持つ都市として紹介し、中世中央アジアの都市構造がよく残る例と位置付けています。十世紀のイスマーイール・サーマーニー廟や十七世紀のマドラサにも触れています。異なる時代に築かれた建物が一つの市街地に重なる点を意識すると、色鮮やかな装飾の奥にある長い歴史が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブハラ歴史地区",
+              "url": "https://whc.unesco.org/en/list/602/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブハラが発展した広域交易路は？",
+            "options": [
+              "シルクロード",
+              "アンデス山脈のインカ道",
+              "北大西洋の航路"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはブハラをシルクロード沿いにある歴史都市として説明しています。",
+            "photoGoal": "ブハラ歴史地区の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Bukhara historic centre Kalon minaret Uzbekistan",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Registan Samarkand Uzbekistan madrasah panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "LA": {
+      "name": "ラオス",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/la",
+      "portrait": {
+        "lead": "メコン川の古都と山裾の遺跡が語る多層の文化",
+        "body": "ラオスのルアンパバーンには寺院と旧市街が重なり合う落ち着いた都市景観があり、南部のワット・プーでは山から川へ続く地形と遺跡が一体になっています。一方は人々が暮らしを続ける町、もう一方は自然の形に意味を与えて計画された聖域です。建物の姿だけでなく、通りや川、山の位置も含めて観察すると、ラオスの文化遺産が土地と強く結びついていることが分かります。",
+        "facts": [
+          "世界遺産：ルアンパバーンの町",
+          "世界遺産：ワット・プーとチャンパーサックの文化的景観"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ラオスの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/la"
+      },
+      "travelDrafts": [
+        {
+          "place": "ルアンパバーンの町",
+          "travelStory": [
+            "ルアンパバーンを散策すると、寺院の屋根の曲線と通り沿いの建物の表情が少しずつ変わります。立派な宗教建築を一度見て終えるのではなく、門の装飾から隣の街路へと視線を移してみてください。古い寺院と十九〜二十世紀の建築が同じ町並みに溶け込み、歩く場所ごとに異なる歴史の層が見えることが、ここで過ごす時間を豊かにします。",
+            "UNESCOはルアンパバーンの独自性を、伝統的なラオスの建築・都市構造と、十九〜二十世紀の欧州植民地期の建築が融合した景観に見いだしています。どちらか一方だけを切り取ると、登録された町の価値を十分に捉えられません。寺院の境内と周辺の街並みを行き来しながら、異なる文化が同じ空間の中で重なった経緯を考えてみたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ルアンパバーンの町",
+              "url": "https://whc.unesco.org/en/list/479/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ルアンパバーンの町並みが評価される特徴は？",
+            "options": [
+              "ラオスの伝統建築と植民地期建築の融合",
+              "高層ビル群の密集",
+              "古代ローマの道路網"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは伝統的なラオスの構造と欧州植民地期の建築が融合した町並みを評価しています。",
+            "photoGoal": "ルアンパバーンの町の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Luang Prabang Laos historic town Wat Xieng Thong",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ワット・プーとチャンパーサックの文化的景観",
+          "travelStory": [
+            "ワット・プーでは、遺跡に向かう道の先に山が見え、寺院の配置そのものが景色の一部になっています。石段や古い基壇に目を向けながら、足元の構造と遠くの斜面を交互に見比べると、建物が単独で置かれたのではないと分かります。寺院だけを撮影して帰るより、山と川の位置関係をゆっくり確かめると、この場所ならではの魅力が深まります。",
+            "UNESCOによれば、チャンパーサックの文化的景観は山頂からメコン川岸へ続く軸線を意識して設計され、寺院や聖所、水利施設が約十キロメートルにわたって配置されました。その構想は自然と人間の関係を示すヒンドゥー教的な世界観に結びつき、主にクメール王国に関連します。遺跡をひとつの建物としてではなく、地形を取り込んだ計画として眺めることが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ワット・プーとチャンパーサックの文化的景観",
+              "url": "https://whc.unesco.org/en/list/481/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ワット・プーの文化的景観で重要な地形のつながりは？",
+            "options": [
+              "山頂から川岸への軸線",
+              "砂漠から海底への水路",
+              "火山の火口を囲む城壁"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは山頂からメコン川岸への軸線を意識した設計を説明しています。",
+            "photoGoal": "ワット・プーとチャンパーサックの文化的景観の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Vat Phou temple Champasak Laos",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Luang Prabang Laos historic town Wat Xieng Thong panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "CU": {
+      "name": "キューバ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cu",
+      "portrait": {
+        "lead": "カリブ海の港町と砂糖交易が育んだ街並み",
+        "body": "キューバでは、海に向かって開いたハバナ旧市街と、内陸の谷と結びついたトリニダーの歴史地区が異なる都市の成り立ちを語ります。ハバナは街路と要塞の配置から港を守る歴史を読み取れ、トリニダーには砂糖交易による繁栄の記憶が残っています。建物の色彩や石畳だけでなく、背後にある港、農地、交易のつながりを想像すると、写真では伝わりにくい街の奥行きが見えてきます。",
+        "facts": [
+          "世界遺産：ハバナ旧市街と要塞群",
+          "世界遺産：トリニダーとロス・インヘニオス渓谷"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：キューバの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cu"
+      },
+      "travelDrafts": [
+        {
+          "place": "ハバナ旧市街と要塞群",
+          "travelStory": [
+            "ハバナ旧市街では、狭い街路を抜けた先に広場が開き、建物の色と窓の形が一角ごとに違って見えます。街の中心を歩くだけでも楽しいですが、海側へ視線を向けて要塞の位置を確かめると、港町としての構造がはっきりしてきます。広場、街路、港の三つをひと続きの景色としてたどり、都市がどのように外の世界とつながってきたのか考えたい場所です。",
+            "UNESCOによればハバナ旧市街は十六世紀初頭にキューバ北西部に築かれ、古い都市計画の輪郭をよく保っています。登録資産には市街地だけでなく港を守る要塞群も含まれます。華やかな建物の外観に注目するだけではなく、海に接する場所と町の防衛施設をあわせて見ることで、長く交易の拠点だった都市の特徴が立体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハバナ旧市街と要塞群",
+              "url": "https://whc.unesco.org/en/list/204/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ハバナのUNESCO登録資産に旧市街とともに含まれるのは？",
+            "options": [
+              "要塞群",
+              "雪山の観測所",
+              "巨大な階段状の棚田"
+            ],
+            "answer": 0,
+            "fact": "登録資産名は「ハバナ旧市街とその要塞群」です。",
+            "photoGoal": "ハバナ旧市街と要塞群の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Old Havana Cuba Plaza Vieja architecture",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "トリニダーとロス・インヘニオス渓谷",
+          "travelStory": [
+            "トリニダーの中心部では、石畳の通りと歴史的な建物が近い距離に並び、歩幅を緩めるほど街の細部が見えてきます。広場に面する邸宅の外観を眺めたあと、町の外に広がるロス・インヘニオス渓谷にも意識を向けてみてください。都市と谷を別々の名所として扱うより、建物の繁栄を支えた産業の場と結びつけて考えるほうが、景色に厚みが生まれます。",
+            "UNESCOはトリニダーが十六世紀初頭に成立し、十八〜十九世紀の砂糖産業による繁栄の時代に築かれた建物が残ると説明しています。ブリュネ宮殿やカンテロ宮殿といった具体的な建造物も挙げています。美しい街並みの背後にあった労働や生産の歴史まで視野に入れると、観光写真とは異なる読み方ができる場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トリニダーとロス・インヘニオス渓谷",
+              "url": "https://whc.unesco.org/en/list/460/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "トリニダーの歴史建築の繁栄に深く関係する産業は？",
+            "options": [
+              "砂糖産業",
+              "製鉄による造船",
+              "半導体の製造"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは十八〜十九世紀の砂糖産業の繁栄が歴史建築の成立に関係すると説明しています。",
+            "photoGoal": "トリニダーとロス・インヘニオス渓谷の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Trinidad Cuba historic center Plaza Mayor",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Old Havana Cuba Plaza Vieja architecture panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "EC": {
+      "name": "エクアドル",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ec",
+      "portrait": {
+        "lead": "アンデスの歴史都市から太平洋の島々へ",
+        "body": "エクアドルには、アンデス山中に歴史的建造物が残る首都キトと、固有の生き物が暮らすガラパゴス諸島という対照的な世界遺産があります。キトでは高地の都市景観と宗教建築の細部に、ガラパゴスでは島ごとに異なる自然環境と生態系に注目したいところです。建築と自然という別々の入り口から国を見つめると、地形が文化と生命の両方に与えた影響を感じられます。",
+        "facts": [
+          "世界遺産：キトの市街",
+          "世界遺産：ガラパゴス諸島"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：エクアドルの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ec"
+      },
+      "travelDrafts": [
+        {
+          "place": "キトの市街",
+          "travelStory": [
+            "キトの旧市街では、山に囲まれた高地の空の下に教会の塔や古い建物が連なっています。広場に立って街の起伏を眺めたあと、建物の中庭や外壁の意匠に目を向けると、巨大な宗教建築と比較的簡素な住宅が同じ都市景観を形づくっていることに気づきます。高い標高ならではの街の広がりを確かめながら、ゆっくり歩くのが似合う場所です。",
+            "UNESCOはキトがインカの都市の遺構の上に十六世紀に築かれ、標高約二千八百五十メートルに位置すると説明しています。旧市街には修道院や教会だけでなく、中庭を持つ住宅なども残ります。壮麗な建物だけを拾い集めるのではなく、宗教施設と生活の建物がともに歴史地区を支えてきたことを意識すると、都市全体の価値が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・キトの市街",
+              "url": "https://whc.unesco.org/en/list/2/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "UNESCOが説明するキト中心部の標高はおよそ？",
+            "options": [
+              "2,850メートル",
+              "85メートル",
+              "8,500メートル"
+            ],
+            "answer": 0,
+            "fact": "UNESCOのキト紹介では標高は約2,850メートルです。",
+            "photoGoal": "キトの市街の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Quito Ecuador historic center San Francisco church",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ガラパゴス諸島",
+          "travelStory": [
+            "ガラパゴス諸島の景色を写真で見ると、溶岩の黒い地面、明るい海、島に適応した動物の姿が同じ画面に現れます。一つの島だけで全体を代表させず、地形や植生の違う島を比較すると、海に隔てられた環境が生き物の暮らし方に影響していることが感じられます。観察する際は動物に近づきすぎず、現地の保護規則に従う視点も欠かせません。",
+            "UNESCOは大陸のエクアドルから約千キロメートル離れたガラパゴス諸島を、多様な島々と周辺海域からなる世界自然遺産として紹介しています。島の生態系と海の生き物は切り離せない関係にあり、希少な自然の保護が重要なテーマです。珍しい動物の名前だけではなく、生き物が暮らす火山地形や海の環境を合わせて理解すると、この諸島の価値がよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ガラパゴス諸島",
+              "url": "https://whc.unesco.org/en/list/1/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ガラパゴス諸島が位置する大陸の国は？",
+            "options": [
+              "エクアドル",
+              "エジプト",
+              "ニュージーランド"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはガラパゴス諸島をエクアドル沖にある群島として紹介しています。",
+            "photoGoal": "ガラパゴス諸島の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Galapagos Islands Ecuador volcanic landscape",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Quito Ecuador historic center San Francisco church panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "CR": {
+      "name": "コスタリカ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cr",
+      "portrait": {
+        "lead": "熱帯の森から先史時代の石球まで、自然と人を知る",
+        "body": "コスタリカでは、グアナカステ保全地域の多様な生態系と、南部ディキス地方の謎を秘めた石球遺跡が、それぞれ違う時間の流れを感じさせます。乾燥林や海岸を含む広い自然の営みと、かつて人々が築いた集落の痕跡。豊かな緑の印象だけで国を語るのではなく、生物多様性の保護と先史社会の文化が並ぶことに注目すると、新しい発見につながります。",
+        "facts": [
+          "世界遺産：グアナカステ保全地域",
+          "世界遺産：ディキス地方の石球遺跡群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：コスタリカの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cr"
+      },
+      "travelDrafts": [
+        {
+          "place": "グアナカステ保全地域",
+          "travelStory": [
+            "グアナカステでは、森の濃淡や季節ごとに姿を変える植生を観察すること自体が旅の魅力になります。熱帯林という一つの言葉では表せない乾燥した森林、海岸に近い環境、そこで暮らす動植物の違いに目を向けてみてください。写真を見る際にも、単に緑が多いかどうかではなく、地形と植生の移り変わりを意識することで保全地域の広がりが伝わります。",
+            "UNESCOはグアナカステ保全地域を、中米からメキシコ北部にかけて重要な乾燥林の生息環境を含み、陸域と海岸・海域の双方で生態学的な過程が見られる場所として評価しています。貴重な動植物の生息地であることに加えて、複数の環境が連続している点も価値の一部です。訪問できる場所や規則は保護のため変わるので、現地の管理情報を確かめたい地域です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グアナカステ保全地域",
+              "url": "https://whc.unesco.org/en/list/928/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "グアナカステ保全地域でUNESCOが重視する森林環境は？",
+            "options": [
+              "熱帯の乾燥林",
+              "北極のツンドラ",
+              "高山の永久氷河"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはグアナカステの重要な乾燥林の生息環境を挙げています。",
+            "photoGoal": "グアナカステ保全地域の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Area de Conservacion Guanacaste Costa Rica dry forest",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ディキス地方の石球遺跡群",
+          "travelStory": [
+            "コスタリカ南部のディキス地方に残る石球は、整った球形そのものが目を引きます。大きさの違う球がどのような配置で見つかったのか、周囲に集落や墓地の痕跡があるのかを考えると、単なる不思議な石以上の存在になります。写真や展示を見ながら形と場所の関係を確かめることで、かつてこの地に暮らした人々の社会に想像が広がります。",
+            "UNESCOはディキスのデルタ地帯にある四つの考古遺跡を登録し、西暦五百〜千五百年の首長制社会の複雑な構造を示すと説明しています。石球は直径およそ〇・七〜二・五七メートルに及びますが、その意味や用途の多くは今も解明されていません。正体を断定的な伝説で埋めず、何が分かり何が未解明なのかを分けて考えることが、この遺跡を味わう鍵です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ディキス地方の石球遺跡群",
+              "url": "https://whc.unesco.org/en/list/1453/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ディキス地方の石球についてUNESCOが述べるのは？",
+            "options": [
+              "用途や意味には未解明の点が多い",
+              "すべて近代の道路標識である",
+              "全て同じ大きさで製作された"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは石球の意味や用途、製作方法に未解明の点が多いと記しています。",
+            "photoGoal": "ディキス地方の石球遺跡群の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Diquis stone spheres Finca 6 Costa Rica",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Area de Conservacion Guanacaste Costa Rica dry forest panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "AM": {
+      "name": "アルメニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/am",
+      "portrait": {
+        "lead": "峡谷の岩窟修道院と学びの場に残る信仰の歴史",
+        "body": "アルメニアの山地には、斜面に建つハフパトとサナヒンの修道院、岩に彫り込まれたゲガルド修道院が残っています。どちらも中世の宗教建築ですが、前者は学びや写本文化の拠点であった歴史を、後者は岩壁と一体化した独特の空間を伝えます。石の色や装飾だけでなく、周囲の山や谷との関係まで視野に入れると、建築と信仰が土地に根づいた様子が見えてきます。",
+        "facts": [
+          "世界遺産：ハフパトとサナヒンの修道院群",
+          "世界遺産：ゲガルド修道院とアザト川上流域"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アルメニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/am"
+      },
+      "travelDrafts": [
+        {
+          "place": "ハフパトとサナヒンの修道院群",
+          "travelStory": [
+            "ハフパトとサナヒンでは、厚い石壁と小さな開口部がつくる陰影に目を向けながら建物の周囲を歩きたいところです。外観は簡潔に見えても、礼拝や学びに用いられた空間を思い浮かべると、静かな中庭が別の表情を見せます。二つの修道院をひとまとめの写真として扱わず、それぞれの地形や建物の配置を比べることでも発見があります。",
+            "UNESCOは十〜十三世紀に繁栄した二つの修道院を重要な学問の中心地とし、サナヒンでは装飾写本と書の教育が知られていたと記しています。ビザンツ系の宗教建築とコーカサス地方の伝統的な建築要素が融合した点も評価されています。岩を積んだ建物の美しさだけでなく、知識を伝える場所として機能していた歴史に触れると印象が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハフパトとサナヒンの修道院群",
+              "url": "https://whc.unesco.org/en/list/777/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ハフパトとサナヒンの修道院が果たした役割は？",
+            "options": [
+              "学問や文化の中心地",
+              "海軍の造船基地",
+              "砂漠の天文台"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは両修道院を重要な学問の中心地と説明しています。",
+            "photoGoal": "ハフパトとサナヒンの修道院群の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Haghpat monastery Armenia courtyard",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ゲガルド修道院とアザト川上流域",
+          "travelStory": [
+            "ゲガルド修道院では、切り立った岩壁のそばに建物があり、場所によっては岩を掘り込んだ内部空間へとつながります。外の自然光から石に囲まれた部屋へ移ると、同じ修道院の中でも光と音の感じ方が変わるでしょう。彫刻や入口の形を眺めるだけでなく、崖と建物のつながりを意識することで、この場所ならではの魅力が分かります。",
+            "UNESCOはゲガルド修道院を、岩から彫り出された教会や墓所を含む中世アルメニア建築の重要な遺産と説明しています。修道院群はアザト川上流域の険しい崖に囲まれ、建築と風景が深く結びついています。岩窟の内部だけを切り取った写真と谷全体の景色を見比べると、信仰の空間が自然の地形に合わせて成立していることを理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ゲガルド修道院とアザト川上流域",
+              "url": "https://whc.unesco.org/en/list/960/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ゲガルド修道院の独特な建築に使われるのは？",
+            "options": [
+              "岩を掘り込んだ教会や墓所",
+              "氷で造られた礼拝堂",
+              "海上に浮かぶ木造宮殿"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは岩を彫り込んでつくられた教会や墓所を特徴として挙げています。",
+            "photoGoal": "ゲガルド修道院とアザト川上流域の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Geghard monastery Armenia rock carved",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Haghpat monastery Armenia courtyard panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "BA": {
+      "name": "ボスニア・ヘルツェゴビナ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ba",
+      "portrait": {
+        "lead": "再建された古橋と川を渡る石橋が語る交流の歴史",
+        "body": "ボスニア・ヘルツェゴビナには、ネレトヴァ川に架かるモスタルの古橋と、ドリナ川に架かるヴィシェグラードの石橋という、異なる歴史を背負う橋があります。橋は向こう岸へ渡るための構造物であると同時に、人と文化をつないできた都市の象徴でもあります。石の曲線や川の流れを眺めながら、破壊と再建、長い交流の歴史を読み解く旅ができます。",
+        "facts": [
+          "世界遺産：モスタル旧市街の古橋地区",
+          "世界遺産：ヴィシェグラードのメフメド・パシャ・ソコロヴィッチ橋"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ボスニア・ヘルツェゴビナの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ba"
+      },
+      "travelDrafts": [
+        {
+          "place": "モスタル旧市街の古橋地区",
+          "travelStory": [
+            "モスタルの古橋を遠くから眺めると、ネレトヴァ川の両岸を結ぶ大きな石のアーチが町の中心に見えてきます。橋の周辺の建物や道を含めて眺めると、渡るための道が人々の交流を支えてきたことが実感できます。橋の上から川を見下ろす視点と、川岸から橋を見上げる視点を比べれば、同じ歴史地区でも異なる表情が見えてきます。",
+            "UNESCOはモスタルをオスマン帝国期やオーストリア＝ハンガリー期に発展した多文化的な都市として説明しています。古橋は一九九〇年代の紛争で破壊され、その後再建されました。現在の姿を、昔から一度も変わらなかった建物と誤解せず、再建が和解と国際協力の象徴となった経緯を知ると、この美しいアーチが持つ意味が伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・モスタル旧市街の古橋地区",
+              "url": "https://whc.unesco.org/en/list/946/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "モスタルの古橋が現在伝える象徴的な意味は？",
+            "options": [
+              "再建と和解・国際協力",
+              "氷河の観測",
+              "新しい宇宙船の発射"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは再建された古橋を和解、国際協力、多様な共同体の共存の象徴と位置付けています。",
+            "photoGoal": "モスタル旧市街の古橋地区の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Stari Most Mostar Bosnia Herzegovina bridge",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ヴィシェグラードのメフメド・パシャ・ソコロヴィッチ橋",
+          "travelStory": [
+            "ヴィシェグラードでは、ドリナ川に架かる長い石橋のアーチが水面にリズムをつくります。少し離れた川岸から全体の形を確かめ、近くでは石積みの曲線や橋への取付け部分に目を向けてみてください。橋は単に美しい建築ではなく、人が対岸へ移動するための土木技術の結晶です。川幅と橋脚の間隔を比べると、その工夫が分かります。",
+            "UNESCOによれば、この橋は十六世紀末に大宰相メフメド・パシャ・ソコロヴィッチの命で建築家ミマール・スィナンが設計し、ドリナ川に架けられました。十一の石造アーチと川岸に直角に延びる取付け部分を備え、オスマン帝国の土木・建築技術の高さを示しています。橋が川の地形にどう応えたのかを見ることで、形の美しさと実用性の両方が感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴィシェグラードのメフメド・パシャ・ソコロヴィッチ橋",
+              "url": "https://whc.unesco.org/en/list/1260/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヴィシェグラードの石橋が渡る川は？",
+            "options": [
+              "ドリナ川",
+              "ナイル川",
+              "テムズ川"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはメフメド・パシャ・ソコロヴィッチ橋がドリナ川に架かると説明しています。",
+            "photoGoal": "ヴィシェグラードのメフメド・パシャ・ソコロヴィッチ橋の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Mehmed Pasa Sokolovic Bridge Visegrad Bosnia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Stari Most Mostar Bosnia Herzegovina bridge panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
