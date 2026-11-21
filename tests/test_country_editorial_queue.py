@@ -72,11 +72,28 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",row["missing"])
             self.assertNotIn("attributed_country_portrait_photo",row["missing"])
 
-    def test_short_pending_trip_is_not_reported_ready(self):
-        # A two-item array is not enough to be a substantive travel essay.
+    def test_korean_content_is_prepared_but_stays_pending(self):
         report=country_editorial_queue(ROOT)
         korea=next(row for row in report["prioritizedPending"] if row["code"]=="KR")
-        self.assertIn("two_paragraph_microtravel",korea["missing"])
+        self.assertEqual(korea["requiredRemaining"],0)
+        self.assertNotIn("KR",report["approvedCountries"])
+        self.assertIn("optional_current_topic",korea["missing"])
+
+    def test_two_short_tourism_paragraphs_still_block_a_pending_country(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            doc=json.loads(path.read_text(encoding="utf-8"))
+            for stop in doc["countries"]["KR"]["travelStops"].values():
+                if stop.get("travelStory"):
+                    stop["travelStory"]=["短すぎる説明。","歴史的な説明も短すぎます。"]
+            path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+            queue=country_editorial_queue(root)
+            korea=next(row for row in queue["prioritizedPending"]
+                       if row["code"]=="KR")
+            self.assertIn("two_paragraph_microtravel",korea["missing"])
 
     def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
         with tempfile.TemporaryDirectory() as dirname:
