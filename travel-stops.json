@@ -211,7 +211,8 @@
         "url": "https://www.historicenvironment.scot/visit/all/edinburgh-castle/history-and-stories/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "cheonan-painters-coffee-rescue-2026": {
     "country": "韓国",
@@ -378,7 +379,8 @@
         "url": "https://www.senso-ji.jp/english/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "brazil-norris-champagne-podium-2026": {
     "country": "ブラジル",
@@ -470,7 +472,8 @@
         "url": "https://www.historicenvironment.scot/visit/all/edinburgh-castle/history-and-stories/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "japan-kyoto-postcard": {
     "country": "日本",
@@ -497,7 +500,8 @@
         "url": "https://www.shokoku-ji.jp/en/kinkakuji/about/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "japan-fuji-postcard": {
     "country": "日本",
@@ -524,7 +528,8 @@
         "url": "https://whc.unesco.org/en/list/1418/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "spain-barcelona-postcard": {
     "country": "スペイン",
@@ -672,7 +677,8 @@
         "url": "https://www.cardiffcastle.com/explore/history/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "uk-towerbridge-postcard": {
     "country": "イギリス",
@@ -699,7 +705,8 @@
         "url": "https://www.towerbridge.org.uk/stories/how-does-tower-bridge-work",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "uk-windermere-postcard": {
     "country": "イギリス",
@@ -726,7 +733,8 @@
         "url": "https://lakedistrict.gov.uk/explore/things-to-do/walking/walking-routes/13-valleys-trail/",
         "checkedOn": "2026-11-21"
       }
-    ]
+    ],
+    "famousTourist": true
   },
   "ar-iguazu-rainbow-hero-postcard": {
     "country": "アルゼンチン",
