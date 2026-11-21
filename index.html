@@ -2834,15 +2834,18 @@ function travelPostcardHtml(story,stop,standalone=false){
  const heritage=stop&&Array.isArray(stop.historicalSources)?
   stop.historicalSources.find(source=>source&&source.name&&
    typeof source.url==='string'&&source.url.startsWith('https://')):null;
+ // Keep the published news template explicit and independently testable.
+ // The standalone country view must not claim a fictitious article's stage.
+ const storyContext='<div class="travel-context" aria-label="記事と旅先の違い">'+
+  '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
+  '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span></div>';
+ const countryContext='<div class="travel-context" aria-label="国紹介と旅先の関係">'+
+  '<span class="travel-context-story">国紹介：'+escapeHtml(reportCountry)+'</span>'+
+  '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span></div>';
  return '<section class="travel-card" aria-label="'+
    (standalone?'出典確認済みの国紹介からの小旅行':'ニュースとは別の旅先を紹介する小旅行')+'">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
-  '<div class="travel-context" aria-label="'+
-   (standalone?'国紹介と旅先の関係':'記事と旅先の違い')+'">'+
-   '<span class="travel-context-story">'+
-    (standalone?'国紹介：':'記事の舞台（国） ')+escapeHtml(reportCountry)+'</span>'+
-   '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span>'+
-  '</div>'+
+  (standalone?countryContext:storyContext)+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
   '<p class="travel-trust" role="note">'+
    (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の有名観光地の写真はまだ準備中です。ニュースの現場を示すものではありません。')+
