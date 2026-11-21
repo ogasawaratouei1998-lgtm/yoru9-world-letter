@@ -2423,12 +2423,12 @@
       "portraitPhotos": [
         {
           "asset": "assets/travel/gr-santorini-caldera-cover.jpg",
-          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Santorini_panorama.jpg/500px-Santorini_panorama.jpg",
-          "caption": "サントリーニ島のカルデラと街並みを望むパノラマ（2020年撮影）",
-          "author": "Stamatis",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Santorini_urban_area.jpg/500px-Santorini_urban_area.jpg",
+          "caption": "サントリーニ島の街並み（2022年撮影）",
+          "author": "ArticCynda",
           "license": "CC BY-SA 4.0",
-          "place": "サントリーニ島のカルデラ景観",
-          "sourcePage": "https://commons.wikimedia.org/wiki/File:Santorini_panorama.jpg"
+          "place": "サントリーニ島の街並み",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Santorini_urban_area.jpg"
         }
       ],
       "quiz": [
@@ -2463,16 +2463,16 @@
         "gr-santorini-caldera-cover": {
           "country": "ギリシャ",
           "countryOnly": true,
-          "place": "サントリーニ島のカルデラ景観",
-          "region": "エーゲ海・サントリーニ島",
-          "latitude": 36.456,
-          "longitude": 25.365,
-          "note": "火山の地形と青い海、集落の眺めが重なるサントリーニ島の風景。",
-          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Santorini_panorama.jpg/500px-Santorini_panorama.jpg",
-          "photoPage": "https://commons.wikimedia.org/wiki/File:Santorini_panorama.jpg",
+          "place": "サントリーニ島の街並み",
+          "region": "キクラデス諸島・サントリーニ島",
+          "latitude": 36.358,
+          "longitude": 25.448,
+          "note": "青い海に近いサントリーニ島の集落と建物を写した風景。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Santorini_urban_area.jpg/500px-Santorini_urban_area.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Santorini_urban_area.jpg",
           "photoAsset": "assets/travel/gr-santorini-caldera-cover.jpg",
-          "photoCaption": "サントリーニ島のカルデラと街並みを望むパノラマ（2020年撮影）",
-          "author": "Stamatis",
+          "photoCaption": "サントリーニ島の街並み（2022年撮影）",
+          "author": "ArticCynda",
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
           "coverOnly": true
