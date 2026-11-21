@@ -234,7 +234,16 @@ jobs:
           fi
       - name: Remove stale generated images after verified SVG-illustrated release
         run: python prepare_news_images.py --rotate
+      - name: Restore validated, correctly licensed Wikimedia photos
+        uses: actions/cache@v4
+        with:
+          path: .cache/yoru9-photos
+          key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
+          restore-keys: |
+            yoru9-photo-cache-v1-${{ runner.os }}-
       - name: Preflight full reader and photo bundle before any release commit
+        env:
+          YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
         shell: bash
         run: |
           set -euo pipefail

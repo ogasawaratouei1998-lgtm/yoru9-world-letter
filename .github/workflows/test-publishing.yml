@@ -57,7 +57,16 @@ jobs:
           node-version: '22'
       - name: Run publishing and privacy tests
         run: python -m unittest discover -s tests -v
+      - name: Restore validated, correctly licensed Wikimedia photos
+        uses: actions/cache@v4
+        with:
+          path: .cache/yoru9-photos
+          key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
+          restore-keys: |
+            yoru9-photo-cache-v1-${{ runner.os }}-
       - name: Check public site build
+        env:
+          YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
         run: |
           python build_site.py
           python check_release_candidate.py --site _site

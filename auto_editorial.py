@@ -1082,16 +1082,19 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "candidate_review_groups","paired_groups","single_original_groups",
     "first_ai_batch_groups","drafted","preflight_eligible",
     "independent_approved","selected_for_edition",
+    "country_ready_articles","country_ready_count",
     "supplemental_attempts","supplemental_generated",
     "supplemental_groups_examined"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
-    "publisher_regions_shortlist","rejection_reasons"
+    "publisher_regions_shortlist","rejection_reasons",
+    "unready_country_codes"
 })
 FUNNEL_STAGES=frozenset({
     "fresh_filter","fetch_plan","body_fetch","shortlist",
-    "budget_blocked","model_quota_blocked","draft","audit","selected"
+    "budget_blocked","model_quota_blocked","draft","audit",
+    "country_readiness","four_story_gate","selected"
 })
 
 def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
@@ -1647,13 +1650,35 @@ def main():
                supplemental_groups_examined=supplemental_groups_examined,
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
+    # Article truthfulness is checked above. Now reconcile the approved
+    # article countries with the ACTUAL curated reader assets. A new country
+    # cannot silently fall back to another country's photo or a one-question
+    # generic quiz. Preserve verified articles' order and original countries.
+    from country_readiness import select_ready_stories
+    reviewed_count=len(selected)
+    selected,unready,prepared,incomplete=select_ready_stories(selected,Path.cwd())
+    checkpoint("country_readiness",independent_approved=reviewed_count,
+               country_ready_articles=len(selected),
+               country_ready_count=len(prepared),
+               unready_country_codes=unready,
+               rejection_reasons=rejection_counts)
+    print("Country reader readiness:",json.dumps({
+        "reviewed":reviewed_count,"ready":len(selected),
+        "prepared_country_codes":sorted(prepared),
+        "countries_needing_curated_assets":unready,
+        "incomplete_registered_codes":sorted(incomplete)},
+        sort_keys=True),flush=True)
     if len(selected)<4 and day>='2026-11-21':
-        checkpoint("four_story_gate",independent_approved=len(selected),
-                   target=4,rejection_reasons=rejection_counts)
-        print("No new edition: fewer than four original-source-verified stories.",flush=True)
+        checkpoint("four_story_gate",independent_approved=reviewed_count,
+                   country_ready_articles=len(selected),
+                   country_ready_count=len(prepared),
+                   unready_country_codes=unready,
+                   rejection_reasons=rejection_counts)
+        print("No new edition: fewer than four source-verified, country-ready stories."
+              " Preserve the previously published issue.",flush=True)
         return 0
     if not selected:
-        print("Source-text verification approved no stories; no publication.");return 0
+        print("No source-verified, country-ready stories; no publication.");return 0
     # After source/safety review, select up to five. Never add unverified filler.
     # When too few survive, the counted rejection reasons distinguish real scarcity
     # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
@@ -1690,11 +1715,8 @@ def main():
              "title":day+"｜世界の大失敗ニュース","editorApproved":True,
              "factChecked":True,"humorReviewed":True,
              "approvedBy":"automated-two-stage-review","stories":selected}
-    if day >= '2026-11-21':
-        # Image paths are plans only; the release must create actual WebPs first.
-        from prepare_news_images import expected_path
-        for story in selected:
-            story['imagePath']=expected_path(day,story)
+    # The reader draws original, bundled SVG illustrations for every story.
+    # Never write paid-image WebP plans or imagePath into the approval artifact.
     # The publisher's exact validation contract is also the AI approval gate.
     from publish_approved import validate_approved
     try:
