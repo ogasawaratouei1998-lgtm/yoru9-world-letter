@@ -40,6 +40,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ベルン旧市街が世界文化遺産に登録された年は？',options:['1983年','2001年','2015年'],answer:0,photoLabel:'正解写真｜ベルン旧市街',fact:'UNESCO世界遺産センターによると、ベルン旧市街は1983年に登録されました。',quip:'時計を見上げる街でも、歴史の時間はずっと長い。',photoKey:'ch-bern-old-city-postcard'},
   {question:'ユングフラウ＝アレッチの世界自然遺産への初回登録年は？',options:['1983年','2001年','2020年'],answer:1,photoLabel:'正解写真｜アレッチ氷河',fact:'UNESCOによれば同地域は2001年に世界自然遺産に初登録され、2007年に拡張されました。',quip:'氷の流れはゆっくり。でも残した地形はとびきり大きい。',photoKey:'ch-aletsch-glacier-postcard'},
  ],
+ CY:[
+  {question:'ネア・パフォスの芸術遺産として知られるものは？',options:['モザイク','氷の彫刻','鋳鉄の高層塔'],answer:0,fact:'ネア・パフォスには古代のモザイクが残っています。',photoLabel:'正解写真｜パフォス・ディオニュソスの館',quip:'床に絵を描くために小石を並べた古代の職人。画素数を競うずっと前から、細部の表現にはこだわっていた。',photoKey:'cy-paphos-mosaic-postcard'},
+  {question:'トロードス地方の教会群が特に伝える芸術は？',options:['近代の映画撮影','ビザンツ系の壁画','海底の彫刻'],answer:1,fact:'十件の教会・修道院の壁画がビザンツ美術などの変化を伝えます。',photoLabel:'正解写真｜トロードス地方・アシヌ教会',quip:'小さな教会だからこそ壁画に目が向く。建物の規模と芸術の価値は比例しない。',photoKey:'cy-asinou-fresco-postcard'},
+ ],
  CZ:[
   {question:'プラハ歴史地区を流れる川は？',options:['ヴルタヴァ川','ナイル川','テムズ川'],answer:0,photoLabel:'正解写真｜プラハ歴史地区',fact:'プラハの歴史地区はヴルタヴァ川の両岸に広がっています。',quip:'橋を渡るだけで、プラハの歴史が川の両岸に広がる。',photoKey:'cz-charles-bridge-postcard'},
   {question:'チェスキー・クルムロフの旧市街を大きく囲む地形は？',options:['川の曲流','火山の噴火口','砂丘の列'],answer:0,photoLabel:'正解写真｜チェスキー・クルムロフ歴史地区',fact:'ヴルタヴァ川の曲流と城、旧市街が特徴的な景観をつくっています。',quip:'城下町を囲むのは城壁だけじゃない。川の曲がり方まで絵になる。',photoKey:'cz-cesky-krumlov-postcard'},
@@ -59,6 +63,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  ES:[
   {question:'サグラダ・ファミリアが建つ都市は？',options:['マドリード','バルセロナ','セビリア'],answer:1,photoKey:'spain-sagrada-nativity-quiz-image',photoLabel:'正解の建築｜バルセロナのサグラダ・ファミリア・生誕のファサード',fact:'サグラダ・ファミリアの「生誕のファサード」と地下聖堂は、ガウディ作品群としてUNESCO世界遺産に登録されています。',quip:'塔だけじゃない。外壁の細工まで観光案内の主役級。'},
   {question:'写真のアルハンブラ宮殿がある都市は？',options:['グラナダ','バルセロナ','バレンシア'],answer:0,photoKey:'spain-alhambra-quiz-image',photoLabel:'正解の宮殿｜アンダルシアのグラナダ・アルハンブラ宮殿',fact:'アルハンブラ宮殿はグラナダにあり、ヘネラリフェとアルバイシン地区とともに世界遺産に登録されています。',quip:'城壁の奥まで歴史ぎっしり。地図の答えはグラナダ。'},
+ ],
+ EE:[
+  {question:'タリンが中世に発展した交易組織は？',options:['ハンザ同盟','国際連合','東インド会社'],answer:0,fact:'バルト海の交易を担ったハンザ同盟の重要な都市でした。',photoLabel:'正解写真｜タリン旧市街・市庁舎広場',quip:'商人の家まで立派なのが、交易都市の強さ。繁栄の証拠は帳簿だけでなく街並みにも残る。',photoKey:'ee-tallinn-square-postcard'},
+  {question:'シュトルーヴェの測地弧は何を測るための遺産？',options:['海の塩分','地球の形と大きさ','鉱山の深さ'],answer:1,fact:'複数国の測量地点を結び、地球の形と大きさを精密に調べました。',photoLabel:'正解写真｜タルトゥ旧天文台',quip:'地球のサイズを測るのに衛星はなかった。測量点を国境越しに結ぶ発想が、現代の地図を支えている。',photoKey:'ee-tartu-observatory-postcard'},
  ],
  FI:[
   {question:'スオメンリンナが築かれた主な目的は？',options:['港の防衛','砂漠の灌漑','山岳農業'],answer:0,fact:'UNESCOはヘルシンキ港の入口に築かれた18世紀の海上要塞として紹介しています。',photoLabel:'正解写真｜スオメンリンナの海上要塞',quip:'海の上で城壁を築く。守備範囲は陸地だけでは足りなかった。',photoKey:'fi-suomenlinna-fortress-postcard'},
@@ -119,6 +127,14 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  LK:[
   {question:'シーギリヤの古代都市で特徴的な地形は？',options:['広大な氷床','高くそびえる岩山','海底火山の火口'],answer:1,fact:'UNESCOは岩山の上と周囲に広がる古代都市の遺構を評価しています。',photoLabel:'正解写真｜古代都市シーギリヤ',quip:'王都の立地条件が、平地ではなく高さ180メートルの岩山。土地選びの段階から工事担当者には難題だったはずだ。',photoKey:'lk-sigiriya-postcard'},
   {question:'キャンディの重要な宗教的伝統は？',options:['古代ローマの多神教','北欧の神話信仰','仏教'],answer:2,fact:'UNESCOはキャンディを仏教における重要な巡礼地として紹介しています。',photoLabel:'正解写真｜聖地キャンディ・仏歯寺',quip:'王国はなくなっても、祈りの場は残った。歴史の中心人物がいつまでも王様とは限らない。',photoKey:'lk-kandy-tooth-postcard'},
+ ],
+ LT:[
+  {question:'ヴィリニュスが歴史的に政治の中心となった国は？',options:['ローマ帝国','アステカ帝国','リトアニア大公国'],answer:2,fact:'ヴィリニュスは長くリトアニア大公国の政治の中心でした。',photoLabel:'正解写真｜ヴィリニュス歴史地区・聖アンナ教会',quip:'異なる時代の建築が同居する旧市街。街全体を一つの様式で統一しなかったことが、むしろ財産になった。',photoKey:'lt-vilnius-anne-postcard'},
+  {question:'砂州を守るために続けられてきた取り組みは？',options:['砂の固定と植林','海底の採掘','氷河の人工造成'],answer:0,fact:'風で動く砂を抑えるため、長年にわたる植林などの取り組みが続いています。',photoLabel:'正解写真｜クルシュー砂州・パルニディス砂丘',quip:'風が砂を運び、人が植林で守る。砂丘の景色は、自然任せでは残らなかった。',photoKey:'lt-nida-parnidis-postcard'},
+ ],
+ LV:[
+  {question:'リガの近代建築を特徴づける様式の一つは？',options:['古代エジプト様式','アール・ヌーヴォー','インカの石造建築'],answer:1,fact:'リガの近代的な住宅地区にはアール・ヌーヴォー建築が残ります。',photoLabel:'正解写真｜リガ歴史地区・アール・ヌーヴォー建築',quip:'建物の壁まで芸術作品。リガでは、街を歩くだけで展覧会の会場が次々に現れる。',photoKey:'lv-riga-artnouveau-postcard'},
+  {question:'クルディーガの世界遺産登録年は？',options:['1980年','1994年','2023年'],answer:2,fact:'クルディーガ旧市街は2023年に世界遺産に登録されました。',photoLabel:'正解写真｜クルディーガ旧市街・アレクシュピーテ川の橋',quip:'世界遺産の価値は建築の高さでは決まらない。小さな橋や家々が歴史を伝える主役になる。',photoKey:'lv-kuldiga-bridge-postcard'},
  ],
  MX:[
   {question:'テオティワカンの巨大な建築群を貫く大通りの名前は？',options:['死者の大通り','王の道','海沿いの大通り'],answer:0,photoLabel:'正解写真｜テオティワカンの遺跡',fact:'テオティワカンには太陽のピラミッドなどを結ぶ『死者の大通り』が広がっています。',quip:'都市計画のスケールが、徒歩の散歩道を超えている。',photoKey:'mx-teotihuacan-postcard'},
