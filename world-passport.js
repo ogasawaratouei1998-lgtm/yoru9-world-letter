@@ -132,6 +132,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'シンガポール植物園が世界文化遺産に登録された年は？',options:['1997年','2015年','2025年'],answer:1,photoLabel:'正解写真｜シンガポール植物園',fact:'UNESCO世界遺産センターの登録情報によると、シンガポール植物園の登録年は2015年です。',quip:'高層ビルの街で、植物も世界遺産の主役です。',photoKey:'sg-botanic-gardens-postcard'},
   {question:'スーパーツリー・グローブに集まっている巨大な樹木型構造物は何本？',options:['3本','12本','40本'],answer:1,photoLabel:'正解写真｜ガーデンズ・バイ・ザ・ベイ',fact:'公式案内では、18本あるスーパーツリーのうち12本がスーパーツリー・グローブに集まっています。',quip:'スーパーツリーが12本。樹木界の未来都市です。',photoKey:'sg-gardens-bay-postcard'},
  ],
+ SI:[
+  {question:'シュコツィアン洞窟の形成に重要な地形は？',options:['カルスト地形','珊瑚礁','砂丘'],answer:0,fact:'UNESCOは石灰岩と水がつくるカルスト地形を洞窟群の重要な価値としています。',photoLabel:'正解写真｜シュコツィアン洞窟群',quip:'大峡谷が地下にある。地図の平面だけでは、地球の実力を読み違える。',photoKey:'si-skocjan-caves-postcard'},
+  {question:'リュブリャナの世界遺産で重視された設計思想は？',options:['人を中心とした都市設計','巨大な要塞の新設','砂漠の道路建設'],answer:0,fact:'UNESCOは建築家プレチニクによる人間中心の都市デザインを評価しています。',photoLabel:'正解写真｜リュブリャナの三本橋',quip:'橋一本で足りると思うのは設計者の都合。歩く人のために三本に増やした。',photoKey:'si-triple-bridge-postcard'},
+ ],
  SE:[
   {question:'ドロットニングホルムの世界遺産に含まれるのは？',options:['宮殿と庭園、劇場','巨大な鉱山','ローマの円形競技場'],answer:0,fact:'UNESCOは宮殿と庭園、歴史的な劇場などを含む王領地を評価しています。',photoLabel:'正解写真｜ドロットニングホルム宮殿',quip:'庭園の木の並びまで王家仕様。『ちょっと整えて』の規模が違う。',photoKey:'se-drottningholm-palace-postcard'},
   {question:'ターヌムの岩絵と特に結びつく時代は？',options:['青銅器時代','産業革命期のみ','宇宙開発時代'],answer:0,fact:'UNESCOはターヌムの岩絵群を北欧青銅器時代の重要な記録とみなしています。',photoLabel:'正解写真｜ターヌムの岩絵',quip:'青銅器時代のメッセージ、保存期間は数千年。クラウドより石が強かった。',photoKey:'se-tanum-rock-carvings-postcard'},
