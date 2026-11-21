@@ -33,6 +33,25 @@ class ExpandedTravelStoriesTest(unittest.TestCase):
                     seen[asset]=essay
         self.assertGreaterEqual(len(seen),32)
 
+    def test_five_editorial_guides_have_sourced_specific_discoveries(self):
+        expected={
+            "fr-eiffel-postcard":"1889年",
+            "fr-mont-saint-michel-postcard":"11～16世紀",
+            "japan-kyoto-postcard":"1955年",
+            "italy-pisa-tower-postcard":"1173年",
+            "italy-venice-grand-canal-postcard":"118",
+        }
+        for key,detail in expected.items():
+            with self.subTest(destination=key):
+                stop=self.manifest[key]
+                story=stop["travelStory"]
+                self.assertEqual(len(story),2)
+                self.assertTrue(all(170<=len(p.strip())<=360 for p in story))
+                self.assertIn(detail,story[1])
+                self.assertTrue(stop.get("historicalSources"))
+                self.assertTrue(all(source["url"].startswith("https://")
+                                    for source in stop["historicalSources"]))
+
     def test_travel_stories_are_escaped_and_are_opt_in(self):
         self.assertIn("Array.isArray(stop.travelStory)&&stop.travelStory.length===2",self.html)
         self.assertIn("stop.travelStory.map(paragraph=>'<p>'+escapeHtml(paragraph)+'</p>')",self.html)

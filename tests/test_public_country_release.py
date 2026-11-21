@@ -51,9 +51,10 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
 
     def test_outdated_pwa_shell_fails(self):
         current = self.assets["service-worker.js"].decode("utf-8")
-        self.assets["service-worker.js"] = current.replace(
-            "yoru9-shell-v43", "yoru9-shell-v21"
-        ).encode("utf-8")
+        import re
+        outdated=re.sub(r"yoru9-shell-v\d+", "yoru9-shell-v21", current, count=1)
+        self.assertNotEqual(outdated,current)
+        self.assets["service-worker.js"] = outdated.encode("utf-8")
         with self.assertRaisesRegex(AssertionError, "shell"):
             inspect_public_assets(self.assets, ROOT)
 
