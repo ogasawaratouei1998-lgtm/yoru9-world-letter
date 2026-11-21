@@ -1609,6 +1609,19 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 
 #atlasHero .gallery-image-label{display:block;align-self:flex-start;font-size:.68rem;
  color:#e2f5ec;background:#26485e;padding:4px 8px;border-radius:8px;margin:4px 7px}
+
+/* Browse only editorially approved country guides, separately from news pins. */
+.approved-atlas{margin:18px 0 3px;padding:16px;border:1px solid #657a98;border-radius:17px;background:#152741}
+.approved-atlas h4{font-size:17px;line-height:1.55;color:#ffe0ac;margin:0 0 5px}
+.approved-atlas .approved-atlas-note{font-size:12px;line-height:1.85;color:#d5e3f4;margin:6px 0 12px}
+.approved-atlas details{border:1px solid #566b88;background:#1c304b;border-radius:12px;padding:9px 11px}
+.approved-atlas summary{cursor:pointer;color:#ffdfa9;font-weight:800;font-size:13px;min-height:38px;align-content:center}
+.approved-atlas-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 0 4px}
+.approved-atlas-country{background:#29405e;border:1px solid #8094ac;border-radius:10px;color:#f5f2e9;min-height:44px;padding:8px 9px;font-size:12px;font-weight:700;line-height:1.4;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.approved-atlas-country:hover,.approved-atlas-country:focus-visible{border-color:#ffdfab;background:#385474}
+.prepared-country-travel{margin-top:17px}
+.prepared-country-travel .travel-card{margin-top:9px}
+@media(max-width:520px){.approved-atlas{padding:13px 12px}.approved-atlas-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.approved-atlas-country{font-size:12px;min-height:48px}}
 </style>
 <link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
@@ -1673,6 +1686,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
     <a id="todayMapIntroCurrentSource" target="_blank" rel="noopener noreferrer">公式情報を確認</a>
    </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
+   <div id="todayMapIntroTravel" class="prepared-country-travel" aria-label="国紹介からの小旅行" hidden></div>
   </section>
   <p class="today-map-game-lead">地図の下にある国名をタップすると、名所や文化を知る写真付き3択クイズを楽しめます。</p>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>
@@ -1707,6 +1721,13 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
    </dialog>
   </section>
   <p class="today-map-note" id="todayMapNote">掲載国の代表位置を示します。ニュースの発生現場ではありません。</p>
+  <section class="approved-atlas" id="approvedAtlas" aria-labelledby="approvedAtlasTitle">
+   <h4 id="approvedAtlasTitle">ニュースがなくても、世界を旅する</h4>
+   <p class="approved-atlas-note">配信国マップとは別に、出典と写真を確認して公開承認した国だけを紹介します。国を選ぶと、実写真・文化・歴史の小旅行と写真付き3択クイズを楽しめます。</p>
+   <details id="approvedAtlasChooser"><summary id="approvedAtlasCount">国の一覧を読み込み中…</summary>
+    <div class="approved-atlas-list" id="approvedAtlasList" role="group" aria-label="公開承認済みの国を選ぶ"></div>
+   </details>
+  </section>
  </section>
  </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
@@ -1835,6 +1856,7 @@ const TODAY_COUNTRY_INTROS=Object.freeze({
  NZ:'南太平洋に位置し、北島と南島を中心に構成される国。火山地形、湖、フィヨルドなどの自然景観で知られます。'
 });
 const TODAY_COUNTRY_PHOTOS=Object.freeze({"IT":[{"asset":"assets/travel/italy-colosseum-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Colosseum_in_Rome_%281%29.jpg/500px-Colosseum_in_Rome_%281%29.jpg","caption":"イタリア・ローマのコロッセオ（2018年撮影）","author":"Tournasol7","license":"CC BY-SA 4.0","place":"ローマのコロッセオ","sourcePage":"https://commons.wikimedia.org/wiki/File:Colosseum_in_Rome_(1).jpg"}],"DE":[{"asset":"assets/travel/germany-brandenburg-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/20220811_Brandenburg_Gate.jpg/500px-20220811_Brandenburg_Gate.jpg","caption":"ドイツ・ベルリンのブランデンブルク門（2022年撮影）","author":"Flocci Nivis","license":"CC BY 4.0","place":"ベルリンのブランデンブルク門","sourcePage":"https://commons.wikimedia.org/wiki/File:20220811_Brandenburg_Gate.jpg"}],"AR":[{"asset":"assets/travel/iguazu-rainbow-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg","caption":"アルゼンチン側のイグアスの滝と虹（2017年撮影）","author":"Pipovci","license":"CC BY-SA 4.0","place":"イグアスの滝・虹の大瀑布"},{"asset":"assets/travel/iguazu-argentina.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG","caption":"アルゼンチン側から望むイグアスの滝（2014年撮影）","author":"Landovb","license":"CC BY-SA 4.0","place":"イグアスの滝・アルゼンチン側","avoidCover":true},{"asset":"assets/travel/buenos-aires-casa-rosada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg","caption":"アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）","author":"Hdemigusag1","license":"CC BY-SA 4.0","place":"ブエノスアイレスのカサ・ロサダ"}],"FR":[{"asset":"assets/travel/mont-saint-michel-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg","caption":"夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）","author":"Giles Laurent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェルの夕景"},{"asset":"assets/travel/france-mont-saint-michel.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg","caption":"フランス・モン・サン＝ミシェルの干潟（2015年撮影）","author":"Freddy de Hosdent","license":"CC BY-SA 4.0","place":"モン・サン＝ミシェル"},{"asset":"assets/travel/paris-eiffel-tower.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg","caption":"フランス・パリのエッフェル塔（2020年撮影）","author":"Commonists","license":"CC BY-SA 4.0","place":"パリのエッフェル塔"}],"US":[{"asset":"assets/travel/golden-gate-sunset-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg","caption":"夕暮れのゴールデンゲートブリッジ（2007年撮影）","author":"Rich Niewiroski Jr.","license":"CC BY 2.5","place":"ゴールデンゲートブリッジ・夕景"},{"asset":"assets/travel/new-york-skyline.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg","caption":"ブルックリン側から見たマンハッタン（2025年撮影）","author":"Kidfly182","license":"CC BY 4.0","place":"ニューヨークの街並み"},{"asset":"assets/travel/san-francisco-golden-gate.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg","caption":"海峡に架かるゴールデンゲートブリッジ（2016年撮影）","author":"Ashokmehta72","license":"CC BY-SA 4.0","place":"ゴールデンゲートブリッジ","avoidCover":true}],"GB":[{"remoteOnly":true,"url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg","hiResUrl":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg","sourcePage":"https://commons.wikimedia.org/wiki/File:Tower-bridge-in-london.jpg","licenseUrl":"https://creativecommons.org/licenses/by-sa/4.0/","caption":"ロンドン・タワーブリッジの昼景（2019年撮影）","author":"Hexapol","license":"CC BY-SA 4.0","place":"ロンドン・タワーブリッジ"},{"avoidCover":true,"asset":"assets/travel/london-tower-bridge.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Tower_Bridge_Panorama.jpg/500px-Tower_Bridge_Panorama.jpg","caption":"テムズ川にかかるタワーブリッジの夜景（2013年撮影）","author":"Redbannana","license":"CC BY-SA 4.0","place":"ロンドン・タワーブリッジ"},{"asset":"assets/travel/edinburgh-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg","caption":"エディンバラ城の全景（2000年撮影）","author":"Libasstref","license":"CC0 1.0","place":"エディンバラ城","avoidCover":true},{"asset":"assets/travel/wales-cardiff-castle.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardiff_Castle%2C_Wales%2C_GB.jpg/500px-Cardiff_Castle%2C_Wales%2C_GB.jpg","caption":"カーディフ城の緑の丘と石造りの城（2010年撮影）","author":"Ввласенко / Volodymyr Vlasenko","license":"CC BY 4.0","place":"カーディフ城"}],"ES":[{"asset":"assets/travel/barcelona-sagrada.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/La_Sagrada_Familia%2C_Barcelona.jpg/500px-La_Sagrada_Familia%2C_Barcelona.jpg","caption":"バルセロナ・サグラダ・ファミリア（2019年撮影）","author":"Veronika Bashak","license":"CC BY-SA 4.0","place":"サグラダ・ファミリア"}],"JP":[{"asset":"assets/travel/fuji-cherry-blossom.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Mount_Fuji_April_Cherry_Blossom.jpg/500px-Mount_Fuji_April_Cherry_Blossom.jpg","caption":"桜越しに眺める富士山（2025年撮影）","author":"SRP1998","license":"CC BY-SA 4.0","place":"富士山と桜","avoidCover":true},{"asset":"assets/travel/tokyo-sensoji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Sens%C5%8D-ji_Tokyo.jpg/500px-Sens%C5%8D-ji_Tokyo.jpg","caption":"東京・浅草寺（2016年撮影）","author":"Mattias Hill","license":"CC BY-SA 3.0","place":"東京・浅草寺","avoidCover":true},{"asset":"assets/travel/kyoto-kinkakuji.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Kinkaku-ji%2C_Kyoto.jpg/500px-Kinkaku-ji%2C_Kyoto.jpg","caption":"京都・金閣寺と鏡湖池（2025年撮影）","author":"27curlyta","license":"CC0 1.0","place":"京都・金閣寺"}],"NZ":[{"asset":"assets/travel/nz-milford-sound.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg","caption":"ニュージーランド・ミルフォード・サウンドの滝（2005年撮影）","author":"Ryancoke2020","license":"CC BY-SA 4.0","place":"ミルフォード・サウンド"}],"KR":[{"asset":"assets/travel/seoul-gyeongbokgung.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Gyeongbokgung%2C_Seoul.jpg/500px-Gyeongbokgung%2C_Seoul.jpg","caption":"ソウル・景福宮（2012年撮影）","author":"螺钉","license":"CC BY-SA 3.0","place":"ソウル・景福宮","sourcePage":"https://commons.wikimedia.org/wiki/File:Gyeongbokgung%2C_Seoul.jpg"}],"BR":[{"asset":"assets/travel/brazil-rio-christ-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Rio_de_Janeiro_Cristo_Redentor.jpg/500px-Rio_de_Janeiro_Cristo_Redentor.jpg","caption":"コルコバードのキリスト像（2016年撮影）","author":"Carlos esteban oviedo","license":"CC BY-SA 4.0","place":"リオデジャネイロ・コルコバードのキリスト像","sourcePage":"https://commons.wikimedia.org/wiki/File:Rio_de_Janeiro_Cristo_Redentor.jpg"}],"AG":[{"asset":"assets/travel/antigua-english-harbour-cover.jpg","url":"https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Antigua_English_Harbour_Nelson's_Dockyard_2.jpg/500px-Antigua_English_Harbour_Nelson's_Dockyard_2.jpg","caption":"イングリッシュ・ハーバーの歴史的な造船所とヨット（2025年撮影）","author":"Dr. Thomas Liptak","license":"CC BY 4.0","place":"ネルソンズ・ドックヤードの港と船","sourcePage":"https://commons.wikimedia.org/wiki/File:Antigua_English_Harbour_Nelson's_Dockyard_2.jpg"}]});
+const APPROVED_COUNTRY_CODES=Object.freeze(["AG","AR","BR","DE","ES","FR","GB","IT","JP","KR","NZ","US"]);
 const TODAY_COUNTRY_GUIDES=Object.freeze({
  IT:{lead:'歴史ある都市と地域の食文化が、日々の暮らしに息づく国',body:'イタリアは地中海に伸びる半島と島々からなる国で、地方ごとに料理、方言、街の景色が異なります。ローマには古代の円形闘技場コロッセオをはじめとする歴史的建築が残り、フィレンツェではルネサンス期の芸術が街を彩ります。北のアルプス山麓から南の海辺まで風土は多彩で、ヴェネツィアの運河やピサの鐘楼など、都市ごとに異なる建築と暮らしが見られます。地域の市場や広場、食卓を大切にする文化もイタリアを知る入口です。',facts:['首都：ローマ','風景：コロッセオ・ヴェネツィアの運河','文化：地域料理・ルネサンス美術'],photos:['italy-pisa-tower-postcard','italy-venice-grand-canal-postcard'],sourceName:'イタリア政府観光サイト Italia.it',sourceUrl:'https://www.italia.it/en/lazio/rome/guide-history-facts'},
  DE:{lead:'歴史の記憶と地域の創造力が共存する国',body:'ドイツは中央ヨーロッパに位置し、州や都市によって文化と風景が大きく異なります。ベルリンではブランデンブルク門が街の歴史を伝え、現代美術や音楽、カフェが日常を彩ります。ライン川沿いのケルンには大聖堂がそびえ、南のバイエルンにはノイシュヴァンシュタイン城やアルプス山麓の景色が広がります。音楽、工芸、パンや地域料理、クリスマスマーケットなど、各地に根付いた伝統と現代的な街の文化が重なっています。',facts:['首都：ベルリン','風景：ケルン大聖堂・バイエルンの城','文化：音楽・地域料理・工芸'],photos:['germany-cologne-cathedral-postcard','germany-neuschwanstein-castle-postcard'],sourceName:'ドイツ政府観光局 Germany Travel',sourceUrl:'https://www.germany.travel/en/cities-culture/berlin.html'},
@@ -2020,9 +2042,21 @@ function showTodayCountryIntro(item){
   photo.src=sources[sourceIndex];
  }
  const read=$('todayMapIntroRead');
- read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
- read.dataset.storyIndex=String(item.indices[0]);
+ const hasNews=Array.isArray(item.indices)&&item.indices.length>0;
+ read.dataset.action=hasNews?'news':'quiz';
+ read.dataset.countryCode=currentCode;
+ if(hasNews){
+  read.textContent=item.name+'のニュースを読む（'+item.indices.length+'本）';
+  read.dataset.storyIndex=String(item.indices[0]);
+ }else{
+  read.textContent='この国の写真付き3択クイズに挑戦';
+  read.removeAttribute('data-story-index');
+ }
+ const trip=$('todayMapIntroTravel');
+ trip.hidden=true;
+ trip.replaceChildren();
  $('todayMapIntro').hidden=false;
+ if(!hasNews)renderApprovedCountryTrip(item,requestId);
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
@@ -2031,6 +2065,93 @@ function showTodayCountryIntro(item){
 // Country centroid pins stay geographically anchored. On narrow displays,
 // push only the visible marker aside when two 44px tap targets would overlap,
 // then draw a leader from the true representative point to its displaced pin.
+function approvedAtlasItems(){
+ // Only the exact, canonical approval list can create standalone country links.
+ // A geographical catalog entry by itself does not authorize any content.
+ return APPROVED_COUNTRY_CODES.map(code=>{
+  const record=countryRecord(code);
+  return record?{code:record.code,name:record.name,indices:[]}:null;
+ }).filter(Boolean);
+}
+function renderApprovedAtlas(){
+ const list=$('approvedAtlasList');
+ list.replaceChildren();
+ const countries=approvedAtlasItems();
+ $('approvedAtlasCount').textContent=countries.length
+  ?'出典確認済み '+countries.length+'か国から選ぶ':'公開承認済みの国を読み込み中…';
+ countries.forEach(item=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.className='approved-atlas-country';
+  button.textContent=item.name+'の国紹介';
+  button.dataset.countryCode=item.code;
+  button.setAttribute('aria-controls','todayMapIntro');
+  button.setAttribute('aria-label',item.name+'の国紹介と小旅行を開く');
+  button.addEventListener('click',()=>showTodayCountryIntro(item));
+  list.append(button);
+ });
+}
+function approvedAtlasTravelOptions(item,stops){
+ const primaryCover=(TODAY_COUNTRY_PHOTOS[item.code]||[])
+  .filter(p=>p.asset&&!p.avoidCover&&!p.remoteOnly)
+  .sort((a,b)=>countryPhotoPriority(item.code,b)-countryPhotoPriority(item.code,a))[0]?.asset;
+ const chosenCover=displayedCountryCoverAssets.get(item.code)||primaryCover;
+ const questions=typeof WORLD_PASSPORT_QUIZZES==='undefined'?[]:
+  (WORLD_PASSPORT_QUIZZES[item.code]||[]);
+ const quizKeys=new Set(questions.map(q=>q.photoKey));
+ const options=Object.entries(stops||{}).filter(([key,stop])=>
+  stop&&stop.country===item.name&&!stop.coverOnly&&!stop.quizOnly
+  &&stop.photoAsset!==chosenCover&&approvedTravelCover(stop)
+  &&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset||'')
+  &&String(stop.photo||'').startsWith('https://thumb.wikimedia.org/wikipedia/commons/thumb/')
+  &&String(stop.photoPage||'').startsWith('https://commons.wikimedia.org/wiki/File:')
+  &&String(stop.licenseUrl||'').startsWith('https://creativecommons.org/')
+  &&stop.author&&stop.license&&stop.photoCaption
+  &&Array.isArray(stop.travelStory)&&stop.travelStory.length===2
+  &&stop.travelStory.every(text=>typeof text==='string'&&text.trim().length>=110)
+  &&Array.isArray(stop.historicalSources)&&stop.historicalSources.some(source=>
+    source?.name&&String(source.url||'').startsWith('https://')));
+ const independent=options.filter(([key])=>!quizKeys.has(key));
+ const choices=independent.length?independent:options;
+ // The named travel postcard is preferred to a photograph attached to an
+ // unrelated old news story; credits always come from the exact same stop.
+ return choices.sort((a,b)=>Number(b[0].endsWith('-postcard'))-
+  Number(a[0].endsWith('-postcard'))||a[0].localeCompare(b[0]));
+}
+async function renderApprovedCountryTrip(item,requestId){
+ const panel=$('todayMapIntroTravel');
+ panel.hidden=false;
+ panel.textContent='歴史資料を添えた小旅行を読み込み中…';
+ const stops=await loadTravelStops();
+ if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
+    $('todayMapIntro').dataset.countryCode!==item.code)return;
+ const options=approvedAtlasTravelOptions(item,stops);
+ if(!options.length){
+  panel.textContent='この国の出典確認済みの小旅行は準備中です。';
+  return;
+ }
+ function mount(at){
+  if(requestId!==todayCountryIntroRequest||!panel.isConnected||panel.hidden)return;
+  const stop=options[at]?.[1];
+  if(!stop){panel.textContent='旅行写真を読み込めませんでした。';return;}
+  panel.innerHTML=travelPostcardHtml({country:item.name},stop,true);
+  const img=panel.querySelector('.travel-photo');
+  if(!img)return;
+  img.addEventListener('error',()=>{
+   if(requestId!==todayCountryIntroRequest||!img.isConnected||panel.hidden)return;
+   if(!img.dataset.remoteTried&&img.dataset.remotePhoto){
+    img.dataset.remoteTried='true';
+    img.src=img.dataset.remotePhoto;
+    return;
+   }
+   if(at+1<options.length){mount(at+1);return;}
+   img.hidden=true;
+   const message=panel.querySelector('.travel-photo-error');
+   if(message)message.hidden=false;
+  });
+ }
+ mount(0);
+}
 function positionTodayMapPins(){
  const layer=$('todayMapPins');
  if(!layer||!layer.clientWidth||!layer.clientHeight)return;
@@ -2092,6 +2213,7 @@ function renderTodayMap(){
  $('todayMapDate').textContent=published?edition.editionDate+' 発行':'体験版';
  const pins=$('todayMapPins'),legend=$('todayMapLegend');
  pins.replaceChildren();legend.replaceChildren();hideTodayCountryIntro();closeWorldPassport();
+ renderApprovedAtlas();
  if(!countryCatalog.length){
   $('todayMapNote').textContent='国の位置情報を読み込んでいます。';
   return;
@@ -2151,8 +2273,15 @@ function setReleaseStatus(message){$('releaseStatus').textContent=message}
 // Bind UI events outside the pure country-coordinate module used by regression tests.
 $('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
 $('todayMapIntroRead').addEventListener('click',()=>{
- const index=Number($('todayMapIntroRead').dataset.storyIndex);
- if(Number.isInteger(index)&&index>=0&&index<edition.stories.length)openAtlasStory(index);
+ const read=$('todayMapIntroRead');
+ if(read.dataset.action==='quiz'){
+  const item=approvedAtlasItems().find(row=>row.code===read.dataset.countryCode);
+  if(item)startWorldPassport(item);
+  return;
+ }
+ const index=Number(read.dataset.storyIndex);
+ if(read.dataset.action==='news'&&Number.isInteger(index)&&
+    index>=0&&index<edition.stories.length)openAtlasStory(index);
 });
 
 function displayReleaseStatus(){
@@ -2684,7 +2813,8 @@ function chooseTravelPhoto(story,stops){
  rememberTravelPhoto(picked.country,picked.photoAsset);
  return picked;
 }
-function travelPostcardHtml(story,stop){
+function travelPostcardHtml(story,stop,standalone=false){
+
  const known=stop&&Number.isFinite(stop.latitude)&&Number.isFinite(stop.longitude)&&
   Math.abs(stop.latitude)<=90&&Math.abs(stop.longitude)<=180;
  const sameCountry=known&&travelCountryNames(story.country).includes(stop.country);
@@ -2704,12 +2834,18 @@ function travelPostcardHtml(story,stop){
  const heritage=stop&&Array.isArray(stop.historicalSources)?
   stop.historicalSources.find(source=>source&&source.name&&
    typeof source.url==='string'&&source.url.startsWith('https://')):null;
- return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する小旅行">'+
+ // Keep the published news template explicit and independently testable.
+ // The standalone country view must not claim a fictitious article's stage.
+ const storyContext='<div class="travel-context" aria-label="記事と旅先の違い">'+
+  '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
+  '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span></div>';
+ const countryContext='<div class="travel-context" aria-label="国紹介と旅先の関係">'+
+  '<span class="travel-context-story">国紹介：'+escapeHtml(reportCountry)+'</span>'+
+  '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span></div>';
+ return '<section class="travel-card" aria-label="'+
+   (standalone?'出典確認済みの国紹介からの小旅行':'ニュースとは別の旅先を紹介する小旅行')+'">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
-  '<div class="travel-context" aria-label="記事と旅先の違い">'+
-   '<span class="travel-context-story">記事の舞台（国） '+escapeHtml(reportCountry)+'</span>'+
-   '<span class="travel-context-destination">旅先 '+escapeHtml(known?stop.country:'未準備')+'</span>'+
-  '</div>'+
+  (standalone?countryContext:storyContext)+
   '<h4>'+escapeHtml(place)+(known?' · '+escapeHtml(stop.region):'')+'</h4>'+
   '<p class="travel-trust" role="note">'+
    (photo?'この写真はニュース現場の記録ではなく、旅先の風景です。':'この国の有名観光地の写真はまだ準備中です。ニュースの現場を示すものではありません。')+
