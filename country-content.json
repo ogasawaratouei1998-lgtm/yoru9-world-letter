@@ -513,7 +513,7 @@
     },
     "BR": {
       "name": "ブラジル",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "滝と熱帯の森、大都市の音楽が出会う南米の国",
         "body": "ブラジルにはアマゾンの森林、イグアスの滝、大西洋岸の都市など、地域ごとに異なる風景が広がります。リオデジャネイロではサンバやボサノバに加え、アフロブラジル文化が街の歴史を形づくってきました。サンパウロには多彩な食文化や美術館があり、巨大都市の通りでさまざまな背景を持つ人々の暮らしが交わります。首都はリオでもサンパウロでもなく、内陸に建設されたブラジリア。自然と都市、歴史と文化を一緒に見つめたい国です。",
@@ -731,7 +731,26 @@
           "quizOnly": true
         }
       },
-      "highlights": []
+      "highlights": [],
+      "approval": {
+        "reviewedOn": "2026-11-21",
+        "reason": "Brazilian tourism, UNESCO Iguaçu and São Paulo governmental sources reviewed; five distinct attributed Brazilian photos from Commons; photo fallback from the 429 panorama to a smaller independently licensed Brazilian-side image; CI built all 55 curated assets with no missing pictures, mobile 320/375/393px passed, 511 automatic tests passed.",
+        "sources": [
+          "https://www.visitbrasil.com/en/experiences/",
+          "https://www.visitbrasil.com/en/location/rio-de-janeiro-en/",
+          "https://whc.unesco.org/en/list/355/",
+          "https://www.sp.gov.br/sp/conheca-sp/pontos-turisticos/pontos_turisticos",
+          "https://prod.calatrava.com/projects/museu-do-amanha-rio-de-janeiro.html",
+          "https://www.ccpar.rio/museu-do-amanha/"
+        ],
+        "photos": [
+          "https://commons.wikimedia.org/wiki/File:Rio_de_Janeiro_Cristo_Redentor.jpg",
+          "https://commons.wikimedia.org/wiki/File:Av._Paulista_-_São_Paulo_-_Brasil.jpg",
+          "https://commons.wikimedia.org/wiki/File:Iguazu_Falls_(view_from_Brazilian_side).jpg",
+          "https://commons.wikimedia.org/wiki/File:Iguaçu_Falls,_Foz_do_Iguaçu,_Brazil.jpg",
+          "https://commons.wikimedia.org/wiki/File:Museu_do_Amanhã,_Rio_de_Janeiro.jpg"
+        ]
+      }
     },
     "BB": {
       "name": "バルバドス",
