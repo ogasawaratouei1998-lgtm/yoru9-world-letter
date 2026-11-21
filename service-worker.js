@@ -1,5 +1,7 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v39';
+// Revise the shell version when HTML/quiz/travel data changes, so iOS
+// standalone clients refresh their JS and curated country content on return.
+const SHELL_CACHE = 'yoru9-shell-v40';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
