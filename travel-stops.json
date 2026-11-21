@@ -2387,5 +2387,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "at-vienna-opera-cover": {
+    "country": "オーストリア",
+    "countryOnly": true,
+    "place": "ウィーン国立歌劇場",
+    "region": "ウィーン",
+    "latitude": 48.203,
+    "longitude": 16.369,
+    "note": "街の中心部に建つ歴史ある歌劇場。",
+    "photoCaption": "ウィーン国立歌劇場の外観（2026年撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Vienna_state_opera.jpg/500px-Vienna_state_opera.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Vienna_state_opera.jpg",
+    "photoAsset": "assets/travel/at-vienna-opera-cover.jpg",
+    "author": "HamedSharifian1",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "at-schoenbrunn-palace-postcard": {
+    "country": "オーストリア",
+    "countryOnly": true,
+    "place": "シェーンブルン宮殿と庭園",
+    "region": "ウィーン",
+    "latitude": 48.1857,
+    "longitude": 16.3122,
+    "note": "宮殿と庭園が一体となったバロックの都市景観。",
+    "photoCaption": "ウィーンのシェーンブルン宮殿正面（2019年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f8/Schoenbrunn_Palace_in_Vienna.jpg/500px-Schoenbrunn_Palace_in_Vienna.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Schoenbrunn_Palace_in_Vienna.jpg",
+    "photoAsset": "assets/travel/at-schoenbrunn-palace-postcard.jpg",
+    "author": "Vitold Muratov",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ウィーンのシェーンブルン宮殿では、明るい色の建物の前に広い庭園が伸び、噴水や樹木の列が整然と続いています。建物の近くから庭園の奥まで歩くと、宮殿の大きさだけでなく景色の見せ方まで計算されていることに気づきます。振り返って正面を眺めると、宮殿と緑地がひとつの風景として結ばれているのが伝わります。",
+      "UNESCOによると、シェーンブルン宮殿と庭園は保存状態のよいバロック様式の建築と造園の一体的な景観です。皇帝家の夏の離宮として使われ、庭園も宮廷の生活や美意識の一部でした。華やかな建物の室内を想像するだけでなく、遠くまで続く通路と樹木の配置を眺めれば、自然にまで及んだ当時の設計の意図を考えることができます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・シェーンブルン宮殿と庭園",
+        "url": "https://whc.unesco.org/en/list/786",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "at-salzburg-old-town-postcard": {
+    "country": "オーストリア",
+    "countryOnly": true,
+    "place": "ザルツブルク旧市街",
+    "region": "ザルツブルク",
+    "latitude": 47.798,
+    "longitude": 13.047,
+    "note": "教会や塔、丘の城塞に歴史が残る旧市街。",
+    "photoCaption": "冬のザルツブルク旧市街を見渡す風景（2018年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Salzburg_Altstadt%2C_Austria.jpg/500px-Salzburg_Altstadt%2C_Austria.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Salzburg_Altstadt%2C_Austria.jpg",
+    "photoAsset": "assets/travel/at-salzburg-old-town-postcard.jpg",
+    "author": "North Cascade",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ザルツブルクの旧市街を歩くと、川沿いの街並みの向こうに教会の塔が立ち、丘には城塞が見えます。広場から石畳の小道へ進むと街の雰囲気が変わり、古い建物の壁や屋根にさまざまな時代の手掛かりが現れます。大きな建築物だけを急いで回るより、路地の角を曲がりながら、都市全体の姿を味わいたい場所です。",
+      "UNESCOはザルツブルク旧市街を、中世から長く宗教都市として発展した景観が残る歴史地区として紹介しています。大司教の統治や芸術活動と結び付いた建物群が、今日の街の構造に影響を残しました。ひとつの名所の年代を覚えるだけでなく、教会、広場、街路がどのように近くに並んでいるかを見ると、都市の歴史が身近になります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ザルツブルク旧市街",
+        "url": "https://whc.unesco.org/en/list/784",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
   }
 }
