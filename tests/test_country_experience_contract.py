@@ -38,9 +38,7 @@ class CountryExperienceContractTest(unittest.TestCase):
         # correctly while remaining unapproved, rather than given a fake photo.
         for code in ("NG","ID","IS","ZA","TT"):
             self.assertEqual(country_codes(canonical[code]),[code])
-        self.assertNotIn("NG",{
-            code for code in ("IT","DE","US","FR","AR","JP","GB")
-        })
+        self.assertEqual(country_codes("アンティグア・バーブーダ"),["AG"])
         with self.assertRaisesRegex(ValueError,"NG: country content awaiting editorial approval"):
             country_coverage(ROOT,[{"country":canonical["NG"]}])
 
