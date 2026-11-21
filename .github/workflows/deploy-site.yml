@@ -88,12 +88,25 @@ jobs:
             fi
             sleep 5
           done
+      # GitHub can list the artifact through the Actions REST API while
+      # deploy-pages still temporarily sees 0 artifacts in its own endpoint.
+      # Retry that transient indexing failure without regenerating media or
+      # bypassing ANY source/release gate. The second failure is fatal.
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+      - name: Back off if Pages metadata has not propagated
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 20
+      - name: Retry GitHub Pages deployment after indexing delay
+        id: deployment_retry
+        if: steps.deployment.outcome == 'failure'
+        uses: actions/deploy-pages@v4
       - name: Verify published country portraits and tourist microtravel
         env:
-          PUBLISHED_SITE: ${{ steps.deployment.outputs.page_url }}
+          PUBLISHED_SITE: ${{ steps.deployment_retry.outputs.page_url || steps.deployment.outputs.page_url }}
           PUBLISHED_REVISION: ${{ github.sha }}
         run: |
+          : "${PUBLISHED_SITE:?GitHub Pages did not return a deployment URL}"
           python check_public_country_release.py --site "$PUBLISHED_SITE" --revision "$PUBLISHED_REVISION"
