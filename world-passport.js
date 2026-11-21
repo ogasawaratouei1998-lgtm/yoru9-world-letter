@@ -28,6 +28,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'リラ修道院の周囲に広がる特徴的な環境は？',options:['山地','珊瑚礁','砂漠のオアシス'],answer:0,fact:'リラ修道院はブルガリアのリラ山地に位置する歴史的な修道院です。',photoLabel:'正解写真｜リラ修道院の回廊',quip:'山奥なのにこの存在感。隠れた修道院とはとても言えない。',photoKey:'bg-rila-monastery-postcard'},
   {question:'ボヤナ教会で評価されている重要な芸術は？',options:['中世の壁画','近代映画のセット','巨大な機械彫刻'],answer:0,fact:'UNESCOはボヤナ教会の中世の壁画を重要な文化的価値として紹介しています。',photoLabel:'正解写真｜ソフィア郊外のボヤナ教会',quip:'建物は小さくても、壁画の歴史は大作。見落とすには惜しい。',photoKey:'bg-boyana-church-postcard'},
  ],
+ BA:[
+  {question:'モスタルの古橋が現在伝える象徴的な意味は？',options:['氷河の観測','再建と和解・国際協力','新しい宇宙船の発射'],answer:1,fact:'UNESCOは再建された古橋を和解、国際協力、多様な共同体の共存の象徴と位置付けています。',photoLabel:'正解写真｜モスタル旧市街の古橋',quip:'橋の価値は石の量だけでは測れない。壊されたものを再びつなぐには、設計図だけでは足りなかった。',photoKey:'ba-mostar-night-postcard'},
+  {question:'ヴィシェグラードの石橋が渡る川は？',options:['ナイル川','テムズ川','ドリナ川'],answer:2,fact:'UNESCOはメフメド・パシャ・ソコロヴィッチ橋がドリナ川に架かると説明しています。',photoLabel:'正解写真｜メフメド・パシャ・ソコロヴィッチ橋',quip:'十一のアーチが川を渡す。橋の美しさと土木の合理性が、同じ設計で成立している。',photoKey:'ba-visegrad-bridge-postcard'},
+ ],
  BR:[
   {question:'写真に写るサンパウロの有名な大通りは？',options:['アヴェニーダ・パウリスタ','シャンゼリゼ通り','フィフス・アベニュー'],answer:0,photoKey:'brazil-paulista-quiz-image',photoLabel:'正解の通り｜サンパウロ・アヴェニーダ・パウリスタ',fact:'アヴェニーダ・パウリスタはサンパウロの文化施設が集まる通りで、MASPなどが並びます。',quip:'通りを歩けば美術館が次々登場。散歩が文化祭になりそう。'},
   {question:'ブラジル側から撮影したこの滝は何という？',options:['エンジェルフォール','イグアスの滝','ヴィクトリアの滝'],answer:1,photoKey:'brazil-iguacu-brazil-side-quiz-image',photoLabel:'正解の滝｜ブラジル側から見たイグアスの滝',fact:'イグアスの滝はブラジルとアルゼンチンにまたがり、ブラジル側のイグアス国立公園は1986年にUNESCO世界遺産へ登録されました。',quip:'国境より目立つのは水しぶき。滝の迫力に地図が負ける。'},
@@ -92,6 +96,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ブダペストの景観の中心を流れる川は？',options:['ドナウ川','ナイル川','アマゾン川'],answer:0,fact:'UNESCOはドナウ川の両岸をブダペストの世界遺産の重要な一部としています。',photoLabel:'正解写真｜ドナウ川とブダ城',quip:'川一本でブダとペストを分けても、最後は橋で合体。都市の主役はずっとドナウ川。',photoKey:'hu-buda-castle-postcard'},
   {question:'ホッローケーが伝えるのは主にどのような生活？',options:['伝統的な農村生活','宇宙基地の暮らし','氷上都市の生活'],answer:0,fact:'UNESCOは農業の大変革以前の伝統的な農村生活が残る集落として評価しています。',photoLabel:'正解写真｜ホッローケーの古村落',quip:'世界遺産なのに現役の村。『保存のために誰も住めない』では意味がない。',photoKey:'hu-holloko-village-postcard'},
  ],
+ ID:[
+  {question:'ボロブドゥールで中心となる宗教的伝統は？',options:['キリスト教','古代ギリシャ神話','仏教'],answer:2,fact:'UNESCOはボロブドゥールを仏教寺院遺跡群として登録しています。',photoLabel:'正解写真｜ボロブドゥール寺院遺跡群',quip:'仏塔が七十二基。石の並びにまで祈りの意味を持たせる設計は、建築を単なる建物の枠からはみ出させた。',photoKey:'id-borobudur-stupa-postcard'},
+  {question:'プランバナン寺院群の主要な宗教は？',options:['ヒンドゥー教','仏教','イスラム教'],answer:0,fact:'UNESCOはプランバナン寺院群をヒンドゥー教寺院として紹介しています。',photoLabel:'正解写真｜プランバナン寺院遺跡群',quip:'同じ島に異なる信仰の巨石建築。歴史は一つの宗教だけで説明できるほど単純ではない。',photoKey:'id-prambanan-postcard'},
+ ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
@@ -136,6 +144,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'リガの近代建築を特徴づける様式の一つは？',options:['古代エジプト様式','アール・ヌーヴォー','インカの石造建築'],answer:1,fact:'リガの近代的な住宅地区にはアール・ヌーヴォー建築が残ります。',photoLabel:'正解写真｜リガ歴史地区・アール・ヌーヴォー建築',quip:'建物の壁まで芸術作品。リガでは、街を歩くだけで展覧会の会場が次々に現れる。',photoKey:'lv-riga-artnouveau-postcard'},
   {question:'クルディーガの世界遺産登録年は？',options:['1980年','1994年','2023年'],answer:2,fact:'クルディーガ旧市街は2023年に世界遺産に登録されました。',photoLabel:'正解写真｜クルディーガ旧市街・アレクシュピーテ川の橋',quip:'世界遺産の価値は建築の高さでは決まらない。小さな橋や家々が歴史を伝える主役になる。',photoKey:'lv-kuldiga-bridge-postcard'},
  ],
+ MA:[
+  {question:'フェズのメディナが伝えるのはどんな都市文化？',options:['歴史的なイスラム都市文化','南極の研究基地','近代の宇宙都市'],answer:0,fact:'UNESCOはフェズ旧市街を歴史的なイスラム都市の重要な事例として登録しています。',photoLabel:'正解写真｜フェズ旧市街・皮革工房',quip:'旧市街には観光客だけでなく職人もいる。街の歴史を保存するとは、看板を残すだけの仕事ではない。',photoKey:'ma-fez-tannery-postcard'},
+  {question:'アイト・ベン・ハドゥの建築で特徴的な素材は？',options:['氷のブロック','土を用いた建築','鋼鉄製のドーム'],answer:1,fact:'UNESCOはアイト・ベン・ハドゥを伝統的な土造りの集落建築として説明しています。',photoLabel:'正解写真｜アイト・ベン・ハドゥ',quip:'土の建築を守り続けるには手入れがいる。建物は完成した日から維持管理が始まる。',photoKey:'ma-ait-benhaddou-postcard'},
+ ],
  MX:[
   {question:'テオティワカンの巨大な建築群を貫く大通りの名前は？',options:['死者の大通り','王の道','海沿いの大通り'],answer:0,photoLabel:'正解写真｜テオティワカンの遺跡',fact:'テオティワカンには太陽のピラミッドなどを結ぶ『死者の大通り』が広がっています。',quip:'都市計画のスケールが、徒歩の散歩道を超えている。',photoKey:'mx-teotihuacan-postcard'},
   {question:'チチェン・イッツァにある階段状のピラミッドは何と呼ばれる？',options:['エル・カスティージョ','コロッセオ','クトゥブ・ミナール'],answer:0,photoLabel:'正解写真｜チチェン・イッツァ',fact:'エル・カスティージョはチチェン・イッツァを代表する階段状の石造ピラミッドです。',quip:'古代の街の主役級。階段が一段ずつ存在感を出してきます。',photoKey:'mx-chichen-itza-postcard'},
@@ -159,6 +171,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  PE:[
   {question:'マチュ・ピチュと深く結び付く文明は？',options:['インカ文明','古代ギリシャ','フェニキア文明'],answer:0,photoLabel:'正解写真｜マチュ・ピチュ',fact:'UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。',quip:'山頂の絶景だけじゃない。石段にも都市を造った人の意志がある。',photoKey:'pe-machu-picchu-postcard'},
   {question:'クスコに重なる二つの歴史的な建築の流れは？',options:['インカ期とスペイン統治期','江戸時代と明治時代','古代ローマとヴァイキング'],answer:0,photoLabel:'正解写真｜クスコの市街',fact:'UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。',quip:'壁の継ぎ目が、千年単位の都市のリレーを見せてくれる。',photoKey:'pe-cusco-historic-center-postcard'},
+ ],
+ PH:[
+  {question:'コルディリェーラの棚田を長く維持してきた人々は？',options:['古代ローマ軍','イフガオの人々','ヴァイキング'],answer:1,fact:'UNESCOはイフガオの人々の長い農業文化が棚田景観を形づくったと説明しています。',photoLabel:'正解写真｜コルディリェーラの棚田群・バタッド',quip:'棚田の曲線は装飾ではなく、斜面と水を利用する農業の知恵。美しさは働く人の積み重ねから生まれた。',photoKey:'ph-batad-terraces-postcard'},
+  {question:'ビガンの歴史的街並みが示す文化の交流先は？',options:['北極圏のみ','南極大陸のみ','中国とヨーロッパなど'],answer:2,fact:'UNESCOは中国やヨーロッパなどの影響が重なるビガンの都市景観を評価しています。',photoLabel:'正解写真｜ビガン歴史都市・クリソロゴ通り',quip:'文化の交流は地図上の矢印だけではない。窓や屋根にまで、交易の記憶が残っている。',photoKey:'ph-vigan-crisologo-postcard'},
  ],
  PL:[
   {question:'クラクフ歴史地区の構成要素の一つは？',options:['ヴァヴェルの丘','富士山の五合目','ヴェネツィアの運河'],answer:0,fact:'UNESCOは中世都市クラクフ、ヴァヴェルの丘、カジミエシュを含む地区を登録しています。',photoLabel:'正解写真｜クラクフ・ヴァヴェルの丘',quip:'城を見上げて歴史を感じたら、広場で商人の時代を感じる。クラクフは二段構え。',photoKey:'pl-wawel-castle-postcard'},

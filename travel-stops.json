@@ -4159,5 +4159,297 @@
       }
     ],
     "famousTourist": true
+  },
+  "ba-mostar-cover": {
+    "country": "ボスニア・ヘルツェゴビナ",
+    "countryOnly": true,
+    "place": "モスタル旧市街",
+    "region": "モスタル",
+    "latitude": 43.337,
+    "longitude": 17.815,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。ネレトヴァ川と古橋を見渡す旧市街の景観（2007年）。写真で楽しむ小旅行。",
+    "photoCaption": "ネレトヴァ川と古橋を見渡す旧市街の景観（2007年）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Mostar_Old_Town_Panorama_2007.jpg/500px-Mostar_Old_Town_Panorama_2007.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mostar_Old_Town_Panorama_2007.jpg",
+    "photoAsset": "assets/travel/ba-mostar-cover.jpg",
+    "author": "Ramirez",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "ba-mostar-night-postcard": {
+    "country": "ボスニア・ヘルツェゴビナ",
+    "countryOnly": true,
+    "place": "モスタル旧市街の古橋",
+    "region": "モスタル",
+    "latitude": 43.3373,
+    "longitude": 17.8149,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。夜の古橋と水面に映る照明。写真で楽しむ小旅行。",
+    "photoCaption": "夜の古橋と水面に映る照明",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Mostar%2C_Stari_Most_at_night.jpg/500px-Mostar%2C_Stari_Most_at_night.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mostar%2C_Stari_Most_at_night.jpg",
+    "photoAsset": "assets/travel/ba-mostar-night-postcard.jpg",
+    "author": "BáthoryPéter (talk)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "夜の古橋では、照明に浮かぶ石のアーチと、ネレトヴァ川に映る光が対になっています。丘に立つ塔や橋のそばの家々を見比べると、橋が街の景観の中心を占めていることが伝わります。対岸を結ぶ構造だけでなく、人々の記憶をつなぐ場所として、この夜景の背後にある都市の歴史をたどってみましょう。",
+      "UNESCOはモスタルをオスマン帝国期やオーストリア＝ハンガリー期に発展した多文化的な都市として説明しています。古橋は一九九〇年代の紛争で破壊され、その後再建されました。現在の姿を、昔から一度も変わらなかった建物と誤解せず、再建が和解と国際協力の象徴となった経緯を知ると、この美しいアーチが持つ意味が伝わります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・モスタル旧市街の古橋地区",
+        "url": "https://whc.unesco.org/en/list/946/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ba-visegrad-bridge-postcard": {
+    "country": "ボスニア・ヘルツェゴビナ",
+    "countryOnly": true,
+    "place": "メフメド・パシャ・ソコロヴィッチ橋",
+    "region": "ヴィシェグラード",
+    "latitude": 43.782,
+    "longitude": 19.287,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。ドリナ川を渡る石造アーチの連なり。写真で楽しむ小旅行。",
+    "photoCaption": "ドリナ川を渡る石造アーチの連なり",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c9/Mehmed_Pa%C5%A1a_Sokolovi%C4%87_Bridge%2C_Vi%C5%A1egrad.JPG/500px-Mehmed_Pa%C5%A1a_Sokolovi%C4%87_Bridge%2C_Vi%C5%A1egrad.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mehmed_Pa%C5%A1a_Sokolovi%C4%87_Bridge%2C_Vi%C5%A1egrad.JPG",
+    "photoAsset": "assets/travel/ba-visegrad-bridge-postcard.jpg",
+    "author": "Pudelek (Marcin Szala)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "ヴィシェグラードでは、ドリナ川に架かる長い石橋のアーチが水面にリズムをつくります。少し離れた川岸から全体の形を確かめ、近くでは石積みの曲線や橋への取付け部分に目を向けてみてください。橋は単に美しい建築ではなく、人が対岸へ移動するための土木技術の結晶です。川幅と橋脚の間隔を比べると、その工夫が分かります。",
+      "UNESCOによれば、この橋は十六世紀末に大宰相メフメド・パシャ・ソコロヴィッチの命で建築家ミマール・スィナンが設計し、ドリナ川に架けられました。十一の石造アーチと川岸に直角に延びる取付け部分を備え、オスマン帝国の土木・建築技術の高さを示しています。橋が川の地形にどう応えたのかを見ることで、形の美しさと実用性の両方が感じられます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ヴィシェグラードのメフメド・パシャ・ソコロヴィッチ橋",
+        "url": "https://whc.unesco.org/en/list/1260/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "id-sumbing-cover": {
+    "country": "インドネシア",
+    "countryOnly": true,
+    "place": "ボロブドゥールから望むスンビン山",
+    "region": "中部ジャワ・ボロブドゥール",
+    "latitude": -7.608,
+    "longitude": 110.204,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。ボロブドゥール寺院公園から見たスンビン山。写真で楽しむ小旅行。",
+    "photoCaption": "ボロブドゥール寺院公園から見たスンビン山",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Indonesia_Mount-Sumbing-volcano-01.jpg/500px-Indonesia_Mount-Sumbing-volcano-01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Indonesia_Mount-Sumbing-volcano-01.jpg",
+    "photoAsset": "assets/travel/id-sumbing-cover.jpg",
+    "author": "CEphoto, Uwe Aranas",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "id-borobudur-stupa-postcard": {
+    "country": "インドネシア",
+    "countryOnly": true,
+    "place": "ボロブドゥール寺院遺跡群",
+    "region": "中部ジャワ",
+    "latitude": -7.608,
+    "longitude": 110.204,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。円形壇に並ぶ透かし彫りの仏塔。写真で楽しむ小旅行。",
+    "photoCaption": "円形壇に並ぶ透かし彫りの仏塔",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Borobudur-Temple-Park_Indonesia_Stupas-of-Borobudur-01.jpg/500px-Borobudur-Temple-Park_Indonesia_Stupas-of-Borobudur-01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Borobudur-Temple-Park_Indonesia_Stupas-of-Borobudur-01.jpg",
+    "photoAsset": "assets/travel/id-borobudur-stupa-postcard.jpg",
+    "author": "CEphoto, Uwe Aranas",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "円形の壇に並ぶ仏塔は、石の格子状の穴から内部をうかがえる独特の形をしています。写真では仏塔の背後に山々と朝のかすみが広がり、寺院の幾何学的な配置と自然の輪郭を同時に味わえます。地図でジャワ島の中央部を確かめながら、石を積み重ねて造られた祈りの空間を想像してみましょう。",
+      "UNESCOはボロブドゥールを8〜9世紀の仏教遺産として紹介し、方形の段と円形の壇、その上に並ぶ仏塔が独特の構成を形づくると説明しています。石彫を一枚の絵として見るだけでなく、歩く順序そのものが建築の体験になっていることを意識すると、遺跡の奥行きが変わります。仏塔越しの遠景も、時間をかけて眺める価値があります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ボロブドゥール寺院遺跡群",
+        "url": "https://whc.unesco.org/en/list/592/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "id-prambanan-postcard": {
+    "country": "インドネシア",
+    "countryOnly": true,
+    "place": "プランバナン寺院遺跡群",
+    "region": "ジャワ島・プランバナン",
+    "latitude": -7.752,
+    "longitude": 110.492,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。庭園の向こうにそびえる石造寺院。写真で楽しむ小旅行。",
+    "photoCaption": "庭園の向こうにそびえる石造寺院",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Entrance_to_Prambanan%2C_23_November_2013.jpg/500px-Entrance_to_Prambanan%2C_23_November_2013.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Entrance_to_Prambanan%2C_23_November_2013.jpg",
+    "photoAsset": "assets/travel/id-prambanan-postcard.jpg",
+    "author": "Crisco 1492",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "プランバナンでは、空に向かって細く伸びる石の塔が、広い敷地の中に幾重にも立ち並んでいます。ひとつの塔に近づくと壁面の細工が見え、少し離れると塔の高低差が生む輪郭が鮮やかになります。遠望と細部の両方を楽しめる場所なので、建物の間をゆっくり歩き、光の当たり方による石の表情を見比べたくなります。",
+      "UNESCOの解説によれば、プランバナンはシヴァ神を中心とする大規模なヒンドゥー教寺院遺跡群です。並び立つ高い祠堂や周囲の小堂は、古い信仰が建築に表れた姿を示しています。同じジャワ島のボロブドゥールと対比しながら眺めると、異なる宗教的伝統が近い地域に残した景観の多彩さを感じられます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・プランバナン寺院遺跡群",
+        "url": "https://whc.unesco.org/en/list/642/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ma-fez-street-cover": {
+    "country": "モロッコ",
+    "countryOnly": true,
+    "place": "フェズ旧市街の街路",
+    "region": "フェズ",
+    "latitude": 34.063,
+    "longitude": -4.976,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。門に続く路地と行き交う人々。写真で楽しむ小旅行。",
+    "photoCaption": "門に続く路地と行き交う人々",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/Flickr_-_stringer_bel_-_the_old_medina_in_Fes%2C_Morocco.jpg/500px-Flickr_-_stringer_bel_-_the_old_medina_in_Fes%2C_Morocco.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Flickr_-_stringer_bel_-_the_old_medina_in_Fes%2C_Morocco.jpg",
+    "photoAsset": "assets/travel/ma-fez-street-cover.jpg",
+    "author": "Annabel Symington",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  },
+  "ma-fez-tannery-postcard": {
+    "country": "モロッコ",
+    "countryOnly": true,
+    "place": "フェズ旧市街・皮革工房",
+    "region": "フェズ旧市街（代表地点）",
+    "latitude": 34.064,
+    "longitude": -4.973,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。皮革加工のための槽が並ぶ工房。写真で楽しむ小旅行。",
+    "photoCaption": "皮革加工のための槽が並ぶ工房",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1d/Fez_Medina%2C_Morocco_%286343039561%29.jpg/500px-Fez_Medina%2C_Morocco_%286343039561%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Fez_Medina%2C_Morocco_%286343039561%29.jpg",
+    "photoAsset": "assets/travel/ma-fez-tannery-postcard.jpg",
+    "author": "yeowatzup",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "travelStory": [
+      "フェズの皮革工房の写真には、色の異なる槽が密集し、その間で作業する人々が見えます。旧市街が単なる保存された建築群ではなく、職人の仕事が続く生活の場でもあることが伝わる景色です。地図ではメディナの代表地点を示しています。工房の仕事と路地や市場のつながりを想像し、街の成り立ちをたどる小旅行です。",
+      "UNESCOはフェズのメディナを、イスラム世界の都市文化や建築の歴史を伝える重要な場所として登録しています。宗教施設や商業施設、住居が近い距離に集まる町の構造そのものが見どころです。単一の名建築を訪ねて終えるのではなく、道を行き来する人々の動きと建物の配置を一緒に眺めると、都市が育まれた時間を感じます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・フェズ旧市街",
+        "url": "https://whc.unesco.org/en/list/170/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ma-ait-benhaddou-postcard": {
+    "country": "モロッコ",
+    "countryOnly": true,
+    "place": "アイト・ベン・ハドゥ",
+    "region": "ワルザザート近郊",
+    "latitude": 31.047,
+    "longitude": -7.129,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。乾いた景観に溶け込む土造りの集落。写真で楽しむ小旅行。",
+    "photoCaption": "乾いた景観に溶け込む土造りの集落",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a4/A%C3%AFtBenhaddou_Morocco_2.jpg/500px-A%C3%AFtBenhaddou_Morocco_2.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:A%C3%AFtBenhaddou_Morocco_2.jpg",
+    "photoAsset": "assets/travel/ma-ait-benhaddou-postcard.jpg",
+    "author": "cliff williams",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "アイト・ベン・ハドゥでは、土色の建物が斜面に折り重なり、周囲の乾いた景色と一体になって見えます。遠くからは一つの大きな塊のようですが、近づくにつれ塔や壁、通路の起伏が現れます。建物の輪郭と土地の色がつながっていることを確かめ、晴れた光の下で陰影が変わる様子をゆっくり味わいたい場所です。",
+      "UNESCOはこのクサルを、モロッコ南部に見られる伝統的な土造りの建築と集落の優れた例として紹介しています。防御的な構造を持つ住居群がまとまり、地域の建築技術を伝えてきました。豪華な装飾を見る場所とは違い、材料の選び方や壁の厚さ、集落全体の配置に目を向けることで、暮らしの工夫が読み取れます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アイト・ベン・ハドゥ",
+        "url": "https://whc.unesco.org/en/list/444/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ph-hapao-terraces-cover": {
+    "country": "フィリピン",
+    "countryOnly": true,
+    "place": "ハパオの棚田",
+    "region": "イフガオ州・フンドゥアン",
+    "latitude": 16.879,
+    "longitude": 121.038,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。山間の谷に連なるハパオの棚田。写真で楽しむ小旅行。",
+    "photoCaption": "山間の谷に連なるハパオの棚田",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Hungduan%2C_Hapao_rice_terraces_-_Flickr.jpg/500px-Hungduan%2C_Hapao_rice_terraces_-_Flickr.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Hungduan%2C_Hapao_rice_terraces_-_Flickr.jpg",
+    "photoAsset": "assets/travel/ph-hapao-terraces-cover.jpg",
+    "author": "Arian Zwegers from Brussels, Belgium",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  },
+  "ph-batad-terraces-postcard": {
+    "country": "フィリピン",
+    "countryOnly": true,
+    "place": "コルディリェーラの棚田群・バタッド",
+    "region": "イフガオ州・バタッド",
+    "latitude": 16.934,
+    "longitude": 121.136,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。山の斜面に連なるバタッドの棚田。写真で楽しむ小旅行。",
+    "photoCaption": "山の斜面に連なるバタッドの棚田",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d6/Batad_rice_terraces_in_Ifugao.jpg/500px-Batad_rice_terraces_in_Ifugao.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Batad_rice_terraces_in_Ifugao.jpg",
+    "photoAsset": "assets/travel/ph-batad-terraces-postcard.jpg",
+    "author": "Ericmontalban",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "コルディリェーラの棚田を高い場所から見下ろすと、山の斜面をなぞるように小さな田んぼが何段も続きます。遠目には緑の幾何学模様に見えますが、近づくと水を運ぶ仕組みや畦の細かな曲線に目が向きます。角度を変えて見渡せば、谷の地形に合わせて形が異なることも分かります。写真だけでなく、農業の仕事と結びつく景色として眺めたい場所です。",
+      "UNESCOは棚田群を、先住民イフガオの人々が長い時間をかけて育ててきた生きた文化的景観として評価しています。バタッドやバンガアンなど、登録された複数の地区にはそれぞれ異なる形の棚田があります。観光用に整えられた単一の庭園ではなく、現在も農作業が行われる土地だと意識すると、維持するための知恵や労力の大きさがよく分かります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・フィリピン・コルディリェーラの棚田群",
+        "url": "https://whc.unesco.org/en/list/722/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ph-vigan-crisologo-postcard": {
+    "country": "フィリピン",
+    "countryOnly": true,
+    "place": "ビガン歴史都市・クリソロゴ通り",
+    "region": "南イロコス州・ビガン",
+    "latitude": 17.571,
+    "longitude": 120.389,
+    "note": "地図は紹介地域の代表地点（撮影位置とは限りません）。歴史的家屋が並ぶ通りと馬車（2025年）。写真で楽しむ小旅行。",
+    "photoCaption": "歴史的家屋が並ぶ通りと馬車（2025年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Calle_Crisologo%2C_Vigan_Ilocos_Sur_October%2C_2025.jpg/500px-Calle_Crisologo%2C_Vigan_Ilocos_Sur_October%2C_2025.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Calle_Crisologo%2C_Vigan_Ilocos_Sur_October%2C_2025.jpg",
+    "photoAsset": "assets/travel/ph-vigan-crisologo-postcard.jpg",
+    "author": "Hydztemple",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "クリソロゴ通りの写真には、石畳の道、張り出した窓のある家屋、馬車が一緒に写っています。建物の下の階と上の階の素材や窓の形を比べれば、暑い気候や商業活動に対応した街の工夫が見えてきます。現在も人が暮らす歴史地区であることに目を向け、通りの景観から異なる地域の文化が交わった過程を想像しましょう。",
+      "UNESCOはビガンを、フィリピンの地域文化に中国やヨーロッパの建築的要素が重なった、保存状態のよい歴史都市として評価しています。植民地時代だけでなく、それ以前から交易の重要な拠点だったことも街の成り立ちに関わっています。装飾や窓の形の違いを探しながら歩くと、異なる文化が混ざり合って独特の街並みをつくった過程を想像できます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ビガン歴史都市",
+        "url": "https://whc.unesco.org/en/list/502/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }

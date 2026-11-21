@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v79';
+const SHELL_CACHE = 'yoru9-shell-v80';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -96,7 +96,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Sri Lanka: Beira Lake, Sigiriya and Kandy.
  'assets/travel/lk-colombo-beira-cover.jpg', 'assets/travel/lk-sigiriya-postcard.jpg', 'assets/travel/lk-kandy-tooth-postcard.jpg',
  // Baltic states and Cyprus: independently reviewed Commons originals.
- 'assets/travel/ee-tallinn-toompea-cover.jpg', 'assets/travel/ee-tallinn-square-postcard.jpg', 'assets/travel/ee-tartu-observatory-postcard.jpg', 'assets/travel/lv-riga-skyline-cover.jpg', 'assets/travel/lv-riga-artnouveau-postcard.jpg', 'assets/travel/lv-kuldiga-bridge-postcard.jpg', 'assets/travel/lt-vilnius-river-cover.jpg', 'assets/travel/lt-vilnius-anne-postcard.jpg', 'assets/travel/lt-nida-parnidis-postcard.jpg', 'assets/travel/cy-paphos-coast-cover.jpg', 'assets/travel/cy-paphos-mosaic-postcard.jpg', 'assets/travel/cy-asinou-fresco-postcard.jpg'];
+ 'assets/travel/ee-tallinn-toompea-cover.jpg', 'assets/travel/ee-tallinn-square-postcard.jpg', 'assets/travel/ee-tartu-observatory-postcard.jpg', 'assets/travel/lv-riga-skyline-cover.jpg', 'assets/travel/lv-riga-artnouveau-postcard.jpg', 'assets/travel/lv-kuldiga-bridge-postcard.jpg', 'assets/travel/lt-vilnius-river-cover.jpg', 'assets/travel/lt-vilnius-anne-postcard.jpg', 'assets/travel/lt-nida-parnidis-postcard.jpg', 'assets/travel/cy-paphos-coast-cover.jpg', 'assets/travel/cy-paphos-mosaic-postcard.jpg', 'assets/travel/cy-asinou-fresco-postcard.jpg',
+ // Bosnia, Indonesia, Morocco and Philippines.
+ 'assets/travel/ba-mostar-cover.jpg', 'assets/travel/ba-mostar-night-postcard.jpg', 'assets/travel/ba-visegrad-bridge-postcard.jpg', 'assets/travel/id-sumbing-cover.jpg', 'assets/travel/id-borobudur-stupa-postcard.jpg', 'assets/travel/id-prambanan-postcard.jpg', 'assets/travel/ma-fez-street-cover.jpg', 'assets/travel/ma-fez-tannery-postcard.jpg', 'assets/travel/ma-ait-benhaddou-postcard.jpg', 'assets/travel/ph-hapao-terraces-cover.jpg', 'assets/travel/ph-batad-terraces-postcard.jpg', 'assets/travel/ph-vigan-crisologo-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
