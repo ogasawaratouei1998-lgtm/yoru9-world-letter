@@ -68,7 +68,7 @@ try{
     const count=Number(document.querySelector('#atlasStoryCount')?.textContent);
     const cards=document.querySelectorAll('#issueGallery .gallery-tile').length;
     const otherArticles=document.querySelectorAll('#stories li.story').length;
-    return /^\\d{4}-\\d{2}-\\d{2} 発行 · [1-5]本/.test(release) &&
+    return /^\d{4}-\d{2}-\d{2} 発行 · [1-5]本/.test(release) &&
       Number.isInteger(count)&&count>=1&&count<=5 &&
       cards===count&&otherArticles===count-1;
    },null,{timeout:30000});
