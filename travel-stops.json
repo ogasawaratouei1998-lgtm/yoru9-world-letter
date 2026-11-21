@@ -3190,5 +3190,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "pl-warsaw-old-town-cover": {
+    "country": "ポーランド",
+    "countryOnly": true,
+    "place": "ワルシャワ旧市街・市場広場",
+    "region": "ワルシャワ旧市街",
+    "latitude": 52.2495,
+    "longitude": 21.0127,
+    "note": "歴史地区の中心として再建されたワルシャワの旧市街市場広場。",
+    "photoCaption": "ワルシャワ旧市街の市場広場に並ぶ歴史的な街並み（2022年5月、Andrzej Otrębski撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Warszawa_Rynek_Starego_Miasta_4.jpg/500px-Warszawa_Rynek_Starego_Miasta_4.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Warszawa_Rynek_Starego_Miasta_4.jpg",
+    "photoAsset": "assets/travel/pl-warsaw-old-town-cover.jpg",
+    "author": "Andrzej Otrębski",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "pl-wawel-castle-postcard": {
+    "country": "ポーランド",
+    "countryOnly": true,
+    "place": "クラクフ歴史地区・ヴァヴェル城",
+    "region": "クラクフ歴史地区・ヴァヴェルの丘",
+    "latitude": 50.0547,
+    "longitude": 19.9353,
+    "note": "中世都市クラクフの世界遺産を構成する王城と大聖堂のある丘。",
+    "photoCaption": "クラクフのヴァヴェル城と丘を望むパノラマ（2022年12月、Lotse8撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Wawel_Castle_Krakow.jpg/500px-Wawel_Castle_Krakow.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Wawel_Castle_Krakow.jpg",
+    "photoAsset": "assets/travel/pl-wawel-castle-postcard.jpg",
+    "author": "Lotse8",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "クラクフの歴史地区では、広い中央市場広場から小さな通りへ入ると、街の音や建物の密度が変わります。織物会館や教会の塔を見上げたあと、ヴァヴェルの丘へ進むと、街を俯瞰する視点が得られます。ひとつの景色を撮って終えるのではなく、広場、丘、カジミエシュの街並みを歩き比べ、異なる歴史的な区域がどうつながるかを感じたい場所です。",
+      "UNESCOはクラクフの歴史地区を、中世の都市、ヴァヴェルの丘の建築群、カジミエシュを含む複数の区域からなる遺産として評価しています。市場広場の賑わいだけでなく、政治や宗教、商業が街のかたちに与えた影響が見どころです。地図を手に古い通りの配置を見比べれば、街が時代とともに積み重ねてきた役割が分かってきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・クラクフ歴史地区",
+        "url": "https://whc.unesco.org/en/list/29/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "pl-wieliczka-salt-chapel-postcard": {
+    "country": "ポーランド",
+    "countryOnly": true,
+    "place": "ヴィエリチカとボフニャの王立岩塩坑・聖キンガ礼拝堂",
+    "region": "クラクフ近郊・ヴィエリチカ岩塩坑",
+    "latitude": 49.9832,
+    "longitude": 20.0547,
+    "note": "13世紀以降の岩塩採掘の歴史が残る世界遺産。地下に岩塩彫刻や礼拝堂がある。",
+    "photoCaption": "ヴィエリチカ岩塩坑の岩塩を彫って造られた聖キンガ礼拝堂（2026年3月、Андрей Романенко撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Saint_Kinga_Chapel_in_Wieliczka_Salt_Mine.jpg/500px-Saint_Kinga_Chapel_in_Wieliczka_Salt_Mine.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Saint_Kinga_Chapel_in_Wieliczka_Salt_Mine.jpg",
+    "photoAsset": "assets/travel/pl-wieliczka-salt-chapel-postcard.jpg",
+    "author": "Андрей Романенко",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ヴィエリチカの岩塩坑では、地上の景色とはまったく違う地下の空間が続きます。通路を進むと岩塩を削ってつくった彫刻や礼拝堂が現れ、採掘場だった場所に人々が時間をかけて造形を加えてきたことに驚きます。照明の下で浮かぶ岩肌の質感を眺めながら、地下という環境が仕事と信仰の両方にどう使われてきたのかを想像したい場所です。",
+      "UNESCOはヴィエリチカとボフニャの岩塩坑を、13世紀から20世紀に至る欧州の採掘技術の発展を伝える産業遺産として評価しています。坑道や礼拝堂だけでなく、採掘を支えた施設や城も一つの歴史を構成します。階段や通路の連なりに注目すると、地下空間を安全に使うための知恵が見えてきます。見学は指定された経路と案内に従います。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ヴィエリチカとボフニャの王立岩塩坑",
+        "url": "https://whc.unesco.org/en/list/32/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
   }
 }
