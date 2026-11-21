@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -73,10 +73,10 @@ class CountryContentTest(unittest.TestCase):
                 self.assertTrue(stop.get("historicalSources"))
         self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
 
-    def test_korea_source_review_is_complete_without_automatically_approving(self):
+    def test_korea_source_review_is_complete_and_explicitly_approved(self):
         doc=load_country_content(ROOT)
         korea=doc["countries"]["KR"]
-        self.assertEqual(korea["status"],"pending")
+        self.assertEqual(korea["status"],"approved")
         self.assertEqual(len(korea["quiz"]),2)
         covers={p["asset"] for p in korea["portraitPhotos"]
                 if not p.get("avoidCover") and not p.get("remoteOnly")}
@@ -99,12 +99,17 @@ class CountryContentTest(unittest.TestCase):
                 self.assertTrue(all(110<=len(t)<=360 for t in stop["travelStory"]))
                 self.assertTrue(stop.get("historicalSources"))
 
-    def test_korea_explicit_approval_simulation_qualifies_for_reader(self):
-        # A separate PR must opt in. This fixture tests that all photo, quiz
-        # and independent tourist assets really become usable at that point.
+    def test_korea_approval_is_not_inferred_from_complete_assets(self):
+        # A ready-looking Korean portrait without the explicit approval stays
+        # blocked. A second opt-in on this isolated fixture enables it.
         path=self.root/"country-content.json"
         data=json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(data["countries"]["KR"]["status"],"pending")
+        self.assertEqual(data["countries"]["KR"]["status"],"approved")
+        data["countries"]["KR"]["status"]="pending"
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
+        with self.assertRaisesRegex(ValueError,"KR: country content awaiting editorial approval"):
+            country_coverage(self.root,[{"country":"韓国"}])
         data["countries"]["KR"]["status"]="approved"
         path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
         sync_country_content(self.root)

@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AR","DE","ES","FR","GB","IT","JP","NZ","US"])
-        self.assertEqual(report["pendingCountries"],187)
-        self.assertEqual(len(report["prioritizedPending"]),187)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),187)
+        self.assertEqual(report["approvedCountries"],["AR","DE","ES","FR","GB","IT","JP","KR","NZ","US"])
+        self.assertEqual(report["pendingCountries"],186)
+        self.assertEqual(len(report["prioritizedPending"]),186)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),186)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
@@ -72,12 +72,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",row["missing"])
             self.assertNotIn("attributed_country_portrait_photo",row["missing"])
 
-    def test_korean_content_is_prepared_but_stays_pending(self):
+    def test_korean_content_is_approved_only_after_review(self):
         report=country_editorial_queue(ROOT)
-        korea=next(row for row in report["prioritizedPending"] if row["code"]=="KR")
-        self.assertEqual(korea["requiredRemaining"],0)
-        self.assertNotIn("KR",report["approvedCountries"])
-        self.assertIn("optional_current_topic",korea["missing"])
+        self.assertIn("KR",report["approvedCountries"])
+        self.assertNotIn("KR",{row["code"] for row in report["prioritizedPending"]})
 
     def test_two_short_tourism_paragraphs_still_block_a_pending_country(self):
         with tempfile.TemporaryDirectory() as dirname:
@@ -86,6 +84,7 @@ class CountryEditorialQueueTest(unittest.TestCase):
                 shutil.copy2(ROOT/name,root/name)
             path=root/"country-content.json"
             doc=json.loads(path.read_text(encoding="utf-8"))
+            doc["countries"]["KR"]["status"]="pending"
             for stop in doc["countries"]["KR"]["travelStops"].values():
                 if stop.get("travelStory"):
                     stop["travelStory"]=["短すぎる説明。","歴史的な説明も短すぎます。"]

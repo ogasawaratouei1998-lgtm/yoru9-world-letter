@@ -2284,7 +2284,7 @@
     },
     "KR": {
       "name": "韓国",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "王宮から市場の食卓、古代寺院と火山の島へ",
         "body": "韓国では、朝鮮王朝の宮殿や新羅時代の仏教遺産が、現代の映画・音楽・デザイン文化と共存しています。ソウルの宮殿から慶州の石段をたどり、済州島では海から立ち上がる火山地形に出会えます。食卓にはキムチやナムルなどの小皿料理が並び、土地ごとに調理法や味付けが異なります。観光地の写真だけでなく、地域の料理や生活、受け継がれてきた歴史にも目を向けると、多彩な文化が見えてくる国です。",
@@ -2454,7 +2454,24 @@
           ]
         }
       },
-      "highlights": []
+      "highlights": [],
+      "approval": {
+        "reviewedOn": "2026-11-21",
+        "reason": "Independent KTO culture and national heritage agency / UNESCO history, three local photographs with individually credited licenses, distinct national cover and photo answers, verified independent tourist postcard; 506 publication and mobile tests passed preapproval.",
+        "sources": [
+          "https://english.visitkorea.or.kr/svc/contents/contentsView.do?menuSn=903&vcontsId=229195",
+          "https://royal.khs.go.kr/ENG/contents/E101010000.do",
+          "https://whc.unesco.org/en/list/736",
+          "https://whc.unesco.org/en/list/1264",
+          "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=220016",
+          "https://i815.or.kr/2018/introduction/greeting.do"
+        ],
+        "photos": [
+          "https://commons.wikimedia.org/wiki/File:Bulguksa.jpg",
+          "https://commons.wikimedia.org/wiki/File:Seongsan_Ilchulbong.jpg",
+          "https://commons.wikimedia.org/wiki/File:Korea-Gyeongju-Bulguksa-32.jpg"
+        ]
+      }
     },
     "KW": {
       "name": "クウェート",
