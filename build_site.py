@@ -65,6 +65,21 @@ def bundle_travel_photos(root, output):
                     if not photo.get('avoidCover') and asset in required:
                         country_covers.add(asset)
 
+    # Strong native-resolution requirements apply to currently displayed
+    # country portraits. Other vetted historical postcards may temporarily
+    # retain their previously published 500px files under Wikimedia throttling;
+    # they MUST be upgraded before becoming a new issue's active cover.
+    active_covers=set(country_covers)
+    current_path=root/'data/current.json'
+    if current_path.is_file() and page.is_file() and matches:
+        from country_codes import country_codes
+        current_issue=json.loads(current_path.read_text(encoding='utf-8'))
+        active_codes={code for story in current_issue.get('stories',[])
+                      for code in country_codes(story.get('country'))}
+        active_covers={photo.get('asset') for code in active_codes
+                       for photo in registry.get(code,[])
+                       if not photo.get('avoidCover') and
+                       photo.get('asset') in country_covers}
     # GitHub Actions can restore this cache across otherwise ephemeral builds.
     # Cache keys include the verified Wikimedia URL AND the license/author
     # provenance. A changed photo or country-cover role invalidates the entry.
@@ -103,7 +118,7 @@ def bundle_travel_photos(root, output):
                         if src.read(3)!=b"\xff\xd8\xff":
                             raise ValueError("cached JPEG header invalid")
                     w,h=jpeg_dimensions(cache_file)
-                    if (w<1000 or h<540) if cover else (w<330 or h<200):
+                    if (w<1000 or h<540) if asset in active_covers else (w<330 or h<200):
                         raise ValueError("cached image resolution inadequate")
                     shutil.copyfile(cache_file,target)
                     reused+=1
@@ -190,7 +205,7 @@ def bundle_travel_photos(root, output):
                     raise ValueError('published photo bytes are not JPEG')
                 target.write_bytes(payload)
                 width,height=jpeg_dimensions(target)
-                if ((width<1000 or height<540) if asset in country_covers
+                if ((width<1000 or height<540) if asset in active_covers
                         else (width<330 or height<200)):
                     raise ValueError('published photo is below original image size gate')
                 shutil.copyfile(target,cache_files[asset])
