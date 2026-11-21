@@ -59,6 +59,19 @@ class EditorialRubricTests(unittest.TestCase):
         self.assertIn('reject("quip_without_original_angle");continue',source)
         self.assertIn('story["quip"]=selected_quip',source)
 
+    def test_every_refill_gets_same_three_way_quip_selection(self):
+        # Normal and post-review refills used to ask for just one first joke.
+        # The existing selector must receive alternatives without another
+        # paid model call or any relaxation of independent fact review.
+        import inspect
+        from auto_editorial import main, QUIP_ALTERNATIVE_REQUIREMENT
+        source=inspect.getsource(main)
+        self.assertEqual(source.count("QUIP_ALTERNATIVE_REQUIREMENT"),2)
+        self.assertIn("quipCandidates",QUIP_ALTERNATIVE_REQUIREMENT)
+        self.assertIn("Do not invent any events",QUIP_ALTERNATIVE_REQUIREMENT)
+        self.assertEqual(source.count("audit=ai("),1)
+        self.assertIn('story["quip"]=selected_quip',source)
+
     def test_repetitive_stock_reaction_is_discarded(self):
         good="コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"
         story={"title":"救助のために配達を注文",

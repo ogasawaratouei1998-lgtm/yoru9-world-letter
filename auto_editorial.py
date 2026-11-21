@@ -164,6 +164,17 @@ MANZAI_CRAFT=(
     "if it is merely a different metaphor for quip, omit it. "
     "If all safe angles are plain recaps, return no quip-worthy story. "
 )
+QUIP_ALTERNATIVE_REQUIREMENT=(
+    " For each story return quipCandidates: THREE different concise Japanese "
+    "first-punchlines (18-55 characters each), not paraphrases of one another. "
+    "Try (1) the real purpose becoming its opposite, (2) a documented role "
+    "reversal, and (3) a concrete object or decision becoming the unlikely "
+    "star of the outcome. Do not invent any events, quotes, motives or harm. "
+    "Avoid interchangeable endings and headline recaps. The best candidate "
+    "goes into quip; the downstream selector compares all options BEFORE the "
+    "same mandatory independent source, safety and comedy review. "
+)
+
 MANZAI_REVIEW=(
     " Reject soft comments, essay conclusions and headline recaps. "
     " A 4/5 WOW fact and independently hilarious spoken final beat are required. "
@@ -1374,7 +1385,7 @@ def main():
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
             batch=retry_candidates[start:min(start+2,20,len(retry_candidates))]
-            retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+
+            retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+QUIP_ALTERNATIVE_REQUIREMENT+
                 " You are editor A. Review two incident candidates SEPARATELY. "
                 "FIRST seek a verifiable, significant PERSONAL miscalculation or "
                 "large non-tragic outcome of a named individual's decision. "
@@ -1492,6 +1503,7 @@ def main():
             batch=remaining[offset:offset+2]
             retry_prompt=(
                 EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+
+                QUIP_ALTERNATIVE_REQUIREMENT+
                 " Editor A: these independent original-article groups were NOT "
                 "approved or rejected yet. Seek a BIG, independently documented "
                 "individual mistake, spectacular but non-tragic reversal, or "
