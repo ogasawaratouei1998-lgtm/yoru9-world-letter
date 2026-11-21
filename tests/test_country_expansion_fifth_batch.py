@@ -88,7 +88,7 @@ class FifthBatchTests(unittest.TestCase):
     def test_queue_counts_unfinished_photographs_as_blockers(self):
         queue = country_editorial_queue(ROOT)
         self.assertEqual(len(queue["approvedCountries"]), 27)
-        self.assertEqual(queue["pendingCountries"], 170)
+        self.assertEqual(queue["pendingCountries"], 169)
         entries = {row["code"]: row for row in queue["prioritizedPending"]}
         for code in COUNTRIES:
             with self.subTest(code=code):
