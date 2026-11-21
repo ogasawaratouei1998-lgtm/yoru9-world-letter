@@ -212,7 +212,10 @@ def bundle_travel_photos(root, output):
                 recovered+=1
             except (OSError,ValueError) as exc:
                 target.unlink(missing_ok=True)
-                remaining.append(problem+'; published copy unavailable: '+type(exc).__name__)
+                # Diagnostics are bounded and contain no credentials or
+                # publisher article content: only an image path and failure.
+                remaining.append(problem+'; published copy unavailable: '+
+                                 type(exc).__name__+': '+str(exc)[:110])
         failures=remaining
     print(f'旅行写真のサイト内保存：{len(required) - len(failures)}/{len(required)} 件'
           f'（キャッシュ再利用 {reused} 件、公開済み写真から復旧 {recovered} 件）')
