@@ -65,6 +65,33 @@ class CountryContentTest(unittest.TestCase):
                                           {"id":"g","country":"イギリス"}])
         self.assertEqual(set(result),{"IT","DE","US","FR","AR","JP","GB"})
 
+    def test_country_photo_cannot_be_relabelled_to_another_country(self):
+        path=self.root/"country-content.json"
+        doc=json.loads(path.read_text(encoding="utf-8"))
+        german=doc["countries"]["DE"]["travelStops"]["germany-cologne-cathedral-postcard"]
+        german["photoAsset"]="assets/travel/italy-pisa-tower.jpg"
+        path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"photograph reused with conflicting"):
+            load_country_content(self.root)
+
+    def test_country_postcard_must_match_its_geographic_record(self):
+        path=self.root/"country-content.json"
+        doc=json.loads(path.read_text(encoding="utf-8"))
+        doc["countries"]["FR"]["travelStops"]["france-eiffel-postcard"]["country"]="イタリア"
+        path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"wrong-country postcard"):
+            load_country_content(self.root)
+
+    def test_same_country_same_wikimedia_photo_can_have_two_postcards(self):
+        # Historic named incidents and evergreen UK cards genuinely share
+        # Edinburgh Castle imagery with identical rights and photographer.
+        doc=load_country_content(ROOT)
+        one=doc["countries"]["GB"]["travelStops"]["flight-wrong-country"]
+        two=doc["countries"]["GB"]["travelStops"]["uk-country-postcard"]
+        self.assertEqual(one["photoAsset"],two["photoAsset"])
+        self.assertEqual(one["photoPage"],two["photoPage"])
+        self.assertEqual(one["author"],two["author"])
+
     def test_pending_country_cannot_be_promoted_without_photos(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
