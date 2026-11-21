@@ -48,6 +48,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',options:['ベルリン','ミュンヘン','ケルン'],answer:2,photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
   {question:'ノイシュヴァンシュタイン城があるドイツの州は？',options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'},
  ],
+ DK:[
+  {question:'クロンボー城が見下ろす重要な海峡は？',options:['エーレスンド海峡','ジブラルタル海峡','マラッカ海峡'],answer:0,fact:'UNESCOはクロンボー城がエーレスンド海峡を押さえる位置に建つと説明しています。',photoLabel:'正解写真｜クロンボー城',quip:'海峡が狭ければ城の仕事は増える。最高の立地で、常に見張り番。',photoKey:'dk-kronborg-castle-postcard'},
+  {question:'ロスキレ大聖堂の建築材料で特に重要なのは？',options:['レンガ','氷のブロック','珊瑚'],answer:0,fact:'UNESCOは北欧の大型宗教建築における早期のレンガ使用を高く評価しています。',photoLabel:'正解写真｜ロスキレ大聖堂',quip:'レンガが主役の大聖堂。積み重ねたのは建材だけでなく、王家の歴史。',photoKey:'dk-roskilde-cathedral-postcard'},
+ ],
  EG:[
   {question:'ギザのピラミッド群を含むメンフィスの墓地遺跡の世界遺産登録年は？',options:['1979年','1985年','2001年'],answer:0,photoLabel:'正解写真｜ギザの大ピラミッド',fact:'UNESCOによると、メンフィスとその墓地遺跡は1979年に世界文化遺産へ登録されました。',quip:'古代の建築なのに、街の景色に今も堂々と割り込んでくる。',photoKey:'eg-giza-pyramid-postcard'},
   {question:'アブ・シンベルなどのヌビア遺跡群を救うため、国際的な保存活動を主導した機関は？',options:['UNESCO','欧州中央銀行','国際オリンピック委員会'],answer:0,photoLabel:'正解写真｜アブ・シンベル大神殿',fact:'UNESCOが1960年から1980年にかけて進めた国際保存活動により、神殿などが水没の危機から救われました。',quip:'古代の巨像を動かしたのは、現代の大きなチームワーク。',photoKey:'eg-abu-simbel-postcard'},
