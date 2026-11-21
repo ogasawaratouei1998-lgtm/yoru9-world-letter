@@ -158,7 +158,19 @@
     "jo-wadi-rum-sunset-postcard",
     "lk-colombo-beira-cover",
     "lk-sigiriya-postcard",
-    "lk-kandy-tooth-postcard"
+    "lk-kandy-tooth-postcard",
+    "ee-tallinn-toompea-cover",
+    "ee-tallinn-square-postcard",
+    "ee-tartu-observatory-postcard",
+    "lv-riga-skyline-cover",
+    "lv-riga-artnouveau-postcard",
+    "lv-kuldiga-bridge-postcard",
+    "lt-vilnius-river-cover",
+    "lt-vilnius-anne-postcard",
+    "lt-nida-parnidis-postcard",
+    "cy-paphos-coast-cover",
+    "cy-paphos-mosaic-postcard",
+    "cy-asinou-fresco-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2006,7 +2018,7 @@
     },
     "CY": {
       "name": "キプロス",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "地中海の古代遺跡と、山村の教会に描かれた色彩",
         "body": "キプロスでは、海岸近くのパフォスと山地のトロードス地方に異なる文化の遺産が残ります。パフォスでは古代の建物やモザイクに目を向けると、地中海の歴史が身近になります。山へ移動すれば、トロードスの教会群では外観と内部の豊かな壁画との対照が印象的です。装飾の一つひとつを観察しながら、海上交流の記憶と山の集落が守ってきた信仰の文化をたどる小旅行を楽しめます。",
@@ -2014,13 +2026,127 @@
           "世界遺産：パフォス",
           "世界遺産：トロードス地方の壁画教会群"
         ],
-        "photos": [],
+        "photos": [
+          "cy-paphos-mosaic-postcard",
+          "cy-asinou-fresco-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：キプロスの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/cy"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/cy-paphos-coast-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg/500px-Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg",
+          "caption": "港の船と地中海のパノラマ",
+          "author": "El Nino",
+          "license": "CC BY-SA 3.0",
+          "place": "パフォスの海岸",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ネア・パフォスの芸術遺産として知られるものは？",
+          "options": [
+            "モザイク",
+            "氷の彫刻",
+            "鋳鉄の高層塔"
+          ],
+          "answer": 0,
+          "fact": "ネア・パフォスには古代のモザイクが残っています。",
+          "photoLabel": "正解写真｜パフォス・ディオニュソスの館",
+          "quip": "床に絵を描くために小石を並べた古代の職人。画素数を競うずっと前から、細部の表現にはこだわっていた。",
+          "photoKey": "cy-paphos-mosaic-postcard"
+        },
+        {
+          "question": "トロードス地方の教会群が特に伝える芸術は？",
+          "options": [
+            "近代の映画撮影",
+            "ビザンツ系の壁画",
+            "海底の彫刻"
+          ],
+          "answer": 1,
+          "fact": "十件の教会・修道院の壁画がビザンツ美術などの変化を伝えます。",
+          "photoLabel": "正解写真｜トロードス地方・アシヌ教会",
+          "quip": "小さな教会だからこそ壁画に目が向く。建物の規模と芸術の価値は比例しない。",
+          "photoKey": "cy-asinou-fresco-postcard"
+        }
+      ],
+      "travelStops": {
+        "cy-paphos-coast-cover": {
+          "country": "キプロス",
+          "countryOnly": true,
+          "place": "パフォスの海岸",
+          "region": "パフォス",
+          "latitude": 34.756,
+          "longitude": 32.411,
+          "note": "地図は紹介地点の代表座標。港の船と地中海のパノラマ。",
+          "photoCaption": "港の船と地中海のパノラマ",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg/500px-Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Pafoszi_tengerpart_%28_panor%C3%A1mak%C3%A9p%29_-_Coast_of_Paphos_%28panorama%29_-_panoramio.jpg",
+          "photoAsset": "assets/travel/cy-paphos-coast-cover.jpg",
+          "author": "El Nino",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+        },
+        "cy-paphos-mosaic-postcard": {
+          "country": "キプロス",
+          "countryOnly": true,
+          "place": "パフォス・ディオニュソスの館",
+          "region": "ネア・パフォス考古学公園",
+          "latitude": 34.756,
+          "longitude": 32.405,
+          "note": "地図は紹介地点の代表座標。ナルキッソスを描く古代モザイク。",
+          "photoCaption": "ナルキッソスを描く古代モザイク",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/57/Mosaic_of_Narcissus%2C_from_the_House_of_Dionysos%2C_Paphos_Archaeological_Park_%28Nea_Paphos%29%2C_Cyprus_%2822518456155%29.jpg/500px-Mosaic_of_Narcissus%2C_from_the_House_of_Dionysos%2C_Paphos_Archaeological_Park_%28Nea_Paphos%29%2C_Cyprus_%2822518456155%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mosaic_of_Narcissus%2C_from_the_House_of_Dionysos%2C_Paphos_Archaeological_Park_%28Nea_Paphos%29%2C_Cyprus_%2822518456155%29.jpg",
+          "photoAsset": "assets/travel/cy-paphos-mosaic-postcard.jpg",
+          "author": "Carole Raddato from FRANKFURT, Germany",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+          "travelStory": [
+            "パフォスの遺跡では、石の小片を組み合わせて描かれたモザイクが、古代の住居の床に残っています。遠くからは一つの場面として見える絵も、近づくと小さな色の違いと配置で表現されていることに気づきます。建物の大きさだけではなく、足元を飾った絵の細部から、古代の暮らしや芸術の技術を想像する旅です。",
+            "UNESCOはパフォスを新石器時代から人が暮らし、アフロディテの信仰とも深い関係を持つ場所として紹介しています。複数の時代の住居や劇場、墓などに加え、ネア・パフォスのモザイクが芸術的な価値を伝えています。神話と都市生活がどのように結びついていたかを知ると、床面の絵も単なる装飾ではなく歴史を読む入口になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・パフォス・ネア・パフォスのモザイク",
+              "url": "https://whc.unesco.org/en/list/79/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "cy-asinou-fresco-postcard": {
+          "country": "キプロス",
+          "countryOnly": true,
+          "place": "トロードス地方・アシヌ教会",
+          "region": "ニキタリ近郊",
+          "latitude": 35.046,
+          "longitude": 32.973,
+          "note": "地図は紹介地点の代表座標。アシヌ教会の外壁に残る壁画。",
+          "photoCaption": "アシヌ教会の外壁に残る壁画",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Nikitari_Kirche_Panagia_Asinou_Au%C3%9Fenfresko_1.jpg/500px-Nikitari_Kirche_Panagia_Asinou_Au%C3%9Fenfresko_1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Nikitari_Kirche_Panagia_Asinou_Au%C3%9Fenfresko_1.jpg",
+          "photoAsset": "assets/travel/cy-asinou-fresco-postcard.jpg",
+          "author": "Zairon",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "アシヌ教会の外壁の写真では、石を組んだ壁に残る色彩と人物の輪郭が見えます。山村の教会は周囲の地形になじむ控えめな外観を持ちながら、内部には豊かな壁画も残しています。石材と絵画の対照から、地域の建築と宗教美術が一つの建物に重ねられてきたことを想像してみましょう。",
+            "UNESCOはトロードス地方に残る十件の教会・修道院を、ビザンツ美術からその後の時代に至る絵画の変化を示す遺産として登録しています。地域の建築上の工夫と外から伝わった美術の影響が、一つの建物に重なっています。壁画は保護が必要な貴重な文化財でもあるため、実際に見学する場合は礼拝や撮影に関する現地の規則を尊重しましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トロードス地方・アシヌ教会",
+              "url": "https://whc.unesco.org/en/list/351/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "CZ": {
@@ -2835,7 +2961,7 @@
     },
     "EE": {
       "name": "エストニア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "石畳の商都と、地球の形を測った科学の足跡",
         "body": "バルト海に面するエストニアでは、首都タリンの旧市街と、国境を越えて広がる測量の歴史をたどれます。タリンでは城壁や塔のある街を歩き、海上交易が育んだ中世の都市の姿を想像してみましょう。一方、シュトルーヴェの測地弧は、各地の測量地点を結んで地球の大きさと形を調べた科学の遺産です。建物を見上げる旅から、地球そのものを見つめる旅へ、視点が大きく切り替わります。",
@@ -2843,13 +2969,132 @@
           "世界遺産：タリン歴史地区（旧市街）",
           "世界遺産：シュトルーヴェの測地弧（複数国にまたがる遺産）"
         ],
-        "photos": [],
+        "photos": [
+          "ee-tallinn-square-postcard",
+          "ee-tartu-observatory-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：エストニアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/ee"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/ee-tallinn-toompea-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG/500px-Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG",
+          "caption": "夕暮れの旧市街と市庁舎の塔",
+          "author": "Diego Delso",
+          "license": "CC BY-SA 3.0",
+          "place": "タリン・トームペアの眺望",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "タリンが中世に発展した交易組織は？",
+          "options": [
+            "ハンザ同盟",
+            "国際連合",
+            "東インド会社"
+          ],
+          "answer": 0,
+          "fact": "バルト海の交易を担ったハンザ同盟の重要な都市でした。",
+          "photoLabel": "正解写真｜タリン旧市街・市庁舎広場",
+          "quip": "商人の家まで立派なのが、交易都市の強さ。繁栄の証拠は帳簿だけでなく街並みにも残る。",
+          "photoKey": "ee-tallinn-square-postcard"
+        },
+        {
+          "question": "シュトルーヴェの測地弧は何を測るための遺産？",
+          "options": [
+            "海の塩分",
+            "地球の形と大きさ",
+            "鉱山の深さ"
+          ],
+          "answer": 1,
+          "fact": "複数国の測量地点を結び、地球の形と大きさを精密に調べました。",
+          "photoLabel": "正解写真｜タルトゥ旧天文台",
+          "quip": "地球のサイズを測るのに衛星はなかった。測量点を国境越しに結ぶ発想が、現代の地図を支えている。",
+          "photoKey": "ee-tartu-observatory-postcard"
+        }
+      ],
+      "travelStops": {
+        "ee-tallinn-toompea-cover": {
+          "country": "エストニア",
+          "countryOnly": true,
+          "place": "タリン・トームペアの眺望",
+          "region": "タリン旧市街",
+          "latitude": 59.437,
+          "longitude": 24.741,
+          "note": "地図は紹介地点の代表座標。夕暮れの旧市街と市庁舎の塔。",
+          "photoCaption": "夕暮れの旧市街と市庁舎の塔",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG/500px-Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Vistas_panor%C3%A1micas_desde_Toompea%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_25.JPG",
+          "photoAsset": "assets/travel/ee-tallinn-toompea-cover.jpg",
+          "author": "Diego Delso",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+        },
+        "ee-tallinn-square-postcard": {
+          "country": "エストニア",
+          "countryOnly": true,
+          "place": "タリン旧市街・市庁舎広場",
+          "region": "タリン旧市街",
+          "latitude": 59.437,
+          "longitude": 24.745,
+          "note": "地図は紹介地点の代表座標。石畳の市庁舎広場と歴史的建物。",
+          "photoCaption": "石畳の市庁舎広場と歴史的建物",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Plaza_del_ayuntamiento%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_01.JPG/500px-Plaza_del_ayuntamiento%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_01.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Plaza_del_ayuntamiento%2C_Tallinn%2C_Estonia%2C_2012-08-05%2C_DD_01.JPG",
+          "photoAsset": "assets/travel/ee-tallinn-square-postcard.jpg",
+          "author": "Diego Delso",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "タリンの旧市街では、石畳の広場に面する商人の家や教会の塔が、かつてバルト海の交易で栄えた都市の面影を伝えます。狭い通りから広場に出たときの視界の変化や、城壁の内側に集まる建物の配置に目を向けると、中世の都市がどのように暮らしと商業を支えていたか想像できます。",
+            "UNESCOはタリンが13世紀に城を築かれた場所からハンザ同盟の重要な拠点へ発展した歴史を評価しています。火災や戦争をくぐり抜けた商家や公共建築は、当時の経済力を物語る手掛かりです。豪華な建物を眺めるだけでなく、交易によって都市同士が結ばれていた時代の広がりを地図でも確かめてみましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タリン旧市街",
+              "url": "https://whc.unesco.org/en/list/822/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "ee-tartu-observatory-postcard": {
+          "country": "エストニア",
+          "countryOnly": true,
+          "place": "タルトゥ旧天文台",
+          "region": "タルトゥ",
+          "latitude": 58.378,
+          "longitude": 26.72,
+          "note": "地図は紹介地点の代表座標。雪の夕暮れに照らされた旧天文台。",
+          "photoCaption": "雪の夕暮れに照らされた旧天文台",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Tartu_T%C3%A4hetorn_%C3%B5htul.jpg/500px-Tartu_T%C3%A4hetorn_%C3%B5htul.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Tartu_T%C3%A4hetorn_%C3%B5htul.jpg",
+          "photoAsset": "assets/travel/ee-tartu-observatory-postcard.jpg",
+          "author": "Eksootiline Lind",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "雪の夕暮れに照らされたタルトゥ旧天文台は、大学のある街の丘に建つ科学史の記念物です。塔の形に目を向けながら、夜空を観測する研究と地上の位置を精密に測る研究が、同じ施設で進められていたことを想像してみましょう。一つの観測地点から遠く離れた測量点を地図上で結ぶ小旅行です。",
+            "タルトゥ大学博物館によれば、旧天文台はシュトルーヴェの測地弧を構成する観測地点の一つです。19世紀に北ヨーロッパから黒海方面まで伸びる測量網が築かれ、地球の形や大きさを精密に知る助けになりました。衛星が利用できなかった時代の成果だと考えると、一つ一つの観測値を積み重ねた研究者の根気に驚かされます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "タルトゥ大学博物館・旧天文台常設展示",
+              "url": "https://muuseum.ut.ee/en/old-observatory-permanent-exhibition",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "UNESCO世界遺産センター・シュトルーヴェの測地弧",
+              "url": "https://whc.unesco.org/en/list/1187/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "ET": {
@@ -5581,7 +5826,7 @@
     },
     "LT": {
       "name": "リトアニア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "歴史都市の屋根の向こうに、風が形づくった砂の半島",
         "body": "リトアニアには首都ヴィリニュスの歴史地区と、バルト海沿岸に細長く延びるクルシュー砂州があります。旧市街では教会の塔や曲がりくねった街路に目を向け、異なる時代に積み重なった都市の姿を考えてみましょう。砂州では海と潟湖に挟まれた風景から、風が運ぶ砂と人の暮らしの結びつきが見えてきます。石造りの街と移ろう砂の地形という、対照的な景色に出会える国です。",
@@ -5589,13 +5834,127 @@
           "世界遺産：ヴィリニュス歴史地区",
           "世界遺産：クルシュー砂州（ロシアとの共同登録）"
         ],
-        "photos": [],
+        "photos": [
+          "lt-vilnius-anne-postcard",
+          "lt-nida-parnidis-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：リトアニアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/lt"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/lt-vilnius-river-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Vilnius_river.jpg/500px-Vilnius_river.jpg",
+          "caption": "ネリス川と緑地、街並みの眺望",
+          "author": "Tiia Monto",
+          "license": "CC BY-SA 3.0",
+          "place": "ヴィリニュス・ネリス川の眺望",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Vilnius_river.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ヴィリニュスが歴史的に政治の中心となった国は？",
+          "options": [
+            "ローマ帝国",
+            "アステカ帝国",
+            "リトアニア大公国"
+          ],
+          "answer": 2,
+          "fact": "ヴィリニュスは長くリトアニア大公国の政治の中心でした。",
+          "photoLabel": "正解写真｜ヴィリニュス歴史地区・聖アンナ教会",
+          "quip": "異なる時代の建築が同居する旧市街。街全体を一つの様式で統一しなかったことが、むしろ財産になった。",
+          "photoKey": "lt-vilnius-anne-postcard"
+        },
+        {
+          "question": "砂州を守るために続けられてきた取り組みは？",
+          "options": [
+            "砂の固定と植林",
+            "海底の採掘",
+            "氷河の人工造成"
+          ],
+          "answer": 0,
+          "fact": "風で動く砂を抑えるため、長年にわたる植林などの取り組みが続いています。",
+          "photoLabel": "正解写真｜クルシュー砂州・パルニディス砂丘",
+          "quip": "風が砂を運び、人が植林で守る。砂丘の景色は、自然任せでは残らなかった。",
+          "photoKey": "lt-nida-parnidis-postcard"
+        }
+      ],
+      "travelStops": {
+        "lt-vilnius-river-cover": {
+          "country": "リトアニア",
+          "countryOnly": true,
+          "place": "ヴィリニュス・ネリス川の眺望",
+          "region": "ヴィリニュス",
+          "latitude": 54.69,
+          "longitude": 25.279,
+          "note": "地図は紹介地点の代表座標。ネリス川と緑地、街並みの眺望。",
+          "photoCaption": "ネリス川と緑地、街並みの眺望",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Vilnius_river.jpg/500px-Vilnius_river.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Vilnius_river.jpg",
+          "photoAsset": "assets/travel/lt-vilnius-river-cover.jpg",
+          "author": "Tiia Monto",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+        },
+        "lt-vilnius-anne-postcard": {
+          "country": "リトアニア",
+          "countryOnly": true,
+          "place": "ヴィリニュス歴史地区・聖アンナ教会",
+          "region": "ヴィリニュス",
+          "latitude": 54.683,
+          "longitude": 25.293,
+          "note": "地図は紹介地点の代表座標。赤れんがの聖アンナ教会の後陣。",
+          "photoCaption": "赤れんがの聖アンナ教会の後陣",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/94/Church_of_St_Anne_in_Vilnius_Apse.JPG/500px-Church_of_St_Anne_in_Vilnius_Apse.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Church_of_St_Anne_in_Vilnius_Apse.JPG",
+          "photoAsset": "assets/travel/lt-vilnius-anne-postcard.jpg",
+          "author": "Alma Pater",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "ヴィリニュスの旧市街は、教会の塔が見える街路を歩きながら、建築の時代ごとの違いを発見できる場所です。細い路地から広場に出ると、建物の高さや正面の装飾が変わり、同じ旧市街の中にも多様な表情があります。写真では屋根や窓、石とれんがの使い分けまで眺め、街の長い歴史を読み解いてみましょう。",
+            "UNESCOによると、ヴィリニュスは13世紀から18世紀末までリトアニア大公国の政治の中心でした。ゴシック、ルネサンス、バロック、古典主義などの建物が、中世から受け継がれた都市構造に重なっています。一つの様式だけで統一されていないことが、この街の豊かさです。歴史を学ぶと異なる建物の並びにも物語が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴィリニュス歴史地区",
+              "url": "https://whc.unesco.org/en/list/541/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "lt-nida-parnidis-postcard": {
+          "country": "リトアニア",
+          "countryOnly": true,
+          "place": "クルシュー砂州・パルニディス砂丘",
+          "region": "ニダ・リトアニア側",
+          "latitude": 55.293,
+          "longitude": 20.99,
+          "note": "地図は紹介地点の代表座標。砂丘から望む潟湖と南方の景観。",
+          "photoCaption": "砂丘から望む潟湖と南方の景観",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Parnidis_dune.jpg/500px-Parnidis_dune.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Parnidis_dune.jpg",
+          "photoAsset": "assets/travel/lt-nida-parnidis-postcard.jpg",
+          "author": "Bernt Rostad",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "travelStory": [
+            "バルト海と潟湖に挟まれたクルシュー砂州では、砂丘の起伏と水面の広がりが一つの細長い地形に収まっています。リトアニア側のニダ周辺の写真を眺めると、樹木が生える場所と開けた砂の斜面の対照が見えてきます。風が砂を動かす自然の力を意識しながら、植生を守る人々の仕事にも目を向けたい小旅行です。",
+            "UNESCOは全長98キロメートルのこの砂州を、風や波の作用と、それに対応してきた人間の営みが重なる文化的景観としています。砂の移動を抑える工夫や植林が地形の維持に寄与してきました。ロシアとの共同登録遺産ですが、ここで紹介するのはリトアニア側です。保護区域の立入規則を守る理由も、砂丘の成り立ちから理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クルシュー砂州・リトアニア側ニダ",
+              "url": "https://whc.unesco.org/en/list/994/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "LU": {
@@ -5619,7 +5978,7 @@
     },
     "LV": {
       "name": "ラトビア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "大都市の建築と川沿いの小さな旧市街で、異なる時代を歩く",
         "body": "ラトビアでは、首都リガの歴史地区と西部のクルディーガ旧市街を比べてみたいところです。リガでは歴史ある街路や装飾豊かな建物に注目すると、都市が変化してきた時間を感じられます。クルディーガでは川と街並みの関係を眺めながら、より小さな都市の歴史を味わえます。建物の規模だけでなく、街を歩く人の目線や水辺の景観から、バルト海沿岸の都市文化を知る旅です。",
@@ -5627,13 +5986,127 @@
           "世界遺産：リガ歴史地区",
           "世界遺産：クルディーガ旧市街（2023年登録）"
         ],
-        "photos": [],
+        "photos": [
+          "lv-riga-artnouveau-postcard",
+          "lv-kuldiga-bridge-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ラトビアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/lv"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/lv-riga-skyline-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Rigas_skyline_%288229128055%29.jpg/500px-Rigas_skyline_%288229128055%29.jpg",
+          "caption": "川の向こうに並ぶ旧市街の塔",
+          "author": "Guillaume Speurt from Vilnius, Lithuania",
+          "license": "CC BY-SA 2.0",
+          "place": "リガ・ダウガヴァ川沿いの景観",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Rigas_skyline_%288229128055%29.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "リガの近代建築を特徴づける様式の一つは？",
+          "options": [
+            "古代エジプト様式",
+            "アール・ヌーヴォー",
+            "インカの石造建築"
+          ],
+          "answer": 1,
+          "fact": "リガの近代的な住宅地区にはアール・ヌーヴォー建築が残ります。",
+          "photoLabel": "正解写真｜リガ歴史地区・アール・ヌーヴォー建築",
+          "quip": "建物の壁まで芸術作品。リガでは、街を歩くだけで展覧会の会場が次々に現れる。",
+          "photoKey": "lv-riga-artnouveau-postcard"
+        },
+        {
+          "question": "クルディーガの世界遺産登録年は？",
+          "options": [
+            "1980年",
+            "1994年",
+            "2023年"
+          ],
+          "answer": 2,
+          "fact": "クルディーガ旧市街は2023年に世界遺産に登録されました。",
+          "photoLabel": "正解写真｜クルディーガ旧市街・アレクシュピーテ川の橋",
+          "quip": "世界遺産の価値は建築の高さでは決まらない。小さな橋や家々が歴史を伝える主役になる。",
+          "photoKey": "lv-kuldiga-bridge-postcard"
+        }
+      ],
+      "travelStops": {
+        "lv-riga-skyline-cover": {
+          "country": "ラトビア",
+          "countryOnly": true,
+          "place": "リガ・ダウガヴァ川沿いの景観",
+          "region": "リガ",
+          "latitude": 56.949,
+          "longitude": 24.095,
+          "note": "地図は紹介地点の代表座標。川の向こうに並ぶ旧市街の塔。",
+          "photoCaption": "川の向こうに並ぶ旧市街の塔",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/Rigas_skyline_%288229128055%29.jpg/500px-Rigas_skyline_%288229128055%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Rigas_skyline_%288229128055%29.jpg",
+          "photoAsset": "assets/travel/lv-riga-skyline-cover.jpg",
+          "author": "Guillaume Speurt from Vilnius, Lithuania",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/"
+        },
+        "lv-riga-artnouveau-postcard": {
+          "country": "ラトビア",
+          "countryOnly": true,
+          "place": "リガ歴史地区・アール・ヌーヴォー建築",
+          "region": "リガ",
+          "latitude": 56.959,
+          "longitude": 24.106,
+          "note": "地図は紹介地点の代表座標。装飾が豊かな歴史建築の外観。",
+          "photoCaption": "装飾が豊かな歴史建築の外観",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Riga%2C_Str%C4%93lnieku_iela_%28Alberta_iela_13%29%2C_Art_Nouveau_-Jugendstil_-_Classicism_-_panoramio_%284%29.jpg/500px-Riga%2C_Str%C4%93lnieku_iela_%28Alberta_iela_13%29%2C_Art_Nouveau_-Jugendstil_-_Classicism_-_panoramio_%284%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Riga%2C_Str%C4%93lnieku_iela_%28Alberta_iela_13%29%2C_Art_Nouveau_-Jugendstil_-_Classicism_-_panoramio_%284%29.jpg",
+          "photoAsset": "assets/travel/lv-riga-artnouveau-postcard.jpg",
+          "author": "Ainars Brūvelis",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "リガでは中世の街路から装飾の豊かな近代建築が並ぶ地区へ、歩く人の視点で街の変化をたどれます。建物の正面を見上げると、植物のような曲線や彫刻が窓の周囲を飾り、通りそのものが美術展示のように感じられます。旧市街の歴史と近代の街づくりを見比べる小旅行です。",
+            "UNESCOはリガの繁栄が中世のハンザ交易にさかのぼる一方、19世紀からの経済発展が周辺の住宅地区を変えたことを伝えています。木造建築やアール・ヌーヴォーの街並みが残り、時代の異なる建築が一つの都市に共存しています。建築の装飾を好みだけで見るのではなく、都市を成長させた人々の営みに重ねて眺めましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リガ歴史地区",
+              "url": "https://whc.unesco.org/en/list/852/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "lv-kuldiga-bridge-postcard": {
+          "country": "ラトビア",
+          "countryOnly": true,
+          "place": "クルディーガ旧市街・アレクシュピーテ川の橋",
+          "region": "クルディーガ",
+          "latitude": 56.968,
+          "longitude": 21.973,
+          "note": "地図は紹介地点の代表座標。水辺に映るバズニーツァス通りの橋。",
+          "photoCaption": "水辺に映るバズニーツァス通りの橋",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Baznicas_iela_bridge_Kuldiga.jpg/500px-Baznicas_iela_bridge_Kuldiga.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Baznicas_iela_bridge_Kuldiga.jpg",
+          "photoAsset": "assets/travel/lv-kuldiga-bridge-postcard.jpg",
+          "author": "Ymblanter",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "西部ラトビアのクルディーガでは、川と住宅街が近い距離で結びつく景観が印象的です。水辺から屋根の並びや道の曲がり方へ目を移すと、都市が地形に逆らわず成長してきた様子が見えてきます。大都市の華やかな記念建築とは異なり、家々の材料や職人の細かな仕事にゆっくり目を向けたい場所です。",
+            "UNESCOはこの旧市街が16～18世紀にクールラント・ゼムガレン公国の行政と交易の中心へ発展したことを評価しています。木材を使った地域の建築技法に、各地から移り住んだ職人の技術が重なりました。2023年の世界遺産登録は、壮大な宮殿だけではなく、暮らしの風景にも歴史を伝える価値があることを示しています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クルディーガ旧市街",
+              "url": "https://whc.unesco.org/en/list/1658/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "MA": {
