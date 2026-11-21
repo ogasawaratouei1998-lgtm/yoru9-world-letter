@@ -6,6 +6,10 @@ on:
     paths:
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'reader_source.py'
+      - 'reader_asset_split.py'
+      - 'reader_sources/**'
+      - 'country_content.py'
       - 'check_public_country_release.py'
       - 'check_country_experience.py'
       - 'check_release_candidate.py'
