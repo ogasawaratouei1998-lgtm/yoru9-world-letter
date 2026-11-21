@@ -1,0 +1,640 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Eight source-referenced portrait and two-place travel/quiz drafts. No unverified or third-party photographs added. Automatic editorial authorization never overrides photographic provenance gates.",
+  "countries": {
+    "IS": {
+      "name": "アイスランド",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/is",
+      "portrait": {
+        "lead": "大地の裂け目に刻まれた議会の歴史と、氷の下で息づく火山",
+        "body": "アイスランドでは、島の成り立ちを物語る大地の裂け目と、人々が社会を形づくってきた歴史を同じ旅の中でたどれます。シンクヴェトリルは古い野外議会の場所として知られ、ヴァトナヨークトル国立公園には氷河と火山の作用がつくる壮大な風景が広がります。地図では近くに見えても、それぞれの風景に近づくと地形も時間の尺度も異なります。自然の迫力だけでなく、そこで暮らしてきた人々の営みも思いながら歩きたい国です。",
+        "facts": [
+          "世界遺産：シンクヴェトリル国立公園",
+          "世界遺産：ヴァトナヨークトル国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アイスランドの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/is"
+      },
+      "travelDrafts": [
+        {
+          "place": "シンクヴェトリル国立公園",
+          "travelStory": [
+            "シンクヴェトリルでは、草の生えた溶岩原と岩の割れ目の間を歩きながら、地形の大きな線を目で追うことができます。広い谷を見渡す場所に立つと、ひとつの写真では伝わりにくい起伏と空の広さが感じられます。周囲の山並みや湖まで視線を動かし、議会が開かれた土地の輪郭を確かめながら散策したい場所です。",
+            "UNESCOによれば、この場所では930年にアルシングと呼ばれる野外集会が始まり、長く島全体にかかわる議論が行われました。現在の遊歩道を歩く時も、壮観な地形だけを眺めるのではなく、遠くから人々が集まった歴史を思い描くと景色が違って見えてきます。自然地形と共同体の記憶が重なる点こそ、この公園の際立った魅力です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・シンクヴェトリル国立公園",
+              "url": "https://whc.unesco.org/en/list/1152/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "シンクヴェトリルで930年に始まったものは？",
+            "options": [
+              "野外議会",
+              "近代的な空港",
+              "海底鉄道"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは930年にアルシングの野外集会が始まった場所として紹介しています。",
+            "photoGoal": "シンクヴェトリル国立公園の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Thingvellir National Park Iceland",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ヴァトナヨークトル国立公園",
+          "travelStory": [
+            "ヴァトナヨークトル国立公園の魅力は、氷河がゆったり横たわる姿と、その下で活動する火山の力が同じ大地にあることです。氷の端で水が流れ出す場所や、砂礫の平野へ続く景色を見ると、風景が今も少しずつ姿を変えていることが実感できます。安全な展望地点から、白い氷と暗い地表の境界をじっくり見比べたい場所です。",
+            "UNESCOは、この広大な国立公園を火と氷の作用が表れる地域として評価しています。氷の下の噴火が引き起こす急な洪水は、平野や川筋を変えることがあります。その仕組みを知ると、目の前の谷や扇状に広がる土地が単なる眺めではなく、火山活動と水が共同でつくった記録だと分かります。訪問時は必ず現地の気象と立入情報を優先します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴァトナヨークトル国立公園",
+              "url": "https://whc.unesco.org/en/list/1604/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヴァトナヨークトルの景観をつくる主な組み合わせは？",
+            "options": [
+              "氷河と火山",
+              "珊瑚礁と熱帯雨林",
+              "砂丘とマングローブ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは氷河と火山活動の相互作用を重要な価値として挙げています。",
+            "photoGoal": "ヴァトナヨークトル国立公園の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Vatnajokull National Park Iceland",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Thingvellir National Park Iceland landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "IE": {
+      "name": "アイルランド",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ie",
+      "portrait": {
+        "lead": "石造遺跡に残る先史の記憶と、海に浮かぶ修道院の島",
+        "body": "アイルランドの世界遺産をたどると、大西洋に面する島国の風景に、何千年もの人々の営みが重なっていることに気づきます。ボイン川沿いのブルー・ナ・ボーニャには先史時代の巨大な石造遺跡があり、スケリッグ・マイケルの孤立した岩島には修道院の跡が残ります。緑の野を歩いて古い構造物を見る旅と、海を越えた場所に人が住んだ歴史を想像する旅。異なる時代の信仰と暮らしを、一つの国で味わえるのが魅力です。",
+        "facts": [
+          "世界遺産：ブルー・ナ・ボーニャの考古遺跡群",
+          "世界遺産：スケリッグ・マイケル"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アイルランドの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ie"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブルー・ナ・ボーニャの考古遺跡群",
+          "travelStory": [
+            "ボイン川の流域を訪れると、なだらかな草地の中に大きな墳丘が姿を現します。遠くからは自然の丘に見えても、近づくと入口の石や装飾に人の手がかかったことが伝わってきます。ニューグレンジなどの遺跡を一つずつ確かめ、外から見える形と内部に込められた意図の違いを想像する時間が、ここでの散策を特別なものにします。",
+            "UNESCOはニューグレンジ、ノウス、ダウスを含む遺跡群を、先史ヨーロッパの巨石芸術が集中する場所として評価しています。石の文様は単なる飾りではなく、社会や儀礼、埋葬にかかわる営みと結びついています。古い時代を一括りにせず、石を運び配置した人々の技術と長い年月をかけた保存の歩みを考えながら見学すると、印象が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルー・ナ・ボーニャの考古遺跡群",
+              "url": "https://whc.unesco.org/en/list/659/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブルー・ナ・ボーニャで知られる遺産は？",
+            "options": [
+              "先史時代の巨石遺跡",
+              "近代の高層ビル",
+              "海底の沈没船"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはこの地域を先史時代の巨石芸術の重要な集積地として紹介しています。",
+            "photoGoal": "ブルー・ナ・ボーニャの考古遺跡群の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Newgrange Brú na Bóinne Ireland",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "スケリッグ・マイケル",
+          "travelStory": [
+            "大西洋に突き出すスケリッグ・マイケルは、海の上から岩の峰が立ち上がる姿だけでも強い印象を残します。島にある小さな石造建築や険しい斜面を眺めると、ここで生活を送ることの厳しさが想像できます。晴れた日の青い海との対比だけでなく、風や波の存在も含めて景色を受け止めたい場所です。上陸や見学は安全条件と保護規則に従います。",
+            "UNESCOはこの島の初期キリスト教修道院の遺構を評価しています。陸地から隔てられた環境の中に祈りの場所を築いたことが、島の自然と建築を不可分にしています。石を積んだ小さな住居や道の配置を知ると、壮観な風景の裏にある静かな営みが見えてきます。遠望だけでも島の輪郭が語る歴史を感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スケリッグ・マイケル",
+              "url": "https://whc.unesco.org/en/list/757/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "スケリッグ・マイケルに残る主な遺構は？",
+            "options": [
+              "修道院",
+              "競馬場",
+              "巨大な造船所"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはスケリッグ・マイケルの修道院遺跡を文化遺産として評価しています。",
+            "photoGoal": "スケリッグ・マイケルの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Skellig Michael Ireland monastery",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Newgrange Brú na Bóinne Ireland landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "HR": {
+      "name": "クロアチア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/hr",
+      "portrait": {
+        "lead": "城壁の港町と、石灰岩が生み出す湖と滝の連なり",
+        "body": "クロアチアを訪れると、アドリア海の交易都市として栄えた歴史と、内陸の水がつくる自然の表情の違いに驚かされます。ドゥブロヴニク旧市街には城壁や石造の建築群が残り、プリトヴィツェ湖群国立公園では水と石灰岩の働きによって湖と滝が連続しています。海を見渡す城壁の道と、森の中で水音を聞く木道とでは旅の時間の流れも違います。美しい写真だけでなく、景観ができた理由を知ると訪れる楽しみが広がります。",
+        "facts": [
+          "世界遺産：ドゥブロヴニク旧市街",
+          "世界遺産：プリトヴィツェ湖群国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：クロアチアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/hr"
+      },
+      "travelDrafts": [
+        {
+          "place": "ドゥブロヴニク旧市街",
+          "travelStory": [
+            "ドゥブロヴニクの旧市街へ入ると、石畳の通りを中心に建物が密集し、その外側を高い城壁が囲んでいます。通りを歩けば窓や階段の細部に目が留まり、城壁から望めば赤い屋根とアドリア海が一つの構図になります。近景と遠景を行き来しながら、港町が海とどう向き合って築かれてきたかを考えてみたい場所です。",
+            "UNESCOはドゥブロヴニクを、13世紀以降に重要な地中海の海洋勢力となった都市として紹介しています。1667年の地震や1990年代の武力紛争による被害を経験しながら、歴史的な街並みの保存と修復が続けられました。華やかな建築の背後にある復興の歴史を知ることで、城壁や広場の一つひとつがより深く感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドゥブロヴニク旧市街",
+              "url": "https://whc.unesco.org/en/list/95/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ドゥブロヴニクが発展した主な背景は？",
+            "options": [
+              "海上交易",
+              "砂漠の遊牧",
+              "氷河の採掘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。",
+            "photoGoal": "ドゥブロヴニク旧市街の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Old City of Dubrovnik Croatia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "プリトヴィツェ湖群国立公園",
+          "travelStory": [
+            "プリトヴィツェでは、森の中を歩くにつれて水の色や流れが次々と変わります。高いところから複数の湖を見下ろす眺めも、水面近くで滝の音を聞く時間も、それぞれ違う魅力があります。遊歩道から少し視点を変えるだけで緑と青の重なりが変わるため、急いで名所を撮り終えるより水の動きを観察しながら進みたい場所です。",
+            "UNESCOによると、この地域では石灰岩やチョーク質の地層を流れる水が石灰華の障壁をつくり、天然のダムや滝、湖が形成されます。この過程は現在も続いているため、景色は完成した展示物ではありません。自然保護のため定められた道を守りつつ、水が長い時間をかけて地形を変える仕組みに思いをはせると散策がさらに豊かになります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プリトヴィツェ湖群国立公園",
+              "url": "https://whc.unesco.org/en/list/98/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "プリトヴィツェの湖と滝を生み出す主な働きは？",
+            "options": [
+              "石灰華の堆積",
+              "流氷の衝突",
+              "溶岩の噴出のみ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。",
+            "photoGoal": "プリトヴィツェ湖群国立公園の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Plitvice Lakes National Park Croatia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Old City of Dubrovnik Croatia landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "KH": {
+      "name": "カンボジア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/kh",
+      "portrait": {
+        "lead": "森林に抱かれた古代都市と、山上に続く石造寺院の回廊",
+        "body": "カンボジアには、石造建築に残るクメール文化の規模と繊細さを実感できる遺産が点在しています。アンコールの寺院群では建築と水利、森林の景観が重なり、プレアヴィヒア寺院では高地の地形に沿って回廊と聖域が連なります。寺院を一枚の記念写真に収めるだけでなく、入口から奥へ進むにつれて空間がどう変わるかを見てみると、造営した人々の思想が感じられます。歴史を尊重しながらゆっくり訪れたい国です。",
+        "facts": [
+          "世界遺産：アンコール",
+          "世界遺産：プレアヴィヒア寺院"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：カンボジアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/kh"
+      },
+      "travelDrafts": [
+        {
+          "place": "アンコール",
+          "travelStory": [
+            "アンコールの寺院群では、石で組まれた長い回廊と塔が幾重にも現れ、歩くたびに建築の縮尺が変わって見えます。アンコール・ワットの整った姿だけでなく、バイヨンやタ・プロームなど、場所によって異なる意匠にも注目したいところです。木々の影が石壁に落ちる時間帯には、建造物と周囲の自然が同じ風景をつくっていることがよく分かります。",
+            "UNESCOはアンコールをクメール王朝の都市と寺院建築の大規模な遺産として評価しています。寺院は単体で存在したのではなく、広い地域の水利施設や街の構造とつながっていました。地図で遺跡群の広がりを確かめてから見学すると、石彫の細部と都市全体の計画を結びつけて楽しめます。保護のため指定された通路や見学規則を守ることも大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンコール",
+              "url": "https://whc.unesco.org/en/list/668/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "アンコールの寺院群と結びつく歴史的な王朝は？",
+            "options": [
+              "クメール王朝",
+              "ローマ帝国",
+              "アステカ帝国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはアンコールをクメール王朝の主要な遺産として扱っています。",
+            "photoGoal": "アンコールの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Angkor Wat Cambodia temples",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "プレアヴィヒア寺院",
+          "travelStory": [
+            "プレアヴィヒア寺院は高い場所に築かれ、長く伸びる参道や回廊が地形に沿って続いています。水平に並ぶ石の建築と遠くまで見渡せる風景を交互に眺めると、山の形を生かした設計の巧みさが伝わります。装飾のある入口を一つずつ通り、視界が開ける場所で立ち止まると、寺院に入っていく過程そのものが特別な体験になります。",
+            "UNESCOはこの寺院をシヴァ神に捧げられたクメールの宗教建築として紹介しています。長い軸線に沿って配置された建築群は、平地の寺院とは異なる空間の連続性を生み出しています。高所の景観だけに目を奪われず、石材の彫刻や道の向きがどのように聖域を表現しているかを意識すると、歴史との距離が縮まります。現地の安全情報も事前に確認します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プレアヴィヒア寺院",
+              "url": "https://whc.unesco.org/en/list/1224/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "プレアヴィヒア寺院で特に重要な宗教的対象は？",
+            "options": [
+              "シヴァ神",
+              "古代ローマの皇帝",
+              "北欧神話の神々"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはプレアヴィヒア寺院をシヴァ神に捧げられた建築として説明しています。",
+            "photoGoal": "プレアヴィヒア寺院の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Preah Vihear Temple Cambodia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Angkor Wat Cambodia temples landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "NP": {
+      "name": "ネパール",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/np",
+      "portrait": {
+        "lead": "谷に重なる寺院都市と、雪に包まれた高峰の自然",
+        "body": "ネパールの世界遺産には、谷の都市に残る信仰と工芸の豊かさ、そしてヒマラヤの厳しい自然がともに表れています。カトマンズ盆地には宮殿広場や仏教の仏塔、ヒンドゥー教寺院が点在し、サガルマータ国立公園では高峰と氷河が深い谷を形づくっています。街の建物の細工に目を凝らす時間と、遠くの山稜を静かに見つめる時間の対照が印象的です。訪れる土地の文化と自然環境を尊重しながら味わいたい国です。",
+        "facts": [
+          "世界遺産：カトマンズ盆地",
+          "世界遺産：サガルマータ国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ネパールの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/np"
+      },
+      "travelDrafts": [
+        {
+          "place": "カトマンズ盆地",
+          "travelStory": [
+            "カトマンズ盆地では、広場に集まる古い建物の屋根や木彫装飾が、街の暮らしのすぐそばに残っています。カトマンズ、パタン、バクタプルの各宮殿広場を比べると、似た形式の中にも違った表情が見えてきます。市場の通りから寺院へ歩く間も、人々の生活と歴史的な建築が隣り合っているため、静かに立ち止まって観察したい場所です。",
+            "UNESCOはこの盆地の遺産を、宮殿広場三か所、仏教の仏塔、ヒンドゥー教の寺院など七つの地区で構成される文化的景観として評価しています。一つの名所だけを見て終わるのではなく、宗教や美術、都市の営みがどう重なったかを知ると、街全体を読み解く楽しみが増します。礼拝者の動線や撮影の決まりにも配慮しながら見学したいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カトマンズ盆地",
+              "url": "https://whc.unesco.org/en/list/121/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "カトマンズ盆地の世界遺産を構成する主な要素は？",
+            "options": [
+              "宮殿広場や宗教建築",
+              "氷山上の灯台",
+              "巨大な海底遺跡"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは三つの宮殿広場など七つの資産群を挙げています。",
+            "photoGoal": "カトマンズ盆地の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Kathmandu Durbar Square Nepal",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "サガルマータ国立公園",
+          "travelStory": [
+            "サガルマータ国立公園では、谷から見上げる山々の高さと、氷河が刻んだ地形の大きさに圧倒されます。雪をいただく峰だけでなく、その手前の集落や斜面に目を向けると、人がこの環境と向き合ってきた様子も伝わってきます。山の輪郭が刻々と変わる空や雲の動きを眺めながら、無理のない場所から景観を楽しみたい地域です。",
+            "UNESCOはエベレストを含む高峰、氷河、深い谷とともに、シェルパの人々の文化がこの地域の特徴であると説明しています。高度や天候の変化は非常に厳しいため、旅の価値を登頂だけに求める必要はありません。自然と暮らしの関わりを学び、安全な行程で風景を味わうことが、この世界遺産を理解する大切な入口になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サガルマータ国立公園",
+              "url": "https://whc.unesco.org/en/list/120/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "サガルマータ国立公園に含まれる著名な山は？",
+            "options": [
+              "エベレスト",
+              "富士山",
+              "キリマンジャロ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはエベレストを中心とするヒマラヤの山岳景観を紹介しています。",
+            "photoGoal": "サガルマータ国立公園の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Sagarmatha National Park Everest Nepal",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Kathmandu Durbar Square Nepal landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "TZ": {
+      "name": "タンザニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/tz",
+      "portrait": {
+        "lead": "インド洋の交易都市と、サバンナにそびえる火山の山",
+        "body": "タンザニアの旅では、インド洋に面する港町の長い交流史と、内陸に広がるアフリカの大自然をそれぞれ味わえます。ザンジバルのストーン・タウンではアフリカ、アラブ、インド、ヨーロッパの文化が重なった街並みが残り、キリマンジャロ国立公園では広い平原から高い山体を見上げる風景に出会います。石造の町をゆっくり歩く時間と、山の姿に見入る時間は違いますが、どちらもこの土地が持つ厚い魅力を教えてくれます。",
+        "facts": [
+          "世界遺産：ザンジバルのストーン・タウン",
+          "世界遺産：キリマンジャロ国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：タンザニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/tz"
+      },
+      "travelDrafts": [
+        {
+          "place": "ザンジバルのストーン・タウン",
+          "travelStory": [
+            "ザンジバルのストーン・タウンを歩くと、細い道が折れ曲がり、木彫の扉や古い建物の外壁が次々と現れます。海沿いの風景と内側の街路を行き来すると、この町が港として発展してきたことを自然に感じられます。大きな建物だけを探すのではなく、道幅や建具の細部に目を向けると、長く人々が行き交った歴史の手触りが残っていることに気づきます。",
+            "UNESCOはストーン・タウンを東アフリカのスワヒリ海岸に発展した交易都市の代表例として評価しています。多様な地域の文化が建築や都市の形に反映され、街路の構造もよく残っています。土産物の店先や住宅の前を歩く時も、ここが現在も人々の生活の場であることを忘れず、暮らしと歴史の両方を尊重して訪れたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ザンジバルのストーン・タウン",
+              "url": "https://whc.unesco.org/en/list/173/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ストーン・タウンの発展に重要だった役割は？",
+            "options": [
+              "海上交易",
+              "北極探検基地",
+              "高山の鉱山都市"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは東アフリカ沿岸の交易都市としての歴史を評価しています。",
+            "photoGoal": "ザンジバルのストーン・タウンの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Stone Town Zanzibar Tanzania",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "キリマンジャロ国立公園",
+          "travelStory": [
+            "キリマンジャロは広い平原の向こうに大きな山体が浮かぶように見え、頂上付近とふもとの景色が大きく異なります。雪や雲に覆われた高所から森林、周囲の草原へと目を移すと、同じ山の中にさまざまな環境があることが分かります。頂上を目指す旅だけでなく、許可された展望地点から山全体の姿を見つめる時間にも豊かな価値があります。",
+            "UNESCOは標高5895メートルのキリマンジャロを、アフリカ最高峰の火山性山塊として紹介しています。周囲の山地林には多様な動物が生息しており、山の美しさと生態系の保護は切り離せません。登山を行うなら高度や天候への十分な備えが必要です。自然のスケールを知り、保護の決まりを守ることが訪問の基本になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・キリマンジャロ国立公園",
+              "url": "https://whc.unesco.org/en/list/403/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "キリマンジャロの特徴としてUNESCOが挙げるのは？",
+            "options": [
+              "アフリカ最高峰",
+              "世界最大の珊瑚礁",
+              "海底火山の島"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはキリマンジャロをアフリカで最も高い山として説明しています。",
+            "photoGoal": "キリマンジャロ国立公園の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Mount Kilimanjaro Tanzania",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Stone Town Zanzibar Tanzania landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "JO": {
+      "name": "ヨルダン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/jo",
+      "portrait": {
+        "lead": "岩を削って築いた古代都市と、砂漠に残る人々の足跡",
+        "body": "ヨルダンには、乾いた大地の景観の中に人間の営みが深く刻まれた場所があります。ペトラでは岩山を掘り込んだ建造物や通路から古代都市の繁栄を感じられ、ワディ・ラムでは砂岩と花崗岩の山地に長い時代の文化の痕跡が残ります。遠くから見た岩の色だけでなく、近づいたときに見える道や彫刻、岩絵の細部に目を向けると、風景が人々の歴史を語り始めます。自然と文化を一緒に読み解く旅が魅力です。",
+        "facts": [
+          "世界遺産：ペトラ",
+          "世界遺産：ワディ・ラム保護地域"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ヨルダンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/jo"
+      },
+      "travelDrafts": [
+        {
+          "place": "ペトラ",
+          "travelStory": [
+            "ペトラへの道では、岩壁に挟まれた細い通路を進むにつれ、視界の先に石を彫り出した壮大な建築が現れます。岩肌の赤みや影の変化が建物の輪郭を際立たせ、光の向きによって印象が大きく変わります。正面だけを写真に撮るのではなく、そこへ至る道の長さや周囲の地形も含めて歩くと、古代都市の立地に納得できる場所です。",
+            "UNESCOはペトラをナバテア人の古代都市として評価し、岩を削った建造物や水の管理技術に注目しています。乾燥地のなかで人々が活動を続けるには、水を確保し運ぶ仕組みが欠かせませんでした。美しいファサードとともに、水路や道にも目を向ければ、都市を成り立たせた知恵が見えてきます。遺跡の保護区域では定められた通路を守ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ペトラ",
+              "url": "https://whc.unesco.org/en/list/326/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ペトラの古代都市と深く結びつく人々は？",
+            "options": [
+              "ナバテア人",
+              "マヤ人",
+              "ヴァイキング"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはペトラをナバテア人の都市として紹介しています。",
+            "photoGoal": "ペトラの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Petra Jordan Treasury",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ワディ・ラム保護地域",
+          "travelStory": [
+            "ワディ・ラムでは、砂の平地から高い岩山が立ち上がり、進むにつれて風景の形が次々に変わります。広い空の下で山肌の層や岩の割れ目を見つめると、長い時間が地形をつくってきたことが伝わります。岩壁に近づけば人々が残した刻印の存在にも気づき、雄大な自然の中にも歴史が刻まれていると感じられる場所です。",
+            "UNESCOはワディ・ラムを自然遺産と文化遺産の価値を併せ持つ場所として評価しています。砂岩と花崗岩の景観に加えて、岩絵や碑文など、人々がこの地域を通り暮らしたことを示す痕跡が残されています。遠望する景色と壁面の細部を同じ旅の中で考えることで、砂漠が単なる無人の空間ではなかったことが分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ワディ・ラム保護地域",
+              "url": "https://whc.unesco.org/en/list/1377/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ワディ・ラムが評価される二つの側面は？",
+            "options": [
+              "自然と文化",
+              "海洋と造船",
+              "氷河と製鉄"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはワディ・ラムを自然と文化の双方に価値がある遺産として扱っています。",
+            "photoGoal": "ワディ・ラム保護地域の場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Wadi Rum Jordan desert",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Petra Jordan Treasury landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "LK": {
+      "name": "スリランカ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/lk",
+      "portrait": {
+        "lead": "岩山の古代都市と、仏教の信仰が息づく歴史都市",
+        "body": "スリランカでは、熱帯の緑に包まれた歴史遺産を巡ることで、古代王国の建築と今日まで続く宗教文化の両方に触れられます。シーギリヤには岩山を利用した古代都市の遺構が残り、キャンディには仏教の巡礼地として重要な寺院と歴史的な街並みがあります。高い場所から周囲を見渡す旅と、街中で祈りの場を静かに見つめる旅。異なる視点から、この島の長い歴史を味わうことができます。",
+        "facts": [
+          "世界遺産：古代都市シーギリヤ",
+          "世界遺産：聖地キャンディ"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：スリランカの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lk"
+      },
+      "travelDrafts": [
+        {
+          "place": "古代都市シーギリヤ",
+          "travelStory": [
+            "シーギリヤでは、平地から大きく立ち上がる岩山がひときわ目を引きます。近づくと周囲の庭園や水路の配置が見えてきて、高所の建物だけが遺跡のすべてではないことに気づきます。岩の高さと足元の広い景観の対照を楽しみながら、どのようにこの地に都市が築かれたのかを想像すると、ひとつの岩山の印象が大きく変わります。",
+            "UNESCOはシーギリヤを古代の都市遺跡として登録し、岩山の頂上に設けられた施設や庭園の構成を評価しています。独特の立地は目を引きますが、人々が水を利用し、通路や建築を整えてきたことも重要です。岩壁の壁画や周辺の遺構に残る手掛かりを丁寧に見ると、景勝地というだけでは分からない都市の姿が少しずつ現れます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・古代都市シーギリヤ",
+              "url": "https://whc.unesco.org/en/list/202/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "シーギリヤの古代都市で特徴的な地形は？",
+            "options": [
+              "高くそびえる岩山",
+              "広大な氷床",
+              "海底火山の火口"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは岩山の上と周囲に広がる古代都市の遺構を評価しています。",
+            "photoGoal": "古代都市シーギリヤの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Sigiriya Sri Lanka rock fortress",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "聖地キャンディ",
+          "travelStory": [
+            "キャンディの歴史地区には丘や湖に囲まれた街並みが広がり、宗教施設と日々の生活が近い場所で続いています。仏歯寺の周辺を歩くと、建物の形や訪れる人々の姿から、この場所が単なる古い観光地ではないことを感じられます。街の音と祈りの静けさが交わる場所では、見学の歩調をゆるめ、周囲への敬意を大切にしたいところです。",
+            "UNESCOはキャンディをスリランカの仏教文化において重要な聖地として評価し、仏歯を祀る寺院を紹介しています。王都としての歴史も、街の景観と深く結びついています。建築の美しさに加えて、今も信仰を守る人々がいることを理解すれば、旅先でのふるまいも自然に変わります。撮影や服装は現地の規則に従い、礼拝を優先して見学します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・聖地キャンディ",
+              "url": "https://whc.unesco.org/en/list/450/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "キャンディの重要な宗教的伝統は？",
+            "options": [
+              "仏教",
+              "古代ローマの多神教",
+              "北欧の神話信仰"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはキャンディを仏教における重要な巡礼地として紹介しています。",
+            "photoGoal": "聖地キャンディの場所を確かめられる撮影者・CCライセンス表示付きCommons実景写真"
+          },
+          "commonsSearch": "Temple of the Tooth Kandy Sri Lanka",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Sigiriya Sri Lanka rock fortress landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
