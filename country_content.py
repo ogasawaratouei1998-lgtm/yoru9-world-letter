@@ -116,7 +116,7 @@ def load_country_content(root):
                             or url.hostname.endswith("creativecommons.org")):
                         raise ValueError(code+": photo license cannot replace a historical source: "+key)
                     if not isinstance(source.get("checkedOn"),str) or not re.fullmatch(
-                            r"\\d{4}-\\d{2}-\\d{2}",source["checkedOn"]):
+                            r"\d{4}-\d{2}-\d{2}",source["checkedOn"]):
                         raise ValueError(code+": historical source review date missing: "+key)
         if (not isinstance(entry.get("quiz"),list)
                 or not isinstance(entry.get("portraitPhotos"),list)
