@@ -100,6 +100,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
  ],
+ AT:[
+  {question:'シェーンブルン宮殿がある都市は？',options:['ウィーン','ザルツブルク','インスブルック'],answer:0,photoLabel:'正解写真｜シェーンブルン宮殿と庭園',fact:'シェーンブルン宮殿と庭園はウィーンにある世界文化遺産です。',quip:'宮殿の主役は建物だけじゃない。庭まで揃えて一つの舞台。',photoKey:'at-schoenbrunn-palace-postcard'},
+  {question:'ザルツブルク旧市街の発展に深く関わったのは？',options:['大司教を中心とする宗教都市','海軍の造船都市','砂漠の交易都市'],answer:0,photoLabel:'正解写真｜ザルツブルク旧市街',fact:'UNESCOはザルツブルクの大司教領としての歴史的な都市景観を評価しています。',quip:'旧市街では道を曲がるたび、街が歴史の続きを語り出す。',photoKey:'at-salzburg-old-town-postcard'},
+ ],
 });
 
 let worldPassportActive=null;
