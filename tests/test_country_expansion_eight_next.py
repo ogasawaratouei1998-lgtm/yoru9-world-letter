@@ -24,9 +24,9 @@ class NextEightCountryBatchTests(unittest.TestCase):
             with self.subTest(country=code):
                 entry = self.canonical["countries"][code]
                 self.assertEqual(entry["name"], draft["name"])
-                if code == "CZ":
-                    # The original pending draft remains an immutable snapshot;
-                    # the approved Czech reader must now have real independent photos.
+                if code in ("CZ", "BE"):
+                    # Original pending drafts remain immutable snapshots when
+                    # editorially approved countries gain licensed photo sets.
                     self.assertEqual(entry["status"], "approved")
                     self.assertEqual(entry["portrait"]["body"], draft["portrait"]["body"])
                     self.assertEqual(len(entry["portraitPhotos"]), 1)
