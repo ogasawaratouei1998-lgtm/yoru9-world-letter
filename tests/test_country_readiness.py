@@ -5,7 +5,8 @@ import shutil
 import tempfile
 import unittest
 
-from country_readiness import (ready_country_codes, select_ready_stories,\n                               prioritize_ready_drafts, story_has_prepared_countries)
+from country_readiness import (ready_country_codes, select_ready_stories,
+                               prioritize_ready_drafts, story_has_prepared_countries)
 from auto_editorial import save_editorial_funnel
 
 ROOT=Path(__file__).resolve().parents[1]
