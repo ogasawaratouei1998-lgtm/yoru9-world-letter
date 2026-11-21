@@ -146,7 +146,10 @@
     "is-jokulsarlon-postcard",
     "kh-phnom-penh-palace-cover",
     "kh-angkor-wat-postcard",
-    "kh-preah-vihear-postcard"
+    "kh-preah-vihear-postcard",
+    "np-boudhanath-cover",
+    "np-patan-durbar-postcard",
+    "np-everest-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -6040,7 +6043,7 @@
     },
     "NP": {
       "name": "ネパール",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "谷に重なる寺院都市と、雪に包まれた高峰の自然",
         "body": "ネパールの世界遺産には、谷の都市に残る信仰と工芸の豊かさ、そしてヒマラヤの厳しい自然がともに表れています。カトマンズ盆地には宮殿広場や仏教の仏塔、ヒンドゥー教寺院が点在し、サガルマータ国立公園では高峰と氷河が深い谷を形づくっています。街の建物の細工に目を凝らす時間と、遠くの山稜を静かに見つめる時間の対照が印象的です。訪れる土地の文化と自然環境を尊重しながら味わいたい国です。",
@@ -6048,13 +6051,127 @@
           "世界遺産：カトマンズ盆地",
           "世界遺産：サガルマータ国立公園"
         ],
-        "photos": [],
+        "photos": [
+          "np-patan-durbar-postcard",
+          "np-everest-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ネパールの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/np"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/np-boudhanath-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Bouddhanath_Stupa_Kathmandu.jpg/500px-Bouddhanath_Stupa_Kathmandu.jpg",
+          "caption": "青空の下に広がるボダナートの白い仏塔と祈願旗（2018年6月、Prashantghimire256撮影）",
+          "author": "Prashantghimire256",
+          "license": "CC BY-SA 4.0",
+          "place": "ボダナート仏塔",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Bouddhanath_Stupa_Kathmandu.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "カトマンズ盆地の世界遺産を構成する主な要素は？",
+          "options": [
+            "氷山上の灯台",
+            "宮殿広場や宗教建築",
+            "巨大な海底遺跡"
+          ],
+          "answer": 1,
+          "fact": "UNESCOは三つの宮殿広場など七つの資産群を挙げています。",
+          "photoLabel": "正解写真｜カトマンズ盆地・パタン宮殿広場",
+          "quip": "街そのものが博物館。展示物をガラスケースに入れる発想が、ここではむしろ邪魔になる。",
+          "photoKey": "np-patan-durbar-postcard"
+        },
+        {
+          "question": "サガルマータ国立公園に含まれる著名な山は？",
+          "options": [
+            "富士山",
+            "キリマンジャロ",
+            "エベレスト"
+          ],
+          "answer": 2,
+          "fact": "UNESCOはエベレストを中心とするヒマラヤの山岳景観を紹介しています。",
+          "photoLabel": "正解写真｜サガルマータ国立公園・カラパタールからの眺望",
+          "quip": "世界最高峰でも、雲には勝てない。肩書きがどれだけ高くても、天気の都合は聞いてもらえないらしい。",
+          "photoKey": "np-everest-postcard"
+        }
+      ],
+      "travelStops": {
+        "np-boudhanath-cover": {
+          "country": "ネパール",
+          "countryOnly": true,
+          "place": "ボダナート仏塔",
+          "region": "カトマンズ・ボダナート",
+          "latitude": 27.72144,
+          "longitude": 85.36204,
+          "note": "白い仏塔と色鮮やかな祈願旗が印象的な宗教建築。",
+          "photoCaption": "青空の下に広がるボダナートの白い仏塔と祈願旗（2018年6月、Prashantghimire256撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Bouddhanath_Stupa_Kathmandu.jpg/500px-Bouddhanath_Stupa_Kathmandu.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Bouddhanath_Stupa_Kathmandu.jpg",
+          "photoAsset": "assets/travel/np-boudhanath-cover.jpg",
+          "author": "Prashantghimire256",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "np-patan-durbar-postcard": {
+          "country": "ネパール",
+          "countryOnly": true,
+          "place": "カトマンズ盆地・パタン宮殿広場",
+          "region": "ラリトプル・パタン",
+          "latitude": 27.673611,
+          "longitude": 85.325,
+          "note": "石像の向こうに寺院と歴史的な建物が連なる宮殿広場。",
+          "photoCaption": "パタン宮殿広場の石造の象と歴史的建築（2020年5月、Sworna Maharjan撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d4/Patan_Darbar_Square%2C_Nepal.jpg/500px-Patan_Darbar_Square%2C_Nepal.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Patan_Darbar_Square%2C_Nepal.jpg",
+          "photoAsset": "assets/travel/np-patan-durbar-postcard.jpg",
+          "author": "Sworna Maharjan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "カトマンズ盆地では、広場に集まる古い建物の屋根や木彫装飾が、街の暮らしのすぐそばに残っています。カトマンズ、パタン、バクタプルの各宮殿広場を比べると、似た形式の中にも違った表情が見えてきます。市場の通りから寺院へ歩く間も、人々の生活と歴史的な建築が隣り合っているため、静かに立ち止まって観察したい場所です。",
+            "UNESCOはこの盆地の遺産を、宮殿広場三か所、仏教の仏塔、ヒンドゥー教の寺院など七つの地区で構成される文化的景観として評価しています。一つの名所だけを見て終わるのではなく、宗教や美術、都市の営みがどう重なったかを知ると、街全体を読み解く楽しみが増します。礼拝者の動線や撮影の決まりにも配慮しながら見学したいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カトマンズ盆地",
+              "url": "https://whc.unesco.org/en/list/121/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "np-everest-postcard": {
+          "country": "ネパール",
+          "countryOnly": true,
+          "place": "サガルマータ国立公園・カラパタールからの眺望",
+          "region": "ネパール東部・クンブ地方",
+          "latitude": 27.998912,
+          "longitude": 86.856634,
+          "note": "雪山と氷河の壮大な景観。写真で楽しむ高地のバーチャル小旅行。",
+          "photoCaption": "カラパタールから望むエベレストとクンブ氷河（2019年4月、Matheus Hobold Sovernigo撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Mount_Everest_from_Kala_Patthar.jpg/500px-Mount_Everest_from_Kala_Patthar.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Everest_from_Kala_Patthar.jpg",
+          "photoAsset": "assets/travel/np-everest-postcard.jpg",
+          "author": "Matheus Hobold Sovernigo",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "写真のカラパタールからは、雪をまとった峰々と、その間を流れるクンブ氷河を一望できます。山肌の岩と白い氷の境界を目でたどると、氷河が長い時間をかけて刻んだ谷の巨大さが伝わります。空や雲に向かってせり上がる稜線の奥には世界最高峰のエベレストがあり、写真だけでも自然のスケールを想像できます。",
+            "UNESCOはエベレストを含む高峰、氷河、深い谷とともに、シェルパの人々の文化をこの地域の特徴として評価しています。高地は低酸素や急変する天候などの危険があり、写真の撮影地への安易な訪問は勧めません。登頂を目的にしなくても、自然と暮らしの関係を地図や写真から学ぶことが、この世界遺産を知る入口になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サガルマータ国立公園",
+              "url": "https://whc.unesco.org/en/list/120/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "NR": {
