@@ -124,6 +124,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'シンガポール植物園が世界文化遺産に登録された年は？',options:['1997年','2015年','2025年'],answer:1,photoLabel:'正解写真｜シンガポール植物園',fact:'UNESCO世界遺産センターの登録情報によると、シンガポール植物園の登録年は2015年です。',quip:'高層ビルの街で、植物も世界遺産の主役です。',photoKey:'sg-botanic-gardens-postcard'},
   {question:'スーパーツリー・グローブに集まっている巨大な樹木型構造物は何本？',options:['3本','12本','40本'],answer:1,photoLabel:'正解写真｜ガーデンズ・バイ・ザ・ベイ',fact:'公式案内では、18本あるスーパーツリーのうち12本がスーパーツリー・グローブに集まっています。',quip:'スーパーツリーが12本。樹木界の未来都市です。',photoKey:'sg-gardens-bay-postcard'},
  ],
+ SE:[
+  {question:'ドロットニングホルムの世界遺産に含まれるのは？',options:['宮殿と庭園、劇場','巨大な鉱山','ローマの円形競技場'],answer:0,fact:'UNESCOは宮殿と庭園、歴史的な劇場などを含む王領地を評価しています。',photoLabel:'正解写真｜ドロットニングホルム宮殿',quip:'庭園の木の並びまで王家仕様。『ちょっと整えて』の規模が違う。',photoKey:'se-drottningholm-palace-postcard'},
+  {question:'ターヌムの岩絵と特に結びつく時代は？',options:['青銅器時代','産業革命期のみ','宇宙開発時代'],answer:0,fact:'UNESCOはターヌムの岩絵群を北欧青銅器時代の重要な記録とみなしています。',photoLabel:'正解写真｜ターヌムの岩絵',quip:'青銅器時代のメッセージ、保存期間は数千年。クラウドより石が強かった。',photoKey:'se-tanum-rock-carvings-postcard'},
+ ],
  TH:[
   {question:'アユタヤ歴史都市が世界文化遺産に登録された年は？',options:['1985年','1991年','2007年'],answer:1,photoLabel:'正解写真｜アユタヤのワット・マハータート',fact:'UNESCO世界遺産センターの登録情報では、アユタヤ歴史都市の登録年は1991年です。',quip:'木の根が歴史を包む。自然の展示方法には驚かされる。',photoKey:'th-ayutthaya-mahathat-postcard'},
   {question:'UNESCOのスコータイ歴史都市群を構成する主な歴史都市は全部でいくつ？',options:['1つ','3つ','6つ'],answer:1,photoLabel:'正解写真｜スコータイ歴史公園',fact:'UNESCO登録資産はスコータイ、シーサッチャナーライ、カムペーンペットの三つの歴史都市から構成されています。',quip:'都の歴史も一か所では終わらない。見どころが三都市分。',photoKey:'th-sukhothai-park-postcard'},
