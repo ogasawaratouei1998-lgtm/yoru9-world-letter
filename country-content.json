@@ -110,7 +110,10 @@
     "pe-cusco-historic-center-postcard",
     "cz-prague-skyline-cover",
     "cz-charles-bridge-postcard",
-    "cz-cesky-krumlov-postcard"
+    "cz-cesky-krumlov-postcard",
+    "hr-zagreb-panorama-cover",
+    "hr-dubrovnik-old-city-postcard",
+    "hr-plitvice-lakes-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -3157,7 +3160,7 @@
     },
     "HR": {
       "name": "クロアチア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "城壁の港町と、石灰岩が生み出す湖と滝の連なり",
         "body": "クロアチアを訪れると、アドリア海の交易都市として栄えた歴史と、内陸の水がつくる自然の表情の違いに驚かされます。ドゥブロヴニク旧市街には城壁や石造の建築群が残り、プリトヴィツェ湖群国立公園では水と石灰岩の働きによって湖と滝が連続しています。海を見渡す城壁の道と、森の中で水音を聞く木道とでは旅の時間の流れも違います。美しい写真だけでなく、景観ができた理由を知ると訪れる楽しみが広がります。",
@@ -3165,13 +3168,127 @@
           "世界遺産：ドゥブロヴニク旧市街",
           "世界遺産：プリトヴィツェ湖群国立公園"
         ],
-        "photos": [],
+        "photos": [
+          "hr-dubrovnik-old-city-postcard",
+          "hr-plitvice-lakes-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：クロアチアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/hr"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/hr-zagreb-panorama-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Zagreb%2C_Panorama_001.jpg/500px-Zagreb%2C_Panorama_001.jpg",
+          "caption": "ザグレブの歴史的な街並みを見渡す景色（2021年撮影）",
+          "author": "Vojtěch Dočkal",
+          "license": "CC BY-SA 4.0",
+          "place": "ザグレブの市街地",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Zagreb%2C_Panorama_001.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ドゥブロヴニクが発展した主な背景は？",
+          "options": [
+            "海上交易",
+            "砂漠の遊牧",
+            "氷河の採掘"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜ドゥブロヴニク旧市街",
+          "fact": "UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。",
+          "quip": "城壁の外は海、内側は街。地形にまで防御の意志が見える。",
+          "photoKey": "hr-dubrovnik-old-city-postcard"
+        },
+        {
+          "question": "プリトヴィツェの湖と滝を生み出す主な働きは？",
+          "options": [
+            "石灰華の堆積",
+            "流氷の衝突",
+            "溶岩の噴出のみ"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜プリトヴィツェ湖群国立公園",
+          "fact": "UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。",
+          "quip": "滝の設計者は水と石灰岩。しかも工事は現在進行形。",
+          "photoKey": "hr-plitvice-lakes-postcard"
+        }
+      ],
+      "travelStops": {
+        "hr-zagreb-panorama-cover": {
+          "country": "クロアチア",
+          "countryOnly": true,
+          "place": "ザグレブの市街地",
+          "region": "ザグレブ",
+          "latitude": 45.8131,
+          "longitude": 15.9775,
+          "note": "クロアチアの首都ザグレブに広がる屋根や建物の眺め。",
+          "photoCaption": "ザグレブの歴史的な街並みを見渡す景色（2021年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/88/Zagreb%2C_Panorama_001.jpg/500px-Zagreb%2C_Panorama_001.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Zagreb%2C_Panorama_001.jpg",
+          "photoAsset": "assets/travel/hr-zagreb-panorama-cover.jpg",
+          "author": "Vojtěch Dočkal",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "hr-dubrovnik-old-city-postcard": {
+          "country": "クロアチア",
+          "countryOnly": true,
+          "place": "ドゥブロヴニク旧市街",
+          "region": "ダルマチア地方",
+          "latitude": 42.6401,
+          "longitude": 18.1084,
+          "note": "アドリア海沿いの城壁と石造の建築が残る歴史都市。",
+          "photoCaption": "城壁に囲まれたドゥブロヴニクの旧市街（2018年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/82/Old_Town_of_Dubrovnik.jpg/500px-Old_Town_of_Dubrovnik.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Old_Town_of_Dubrovnik.jpg",
+          "photoAsset": "assets/travel/hr-dubrovnik-old-city-postcard.jpg",
+          "author": "Pierre König",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ドゥブロヴニクの旧市街へ入ると、石畳の通りを中心に建物が密集し、その外側を高い城壁が囲んでいます。通りを歩けば窓や階段の細部に目が留まり、城壁から望めば赤い屋根とアドリア海が一つの構図になります。近景と遠景を行き来しながら、港町が海とどう向き合って築かれてきたかを考えてみたい場所です。",
+            "UNESCOはドゥブロヴニクを、13世紀以降に重要な地中海の海洋勢力となった都市として紹介しています。1667年の地震や1990年代の武力紛争による被害を経験しながら、歴史的な街並みの保存と修復が続けられました。華やかな建築の背後にある復興の歴史を知ることで、城壁や広場の一つひとつがより深く感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドゥブロヴニク旧市街",
+              "url": "https://whc.unesco.org/en/list/95/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "hr-plitvice-lakes-postcard": {
+          "country": "クロアチア",
+          "countryOnly": true,
+          "place": "プリトヴィツェ湖群国立公園",
+          "region": "リカ地方",
+          "latitude": 44.865397,
+          "longitude": 15.582012,
+          "note": "森の中に湖と滝が連なる、石灰華の堆積がつくる自然景観。",
+          "photoCaption": "石灰華の段差を流れ落ちるプリトヴィツェの水景（2016年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Plitvice_Lakes.jpg/500px-Plitvice_Lakes.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Plitvice_Lakes.jpg",
+          "photoAsset": "assets/travel/hr-plitvice-lakes-postcard.jpg",
+          "author": "Matthiasmullie",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "プリトヴィツェでは、森の中を歩くにつれて水の色や流れが次々と変わります。高いところから複数の湖を見下ろす眺めも、水面近くで滝の音を聞く時間も、それぞれ違う魅力があります。遊歩道から少し視点を変えるだけで緑と青の重なりが変わるため、急いで名所を撮り終えるより水の動きを観察しながら進みたい場所です。",
+            "UNESCOによると、この地域では石灰岩やチョーク質の地層を流れる水が石灰華の障壁をつくり、天然のダムや滝、湖が形成されます。この過程は現在も続いているため、景色は完成した展示物ではありません。自然保護のため定められた道を守りつつ、水が長い時間をかけて地形を変える仕組みに思いをはせると散策がさらに豊かになります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プリトヴィツェ湖群国立公園",
+              "url": "https://whc.unesco.org/en/list/98/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "HT": {

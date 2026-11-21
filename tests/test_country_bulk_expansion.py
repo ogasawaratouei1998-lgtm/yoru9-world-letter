@@ -22,11 +22,20 @@ class BulkCountryExpansionTests(unittest.TestCase):
         for code, draft in self.batch["countries"].items():
             with self.subTest(country=code):
                 country = self.doc["countries"][code]
-                self.assertEqual(country["status"], "pending")
-                self.assertEqual(country["portrait"], draft["portrait"])
-                self.assertEqual(country["portraitPhotos"], [])
-                self.assertEqual(country["travelStops"], {})
-                self.assertEqual(country["quiz"], [])
+                if code == "HR":
+                    # Original batch is a historical draft snapshot. Croatia is
+                    # now released only after three separately licensed photos.
+                    self.assertEqual(country["status"], "approved")
+                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertEqual(len(country["portraitPhotos"]), 1)
+                    self.assertEqual(len(country["travelStops"]), 3)
+                    self.assertEqual(len(country["quiz"]), 2)
+                else:
+                    self.assertEqual(country["status"], "pending")
+                    self.assertEqual(country["portrait"], draft["portrait"])
+                    self.assertEqual(country["portraitPhotos"], [])
+                    self.assertEqual(country["travelStops"], {})
+                    self.assertEqual(country["quiz"], [])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
                 self.assertTrue(country["portrait"]["sourceUrl"].startswith("https://whc.unesco.org/en/statesparties/"))
                 self.assertEqual(len(draft["travelDrafts"]), 2)

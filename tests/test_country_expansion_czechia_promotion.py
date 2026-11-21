@@ -71,7 +71,7 @@ class CzechiaPromotionTests(unittest.TestCase):
         self.assertNotIn(cover,quiz)
         self.assertEqual(set(self.cz["portrait"]["photos"]),set(FILES)-{"cz-prague-skyline-cover"})
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v62", worker)
+        self.assertIn("yoru9-shell-v63", worker)
         for key in FILES:
             self.assertIn("assets/travel/"+key+".jpg",worker)
 
@@ -86,7 +86,7 @@ class CzechiaPromotionTests(unittest.TestCase):
             self.assertTrue(all(110<=len(text)<=360 for text in stop["travelStory"]))
             sources.update(src["url"] for src in stop["historicalSources"])
         self.assertEqual(sources,SOURCES)
-        self.assertEqual(set(self.doc["travelOrder"][-3:]),set(FILES))
+        self.assertTrue(set(FILES).issubset(self.doc["travelOrder"]))
         self.assertEqual(set(q["photoKey"] for q in self.cz["quiz"]),
                          set(FILES)-{"cz-prague-skyline-cover"})
 

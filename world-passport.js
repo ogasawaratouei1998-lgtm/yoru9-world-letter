@@ -60,6 +60,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
   {question:'古代ギリシャのデルフィで神託と深く関わった神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoLabel:'正解写真｜デルフィのアポロン神殿跡',fact:'デルフィの聖域はアポロンの神託で知られ、UNESCO世界遺産にも登録されています。',quip:'山奥の相談所に世界中から人が集まる、古代の人気ぶり。',photoKey:'gr-delphi-apollo-postcard'},
  ],
+ HR:[
+  {question:'ドゥブロヴニクが発展した主な背景は？',options:['海上交易','砂漠の遊牧','氷河の採掘'],answer:0,photoLabel:'正解写真｜ドゥブロヴニク旧市街',fact:'UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。',quip:'城壁の外は海、内側は街。地形にまで防御の意志が見える。',photoKey:'hr-dubrovnik-old-city-postcard'},
+  {question:'プリトヴィツェの湖と滝を生み出す主な働きは？',options:['石灰華の堆積','流氷の衝突','溶岩の噴出のみ'],answer:0,photoLabel:'正解写真｜プリトヴィツェ湖群国立公園',fact:'UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。',quip:'滝の設計者は水と石灰岩。しかも工事は現在進行形。',photoKey:'hr-plitvice-lakes-postcard'},
+ ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
@@ -116,7 +120,6 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
  ],
-
 });
 
 let worldPassportActive=null;

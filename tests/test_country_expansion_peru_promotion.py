@@ -63,7 +63,7 @@ class PeruPromotionTests(unittest.TestCase):
    source.update(s["url"] for s in stop["historicalSources"])
   self.assertEqual(source,{"https://whc.unesco.org/en/list/274/","https://whc.unesco.org/en/list/273/"})
   sw=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-  self.assertIn("yoru9-shell-v62",sw)
+  self.assertIn("yoru9-shell-v63",sw)
   for key in PHOTOS:
    self.assertIn("assets/travel/"+key+".jpg",sw)
 if __name__=="__main__":
