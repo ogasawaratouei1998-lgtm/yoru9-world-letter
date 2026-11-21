@@ -127,6 +127,9 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(len(brazil["quiz"]),2)
         keys=[item["photoKey"] for item in brazil["quiz"]]
         self.assertEqual(len(set(keys)),2)
+        self.assertIn("brazil-iguacu-brazil-side-quiz-image",keys)
+        self.assertEqual(brazil["travelStops"]["brazil-iguacu-brazil-side-quiz-image"]["author"],
+                         "MurielDamiana")
         self.assertTrue(all(brazil["travelStops"][key]["quizOnly"] for key in keys))
         cover=brazil["portraitPhotos"][0]
         self.assertEqual(cover["asset"],"assets/travel/brazil-rio-christ-cover.jpg")
