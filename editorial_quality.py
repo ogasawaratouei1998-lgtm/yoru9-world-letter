@@ -146,7 +146,7 @@ def quip_candidates_ranked(story):
     summary=str(story.get("summary","")).strip()
     distinct=[]
     for index,candidate in enumerate(options[:7]):
-        if not isinstance(candidate,str) or candidate.strip() in {x[1] for x in distinct}:
+        if not isinstance(candidate,str) or candidate.strip() in {x[2] for x in distinct}:
             continue
         line=candidate.strip()
         if (not 17<=len(line)<=75 or comic_line_rejection(line) is not None):
@@ -159,9 +159,9 @@ def quip_candidates_ranked(story):
                - (10 if quip_cadence(line) else 0)
                - (12 if line.endswith(("という話。","という話","ですね。","ですね")) else 0)
                + (3 if index==0 else 0))
-        distinct.append((score,line))
-    distinct.sort(key=lambda pair:(-pair[0], options.index(pair[1])))
-    return [line for _,line in distinct]
+        distinct.append((score,index,line))
+    distinct.sort(key=lambda pair:(-pair[0],pair[1]))
+    return [line for _,_,line in distinct]
 
 
 def choose_pre_review_quip(story):
