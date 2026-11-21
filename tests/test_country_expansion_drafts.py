@@ -55,7 +55,7 @@ class CountryExpansionDraftTests(unittest.TestCase):
                     src=record["historicalSource"]
                     self.assertIn(urlsplit(src["url"]).hostname,SITE_HOSTS)
                     self.assertTrue(src["name"])
-                    self.assertRegex(src["checkedOn"],r"^\\d{4}-\\d{2}-\\d{2}$")
+                    self.assertRegex(src["checkedOn"],r"^\d{4}-\d{2}-\d{2}$")
                     self.assertEqual(record["photoStatus"],"not_selected_or_licensed")
                     self.assertNotIn("photoAsset",record)
                     self.assertNotIn("photo",record)
@@ -74,9 +74,9 @@ class CountryExpansionDraftTests(unittest.TestCase):
     def test_reader_exposes_only_existing_twelve_approved_countries(self):
         html=(ROOT/"index.html").read_text(encoding="utf-8")
         for code in COUNTRIES:
-            self.assertNotRegex(html,r"(?m)^ "+code+r":\\{lead:")
+            self.assertNotRegex(html,r"(?m)^ "+code+r":\{lead:")
         match=re.search(
-            r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\((\\[[^\\n]+\\])\\);$",
+            r"(?m)^const APPROVED_COUNTRY_CODES=Object\.freeze\((\[[^\n]+\])\);$",
             html)
         self.assertIsNotNone(match)
         atlas=json.loads(match.group(1))
