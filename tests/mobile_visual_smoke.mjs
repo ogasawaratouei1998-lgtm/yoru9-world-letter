@@ -55,10 +55,20 @@ try{
     await page.waitForTimeout(6000);
    }
    assert.ok(freshDesign,'GitHub Pages must serve the latest simplified live news reader');
+   // The embedded historical demo is rendered before the async published
+   // issue arrives. A headline is not proof that the real issue has loaded.
+   // Wait for the same published record to drive the title and both galleries.
    await page.waitForFunction(()=>{
-    const el=document.querySelector('#spotlightTitle');
-    return el&&el.textContent&&!el.textContent.includes('準備中');
-   },null,{timeout:30000});
+    if(typeof edition==='undefined'||edition.status!=='published'||
+       !Array.isArray(edition.stories)||!edition.stories.length)return false;
+    const n=edition.stories.length;
+    return document.querySelector('#spotlightTitle')?.textContent===edition.stories[0]?.title&&
+     document.querySelector('#atlasStoryCount')?.textContent?.trim()===String(n)&&
+     document.querySelectorAll('#issueGallery .gallery-tile').length===n&&
+     document.querySelectorAll('#stories .story').length===Math.max(0,n-1)&&
+     document.querySelector('#galleryHeading')?.textContent===
+      '世界の「まさか」'+n+'コマ劇場';
+   },null,{timeout:35000});
    const editorialCover=await page.evaluate(()=>{
     const hero=document.querySelector('#atlasHero');
     const h2=hero?.querySelector('.atlas-title');
