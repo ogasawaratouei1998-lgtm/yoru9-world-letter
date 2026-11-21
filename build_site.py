@@ -331,6 +331,10 @@ def build_country_coverage(root,output):
 
 
 def build(root, output):
+    # Country JSON is editorial source-of-truth; no unreviewed drift ships.
+    if (root / 'country-content.json').is_file():
+        from country_content import check_country_content
+        check_country_content(root)
     if output.exists():
         shutil.rmtree(output)
     output.mkdir(parents=True)
