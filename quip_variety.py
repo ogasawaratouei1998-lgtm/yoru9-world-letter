@@ -50,7 +50,7 @@ def repeated_exact_quip_count(stories):
     This is only an issue-level selection tiebreaker; it cannot approve or
     rewrite a joke, add invented facts, or disqualify a published article.
     """
-    text=[re.sub(r"\\s+","",row.get("quip","")) for row in stories
+    text=[re.sub(r"\s+","",row.get("quip","")) for row in stories
           if isinstance(row,dict) and isinstance(row.get("quip"),str)]
     counts=Counter(line for line in text if line)
     return sum(max(0,n-1) for n in counts.values())
