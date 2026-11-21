@@ -86,7 +86,7 @@ class CroatiaPromotionTests(unittest.TestCase):
         self.assertEqual(sources, SOURCES)
         self.assertTrue(set(PHOTOS).issubset(self.doc["travelOrder"]))
         sw = (ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v63", sw)
+        self.assertIn("yoru9-shell-v64", sw)
         for key in PHOTOS:
             self.assertIn("assets/travel/"+key+".jpg", sw)
 
