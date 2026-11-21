@@ -229,7 +229,7 @@ class CountryContentTest(unittest.TestCase):
                         if entry["status"]=="approved")
         page=(self.root/"index.html")
         original=page.read_text(encoding="utf-8")
-        match=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\((\\[.*\\])\\);$",
+        match=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\.freeze\((\[.*\])\);$",
                         original)
         self.assertIsNotNone(match)
         self.assertEqual(json.loads(match.group(1)),expected)
