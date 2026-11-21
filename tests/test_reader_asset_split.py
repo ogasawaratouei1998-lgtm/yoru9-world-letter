@@ -67,7 +67,7 @@ class ReaderAssetSplitTest(unittest.TestCase):
                      "assets/reader-travel.js",
                      "assets/reading-focus.css"):
             self.assertIn("'"+path+"'",worker)
-        self.assertRegex(worker,r"yoru9-shell-v\\d+")
+        self.assertRegex(worker,r"yoru9-shell-v\d+")
 
     def test_release_smoke_fetches_external_code(self):
         from inspect import getsource
