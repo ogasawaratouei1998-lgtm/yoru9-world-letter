@@ -306,6 +306,18 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 self.assertEqual(editorial.editorial_fit_rejection(
                     {**story,"detail":phrase}),"coercive_reader_tone")
 
+    def test_news_candidates_come_only_from_approved_media(self):
+        import inspect
+        code=inspect.getsource(editorial.main)
+        self.assertIn('trusted_original_domain(lead.get("url",""))',code)
+        self.assertIn('trusted_original_domain(urls[0])',code)
+        self.assertIn('urls=[story.get("sourceUrl","")]',code)
+        self.assertIn('story["verificationUrls"]=urls',code)
+        self.assertNotIn("multi_source_fidelity_not_verified",code)
+        self.assertNotIn("single_original_not_verified",code)
+        self.assertNotIn('audit.get("originalReporting")',code)
+        self.assertIn("JAPANESE EDITORIAL AND HUMOR REVIEW",code)
+
     def test_approved_publisher_alone_meets_news_evidence_rule(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
