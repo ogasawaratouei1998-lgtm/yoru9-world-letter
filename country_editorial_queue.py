@@ -66,10 +66,13 @@ def country_editorial_queue(root: Path) -> dict:
                                "https://creativecommons.org/")
                            for q in quiz_photos)):
             missing.append("two_distinct_licensed_photo_quizzes")
-        if (local_covers and any(
-                q and q.get("photoAsset")==cover["asset"]
-                for q in quiz_photos for cover in local_covers)):
-            # Every possible fallback portrait must differ from quiz reveals.
+        selectable_covers=[cover for cover in entry.get("portraitPhotos",[])
+                           if isinstance(cover,dict)
+                           and not cover.get("avoidCover") and not cover.get("remoteOnly")]
+        if any(q and q.get("photoAsset")==cover.get("asset")
+               for q in quiz_photos for cover in selectable_covers):
+            # Quiz overlap and incorrect attribution are independent defects.
+            # Report both; a broken credit must not mask a reused photo.
             missing.append("portrait_photo_reused_in_quiz")
         postcards=[s for s in entry.get("travelStops",{}).values()
                    if not s.get("quizOnly") and not s.get("coverOnly")
