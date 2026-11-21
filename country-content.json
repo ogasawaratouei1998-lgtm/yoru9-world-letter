@@ -137,7 +137,10 @@
     "pl-wieliczka-salt-chapel-postcard",
     "si-ljubljana-panorama-cover",
     "si-skocjan-caves-postcard",
-    "si-triple-bridge-postcard"
+    "si-triple-bridge-postcard",
+    "ie-dublin-hapenny-cover",
+    "ie-newgrange-postcard",
+    "ie-skellig-michael-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4169,7 +4172,7 @@
     },
     "IE": {
       "name": "アイルランド",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "石造遺跡に残る先史の記憶と、海に浮かぶ修道院の島",
         "body": "アイルランドの世界遺産をたどると、大西洋に面する島国の風景に、何千年もの人々の営みが重なっていることに気づきます。ボイン川沿いのブルー・ナ・ボーニャには先史時代の巨大な石造遺跡があり、スケリッグ・マイケルの孤立した岩島には修道院の跡が残ります。緑の野を歩いて古い構造物を見る旅と、海を越えた場所に人が住んだ歴史を想像する旅。異なる時代の信仰と暮らしを、一つの国で味わえるのが魅力です。",
@@ -4177,13 +4180,127 @@
           "世界遺産：ブルー・ナ・ボーニャの考古遺跡群",
           "世界遺産：スケリッグ・マイケル"
         ],
-        "photos": [],
+        "photos": [
+          "ie-newgrange-postcard",
+          "ie-skellig-michael-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：アイルランドの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/ie"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/ie-dublin-hapenny-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Dublin_Ha%27_Penny_Bridge_1.jpg/500px-Dublin_Ha%27_Penny_Bridge_1.jpg",
+          "caption": "リフィー川を渡る白い歩行者橋とダブリンの建物（2022年5月、Zairon撮影）",
+          "author": "Zairon",
+          "license": "CC BY 4.0",
+          "place": "ダブリン・ハーフペニー橋",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Dublin_Ha%27_Penny_Bridge_1.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ブルー・ナ・ボーニャで知られる遺産は？",
+          "options": [
+            "近代の高層ビル",
+            "先史時代の巨石遺跡",
+            "海底の沈没船"
+          ],
+          "answer": 1,
+          "fact": "UNESCOはこの地域を先史時代の巨石芸術の重要な集積地として紹介しています。",
+          "photoLabel": "正解写真｜ブルー・ナ・ボーニャの考古遺跡群・ニューグレンジ",
+          "quip": "文字がなくても石は語る。五千年先に残る説明書を作る技術、現代のアプリにも欲しい。",
+          "photoKey": "ie-newgrange-postcard"
+        },
+        {
+          "question": "スケリッグ・マイケルに残る主な遺構は？",
+          "options": [
+            "競馬場",
+            "巨大な造船所",
+            "修道院"
+          ],
+          "answer": 2,
+          "fact": "UNESCOはスケリッグ・マイケルの修道院遺跡を文化遺産として評価しています。",
+          "photoLabel": "正解写真｜スケリッグ・マイケル",
+          "quip": "修道院の立地条件が厳しい。日常から離れるために、海まで越えるとは徹底している。",
+          "photoKey": "ie-skellig-michael-postcard"
+        }
+      ],
+      "travelStops": {
+        "ie-dublin-hapenny-cover": {
+          "country": "アイルランド",
+          "countryOnly": true,
+          "place": "ダブリン・ハーフペニー橋",
+          "region": "ダブリン中心部・リフィー川",
+          "latitude": 53.3463,
+          "longitude": -6.2629,
+          "note": "首都の川沿いの街並みと白い歩行者橋。",
+          "photoCaption": "リフィー川を渡る白い歩行者橋とダブリンの建物（2022年5月、Zairon撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Dublin_Ha%27_Penny_Bridge_1.jpg/500px-Dublin_Ha%27_Penny_Bridge_1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Dublin_Ha%27_Penny_Bridge_1.jpg",
+          "photoAsset": "assets/travel/ie-dublin-hapenny-cover.jpg",
+          "author": "Zairon",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        "ie-newgrange-postcard": {
+          "country": "アイルランド",
+          "countryOnly": true,
+          "place": "ブルー・ナ・ボーニャの考古遺跡群・ニューグレンジ",
+          "region": "ミース県・ボイン川流域",
+          "latitude": 53.694608,
+          "longitude": -6.474026,
+          "note": "先史時代の通路墓と巨石に刻まれた文様。",
+          "photoCaption": "渦巻文様の石が置かれたニューグレンジの入口（2013年7月、CooKeeN撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Newgrange_entrance.JPG/500px-Newgrange_entrance.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Newgrange_entrance.JPG",
+          "photoAsset": "assets/travel/ie-newgrange-postcard.jpg",
+          "author": "CooKeeN",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ボイン川の流域を訪れると、なだらかな草地の中に大きな墳丘が姿を現します。遠くからは自然の丘に見えても、近づくと入口の石や装飾に人の手がかかったことが伝わってきます。ニューグレンジなどの遺跡を一つずつ確かめ、外から見える形と内部に込められた意図の違いを想像する時間が、ここでの散策を特別なものにします。",
+            "UNESCOはニューグレンジ、ノウス、ダウスを含む遺跡群を、先史ヨーロッパの巨石芸術が集中する場所として評価しています。石の文様は単なる飾りではなく、社会や儀礼、埋葬にかかわる営みと結びついています。古い時代を一括りにせず、石を運び配置した人々の技術と長い年月をかけた保存の歩みを考えながら見学すると、印象が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルー・ナ・ボーニャの考古遺跡群",
+              "url": "https://whc.unesco.org/en/list/659/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "ie-skellig-michael-postcard": {
+          "country": "アイルランド",
+          "countryOnly": true,
+          "place": "スケリッグ・マイケル",
+          "region": "ケリー県沖・大西洋",
+          "latitude": 51.772187,
+          "longitude": -10.538701,
+          "note": "大西洋の岩島に残る初期キリスト教の修道院遺構。",
+          "photoCaption": "スケリッグ・マイケルの修道院の石積み建物（2013年7月、Cathal Curran Photography撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/75/Skellig_Michael_Monastery.JPG/500px-Skellig_Michael_Monastery.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Skellig_Michael_Monastery.JPG",
+          "photoAsset": "assets/travel/ie-skellig-michael-postcard.jpg",
+          "author": "Cathal Curran Photography",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "大西洋に突き出すスケリッグ・マイケルは、海の上から岩の峰が立ち上がる姿だけでも強い印象を残します。島にある小さな石造建築や険しい斜面を眺めると、ここで生活を送ることの厳しさが想像できます。晴れた日の青い海との対比だけでなく、風や波の存在も含めて景色を受け止めたい場所です。上陸や見学は安全条件と保護規則に従います。",
+            "UNESCOはこの島の初期キリスト教修道院の遺構を評価しています。陸地から隔てられた環境の中に祈りの場所を築いたことが、島の自然と建築を不可分にしています。石を積んだ小さな住居や道の配置を知ると、壮観な風景の裏にある静かな営みが見えてきます。遠望だけでも島の輪郭が語る歴史を感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スケリッグ・マイケル",
+              "url": "https://whc.unesco.org/en/list/757/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "IR": {
