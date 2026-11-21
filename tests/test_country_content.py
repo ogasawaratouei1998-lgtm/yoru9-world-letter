@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -33,7 +33,7 @@ class CountryContentTest(unittest.TestCase):
     def test_spain_source_review_is_prepared_but_approval_is_separate(self):
         doc=load_country_content(ROOT)
         spain=doc["countries"]["ES"]
-        self.assertEqual(spain["status"],"pending")
+        self.assertEqual(spain["status"],"approved")
         self.assertTrue(spain["portrait"]["sourceUrl"].startswith(
             "https://www.spain.info/"))
         self.assertEqual(len(spain["quiz"]),2)

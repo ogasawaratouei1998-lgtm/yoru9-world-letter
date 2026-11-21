@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AR","DE","FR","GB","IT","JP","US"])
-        self.assertEqual(report["pendingCountries"],189)
-        self.assertEqual(len(report["prioritizedPending"]),189)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),189)
+        self.assertEqual(report["approvedCountries"],["AR","DE","ES","FR","GB","IT","JP","US"])
+        self.assertEqual(report["pendingCountries"],188)
+        self.assertEqual(len(report["prioritizedPending"]),188)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),188)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
@@ -31,9 +31,8 @@ class CountryEditorialQueueTest(unittest.TestCase):
         # Their index-level cover entries predating sourcePage aren't missing.
         # A reused portrait/quiz image is a different and real release defect.
         self.assertIn("portrait_photo_reused_in_quiz",pending["NZ"]["missing"])
-        self.assertIn("ES",pending)
-        self.assertEqual(pending["ES"]["requiredRemaining"],0)
-        self.assertNotIn("portrait_photo_reused_in_quiz",pending["ES"]["missing"])
+        self.assertNotIn("ES",pending)
+        self.assertIn("ES",report["approvedCountries"])
         for code in ("FR","AR","JP","GB"):
             self.assertIn(code,report["approvedCountries"])
 

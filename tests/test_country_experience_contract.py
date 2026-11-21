@@ -55,6 +55,17 @@ class CountryExperienceContractTest(unittest.TestCase):
             country_coverage(self.root,[{"id":"verified-news-example",
                                         "country":"Nigeria"}])
 
+    def test_newly_approved_spain_has_distinct_licensed_quizzes_and_trip(self):
+        result=country_coverage(ROOT,[{"country":"スペイン"}])
+        self.assertEqual(set(result),{"ES"})
+        spain=result["ES"]
+        self.assertEqual(spain["quizRounds"],2)
+        self.assertEqual(len(set(spain["quizPhotoKeys"])),2)
+        manifest=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertNotIn(spain["cover"],[
+            manifest[key]["photoAsset"] for key in spain["quizPhotoKeys"]])
+        self.assertEqual(spain["postcard"],"assets/travel/spain-park-guell-drac.jpg")
+
     def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
         report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
                                           {"id":"verified-jp","country":"日本"}])
