@@ -256,8 +256,15 @@
     "photoAsset": "assets/travel/iguazu-falls.jpg",
     "countryOnly": true,
     "travelStory": [
-      "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
-      "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+      "イグアスの滝は、少し離れた展望場所から眺めると、森を切り開いたような巨大な水の壁になります。細く分かれた流れが一斉に落ち、岩壁の間から水しぶきが立ち上がる。写真の端から端まで視線を動かすと、滝が一つの落ち口ではなく、幾重にも連なる景色だと気づきます。水量によって表情が変わるため、晴れた空の下だけでなく、霧や雲がかかる日にも別の印象を残す場所です。",
+      "ユネスコによれば、ブラジルのイグアス国立公園とアルゼンチン側の国立公園は、国境をはさみ一つの壮大な滝群と亜熱帯の森を守っています。滝の広がりは約2.7キロメートルに及び、周辺には希少な生き物の生息地も残ります。観光の見どころだけでなく、滝が森に水分をもたらし、その自然を育む関係にも目を向けてみたいものです。国境の向こうまでつながる風景を、一枚の写真から想像できます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ブラジルのイグアス国立公園",
+        "url": "https://whc.unesco.org/en/list/355/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "faa-router-ground-stop-2026": {
@@ -411,8 +418,20 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "travelStory": [
-      "サンパウロの街並みは、遠くまで続く高層ビル群が印象的です。さまざまな高さの建物が密集し、その間を通りが走っています。写真の手前から地平線の方まで視線を動かすと、南米最大級の都市圏が持つスケールを実感できます。",
-      "この街には多様な人々の文化が集まり、美術館や市場、食の風景も豊かです。遠くから見た街はビルの集まりでも、そのひとつひとつの通りには暮らしがあります。大都市の輪郭の向こうにある日常を想像してみてください。"
+      "サンパウロの高層ビル群は、遠くから眺めると建物の線が地平線まで重なる巨大な模様のようです。けれど街に入れば、商店やカフェ、公共交通機関、文化施設がいくつもの通りを結んでいます。写真の街並みを見たあとでアヴェニーダ・パウリスタを歩き、建物の足元にある人々の活動へ視線を戻すと、都市の大きさが具体的な生活の場として感じられます。ビルの間の緑や広場にも注目したい街です。",
+      "サンパウロ市の公式観光案内では、アヴェニーダ・パウリスタ周辺にMASP（サンパウロ美術館）や文化施設、公園が集まることが紹介されています。美術館の展示を楽しみ、道路沿いを少し歩くだけで、金融都市という印象とは違う多様な街の顔に出会えるのです。日曜日に歩行者が集まる通りの魅力も知られています。遠景では同じように見える高層ビルの列も、一つの通りを歩くと、歴史と文化が重なる場所へ変わっていきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "サンパウロ州政府・パウリスタ大通り観光案内",
+        "url": "https://www.sp.gov.br/sp/conheca-sp/pontos-turisticos/pontos_turisticos",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "ブラジル政府観光案内・サンパウロ",
+        "url": "https://www.visitbrasil.com/en/location/sao-paulo/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "uk-penrith-church-sign-typo-2026": {
@@ -443,22 +462,29 @@
   },
   "brazil-country-postcard": {
     "country": "ブラジル",
-    "place": "イグアスの滝",
+    "place": "ブラジル側・イグアスの滝",
     "region": "パラナ州・フォス・ド・イグアス",
     "latitude": -25.6953,
     "longitude": -54.4367,
-    "note": "深い緑の森を割るように、幾筋もの滝が流れ落ちます。白い水しぶきと圧倒的なスケールを、写真の中でゆっくり味わってみてください。",
-    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Iguaz%C3%BA_falls.jpg/500px-Iguaz%C3%BA_falls.jpg",
-    "photoCaption": "ブラジル側から見たイグアスの滝（2022年撮影）",
-    "author": "Enrique von specht",
+    "note": "ブラジル側の滝見台から撮影したイグアスの滝。森と水しぶきに注目。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Igua%C3%A7u_Falls,_Foz_do_Igua%C3%A7u,_Brazil.jpg/500px-Igua%C3%A7u_Falls,_Foz_do_Igua%C3%A7u,_Brazil.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaçu_Falls,_Foz_do_Iguaçu,_Brazil.jpg",
+    "photoAsset": "assets/travel/brazil-iguacu-brazil-side-postcard.jpg",
+    "photoCaption": "ブラジル側から撮影されたイグアスの滝と虹（2016年撮影）",
+    "author": "Flaviohmg",
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-    "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaz%C3%BA_falls.jpg",
-    "photoAsset": "assets/travel/iguazu-falls.jpg",
-    "countryOnly": true,
+    "famousTourist": true,
     "travelStory": [
-      "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
-      "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+      "ブラジルのフォス・ド・イグアスから滝の近くに向かうと、最初に驚くのは水の音と、森を包むしぶきの量かもしれません。ブラジル側の展望地点では、大小の滝が連なって落ちる大きな景色を望めます。写真に写る水しぶきの光や緑の奥行きをたどると、ひとつの滝という名前の下に、実際には無数の流れがあることが伝わります。歩くにつれて滝の見え方が変わるのも、写真だけでは味わえない魅力です。",
+      "イグアスという名は先住民の言葉で「大いなる水」を意味するとされ、ブラジル側の国立公園は1986年にユネスコ世界自然遺産へ登録されました。国境の向こうにはアルゼンチン側の国立公園が接し、両側で一つの滝と森を守っています。滝だけでなく、絶えず立ち上がる水の霧が周囲の豊かな植物を育てるという説明を読んでから眺めると、迫力ある景観が生態系と結びついた自然の働きとして見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・イグアス国立公園",
+        "url": "https://whc.unesco.org/en/list/355/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "uk-country-postcard": {
@@ -1254,6 +1280,86 @@
       {
         "name": "韓国観光公社・仏国寺の史跡案内",
         "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=220016",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "brazil-rio-christ-cover": {
+    "country": "ブラジル",
+    "place": "リオデジャネイロ・コルコバードのキリスト像",
+    "region": "リオデジャネイロ州・リオデジャネイロ",
+    "latitude": -22.9519,
+    "longitude": -43.2105,
+    "note": "コルコバード山に立つキリスト像。リオの高台から森と街を見渡せる名所です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2d/Rio_de_Janeiro_Cristo_Redentor.jpg/500px-Rio_de_Janeiro_Cristo_Redentor.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Rio_de_Janeiro_Cristo_Redentor.jpg",
+    "photoAsset": "assets/travel/brazil-rio-christ-cover.jpg",
+    "photoCaption": "コルコバードのキリスト像（2016年撮影）",
+    "author": "Carlos esteban oviedo",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "coverOnly": true
+  },
+  "brazil-paulista-quiz-image": {
+    "country": "ブラジル",
+    "place": "サンパウロ・アヴェニーダ・パウリスタ",
+    "region": "サンパウロ州・サンパウロ市",
+    "latitude": -23.570278,
+    "longitude": -46.645278,
+    "note": "SESCパウリスタ付近から眺めるサンパウロの大通りと街の建物。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Av._Paulista_-_S%C3%A3o_Paulo_-_Brasil.jpg/500px-Av._Paulista_-_S%C3%A3o_Paulo_-_Brasil.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Av._Paulista_-_São_Paulo_-_Brasil.jpg",
+    "photoAsset": "assets/travel/brazil-paulista-quiz.jpg",
+    "photoCaption": "アヴェニーダ・パウリスタ、SESCパウリスタからの眺め（2018年撮影）",
+    "author": "Lgjunior",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "brazil-iguacu-panorama-quiz-image": {
+    "country": "ブラジル",
+    "place": "ブラジル側から眺めたイグアスの滝",
+    "region": "パラナ州・フォス・ド・イグアス",
+    "latitude": -25.691667,
+    "longitude": -54.437953,
+    "note": "ブラジル側の展望地点から撮影したイグアスの滝のパノラマ。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Igua%C3%A7u-falls-panorama.jpg/500px-Igua%C3%A7u-falls-panorama.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaçu-falls-panorama.jpg",
+    "photoAsset": "assets/travel/brazil-iguacu-panorama-quiz.jpg",
+    "photoCaption": "ブラジル側から望むイグアスの滝のパノラマ（2017年撮影）",
+    "author": "Bruno Viecelli",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "brazil-museum-tomorrow-postcard": {
+    "country": "ブラジル",
+    "place": "リオデジャネイロ・明日の博物館",
+    "region": "リオデジャネイロ州・リオデジャネイロの港湾地区",
+    "latitude": -22.894,
+    "longitude": -43.179,
+    "note": "港のピア・マウアに建つ「明日の博物館」。長く伸びる独特の屋根を持つ建物。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Museu_do_Amanh%C3%A3,_Rio_de_Janeiro.jpg/500px-Museu_do_Amanh%C3%A3,_Rio_de_Janeiro.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Museu_do_Amanhã,_Rio_de_Janeiro.jpg",
+    "photoAsset": "assets/travel/brazil-rio-museum-tomorrow.jpg",
+    "photoCaption": "リオデジャネイロ港湾地区の「明日の博物館」（2016年撮影）",
+    "author": "Leonardo Chavez",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "リオデジャネイロの港にある「明日の博物館」は、白い骨組みのような屋根が水辺へ長く伸びる、ひときわ目立つ建物です。近づくにつれて、水平に広がる屋根の形と、港の広い空との対比が際立ってきます。写真で建物の輪郭を確かめたら、周囲の広場に視線を移してみてください。歴史ある港の一角に現代的な建築が置かれたこと自体が、街の変化を物語っているように感じられます。",
+      "「明日の博物館」は2015年に開館した科学をテーマとする文化施設で、スペイン出身の建築家サンティアゴ・カラトラバが設計しました。リオの港湾地区を再生する計画「ポルト・マラヴィーリャ」の一環として生まれた建物です。見た目の新しさだけに驚くのではなく、都市の古い港をどのように変え、未来の暮らしを考える場にしてきたかを知ってから歩くと、建築が街の時間をつなぐ役割まで見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "設計者サンティアゴ・カラトラバ公式・明日の博物館",
+        "url": "https://prod.calatrava.com/projects/museu-do-amanha-rio-de-janeiro.html",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "リオ市開発公社・明日の博物館",
+        "url": "https://www.ccpar.rio/museu-do-amanha/",
         "checkedOn": "2026-11-21"
       }
     ]
