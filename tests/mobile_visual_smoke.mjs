@@ -59,6 +59,19 @@ try{
     const el=document.querySelector('#spotlightTitle');
     return el&&el.textContent&&!el.textContent.includes('準備中');
    },null,{timeout:30000});
+   // The HTML includes a five-story *demo* while real current.json loads.
+   // Never capture counts from demo and compare them to the released four-
+   // story gallery after the fetch swaps the issue. The test must verify
+   // the actual published edition, not merely a nonempty headline.
+   await page.waitForFunction(()=>{
+    const release=document.querySelector('#editionMessage')?.textContent?.trim()||'';
+    const count=Number(document.querySelector('#atlasStoryCount')?.textContent);
+    const cards=document.querySelectorAll('#issueGallery .gallery-tile').length;
+    const otherArticles=document.querySelectorAll('#stories li.story').length;
+    return /^\\d{4}-\\d{2}-\\d{2} 発行 · [1-5]本/.test(release) &&
+      Number.isInteger(count)&&count>=1&&count<=5 &&
+      cards===count&&otherArticles===count-1;
+   },null,{timeout:30000});
    const editorialCover=await page.evaluate(()=>{
     const hero=document.querySelector('#atlasHero');
     const h2=hero?.querySelector('.atlas-title');
