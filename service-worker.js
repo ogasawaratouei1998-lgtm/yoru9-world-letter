@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v59';
+const SHELL_CACHE = 'yoru9-shell-v60';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -58,7 +58,8 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/eg-cairo-skyline-cover.jpg', 'assets/travel/eg-giza-pyramid-postcard.jpg', 'assets/travel/eg-abu-simbel-postcard.jpg', 'assets/travel/tr-istanbul-sunset-cover.jpg', 'assets/travel/tr-hagia-sophia-postcard.jpg', 'assets/travel/tr-cappadocia-rocks-postcard.jpg', 'assets/travel/th-bangkok-wat-arun-cover.jpg', 'assets/travel/th-ayutthaya-mahathat-postcard.jpg', 'assets/travel/th-sukhothai-park-postcard.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg',
- 'assets/travel/at-vienna-opera-cover.jpg', 'assets/travel/at-schoenbrunn-palace-postcard.jpg', 'assets/travel/at-salzburg-old-town-postcard.jpg'];
+ 'assets/travel/at-vienna-opera-cover.jpg', 'assets/travel/at-schoenbrunn-palace-postcard.jpg', 'assets/travel/at-salzburg-old-town-postcard.jpg',
+ 'assets/travel/no-oslo-skyline-cover.jpg', 'assets/travel/no-bryggen-postcard.jpg', 'assets/travel/no-geirangerfjord-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
