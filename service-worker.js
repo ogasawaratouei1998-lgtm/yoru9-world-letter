@@ -47,6 +47,12 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/brazil-rio-christ-cover.jpg', 'assets/travel/brazil-paulista-quiz.jpg', 'assets/travel/brazil-iguacu-brazil-side-quiz.jpg', 'assets/travel/brazil-iguacu-brazil-side-postcard.jpg', 'assets/travel/brazil-rio-museum-tomorrow.jpg',
  // Antigua and Barbuda: distinct licensed national cover, two answers, independent coastal tour.
  'assets/travel/antigua-english-harbour-cover.jpg', 'assets/travel/antigua-bettys-hope-quiz.jpg', 'assets/travel/antigua-devils-bridge-quiz.jpg', 'assets/travel/antigua-devils-bridge-coast.jpg', 'assets/travel/seoul-gyeongbokgung.jpg',
+ // Australia: Sydney harbour cover, Opera House and reef quiz postcards.
+ 'assets/travel/au-sydney-harbour-cover.jpg', 'assets/travel/au-opera-house-postcard.jpg', 'assets/travel/au-great-barrier-reef-postcard.jpg',
+ // Canada: Québec old town portrait; Old Québec and Banff quiz postcards.
+ 'assets/travel/ca-quebec-chateau-cover.jpg', 'assets/travel/ca-old-quebec-postcard.jpg', 'assets/travel/ca-banff-lake-louise-postcard.jpg',
+ // India: Jaipur representative photo, Taj Mahal and Qutb Minar quiz postcards.
+ 'assets/travel/in-jaipur-hawa-mahal-cover.jpg', 'assets/travel/in-taj-mahal-postcard.jpg', 'assets/travel/in-qutb-minar-postcard.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
