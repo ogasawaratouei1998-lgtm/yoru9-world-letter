@@ -70,12 +70,15 @@ def bundle_travel_photos(root, output):
     # retain their previously published 500px files under Wikimedia throttling;
     # they MUST be upgraded before becoming a new issue's active cover.
     active_covers=set(country_covers)
+    active_photos=set(required)
     current_path=root/'data/current.json'
     if current_path.is_file() and page.is_file() and matches:
         from country_codes import country_codes
         current_issue=json.loads(current_path.read_text(encoding='utf-8'))
         active_codes={code for story in current_issue.get('stories',[])
                       for code in country_codes(story.get('country'))}
+        active_photos={stop.get('photoAsset') for stop in stops.values()
+                       if set(country_codes(stop.get('country')))&active_codes}
         active_covers={photo.get('asset') for code in active_codes
                        for photo in registry.get(code,[])
                        if not photo.get('avoidCover') and
@@ -120,7 +123,9 @@ def bundle_travel_photos(root, output):
                         if src.read(3)!=b"\xff\xd8\xff":
                             raise ValueError("cached JPEG header invalid")
                     w,h=jpeg_dimensions(cache_file)
-                    if (w<1000 or h<540) if asset in active_covers else (w<330 or h<200):
+                    if ((w<1000 or h<540) if asset in active_covers else
+                            (w<330 or h<200) if asset in active_photos else
+                            (w<300 or h<160)):
                         raise ValueError("cached image resolution inadequate")
                     shutil.copyfile(cache_file,target)
                     reused+=1
@@ -209,8 +214,10 @@ def bundle_travel_photos(root, output):
                 target.write_bytes(payload)
                 width,height=jpeg_dimensions(target)
                 if ((width<1000 or height<540) if asset in active_covers
-                        else (width<330 or height<200)):
-                    raise ValueError('published photo is below original image size gate')
+                        else (width<330 or height<200) if asset in active_photos
+                        else (width<300 or height<160)):
+                    raise ValueError('published photo below native pixel requirement: '+
+                                     str(width)+'x'+str(height))
                 shutil.copyfile(target,cache_files[asset])
                 recovered+=1
             except (OSError,ValueError) as exc:
