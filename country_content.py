@@ -270,6 +270,13 @@ def check_country_content(root):
         raise ValueError("Country current-topic metadata drift: use --sync")
     for code,entry in canonical["countries"].items():
         for field,value in legacy["countries"][code].items():
+            if entry["status"]=="pending" and field=="portrait":
+                # Editors may draft a well-sourced country portrait before
+                # licensed photographs and two quiz rounds are ready. Draft
+                # portraits must NEVER enter runtime JS, even through --sync.
+                if value is not None:
+                    raise ValueError(code+": pending country portrait leaked to reader")
+                continue
             if entry.get(field)!=value:
                 raise ValueError(code+"."+field+": source-of-truth drift; run --sync")
     # A valid JSON/JS export alone does not mean a newly approved country can
@@ -337,7 +344,7 @@ def sync_country_content(root):
     passport=(root/"world-passport.js").read_text(encoding="utf-8")
     html=_replace_object(html,"TODAY_COUNTRY_GUIDES",
                          ((code,c["portrait"]) for code,c in countries.items()
-                          if c["portrait"] is not None),"guide")
+                          if c["status"]=="approved" and c["portrait"] is not None),"guide")
     passport=_replace_object(passport,"WORLD_PASSPORT_QUIZZES",
                              ((code,c["quiz"]) for code,c in countries.items()
                               if c["quiz"]),"quiz")

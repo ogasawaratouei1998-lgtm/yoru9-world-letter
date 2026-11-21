@@ -30,6 +30,32 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
 
+    def test_new_country_portraits_are_sourced_drafts_not_public_guids(self):
+        approved={"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"}
+        draft_codes=("AU","CA","IN")
+        doc=check_country_content(ROOT)
+        for code in draft_codes:
+            with self.subTest(code=code):
+                country=doc["countries"][code]
+                self.assertEqual(country["status"],"pending")
+                self.assertGreaterEqual(len(country["portrait"]["body"]),145)
+                self.assertTrue(country["portrait"]["sourceUrl"].startswith("https://"))
+                self.assertEqual(country["portraitPhotos"],[])
+                self.assertEqual(country["quiz"],[])
+                self.assertFalse(country["travelStops"])
+        self.assertEqual({code for code,item in doc["countries"].items()
+                          if item["status"]=="approved"},approved)
+        html=(ROOT/"index.html").read_text(encoding="utf-8")
+        for code in draft_codes:
+            self.assertNotIn("\\n "+code+":{lead:",html)
+        # Regression: even an explicit sync must not accidentally export
+        # unpublished portrait drafts to the reader.
+        sync_country_content(self.root)
+        html=(self.root/"index.html").read_text(encoding="utf-8")
+        for code in draft_codes:
+            self.assertNotIn("\\n "+code+":{lead:",html)
+        check_country_content(self.root)
+
     def test_spain_source_review_is_prepared_but_approval_is_separate(self):
         doc=load_country_content(ROOT)
         spain=doc["countries"]["ES"]
