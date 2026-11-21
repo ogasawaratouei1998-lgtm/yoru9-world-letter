@@ -62,7 +62,16 @@
     "antigua-english-harbour-cover",
     "antigua-bettys-hope-quiz-image",
     "antigua-devils-bridge-quiz-image",
-    "antigua-devils-bridge-postcard"
+    "antigua-devils-bridge-postcard",
+    "au-sydney-harbour-cover",
+    "au-opera-house-postcard",
+    "au-great-barrier-reef-postcard",
+    "ca-quebec-chateau-cover",
+    "ca-old-quebec-postcard",
+    "ca-banff-lake-louise-postcard",
+    "in-jaipur-hawa-mahal-cover",
+    "in-taj-mahal-postcard",
+    "in-qutb-minar-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -533,7 +542,7 @@
     },
     "AU": {
       "name": "オーストラリア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "先住民の文化、多彩な都市、海と大地の風景が重なる国",
         "body": "オーストラリアでは、アボリジナルおよびトレス海峡諸島民の文化が、大地や海との深いつながりとともに受け継がれています。シドニーやメルボルンの街には移民による多様な言語・食文化が息づき、内陸の赤い大地と熱帯のサンゴ礁はまるで別の国の風景のようです。シドニー・オペラハウスの建築、グレートバリアリーフの生態系、地域ごとの先住民文化を並べて知ると、広大な国土を一つのイメージだけでは語れないことに気づきます。",
@@ -543,11 +552,126 @@
           "自然：グレートバリアリーフ"
         ],
         "sourceName": "オーストラリア政府観光局・文化と暮らし",
-        "sourceUrl": "https://www.australia.com/en/facts-and-planning/about-australia/the-aussie-way-of-life.html"
+        "sourceUrl": "https://www.australia.com/en/facts-and-planning/about-australia/the-aussie-way-of-life.html",
+        "photos": [
+          "au-opera-house-postcard",
+          "au-great-barrier-reef-postcard"
+        ]
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/au-sydney-harbour-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg/500px-Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg",
+          "caption": "シドニー港・ハーバーブリッジとオペラハウスの夕景（2025年撮影）",
+          "author": "Stu's Images",
+          "license": "CC BY-SA 4.0",
+          "place": "シドニー港の夕景",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "シドニー・オペラハウスが世界文化遺産に登録された年は？",
+          "options": [
+            "1973年",
+            "2007年",
+            "1981年"
+          ],
+          "answer": 1,
+          "photoKey": "au-opera-house-postcard",
+          "photoLabel": "正解写真｜シドニー・オペラハウス",
+          "fact": "UNESCOの世界遺産一覧では、シドニー・オペラハウスの登録年は2007年とされています。",
+          "quip": "屋根は帆の形。でも舞台は海上ではなく、ちゃんと劇場の中。"
+        },
+        {
+          "question": "グレートバリアリーフが世界自然遺産に登録された年は？",
+          "options": [
+            "1981年",
+            "2007年",
+            "1999年"
+          ],
+          "answer": 0,
+          "photoKey": "au-great-barrier-reef-postcard",
+          "photoLabel": "正解写真｜グレートバリアリーフ",
+          "fact": "UNESCOはグレートバリアリーフを1981年に世界自然遺産として登録しています。",
+          "quip": "青い海の中は大にぎわい。サンゴが街の主役になっている。"
+        }
+      ],
+      "travelStops": {
+        "au-sydney-harbour-cover": {
+          "country": "オーストラリア",
+          "countryOnly": true,
+          "place": "シドニー港の夕景",
+          "region": "ニューサウスウェールズ州・シドニー",
+          "latitude": -33.84905,
+          "longitude": 151.21368,
+          "note": "ハーバーブリッジとオペラハウスが同じ水辺に並ぶ夕暮れの眺め。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg/500px-Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Sydney_Harbour%2C_New_South_Wales%2C_Australia.jpg",
+          "author": "Stu's Images",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/au-sydney-harbour-cover.jpg",
+          "photoCaption": "シドニー港・ハーバーブリッジとオペラハウスの夕景（2025年撮影）",
+          "coverOnly": true
+        },
+        "au-opera-house-postcard": {
+          "country": "オーストラリア",
+          "countryOnly": true,
+          "place": "シドニー・オペラハウス",
+          "region": "シドニー・ベネロングポイント",
+          "latitude": -33.8568,
+          "longitude": 151.2153,
+          "note": "帆のような屋根が連なる港沿いの世界遺産建築。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Exterior_of_Sydney_Opera_House.jpg/500px-Exterior_of_Sydney_Opera_House.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Exterior_of_Sydney_Opera_House.jpg",
+          "author": "BennyG3255",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/au-opera-house-postcard.jpg",
+          "photoCaption": "シドニー・オペラハウスの曲線を描く外観（2016年撮影）",
+          "travelStory": [
+            "シドニーの港沿いを歩くと、海面から立ち上がる白い帆のような屋根が視界に入ります。離れた場所では一つの白い塊に見えますが、近づくにつれ、曲面が何枚も重なっていることに気づきます。水辺に立つ建築そのものが、劇場へ向かう人も、散策を楽しむ人も迎える大きな風景になっています。港の対岸から眺めたあと、足元まで歩いて形の違いを確かめるのがおすすめです。",
+            "この建物の構想が世界に示されたのは1957年。UNESCOによれば、デンマーク出身の建築家ヨーン・ウッツォンの案が国際審査で選ばれ、従来と大きく異なる建築表現として注目されました。2007年には世界文化遺産に登録されています。屋根の美しさだけでなく、既存の形に収まらない設計を実物の建築へと変えていった挑戦を思い浮かべると、港の風景にもう一つの物語が加わります。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・シドニー・オペラハウス",
+              "url": "https://whc.unesco.org/en/list/166",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        },
+        "au-great-barrier-reef-postcard": {
+          "country": "オーストラリア",
+          "countryOnly": true,
+          "place": "グレートバリアリーフ",
+          "region": "クイーンズランド州・ミカエルマスリーフ付近",
+          "latitude": -16.5876,
+          "longitude": 145.9964,
+          "note": "色彩豊かなサンゴの群落が広がる、世界最大規模のサンゴ礁生態系。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7f/Great_Barrier_Reef_Corals.jpg/500px-Great_Barrier_Reef_Corals.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Great_Barrier_Reef_Corals.jpg",
+          "author": "Gökhan Tolun",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/au-great-barrier-reef-postcard.jpg",
+          "photoCaption": "グレートバリアリーフのサンゴ群落（2017年撮影）",
+          "travelStory": [
+            "クイーンズランド州の海辺から沖へ目を向けると、その向こうに広大なサンゴ礁の海が続いています。浅い場所の水色から深い海の青へと色が変わる眺めだけでも魅力的ですが、海面の下にはサンゴや魚など多様な生き物の暮らしがあります。海に入るかどうかを問わず、写真に写る海の色の違いをたどりながら、陸地からは見えない生態系の広がりを想像してみたい場所です。",
+            "グレートバリアリーフは1981年に世界自然遺産へ登録されました。UNESCOの解説では、登録対象は約34万8000平方キロメートルにわたる広大な生態系です。単一の美しい珊瑚礁ではなく、遠く離れた多くの環境がつながる巨大な世界。地図で全体の長さを見たあと、一つのサンゴや魚に目を向けると、目の前の小さな景色が大きな自然の仕組みと結び付いていることを実感できそうです。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グレートバリアリーフ",
+              "url": "https://whc.unesco.org/en/list/154",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        }
+      },
       "highlights": []
     },
     "AT": {
@@ -964,7 +1088,7 @@
     },
     "CA": {
       "name": "カナダ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "フランス語の街並みと先住民文化、広大な山と湖が共存する国",
         "body": "カナダでは太平洋沿岸から大西洋岸、北方の大地まで、自然と都市の表情が大きく変わります。ケベック・シティには城壁と石畳の旧市街が残り、バンクーバーやトロントでは世界各地から来た人々の食や芸術に出会えます。さらにファースト・ネーションズ、イヌイット、メティなど先住民の多様な文化や土地との関係も欠かせません。山岳国立公園や湖の景色だけでなく、地域ごとの言語や記憶を知ることが、この国への旅を豊かにします。",
@@ -974,11 +1098,126 @@
           "自然：バンフ国立公園・カナディアンロッキー"
         ],
         "sourceName": "カナダ観光局・文化と歴史の観光案内",
-        "sourceUrl": "https://travel.destinationcanada.com/en-ca/things-to-do"
+        "sourceUrl": "https://travel.destinationcanada.com/en-ca/things-to-do",
+        "photos": [
+          "ca-old-quebec-postcard",
+          "ca-banff-lake-louise-postcard"
+        ]
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/ca-quebec-chateau-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Ch%C3%A2teau_Frontenac_Quebec_City.jpg/500px-Ch%C3%A2teau_Frontenac_Quebec_City.jpg",
+          "caption": "ケベック旧市街に建つシャトー・フロントナック（2017年撮影）",
+          "author": "Adam Bishop",
+          "license": "CC BY-SA 4.0",
+          "place": "ケベック・シティのシャトー・フロントナック",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_Frontenac_Quebec_City.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ケベック旧市街の歴史地区が世界文化遺産に登録された年は？",
+          "options": [
+            "2007年",
+            "1985年",
+            "1950年"
+          ],
+          "answer": 1,
+          "photoKey": "ca-old-quebec-postcard",
+          "photoLabel": "正解写真｜ケベック旧市街",
+          "fact": "ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。",
+          "quip": "城壁の街。いまは観光客のカメラがあちこちに陣取っている。"
+        },
+        {
+          "question": "カナダで最初の国立公園として知られる場所は？",
+          "options": [
+            "バンフ国立公園",
+            "ヨセミテ国立公園",
+            "フィヨルドランド国立公園"
+          ],
+          "answer": 0,
+          "photoKey": "ca-banff-lake-louise-postcard",
+          "photoLabel": "正解写真｜バンフ国立公園",
+          "fact": "1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。",
+          "quip": "カナダで最初の国立公園。絶景にも歴史にも先輩の貫禄。"
+        }
+      ],
+      "travelStops": {
+        "ca-quebec-chateau-cover": {
+          "country": "カナダ",
+          "countryOnly": true,
+          "place": "ケベック・シティのシャトー・フロントナック",
+          "region": "ケベック州・ケベック・シティ",
+          "latitude": 46.81277,
+          "longitude": -71.2047,
+          "note": "歴史あるケベック旧市街を象徴する塔のある建物。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Ch%C3%A2teau_Frontenac_Quebec_City.jpg/500px-Ch%C3%A2teau_Frontenac_Quebec_City.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Ch%C3%A2teau_Frontenac_Quebec_City.jpg",
+          "author": "Adam Bishop",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/ca-quebec-chateau-cover.jpg",
+          "photoCaption": "ケベック旧市街に建つシャトー・フロントナック（2017年撮影）",
+          "coverOnly": true
+        },
+        "ca-old-quebec-postcard": {
+          "country": "カナダ",
+          "countryOnly": true,
+          "place": "ケベック旧市街のサン＝ルイ通り",
+          "region": "ケベック州・ケベック旧市街",
+          "latitude": 46.81274,
+          "longitude": -71.21935,
+          "note": "石造りの建物や街路が残る、歴史地区の散策路。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/81/Vieux_Quebec_(Old_Quebec)_-_Quebec_City.jpg/500px-Vieux_Quebec_(Old_Quebec)_-_Quebec_City.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Vieux_Quebec_(Old_Quebec)_-_Quebec_City.jpg",
+          "author": "Yacosta",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "photoAsset": "assets/travel/ca-old-quebec-postcard.jpg",
+          "photoCaption": "石造りの街並みが続くケベック旧市街のサン＝ルイ通り（2012年撮影）",
+          "travelStory": [
+            "ケベック・シティの旧市街を歩くと、城壁の門をくぐった先に、傾斜した石畳の道や歴史を感じる建物が現れます。高台のアッパータウンから坂を下り、ロウワータウンへと向かえば、同じ街でも景色が大きく変わります。北米の都市でありながら、街の輪郭そのものに長い歴史が残るのが魅力です。写真に写る塔や屋根だけでなく、道の高さや城壁の位置にも注目してみてください。",
+            "UNESCOはこの地区を、北米に残る要塞化された植民地都市の代表例の一つとして紹介し、1985年に世界文化遺産へ登録しました。高台には防御施設と歴史的な街区があり、その下に川に近い街並みが広がります。街を守るための構造が、時代を経て散策を楽しむ都市景観になったのです。城門を通り抜けたあとに振り返ると、石積みが単なる装飾ではなく、街の成り立ちを語るものに見えてきます。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ケベック旧市街",
+              "url": "https://whc.unesco.org/en/list/300",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        },
+        "ca-banff-lake-louise-postcard": {
+          "country": "カナダ",
+          "countryOnly": true,
+          "place": "バンフ国立公園のレイク・ルイーズ",
+          "region": "アルバータ州・バンフ国立公園",
+          "latitude": 51.4166,
+          "longitude": -116.2139,
+          "note": "氷河から流れ込む水と険しい峰がつくる山岳湖の絶景。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/48/Lake_Louise%2C_Banff_National_Park.jpg/500px-Lake_Louise%2C_Banff_National_Park.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Lake_Louise%2C_Banff_National_Park.jpg",
+          "author": "Gabriel Caparo",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/ca-banff-lake-louise-postcard.jpg",
+          "photoCaption": "バンフ国立公園のレイク・ルイーズと山々（2017年撮影）",
+          "travelStory": [
+            "カナディアンロッキーの山あいに広がるバンフ国立公園では、切り立つ峰と氷河に由来する湖の景色が人を迎えます。湖面に映る山を眺めるだけでなく、森の道や谷の形をたどると、山の大きさを違う角度から感じられます。晴れた空の下で水面の色に目を奪われたあと、遠くに重なる山の稜線にも注目してみてください。カナダの自然を一枚の写真に収めることの難しさを実感する場所です。",
+            "バンフは1885年に始まったカナダ最初の国立公園です。カナダ公園局によると、その出発点にはケーブ・アンド・ベイスンの温泉周辺の保護がありました。いま私たちが見る山の絶景は、観光地であると同時に長い保護の歴史を持つ場所でもあります。温泉の保護から始まった公園が、国を代表する自然保護の象徴へ成長した経緯を知って眺めれば、風景の美しさの後ろに人間の選択の歴史も見えてきます。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "カナダ公園局・バンフ国立公園管理計画",
+              "url": "https://parks.canada.ca/pn-np/ab/banff/info/gestion-management/involved/plan/plan-2022",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        }
+      },
       "highlights": []
     },
     "CH": {
@@ -2210,7 +2449,7 @@
     },
     "IN": {
       "name": "インド",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "古都の建築から市場の活気まで、多様な言語と文化が息づく国",
         "body": "インドには地域ごとに異なる言語、料理、祭り、音楽や工芸があり、一つの街を歩くだけでも幾つもの文化の重なりに出会います。北部のアグラには白い大理石で知られるタージ・マハル、デリーには中世の石造建築クトゥブ・ミナールが残ります。港町、山岳地帯、農村、活気ある大都市では、人々の暮らしもそれぞれ異なります。歴史的建築の写真だけでなく、それを守り、使い、受け継いできた地域の人々に目を向けたくなる国です。",
@@ -2220,11 +2459,126 @@
           "文化：地域ごとに多彩な言語・食・祭り"
         ],
         "sourceName": "インド観光省・Incredible India 文化案内",
-        "sourceUrl": "https://www.incredibleindia.gov.in/en/people-and-culture"
+        "sourceUrl": "https://www.incredibleindia.gov.in/en/people-and-culture",
+        "photos": [
+          "in-taj-mahal-postcard",
+          "in-qutb-minar-postcard"
+        ]
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/in-jaipur-hawa-mahal-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Hawa_Mahal_in_Jaipur_India.jpg/500px-Hawa_Mahal_in_Jaipur_India.jpg",
+          "caption": "ジャイプルにあるハワ・マハルの外観（2023年撮影）",
+          "author": "Wander-earth",
+          "license": "CC BY-SA 4.0",
+          "place": "ジャイプルのハワ・マハル",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Hawa_Mahal_in_Jaipur_India.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "タージ・マハルの建設を命じたムガル帝国の皇帝は？",
+          "options": [
+            "シャー・ジャハーン",
+            "アクバル",
+            "アショーカ王"
+          ],
+          "answer": 0,
+          "photoKey": "in-taj-mahal-postcard",
+          "photoLabel": "正解写真｜タージ・マハル",
+          "fact": "UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。",
+          "quip": "大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。"
+        },
+        {
+          "question": "クトゥブ・ミナールの高さはおよそ何メートル？",
+          "options": [
+            "24.5メートル",
+            "72.5メートル",
+            "150メートル"
+          ],
+          "answer": 1,
+          "photoKey": "in-qutb-minar-postcard",
+          "photoLabel": "正解写真｜クトゥブ・ミナール",
+          "fact": "UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。",
+          "quip": "高さ72.5メートル。見上げる首にも歴史の授業が始まる。"
+        }
+      ],
+      "travelStops": {
+        "in-jaipur-hawa-mahal-cover": {
+          "country": "インド",
+          "countryOnly": true,
+          "place": "ジャイプルのハワ・マハル",
+          "region": "ラジャスタン州・ジャイプル",
+          "latitude": 26.9239,
+          "longitude": 75.8267,
+          "note": "幾つもの小窓が特徴的な、ジャイプルの華やかな建築。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/ab/Hawa_Mahal_in_Jaipur_India.jpg/500px-Hawa_Mahal_in_Jaipur_India.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Hawa_Mahal_in_Jaipur_India.jpg",
+          "author": "Wander-earth",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/in-jaipur-hawa-mahal-cover.jpg",
+          "photoCaption": "ジャイプルにあるハワ・マハルの外観（2023年撮影）",
+          "coverOnly": true
+        },
+        "in-taj-mahal-postcard": {
+          "country": "インド",
+          "countryOnly": true,
+          "place": "タージ・マハル",
+          "region": "ウッタル・プラデーシュ州・アグラ",
+          "latitude": 27.1751,
+          "longitude": 78.0421,
+          "note": "白い大理石の霊廟と庭園が左右対称に配された世界遺産。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Complete_Taj_Mahal.jpg/500px-Complete_Taj_Mahal.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Complete_Taj_Mahal.jpg",
+          "author": "Fioselvan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/in-taj-mahal-postcard.jpg",
+          "photoCaption": "アグラのタージ・マハルと庭園の水路（2015年撮影）",
+          "travelStory": [
+            "アグラのタージ・マハルへ向かうと、白い大理石の大きなドームと四隅の塔が、庭園のまっすぐな軸の先に現れます。写真では白一色に見えても、近づいてみると表面の模様や装飾に細かな変化があります。水路や建物の配置を順に眺めると、左右が釣り合う構成にも気づきます。人々を魅了する姿の背景に、誰が何のために造らせたのかという物語が重なっている場所です。",
+            "UNESCOによると、この霊廟はムガル帝国皇帝シャー・ジャハーンが、妻ムムターズ・マハルを追悼するために建てさせました。建設は1632年に始まり、主要部分は1648年に完成しました。周囲にはモスクや門なども配されています。美しい建物として写真に収めるだけでなく、庭園から見える全体の均衡と、追悼のために長い年月をかけて実現した建築だという背景を重ねると、一つ一つの装飾が違って見えてきます。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タージ・マハル",
+              "url": "https://whc.unesco.org/en/list/252",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        },
+        "in-qutb-minar-postcard": {
+          "country": "インド",
+          "countryOnly": true,
+          "place": "クトゥブ・ミナール",
+          "region": "デリー・メヘラウリー",
+          "latitude": 28.5245,
+          "longitude": 77.1855,
+          "note": "赤みを帯びた石造りの塔が空に伸び、周辺に古い建築が残る遺跡群。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Qutb_Minar_in_Delhi%2C_India.jpg/500px-Qutb_Minar_in_Delhi%2C_India.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Qutb_Minar_in_Delhi%2C_India.jpg",
+          "author": "Clément Bardot",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoAsset": "assets/travel/in-qutb-minar-postcard.jpg",
+          "photoCaption": "デリーの石造りの塔・クトゥブ・ミナール（2016年撮影）",
+          "travelStory": [
+            "デリーのクトゥブ・ミナールを見上げると、赤みを帯びた石の塔が空へ細く伸びています。地面に近い部分から上へ視線を移していくと、塔の太さや表面の溝の見え方が変わり、装飾にも層があることに気づきます。周囲には門やモスクなどの遺構も残り、塔一本だけを眺めるのとは異なる広がりがあります。少し離れて全体の輪郭を確かめ、近づいて石の模様を見るのが面白い場所です。",
+            "UNESCOの解説によると、クトゥブ・ミナールは13世紀初めに建てられた、高さ72.5メートルの塔です。赤い砂岩を使い、角張った部分と丸みを帯びた部分が交互になる縦の溝が特徴です。周辺にはアラーイー・ダルワーザ門などの建築も残っています。華やかな装飾を鑑賞しながら、建物ごとに異なる年代と役割を考えてみると、写真に写る塔が、デリーの長い都市史へとつながっていきます。"
+          ],
+          "famousTourist": true,
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クトゥブ・ミナールと周辺遺跡",
+              "url": "https://whc.unesco.org/en/list/233",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        }
+      },
       "highlights": []
     },
     "IE": {

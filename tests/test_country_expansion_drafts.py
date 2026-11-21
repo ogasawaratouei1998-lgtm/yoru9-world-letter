@@ -1,4 +1,4 @@
-"""Public country data must never promote draft descriptions or invented photos."""
+"""Reviewed country content must retain authentic licensed pictures and their editorial provenance."""
 import json
 from pathlib import Path
 import re
@@ -18,15 +18,15 @@ class CountryExpansionDraftTests(unittest.TestCase):
         cls.draft=json.loads((ROOT/"country-expansion-drafts.json").read_text(encoding="utf-8"))
         cls.country=check_country_content(ROOT)
 
-    def test_draft_countries_are_source_backed_but_never_approved(self):
+    def test_three_country_expansions_are_explicitly_approved_with_matching_photos(self):
         self.assertEqual(set(self.draft["countries"]),COUNTRIES)
-        self.assertEqual(self.draft["visibility"],"EDITORIAL_ONLY_NOT_FOR_READER")
+        self.assertEqual(self.draft["visibility"],"APPROVED_COUNTRIES_EDITORIAL_RECORD")
         for code in COUNTRIES:
             with self.subTest(code=code):
                 row=self.country["countries"][code]
                 entry=self.draft["countries"][code]
-                self.assertEqual(row["status"],"pending")
-                self.assertEqual(entry["status"],"pending")
+                self.assertEqual(row["status"],"approved")
+                self.assertEqual(entry["status"],"approved")
                 self.assertEqual(entry["name"],row["name"])
                 self.assertGreaterEqual(len(row["portrait"]["body"]),145)
                 self.assertTrue(row["portrait"]["sourceName"])
@@ -34,9 +34,9 @@ class CountryExpansionDraftTests(unittest.TestCase):
                 self.assertIn(urlsplit(row["portrait"]["sourceUrl"]).hostname,
                               ("www.australia.com","travel.destinationcanada.com",
                                "www.incredibleindia.gov.in"))
-                self.assertEqual(row["portraitPhotos"],[])
-                self.assertEqual(row["quiz"],[])
-                self.assertEqual(row["travelStops"],{})
+                self.assertEqual(len(row["portraitPhotos"]),1)
+                self.assertEqual(len(row["quiz"]),2)
+                self.assertEqual(len(row["travelStops"]),3)
                 self.assertGreaterEqual(len(entry["coverPhotoGoal"]),30)
                 self.assertEqual(len(entry["travelDrafts"]),2)
 
@@ -56,9 +56,15 @@ class CountryExpansionDraftTests(unittest.TestCase):
                     self.assertIn(urlsplit(src["url"]).hostname,SITE_HOSTS)
                     self.assertTrue(src["name"])
                     self.assertRegex(src["checkedOn"],r"^\d{4}-\d{2}-\d{2}$")
-                    self.assertEqual(record["photoStatus"],"not_selected_or_licensed")
-                    self.assertNotIn("photoAsset",record)
-                    self.assertNotIn("photo",record)
+                    self.assertEqual(record["photoStatus"],"licensed_commons_and_approved")
+                    self.assertTrue(record["photoAsset"].startswith("assets/travel/"))
+                    matching=[stop for stop in self.country["countries"][code]["travelStops"].values()
+                              if stop["photoAsset"]==record["photoAsset"]]
+                    self.assertEqual(len(matching),1)
+                    self.assertEqual(matching[0]["travelStory"],record["travelStory"])
+                    self.assertEqual(matching[0]["historicalSources"],[record["historicalSource"]])
+                    self.assertTrue(matching[0]["photoPage"].startswith(
+                        "https://commons.wikimedia.org/wiki/File:"))
                     q=record["quizDraft"]
                     self.assertGreaterEqual(len(q["question"]),10)
                     self.assertEqual(len(q["options"]),3)
@@ -71,20 +77,22 @@ class CountryExpansionDraftTests(unittest.TestCase):
                              "Quiz answer photographs must be distinct, not reused")
         self.assertEqual(len(destinations),6)
 
-    def test_reader_exposes_only_existing_twelve_approved_countries(self):
+    def test_reader_exposes_fifteen_approved_countries_and_not_pending_ones(self):
         html=(ROOT/"index.html").read_text(encoding="utf-8")
         for code in COUNTRIES:
-            self.assertNotRegex(html,r"(?m)^ "+code+r":\{lead:")
+            self.assertRegex(html,r"(?m)^ "+code+r":\{lead:")
         match=re.search(
             r"(?m)^const APPROVED_COUNTRY_CODES=Object\.freeze\((\[[^\n]+\])\);$",
             html)
         self.assertIsNotNone(match)
         atlas=json.loads(match.group(1))
-        self.assertEqual(len(atlas),12)
-        self.assertFalse(COUNTRIES.intersection(atlas))
-        self.assertFalse(COUNTRIES.intersection(
+        self.assertEqual(len(atlas),15)
+        self.assertTrue(COUNTRIES.issubset(atlas))
+        self.assertTrue(COUNTRIES.issubset(
             {code for code,country in self.country["countries"].items()
              if country["status"]=="approved"}))
+        self.assertNotIn("NG",atlas)
+        self.assertNotRegex(html,r"(?m)^ NG:\{lead:")
 
 
 if __name__=="__main__":

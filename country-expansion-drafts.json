@@ -1,12 +1,12 @@
 {
   "version": 1,
   "updatedOn": "2026-11-21",
-  "visibility": "EDITORIAL_ONLY_NOT_FOR_READER",
+  "visibility": "APPROVED_COUNTRIES_EDITORIAL_RECORD",
   "policy": "The news source publisher is responsible for news verification. Historical and cultural site descriptions use the tourism authority or monument custodian. No country is approved or displayed until separately licensed real photos, two distinct quiz images, and canonical runtime records are validated.",
   "countries": {
     "AU": {
       "name": "オーストラリア",
-      "status": "pending",
+      "status": "approved",
       "coverPhotoGoal": "メルボルンまたはシドニーの実景。クイズ2枚と別の写真をWikimedia Commonsから著作者・利用許諾・実際の場所まで確認",
       "travelDrafts": [
         {
@@ -31,7 +31,8 @@
             "fact": "UNESCOの世界遺産一覧では、シドニー・オペラハウスの登録年は2007年とされています。",
             "photoGoal": "シドニー・オペラハウスそのものの権利確認済みの実景写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/au-opera-house-postcard.jpg"
         },
         {
           "place": "グレートバリアリーフ",
@@ -55,13 +56,14 @@
             "fact": "UNESCOはグレートバリアリーフを1981年に世界自然遺産として登録しています。",
             "photoGoal": "グレートバリアリーフの場所が確認できる、水中または海上の権利確認済みの実景写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/au-great-barrier-reef-postcard.jpg"
         }
       ]
     },
     "CA": {
       "name": "カナダ",
-      "status": "pending",
+      "status": "approved",
       "coverPhotoGoal": "バンクーバーなどの街並み。ケベック・バンフと別の実景写真を選び、著作者・CCライセンス・国名を照合",
       "travelDrafts": [
         {
@@ -86,7 +88,8 @@
             "fact": "ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。",
             "photoGoal": "城壁と旧市街の位置関係が分かる現地の権利確認済み写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/ca-old-quebec-postcard.jpg"
         },
         {
           "place": "バンフ国立公園",
@@ -110,13 +113,14 @@
             "fact": "1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。",
             "photoGoal": "バンフの山と湖が確認できる、著作者・権利表示付きの写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/ca-banff-lake-louise-postcard.jpg"
         }
       ]
     },
     "IN": {
       "name": "インド",
-      "status": "pending",
+      "status": "approved",
       "coverPhotoGoal": "ジャイプルなどの街並みで、タージ・マハルやクトゥブ・ミナールと別の実景写真を権利確認",
       "travelDrafts": [
         {
@@ -141,7 +145,8 @@
             "fact": "UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。",
             "photoGoal": "タージ・マハルの全景が明瞭な、場所・著作者・利用許諾を確認した写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/in-taj-mahal-postcard.jpg"
         },
         {
           "place": "クトゥブ・ミナールと周辺遺跡",
@@ -165,7 +170,8 @@
             "fact": "UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。",
             "photoGoal": "クトゥブ・ミナールの塔と石造模様が見える権利確認済みの写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/in-qutb-minar-postcard.jpg"
         }
       ]
     }

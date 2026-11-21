@@ -25,35 +25,41 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AU","CA","IN"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
 
-    def test_new_country_portraits_are_sourced_drafts_not_public_guids(self):
-        approved={"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"}
-        draft_codes=("AU","CA","IN")
+    def test_three_new_countries_are_approved_with_photos_and_two_real_quizzes(self):
+        countries=("AU","CA","IN")
         doc=check_country_content(ROOT)
-        for code in draft_codes:
-            with self.subTest(code=code):
+        stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        for code in countries:
+            with self.subTest(country=code):
                 country=doc["countries"][code]
-                self.assertEqual(country["status"],"pending")
+                self.assertEqual(country["status"],"approved")
                 self.assertGreaterEqual(len(country["portrait"]["body"]),145)
                 self.assertTrue(country["portrait"]["sourceUrl"].startswith("https://"))
-                self.assertEqual(country["portraitPhotos"],[])
-                self.assertEqual(country["quiz"],[])
-                self.assertFalse(country["travelStops"])
-        self.assertEqual({code for code,item in doc["countries"].items()
-                          if item["status"]=="approved"},approved)
-        html=(ROOT/"index.html").read_text(encoding="utf-8")
-        for code in draft_codes:
-            self.assertNotIn("\\n "+code+":{lead:",html)
-        # Regression: even an explicit sync must not accidentally export
-        # unpublished portrait drafts to the reader.
+                self.assertEqual(len(country["portraitPhotos"]),1)
+                self.assertEqual(len(country["quiz"]),2)
+                self.assertEqual(len(country["travelStops"]),3)
+                cover=country["portraitPhotos"][0]["asset"]
+                quiz_assets={country["travelStops"][quiz["photoKey"]]["photoAsset"]
+                             for quiz in country["quiz"]}
+                self.assertEqual(len(quiz_assets),2)
+                self.assertNotIn(cover,quiz_assets)
+                for key,stop in country["travelStops"].items():
+                    self.assertEqual(stop,stops[key])
+                    self.assertEqual(stop["country"],country["name"])
+                    self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/"))
+                    self.assertTrue(stop["photoPage"].startswith("https://commons.wikimedia.org/wiki/File:"))
+                    self.assertTrue(stop["author"] and stop["license"])
+                    if not stop.get("coverOnly"):
+                        self.assertEqual(len(stop["travelStory"]),2)
+                        self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
+                        self.assertTrue(stop["historicalSources"])
+        # Both exported frontends must survive a full canonical round trip.
         sync_country_content(self.root)
-        html=(self.root/"index.html").read_text(encoding="utf-8")
-        for code in draft_codes:
-            self.assertNotIn("\\n "+code+":{lead:",html)
         check_country_content(self.root)
 
     def test_spain_source_review_is_prepared_but_approval_is_separate(self):
@@ -507,7 +513,7 @@ class CountryContentTest(unittest.TestCase):
                 self.assertNotEqual(url,stop["photoPage"])
                 self.assertTrue(stop["author"] and stop["license"] and stop["photoAsset"])
         self.assertEqual({code for code,c in data["countries"].items() if c["status"]=="approved"},
-                         {"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"})
+                         {"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AU","CA","IN"})
 
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)

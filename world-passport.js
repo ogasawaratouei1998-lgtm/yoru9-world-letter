@@ -4,91 +4,53 @@
  * licensed sources and are disclosed only after answering. */
 'use strict';
 const WORLD_PASSPORT_QUIZZES=Object.freeze({
- IT:[
-  {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',
-   options:['ピサ','ローマ','ミラノ'],answer:0,
-   photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',
-   fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',
-   quip:'斜めに立っても、長年しっかり観光の主役。'},
-  {question:'ヴェネツィアの街を象徴する大きな水路は？',
-   options:['ライン川','大運河','テムズ川'],answer:1,
-   photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',
-   fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',
-   quip:'道路を探すより、舟を探したほうが早い日もある。'}
- ],
- DE:[
-  {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',
-   options:['ベルリン','ミュンヘン','ケルン'],answer:2,
-   photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',
-   fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',
-   quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
-  {question:'ノイシュヴァンシュタイン城があるドイツの州は？',
-   options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,
-   photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',
-   fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',
-   quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'}
+ AR:[
+  {question:'イグアスの滝を包む風景は？',options:['熱帯の森','氷の洞窟','砂漠の砂丘'],answer:0,photoKey:'ar-iguazu-postcard',photoLabel:'正解の風景｜イグアスの滝と熱帯の森',fact:'アルゼンチン北東部のイグアスの滝は、熱帯の森に囲まれています。',quip:'水の勢いがすごすぎて、森まで拍手しているように見える。'},
+  {question:'アルゼンチンのマテ茶に似合うのは？',options:['車の給油','語らいのひととき','壁のペンキ塗り'],answer:1,photoKey:'ar-mate-quiz-image',photoLabel:'正解の文化｜マテ茶の器とボンビージャ',fact:'マテ茶はアルゼンチンの日常や人との語らいの中で親しまれています。',quip:'どれだけ話が弾んでも、オチまでは淹れてくれない。'},
  ],
  AG:[
   {question:'アンティグア島のベティーズ・ホープに残る風車は、かつて何に使われた？',options:['サトウキビを搾る作業','港に船を導く灯台','天体を観測する施設'],answer:0,photoKey:'antigua-bettys-hope-quiz-image',photoLabel:'正解の遺構｜ベティーズ・ホープの製糖風車',fact:'ベティーズ・ホープは砂糖プランテーションの跡地で、風車はサトウキビを搾る施設でした。そこでは奴隷にされた人々が労働を強いられた歴史も伝えられています。',quip:'丸い石塔は飾りじゃない。風の力まで製糖に動員していた。'},
   {question:'アンティグア島の自然の石橋『デビルズ・ブリッジ』を削り出したのは？',options:['船で運んだ石材','大西洋の波の浸食','火山から流れた溶岩'],answer:1,photoKey:'antigua-devils-bridge-quiz-image',photoLabel:'正解の自然景観｜アンティグア島・デビルズ・ブリッジ',fact:'デビルズ・ブリッジはアンティグア島東部にある石灰岩の自然のアーチ。大西洋の波が長い年月をかけて形をつくりました。',quip:'橋を設計したのは人間じゃなく、休みなく押し寄せる波。'},
  ],
- AR:[
-  {question:'イグアスの滝を包む風景は？',options:['熱帯の森','氷の洞窟','砂漠の砂丘'],answer:0,
-   photoKey:'ar-iguazu-postcard',photoLabel:'正解の風景｜イグアスの滝と熱帯の森',
-   fact:'アルゼンチン北東部のイグアスの滝は、熱帯の森に囲まれています。',
-   quip:'水の勢いがすごすぎて、森まで拍手しているように見える。'},
-  {question:'アルゼンチンのマテ茶に似合うのは？',options:['車の給油','語らいのひととき','壁のペンキ塗り'],answer:1,
-   photoKey:'ar-mate-quiz-image',photoLabel:'正解の文化｜マテ茶の器とボンビージャ',
-   fact:'マテ茶はアルゼンチンの日常や人との語らいの中で親しまれています。',
-   quip:'どれだけ話が弾んでも、オチまでは淹れてくれない。'}
- ],
- FR:[
-  {question:'モン・サン＝ミシェルの景色を変えるのは？',options:['火山の噴火','オーロラ','潮の満ち引き'],answer:2,
-   photoKey:'fr-mont-low-tide-quiz-image',photoLabel:'正解の景色｜潮の満ち引きの影響を受ける干潟',
-   fact:'ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで周囲の景色が変わります。',
-   quip:'景色の模様替え係は海。毎日、無給で大仕事。'},
-  {question:'フランス南部の海岸が面するのは？',options:['地中海','カリブ海','北極海'],answer:0,
-   photoKey:'fr-mediterranean-quiz-image',photoLabel:'正解の海｜南フランス・ニースの地中海',
-   fact:'フランスは大西洋と地中海の両方に面しています。',
-   quip:'北極海でバカンスを始めたら、水着より防寒着が主役。'}
- ],
- US:[
-  {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,
-   photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',
-   fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',
-   quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
-  {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,
-   photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',
-   fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',
-   quip:'地球のプロフィール写真、岩肌の圧が強い。'}
- ],
- GB:[
-  {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,
-   photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',
-   fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',
-   quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
-  {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,
-   photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',
-   fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',
-   quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'}
+ AU:[
+  {question:'シドニー・オペラハウスが世界文化遺産に登録された年は？',options:['1973年','2007年','1981年'],answer:1,photoKey:'au-opera-house-postcard',photoLabel:'正解写真｜シドニー・オペラハウス',fact:'UNESCOの世界遺産一覧では、シドニー・オペラハウスの登録年は2007年とされています。',quip:'屋根は帆の形。でも舞台は海上ではなく、ちゃんと劇場の中。'},
+  {question:'グレートバリアリーフが世界自然遺産に登録された年は？',options:['1981年','2007年','1999年'],answer:0,photoKey:'au-great-barrier-reef-postcard',photoLabel:'正解写真｜グレートバリアリーフ',fact:'UNESCOはグレートバリアリーフを1981年に世界自然遺産として登録しています。',quip:'青い海の中は大にぎわい。サンゴが街の主役になっている。'},
  ],
  BR:[
   {question:'写真に写るサンパウロの有名な大通りは？',options:['アヴェニーダ・パウリスタ','シャンゼリゼ通り','フィフス・アベニュー'],answer:0,photoKey:'brazil-paulista-quiz-image',photoLabel:'正解の通り｜サンパウロ・アヴェニーダ・パウリスタ',fact:'アヴェニーダ・パウリスタはサンパウロの文化施設が集まる通りで、MASPなどが並びます。',quip:'通りを歩けば美術館が次々登場。散歩が文化祭になりそう。'},
   {question:'ブラジル側から撮影したこの滝は何という？',options:['エンジェルフォール','イグアスの滝','ヴィクトリアの滝'],answer:1,photoKey:'brazil-iguacu-brazil-side-quiz-image',photoLabel:'正解の滝｜ブラジル側から見たイグアスの滝',fact:'イグアスの滝はブラジルとアルゼンチンにまたがり、ブラジル側のイグアス国立公園は1986年にUNESCO世界遺産へ登録されました。',quip:'国境より目立つのは水しぶき。滝の迫力に地図が負ける。'},
  ],
+ CA:[
+  {question:'ケベック旧市街の歴史地区が世界文化遺産に登録された年は？',options:['2007年','1985年','1950年'],answer:1,photoKey:'ca-old-quebec-postcard',photoLabel:'正解写真｜ケベック旧市街',fact:'ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。',quip:'城壁の街。いまは観光客のカメラがあちこちに陣取っている。'},
+  {question:'カナダで最初の国立公園として知られる場所は？',options:['バンフ国立公園','ヨセミテ国立公園','フィヨルドランド国立公園'],answer:0,photoKey:'ca-banff-lake-louise-postcard',photoLabel:'正解写真｜バンフ国立公園',fact:'1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。',quip:'カナダで最初の国立公園。絶景にも歴史にも先輩の貫禄。'},
+ ],
+ DE:[
+  {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',options:['ベルリン','ミュンヘン','ケルン'],answer:2,photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
+  {question:'ノイシュヴァンシュタイン城があるドイツの州は？',options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'},
+ ],
  ES:[
   {question:'サグラダ・ファミリアが建つ都市は？',options:['マドリード','バルセロナ','セビリア'],answer:1,photoKey:'spain-sagrada-nativity-quiz-image',photoLabel:'正解の建築｜バルセロナのサグラダ・ファミリア・生誕のファサード',fact:'サグラダ・ファミリアの「生誕のファサード」と地下聖堂は、ガウディ作品群としてUNESCO世界遺産に登録されています。',quip:'塔だけじゃない。外壁の細工まで観光案内の主役級。'},
   {question:'写真のアルハンブラ宮殿がある都市は？',options:['グラナダ','バルセロナ','バレンシア'],answer:0,photoKey:'spain-alhambra-quiz-image',photoLabel:'正解の宮殿｜アンダルシアのグラナダ・アルハンブラ宮殿',fact:'アルハンブラ宮殿はグラナダにあり、ヘネラリフェとアルバイシン地区とともに世界遺産に登録されています。',quip:'城壁の奥まで歴史ぎっしり。地図の答えはグラナダ。'},
  ],
+ FR:[
+  {question:'モン・サン＝ミシェルの景色を変えるのは？',options:['火山の噴火','オーロラ','潮の満ち引き'],answer:2,photoKey:'fr-mont-low-tide-quiz-image',photoLabel:'正解の景色｜潮の満ち引きの影響を受ける干潟',fact:'ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで周囲の景色が変わります。',quip:'景色の模様替え係は海。毎日、無給で大仕事。'},
+  {question:'フランス南部の海岸が面するのは？',options:['地中海','カリブ海','北極海'],answer:0,photoKey:'fr-mediterranean-quiz-image',photoLabel:'正解の海｜南フランス・ニースの地中海',fact:'フランスは大西洋と地中海の両方に面しています。',quip:'北極海でバカンスを始めたら、水着より防寒着が主役。'},
+ ],
+ GB:[
+  {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
+  {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'},
+ ],
+ IN:[
+  {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
+  {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
+ ],
+ IT:[
+  {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',options:['ピサ','ローマ','ミラノ'],answer:0,photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',quip:'斜めに立っても、長年しっかり観光の主役。'},
+  {question:'ヴェネツィアの街を象徴する大きな水路は？',options:['ライン川','大運河','テムズ川'],answer:1,photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',quip:'道路を探すより、舟を探したほうが早い日もある。'},
+ ],
  JP:[
-  {question:'富士山がまたがる2つの県は？',options:['長野県と岐阜県','京都府と滋賀県','山梨県と静岡県'],answer:2,
-   photoKey:'japan-fuji-postcard',photoLabel:'正解の山｜山梨県・静岡県にまたがる富士山',
-   fact:'富士山は山梨県と静岡県にまたがる日本で最も高い山です。',
-   quip:'存在感が大きすぎて二つの県にまたがってしまった。'},
-  {question:'東京・浅草の浅草寺があるのはどこ？',options:['京都府','東京都','奈良県'],answer:1,
-   photoKey:'japan-country-postcard',photoLabel:'正解の寺院｜東京・浅草寺',
-   fact:'浅草寺は東京都台東区浅草にあり、雷門などで知られています。',
-   quip:'雷門は人気者。記念写真の行列まで名物になりそう。'}
+  {question:'富士山がまたがる2つの県は？',options:['長野県と岐阜県','京都府と滋賀県','山梨県と静岡県'],answer:2,photoKey:'japan-fuji-postcard',photoLabel:'正解の山｜山梨県・静岡県にまたがる富士山',fact:'富士山は山梨県と静岡県にまたがる日本で最も高い山です。',quip:'存在感が大きすぎて二つの県にまたがってしまった。'},
+  {question:'東京・浅草の浅草寺があるのはどこ？',options:['京都府','東京都','奈良県'],answer:1,photoKey:'japan-country-postcard',photoLabel:'正解の寺院｜東京・浅草寺',fact:'浅草寺は東京都台東区浅草にあり、雷門などで知られています。',quip:'雷門は人気者。記念写真の行列まで名物になりそう。'},
  ],
  KR:[
   {question:'石段と石塔で知られる、慶州の世界遺産の寺は？',options:['仏国寺','景福宮','海印寺'],answer:0,photoKey:'korea-bulguksa-quiz-image',photoLabel:'正解の寺院｜慶州・仏国寺',fact:'仏国寺は新羅時代の仏教建築を伝える寺で、石窟庵とともにUNESCO世界遺産に登録されています。',quip:'階段の先まで文化財。登る前から歴史が濃い。'},
@@ -98,7 +60,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
  ],
-
+ US:[
+  {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
+  {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
+ ],
 });
 
 let worldPassportActive=null;
