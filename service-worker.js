@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v67';
+const SHELL_CACHE = 'yoru9-shell-v68';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -72,7 +72,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Denmark: three independent place-matched Commons photographs with named authors.
  'assets/travel/dk-copenhagen-skyline-cover.jpg', 'assets/travel/dk-kronborg-castle-postcard.jpg', 'assets/travel/dk-roskilde-cathedral-postcard.jpg',
  // Finland: reviewed Commons photos of Helsinki Cathedral, Suomenlinna and Old Rauma.
- 'assets/travel/fi-helsinki-cathedral-cover.jpg', 'assets/travel/fi-suomenlinna-fortress-postcard.jpg', 'assets/travel/fi-old-rauma-postcard.jpg'];
+ 'assets/travel/fi-helsinki-cathedral-cover.jpg', 'assets/travel/fi-suomenlinna-fortress-postcard.jpg', 'assets/travel/fi-old-rauma-postcard.jpg',
+ // Sweden: separate Stockholm, Drottningholm and Tanum source-verified photos.
+ 'assets/travel/se-stockholm-gamla-stan-cover.jpg', 'assets/travel/se-drottningholm-palace-postcard.jpg', 'assets/travel/se-tanum-rock-carvings-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
