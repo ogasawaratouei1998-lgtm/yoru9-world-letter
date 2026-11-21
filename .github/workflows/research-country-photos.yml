@@ -11,6 +11,7 @@ on:
       - 'country-expansion-batch-unesco-eight-20261121.json'
       - 'country-expansion-batch-eight-20261121.json'
       - 'country_photo_candidates.py'
+      - 'country_unesco_source_catalog.py'
       - '.github/workflows/research-country-photos.yml'
 
 permissions:
@@ -29,11 +30,16 @@ jobs:
         run: python country_content.py --check
       - name: Research Commons JPEGs and license metadata without selecting images
         run: python country_photo_candidates.py --output reports/country-photo-candidates.json --limit 3
+      - name: Inventory all 171 pending countries from the UNESCO official XML feed
+        continue-on-error: true
+        run: python country_unesco_source_catalog.py --output reports/country-official-source-inventory.json
       - name: Preserve source links, photographer credits, CC licenses and required visual checks
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: country-photo-metadata-candidates
-          path: reports/country-photo-candidates.json
+          path: |
+            reports/country-photo-candidates.json
+            reports/country-official-source-inventory.json
           if-no-files-found: warn
           retention-days: 14
