@@ -122,7 +122,10 @@
     "bg-boyana-church-postcard",
     "dk-copenhagen-skyline-cover",
     "dk-kronborg-castle-postcard",
-    "dk-roskilde-cathedral-postcard"
+    "dk-roskilde-cathedral-postcard",
+    "fi-helsinki-cathedral-cover",
+    "fi-suomenlinna-fortress-postcard",
+    "fi-old-rauma-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2807,7 +2810,7 @@
     },
     "FI": {
       "name": "フィンランド",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "島をつなぐ要塞と、木造の港町に刻まれた北方の暮らし",
         "body": "フィンランドの遺産には、海に面した地域ならではの都市の記憶が残っています。ヘルシンキ沖のスオメンリンナは島々に広がる要塞で、ラウマ旧市街には木造の家屋が連なる伝統的な街並みが受け継がれています。海上の防備を目的に計画された大規模な施設と、商いと生活のなかで形づくられた細い通り。海風を感じながらこの二つを比べると、同じ北方の港でも歴史が異なることがよく分かります。",
@@ -2815,13 +2818,127 @@
           "世界遺産：スオメンリンナの要塞",
           "世界遺産：ラウマ旧市街"
         ],
-        "photos": [],
+        "photos": [
+          "fi-suomenlinna-fortress-postcard",
+          "fi-old-rauma-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：フィンランドの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/fi"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/fi-helsinki-cathedral-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg/500px-Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg",
+          "caption": "ヘルシンキの元老院広場と白い大聖堂（2026年5月、JIP撮影）",
+          "author": "JIP",
+          "license": "CC BY-SA 4.0",
+          "place": "ヘルシンキ大聖堂・元老院広場",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "スオメンリンナが築かれた主な目的は？",
+          "options": [
+            "港の防衛",
+            "砂漠の灌漑",
+            "山岳農業"
+          ],
+          "answer": 0,
+          "fact": "UNESCOはヘルシンキ港の入口に築かれた18世紀の海上要塞として紹介しています。",
+          "photoLabel": "正解写真｜スオメンリンナの海上要塞",
+          "quip": "海の上で城壁を築く。守備範囲は陸地だけでは足りなかった。",
+          "photoKey": "fi-suomenlinna-fortress-postcard"
+        },
+        {
+          "question": "ラウマ旧市街の伝統的な街並みを特徴づけるのは？",
+          "options": [
+            "木造家屋",
+            "大理石の高層塔",
+            "砂漠のテント"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは伝統的な木造建築が残る北欧の港町としてラウマを評価しています。",
+          "photoLabel": "正解写真｜木造のラウマ旧市街",
+          "quip": "古い木の家が並ぶ街。建て替えの速さより、残す技術で勝負した。",
+          "photoKey": "fi-old-rauma-postcard"
+        }
+      ],
+      "travelStops": {
+        "fi-helsinki-cathedral-cover": {
+          "country": "フィンランド",
+          "countryOnly": true,
+          "place": "ヘルシンキ大聖堂・元老院広場",
+          "region": "ヘルシンキ中心部",
+          "latitude": 60.1695,
+          "longitude": 24.9523,
+          "note": "19世紀の新古典主義の街づくりを象徴する白い大聖堂と元老院広場。",
+          "photoCaption": "ヘルシンキの元老院広場と白い大聖堂（2026年5月、JIP撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg/500px-Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Helsinki_Senate_Square_and_Helsinki_Cathedral_in_May_2026.jpg",
+          "photoAsset": "assets/travel/fi-helsinki-cathedral-cover.jpg",
+          "author": "JIP",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "fi-suomenlinna-fortress-postcard": {
+          "country": "フィンランド",
+          "countryOnly": true,
+          "place": "スオメンリンナの要塞",
+          "region": "ヘルシンキ沖・スオメンリンナ",
+          "latitude": 60.145,
+          "longitude": 24.988,
+          "note": "18世紀に築かれた島々に連なる海上要塞の世界遺産。",
+          "photoCaption": "船上から眺めたスオメンリンナの石造の海上要塞（2019年、Bahnfrend撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Fortress_of_Suomenlinna%2C_2019_(01).jpg/500px-Fortress_of_Suomenlinna%2C_2019_(01).jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Fortress_of_Suomenlinna%2C_2019_(01).jpg",
+          "photoAsset": "assets/travel/fi-suomenlinna-fortress-postcard.jpg",
+          "author": "Bahnfrend",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "スオメンリンナへ向かうと、海の上に島々と低い石造の防壁が少しずつ近づいてきます。島へ着いたら大砲の跡や門、草の生えた防塁を歩き、港の入口を見渡してみたいところです。建物だけを見ていると大きな公園のようにも感じられますが、海へ開いた視界に立つと、島の配置そのものが防衛に利用されていたことが分かります。",
+            "UNESCOはスオメンリンナを、18世紀後半にスウェーデンがヘルシンキ港の入口に築いた海上要塞として評価しています。要塞は一つの島の建物ではなく、複数の島と水路を合わせて構成された軍事建築です。散策中は島ごとの距離や砲台の向きを意識すると、守る対象と海上交通の関係が読み解けます。現在も人々が暮らす場所なので、住民の生活空間への配慮も大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スオメンリンナの要塞",
+              "url": "https://whc.unesco.org/en/list/583/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "fi-old-rauma-postcard": {
+          "country": "フィンランド",
+          "countryOnly": true,
+          "place": "ラウマ旧市街",
+          "region": "フィンランド西岸・ラウマ",
+          "latitude": 61.128269,
+          "longitude": 21.513215,
+          "note": "伝統的な木造家屋の街路がよく残る歴史都市の世界文化遺産。",
+          "photoCaption": "木造家屋と石畳の通りが残るラウマ旧市街（2017年、Anninaem撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Vanha_Rauma.jpg/500px-Vanha_Rauma.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Vanha_Rauma.jpg",
+          "photoAsset": "assets/travel/fi-old-rauma-postcard.jpg",
+          "author": "Anninaem",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ラウマの旧市街では、色づけされた木造の家が細い通りに並び、店先の窓や門のつくりに目を奪われます。大きな記念建造物よりも、ひとつひとつの建物が街並みを形づくっているところが魅力です。交差点で振り返って屋根の重なりを見比べると、木造の家が残る北欧の港町を日常の速度で歩く楽しみが伝わってきます。",
+            "UNESCOによればラウマはフィンランドでも古い港町の一つで、フランシスコ会修道院を中心に街が発展しました。17世紀末の火災を経験しながらも、伝統的な木造の都市景観が受け継がれています。家屋の配置や通りの幅に注目すると、暮らしに合わせて育った都市の姿が感じられます。現在の住宅や店にも使われる場所として、写真撮影では住民の暮らしを尊重したいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラウマ旧市街",
+              "url": "https://whc.unesco.org/en/list/582/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "FJ": {
