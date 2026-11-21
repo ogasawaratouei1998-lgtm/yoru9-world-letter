@@ -246,6 +246,53 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(load_country_content(self.root)["countries"]["NG"]["status"],
                          "pending")
 
+    def test_approved_country_quiz_rejects_bad_answers_and_duplicate_options(self):
+        cases=[
+            ("out_of_range",{"answer":3}),
+            ("negative",{"answer":-1}),
+            ("boolean",{"answer":True}),
+            ("string",{"answer":"1"}),
+            ("duplicated_options",{"options":["ピサ","ローマ"," ピサ "]}),
+            ("missing_fact",{"fact":""}),
+            ("missing_question",{"question":"?"}),
+            ("missing_credit_label",{"photoLabel":""}),
+            ("missing_quip",{"quip":""}),
+        ]
+        for label,changes in cases:
+            with self.subTest(problem=label):
+                path=self.root/"country-content.json"
+                data=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+                data["countries"]["IT"]["quiz"][0].update(changes)
+                path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+                with self.assertRaisesRegex(ValueError,
+                                            "IT: invalid approved photo quiz: quiz_content"):
+                    load_country_content(self.root)
+
+    def test_different_photo_keys_cannot_disguise_one_repeated_quiz_image(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        italy=data["countries"]["IT"]
+        first=italy["travelStops"][italy["quiz"][0]["photoKey"]]
+        second=italy["travelStops"][italy["quiz"][1]["photoKey"]]
+        for field in ("photoAsset","photo","photoPage","author","license","licenseUrl"):
+            second[field]=first[field]
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,
+                                    "IT: invalid approved photo quiz: quiz_photos"):
+            load_country_content(self.root)
+
+    def test_a_canonical_cover_cannot_double_as_a_quiz_reveal(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        italy=data["countries"]["IT"]
+        cover_stop=italy["travelStops"]["italy-rome-colosseum-cover"]
+        first=italy["travelStops"][italy["quiz"][0]["photoKey"]]
+        for field in ("photoAsset","photo","photoPage","author","license","licenseUrl"):
+            first[field]=cover_stop[field]
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"quiz_cover_overlap"):
+            load_country_content(self.root)
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
@@ -339,7 +386,7 @@ class CountryContentTest(unittest.TestCase):
                              if p.get("asset")=="assets/travel/fuji-cherry-blossom.jpg")
         japanese_fujisan.pop("avoidCover",None)
         content.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"JP: approved content fails reader readiness"):
+        with self.assertRaisesRegex(ValueError,"JP: invalid approved photo quiz: quiz_cover_overlap"):
             sync_country_content(self.root)
 
     def test_approved_fallback_must_not_reuse_a_quiz_photo(self):
@@ -355,7 +402,7 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(fallback.pop("avoidCover"))
         path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
         with self.assertRaisesRegex(ValueError,
-                                    "AR: approved content fails reader readiness: AR: portrait cover reused"):
+                                    "AR: invalid approved photo quiz: quiz_cover_overlap"):
             sync_country_content(self.root)
 
     def test_newly_approved_countries_keep_distinct_covers_and_quiz_photos(self):

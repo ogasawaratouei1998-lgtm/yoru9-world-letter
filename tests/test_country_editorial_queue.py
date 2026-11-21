@@ -136,6 +136,39 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",row["missing"])
             self.assertIn("portrait_photo_reused_in_quiz",row["missing"])
 
+    def test_pending_country_queue_explains_broken_choices_and_answers(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            doc=json.loads(path.read_text(encoding="utf-8"))
+            doc["countries"]["IT"]["status"]="pending"
+            doc["countries"]["IT"]["quiz"][0]["answer"]=99
+            doc["countries"]["IT"]["quiz"][1]["options"]=["same","same","same"]
+            path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+            queue=country_editorial_queue(root)
+            row=next(row for row in queue["prioritizedPending"] if row["code"]=="IT")
+            self.assertIn("complete_three_choice_quiz",row["missing"])
+            self.assertNotIn("two_distinct_licensed_photo_quizzes",row["missing"])
+            self.assertNotIn("IT",queue["approvedCountries"])
+
+    def test_pending_country_queue_separately_flags_duplicate_answer_photo(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            doc=json.loads(path.read_text(encoding="utf-8"))
+            italy=doc["countries"]["IT"]
+            italy["status"]="pending"
+            italy["quiz"][1]["photoKey"]=italy["quiz"][0]["photoKey"]
+            path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+            row=next(row for row in country_editorial_queue(root)["prioritizedPending"]
+                     if row["code"]=="IT")
+            self.assertIn("two_distinct_licensed_photo_quizzes",row["missing"])
+            self.assertNotIn("complete_three_choice_quiz",row["missing"])
+
     def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)
