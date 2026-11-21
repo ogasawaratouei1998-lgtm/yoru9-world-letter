@@ -31,7 +31,7 @@ class SecondCountryExpansionTests(unittest.TestCase):
                 self.assertEqual(len(answers),2)
                 self.assertNotIn(cover,answers)
                 self.assertEqual(set(country_coverage(ROOT,[{"country":code}])),{code})
-        self.assertEqual(len(ready),18)
+        self.assertEqual(len(ready),19)
         self.assertEqual(sum(row["status"]=="pending"
                              for row in source["countries"].values()),178)
 
