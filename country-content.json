@@ -344,7 +344,7 @@
     },
     "AG": {
       "name": "アンティグア・バーブーダ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "世界遺産の港、風車の記憶、波が彫った石の橋",
         "body": "カリブ海に浮かぶアンティグア・バーブーダは、アンティグア島とバーブーダ島などからなる国です。アンティグアのイングリッシュ・ハーバーでは帆船と歴史的な造船所が同じ湾に並び、島の東端には大西洋の波が長い年月をかけて削った自然の石橋があります。海辺の美しさの裏には、植民地時代の海軍拠点や砂糖プランテーション、奴隷にされた人々の労働という歴史も残ります。カーニバルや音楽、バーブーダの静かな浜辺も含め、異なる島の暮らしと記憶を知る旅ができます。",
@@ -510,7 +510,26 @@
           ]
         }
       },
-      "highlights": []
+      "highlights": [],
+      "approval": {
+        "reviewedOn": "2026-11-21",
+        "reason": "Government tourism bureau cultural facts, UNESCO 2016 World Heritage and National Parks colonial labor history, Betty's Hope archaeological restoration, natural coastal erosion and four independently credited Wikimedia photographs verified; complete 519-test CI, image bundle and 320/375/393px browser preflight succeeded in PR #114.",
+        "sources": [
+          "https://www.visitantiguabarbuda.com/public_relations/28014/",
+          "https://whc.unesco.org/en/list/1499/",
+          "https://www.nationalparksantigua.com/tours/nelsons-dockyard-national-park/",
+          "https://www.archaeologyantigua.org/index.php/betty-s-hope",
+          "https://www.antiguamuseums.net/bettys-hope-trust/",
+          "https://www.visitantiguabarbuda.com/?taxonomy=interests&term=beach"
+        ],
+        "photos": [
+          "https://commons.wikimedia.org/wiki/File:Antigua_English_Harbour_Nelson's_Dockyard_2.jpg",
+          "https://commons.wikimedia.org/wiki/File:Bettys_Hope_auf_Antigua.JPG",
+          "https://commons.wikimedia.org/wiki/File:Antigua_natural_stone_bridge.jpg",
+          "https://commons.wikimedia.org/wiki/File:Antigua_Willikies_Devil's_Bridge_National_Park.jpg",
+          "https://commons.wikimedia.org/wiki/File:Nelson's_Dockyard_Antigua.jpg"
+        ]
+      }
     },
     "AU": {
       "name": "オーストラリア",
