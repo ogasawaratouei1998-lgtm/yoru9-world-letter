@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-21",
+  "updatedOn": "2026-11-22",
   "editorialPolicy": "approved = explicitly vetted release-country experience; pending = not yet cleared for promotion. References are inherited from existing reviewed assets, not automatically fact-verified by this migration.",
   "travelOrder": [
     "ar-casa-rosada-postcard",
@@ -166,7 +166,17 @@
     "AL": {
       "name": "アルバニア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "丘に連なる歴史都市と、水辺に重なる古代の遺跡",
+        "body": "アルバニアでは、ベラトとジロカストラの歴史地区、さらに南部のブトリントの遺跡が魅力です。歴史都市では坂道をたどり、丘の斜面と住宅の配置をじっくり眺めると、建物と地形が一体となった景観が見えてきます。ブトリントでは異なる時代の遺構が重なる場所を歩き、地中海の交流が残した痕跡を考えてみたいところです。暮らしの続く街と考古遺跡を比べながら、建築に現れる歴史の層を味わう旅です。",
+        "facts": [
+          "世界遺産：ベラトとジロカストラの歴史地区",
+          "世界遺産：ブトリント"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アルバニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/al"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -1976,7 +1986,17 @@
     "CY": {
       "name": "キプロス",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "地中海の古代遺跡と、山村の教会に描かれた色彩",
+        "body": "キプロスでは、海岸近くのパフォスと山地のトロードス地方に異なる文化の遺産が残ります。パフォスでは古代の建物やモザイクに目を向けると、地中海の歴史が身近になります。山へ移動すれば、トロードスの教会群では外観と内部の豊かな壁画との対照が印象的です。装飾の一つひとつを観察しながら、海上交流の記憶と山の集落が守ってきた信仰の文化をたどる小旅行を楽しめます。",
+        "facts": [
+          "世界遺産：パフォス",
+          "世界遺産：トロードス地方の壁画教会群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：キプロスの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cy"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -2795,7 +2815,17 @@
     "EE": {
       "name": "エストニア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "石畳の商都と、地球の形を測った科学の足跡",
+        "body": "バルト海に面するエストニアでは、首都タリンの旧市街と、国境を越えて広がる測量の歴史をたどれます。タリンでは城壁や塔のある街を歩き、海上交易が育んだ中世の都市の姿を想像してみましょう。一方、シュトルーヴェの測地弧は、各地の測量地点を結んで地球の大きさと形を調べた科学の遺産です。建物を見上げる旅から、地球そのものを見つめる旅へ、視点が大きく切り替わります。",
+        "facts": [
+          "世界遺産：タリン歴史地区（旧市街）",
+          "世界遺産：シュトルーヴェの測地弧（複数国にまたがる遺産）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：エストニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ee"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -4946,7 +4976,17 @@
     "LT": {
       "name": "リトアニア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "歴史都市の屋根の向こうに、風が形づくった砂の半島",
+        "body": "リトアニアには首都ヴィリニュスの歴史地区と、バルト海沿岸に細長く延びるクルシュー砂州があります。旧市街では教会の塔や曲がりくねった街路に目を向け、異なる時代に積み重なった都市の姿を考えてみましょう。砂州では海と潟湖に挟まれた風景から、風が運ぶ砂と人の暮らしの結びつきが見えてきます。石造りの街と移ろう砂の地形という、対照的な景色に出会える国です。",
+        "facts": [
+          "世界遺産：ヴィリニュス歴史地区",
+          "世界遺産：クルシュー砂州（ロシアとの共同登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：リトアニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lt"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -4955,7 +4995,17 @@
     "LU": {
       "name": "ルクセンブルク",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "川が刻んだ谷と城壁が語る、中欧の要塞都市の記憶",
+        "body": "ルクセンブルクの首都では、川が刻んだ深い谷と岩の高台が、旧市街の個性を形づくっています。高い場所から街を見渡すと、地形そのものが防御に生かされた理由を想像できます。谷へ視線を移せば、橋や坂道によって異なる高さの街が結ばれていることにも気づきます。かつての要塞の痕跡を探しながら、複数のヨーロッパの勢力が関わった歴史と、現在の都市空間がどう重なっているかを考える旅です。",
+        "facts": [
+          "世界遺産：ルクセンブルク市の旧市街と要塞群",
+          "要塞の大規模な解体は1867年から"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ルクセンブルクの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lu"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -4964,7 +5014,17 @@
     "LV": {
       "name": "ラトビア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "大都市の建築と川沿いの小さな旧市街で、異なる時代を歩く",
+        "body": "ラトビアでは、首都リガの歴史地区と西部のクルディーガ旧市街を比べてみたいところです。リガでは歴史ある街路や装飾豊かな建物に注目すると、都市が変化してきた時間を感じられます。クルディーガでは川と街並みの関係を眺めながら、より小さな都市の歴史を味わえます。建物の規模だけでなく、街を歩く人の目線や水辺の景観から、バルト海沿岸の都市文化を知る旅です。",
+        "facts": [
+          "世界遺産：リガ歴史地区",
+          "世界遺産：クルディーガ旧市街（2023年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ラトビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lv"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -5218,7 +5278,17 @@
     "ME": {
       "name": "モンテネグロ",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "山が海へ迫る湾と、氷河の痕跡が残る山岳の国立公園",
+        "body": "モンテネグロでは、アドリア海に通じるコトル湾と内陸のドゥルミトル国立公園が対照的な風景を見せます。コトルでは海と険しい山に囲まれた街の位置に注目し、港と防御施設がどう結びついていたかを想像しましょう。ドゥルミトルでは山の稜線や谷、湖が形づくる広い景観を楽しめます。海辺の歴史都市から山岳自然へと視点を移すことで、同じ国の中にある大きな地形の変化を体感できます。",
+        "facts": [
+          "世界遺産：コトルの自然と文化歴史地域",
+          "世界遺産：ドゥルミトル国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：モンテネグロの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/me"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
@@ -6637,7 +6707,17 @@
     "SK": {
       "name": "スロバキア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "鉱山町の技術の記憶と、丘の上に広がる城の歴史",
+        "body": "スロバキアでは、バンスカー・シュチャヴニツァの鉱山都市と、スピシュ城を中心とする歴史的な景観をたどる旅ができます。鉱山町では街の起伏や水を扱う技術の痕跡に目を向けると、地下の資源が地上の街づくりにも影響したことが伝わります。城のある丘では、周囲の道や集落を見渡し、防御や交通に地形が果たした役割を想像できます。資源と地形の双方から中欧の歴史を読み解く小旅行です。",
+        "facts": [
+          "世界遺産：バンスカー・シュチャヴニツァ歴史地区と周辺の技術遺産",
+          "世界遺産：レヴォチャ、スピシュ城と関連文化財"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：スロバキアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/sk"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
