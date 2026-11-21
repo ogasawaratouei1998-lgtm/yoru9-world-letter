@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v63';
+const SHELL_CACHE = 'yoru9-shell-v64';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -64,7 +64,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Czechia: verified independent Commons covers, landmark photo quizzes and microtravel.
  'assets/travel/cz-prague-skyline-cover.jpg', 'assets/travel/cz-charles-bridge-postcard.jpg', 'assets/travel/cz-cesky-krumlov-postcard.jpg',
  // Croatia: Zagreb cover, independent Dubrovnik and Plitvice historical/travel images.
- 'assets/travel/hr-zagreb-panorama-cover.jpg', 'assets/travel/hr-dubrovnik-old-city-postcard.jpg', 'assets/travel/hr-plitvice-lakes-postcard.jpg'];
+ 'assets/travel/hr-zagreb-panorama-cover.jpg', 'assets/travel/hr-dubrovnik-old-city-postcard.jpg', 'assets/travel/hr-plitvice-lakes-postcard.jpg',
+ // Belgium: three independent Commons photos with location and creator provenance.
+ 'assets/travel/be-atomium-brussels-cover.jpg', 'assets/travel/be-grand-place-postcard.jpg', 'assets/travel/be-bruges-belfry-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>

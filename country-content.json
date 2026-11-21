@@ -113,7 +113,10 @@
     "cz-cesky-krumlov-postcard",
     "hr-zagreb-panorama-cover",
     "hr-dubrovnik-old-city-postcard",
-    "hr-plitvice-lakes-postcard"
+    "hr-plitvice-lakes-postcard",
+    "be-atomium-brussels-cover",
+    "be-grand-place-postcard",
+    "be-bruges-belfry-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -870,7 +873,7 @@
     },
     "BE": {
       "name": "ベルギー",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "石畳の広場と運河の街に、商業都市の長い繁栄を読む",
         "body": "ベルギーの歴史都市には、職人や商人が活動した時代の街並みが今も暮らしのすぐそばに残っています。ブリュッセルのグラン・プラスは壮麗な建物が囲む都市の中心で、ブルッヘの歴史地区には運河と街路が複雑に重なっています。華やかな正面装飾だけを見るのではなく、商いと日常生活を支えてきた通りや水路をたどると、街の魅力がより鮮やかに見えてくる国です。",
@@ -878,13 +881,127 @@
           "世界遺産：ブリュッセルのグラン・プラス",
           "世界遺産：ブルッヘ歴史地区"
         ],
-        "photos": [],
+        "photos": [
+          "be-grand-place-postcard",
+          "be-bruges-belfry-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ベルギーの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/be"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/be-atomium-brussels-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Atomium%2C_Brussels%2C_Belgium.jpg/500px-Atomium%2C_Brussels%2C_Belgium.jpg",
+          "caption": "ブリュッセルのアトミウム、1958年の万博のためにつくられたランドマーク（2017年撮影）",
+          "author": "Theedi",
+          "license": "CC BY-SA 4.0",
+          "place": "ブリュッセル・アトミウム",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Atomium%2C_Brussels%2C_Belgium.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "グラン・プラスが示すブリュッセルの歴史的役割は？",
+          "options": [
+            "商業都市",
+            "砂漠の交易隊の宿営地",
+            "高山の観測基地"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜ブリュッセルのグラン・プラス",
+          "fact": "UNESCOはグラン・プラスを商業都市として栄えたブリュッセルの象徴として説明しています。",
+          "quip": "商業都市の繁栄は広場に刻まれた。建物の装飾まで、宣伝上手。",
+          "photoKey": "be-grand-place-postcard"
+        },
+        {
+          "question": "ブルッヘの歴史都市景観に特徴的なのは？",
+          "options": [
+            "運河と歴史的街路",
+            "砂丘の連続",
+            "火山の溶岩流"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜ブルッヘ歴史地区",
+          "fact": "UNESCOは中世以来の都市のかたちが残るブルッヘ歴史地区を評価しています。",
+          "quip": "運河は観光用の飾りじゃない。昔は荷物も暮らしも、この水路を使っていた。",
+          "photoKey": "be-bruges-belfry-postcard"
+        }
+      ],
+      "travelStops": {
+        "be-atomium-brussels-cover": {
+          "country": "ベルギー",
+          "countryOnly": true,
+          "place": "ブリュッセル・アトミウム",
+          "region": "ブリュッセル",
+          "latitude": 50.8949,
+          "longitude": 4.3415,
+          "note": "1958年のブリュッセル万博のために建設された球体が連なる記念建築。",
+          "photoCaption": "ブリュッセルのアトミウム、1958年の万博のためにつくられたランドマーク（2017年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bd/Atomium%2C_Brussels%2C_Belgium.jpg/500px-Atomium%2C_Brussels%2C_Belgium.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Atomium%2C_Brussels%2C_Belgium.jpg",
+          "photoAsset": "assets/travel/be-atomium-brussels-cover.jpg",
+          "author": "Theedi",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "be-grand-place-postcard": {
+          "country": "ベルギー",
+          "countryOnly": true,
+          "place": "ブリュッセルのグラン・プラス",
+          "region": "ブリュッセル旧市街",
+          "latitude": 50.846531,
+          "longitude": 4.353074,
+          "note": "商人や職人が築いた装飾的な歴史建築が広場を囲む都市景観。",
+          "photoCaption": "歴史的なギルドハウスと市庁舎が囲むブリュッセルのグラン・プラス（2026年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Grand_Place_Brussels1.jpg/500px-Grand_Place_Brussels1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Grand_Place_Brussels1.jpg",
+          "photoAsset": "assets/travel/be-grand-place-postcard.jpg",
+          "author": "Sandor Somkuti",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "グラン・プラスの広場に立つと、周囲を取り巻くギルドハウスの装飾がそれぞれ違うことに気づきます。正面に並んだ窓や彫像を見比べてから、広場の端に移動すると建物群全体のリズムが分かります。細い通りから急に開けた広場へ出る体験も魅力で、明るさや人の動きを含めて街の中心がどのように使われてきたのか想像したい場所です。",
+            "UNESCOはグラン・プラスを、北ヨーロッパの商業都市として繁栄したブリュッセルの歴史を伝える広場として評価しています。1695年の砲撃で大きな被害を受けた後、建物群が再建されたことも、この景観の重要な背景です。細部の華やかさに目を奪われますが、再建にかかわった商人や職人の活動を考えると、広場全体が街の物語として見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブリュッセルのグラン・プラス",
+              "url": "https://whc.unesco.org/en/list/857/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "be-bruges-belfry-postcard": {
+          "country": "ベルギー",
+          "countryOnly": true,
+          "place": "ブルッヘ歴史地区",
+          "region": "西フランデレン州ブルッヘ",
+          "latitude": 51.207581,
+          "longitude": 3.227361,
+          "note": "運河沿いの煉瓦造りの建物と街の鐘楼が重なる中世都市の風景。",
+          "photoCaption": "ブルッヘの運河から望む鐘楼と歴史地区の建物（2024年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/Belfry_of_Bruges%2C_view_from_the_canal%2C_Belgium_-_April_2024.jpg/500px-Belfry_of_Bruges%2C_view_from_the_canal%2C_Belgium_-_April_2024.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Belfry_of_Bruges%2C_view_from_the_canal%2C_Belgium_-_April_2024.jpg",
+          "photoAsset": "assets/travel/be-bruges-belfry-postcard.jpg",
+          "author": "Zeete",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ブルッヘでは、運河沿いを歩くと橋の下から水面へ映る建物が見え、少し離れた路地では煉瓦の壁や石畳の質感に目が向きます。水路と道路が近接するため、同じ街でも徒歩と船上では景色の見え方が変わります。大きな広場を目指すだけでなく、小さな橋を渡るたびに街並みの角度を確かめると、地図だけではつかめない水の都の構造を感じられます。",
+            "UNESCOはブルッヘを、中世の商業都市の町割りと建築がよく残る歴史地区として評価しています。北ヨーロッパの交易に結びついた繁栄は、運河や倉庫、街路の配置にも表れています。現在も生活が続く都市であることを意識しながら、建物と水路の関係をゆっくり読み解くと、観光名所を超えた街の奥行きに気づくことができます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルッヘ歴史地区",
+              "url": "https://whc.unesco.org/en/list/996/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "BJ": {
