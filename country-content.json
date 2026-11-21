@@ -1,0 +1,3301 @@
+{
+  "version": 1,
+  "updatedOn": "2026-11-21",
+  "editorialPolicy": "approved = explicitly vetted release-country experience; pending = not yet cleared for promotion. References are inherited from existing reviewed assets, not automatically fact-verified by this migration.",
+  "travelOrder": [
+    "ar-casa-rosada-postcard",
+    "ar-iguazu-postcard",
+    "ar-iguazu-rainbow-postcard",
+    "fr-eiffel-postcard",
+    "fr-mont-saint-michel-postcard",
+    "argentina-goalkeeper-throws-own-goal-2026",
+    "france-candy-police-mock-wanted-2026",
+    "flight-wrong-country",
+    "cheonan-painters-coffee-rescue-2026",
+    "guaira-degavar-road-marking-2026",
+    "faa-router-ground-stop-2026",
+    "jensen-huang-nvidia-resignation-2026",
+    "spacex-starship-booster-failure-2026",
+    "korea-country-postcard",
+    "japan-country-postcard",
+    "brazil-norris-champagne-podium-2026",
+    "uk-penrith-church-sign-typo-2026",
+    "brazil-country-postcard",
+    "uk-country-postcard",
+    "japan-kyoto-postcard",
+    "japan-fuji-postcard",
+    "spain-barcelona-postcard",
+    "antigua-dockyard-postcard",
+    "us-golden-gate-postcard",
+    "us-waikiki-postcard",
+    "us-newyork-postcard",
+    "uk-cardiff-postcard",
+    "uk-towerbridge-postcard",
+    "uk-windermere-postcard",
+    "ar-iguazu-rainbow-hero-postcard",
+    "fr-mont-sunset-hero-postcard",
+    "us-golden-gate-sunset-hero-postcard",
+    "ar-mate-quiz-image",
+    "fr-mediterranean-quiz-image",
+    "fr-mont-low-tide-quiz-image",
+    "us-yosemite-color-quiz-image",
+    "nz-milford-sound-postcard",
+    "italy-rome-colosseum-cover",
+    "italy-pisa-tower-postcard",
+    "italy-venice-grand-canal-postcard",
+    "germany-berlin-brandenburg-cover",
+    "germany-cologne-cathedral-postcard",
+    "germany-neuschwanstein-castle-postcard"
+  ],
+  "highlightsMetadata": {
+    "version": 1,
+    "updatedOn": "2026-11-21",
+    "description": "Editorially verified cultural and current-affairs notes for country introductions. Never derive these from unverified news leads or tourist postcard records."
+  },
+  "countries": {
+    "AF": {
+      "name": "アフガニスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AO": {
+      "name": "アンゴラ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AL": {
+      "name": "アルバニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AD": {
+      "name": "アンドラ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AE": {
+      "name": "アラブ首長国連邦",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AR": {
+      "name": "アルゼンチン",
+      "status": "pending",
+      "portrait": {
+        "lead": "タンゴとマテ茶、人と語らう時間が息づく国",
+        "body": "街のカフェや公園で交わされる会話、親しい人と回すマテ茶、食卓を囲むアサード（炭火焼き）。アルゼンチンの暮らしには、人と時間をともにする文化があります。ブエノスアイレスで育まれたタンゴは、音楽と踊りを通じて移民の歴史や都市の感情を語り、南部パタゴニアと北部の熱帯地域では暮らしの風景も変わります。サッカーへの熱気や現代文学も、この国の多彩な顔です。",
+        "facts": [
+          "首都：ブエノスアイレス",
+          "風景：イグアスの滝・パタゴニア",
+          "文化：タンゴ・マテ茶"
+        ],
+        "photos": [
+          "ar-iguazu-postcard",
+          "ar-casa-rosada-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/iguazu-rainbow-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg",
+          "caption": "アルゼンチン側のイグアスの滝と虹（2017年撮影）",
+          "author": "Pipovci",
+          "license": "CC BY-SA 4.0",
+          "place": "イグアスの滝・虹の大瀑布"
+        },
+        {
+          "asset": "assets/travel/iguazu-argentina.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG",
+          "caption": "アルゼンチン側から望むイグアスの滝（2014年撮影）",
+          "author": "Landovb",
+          "license": "CC BY-SA 4.0",
+          "place": "イグアスの滝・アルゼンチン側"
+        },
+        {
+          "asset": "assets/travel/buenos-aires-casa-rosada.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg",
+          "caption": "アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）",
+          "author": "Hdemigusag1",
+          "license": "CC BY-SA 4.0",
+          "place": "ブエノスアイレスのカサ・ロサダ"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "イグアスの滝を包む風景は？",
+          "options": [
+            "熱帯の森",
+            "氷の洞窟",
+            "砂漠の砂丘"
+          ],
+          "answer": 0,
+          "photoKey": "ar-iguazu-postcard",
+          "photoLabel": "正解の風景｜イグアスの滝と熱帯の森",
+          "fact": "アルゼンチン北東部のイグアスの滝は、熱帯の森に囲まれています。",
+          "quip": "水の勢いがすごすぎて、森まで拍手しているように見える。"
+        },
+        {
+          "question": "アルゼンチンのマテ茶に似合うのは？",
+          "options": [
+            "車の給油",
+            "語らいのひととき",
+            "壁のペンキ塗り"
+          ],
+          "answer": 1,
+          "photoKey": "ar-mate-quiz-image",
+          "photoLabel": "正解の文化｜マテ茶の器とボンビージャ",
+          "fact": "マテ茶はアルゼンチンの日常や人との語らいの中で親しまれています。",
+          "quip": "どれだけ話が弾んでも、オチまでは淹れてくれない。"
+        }
+      ],
+      "travelStops": {
+        "ar-casa-rosada-postcard": {
+          "country": "アルゼンチン",
+          "countryOnly": true,
+          "place": "ブエノスアイレスのカサ・ロサダ",
+          "region": "ブエノスアイレス・五月広場",
+          "latitude": -34.6081,
+          "longitude": -58.3703,
+          "note": "五月広場に面する淡いピンク色の大統領府。ブエノスアイレスの歴史と街の色彩が集まる場所です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg/500px-Casa_Rosada%2C_Buenos_Aires_%28Argentina%29.jpg",
+          "photoCaption": "アルゼンチン・ブエノスアイレスのカサ・ロサダ（2022年撮影）",
+          "author": "Hdemigusag1",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Casa_Rosada,_Buenos_Aires_(Argentina).jpg",
+          "photoAsset": "assets/travel/buenos-aires-casa-rosada.jpg",
+          "travelStory": [
+            "五月広場に面して建つ淡いピンク色の大統領府、カサ・ロサダ。正面に立つと、政治の中心でありながら街の風景に溶け込むその色合いが目を引きます。広場と建物を一緒に眺めると、ブエノスアイレスの歴史的な中心地の広がりが感じられます。",
+            "建物だけでなく、周囲の広場や通りにも目を向けてみてください。記念碑、歴史的な建築、人々が行き交う街角がひと続きになり、アルゼンチンの首都が重ねてきた時間を想像できます。"
+          ]
+        },
+        "ar-iguazu-postcard": {
+          "country": "アルゼンチン",
+          "countryOnly": true,
+          "place": "イグアスの滝・アルゼンチン側",
+          "region": "ミシオネス州・イグアス国立公園",
+          "latitude": -25.6953,
+          "longitude": -54.4367,
+          "note": "ジャングルの緑の間から巨大な水のカーテンが流れ落ちます。アルゼンチン側から眺める迫力ある滝景色です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Iguazu_Falls_from_the_Argentinian_side.JPG/500px-Iguazu_Falls_from_the_Argentinian_side.JPG",
+          "photoCaption": "アルゼンチン側から望むイグアスの滝（2014年撮影）",
+          "author": "Landovb",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_Falls_from_the_Argentinian_side.JPG",
+          "photoAsset": "assets/travel/iguazu-argentina.jpg",
+          "travelStory": [
+            "イグアスの滝は、緑の森の奥から水が幾筋にも現れる巨大な滝群です。ひとつの滝を眺めるというより、森と川がつくる広い景色に包まれる場所。水の白さと熱帯の緑の対比に目を留めると、写真の迫力がいっそう伝わります。",
+            "アルゼンチン側では滝をさまざまな方向から見る楽しみがあります。場所によって川の流れや滝の重なりが違って見えるので、全景と細部を行き来するような気持ちで写真を眺めてみましょう。"
+          ]
+        },
+        "ar-iguazu-rainbow-postcard": {
+          "country": "アルゼンチン",
+          "countryOnly": true,
+          "place": "イグアスの滝・虹の大パノラマ",
+          "region": "ミシオネス州・イグアス国立公園",
+          "latitude": -25.6953,
+          "longitude": -54.4367,
+          "note": "密林の向こうへ幾重にも連なる大瀑布。水しぶきが光を受け、滝の上に大きな虹が弧を描きます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Foz_de_Iguacu_Panorama_AR01.jpg/500px-Foz_de_Iguacu_Panorama_AR01.jpg",
+          "photoCaption": "アルゼンチン側のイグアスの滝と虹（2009年撮影）",
+          "author": "Mariordo / Mario Roberto Duran Ortiz",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Foz_de_Iguacu_Panorama_AR01.jpg",
+          "photoAsset": "assets/travel/iguazu-rainbow-panorama.jpg",
+          "travelStory": [
+            "熱帯の森の向こうに滝が何段にも連なり、白い水しぶきの上に虹がかかるイグアスの景色。滝だけでも圧巻ですが、光が加わると川の幅や流れの力強さまで浮かび上がるようです。遠くの滝と手前の緑を見比べてみてください。",
+            "虹は光と水滴が出会うことで生まれる一瞬の表情。写真に切り取られたその色を眺めながら、水音が絶えず響いている風景を想像すると、大瀑布のスケールをより身近に感じられます。"
+          ]
+        },
+        "argentina-goalkeeper-throws-own-goal-2026": {
+          "country": "アルゼンチン",
+          "countryOnly": true,
+          "place": "ブエノスアイレスのオベリスコ",
+          "region": "ブエノスアイレス・7月9日大通り",
+          "latitude": -34.6037,
+          "longitude": -58.3816,
+          "note": "ブエノスアイレスの中心に立つオベリスコ。夕暮れの大通りを眺めれば、南米の大都市の躍動が伝わってきます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d0/Obelisco_de_Buenos_Aires%2C_Argentina.jpg/500px-Obelisco_de_Buenos_Aires%2C_Argentina.jpg",
+          "photoCaption": "夕暮れのブエノスアイレス、7月9日大通りとオベリスコ（2023年撮影）",
+          "author": "Franco Javier Perez",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Obelisco_de_Buenos_Aires,_Argentina.jpg",
+          "photoAsset": "assets/travel/buenos-aires-obelisco.jpg",
+          "travelStory": [
+            "ブエノスアイレスの大通りに立つオベリスコは、都会の真ん中に空への目印をつくる白い塔です。周囲には交通が行き交い、高い建物と広い道路が重なります。塔を中心に街の線が遠くへ伸びていく構図を眺めると、首都の大きさが伝わってきます。",
+            "この記念碑は1936年、市の創設400周年を記念して建てられました。観光写真の定番でありながら、市民が集まる広場のような役割も担う場所です。街の歴史と日常のにぎわいを一枚の中で探してみてください。"
+          ]
+        },
+        "ar-iguazu-rainbow-hero-postcard": {
+          "country": "アルゼンチン",
+          "countryOnly": true,
+          "place": "イグアスの滝・虹の大瀑布",
+          "region": "ミシオネス州・イグアス国立公園",
+          "latitude": -25.6953,
+          "longitude": -54.4367,
+          "note": "熱帯の緑に囲まれた巨大な滝と、水しぶきの中にかかる虹。アルゼンチン側のイグアスを象徴する壮大な眺めです。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Iguazu_.jpg/500px-Iguazu_.jpg",
+          "photoCaption": "アルゼンチン側のイグアスの滝と虹（2017年撮影）",
+          "author": "Pipovci",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_.jpg",
+          "photoAsset": "assets/travel/iguazu-rainbow-cover.jpg",
+          "coverOnly": true
+        },
+        "ar-mate-quiz-image": {
+          "country": "アルゼンチン",
+          "quizOnly": true,
+          "place": "伝統的なマテ茶の器とボンビージャ",
+          "region": "アルゼンチンの飲料文化",
+          "latitude": -34.6037,
+          "longitude": -58.3816,
+          "note": "マテ茶に使う器、金属のストロー（ボンビージャ）、茶葉。人物の交流場面を撮影したものではありません。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/40/Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg/500px-Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Traditional_mate_set_calabash_gourd_with_La_Merced_yerba_mate.jpg",
+          "photoAsset": "assets/travel/argentina-mate-quiz.jpg",
+          "photoCaption": "実物のマテ茶セット：器・ボンビージャ・茶葉（交流の場面ではありません）",
+          "author": "Siarhei V / Siarhei Besarab",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        }
+      },
+      "highlights": []
+    },
+    "AM": {
+      "name": "アルメニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AG": {
+      "name": "アンティグア・バーブーダ",
+      "status": "pending",
+      "portrait": {
+        "lead": "海と音楽、島のコミュニティが身近なカリブの国",
+        "body": "アンティグア・バーブーダはカリブ海の島国。鮮やかな海辺の風景の一方で、首都セントジョンズの市場、地元の食文化、カリプソやスティールパンに親しむ祭りなどに日常の表情があります。船と海の歴史が地域の暮らしに深く結びつき、島ごとに違う時間の流れを感じられます。",
+        "facts": [
+          "首都：セントジョンズ",
+          "文化：カリプソ・音楽と祭り",
+          "特色：島々の暮らしと海の歴史"
+        ]
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {
+        "antigua-dockyard-postcard": {
+          "country": "アンティグア・バーブーダ",
+          "countryOnly": true,
+          "place": "ネルソンズ・ドックヤード",
+          "region": "アンティグア島・イングリッシュ・ハーバー",
+          "latitude": 17.0064,
+          "longitude": -61.764,
+          "note": "ヤシの木の間に、石造りの歴史的な建物が並びます。カリブ海の陽射しと、かつての港町の面影が同居する場所です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Nelson's_Dockyard_Antigua.jpg/500px-Nelson's_Dockyard_Antigua.jpg",
+          "photoCaption": "ネルソンズ・ドックヤードの歴史ある港湾施設（2009年撮影）",
+          "author": "Kognos",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Nelson's_Dockyard_Antigua.jpg",
+          "photoAsset": "assets/travel/antigua-dockyard.jpg",
+          "travelStory": [
+            "アンティグア島のネルソンズ・ドックヤードは、海と港の歴史が重なる場所です。ヤシの木の間に古い石造りの建物が並び、港町の景色に落ち着いた表情を与えています。明るい空や海辺の光と建物の質感を見比べると、独特の魅力が伝わります。",
+            "ここは18〜19世紀の海軍基地の歴史を伝えるエリアで、現在も歴史的な港の景観が残されています。カリブの自然と船の往来がつくってきた暮らしを思い浮かべながら眺めると、リゾートとは違う島の一面に出会えます。"
+          ]
+        }
+      },
+      "highlights": []
+    },
+    "AU": {
+      "name": "オーストラリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AT": {
+      "name": "オーストリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "AZ": {
+      "name": "アゼルバイジャン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BI": {
+      "name": "ブルンジ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BE": {
+      "name": "ベルギー",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BJ": {
+      "name": "ベナン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BF": {
+      "name": "ブルキナファソ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BD": {
+      "name": "バングラデシュ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BG": {
+      "name": "ブルガリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BH": {
+      "name": "バーレーン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BS": {
+      "name": "バハマ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BA": {
+      "name": "ボスニア・ヘルツェゴビナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BY": {
+      "name": "ベラルーシ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BZ": {
+      "name": "ベリーズ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BO": {
+      "name": "ボリビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BR": {
+      "name": "ブラジル",
+      "status": "pending",
+      "portrait": {
+        "lead": "音楽と多様な文化が息づく、広大な南米の国",
+        "body": "ブラジルの魅力は、サンバやボサノバといった音楽だけではありません。先住民、アフリカ、ヨーロッパなどにルーツを持つ文化が地域ごとの暮らしや食卓を形づくっています。北部と南部、内陸と沿岸の風土も大きく異なり、フェイジョアーダのような料理や、地域ごとに受け継がれる祭りが、人々の生活に彩りを加えています。",
+        "facts": [
+          "首都：ブラジリア",
+          "食：フェイジョアーダ",
+          "文化：サンバ・多様な地域文化"
+        ]
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {
+        "guaira-degavar-road-marking-2026": {
+          "country": "ブラジル",
+          "place": "イグアスの滝",
+          "region": "パラナ州・フォス・ド・イグアス",
+          "latitude": -25.6953,
+          "longitude": -54.4367,
+          "note": "深い緑の森を割るように、幾筋もの滝が流れ落ちます。白い水しぶきと圧倒的なスケールを、写真の中でゆっくり味わってみてください。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Iguaz%C3%BA_falls.jpg/500px-Iguaz%C3%BA_falls.jpg",
+          "photoCaption": "ブラジル側から見たイグアスの滝（2022年撮影）",
+          "author": "Enrique von specht",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaz%C3%BA_falls.jpg",
+          "photoAsset": "assets/travel/iguazu-falls.jpg",
+          "countryOnly": true,
+          "travelStory": [
+            "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
+            "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+          ]
+        },
+        "brazil-norris-champagne-podium-2026": {
+          "country": "ブラジル",
+          "place": "サンパウロ",
+          "region": "サンパウロ州",
+          "latitude": -23.5505,
+          "longitude": -46.6333,
+          "note": "建物がどこまでも連なるサンパウロ。高層ビルがつくる大都市の眺めから、ブラジルのエネルギッシュな日常を少し感じてみましょう。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/dc/Vista_de_S%C3%A3o_Paulo_2023.jpg/500px-Vista_de_S%C3%A3o_Paulo_2023.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Vista_de_S%C3%A3o_Paulo_2023.jpg",
+          "photoAsset": "assets/travel/sao-paulo.jpg",
+          "photoCaption": "サンパウロの街並み（2023年撮影）",
+          "author": "Boaventuravinicius",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "サンパウロの街並みは、遠くまで続く高層ビル群が印象的です。さまざまな高さの建物が密集し、その間を通りが走っています。写真の手前から地平線の方まで視線を動かすと、南米最大級の都市圏が持つスケールを実感できます。",
+            "この街には多様な人々の文化が集まり、美術館や市場、食の風景も豊かです。遠くから見た街はビルの集まりでも、そのひとつひとつの通りには暮らしがあります。大都市の輪郭の向こうにある日常を想像してみてください。"
+          ]
+        },
+        "brazil-country-postcard": {
+          "country": "ブラジル",
+          "place": "イグアスの滝",
+          "region": "パラナ州・フォス・ド・イグアス",
+          "latitude": -25.6953,
+          "longitude": -54.4367,
+          "note": "深い緑の森を割るように、幾筋もの滝が流れ落ちます。白い水しぶきと圧倒的なスケールを、写真の中でゆっくり味わってみてください。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Iguaz%C3%BA_falls.jpg/500px-Iguaz%C3%BA_falls.jpg",
+          "photoCaption": "ブラジル側から見たイグアスの滝（2022年撮影）",
+          "author": "Enrique von specht",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaz%C3%BA_falls.jpg",
+          "photoAsset": "assets/travel/iguazu-falls.jpg",
+          "countryOnly": true,
+          "travelStory": [
+            "イグアスの滝のブラジル側からは、森の奥へと続く大きな滝群の全体像を感じられます。水が白い帯になって流れ落ち、濃い緑の木々と鮮やかな対比をつくります。ひとつひとつの滝の幅と数を見比べながら眺めるのが楽しい風景です。",
+            "イグアス川の滝はブラジルとアルゼンチンの国境付近に広がります。国を隔てても同じ自然の壮大さを共有しているのが印象的。滝と森の広がりを写真の端まで追ってみると、そのスケールを想像しやすくなります。"
+          ]
+        }
+      },
+      "highlights": []
+    },
+    "BB": {
+      "name": "バルバドス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BN": {
+      "name": "ブルネイ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BT": {
+      "name": "ブータン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "BW": {
+      "name": "ボツワナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CF": {
+      "name": "中央アフリカ共和国",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CA": {
+      "name": "カナダ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CH": {
+      "name": "スイス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CL": {
+      "name": "チリ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CN": {
+      "name": "中国",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CI": {
+      "name": "コートジボワール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CM": {
+      "name": "カメルーン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CD": {
+      "name": "コンゴ民主共和国(キンシャサ)",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CG": {
+      "name": "コンゴ共和国(ブラザビル)",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CO": {
+      "name": "コロンビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KM": {
+      "name": "コモロ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CV": {
+      "name": "カーボベルデ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CR": {
+      "name": "コスタリカ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CU": {
+      "name": "キューバ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CY": {
+      "name": "キプロス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "CZ": {
+      "name": "チェコ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "DE": {
+      "name": "ドイツ",
+      "status": "approved",
+      "portrait": {
+        "lead": "歴史の記憶と地域の創造力が共存する国",
+        "body": "ドイツは中央ヨーロッパに位置し、州や都市によって文化と風景が大きく異なります。ベルリンではブランデンブルク門が街の歴史を伝え、現代美術や音楽、カフェが日常を彩ります。ライン川沿いのケルンには大聖堂がそびえ、南のバイエルンにはノイシュヴァンシュタイン城やアルプス山麓の景色が広がります。音楽、工芸、パンや地域料理、クリスマスマーケットなど、各地に根付いた伝統と現代的な街の文化が重なっています。",
+        "facts": [
+          "首都：ベルリン",
+          "風景：ケルン大聖堂・バイエルンの城",
+          "文化：音楽・地域料理・工芸"
+        ],
+        "photos": [
+          "germany-cologne-cathedral-postcard",
+          "germany-neuschwanstein-castle-postcard"
+        ],
+        "sourceName": "ドイツ政府観光局 Germany Travel",
+        "sourceUrl": "https://www.germany.travel/en/cities-culture/berlin.html"
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/germany-brandenburg-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/20220811_Brandenburg_Gate.jpg/500px-20220811_Brandenburg_Gate.jpg",
+          "caption": "ドイツ・ベルリンのブランデンブルク門（2022年撮影）",
+          "author": "Flocci Nivis",
+          "license": "CC BY 4.0",
+          "place": "ベルリンのブランデンブルク門",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:20220811_Brandenburg_Gate.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？",
+          "options": [
+            "ベルリン",
+            "ミュンヘン",
+            "ケルン"
+          ],
+          "answer": 2,
+          "photoKey": "germany-cologne-cathedral-postcard",
+          "photoLabel": "正解の建築｜ケルン大聖堂",
+          "fact": "ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。",
+          "quip": "塔が高すぎて、街のランドマークが自己主張を忘れない。"
+        },
+        {
+          "question": "ノイシュヴァンシュタイン城があるドイツの州は？",
+          "options": [
+            "バイエルン州",
+            "ブランデンブルク州",
+            "ヘッセン州"
+          ],
+          "answer": 0,
+          "photoKey": "germany-neuschwanstein-castle-postcard",
+          "photoLabel": "正解の城｜ノイシュヴァンシュタイン城",
+          "fact": "ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。",
+          "quip": "絵本のような城だけれど、背景は本物のアルプス山麓。"
+        }
+      ],
+      "travelStops": {
+        "germany-berlin-brandenburg-cover": {
+          "country": "ドイツ",
+          "countryOnly": true,
+          "place": "ベルリンのブランデンブルク門",
+          "region": "ベルリン",
+          "latitude": 52.5163,
+          "longitude": 13.3777,
+          "note": "ベルリンの歴史を象徴する門。現在も街の代表的なランドマークです。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/fc/20220811_Brandenburg_Gate.jpg/500px-20220811_Brandenburg_Gate.jpg",
+          "photoCaption": "ドイツ・ベルリンのブランデンブルク門（2022年撮影）",
+          "author": "Flocci Nivis",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:20220811_Brandenburg_Gate.jpg",
+          "photoAsset": "assets/travel/germany-brandenburg-cover.jpg",
+          "coverOnly": true
+        },
+        "germany-cologne-cathedral-postcard": {
+          "country": "ドイツ",
+          "countryOnly": true,
+          "place": "ケルン大聖堂",
+          "region": "ノルトライン＝ヴェストファーレン州・ケルン",
+          "latitude": 50.9413,
+          "longitude": 6.9583,
+          "note": "ライン川沿いの都市ケルンを代表するゴシック建築。2つの塔で知られます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Cologne_Cathedral_Front_View.jpg/500px-Cologne_Cathedral_Front_View.jpg",
+          "photoCaption": "ドイツ・ケルン大聖堂の正面（2014年撮影）",
+          "author": "Andrew Gnias",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Cologne_Cathedral_Front_View.jpg",
+          "photoAsset": "assets/travel/germany-cologne-cathedral.jpg",
+          "famousTourist": true,
+          "travelStory": [
+            "ケルン大聖堂は、高く伸びる二つの塔と繊細な石の装飾が目を引くゴシック建築です。近くから見上げると塔が空へと続いていくように感じられ、遠くからでも街の目印になる大きさが分かります。",
+            "ライン川沿いの街ケルンに立つこの大聖堂は、長い年月をかけて建てられました。外壁の細部や塔の輪郭を追うと、建築に込められた時間の長さを感じられます。街の風景に溶け込む歴史の姿を楽しんでみてください。"
+          ]
+        },
+        "germany-neuschwanstein-castle-postcard": {
+          "country": "ドイツ",
+          "countryOnly": true,
+          "place": "ノイシュヴァンシュタイン城",
+          "region": "バイエルン州・シュヴァンガウ",
+          "latitude": 47.5576,
+          "longitude": 10.7498,
+          "note": "バイエルンの山並みを背景に建つ19世紀の城。ルートヴィヒ2世にゆかりがあります。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Neuschwanstein_Castle_in_Germany.jpg/500px-Neuschwanstein_Castle_in_Germany.jpg",
+          "photoCaption": "ドイツ・バイエルンのノイシュヴァンシュタイン城（2011年撮影）",
+          "author": "Awer20",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_in_Germany.jpg",
+          "photoAsset": "assets/travel/germany-neuschwanstein-castle.jpg",
+          "famousTourist": true,
+          "travelStory": [
+            "バイエルンのノイシュヴァンシュタイン城は、山々を背景に白い塔や屋根が立ち上がる、絵本のような風景で知られます。城の輪郭と周囲の深い緑を見比べると、山中の景色に建築が浮かび上がって見える理由が分かります。",
+            "19世紀にバイエルン王ルートヴィヒ2世の構想で建てられた城です。中世のお城のように見えながら、ロマン主義の時代に生まれた建物だと知ると、見方も変わります。遠景の山並みまで含めて、風景を味わってみてください。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "ベルリン、11月23日から伝統の冬市",
+          "body": "ベルリンの公式観光案内によると、ジャンダルメンマルクトのクリスマスマーケットは2026年11月23日から12月31日までの日程です。歴史的な広場を舞台に、工芸品や食の屋台などが紹介されています。",
+          "validFrom": "2026-11-21",
+          "validThrough": "2026-12-05",
+          "checkedOn": "2026-11-21",
+          "sourceName": "ベルリン公式観光案内 visitBerlin",
+          "sourceUrl": "https://www.visitberlin.de/en/christmas-market-weihnachtszauber-gendarmenmarkt-berlin"
+        }
+      ]
+    },
+    "DJ": {
+      "name": "ジブチ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "DM": {
+      "name": "ドミニカ国",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "DK": {
+      "name": "デンマーク",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "DO": {
+      "name": "ドミニカ共和国",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "DZ": {
+      "name": "アルジェリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "EC": {
+      "name": "エクアドル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "EG": {
+      "name": "エジプト",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ER": {
+      "name": "エリトリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ES": {
+      "name": "スペイン",
+      "status": "pending",
+      "portrait": {
+        "lead": "食と音楽、地域ごとの文化が華やぐ国",
+        "body": "スペインでは地域ごとに言語、料理、祭りが異なり、多彩な文化が日々の暮らしを彩ります。バルセロナのカタルーニャ文化、アンダルシアで育まれたフラメンコ、バスク地方の食文化など、土地ごとに違う魅力があります。広場で人が集い、家族や友人と食卓を囲む時間、現代アートやスポーツに熱中する空気にも、豊かな生活文化が表れています。",
+        "facts": [
+          "首都：マドリード",
+          "風景：サグラダ・ファミリア",
+          "文化：フラメンコ・タパス"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/barcelona-sagrada.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/La_Sagrada_Familia%2C_Barcelona.jpg/500px-La_Sagrada_Familia%2C_Barcelona.jpg",
+          "caption": "バルセロナ・サグラダ・ファミリア（2019年撮影）",
+          "author": "Veronika Bashak",
+          "license": "CC BY-SA 4.0",
+          "place": "サグラダ・ファミリア"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "サグラダ・ファミリアがあるスペインの都市は？",
+          "options": [
+            "マドリード",
+            "バルセロナ",
+            "セビリア"
+          ],
+          "answer": 1,
+          "photoKey": "spain-barcelona-postcard",
+          "photoLabel": "正解の建築｜バルセロナのサグラダ・ファミリア",
+          "fact": "サグラダ・ファミリアはバルセロナにあるガウディゆかりの聖堂です。",
+          "quip": "街の名刺代わりが世界級の建築。自己紹介のスケールが大きい。"
+        },
+        {
+          "question": "スペインの「タパス」とは、一般に何のこと？",
+          "options": [
+            "小皿料理",
+            "伝統的な船",
+            "夜行列車"
+          ],
+          "answer": 0,
+          "fact": "タパスとはスペインのバルなどで親しまれる小皿料理やおつまみです。",
+          "quip": "料理は小皿でも、会話は特大サイズになりがち。"
+        }
+      ],
+      "travelStops": {
+        "spain-barcelona-postcard": {
+          "country": "スペイン",
+          "countryOnly": true,
+          "place": "サグラダ・ファミリア",
+          "region": "カタルーニャ州・バルセロナ",
+          "latitude": 41.4036,
+          "longitude": 2.1744,
+          "note": "空へ伸びる細い塔と、細部まで彫り込まれた石の装飾。ガウディが構想した独特の建築が、街角にそびえています。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/62/La_Sagrada_Familia%2C_Barcelona.jpg/500px-La_Sagrada_Familia%2C_Barcelona.jpg",
+          "photoCaption": "バルセロナ・サグラダ・ファミリア（2019年撮影）",
+          "author": "Veronika Bashak",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:La_Sagrada_Familia%2C_Barcelona.jpg",
+          "photoAsset": "assets/travel/barcelona-sagrada.jpg",
+          "travelStory": [
+            "バルセロナのサグラダ・ファミリアは、細く伸びる塔と、彫刻のように表情豊かな外壁が印象的な建築です。近づいて細部を眺めるほど、直線だけでは説明できない独特の造形に気づきます。写真では上から下まで、ひとつずつ形を探してみてください。",
+            "建築家アントニ・ガウディが関わったこの聖堂は、長い年月をかけて建設が続いてきました。宗教的な意味を持つ細部と大胆な建築表現が重なる姿は、バルセロナの街の創造性を象徴しています。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "マドリードで舞台芸術の秋祭り",
+          "body": "11月6〜26日、マドリード自治州の第44回秋の芸術祭が開催。演劇、ダンス、パフォーマンスなど、多彩な国際舞台芸術が街の劇場を彩ります。",
+          "validFrom": "2026-11-06",
+          "validThrough": "2026-11-26",
+          "checkedOn": "2026-11-19",
+          "sourceName": "マドリード市公式観光案内",
+          "sourceUrl": "https://www.esmadrid.com/en/whats-on/autumn-festival"
+        },
+        {
+          "title": "マドリードで骨董品とアートの見本市",
+          "body": "11月21〜29日、マドリードのIFEMAで「FERIARTE」が開催予定。アンティークや美術作品が集まり、スペインのアートとコレクション文化に触れられる催しです。",
+          "validFrom": "2026-11-27",
+          "validThrough": "2026-11-29",
+          "checkedOn": "2026-11-19",
+          "sourceName": "マドリード市公式観光案内",
+          "sourceUrl": "https://www.esmadrid.com/en/whats-on/feriarte-ifema-madrid"
+        }
+      ]
+    },
+    "EE": {
+      "name": "エストニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ET": {
+      "name": "エチオピア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "FI": {
+      "name": "フィンランド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "FJ": {
+      "name": "フィジー",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "FR": {
+      "name": "フランス",
+      "status": "pending",
+      "portrait": {
+        "lead": "芸術と食卓を愛する、地域文化豊かな国",
+        "body": "フランスでは、パン屋に立ち寄る朝、カフェで語る午後、家族や友人と料理を囲む夜など、日常のなかに食と会話を楽しむ文化が息づいています。印象派から現代映画まで芸術表現の層も厚く、地方ごとに言葉の響きや郷土料理、祭りの表情が異なるのも魅力です。パリだけでは語れない多様な地域文化が、この国の個性を形づくっています。",
+        "facts": [
+          "首都：パリ",
+          "風景：モン・サン＝ミシェル・アルプス",
+          "文化：美術・パン・郷土料理"
+        ],
+        "photos": [
+          "fr-eiffel-postcard",
+          "fr-mont-saint-michel-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/mont-saint-michel-sunset-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
+          "caption": "夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）",
+          "author": "Giles Laurent",
+          "license": "CC BY-SA 4.0",
+          "place": "モン・サン＝ミシェルの夕景"
+        },
+        {
+          "asset": "assets/travel/france-mont-saint-michel.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg",
+          "caption": "フランス・モン・サン＝ミシェルの干潟（2015年撮影）",
+          "author": "Freddy de Hosdent",
+          "license": "CC BY-SA 4.0",
+          "place": "モン・サン＝ミシェル"
+        },
+        {
+          "asset": "assets/travel/paris-eiffel-tower.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg",
+          "caption": "フランス・パリのエッフェル塔（2020年撮影）",
+          "author": "Commonists",
+          "license": "CC BY-SA 4.0",
+          "place": "パリのエッフェル塔"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "モン・サン＝ミシェルの景色を変えるのは？",
+          "options": [
+            "火山の噴火",
+            "オーロラ",
+            "潮の満ち引き"
+          ],
+          "answer": 2,
+          "photoKey": "fr-mont-low-tide-quiz-image",
+          "photoLabel": "正解の景色｜潮の満ち引きの影響を受ける干潟",
+          "fact": "ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで周囲の景色が変わります。",
+          "quip": "景色の模様替え係は海。毎日、無給で大仕事。"
+        },
+        {
+          "question": "フランス南部の海岸が面するのは？",
+          "options": [
+            "地中海",
+            "カリブ海",
+            "北極海"
+          ],
+          "answer": 0,
+          "photoKey": "fr-mediterranean-quiz-image",
+          "photoLabel": "正解の海｜南フランス・ニースの地中海",
+          "fact": "フランスは大西洋と地中海の両方に面しています。",
+          "quip": "北極海でバカンスを始めたら、水着より防寒着が主役。"
+        }
+      ],
+      "travelStops": {
+        "fr-eiffel-postcard": {
+          "country": "フランス",
+          "countryOnly": true,
+          "place": "パリのエッフェル塔",
+          "region": "パリ・シャン・ド・マルス",
+          "latitude": 48.85837,
+          "longitude": 2.29448,
+          "note": "パリの空に高く伸びる鉄塔。足元から見上げると、細やかな鉄骨の幾何学模様が際立ちます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/46/Eiffel_Tower%2CParis.jpg/500px-Eiffel_Tower%2CParis.jpg",
+          "photoCaption": "フランス・パリのエッフェル塔（2020年撮影）",
+          "author": "Commonists",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Eiffel_Tower,Paris.jpg",
+          "photoAsset": "assets/travel/paris-eiffel-tower.jpg",
+          "travelStory": [
+            "エッフェル塔は、パリの街に軽やかな線を描く鉄の建築です。遠くから見る塔の輪郭と、近づいて見上げたときの細かな骨組みでは印象が大きく変わります。写真では脚部のアーチから塔の先端まで視線を上げ、構造の美しさを味わってみてください。",
+            "1889年のパリ万国博覧会に合わせて建てられた塔は、今では街を代表する風景になりました。周辺の広場やセーヌ川と一緒に眺めると、歴史的な建築と現代の都市生活が重なり合うパリらしさが見えてきます。"
+          ]
+        },
+        "fr-mont-saint-michel-postcard": {
+          "country": "フランス",
+          "countryOnly": true,
+          "place": "モン・サン＝ミシェル",
+          "region": "ノルマンディー・マンシュ県",
+          "latitude": 48.6361,
+          "longitude": -1.5115,
+          "note": "広大な干潟の上に浮かぶ修道院の島。潮の満ち引きで表情を変えるノルマンディーの名景です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/ea/Mont-saint-Michel_%28France%29.jpg/500px-Mont-saint-Michel_%28France%29.jpg",
+          "photoCaption": "フランス・モン・サン＝ミシェルの干潟（2015年撮影）",
+          "author": "Freddy de Hosdent",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mont-saint-Michel_(France).jpg",
+          "photoAsset": "assets/travel/france-mont-saint-michel.jpg",
+          "travelStory": [
+            "ノルマンディーの湾に浮かぶモン・サン＝ミシェルは、海と陸の境目に立つ修道院の島です。小さな街並みから上へと伸びる建物の重なりを見ると、島全体がひとつの大きな建築作品のよう。空と干潟の広さが、その輪郭をいっそう際立たせます。",
+            "ここでは潮の満ち引きによって島の周りの景色が変わります。水があるときと広い干潟が姿を見せるときの違いを思い浮かべるだけでも面白い場所です。石造りの修道院が長い年月をかけて受け継がれてきたことにも思いを寄せてみましょう。"
+          ]
+        },
+        "france-candy-police-mock-wanted-2026": {
+          "country": "フランス",
+          "place": "トノン＝レ＝バンのリーヴ港",
+          "region": "オート＝サヴォワ県・レマン湖畔",
+          "latitude": 46.374367,
+          "longitude": 6.48026,
+          "note": "レマン湖のほとりに広がるリーヴ港。夕暮れに灯る港の明かりと、静かな湖面の風景が印象的です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Port_de_Rives_in_Thonon-les-Bains_01.jpg/500px-Port_de_Rives_in_Thonon-les-Bains_01.jpg",
+          "photoCaption": "フランス・トノン＝レ＝バンのリーヴ港とレマン湖（2020年撮影）",
+          "author": "Krzysztof Golik (Tournasol7)",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Port_de_Rives_in_Thonon-les-Bains_01.jpg",
+          "photoAsset": "assets/travel/thonon-port-de-rives.jpg",
+          "travelStory": [
+            "レマン湖のほとりにあるトノン＝レ＝バンのリーヴ港。湖面に映る空と、水辺に並ぶ建物、係留された船を眺めると、アルプス周辺の湖畔の街が持つ穏やかな空気が伝わります。港の向こうに広がる水面の広さが、写真の主役です。",
+            "この湖はフランスとスイスにまたがっています。岸辺の街の生活と国境を越える大きな湖が隣り合うことも、この場所の魅力。港から視線を少し遠くへ移し、水辺と山々がつくる奥行きを感じてみてください。"
+          ]
+        },
+        "fr-mont-sunset-hero-postcard": {
+          "country": "フランス",
+          "countryOnly": true,
+          "place": "モン・サン＝ミシェルの夕景",
+          "region": "ノルマンディー・モン・サン＝ミシェル湾",
+          "latitude": 48.6361,
+          "longitude": -1.5115,
+          "note": "夕陽と水面に映る修道院のシルエット。潮の満ち引きが生み出す、フランス屈指の幻想的な風景です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg/500px-1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
+          "photoCaption": "夕陽と水面に映るモン・サン＝ミシェル（2026年撮影）",
+          "author": "Giles Laurent",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:1002_Mont-Saint-Michel_reflecting_in_the_water_during_sunset_Photo_by_Giles_Laurent.jpg",
+          "photoAsset": "assets/travel/mont-saint-michel-sunset-cover.jpg",
+          "coverOnly": true
+        },
+        "fr-mediterranean-quiz-image": {
+          "country": "フランス",
+          "quizOnly": true,
+          "place": "ニースの青い地中海と海辺",
+          "region": "南フランス・コートダジュール",
+          "latitude": 43.695,
+          "longitude": 7.266,
+          "note": "南フランスのニース。紺碧の地中海と海辺の風景をカラー写真で紹介します。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7d/Nice_C%C3%B4te_1.jpg/500px-Nice_C%C3%B4te_1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Nice_C%C3%B4te_1.jpg",
+          "photoAsset": "assets/travel/france-nice-coast-quiz.jpg",
+          "photoCaption": "南フランス・ニースの海岸線と地中海（2021年撮影）",
+          "author": "Zairon",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "fr-mont-low-tide-quiz-image": {
+          "country": "フランス",
+          "quizOnly": true,
+          "place": "干潮時のモン・サン＝ミシェル",
+          "region": "ノルマンディー・モン・サン＝ミシェル湾",
+          "latitude": 48.6361,
+          "longitude": -1.5115,
+          "note": "海が引き広い砂の干潟が現れる干潮時。修道院の島がはっきり写る景色。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/11/Mont_St_Michel_during_low_tide_%28cropped%29.jpg/500px-Mont_St_Michel_during_low_tide_%28cropped%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mont_St_Michel_during_low_tide_(cropped).jpg",
+          "photoAsset": "assets/travel/france-mont-low-tide-quiz.jpg",
+          "photoCaption": "干潮時のモン・サン＝ミシェルと広がる干潟（2024年撮影）",
+          "author": "Lynx1211",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        }
+      },
+      "highlights": []
+    },
+    "FM": {
+      "name": "ミクロネシア連邦",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GA": {
+      "name": "ガボン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GB": {
+      "name": "イギリス",
+      "status": "pending",
+      "portrait": {
+        "lead": "文学と音楽、4地域の個性が重なる国",
+        "body": "英国はイングランド、スコットランド、ウェールズ、北アイルランドからなる国で、それぞれの地域に独自の歴史や言語文化が息づいています。演劇や文学、ポップ音楽が育まれ、街のパブやマーケットにも地域の交流があります。紅茶と焼き菓子の文化、サッカーへの情熱、伝統と新しい表現が共存する都市生活まで、ひとつの国にさまざまな個性が重なっています。",
+        "facts": [
+          "首都：ロンドン",
+          "風景：タワーブリッジ・湖水地方",
+          "文化：文学・紅茶・音楽"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "remoteOnly": true,
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg",
+          "hiResUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Tower-bridge-in-london.jpg/1280px-Tower-bridge-in-london.jpg",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Tower-bridge-in-london.jpg",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "caption": "ロンドン・タワーブリッジの昼景（2019年撮影）",
+          "author": "Hexapol",
+          "license": "CC BY-SA 4.0",
+          "place": "ロンドン・タワーブリッジ"
+        },
+        {
+          "avoidCover": true,
+          "asset": "assets/travel/london-tower-bridge.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Tower_Bridge_Panorama.jpg/500px-Tower_Bridge_Panorama.jpg",
+          "caption": "テムズ川にかかるタワーブリッジの夜景（2013年撮影）",
+          "author": "Redbannana",
+          "license": "CC BY-SA 4.0",
+          "place": "ロンドン・タワーブリッジ"
+        },
+        {
+          "asset": "assets/travel/edinburgh-castle.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg",
+          "caption": "エディンバラ城の全景（2000年撮影）",
+          "author": "Libasstref",
+          "license": "CC0 1.0",
+          "place": "エディンバラ城"
+        },
+        {
+          "asset": "assets/travel/wales-cardiff-castle.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardiff_Castle%2C_Wales%2C_GB.jpg/500px-Cardiff_Castle%2C_Wales%2C_GB.jpg",
+          "caption": "カーディフ城の緑の丘と石造りの城（2010年撮影）",
+          "author": "Ввласенко / Volodymyr Vlasenko",
+          "license": "CC BY 4.0",
+          "place": "カーディフ城"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ロンドンのタワーブリッジが架かる川は？",
+          "options": [
+            "セーヌ川",
+            "テムズ川",
+            "ドナウ川"
+          ],
+          "answer": 1,
+          "photoKey": "uk-towerbridge-postcard",
+          "photoLabel": "正解の橋｜ロンドンのタワーブリッジとテムズ川",
+          "fact": "タワーブリッジはロンドンのテムズ川に架かる橋です。",
+          "quip": "名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。"
+        },
+        {
+          "question": "エディンバラ城があるのはイギリスのどの地域？",
+          "options": [
+            "ウェールズ",
+            "イングランド",
+            "スコットランド"
+          ],
+          "answer": 2,
+          "photoKey": "uk-country-postcard",
+          "photoLabel": "正解の城｜スコットランドのエディンバラ城",
+          "fact": "エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。",
+          "quip": "高台の城が街を見守る。写真の撮影枚数までは数えきれない。"
+        }
+      ],
+      "travelStops": {
+        "flight-wrong-country": {
+          "country": "イギリス",
+          "place": "エディンバラ城",
+          "region": "スコットランド・エディンバラ",
+          "latitude": 55.9487,
+          "longitude": -3.2007,
+          "note": "岩山の上にそびえるエディンバラ城。重厚な石の城壁と旧市街の屋根が重なる景色から、スコットランドの長い歴史が感じられます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg",
+          "photoCaption": "エディンバラ城の全景（2000年撮影）",
+          "author": "Libasstref",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_2000-1.jpg",
+          "photoAsset": "assets/travel/edinburgh-castle.jpg",
+          "travelStory": [
+            "エディンバラ城は、火山活動によって生まれた岩山の上に建つスコットランドを代表する城です。街から見上げると、高い石壁と城の建物が空を背景に浮かび上がります。旧市街の屋根と岩山を一緒に眺めると、城が都市の中心にあることがよく分かります。",
+            "城だけでなく、ふもとから続く石畳の街並みにも注目したいところ。長い歴史の層を感じさせる建築と、現在の街のにぎわいが隣り合っています。ゆっくり歩くような気持ちで、街から城へと目線を移してみてください。"
+          ]
+        },
+        "uk-penrith-church-sign-typo-2026": {
+          "country": "イギリス",
+          "place": "ペンリス",
+          "region": "イングランド・カンブリア",
+          "latitude": 54.6641,
+          "longitude": -2.7512,
+          "note": "石造りのセント・アンドルーズ教会が、ペンリスの街に静かにたたずみます。イングランド北部らしい、落ち着いた町並みが魅力です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/St_Andrew%27s_Church_Penrith_DSCN9111.jpg/500px-St_Andrew%27s_Church_Penrith_DSCN9111.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:St_Andrew%27s_Church_Penrith_DSCN9111.jpg",
+          "photoAsset": "assets/travel/penrith-church.jpg",
+          "photoCaption": "ペンリスのセント・アンドルーズ教会（2017年撮影）",
+          "author": "AlasdairW",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "イングランド北部のペンリスは、石造りの建物が街に落ち着いた表情を与える町です。セント・アンドルーズ教会の存在感は、華やかな大都市とは少し違う、地域の歴史が日常の景色に残る町らしさを伝えています。",
+            "周辺は湖水地方やカンブリアの丘陵にも近い地域です。写真に写る教会の壁や屋根、街路の雰囲気を眺めると、観光の中心地だけではない英国の町並みにも目を向けたくなります。"
+          ]
+        },
+        "uk-country-postcard": {
+          "country": "イギリス",
+          "place": "エディンバラ城",
+          "region": "スコットランド・エディンバラ",
+          "latitude": 55.9487,
+          "longitude": -3.2007,
+          "note": "岩山の上にそびえるエディンバラ城。重厚な石の城壁と旧市街の屋根が重なる景色から、スコットランドの長い歴史が感じられます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Edinburgh_Castle_2000-1.jpg/500px-Edinburgh_Castle_2000-1.jpg",
+          "photoCaption": "エディンバラ城の全景（2000年撮影）",
+          "author": "Libasstref",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Edinburgh_Castle_2000-1.jpg",
+          "photoAsset": "assets/travel/edinburgh-castle.jpg",
+          "countryOnly": true,
+          "travelStory": [
+            "エディンバラ城は、火山活動によって生まれた岩山の上に建つスコットランドを代表する城です。街から見上げると、高い石壁と城の建物が空を背景に浮かび上がります。旧市街の屋根と岩山を一緒に眺めると、城が都市の中心にあることがよく分かります。",
+            "城だけでなく、ふもとから続く石畳の街並みにも注目したいところ。長い歴史の層を感じさせる建築と、現在の街のにぎわいが隣り合っています。ゆっくり歩くような気持ちで、街から城へと目線を移してみてください。"
+          ]
+        },
+        "uk-cardiff-postcard": {
+          "country": "イギリス",
+          "countryOnly": true,
+          "place": "カーディフ城",
+          "region": "ウェールズ・カーディフ",
+          "latitude": 51.482,
+          "longitude": -3.1821,
+          "note": "緑の丘の上に石造りの城がそびえるウェールズの首都。雨雲の下にも、長い歴史を感じさせる風景が広がります。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c8/Cardiff_Castle%2C_Wales%2C_GB.jpg/500px-Cardiff_Castle%2C_Wales%2C_GB.jpg",
+          "photoCaption": "カーディフ城の緑の丘と石造りの城（2010年撮影）",
+          "author": "Ввласенко / Volodymyr Vlasenko",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Cardiff_Castle%2C_Wales%2C_GB.jpg",
+          "photoAsset": "assets/travel/wales-cardiff-castle.jpg",
+          "travelStory": [
+            "ウェールズの首都カーディフにあるカーディフ城は、石造りの城壁や塔が街の中心に歴史の存在感を残す場所です。周囲の緑と古い建物の形を一緒に眺めると、街がいくつもの時代を重ねてきたことが伝わります。",
+            "城の敷地には異なる時代の建築が残り、ローマ時代から中世、近代へとつながる歴史を感じられます。観光名所でありながら、市街地から歩いて出会える距離感も魅力です。城壁の向こうの街の暮らしも想像してみてください。"
+          ]
+        },
+        "uk-towerbridge-postcard": {
+          "country": "イギリス",
+          "countryOnly": true,
+          "place": "ロンドン・タワーブリッジ",
+          "region": "イングランド・ロンドン",
+          "latitude": 51.5055,
+          "longitude": -0.0754,
+          "note": "夜のテムズ川沿いに浮かぶ橋の灯り。街の光が水面にきらめき、昼とは違うロンドンの表情が見えてきます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Tower_Bridge_Panorama.jpg/500px-Tower_Bridge_Panorama.jpg",
+          "photoCaption": "テムズ川にかかるタワーブリッジの夜景（2013年撮影）",
+          "author": "Redbannana",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Tower_Bridge_Panorama.jpg",
+          "photoAsset": "assets/travel/london-tower-bridge.jpg",
+          "travelStory": [
+            "ロンドンのタワーブリッジは、二つの塔とその間をつなぐ橋がテムズ川にかかる姿で知られています。夜には橋の灯りが水面に映り、建築の輪郭が一層はっきり浮かびます。川の流れに沿って街の明かりを追うのも楽しい見方です。",
+            "19世紀末に完成したこの橋は、船を通すため中央の橋桁が開く仕組みを備えています。古い石造りのように見える塔と、機械仕掛けの橋が一体になっていることを知ると、写真の細部にも目を向けたくなります。"
+          ]
+        },
+        "uk-windermere-postcard": {
+          "country": "イギリス",
+          "countryOnly": true,
+          "place": "ウィンダミア湖",
+          "region": "イングランド・湖水地方",
+          "latitude": 54.3629,
+          "longitude": -2.94,
+          "note": "穏やかな湖面と、その向こうに続く緑の丘。英国の湖水地方ならではの、深呼吸したくなるような風景です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/73/Lake_Windermere_Panoramic.jpg/500px-Lake_Windermere_Panoramic.jpg",
+          "photoCaption": "イングランド・ウィンダミア湖のパノラマ（2022年撮影）",
+          "author": "Michael D Beckwith",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Lake_Windermere_Panoramic.jpg",
+          "photoAsset": "assets/travel/england-windermere.jpg",
+          "travelStory": [
+            "英国湖水地方のウィンダミア湖は、緑の丘や木々に囲まれた細長い湖です。水面の静かな色と、遠くに重なる丘の輪郭を眺めると、街とは違うゆったりとした時間の流れが感じられます。",
+            "湖水地方は自然の景色や文学とのつながりでも知られます。歩道や湖畔の町から水面を眺める楽しみがあり、季節や天候によって光の表情が変わります。写真の湖面に映る空の色にも注目してみてください。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "ロンドンはジャズが街に広がる11月",
+          "body": "11月13〜22日のロンドン・ジャズ・フェスティバルでは、世界的な演奏家や新進アーティストによるコンサート、トーク、ワークショップなどが街の会場で開催されます。",
+          "validFrom": "2026-11-13",
+          "validThrough": "2026-11-22",
+          "checkedOn": "2026-11-19",
+          "sourceName": "英国政府観光局 VisitBritain",
+          "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+        },
+        {
+          "title": "ロンドンの冬、ハイドパークが光の広場に",
+          "body": "11月19日から2027年1月3日まで、ロンドンのハイドパークで冬のイベント「Winter Wonderland」が予定されています。市場や観覧車など、冬の街の楽しみが集まります。",
+          "validFrom": "2026-11-23",
+          "validThrough": "2026-12-15",
+          "checkedOn": "2026-11-19",
+          "sourceName": "英国政府観光局 VisitBritain",
+          "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+        }
+      ]
+    },
+    "GE": {
+      "name": "ジョージア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GH": {
+      "name": "ガーナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GN": {
+      "name": "ギニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GM": {
+      "name": "ガンビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GW": {
+      "name": "ギニアビサウ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GQ": {
+      "name": "赤道ギニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GR": {
+      "name": "ギリシャ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GD": {
+      "name": "グレナダ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GT": {
+      "name": "グアテマラ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "GY": {
+      "name": "ガイアナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "HN": {
+      "name": "ホンジュラス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "HR": {
+      "name": "クロアチア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "HT": {
+      "name": "ハイチ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "HU": {
+      "name": "ハンガリー",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ID": {
+      "name": "インドネシア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IN": {
+      "name": "インド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IE": {
+      "name": "アイルランド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IR": {
+      "name": "イラン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IQ": {
+      "name": "イラク",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IS": {
+      "name": "アイスランド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IL": {
+      "name": "イスラエル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "IT": {
+      "name": "イタリア",
+      "status": "approved",
+      "portrait": {
+        "lead": "歴史ある都市と地域の食文化が、日々の暮らしに息づく国",
+        "body": "イタリアは地中海に伸びる半島と島々からなる国で、地方ごとに料理、方言、街の景色が異なります。ローマには古代の円形闘技場コロッセオをはじめとする歴史的建築が残り、フィレンツェではルネサンス期の芸術が街を彩ります。北のアルプス山麓から南の海辺まで風土は多彩で、ヴェネツィアの運河やピサの鐘楼など、都市ごとに異なる建築と暮らしが見られます。地域の市場や広場、食卓を大切にする文化もイタリアを知る入口です。",
+        "facts": [
+          "首都：ローマ",
+          "風景：コロッセオ・ヴェネツィアの運河",
+          "文化：地域料理・ルネサンス美術"
+        ],
+        "photos": [
+          "italy-pisa-tower-postcard",
+          "italy-venice-grand-canal-postcard"
+        ],
+        "sourceName": "イタリア政府観光サイト Italia.it",
+        "sourceUrl": "https://www.italia.it/en/lazio/rome/guide-history-facts"
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/italy-colosseum-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Colosseum_in_Rome_%281%29.jpg/500px-Colosseum_in_Rome_%281%29.jpg",
+          "caption": "イタリア・ローマのコロッセオ（2018年撮影）",
+          "author": "Tournasol7",
+          "license": "CC BY-SA 4.0",
+          "place": "ローマのコロッセオ",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Colosseum_in_Rome_(1).jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ピサの斜塔が建っているのは、イタリアのどの都市？",
+          "options": [
+            "ピサ",
+            "ローマ",
+            "ミラノ"
+          ],
+          "answer": 0,
+          "photoKey": "italy-pisa-tower-postcard",
+          "photoLabel": "正解の建築｜ピサの斜塔",
+          "fact": "ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。",
+          "quip": "斜めに立っても、長年しっかり観光の主役。"
+        },
+        {
+          "question": "ヴェネツィアの街を象徴する大きな水路は？",
+          "options": [
+            "ライン川",
+            "大運河",
+            "テムズ川"
+          ],
+          "answer": 1,
+          "photoKey": "italy-venice-grand-canal-postcard",
+          "photoLabel": "正解の水景｜ヴェネツィアの大運河",
+          "fact": "ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。",
+          "quip": "道路を探すより、舟を探したほうが早い日もある。"
+        }
+      ],
+      "travelStops": {
+        "italy-rome-colosseum-cover": {
+          "country": "イタリア",
+          "countryOnly": true,
+          "place": "ローマのコロッセオ",
+          "region": "ラツィオ州・ローマ",
+          "latitude": 41.8902,
+          "longitude": 12.4922,
+          "note": "ローマの古代遺跡を代表する円形闘技場。長い歴史を伝える建築です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Colosseum_in_Rome_%281%29.jpg/500px-Colosseum_in_Rome_%281%29.jpg",
+          "photoCaption": "イタリア・ローマのコロッセオ（2018年撮影）",
+          "author": "Tournasol7",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Colosseum_in_Rome_(1).jpg",
+          "photoAsset": "assets/travel/italy-colosseum-cover.jpg",
+          "coverOnly": true
+        },
+        "italy-pisa-tower-postcard": {
+          "country": "イタリア",
+          "countryOnly": true,
+          "place": "ピサの斜塔",
+          "region": "トスカーナ州・ピサ",
+          "latitude": 43.723,
+          "longitude": 10.3966,
+          "note": "ピサのドゥオモ広場に立つ傾いた鐘楼。ロマネスク建築で知られます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Pisa_-_Leaning_Tower.jpg/500px-Pisa_-_Leaning_Tower.jpg",
+          "photoCaption": "イタリア・ピサの斜塔（2021年撮影）",
+          "author": "Ingo Mehling",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Pisa_-_Leaning_Tower.jpg",
+          "photoAsset": "assets/travel/italy-pisa-tower.jpg",
+          "famousTourist": true,
+          "travelStory": [
+            "ピサの斜塔は、大聖堂に付属する鐘楼です。傾いた姿が有名ですが、近づいて眺めると白い石の柱やアーチが幾層にも重なる美しさにも気づきます。まっすぐな地平線と塔の角度を比べるだけでも、独特の眺めが楽しめます。",
+            "塔が立つドゥオモ広場には、大聖堂や洗礼堂などの建物も集まっています。ひとつの塔だけではなく、広場全体の建築を一緒に見てみてください。ピサの街が受け継いできた中世の風景が浮かび上がります。"
+          ]
+        },
+        "italy-venice-grand-canal-postcard": {
+          "country": "イタリア",
+          "countryOnly": true,
+          "place": "ヴェネツィアの大運河",
+          "region": "ヴェネト州・ヴェネツィア",
+          "latitude": 45.4408,
+          "longitude": 12.3342,
+          "note": "運河と水上交通が暮らしに根付くヴェネツィア。大運河には歴史ある建物が並びます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/Grand_Canal%2C_Venice%2C_Italy.jpg/500px-Grand_Canal%2C_Venice%2C_Italy.jpg",
+          "photoCaption": "イタリア・ヴェネツィアの大運河（2012年撮影）",
+          "author": "Mgimelfarb",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Grand_Canal,_Venice,_Italy.jpg",
+          "photoAsset": "assets/travel/italy-venice-grand-canal.jpg",
+          "famousTourist": true,
+          "travelStory": [
+            "ヴェネツィアの大運河では、水路の両側に歴史ある建物が立ち並び、船が街の道のように行き交います。橋の形や窓の並び、水面に映る色を一つずつ眺めると、水上の都市ならではの景色が見えてきます。",
+            "島々の上に築かれたヴェネツィアでは、運河が街をつなぐ大切な通りになってきました。写真の奥に続く水路をたどりながら、歩道とは異なる視点で街を移動する様子を想像してみてください。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "ヴェネツィア、街を彩る冬の催し",
+          "body": "ヴェネツィア市の公式観光案内は、2026年11月20日から2027年1月6日までの「Natale Venezia 2026」を掲載。街の広場や周辺地域で冬の催しが案内され、歴史的な水の都にも季節の風景が広がります。",
+          "validFrom": "2026-11-21",
+          "validThrough": "2026-12-05",
+          "checkedOn": "2026-11-21",
+          "sourceName": "ヴェネツィア市公式観光案内 Venezia Unica",
+          "sourceUrl": "https://www.veneziaunica.it/en/things-to-do-in-venice/events/natale-venezia-2026"
+        }
+      ]
+    },
+    "JM": {
+      "name": "ジャマイカ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "JO": {
+      "name": "ヨルダン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "JP": {
+      "name": "日本",
+      "status": "pending",
+      "portrait": {
+        "lead": "四季の暮らしと現代文化が共存する国",
+        "body": "日本では、四季とともに楽しむ食、祭り、工芸、日常の習慣が地域によって多彩に異なります。発酵食品や郷土料理、和紙や焼き物といった手仕事の伝統が受け継がれる一方、アニメやゲーム、現代デザインなどの創造文化も広がっています。大都市と地方、北の雪国と南の島々で異なる暮らしのリズムがあり、古い文化と新しい発想が出会うところに魅力があります。",
+        "facts": [
+          "首都：東京",
+          "風景：富士山・京都・瀬戸内海",
+          "文化：祭り・寺社・多様な郷土料理"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/fuji-cherry-blossom.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Mount_Fuji_April_Cherry_Blossom.jpg/500px-Mount_Fuji_April_Cherry_Blossom.jpg",
+          "caption": "桜越しに眺める富士山（2025年撮影）",
+          "author": "SRP1998",
+          "license": "CC BY-SA 4.0",
+          "place": "富士山と桜"
+        },
+        {
+          "asset": "assets/travel/tokyo-sensoji.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Sens%C5%8D-ji_Tokyo.jpg/500px-Sens%C5%8D-ji_Tokyo.jpg",
+          "caption": "東京・浅草寺（2016年撮影）",
+          "author": "Mattias Hill",
+          "license": "CC BY-SA 3.0",
+          "place": "東京・浅草寺"
+        },
+        {
+          "asset": "assets/travel/kyoto-kinkakuji.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Kinkaku-ji%2C_Kyoto.jpg/500px-Kinkaku-ji%2C_Kyoto.jpg",
+          "caption": "京都・金閣寺と鏡湖池（2025年撮影）",
+          "author": "27curlyta",
+          "license": "CC0 1.0",
+          "place": "京都・金閣寺"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "富士山がまたがる2つの県は？",
+          "options": [
+            "長野県と岐阜県",
+            "京都府と滋賀県",
+            "山梨県と静岡県"
+          ],
+          "answer": 2,
+          "photoKey": "japan-fuji-postcard",
+          "photoLabel": "正解の山｜山梨県・静岡県にまたがる富士山",
+          "fact": "富士山は山梨県と静岡県にまたがる日本で最も高い山です。",
+          "quip": "存在感が大きすぎて二つの県にまたがってしまった。"
+        },
+        {
+          "question": "東京・浅草の浅草寺があるのはどこ？",
+          "options": [
+            "京都府",
+            "東京都",
+            "奈良県"
+          ],
+          "answer": 1,
+          "photoKey": "japan-country-postcard",
+          "photoLabel": "正解の寺院｜東京・浅草寺",
+          "fact": "浅草寺は東京都台東区浅草にあり、雷門などで知られています。",
+          "quip": "雷門は人気者。記念写真の行列まで名物になりそう。"
+        }
+      ],
+      "travelStops": {
+        "japan-country-postcard": {
+          "country": "日本",
+          "countryOnly": true,
+          "place": "東京・浅草寺",
+          "region": "東京都・浅草",
+          "latitude": 35.7148,
+          "longitude": 139.7967,
+          "note": "朱色の建物と参道のにぎわいが印象的な浅草寺。東京の街の中に、昔ながらの下町の空気が今も息づいています。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Sens%C5%8D-ji_Tokyo.jpg/500px-Sens%C5%8D-ji_Tokyo.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Sens%C5%8D-ji_Tokyo.jpg",
+          "photoAsset": "assets/travel/tokyo-sensoji.jpg",
+          "photoCaption": "東京・浅草寺（2016年撮影）",
+          "author": "Mattias Hill",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "東京・浅草寺は、雷門の大きな提灯と、参道に続く店々のにぎわいで知られる古い寺院です。朱色の門や屋根の形が街の景色に彩りを添え、寺院に向かう道そのものにも見どころがたくさんあります。",
+            "浅草は伝統的な下町の空気を感じられる地区です。観光客が行き交う通りの先に境内があり、祈りの場と商店街が自然につながっています。写真に映る建物の色や人の流れを、歩くような気持ちで追ってみてください。"
+          ]
+        },
+        "japan-kyoto-postcard": {
+          "country": "日本",
+          "countryOnly": true,
+          "place": "京都・金閣寺",
+          "region": "京都府・京都市",
+          "latitude": 35.0394,
+          "longitude": 135.7292,
+          "note": "池に映る金色の建物と、周囲の青々とした木々。京都の静けさが、水面にゆっくり広がるような景色です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Kinkaku-ji%2C_Kyoto.jpg/500px-Kinkaku-ji%2C_Kyoto.jpg",
+          "photoCaption": "京都・金閣寺と鏡湖池（2025年撮影）",
+          "author": "27curlyta",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Kinkaku-ji%2C_Kyoto.jpg",
+          "photoAsset": "assets/travel/kyoto-kinkakuji.jpg",
+          "travelStory": [
+            "京都の金閣寺は、金色の舎利殿と庭園の池がつくる景色で広く知られています。水面に建物や木々の姿が映り込むと、建築を眺めるだけでなく、その周囲の自然まで含めてひとつの風景として楽しめます。",
+            "正式には鹿苑寺といい、金閣はその一部です。写真では、金色の建物と池の青み、背後の緑をゆっくり見比べてみてください。庭園が工夫してきた眺めの美しさが伝わってきます。"
+          ]
+        },
+        "japan-fuji-postcard": {
+          "country": "日本",
+          "countryOnly": true,
+          "place": "富士山と桜",
+          "region": "山梨県・富士五湖周辺",
+          "latitude": 35.5068,
+          "longitude": 138.7684,
+          "note": "淡い桜の花越しに、雪をいただいた富士山が姿を見せます。春の空気を感じながら、少し遠くを眺めるひとときです。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/23/Mount_Fuji_April_Cherry_Blossom.jpg/500px-Mount_Fuji_April_Cherry_Blossom.jpg",
+          "photoCaption": "桜越しに眺める富士山（2025年撮影）",
+          "author": "SRP1998",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_April_Cherry_Blossom.jpg",
+          "photoAsset": "assets/travel/fuji-cherry-blossom.jpg",
+          "travelStory": [
+            "春の富士山は、雪をまとった山頂と淡い桜の色が同じ画面に重なります。遠くまで広がる空の中に山の輪郭が浮かび、手前の花が季節の近さを感じさせます。大きな山と小さな花の対比をじっくり味わいたい風景です。",
+            "富士山は山梨県と静岡県にまたがる日本最高峰で、古くから信仰や芸術の題材になってきました。桜越しに眺める景色には、日本の季節と風景を大切にする感覚が凝縮されているように感じられます。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "福岡で大相撲九州場所",
+          "body": "11月8〜22日、福岡国際センターで大相撲の九州場所が開催。11月の福岡では相撲文化に触れる季節が続いています。",
+          "validFrom": "2026-11-08",
+          "validThrough": "2026-11-22",
+          "checkedOn": "2026-11-19",
+          "sourceName": "福岡県公式観光サイト VISIT FUKUOKA",
+          "sourceUrl": "https://www.crossroadfukuoka.jp/en/event/10397"
+        },
+        {
+          "title": "久留米で秋バラと紅葉の彩り",
+          "body": "福岡県久留米市の石橋文化センターでは、10月23日〜12月6日に秋バラと紅葉を楽しむ催しが案内されています。庭園と季節の文化に親しむ時期です。",
+          "validFrom": "2026-11-23",
+          "validThrough": "2026-12-06",
+          "checkedOn": "2026-11-19",
+          "sourceName": "福岡県公式観光サイト VISIT FUKUOKA",
+          "sourceUrl": "https://www.crossroadfukuoka.jp/event/17385"
+        }
+      ]
+    },
+    "KZ": {
+      "name": "カザフスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KE": {
+      "name": "ケニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KG": {
+      "name": "キルギス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KH": {
+      "name": "カンボジア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KI": {
+      "name": "キリバス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KN": {
+      "name": "セントクリストファー・ネーヴィス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KR": {
+      "name": "韓国",
+      "status": "pending",
+      "portrait": {
+        "lead": "伝統とポップカルチャーが交差する、活気ある日常",
+        "body": "韓国では、伝統的な市場の食堂や発酵食の食卓と、現代の音楽・映画・デザイン文化が自然に並んでいます。ソウルでは古い街並みを大切にする地区と新しい文化拠点が共存し、地域によって方言や郷土料理も豊かに異なります。キムチや韓国料理を囲む時間、家族や仲間と食卓を共有する習慣も、暮らしの魅力を知る入口です。",
+        "facts": [
+          "首都：ソウル",
+          "食：キムチ・多彩な郷土料理",
+          "文化：映画・音楽・市場"
+        ]
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {
+        "cheonan-painters-coffee-rescue-2026": {
+          "country": "韓国",
+          "place": "天安・独立記念館",
+          "region": "忠清南道・天安市",
+          "latitude": 36.7839,
+          "longitude": 127.2251,
+          "note": "広々とした敷地に、堂々とした屋根を広げる独立記念館。韓国の近現代史を伝える場所で、天安の落ち着いた表情に出会えます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a1/Independence_Hall_of_Korea(main_hall).jpg/500px-Independence_Hall_of_Korea(main_hall).jpg",
+          "photoCaption": "天安・独立記念館のメインホール（2025年撮影）",
+          "author": "NYPD9990",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Independence_Hall_of_Korea(main_hall).jpg",
+          "photoAsset": "assets/travel/cheonan-museum.jpg",
+          "travelStory": [
+            "天安の独立記念館は、韓国の近現代史を伝える大きな展示施設です。広い敷地には象徴的な建築が配置され、建物の屋根の形や開けた空間が印象に残ります。写真では建築の線と周囲の緑との対比を楽しめます。",
+            "展示や記念の空間がある場所として知られ、単なる記念撮影の背景ではありません。大きな建物の前に広がる空間を眺めながら、歴史を学び、考えるために設計された場所なのだと想像すると、景色が違って見えてきます。"
+          ]
+        },
+        "korea-country-postcard": {
+          "country": "韓国",
+          "countryOnly": true,
+          "place": "ソウル・景福宮",
+          "region": "ソウル特別市",
+          "latitude": 37.5796,
+          "longitude": 126.977,
+          "note": "色鮮やかな宮殿の屋根が、山々を背景に美しい輪郭を描きます。景福宮は、ソウルの中心で朝鮮王朝の歴史に触れられる場所です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Gyeongbokgung%2C_Seoul.jpg/500px-Gyeongbokgung%2C_Seoul.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Gyeongbokgung%2C_Seoul.jpg",
+          "photoAsset": "assets/travel/seoul-gyeongbokgung.jpg",
+          "photoCaption": "ソウル・景福宮（2012年撮影）",
+          "author": "螺钉",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "ソウルの景福宮は、朝鮮王朝の歴史を伝える王宮です。色鮮やかな屋根の曲線や木造建築の細部、背景の山々を見渡すと、都の中心にありながら大きな景色の中に建てられていることが分かります。",
+            "かつての宮廷文化を感じられる場所として、現在も人々が訪れます。建物を正面から眺めるだけでなく、屋根の重なりや門から奥へと続く空間に注目すると、建築の配置がつくる落ち着いた雰囲気も味わえます。"
+          ]
+        }
+      },
+      "highlights": []
+    },
+    "KW": {
+      "name": "クウェート",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LA": {
+      "name": "ラオス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LB": {
+      "name": "レバノン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LR": {
+      "name": "リベリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LY": {
+      "name": "リビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LC": {
+      "name": "セントルシア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LI": {
+      "name": "リヒテンシュタイン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LK": {
+      "name": "スリランカ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LS": {
+      "name": "レソト",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LT": {
+      "name": "リトアニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LU": {
+      "name": "ルクセンブルク",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "LV": {
+      "name": "ラトビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MA": {
+      "name": "モロッコ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MC": {
+      "name": "モナコ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MD": {
+      "name": "モルドバ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MG": {
+      "name": "マダガスカル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MV": {
+      "name": "モルディブ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MX": {
+      "name": "メキシコ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MH": {
+      "name": "マーシャル諸島",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MK": {
+      "name": "北マケドニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ML": {
+      "name": "マリ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MT": {
+      "name": "マルタ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MM": {
+      "name": "ミャンマー (ビルマ)",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ME": {
+      "name": "モンテネグロ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MN": {
+      "name": "モンゴル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MZ": {
+      "name": "モザンビーク",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MR": {
+      "name": "モーリタニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MU": {
+      "name": "モーリシャス",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MW": {
+      "name": "マラウイ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "MY": {
+      "name": "マレーシア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NA": {
+      "name": "ナミビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NE": {
+      "name": "ニジェール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NG": {
+      "name": "ナイジェリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NI": {
+      "name": "ニカラグア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NL": {
+      "name": "オランダ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NO": {
+      "name": "ノルウェー",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NP": {
+      "name": "ネパール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NR": {
+      "name": "ナウル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "NZ": {
+      "name": "ニュージーランド",
+      "status": "pending",
+      "portrait": {
+        "lead": "マオリ文化と自然に寄り添う暮らし",
+        "body": "ニュージーランドでは、先住民マオリの言語や芸術、文化が社会の大切な一部をなしています。都市の音楽やカフェ文化、地域ごとの農業・食文化があり、海や山に近い暮らしも特色のひとつです。北島と南島では風土が異なり、自然環境を大切にする取り組みやアウトドアへの親しみが日常のなかに見られます。マオリの伝統と多様な現代文化が重なり合う国です。",
+        "facts": [
+          "首都：ウェリントン",
+          "風景：ミルフォード・サウンド",
+          "文化：マオリ文化・自然体験"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/nz-milford-sound.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg",
+          "caption": "ニュージーランド南島・ミルフォード・サウンドの滝（2005年撮影）",
+          "author": "Ryancoke2020",
+          "license": "CC BY-SA 4.0",
+          "place": "ミルフォード・サウンド"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ミルフォード・サウンドがあるのは？",
+          "options": [
+            "北島",
+            "南島",
+            "チャタム諸島"
+          ],
+          "answer": 1,
+          "photoKey": "nz-milford-sound-postcard",
+          "photoLabel": "正解の景色｜南島のミルフォード・サウンド",
+          "fact": "ミルフォード・サウンドはニュージーランド南島のフィヨルドランド国立公園にあります。",
+          "quip": "山と海の共演が大迫力。観客は静かに見上げるしかない。"
+        },
+        {
+          "question": "ニュージーランドの先住民族として知られるのは？",
+          "options": [
+            "サーミ",
+            "イヌイット",
+            "マオリ"
+          ],
+          "answer": 2,
+          "fact": "マオリはニュージーランドの先住民族で、言葉や芸術などの文化を受け継いでいます。",
+          "quip": "文化の積み重ねは、世界地図のピンだけでは収まりません。"
+        }
+      ],
+      "travelStops": {
+        "nz-milford-sound-postcard": {
+          "country": "ニュージーランド",
+          "countryOnly": true,
+          "place": "ミルフォード・サウンド",
+          "region": "南島・フィヨルドランド国立公園",
+          "latitude": -44.671,
+          "longitude": 167.928,
+          "note": "氷河が削った入り江に切り立つ山々と滝。ニュージーランド南島を代表するフィヨルドの風景です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Milford_Sound_-_New_Zealand.jpg",
+          "photoAsset": "assets/travel/nz-milford-sound.jpg",
+          "photoCaption": "ニュージーランド・ミルフォード・サウンドの滝（2005年撮影）",
+          "author": "Ryancoke2020",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ニュージーランド南島のミルフォード・サウンドでは、深い入り江の両側に山々が迫り、切り立った岩壁が水面から立ち上がるように見えます。山の高さと、水面の静けさが一枚の写真の中で対照的に感じられます。",
+            "この地形は氷河の働きによって形づくられたフィヨルドです。雨が多い地域で、天候によっては岩壁を伝う滝が現れます。山と海、霧や雲がつくる風景を想像しながら眺めると、その奥深さが伝わります。"
+          ]
+        }
+      },
+      "highlights": [
+        {
+          "title": "南島ダニーデンでバレエ公演を予定",
+          "body": "11月21〜22日、ダニーデンでロイヤル・ニュージーランド・バレエの『眠れる森の美女』が上演予定です。初夏を迎える街で、舞台芸術も楽しみのひとつに。",
+          "validFrom": "2026-11-19",
+          "validThrough": "2026-11-22",
+          "checkedOn": "2026-11-19",
+          "sourceName": "ダニーデン公式観光案内",
+          "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+        },
+        {
+          "title": "ダニーデンで食と音楽の週末",
+          "body": "11月27〜28日にダニーデンで地元の食やライブ音楽などを楽しむフェスティバルが予定されています。南島の街の食文化と音楽シーンに触れる催しです。",
+          "validFrom": "2026-11-23",
+          "validThrough": "2026-11-28",
+          "checkedOn": "2026-11-19",
+          "sourceName": "ダニーデン公式観光案内",
+          "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+        }
+      ]
+    },
+    "OM": {
+      "name": "オマーン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PK": {
+      "name": "パキスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PA": {
+      "name": "パナマ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PE": {
+      "name": "ペルー",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PH": {
+      "name": "フィリピン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PW": {
+      "name": "パラオ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PG": {
+      "name": "パプアニューギニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PL": {
+      "name": "ポーランド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "KP": {
+      "name": "北朝鮮",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PT": {
+      "name": "ポルトガル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PY": {
+      "name": "パラグアイ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "PS": {
+      "name": "パレスチナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "QA": {
+      "name": "カタール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "RO": {
+      "name": "ルーマニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "RU": {
+      "name": "ロシア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "RW": {
+      "name": "ルワンダ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SA": {
+      "name": "サウジアラビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SD": {
+      "name": "スーダン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SN": {
+      "name": "セネガル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SG": {
+      "name": "シンガポール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SB": {
+      "name": "ソロモン諸島",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SL": {
+      "name": "シエラレオネ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SV": {
+      "name": "エルサルバドル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SM": {
+      "name": "サンマリノ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SO": {
+      "name": "ソマリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "RS": {
+      "name": "セルビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SS": {
+      "name": "南スーダン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ST": {
+      "name": "サントメ・プリンシペ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SR": {
+      "name": "スリナム",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SK": {
+      "name": "スロバキア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SI": {
+      "name": "スロベニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SE": {
+      "name": "スウェーデン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SZ": {
+      "name": "エスワティニ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SC": {
+      "name": "セーシェル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "SY": {
+      "name": "シリア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TD": {
+      "name": "チャド",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TG": {
+      "name": "トーゴ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TH": {
+      "name": "タイ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TJ": {
+      "name": "タジキスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TM": {
+      "name": "トルクメニスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TL": {
+      "name": "東ティモール",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TO": {
+      "name": "トンガ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TT": {
+      "name": "トリニダード・トバゴ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TN": {
+      "name": "チュニジア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TR": {
+      "name": "トルコ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TV": {
+      "name": "ツバル",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TW": {
+      "name": "台湾",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "TZ": {
+      "name": "タンザニア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "UG": {
+      "name": "ウガンダ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "UA": {
+      "name": "ウクライナ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "UY": {
+      "name": "ウルグアイ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "US": {
+      "name": "アメリカ合衆国",
+      "status": "approved",
+      "portrait": {
+        "lead": "多様なルーツから新しい文化が生まれる国",
+        "body": "アメリカ合衆国には多様なルーツを持つ人々が暮らし、州や都市によって食、音楽、働き方、日常の風景が大きく異なります。ジャズ、ブルース、ヒップホップなど、各地から生まれた音楽は世界の文化にも影響を与えてきました。映画や新しい技術を生み出す都市がある一方で、地域社会の祭り、学校のスポーツ、家庭で伝わる料理にもこの国らしい活気があります。",
+        "facts": [
+          "首都：ワシントンD.C.",
+          "風景：ヨセミテ・グランドキャニオン",
+          "文化：ジャズ・映画・多彩な食文化"
+        ],
+        "photos": [
+          "us-newyork-postcard",
+          "us-golden-gate-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/golden-gate-sunset-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg",
+          "caption": "夕暮れのゴールデンゲートブリッジ（2007年撮影）",
+          "author": "Rich Niewiroski Jr.",
+          "license": "CC BY 2.5",
+          "place": "ゴールデンゲートブリッジ・夕景"
+        },
+        {
+          "asset": "assets/travel/new-york-skyline.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg",
+          "caption": "ブルックリン側から見たマンハッタン（2025年撮影）",
+          "author": "Kidfly182",
+          "license": "CC BY 4.0",
+          "place": "ニューヨークの街並み"
+        },
+        {
+          "asset": "assets/travel/san-francisco-golden-gate.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg",
+          "caption": "海峡に架かるゴールデンゲートブリッジ（2016年撮影）",
+          "author": "Ashokmehta72",
+          "license": "CC BY-SA 4.0",
+          "place": "ゴールデンゲートブリッジ"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "サンフランシスコの海峡に架かる橋は？",
+          "options": [
+            "ロンドン橋",
+            "ゴールデンゲートブリッジ",
+            "ブルックリン橋"
+          ],
+          "answer": 1,
+          "photoKey": "us-golden-gate-postcard",
+          "photoLabel": "正解の橋｜ゴールデンゲートブリッジ",
+          "fact": "ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。",
+          "quip": "名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。"
+        },
+        {
+          "question": "ヨセミテ国立公園の巨大な岩壁で知られる岩石は？",
+          "options": [
+            "サンゴ",
+            "石炭",
+            "花崗岩"
+          ],
+          "answer": 2,
+          "photoKey": "us-yosemite-color-quiz-image",
+          "photoLabel": "正解の地形｜ヨセミテの岩壁と谷",
+          "fact": "ヨセミテには花崗岩の大きな岩壁や谷が広がっています。",
+          "quip": "地球のプロフィール写真、岩肌の圧が強い。"
+        }
+      ],
+      "travelStops": {
+        "faa-router-ground-stop-2026": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "グランドキャニオン",
+          "region": "アリゾナ州",
+          "latitude": 36.0544,
+          "longitude": -112.1401,
+          "note": "赤や紫の地層が幾重にも連なり、谷が地平線の向こうまで続きます。気の遠くなるような時間がつくった、アリゾナの大パノラマです。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/84/Grand_canyon.jpg/500px-Grand_canyon.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Grand_canyon.jpg",
+          "photoAsset": "assets/travel/grand-canyon.jpg",
+          "photoCaption": "米国アリゾナ州グランドキャニオンの景色",
+          "author": "U.S. National Park Service（Wikimedia Commons経由）",
+          "license": "パブリックドメイン",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+          "travelStory": [
+            "グランドキャニオンでは、何層にも重なる岩の色と、深い谷が果てしなく続くように見えます。赤、茶、紫の地層に目を凝らせば、長い時間をかけて積み重なった地球の歴史が、一枚の風景に刻まれていることが伝わってきます。",
+            "アリゾナ州の高原をコロラド川が削り続けて生まれた峡谷です。遠景の大きな形だけでなく、手前の岩肌と谷の向こうの影にも注目してみてください。自然がつくった奥行きの豊かさに、思わず目を奪われます。"
+          ]
+        },
+        "jensen-huang-nvidia-resignation-2026": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ヨセミテ国立公園",
+          "region": "カリフォルニア州",
+          "latitude": 37.7456,
+          "longitude": -119.5936,
+          "note": "切り立った花こう岩の岩壁と深い緑の森が出会うヨセミテ渓谷。空の広さまで感じられる、カリフォルニアを代表する雄大な景色です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Yosemite_National_Park_by_Carol_M._Highsmith.jpg/500px-Yosemite_National_Park_by_Carol_M._Highsmith.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Yosemite_National_Park_by_Carol_M._Highsmith.jpg",
+          "photoAsset": "assets/travel/yosemite.jpg",
+          "photoCaption": "米国カリフォルニア州のヨセミテ国立公園",
+          "author": "Carol M. Highsmith（Library of Congress / Wikimedia Commons）",
+          "license": "パブリックドメイン",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+          "travelStory": [
+            "ヨセミテ渓谷には、切り立った花崗岩の壁、深い森、広い空が重なる壮大な景色があります。写真では谷を囲む岩壁の大きさと、足元に広がる木々の小ささを見比べてみてください。その対比だけでも、風景のスケールが伝わります。",
+            "この一帯は氷河などの働きによって形づくられた地形で知られます。明るい岩肌と森の色を追っていくと、硬い岩と緑の生命が同じ場所で共存していることに気づきます。目の前に立った気分で深呼吸したくなる景色です。"
+          ]
+        },
+        "spacex-starship-booster-failure-2026": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ビッグベンド国立公園",
+          "region": "テキサス州",
+          "latitude": 29.2498,
+          "longitude": -103.2512,
+          "note": "乾いた大地の向こうに山々が重なり、空が大きく広がるビッグベンド。砂漠と山が織りなす、テキサスの静かな絶景です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/Big_Bend_National_Park_PB112584.jpg/500px-Big_Bend_National_Park_PB112584.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Big_Bend_National_Park_PB112584.jpg",
+          "photoAsset": "assets/travel/big-bend.jpg",
+          "photoCaption": "米国テキサス州のビッグベンド国立公園",
+          "author": "U.S. National Park Service（Wikimedia Commons経由）",
+          "license": "パブリックドメイン",
+          "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+          "travelStory": [
+            "テキサス州南西部のビッグベンド国立公園では、乾いた地形の向こうに山並みが広がり、空が驚くほど大きく感じられます。砂漠の色と山の稜線を交互に眺めると、街とはまるで違う土地の広さが印象に残ります。",
+            "公園の名は、リオグランデ川が大きく曲がる地形に由来します。乾燥した大地と川のつくる景観が隣り合う場所です。写真に映る静かな稜線を追いながら、川と山が刻んだ地形を想像してみてください。"
+          ]
+        },
+        "us-golden-gate-postcard": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ゴールデンゲートブリッジ",
+          "region": "カリフォルニア州・サンフランシスコ",
+          "latitude": 37.8199,
+          "longitude": -122.4783,
+          "note": "海の青と橋の赤が印象的なサンフランシスコの風景。橋の向こうまで続く海岸線に、少し目を向けてみましょう。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg/500px-Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg",
+          "photoCaption": "海峡に架かるゴールデンゲートブリッジ（2016年撮影）",
+          "author": "Ashokmehta72",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Golden_Gate_Bridge%2C_San_Francisco%2C_CA.jpg",
+          "photoAsset": "assets/travel/san-francisco-golden-gate.jpg",
+          "travelStory": [
+            "サンフランシスコのゴールデンゲートブリッジは、鮮やかな赤い色と大きな吊り橋の曲線が海峡を横切る風景で知られます。橋脚の高さ、ケーブルの線、対岸へと続く道路を追いかけると、橋の大きさがよく分かります。",
+            "太平洋とサンフランシスコ湾をつなぐ海峡に架かり、街を代表するランドマークです。写真の中では、橋そのものと海岸線の両方に注目してみてください。人がつくった構造物と自然の広がりが、鮮やかに響き合っています。"
+          ]
+        },
+        "us-waikiki-postcard": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ワイキキビーチ",
+          "region": "ハワイ州・ホノルル",
+          "latitude": 21.2793,
+          "longitude": -157.8294,
+          "note": "青く透き通る海に、白い波が次々と寄せてきます。眺めているだけで南国の風を感じるような、開放的な海辺です。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Waikiki_Beach%2C_Hawaii.jpg/500px-Waikiki_Beach%2C_Hawaii.jpg",
+          "photoCaption": "ハワイ・ワイキキの海と波（2018年撮影）",
+          "author": "Julianibarra",
+          "license": "CC0 1.0",
+          "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Waikiki_Beach%2C_Hawaii.jpg",
+          "photoAsset": "assets/travel/hawaii-waikiki.jpg",
+          "travelStory": [
+            "ホノルルのワイキキビーチは、なめらかな波が砂浜に寄せ、明るい海が遠くまで広がる風景で知られます。白い波、青い水、海岸沿いの街並みを眺めると、海と都市がすぐ隣り合うハワイらしい景色が伝わります。",
+            "ワイキキは長く人々が海に親しんできた場所です。近くにはダイヤモンドヘッドの山影も見え、泳ぐだけでなく散歩や夕方の景色を楽しむ海辺として親しまれています。海の色の変化をゆっくり眺めてみてください。"
+          ]
+        },
+        "us-newyork-postcard": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ニューヨークの街並み",
+          "region": "ニューヨーク州・マンハッタン",
+          "latitude": 40.701,
+          "longitude": -74.011,
+          "note": "川を行く船の向こうに、ビル群がすき間なく立ち並びます。水辺から眺めるニューヨークには、街の大きさを感じる迫力があります。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/50/Lower_Manhattan_Skyline_June_2025_008.jpg/500px-Lower_Manhattan_Skyline_June_2025_008.jpg",
+          "photoCaption": "ブルックリン側から見たマンハッタン（2025年撮影）",
+          "author": "Kidfly182",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Lower_Manhattan_Skyline_June_2025_008.jpg",
+          "photoAsset": "assets/travel/new-york-skyline.jpg",
+          "travelStory": [
+            "ニューヨークの街並みを水辺から見ると、ビルの輪郭が折り重なり、都会のスケールが強く感じられます。川を行く船の手前と遠くの高層ビルを見比べると、街の奥行きや絶えず動き続ける都市の姿が伝わってきます。",
+            "ニューヨークは世界からさまざまな文化が集まってきた街。写真では建物の数や高さだけでなく、水辺と街を行き来する人の暮らしにも想像を広げてみてください。大都市の景色に小さな物語が隠れています。"
+          ]
+        },
+        "us-golden-gate-sunset-hero-postcard": {
+          "country": "アメリカ合衆国",
+          "countryOnly": true,
+          "place": "ゴールデンゲートブリッジ・夕景",
+          "region": "カリフォルニア州・サンフランシスコ",
+          "latitude": 37.8199,
+          "longitude": -122.4783,
+          "note": "夕暮れの海峡を横切る赤い大橋と、穏やかなサンフランシスコ湾。アメリカ西海岸を象徴する眺めです。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/500px-GoldenGateBridge-001.jpg",
+          "photoCaption": "夕暮れのゴールデンゲートブリッジ（2007年撮影）",
+          "author": "Rich Niewiroski Jr.",
+          "license": "CC BY 2.5",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:GoldenGateBridge-001.jpg",
+          "photoAsset": "assets/travel/golden-gate-sunset-cover.jpg",
+          "coverOnly": true
+        },
+        "us-yosemite-color-quiz-image": {
+          "country": "アメリカ合衆国",
+          "quizOnly": true,
+          "place": "ヨセミテ渓谷のエル・キャピタンとハーフドーム",
+          "region": "カリフォルニア州・ヨセミテ国立公園",
+          "latitude": 37.7456,
+          "longitude": -119.5936,
+          "note": "チュネル・ビューから、ヨセミテの花崗岩の岩壁と深い森をカラー写真で見渡します。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Yosemite_Valley_from_Tunnel.jpg/500px-Yosemite_Valley_from_Tunnel.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Yosemite_Valley_from_Tunnel.jpg",
+          "photoAsset": "assets/travel/us-yosemite-granite-quiz.jpg",
+          "photoCaption": "ヨセミテ渓谷の花崗岩の岩壁・エルキャピタンなど（2022年撮影）",
+          "author": "Williamgayde",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        }
+      },
+      "highlights": [
+        {
+          "title": "2026年の感謝祭は11月26日",
+          "body": "米国政府の2026年連邦祝日一覧では、感謝祭（Thanksgiving Day）は11月26日（木）。11月の米国を代表する季節行事の一つで、家庭や地域で人が集い、食卓を囲む文化を知るきっかけになります。",
+          "validFrom": "2026-11-21",
+          "validThrough": "2026-12-01",
+          "checkedOn": "2026-11-21",
+          "sourceName": "米国人事管理局（OPM）連邦祝日一覧",
+          "sourceUrl": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
+        }
+      ]
+    },
+    "UZ": {
+      "name": "ウズベキスタン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "VA": {
+      "name": "バチカン市国",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "VC": {
+      "name": "セントビンセント及びグレナディーン諸島",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "VE": {
+      "name": "ベネズエラ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "VN": {
+      "name": "ベトナム",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "VU": {
+      "name": "バヌアツ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "WS": {
+      "name": "サモア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "YE": {
+      "name": "イエメン",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ZA": {
+      "name": "南アフリカ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ZM": {
+      "name": "ザンビア",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    },
+    "ZW": {
+      "name": "ジンバブエ",
+      "status": "pending",
+      "portrait": null,
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": []
+    }
+  }
+}
