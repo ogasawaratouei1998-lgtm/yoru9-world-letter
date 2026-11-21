@@ -94,6 +94,27 @@ class CountryEditorialQueueTest(unittest.TestCase):
                        if row["code"]=="KR")
             self.assertIn("two_paragraph_microtravel",korea["missing"])
 
+    def test_brazil_is_prepared_but_remains_pending(self):
+        report=country_editorial_queue(ROOT)
+        brazil=next(row for row in report["prioritizedPending"] if row["code"]=="BR")
+        self.assertEqual(brazil["requiredRemaining"],0,brazil["missing"])
+        self.assertNotIn("BR",report["approvedCountries"])
+        self.assertIn("optional_current_topic",brazil["missing"])
+
+    def test_brazil_cover_source_drift_is_flagged_even_with_usable_quizzes(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for filename in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/filename,root/filename)
+            path=root/"country-content.json"
+            dataset=json.loads(path.read_text(encoding="utf-8"))
+            dataset["countries"]["BR"]["portraitPhotos"][0]["author"]="Incorrect photographer"
+            path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+            report=country_editorial_queue(root)
+            brazil=next(row for row in report["prioritizedPending"] if row["code"]=="BR")
+            self.assertIn("invalid_selectable_portrait_photo",brazil["missing"])
+            self.assertIn("attributed_country_portrait_photo",brazil["missing"])
+
     def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)
