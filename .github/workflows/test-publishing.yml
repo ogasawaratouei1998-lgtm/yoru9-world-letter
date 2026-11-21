@@ -66,6 +66,8 @@ jobs:
         run: python country_content.py --check
       - name: Report pending country editorial preparation without promoting any country
         run: python country_editorial_queue.py --top 8
+      - name: Summarize delegated bulk country expansion and remaining photo blockers
+        run: python country_batch_progress.py
       - name: Run publishing and privacy tests
         run: python -m unittest discover -s tests -v
       - name: Restore validated, correctly licensed Wikimedia photos
