@@ -1,0 +1,640 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Eight new UNESCO-sourced country portraits and sixteen distinct travel / quiz drafts. Photography is intentionally withheld until independent Commons provenance and on-location image checks pass.",
+  "countries": {
+    "MN": {
+      "name": "モンゴル",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/mn",
+      "portrait": {
+        "lead": "草原の都の記憶と、聖なる山に受け継がれる祈り",
+        "body": "広大な草原を旅するモンゴルでは、移動しながら暮らす人々の文化と、帝国の都市が残した痕跡を同じ風景の中で見つけられます。オルホン渓谷には古い遺跡や遊牧の暮らしが刻まれ、ブルハン・ハルドゥン山では山と人との精神的な結びつきが今も大切にされています。草原の広がりをただ眺めるだけでなく、なぜ川沿いに都が栄え、なぜ特定の山が聖地となったのかを知ると、地平線の向こうの歴史が立ち上がってきます。",
+        "facts": [
+          "世界遺産：オルホン渓谷の文化的景観",
+          "世界遺産：ブルハン・ハルドゥン山の聖なる景観"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：モンゴルの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/mn"
+      },
+      "travelDrafts": [
+        {
+          "place": "オルホン渓谷の文化的景観",
+          "travelStory": [
+            "オルホン川の両岸に草地が広がり、その中に古代の遺跡や後世の都の跡が点在しています。見渡す限りの草原は一見変化が少ないようでいて、川の近くを進むと人々がこの土地を選んだ理由が少しずつ見えてきます。遠景と足元の遺構を交互に見ながら、遊牧と都市が交わる風景を味わいたい場所です。",
+            "UNESCOによれば、この文化的景観には6世紀以降の考古学的遺構が残り、13～14世紀のモンゴル帝国の都カラコルムも含まれます。川沿いの牧草地が季節ごとの家畜の移動を支えてきたことを考えると、遺跡を単独の点としてではなく、生活と交通のつながりの中で理解できます。広い景観のどこに人の営みが重なっているか、地図と見比べて歩くのがおすすめです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・オルホン渓谷の文化的景観",
+              "url": "https://whc.unesco.org/en/list/1081",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "オルホン渓谷の世界遺産に含まれるモンゴル帝国期の都は？",
+            "options": [
+              "カラコルム",
+              "北京",
+              "サマルカンド"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはオルホン渓谷の登録範囲に13～14世紀の都カラコルムを挙げています。",
+            "photoGoal": "オルホン渓谷の文化的景観の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Orkhon Valley Karakorum Mongolia monastery",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ブルハン・ハルドゥン山の聖なる景観",
+          "travelStory": [
+            "北東モンゴルの森と草原が接する山岳地帯では、樹木に覆われた山腹から河川のある谷へと景色が移り変わります。ブルハン・ハルドゥン山は単なる登山の目標ではなく、土地の人々が神聖なものとして敬ってきた山です。訪問可能な区域や地元の決まりを尊重し、山並みを遠くから眺めながら景観と信仰の関係に思いを巡らせたい場所です。",
+            "UNESCOはこの山と周辺景観が、チンギス・ハンの時代から続く山岳信仰に深く関わると説明しています。山の神聖さは建物の規模ではなく、特定の地形や祭礼、伝承に支えられてきました。石積みの祭壇や森林の帯を観察する際も、遺産を観光施設として扱うのではなく、現地の保護規則と信仰を優先する姿勢が大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルハン・ハルドゥン山の聖なる景観",
+              "url": "https://whc.unesco.org/en/list/1440",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブルハン・ハルドゥン山が重要視される理由として適切なのは？",
+            "options": [
+              "山岳信仰との結びつき",
+              "古代ローマの港湾",
+              "サンゴ礁の研究"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはブルハン・ハルドゥン山と周辺を、山岳信仰に関わる文化的景観として登録しています。",
+            "photoGoal": "ブルハン・ハルドゥン山の聖なる景観の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Burkhan Khaldun sacred mountain Mongolia landscape",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Orkhon Valley Mongolia Karakorum landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "KZ": {
+      "name": "カザフスタン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/kz",
+      "portrait": {
+        "lead": "青いドームの建築と岩に刻まれた記録をたどる",
+        "body": "カザフスタンを旅すると、中央アジアの広がりの中に、異なる時代の人々が残した豊かな文化を感じられます。トルキスタンのホージャ・アフメド・ヤサウィ廟は巨大な建築と装飾で人々を迎え、タンバルィの岩絵群は文字より前から続く営みを伝えています。色鮮やかなタイルと岩肌の線刻という、まったく異なる方法で刻まれた記憶を見比べると、この土地がたどってきた長い時間の幅を実感できます。",
+        "facts": [
+          "世界遺産：ホージャ・アフメド・ヤサウィ廟",
+          "世界遺産：タンバルィの考古学的景観の岩絵群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：カザフスタンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/kz"
+      },
+      "travelDrafts": [
+        {
+          "place": "ホージャ・アフメド・ヤサウィ廟",
+          "travelStory": [
+            "トルキスタンの街で廟に近づくと、大きな門構えと青みを帯びたドームの対比が目を引きます。外壁の装飾は遠くから見ると一つの模様に見えますが、近づくにつれ、タイルの線や色が複雑に組み合わさっていることに気づきます。広場から建物全体の姿を見たあと、装飾の細部を落ち着いて観察したい建築です。",
+            "UNESCOはこの廟をティムール朝期の重要な建築として評価しています。未完成の部分を含む巨大な建築は、後世の宗教建築にも影響を与えたとされます。ヤサウィという人物への敬意が建築の規模や場所の意味を形づくっていることを知ると、色や形の美しさだけでなく、人々がこの場所を守り伝えてきた理由にも目が向きます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホージャ・アフメド・ヤサウィ廟",
+              "url": "https://whc.unesco.org/en/list/1103",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ホージャ・アフメド・ヤサウィ廟と特に関係する時代は？",
+            "options": [
+              "ティムール朝期",
+              "江戸時代",
+              "古代エジプト中王国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはホージャ・アフメド・ヤサウィ廟をティムール朝の建築の重要な例としています。",
+            "photoGoal": "ホージャ・アフメド・ヤサウィ廟の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Mausoleum Khoja Ahmed Yasawi Turkestan Kazakhstan exterior",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "タンバルィの考古学的景観の岩絵群",
+          "travelStory": [
+            "タンバルィでは、開けた岩場に近づくと、岩肌の上に動物や人の姿が刻まれているのが分かります。遠くからはただの岩に見えても、光の向きや見る角度によって線刻が浮かび上がり、昔の人々がここを特別な場所として使っていたことが伝わります。遺構を傷つけず、指定された見学経路から一つずつ絵柄を探したい場所です。",
+            "UNESCOはタンバルィの景観におよそ5000点の岩絵があり、青銅器時代から近代に至る牧畜社会の儀礼や生活の手掛かりを伝えていると説明しています。岩絵の周辺には墓や集落の遺構もあり、描かれた絵だけを切り離して考えることはできません。どの岩がどの地形に置かれているかに目を向けると、古代の記録が立体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タンバルィの考古学的景観の岩絵群",
+              "url": "https://whc.unesco.org/en/list/1145",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "タンバルィの岩絵が示す文化として最も適切なのは？",
+            "options": [
+              "牧畜社会の営みと儀礼",
+              "大航海時代の造船",
+              "産業革命の鉄道"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはタンバルィの岩絵が牧畜社会の生活や儀礼を伝えると説明しています。",
+            "photoGoal": "タンバルィの考古学的景観の岩絵群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Tanbaly petroglyphs Kazakhstan rock carvings",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Khoja Ahmed Yasawi mausoleum Turkestan Kazakhstan panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "BO": {
+      "name": "ボリビア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/bo",
+      "portrait": {
+        "lead": "高原の古代文明と銀山都市、アンデスの歴史を読む",
+        "body": "アンデスの高地に広がるボリビアには、異なる時代の人々が築いた都市や儀礼の場所が残されています。ティワナクでは精巧な石組みが古代社会の力を伝え、ポトシでは銀の採掘によって大きく発展した植民地時代の都市景観を見ることができます。どちらも壮大な遺産である一方、人々の労働や支配の歴史から切り離せません。美しい建築や山の輪郭を眺めながら、繁栄を生んだ仕組みとその代償にも思いを向けたい国です。",
+        "facts": [
+          "世界遺産：ティワナク遺跡",
+          "世界遺産：ポトシの街"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ボリビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/bo"
+      },
+      "travelDrafts": [
+        {
+          "place": "ティワナク遺跡",
+          "travelStory": [
+            "標高の高い平原に立つティワナクの石造遺構では、巨大な石を組み合わせた建築が目の前に現れます。彫刻の細部が残る門や石碑を見ながら歩くと、周囲に大きな建物がなくても、古代の都市が持っていた空間の広がりを想像できます。遠くの山並みと遺構を同じ視界に入れ、この場所が高原のどこに築かれたのかも確かめたいところです。",
+            "UNESCOによれば、ティワナクは小さな集落から発展し、西暦400～900年ごろに計画的な都市として繁栄しました。宗教的・政治的な中心地としての役割を持ち、整えられた石材や儀礼空間にその技術が表れています。石の門を単体の写真で見るだけでなく、広場や建物跡の位置関係をたどると、遺跡全体の意味が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ティワナク遺跡",
+              "url": "https://whc.unesco.org/en/list/567",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ティワナクが特に繁栄した時期は？",
+            "options": [
+              "西暦400～900年ごろ",
+              "西暦1700～1900年",
+              "紀元前5000年以前"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはティワナクが西暦400～900年ごろ計画都市として発展したと説明しています。",
+            "photoGoal": "ティワナク遺跡の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Tiwanaku Gate of the Sun Bolivia archaeology",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ポトシの街",
+          "travelStory": [
+            "ポトシでは、植民地時代の街並みの背後にセロ・リコの山がそびえ、街と鉱山の関係が一目で分かります。建物の壁や教会の意匠を眺めながら坂道を歩くと、華やかな都市景観が山から掘り出された銀と結びついていたことを実感します。美観を楽しむだけでなく、鉱山で働いた人々の歴史にも目を向けたい場所です。",
+            "UNESCOはポトシを、銀の生産を軸に鉱山、水利施設、精錬所、都市が結びついた世界遺産として評価しています。鉱山を取り巻く自然環境や建造物は一体となって都市の発展を支えました。ポトシが世界遺産の危機遺産リストにも掲載されていることを踏まえると、残された街並みを守る課題も旅の重要な視点になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ポトシの街",
+              "url": "https://whc.unesco.org/en/list/420",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ポトシの都市発展を大きく支えた産業は？",
+            "options": [
+              "銀の採掘と精錬",
+              "真珠の養殖",
+              "自動車製造"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはポトシを銀山と精錬施設を含む鉱山都市の遺産として説明しています。",
+            "photoGoal": "ポトシの街の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Potosi Bolivia Cerro Rico historic city panorama",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Tiwanaku Bolivia archaeological ruins highland",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "PA": {
+      "name": "パナマ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/pa",
+      "portrait": {
+        "lead": "熱帯の海に眠る自然と、交易を守った石造の要塞",
+        "body": "南北アメリカをつなぐパナマには、海上交易の歴史と豊かな海洋生態系が共存しています。カリブ海側のポルトベロとサン・ロレンソの要塞群は、かつて海の往来を見張った場所です。一方、太平洋のコイバ国立公園では島と海が多様な生き物を育んでいます。古い砲台から海を眺める時間と、島の自然を保護の観点から知る時間を比べると、この細長い国が二つの海に開かれていることを強く感じられます。",
+        "facts": [
+          "世界遺産：ポルトベロとサン・ロレンソの要塞群",
+          "世界遺産：コイバ国立公園と海洋保護特別区域"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：パナマの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/pa"
+      },
+      "travelDrafts": [
+        {
+          "place": "ポルトベロとサン・ロレンソの要塞群",
+          "travelStory": [
+            "カリブ海に面するポルトベロでは、海岸沿いの石造の砲台跡が水面の向こうを見張るように残っています。海と建築の距離が近く、要塞がどの方向から来る船を意識して造られたのかを想像しやすい場所です。離れた位置にあるサン・ロレンソとあわせて地図で確認すると、ひとつの港だけではない防衛網の広がりが伝わります。",
+            "UNESCOはこれらを16～18世紀のスペイン軍事建築が熱帯の地形に対応した遺産として評価しています。大西洋を渡る交易を守るために築かれ、海岸や河口と一体で機能しました。保存上の課題がある危機遺産でもあるため、石壁の傷みを含めて現地の保護ルールに従い、歴史と保全の両方に目を向けたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ポルトベロとサン・ロレンソの要塞群",
+              "url": "https://whc.unesco.org/en/list/135",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ポルトベロとサン・ロレンソの要塞が守った主なものは？",
+            "options": [
+              "海上交易路",
+              "砂漠の隊商路",
+              "アルプスの峠道"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは要塞群を大西洋交易に関わるスペインの防衛施設として説明しています。",
+            "photoGoal": "ポルトベロとサン・ロレンソの要塞群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Portobelo San Jeronimo fort Panama Caribbean",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "コイバ国立公園と海洋保護特別区域",
+          "travelStory": [
+            "太平洋側のコイバ国立公園では、深い緑をまとった島々と海が隣り合い、海岸線を追うだけでも豊かな自然が感じられます。海の色の変化に目を向けると、陸と海の生態系が切り離せないことが分かります。訪れる際は自然保護の規則に従い、野生生物を近づいて撮ろうとせず、海と島をつなぐ大きな景観を楽しみたい場所です。",
+            "UNESCOはコイバ国立公園と周辺の海洋保護特別区域を、熱帯東太平洋の重要な生物多様性の拠点として評価しています。島の隔離された環境と広い海域が、多様な生息地を守ってきました。美しい海の眺めに加え、漁業や開発による圧力から生態系を守る必要があることを知ると、景色の見方も変わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コイバ国立公園と海洋保護特別区域",
+              "url": "https://whc.unesco.org/en/list/1138",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "コイバ国立公園の世界遺産としての重要性は？",
+            "options": [
+              "海洋と島の生物多様性",
+              "砂漠の地下宮殿",
+              "氷河の採掘史"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはコイバと海洋保護特別区域の生物多様性と生態系を評価しています。",
+            "photoGoal": "コイバ国立公園と海洋保護特別区域の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Coiba National Park Panama island ocean",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Portobelo Panama Caribbean fort San Jeronimo",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "NA": {
+      "name": "ナミビア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/na",
+      "portrait": {
+        "lead": "岩に刻まれた遠い記憶と、霧が育む砂漠の景観",
+        "body": "ナミビアには、乾いた土地の美しさと、そこで長く続いてきた人と自然の関係を物語る世界遺産があります。トワイフェルフォンテインの岩絵群はかつての暮らしや信仰を岩に刻み、ナミブ砂海は海からの霧と砂丘がつくる独特の生態系を伝えています。同じ乾燥地の中でも、岩に残る人の手の痕跡と、風によって形を変え続ける砂の地形はまったく違う表情を見せます。光と風の変化をゆっくり観察したい国です。",
+        "facts": [
+          "世界遺産：トワイフェルフォンテインの岩絵群",
+          "世界遺産：ナミブ砂海"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ナミビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/na"
+      },
+      "travelDrafts": [
+        {
+          "place": "トワイフェルフォンテインの岩絵群",
+          "travelStory": [
+            "赤茶色の岩が重なるトワイフェルフォンテインでは、岩面をよく見ると動物や足跡のような線刻が現れます。近づいて初めて気づく模様も多く、景観を眺める時間と一つひとつの岩を読む時間では、まったく異なる印象を受けます。保存のために岩には触れず、案内されたルートから刻まれた形と周囲の地形を見比べたい場所です。",
+            "UNESCOはここをアフリカでも特に密度の高い岩絵の場所として紹介し、狩猟採集の人々が残した表現と儀礼の痕跡を評価しています。描かれた動物は、現在の乾いた景観を見ているだけでは想像しづらい過去の環境も考えさせます。石の線を美術品としてだけ見るのではなく、人々の生活と信仰が重なった記録として読むことができます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トワイフェルフォンテインの岩絵群",
+              "url": "https://whc.unesco.org/en/list/1255",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "トワイフェルフォンテインで特に知られる遺産は？",
+            "options": [
+              "岩面に刻まれた絵や模様",
+              "水上の木造集落",
+              "鋼鉄製の高層塔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはトワイフェルフォンテインの岩絵とその文化的な意味を評価しています。",
+            "photoGoal": "トワイフェルフォンテインの岩絵群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Twyfelfontein Namibia petroglyphs engraved giraffe",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ナミブ砂海",
+          "travelStory": [
+            "ナミブ砂海では、巨大な砂丘の稜線がいくつも重なり、光の角度によって斜面の色が大きく変わります。遠くの砂丘は滑らかな曲線に見えますが、近くで見ると風が刻んだ細かな模様が広がっています。暑さと保護区域の制約に十分配慮しながら、砂丘の陰影と地平線の形が変わる様子を静かに観察したい場所です。",
+            "UNESCOはナミブ砂海を、海岸霧の影響を受ける広大な砂丘地帯として世界自然遺産に登録しています。乾燥した風景でありながら、霧が水分の供給源となり、生き物の暮らしを支えている点が特徴です。砂漠を単に水のない場所だと考えず、風と霧と生態系が結びついた景観として見ることで、自然の仕組みを実感できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ナミブ砂海",
+              "url": "https://whc.unesco.org/en/list/1430",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ナミブ砂海の生態系を支える特徴的な水分源は？",
+            "options": [
+              "海岸から入る霧",
+              "毎日の大雪",
+              "大河の氾濫"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはナミブ砂海に海岸霧が及ぼす影響を重要な特徴として挙げています。",
+            "photoGoal": "ナミブ砂海の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Namib Sand Sea Namibia red dunes Sossusvlei",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Twyfelfontein Namibia rock engravings landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "SN": {
+      "name": "セネガル",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/sn",
+      "portrait": {
+        "lead": "海に面した記憶の島と、河口に残る都市の時間",
+        "body": "西アフリカの大西洋岸にあるセネガルには、交易と植民地支配の歴史を深く考えさせる場所があります。ゴレ島は奴隷貿易の記憶と結びつく島であり、サン・ルイ島には川と海の間に築かれた歴史都市の街並みが残ります。美しい海辺や色彩豊かな建築だけで終わらず、人々の移動、支配、抵抗、生活の歴史を丁寧に知ることで、旅の景色はより多くの意味を持ちます。記憶を尊重しながら歩きたい国です。",
+        "facts": [
+          "世界遺産：ゴレ島",
+          "世界遺産：サン・ルイ島"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：セネガルの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/sn"
+      },
+      "travelDrafts": [
+        {
+          "place": "ゴレ島",
+          "travelStory": [
+            "ダカール沖のゴレ島では、海に向いた家並みや路地を歩くと、静かな島の風景の中に歴史の重さが潜んでいることを感じます。建物の色彩や港の風景だけでなく、島が果たしてきた役割を伝える展示や案内にも時間を割きたい場所です。穏やかな景色の中でも、奴隷貿易に関わる人々の経験を軽く扱わず、記憶の場所として向き合いたいものです。",
+            "UNESCOはゴレ島を大西洋奴隷貿易の記憶を伝える重要な象徴として登録しています。島には複数の時代の建築が残り、奴隷貿易をめぐる歴史と記憶の継承について考える場所となっています。建物一つの物語だけに頼るのではなく、島全体の展示や歴史的背景を複数の視点から学ぶことで、その重みがよりよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ゴレ島",
+              "url": "https://whc.unesco.org/en/list/26",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ゴレ島が世界遺産として記憶を伝える主な歴史は？",
+            "options": [
+              "大西洋奴隷貿易",
+              "極地探検",
+              "宇宙開発競争"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはゴレ島を大西洋奴隷貿易の歴史を伝える記憶の場所として説明しています。",
+            "photoGoal": "ゴレ島の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Goree Island Senegal street historic houses",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "サン・ルイ島",
+          "travelStory": [
+            "セネガル川の河口にあるサン・ルイ島では、水辺の通りや家々のバルコニーが、歴史ある街並みの輪郭をつくっています。川を横切る橋から島全体を眺めると、建物が密集する区画と岸辺の関係がよく分かります。街角の装飾を探すだけではなく、港や商業の拠点として発展した理由を、川の流れと一緒に考えながら歩きたい場所です。",
+            "UNESCOはサン・ルイ島を、西アフリカの植民地時代の都市計画と建築を伝える優れた例として評価しています。整った街路や河岸の構成には、交易と行政の中心地としての歴史が表れています。建物の保存だけでなく、そこに暮らす人々の生活や都市の変化も大切な視点です。古い街の姿を固定された展示としてではなく、今も続く場所として理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サン・ルイ島",
+              "url": "https://whc.unesco.org/en/list/956",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "サン・ルイ島の街並みで世界遺産として評価されるものは？",
+            "options": [
+              "植民地期の都市計画と建築",
+              "火山の噴火口",
+              "氷河の洞窟"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはサン・ルイ島の都市計画と植民地期の建築を評価しています。",
+            "photoGoal": "サン・ルイ島の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Saint Louis Senegal island historic colonial architecture",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Goree Island Senegal colonial street coastline",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "OM": {
+      "name": "オマーン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/om",
+      "portrait": {
+        "lead": "土の城壁と乳香の交易路が伝えるアラビアの歴史",
+        "body": "アラビア半島の南東部に位置するオマーンでは、乾いた大地と海上交易が独特の歴史を形づくってきました。バハラ城塞では土を用いた防御建築がオアシスの暮らしを守り、乳香の土地では樹木、古い隊商の拠点、港が一つの交易の物語でつながります。砂漠の風景を単調なものとして眺めるのではなく、人々が水を確保し、香料を運び、遠い地域と結びついてきた工夫に目を向ける旅が魅力です。",
+        "facts": [
+          "世界遺産：バハラ城塞",
+          "世界遺産：乳香の土地"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：オマーンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/om"
+      },
+      "travelDrafts": [
+        {
+          "place": "バハラ城塞",
+          "travelStory": [
+            "バハラのオアシスに近づくと、土色の城壁と塔が周囲の乾いた山地に溶け込むように見えてきます。明るい壁面は空の色によって表情を変え、建物を遠くから眺めるのと近くで見上げるのとでは、印象が大きく違います。城の外郭だけでなく、集落や水と結びついた立地を確認すると、防御の建築が暮らしに近い場所だったことに気づけます。",
+            "UNESCOによれば、バハラの城塞と集落はオアシスを囲む土の建築を特徴とし、バヌ・ナブハーン族がこの地を拠点とした歴史を伝えています。土でつくられた壁は気候への対応を示す一方、保全には繊細な管理が必要です。写真で見る城壁の輪郭だけでなく、素材と水利、住居の関係を考えると、建築の意味がより深く理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バハラ城塞",
+              "url": "https://whc.unesco.org/en/list/433",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "バハラ城塞の建築で重要な素材は？",
+            "options": [
+              "土・日干しれんが",
+              "透明な氷",
+              "大量の鉄骨"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはバハラ城塞と周囲の集落の土の建築を特徴として挙げています。",
+            "photoGoal": "バハラ城塞の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Bahla Fort Oman mud brick fortress",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "乳香の土地",
+          "travelStory": [
+            "オマーン南部の乳香の土地には、香り高い樹脂を生み出す樹木の生育地と、かつてその交易を支えた遺構が残ります。木立がある場所と、海辺の古い港の跡を同じ地図で追うと、小さな樹脂が遠い地域へ運ばれた道筋を想像できます。ひとつの建物だけを訪ねるのではなく、山の谷と港が結びついていたことを感じたい遺産です。",
+            "UNESCOはワディ・ダウカの乳香樹、シスルの隊商拠点、ホール・ローリとアル・バリードの港を組み合わせて登録しています。乳香交易は古代から中世にかけて地域を広い交易網につなぎました。風景は離れた場所に分散していますが、その距離そのものが産地から消費地までの流通を考える手掛かりになります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・乳香の土地",
+              "url": "https://whc.unesco.org/en/list/1010",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "「乳香の土地」が伝える歴史の中心は？",
+            "options": [
+              "乳香の生産と交易",
+              "金貨鋳造の発明",
+              "北極海の捕鯨"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは乳香樹と隊商拠点、港の遺構を乳香交易の歴史として登録しています。",
+            "photoGoal": "乳香の土地の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Land of Frankincense Oman Al Baleed ruins",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Bahla Fort Oman exterior mud brick panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "MT": {
+      "name": "マルタ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/mt",
+      "portrait": {
+        "lead": "要塞都市の石畳から、はるかな先史時代の神殿へ",
+        "body": "地中海に浮かぶマルタでは、海を守る要塞都市と先史時代の巨石神殿を一つの旅で見比べられます。首都ヴァレッタには騎士団の時代に形づくられた街路や建築が残り、島々に点在する巨石神殿はそれよりはるかに古い信仰や建築の技術を伝えています。海に面した石造りの街と、石を積んだ神殿を歩き比べると、同じ石の風景が異なる時代の人々によって全く別の意味を持っていたことが分かります。",
+        "facts": [
+          "世界遺産：ヴァレッタ市街",
+          "世界遺産：マルタの巨石神殿群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：マルタの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/mt"
+      },
+      "travelDrafts": [
+        {
+          "place": "ヴァレッタ市街",
+          "travelStory": [
+            "ヴァレッタの高台から港を眺めると、海へ向けて築かれた城壁と、まっすぐ延びる街路の関係が見えてきます。坂道を歩くと石造建築の壁やバルコニーが連なり、角を曲がるたびに港の青さが視界に入ります。眺めの良い場所から街全体の形を確かめたあと、歴史ある通りをゆっくり歩いて細部を味わいたい都市です。",
+            "UNESCOはヴァレッタを、16世紀に聖ヨハネ騎士団によって整えられた要塞都市として評価しています。聖ヨハネ大聖堂や騎士団ゆかりの建物がまとまって残り、軍事的な防御と都市生活が同じ空間に組み込まれています。海から見た城壁の役割と、街の中の整然とした道の配置を重ねて見ると、都市設計の意図がより分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴァレッタ市街",
+              "url": "https://whc.unesco.org/en/list/131",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヴァレッタの都市形成に深く関わった組織は？",
+            "options": [
+              "聖ヨハネ騎士団",
+              "東インド会社",
+              "ハンザ同盟"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはヴァレッタの建設と発展を聖ヨハネ騎士団の歴史に結びつけています。",
+            "photoGoal": "ヴァレッタ市街の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Valletta Malta Grand Harbour historic fortifications",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "マルタの巨石神殿群",
+          "travelStory": [
+            "マルタの巨石神殿では、丸みを帯びた大きな石を積んだ壁や入り口から、古い時代の人々が空間をつくる工夫を感じられます。狭い通路を通って内部の区画へ目を向けると、現代の建物とは異なる建築の考え方が伝わってきます。屋外展示や保護設備の案内を守り、石の大きさだけでなく配置や向きにも注目して見学したい場所です。",
+            "UNESCOはゴゾ島のジュガンティーヤをはじめ、マルタ島とゴゾ島に残る複数の先史時代の神殿群を一つの世界遺産として登録しています。巨大な石材が組み合わされた建築は、古くから続く島の文化を示しています。各神殿が別の場所にあることを理解し、遺構の形を比べることで、共通する建築技術と場所ごとの個性が分かってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マルタの巨石神殿群",
+              "url": "https://whc.unesco.org/en/list/132",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "マルタの巨石神殿群が分布する島々は？",
+            "options": [
+              "マルタ島とゴゾ島",
+              "アイスランド島とグリーンランド島",
+              "シチリア島とサルデーニャ島"
+            ],
+            "answer": 0,
+            "fact": "UNESCOの登録にはマルタ島とゴゾ島にある複数の巨石神殿が含まれます。",
+            "photoGoal": "マルタの巨石神殿群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Ggantija Temples Gozo Malta megalithic limestone",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Valletta Malta skyline Grand Harbour historic city",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
