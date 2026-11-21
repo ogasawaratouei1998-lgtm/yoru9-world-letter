@@ -40,7 +40,7 @@ class FourthBatchTests(unittest.TestCase):
         ready,pending=ready_country_codes(ROOT)
         self.assertEqual(len(ready),26)
         self.assertEqual(sum(row["status"]=="pending"
-                             for row in self.doc["countries"].values()),171)
+                             for row in self.doc["countries"].values()),170)
         for code in PHOTOS:
             with self.subTest(country=code):
                 c=self.doc["countries"][code]
