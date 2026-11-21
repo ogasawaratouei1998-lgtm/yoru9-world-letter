@@ -131,7 +131,8 @@
           "caption": "アルゼンチン側から望むイグアスの滝（2014年撮影）",
           "author": "Landovb",
           "license": "CC BY-SA 4.0",
-          "place": "イグアスの滝・アルゼンチン側"
+          "place": "イグアスの滝・アルゼンチン側",
+          "avoidCover": true
         },
         {
           "asset": "assets/travel/buenos-aires-casa-rosada.jpg",
@@ -3161,7 +3162,8 @@
           "caption": "海峡に架かるゴールデンゲートブリッジ（2016年撮影）",
           "author": "Ashokmehta72",
           "license": "CC BY-SA 4.0",
-          "place": "ゴールデンゲートブリッジ"
+          "place": "ゴールデンゲートブリッジ",
+          "avoidCover": true
         }
       ],
       "quiz": [
