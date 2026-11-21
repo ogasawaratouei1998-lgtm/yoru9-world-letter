@@ -239,6 +239,48 @@ class PublishingTest(unittest.TestCase):
         self.assertEqual(len(published["stories"]),len(data["stories"]))
         self.assertNotIn("editorQualityVerified",published["stories"][0])
 
+    def test_november_21_final_release_requires_all_five_review_scores(self):
+        # The generator already checks these, but the publication boundary
+        # must also reject tampered artifacts and manual low-quality approvals.
+        source=Path(__file__).resolve().parents[1]/"data/approved/2026-11-20.json"
+        data=json.loads(source.read_text(encoding="utf-8"))
+        data["editionDate"]="2026-11-21"
+        data["approvedBy"]="human-editorial-five-factor-review"
+        data.pop("fourStoryStaticIllustrationReissue",None)
+        for story in data["stories"]:
+            story["reported"]="2026-11-20"
+            story.pop("editorialScores",None)
+        with self.assertRaisesRegex(ValueError,"5項目品質審査"):
+            validate_approved(data,"2026-11-21")
+
+        good={"surprise":4,"mistakeClarity":4,"outcomeIrony":4,
+              "evidence":5,"safety":5}
+        for story in data["stories"]:
+            story["editorialScores"]=dict(good)
+        public=validate_approved(data,"2026-11-21")
+        self.assertEqual(len(public["stories"]),4)
+        self.assertNotIn("editorialScores",public["stories"][0],
+                         "Private review scores must never leak into the public reader")
+
+        for dimension in good:
+            with self.subTest(dimension=dimension):
+                damaged=dict(good)
+                damaged[dimension]-=1
+                data["stories"][0]["editorialScores"]=damaged
+                with self.assertRaisesRegex(ValueError,"5項目品質審査"):
+                    validate_approved(data,"2026-11-21")
+        for malformed in ({"surprise":True,**{k:v for k,v in good.items() if k!="surprise"}},
+                          {k:v for k,v in good.items() if k!="safety"},
+                          {**good,"unknownDimension":5}):
+            with self.subTest(malformed=malformed):
+                data["stories"][0]["editorialScores"]=malformed
+                with self.assertRaisesRegex(ValueError,"5項目品質審査"):
+                    validate_approved(data,"2026-11-21")
+        data["stories"][0]["editorialScores"]=dict(good)
+        # Historic Nov 20 corrections retain their original contract.
+        historical=json.loads(source.read_text(encoding="utf-8"))
+        self.assertEqual(len(validate_approved(historical,"2026-11-20")["stories"]),4)
+
     def test_automated_second_joke_requires_its_own_review_proof(self):
         data=fixture("2026-11-18")
         data["approvedBy"]="automated-two-stage-review"
