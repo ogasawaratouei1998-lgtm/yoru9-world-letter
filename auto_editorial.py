@@ -1428,8 +1428,27 @@ def main():
         },sort_keys=True),flush=True)
         print("No draft stories generated; evidence must not be promoted to publication.",flush=True)
         return 0
+    # Existing paid-free quota allows only a handful of independent B audits.
+    # Put drafts whose claimed countries have COMPLETELY curated reader assets
+    # first. This is a scheduling hint, not a source/fact approval: the original
+    # article and independent review still have to prove the event location.
+    from country_readiness import (
+        ready_country_codes, prioritize_ready_drafts, story_has_prepared_countries)
+    ready_for_review,_=ready_country_codes(Path.cwd())
+    draft=prioritize_ready_drafts(draft,ready_for_review)
+    print("Review budget priority (unverified draft locations only):",
+          json.dumps({
+              "drafted":len(draft),
+              "country_ready_draft_hints":sum(
+                  story_has_prepared_countries(s,ready_for_review) for s in draft)
+          },sort_keys=True),flush=True)
     seen=previous_events()
     selected=[]
+    def ready_reviewed_count():
+        # This is applied AFTER independent article-source checks. It cannot
+        # turn an unverified draft into an approved publication.
+        return sum(story_has_prepared_countries(story,ready_for_review)
+                   for story in selected)
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
@@ -1445,7 +1464,7 @@ def main():
         # vetoes left fewer than four usable stories. Refill from untouched,
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
-        if len(selected)>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+        if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
             return
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
@@ -1459,7 +1478,7 @@ def main():
         print("After-review source-bound refill candidates:",len(remaining),flush=True)
         for offset in range(0,min(len(remaining),20),2):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
-            if len(selected)>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+            if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
                 print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+2]
