@@ -57,6 +57,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Verify canonical country content has no divergent exports
+        run: python country_content.py --check
       - name: Run publishing and privacy tests
         run: python -m unittest discover -s tests -v
       - name: Restore validated, correctly licensed Wikimedia photos
