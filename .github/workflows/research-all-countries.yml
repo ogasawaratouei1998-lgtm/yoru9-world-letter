@@ -7,12 +7,17 @@ on:
     paths:
       - 'country_bulk_research.py'
       - 'tests/test_country_bulk_research.py'
+      - 'country_review_bundle.py'
+      - 'tests/test_country_review_bundle.py'
+      - 'country-expansion-batch-*.json'
       - '.github/workflows/research-all-countries.yml'
   push:
     branches: [main]
     paths:
       - '.github/workflows/research-all-countries.yml'
       - 'country_bulk_research.py'
+      - 'country_review_bundle.py'
+      - 'country-expansion-batch-*.json'
   schedule:
     - cron: '25 3 * * 1,4'
 
@@ -34,6 +39,7 @@ jobs:
           python-version: '3.12'
       - run: python country_content.py --check
       - run: python -m unittest discover -s tests -p test_country_bulk_research.py -v
+      - run: python -m unittest discover -s tests -p test_country_review_bundle.py -v
       - run: python country_bulk_research.py plan --output reports/all-country-plan.json
       - uses: actions/upload-artifact@v4
         with:
@@ -90,5 +96,27 @@ jobs:
         with:
           name: all-country-research
           path: reports/all-country-research.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  review-bundle:
+    needs: consolidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: all-country-research
+          path: reports
+      - run: python country_review_bundle.py --report reports/all-country-research.json --output reports/review-bundle --limit 12
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: editorial-review-bundle
+          path: reports/review-bundle/
           if-no-files-found: warn
           retention-days: 14
