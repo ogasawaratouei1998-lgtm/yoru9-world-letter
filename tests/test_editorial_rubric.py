@@ -2,7 +2,7 @@
 import unittest
 
 from editorial_quality import (
-    editorial_rubric, editorial_rubric_rejection,
+    editorial_rubric, editorial_rubric_rejection, verified_rubric_for_edition,
     choose_pre_review_quip, quip_candidates_ranked,
 )
 
@@ -29,6 +29,14 @@ class EditorialRubricTests(unittest.TestCase):
             "editorial_scores_invalid")
         # Older approved editions need not invent retrospective model scores.
         self.assertIsNone(editorial_rubric_rejection({"approved":True}))
+
+    def test_new_editions_require_all_five_review_dimensions(self):
+        top={"surprise":4,"mistakeClarity":5,"outcomeIrony":4,
+             "evidence":5,"safety":5}
+        self.assertFalse(verified_rubric_for_edition({"approved":True},"2026-11-21"))
+        self.assertTrue(verified_rubric_for_edition({"editorialScores":top},"2026-11-21"))
+        self.assertFalse(verified_rubric_for_edition({"editorialScores":{**top,"safety":4}},"2026-11-21"))
+        self.assertTrue(verified_rubric_for_edition({"approved":True},"2026-11-20"))
 
     def test_weak_recap_rejected_when_stronger_option_exists(self):
         headline="コーヒーの注文で助けを呼び、扉が開く"

@@ -346,6 +346,11 @@ def build(root, output):
         target = output / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, target)
+    # The full editorial reader has the canonical country manifest. Lightweight
+    # build fixtures deliberately use a minimal index and should remain valid.
+    if (root / 'country-content.json').is_file():
+        from reader_asset_split import split_reader_assets
+        split_reader_assets(output)
     validate_country_highlights(root)
     # Original in-house SVG illustrations are editorial artwork, NOT incident
     # photographs. Bundle each verified static asset; no outside image server
