@@ -1175,7 +1175,7 @@ def main():
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
             if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
-        if host(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
+        if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
     checkpoint("fresh_filter",fresh=len(recent))
     if len(recent)<5:
         print("Not enough fresh leads within seven days; safe skip.");return 0
@@ -1217,7 +1217,7 @@ def main():
     fetched_regions=Counter(country_region(x.get("sourcecountry")) or "unattributed" for x in source_leads)
     checkpoint("body_fetch",fetchable_original_bodies=len(source_leads),
                publisher_regions_fetched=dict(fetched_regions))
-    print('Evidence collection:',len(recent),'recent seven-day leads,',len(source_leads),'fetchable article bodies',flush=True)
+    print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
     if len(source_leads)<1:
@@ -1723,10 +1723,10 @@ def main():
         return 0
     if not selected:
         print("No publisher-sourced, country-ready stories; no publication.");return 0
-    # After source/safety review, select up to five. Never add unverified filler.
+    # After publisher selection and humor review, choose up to five. Never add fabricated filler.
     # When too few survive, the counted rejection reasons distinguish real scarcity
     # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
-    # Personal scale and diversity apply ONLY after factual fidelity and safety review.
+    # Personal scale and diversity apply only after editorial safety review.
     country_history,category_history=recent_diversity_counts(now.date())
     topic_history=recent_topic_counts(now.date())
     lifetime_history=lifetime_country_counts(now.date())
@@ -1765,7 +1765,7 @@ def main():
              "approvedBy":"automated-two-stage-review","stories":selected}
     # The reader draws original, bundled SVG illustrations for every story.
     # Never write paid-image WebP plans or imagePath into the approval artifact.
-    # The publisher's exact validation contract is also the AI approval gate.
+    # The publisher's identity and editorial-humor rules are the release gate.
     from publish_approved import validate_approved
     try:
         validate_approved(payload,day)
