@@ -306,13 +306,13 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                 self.assertEqual(editorial.editorial_fit_rejection(
                     {**story,"detail":phrase}),"coercive_reader_tone")
 
-    def test_ai_approved_json_matches_one_source_publisher_rules(self):
+    def test_approved_publisher_alone_meets_news_evidence_rule(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn("1<=len(urls)<=3",code)
         self.assertIn("trusted_original_domain(urls[0])",code)
-        self.assertIn("single_original_not_verified",code)
-        self.assertIn("if len(evidence)<1",code)
+        self.assertIn("publisher_not_in_approved_news_registry",code)
+        self.assertIn("publisher_article_not_readable_for_summary",code)
         self.assertIn("validate_approved(payload,day)",code)
         self.assertIn("a syndicated copy, social media repost",code)
 
@@ -582,26 +582,26 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn("firstQuipFinalBeat",REVIEW_FIELDS)
         self.assertNotIn("firstQuipAngleEarned",REVIEW_FIELDS)
 
-    def test_original_reporting_keeps_one_short_source_comparison(self):
+    def test_editorial_review_avoids_fact_checking_the_publisher(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
         begin=source.index("audit=ai(")
         end=source.index("except RuntimeError as exc:",begin)
         check=source[begin:end]
         self.assertLess(len(check),5000)
-        self.assertIn("SOURCE-FIDELITY CHECK",check)
-        self.assertIn("publisher's genuine first-hand reporting is sufficient",check)
+        self.assertIn("JAPANESE EDITORIAL AND HUMOR REVIEW",check)
+        self.assertIn("Trust the reporting company",check)
         self.assertIn("do NOT",check)
         self.assertIn("translationAccurate:boolean",check)
         self.assertIn("legalStatusAccurate:boolean",check)
-        self.assertIn("factsVerified:boolean",check)
+        self.assertNotIn("factsVerified:boolean",check)
         self.assertIn("humanFailureConfirmed:boolean",check)
         self.assertIn("stageTsukkomiConfirmed:boolean",check)
         self.assertNotIn("EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_REVIEW",check)
         self.assertIn("headline_fidelity_risk(story,evidence)",source)
         self.assertIn("noncomic_incident_rejection(story,evidence)",source)
         self.assertIn("trusted_original_domain(urls[0])",source)
-        self.assertIn("multi_source_fidelity_not_verified",source)
+        self.assertNotIn("multi_source_fidelity_not_verified",source)
         self.assertIn("validate_approved(payload,day)",source)
         self.assertEqual(source.count("audit=ai("),1)
 
@@ -937,15 +937,15 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("1 <= len(stories) <= 5", publisher)
         self.assertIn("if not selected:", editorial)
 
-    def test_single_original_report_can_pass_independent_ai_review(self):
+    def test_one_publisher_report_needs_no_independent_confirmation(self):
         from pathlib import Path
         pipeline=(Path(__file__).resolve().parents[1] / "auto_editorial.py").read_text(encoding="utf-8")
         # One real publisher's article is acceptable, but still must be
         # fetched, source-grounded and independently audited by the AI.
         self.assertIn("groups.extend([[item] for item in unpaired",pipeline)
-        self.assertIn("not (1<=len(urls)<=3)",pipeline)
-        self.assertIn("if len(evidence)<1",pipeline)
-        self.assertIn("originalReportingVerified",pipeline)
+        self.assertIn('urls=[story.get("sourceUrl","")]',pipeline)
+        self.assertIn('evidence=[{"url":urls[0],"text":cache[urls[0]]}]',pipeline)
+        self.assertIn('story.pop("originalReportingVerified",None)',pipeline)
         self.assertIn('validate_approved(payload,day)',pipeline)
         self.assertIn('if not valid_recent_reported(story["reported"],now):',pipeline)
 
