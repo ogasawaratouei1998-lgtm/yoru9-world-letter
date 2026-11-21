@@ -11,9 +11,35 @@ import argparse
 from collections import Counter
 import json
 from pathlib import Path
+import re
+from urllib.parse import urlsplit
 
 from country_content import load_country_content
-from check_country_experience import verified_country_cover
+from check_country_experience import verified_country_cover, _licensed_photo
+
+
+def _documented_travel_source(stop) -> bool:
+    """A guide's historical source must belong to the SAME usable postcard.
+
+    URL shape and reviewer date are structural checks, not proof that the
+    cited page supports the prose. Human editorial approval is still required.
+    """
+    sources=stop.get("historicalSources")
+    if not isinstance(sources,list) or not sources:
+        return False
+    for source in sources:
+        if not isinstance(source,dict) or not isinstance(source.get("name"),str):
+            return False
+        if not source["name"].strip() or not isinstance(source.get("url"),str):
+            return False
+        address=urlsplit(source["url"])
+        if (address.scheme!="https" or not address.hostname
+                or address.username or address.password
+                or address.hostname.endswith(("wikimedia.org","creativecommons.org"))
+                or not isinstance(source.get("checkedOn"),str)
+                or not re.fullmatch(r"\d{4}-\d{2}-\d{2}",source["checkedOn"])):
+            return False
+    return True
 
 
 def country_editorial_queue(root: Path) -> dict:
@@ -76,11 +102,15 @@ def country_editorial_queue(root: Path) -> dict:
             missing.append("portrait_photo_reused_in_quiz")
         postcards=[s for s in entry.get("travelStops",{}).values()
                    if not s.get("quizOnly") and not s.get("coverOnly")
+                   and s.get("country")==entry["name"] and _licensed_photo(s)
                    and isinstance(s.get("travelStory"),list)
-                   and len(s["travelStory"])==2]
+                   and len(s["travelStory"])==2
+                   and all(isinstance(paragraph,str)
+                           and 110<=len(paragraph.strip())<=360
+                           for paragraph in s["travelStory"])]
         if not postcards:
             missing.append("two_paragraph_microtravel")
-        if not any(s.get("historicalSources") for s in postcards):
+        if not any(_documented_travel_source(s) for s in postcards):
             missing.append("independent_travel_history_culture_source")
         if not entry.get("highlights"):
             # Fresh country topics are an optional enhancement; their absence

@@ -115,6 +115,17 @@ class CountryExperienceContractTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"US: selectable cover"):
             country_coverage(self.root,[{"country":"US"}])
 
+    def test_thin_tourism_essay_cannot_be_published_as_complete(self):
+        path=self.root/"travel-stops.json"
+        manifest=json.loads(path.read_text(encoding="utf-8"))
+        for stop in manifest.values():
+            if (stop.get("country")=="イタリア"
+                    and not stop.get("coverOnly") and not stop.get("quizOnly")):
+                stop["travelStory"]=["風景を眺めながら歩きます。"*8]*2
+        path.write_text(json.dumps(manifest,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"IT.*detailed essay"):
+            country_coverage(self.root,[{"country":"IT"}])
+
     def test_two_paragraph_travel_story_is_required_for_published_country(self):
         path=self.root/"travel-stops.json"
         manifest=json.loads(path.read_text(encoding="utf-8"))

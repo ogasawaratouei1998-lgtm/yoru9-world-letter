@@ -70,6 +70,33 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",row["missing"])
             self.assertNotIn("attributed_country_portrait_photo",row["missing"])
 
+    def test_short_pending_trip_is_not_reported_ready(self):
+        # A two-item array is not enough to be a substantive travel essay.
+        report=country_editorial_queue(ROOT)
+        spain=next(row for row in report["prioritizedPending"] if row["code"]=="ES")
+        self.assertIn("two_paragraph_microtravel",spain["missing"])
+
+    def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            doc=json.loads(path.read_text(encoding="utf-8"))
+            italy=doc["countries"]["IT"]
+            italy["status"]="pending"
+            for stop in italy["travelStops"].values():
+                stop.pop("historicalSources",None)
+                if stop.get("coverOnly"):
+                    stop["historicalSources"]=[{
+                        "name":"Museum","url":"https://example.org/history",
+                        "checkedOn":"2026-11-21"}]
+            path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+            report=country_editorial_queue(root)
+            row=next(item for item in report["prioritizedPending"] if item["code"]=="IT")
+            self.assertNotIn("two_paragraph_microtravel",row["missing"])
+            self.assertIn("independent_travel_history_culture_source",row["missing"])
+
     def test_missing_heritage_source_remains_an_actionable_review_item(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)
