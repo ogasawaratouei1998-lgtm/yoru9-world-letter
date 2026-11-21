@@ -168,6 +168,56 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(result["BR"]["postcard"],
                          "assets/travel/brazil-iguacu-brazil-side-postcard.jpg")
 
+    def test_antigua_content_is_sourced_and_illustrated_without_auto_approval(self):
+        dataset=load_country_content(ROOT)
+        antigua=dataset["countries"]["AG"]
+        self.assertEqual(antigua["status"],"pending")
+        self.assertTrue(antigua["portrait"]["sourceUrl"].startswith(
+            "https://www.visitantiguabarbuda.com/"))
+        self.assertEqual(len(antigua["quiz"]),2)
+        cover=antigua["portraitPhotos"][0]
+        self.assertEqual(cover["asset"],"assets/travel/antigua-english-harbour-cover.jpg")
+        self.assertEqual(cover["author"],"Dr. Thomas Liptak")
+        self.assertEqual(cover["license"],"CC BY 4.0")
+        quiz_keys=[q["photoKey"] for q in antigua["quiz"]]
+        self.assertEqual(len(set(quiz_keys)),2)
+        quiz_assets={antigua["travelStops"][k]["photoAsset"] for k in quiz_keys}
+        self.assertEqual(len(quiz_assets),2)
+        self.assertNotIn(cover["asset"],quiz_assets)
+        self.assertEqual(antigua["travelStops"]["antigua-bettys-hope-quiz-image"]["author"],
+                         "reisedoktor.com")
+        self.assertEqual(antigua["travelStops"]["antigua-devils-bridge-quiz-image"]["author"],
+                         "Z_dead")
+        self.assertEqual(antigua["travelStops"]["antigua-devils-bridge-postcard"]["author"],
+                         "Dr. Thomas Liptak")
+        self.assertTrue(all(antigua["travelStops"][k].get("quizOnly") for k in quiz_keys))
+        for key in ("antigua-dockyard-postcard","antigua-devils-bridge-postcard"):
+            with self.subTest(destination=key):
+                stop=antigua["travelStops"][key]
+                self.assertEqual(len(stop["travelStory"]),2)
+                self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
+                self.assertTrue(stop.get("historicalSources"))
+                self.assertTrue(stop.get("famousTourist"))
+        self.assertEqual(len(dataset["travelOrder"]),len(set(dataset["travelOrder"])))
+
+    def test_approved_antigua_reader_requires_separate_conscious_review(self):
+        with self.assertRaisesRegex(ValueError,"AG: country content awaiting editorial approval"):
+            country_coverage(self.root,[{"country":"アンティグア・バーブーダ"}])
+        path=self.root/"country-content.json"
+        dataset=json.loads(path.read_text(encoding="utf-8"))
+        dataset["countries"]["AG"]["status"]="approved"
+        path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
+        report=country_coverage(self.root,[{"country":"アンティグア・バーブーダ"}])
+        self.assertEqual(set(report),{"AG"})
+        self.assertEqual(report["AG"]["quizRounds"],2)
+        self.assertEqual(report["AG"]["cover"],
+                         "assets/travel/antigua-english-harbour-cover.jpg")
+        self.assertEqual(report["AG"]["postcard"],"assets/travel/antigua-dockyard.jpg")
+        photos=json.loads((self.root/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertNotIn(report["AG"]["cover"],
+                         {photos[k]["photoAsset"] for k in report["AG"]["quizPhotoKeys"]})
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
