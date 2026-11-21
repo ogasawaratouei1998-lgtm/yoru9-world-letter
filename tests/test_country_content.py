@@ -107,6 +107,14 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(rows["GB"]["cover"],"assets/travel/wales-cardiff-castle.jpg")
         self.assertTrue(all(len(row["quizPhotoKeys"])==2 for row in rows.values()))
 
+    def test_approved_country_portrait_requires_independent_cultural_source(self):
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["JP"]["portrait"].pop("sourceUrl")
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"portrait source URL missing"):
+            load_country_content(self.root)
+
     def test_photo_credit_cannot_masquerade_as_history(self):
         file=self.root/"country-content.json"
         dataset=json.loads(file.read_text(encoding="utf-8"))
