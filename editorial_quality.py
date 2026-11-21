@@ -127,10 +127,48 @@ def editorial_rubric_rejection(review):
     return None
 
 
+# Japanese noun and numeric fragments are small deterministic hints, not facts.
+# Rank tangible, incident-specific punchlines above free-floating generic
+# reactions when draft context supplies several identifiable objects. The
+# independent source reviewer remains the ONLY factual/safety decision-maker.
+_QUIP_ANCHOR_TOKEN=re.compile(r"[一-龯]{2,}|[ァ-ヴー]{3,}|[A-Za-z]{3,}|\d{2,}")
+_QUIP_GENERIC_TOKENS=frozenset((
+    "結果","予想","予定","計画","現実","事件","今回","世界","人生","人間",
+    "状態","事態","状況","対応","仕事","判断","説明","内容","理由",
+    "自分","本人","失敗","間違","可能","最初","最後","以上",
+))
+
+
+def _quip_event_anchor_bonus(line,story):
+    """Small, bounded preference for objects actually named in draft evidence.
+
+    Matching an AI-provided source summary does NOT verify a fact; every
+    selected line is checked against the original publisher text afterwards.
+    Older/partial drafts with no concrete anchors retain the same ranking.
+    """
+    narrative=" ".join(
+        story.get(field,"") for field in
+        ("humanMistake","expectedPlan","observedOutcome","summary")
+        if isinstance(story.get(field),str))
+    terms={term for term in _QUIP_ANCHOR_TOKEN.findall(narrative)
+           if term not in _QUIP_GENERIC_TOKENS}
+    if len(terms)<2:
+        return 0
+    hits=sum(term in line for term in terms)
+    return min(2,hits)*9-(10 if hits==0 else 0)
+
+
+def _quip_cadence_normalized(line):
+    """Normalize cosmetic punctuation only when comparing candidate repeats."""
+    return re.sub(r"[\s。、！!？?「」『』…]+","",line)
+
+
 def quip_candidates_ranked(story):
     """Compare proposed first-line punchlines before independent fact review.
 
     Deterministic form checks remove headline recaps and overused cadences.
+    A bounded source-anchor bonus favors actual incident objects over generic
+    reactions; near-duplicate first-quips collapse after ranking.
     These scores cannot determine whether a quip is *true* or respectful.
     The selected line must pass the subsequent source-fidelity AI reviewer.
     """
@@ -158,10 +196,21 @@ def quip_candidates_ranked(story):
         score=(max(0,100-round(72*title_similarity+28*summary_similarity))
                - (10 if quip_cadence(line) else 0)
                - (12 if line.endswith(("という話。","という話","ですね。","ですね")) else 0)
+               + _quip_event_anchor_bonus(line,story)
                + (3 if index==0 else 0))
         distinct.append((score,index,line))
     distinct.sort(key=lambda pair:(-pair[0],pair[1]))
-    return [line for _,_,line in distinct]
+    # Several LLM alternatives can be the same joke with a different comma
+    # or sentence ending; keep the strongest scored version, not every echo.
+    selected=[]
+    for _,_,line in distinct:
+        cleaned=_quip_cadence_normalized(line)
+        if any(SequenceMatcher(None,cleaned,
+                               _quip_cadence_normalized(chosen)).ratio()>=0.86
+               for chosen in selected):
+            continue
+        selected.append(line)
+    return selected
 
 
 def choose_pre_review_quip(story):

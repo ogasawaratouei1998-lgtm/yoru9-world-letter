@@ -72,6 +72,45 @@ class EditorialRubricTests(unittest.TestCase):
         self.assertEqual(source.count("audit=ai("),1)
         self.assertIn('story["quip"]=selected_quip',source)
 
+    def test_grounded_object_beats_a_vague_universal_reaction(self):
+        generic="まあ、世の中にはいろいろな展開が起こるものですね。"
+        grounded="コーヒーを注文したのに、配達員の本業が救助係に。"
+        story={
+            "title":"閉じ込められた男性が配達で助かった",
+            "summary":"閉じ込められた男性は配達員にコーヒーを頼み、救助された。",
+            "humanMistake":"男性はコーヒーの宅配を注文して助けを呼んだ",
+            "expectedPlan":"配達員にコーヒーを届けてもらう",
+            "observedOutcome":"配達員が扉を開け、男性を救助した",
+            "quip":generic,"quipCandidates":[grounded],
+        }
+        self.assertEqual(choose_pre_review_quip(story),grounded)
+        self.assertEqual(len(quip_candidates_ranked(story)),2)
+        self.assertNotIn("editorVerified",story,
+                         "A deterministic anchor is not source verification")
+
+    def test_identical_punchline_with_punctuation_variations_collapses(self):
+        original="コーヒーを注文して、欲しかったのはコーヒーより出口。"
+        variant="コーヒーを注文して欲しかったのはコーヒーより出口！"
+        alternative="宅配の用事は注文、到着後の本業は救助係だった。"
+        story={"title":"玄関の鍵が開かず宅配員に助けてもらう",
+               "summary":"閉じ込められた人が配達で助けを求めた。",
+               "humanMistake":"コーヒーの注文",
+               "expectedPlan":"コーヒーを受け取る",
+               "observedOutcome":"配達員が閉じ込められた人を救助した",
+               "quip":original,"quipCandidates":[variant,alternative]}
+        ranked=quip_candidates_ranked(story)
+        self.assertEqual(len(ranked),2,ranked)
+        self.assertIn(alternative,ranked)
+        self.assertEqual(sum(x in ranked for x in (original,variant)),1)
+
+    def test_anchor_scoring_does_not_block_unusual_metaphors_or_legacy_drafts(self):
+        metaphor="注文書だけが先に休暇を申請してしまった。"
+        story={"title":"業務手順の不備","summary":"予定の配達が延期された。",
+               "quip":metaphor}
+        self.assertEqual(choose_pre_review_quip(story),metaphor)
+        self.assertIsNone(choose_pre_review_quip(
+            {"title":"同一記事","summary":"報道内容","quip":""}))
+
     def test_repetitive_stock_reaction_is_discarded(self):
         good="コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"
         story={"title":"救助のために配達を注文",
