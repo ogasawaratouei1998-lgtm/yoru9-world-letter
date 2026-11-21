@@ -23,7 +23,7 @@ class EditorialHealthReportTests(unittest.TestCase):
             with self.subTest(phase=phase):
                 report=summarize_funnel({"phase":phase,"fresh":3})
                 self.assertIn(fragment,report)
-                self.assertIn("配信成功",report) if phase not in ("selected",) else None
+                self.assertIn("公開成功・失敗の確定通知ではありません",report)
                 self.assertNotIn("https://",report)
 
     def test_counts_are_aggregated_and_free_text_is_never_emitted(self):
