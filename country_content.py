@@ -11,6 +11,8 @@ import ast
 import json
 from pathlib import Path
 import re
+import unicodedata
+from urllib.parse import unquote, urlsplit
 
 from country_codes import country_codes
 
@@ -98,6 +100,34 @@ def _legacy(root):
             "countries":countries}
 
 
+def _commons_identity(url):
+    """Identify the original Commons file, independently of thumbnail width.
+
+    Local filenames, URL escapes, query parameters and thumbnail sizes are
+    not photographic identity. Preserve filename case (Commons is case-sensitive).
+    """
+    if not isinstance(url,str):
+        return None
+    try:
+        parsed=urlsplit(url)
+        if parsed.scheme!="https" or parsed.username or parsed.password:
+            return None
+        path=parsed.path
+        if parsed.hostname=="commons.wikimedia.org" and path.startswith("/wiki/File:"):
+            title=path[len("/wiki/File:"):]
+        elif parsed.hostname in ("thumb.wikimedia.org","upload.wikimedia.org"):
+            match=re.fullmatch(r"/wikipedia/commons/(?:thumb/)?[0-9a-f]/[0-9a-f]{2}/([^/]+)(?:/[^/]+)?",path)
+            if not match:
+                return None
+            title=match.group(1)
+        else:
+            return None
+        title=unicodedata.normalize("NFC",unquote(title)).replace("_"," ").strip()
+        return title or None
+    except ValueError:
+        return None
+
+
 def country_quiz_problems(entry):
     """Pure structural QA for all two-round, photo-backed country quizzes.
 
@@ -111,12 +141,16 @@ def country_quiz_problems(entry):
     stops=entry.get("travelStops",{})
     if not isinstance(stops,dict):
         return ("quiz_photos",)
-    cover_assets={photo.get("asset")
-                  for photo in entry.get("portraitPhotos",[])
-                  if isinstance(photo,dict)
-                  and not photo.get("avoidCover") and not photo.get("remoteOnly")}
+    covers=[photo for photo in entry.get("portraitPhotos",[])
+            if isinstance(photo,dict)
+            and not photo.get("avoidCover") and not photo.get("remoteOnly")]
+    cover_assets={photo.get("asset") for photo in covers}
+    cover_originals={identity for photo in covers
+                     for field in ("url","sourcePage")
+                     if (identity:=_commons_identity(photo.get(field)))}
     used_keys=set()
     used_assets=set()
+    used_originals=set()
     for question in quizzes:
         if not isinstance(question,dict):
             problems.update(("quiz_content","quiz_photos"))
@@ -130,7 +164,7 @@ def country_quiz_problems(entry):
         if (not isinstance(options,list) or len(options)!=3 or
                 any(not isinstance(option,str) or not option.strip()
                     for option in options) or
-                len({option.strip().casefold() for option in options
+                len({" ".join(unicodedata.normalize("NFKC",option).split()).casefold() for option in options
                      if isinstance(option,str)})!=3 or
                 type(question.get("answer")) is not int or
                 not 0<=question["answer"]<3):
@@ -156,11 +190,17 @@ def country_quiz_problems(entry):
             problems.add("quiz_photos")
             continue
         asset=stop["photoAsset"]
-        if asset in used_assets:
+        original=_commons_identity(stop["photo"])
+        declared=_commons_identity(stop["photoPage"])
+        if not original or original!=declared:
             problems.add("quiz_photos")
-        if asset in cover_assets:
+        originals={title for title in (original,declared) if title}
+        if asset in used_assets or originals & used_originals:
+            problems.add("quiz_photos")
+        if asset in cover_assets or originals & cover_originals:
             problems.add("quiz_cover_overlap")
         used_assets.add(asset)
+        used_originals.update(originals)
     return tuple(sorted(problems))
 
 

@@ -313,6 +313,52 @@ class CountryContentTest(unittest.TestCase):
                                     "IT: invalid approved photo quiz: quiz_photos"):
             load_country_content(self.root)
 
+    def test_renamed_quiz_asset_and_resized_thumbnail_still_duplicate_original(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        italy=data["countries"]["IT"]
+        first=italy["travelStops"][italy["quiz"][0]["photoKey"]]
+        second=italy["travelStops"][italy["quiz"][1]["photoKey"]]
+        for field in ("photo","photoPage","author","license","licenseUrl"):
+            second[field]=first[field]
+        second["photo"]=second["photo"].replace("/500px-","/800px-")
+        second["photoPage"]=second["photoPage"].replace("_","%20")+"?uselang=ja"
+        self.assertNotEqual(first["photoAsset"],second["photoAsset"])
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"quiz_photos"):
+            load_country_content(self.root)
+
+    def test_renamed_cover_original_cannot_be_used_in_quiz(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        italy=data["countries"]["IT"]
+        cover=italy["travelStops"]["italy-rome-colosseum-cover"]
+        first=italy["travelStops"][italy["quiz"][0]["photoKey"]]
+        for field in ("photo","photoPage","author","license","licenseUrl"):
+            first[field]=cover[field]
+        self.assertNotEqual(first["photoAsset"],cover["photoAsset"])
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"quiz_cover_overlap"):
+            load_country_content(self.root)
+
+    def test_quiz_credit_page_must_identify_actual_thumbnail_original(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        italy=data["countries"]["IT"]
+        first=italy["travelStops"][italy["quiz"][0]["photoKey"]]
+        first["photoPage"]="https://commons.wikimedia.org/wiki/File:Unrelated.jpg"
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"quiz_photos"):
+            load_country_content(self.root)
+
+    def test_fullwidth_and_ascii_choices_are_not_distinct(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        data["countries"]["IT"]["quiz"][0]["options"]=["ＡＢＣ","ABC","別の選択肢"]
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"quiz_content"):
+            load_country_content(self.root)
+
     def test_a_canonical_cover_cannot_double_as_a_quiz_reveal(self):
         path=self.root/"country-content.json"
         data=json.loads(path.read_text(encoding="utf-8"))
