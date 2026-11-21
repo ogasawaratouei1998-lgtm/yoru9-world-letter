@@ -53,7 +53,7 @@ class ReaderAssetSplitTest(unittest.TestCase):
                      "assets/reader-country-data.js",
                      "assets/reading-focus.css"):
             self.assertIn("'"+path+"'",worker)
-        self.assertIn("yoru9-shell-v40",worker)
+        self.assertIn("yoru9-shell-v41",worker)
 
     def test_release_smoke_fetches_external_code(self):
         from inspect import getsource
