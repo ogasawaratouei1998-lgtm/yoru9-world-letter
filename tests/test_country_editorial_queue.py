@@ -35,6 +35,23 @@ class CountryEditorialQueueTest(unittest.TestCase):
         for code in ("FR","AR","JP","GB"):
             self.assertIn(code,report["approvedCountries"])
 
+    def test_queue_flags_second_fallback_cover_when_it_reuses_a_quiz_image(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            doc=json.loads(path.read_text(encoding="utf-8"))
+            argentina=doc["countries"]["AR"]
+            argentina["status"]="pending"
+            fallback=next(photo for photo in argentina["portraitPhotos"]
+                          if photo.get("asset")=="assets/travel/iguazu-argentina.jpg")
+            fallback.pop("avoidCover")
+            path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
+            queue=country_editorial_queue(root)
+            row=next(item for item in queue["prioritizedPending"] if item["code"]=="AR")
+            self.assertIn("portrait_photo_reused_in_quiz",row["missing"])
+
     def test_missing_heritage_source_remains_an_actionable_review_item(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)

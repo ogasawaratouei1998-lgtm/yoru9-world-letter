@@ -62,6 +62,25 @@ class CountryExperienceContractTest(unittest.TestCase):
         self.assertEqual(report["GB"]["cover"],"assets/travel/wales-cardiff-castle.jpg")
         self.assertEqual(report["JP"]["cover"],"assets/travel/kyoto-kinkakuji.jpg")
 
+    def test_second_usable_us_cover_must_not_repeat_a_quiz_answer(self):
+        # Simulate a photographer's main cover failing to load. The browser
+        # then tries the second selectable cover, which must also be safe.
+        path=self.root/"index.html"
+        page=path.read_text(encoding="utf-8")
+        import re
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\.freeze\((.*)\);$",page)
+        self.assertIsNotNone(registry)
+        covers=json.loads(registry.group(1))
+        alternate=next(photo for photo in covers["US"]
+                       if photo.get("asset")=="assets/travel/san-francisco-golden-gate.jpg")
+        alternate.pop("avoidCover")
+        replacement="const TODAY_COUNTRY_PHOTOS=Object.freeze("+json.dumps(
+            covers,ensure_ascii=False,separators=(",",":"))+");"
+        path.write_text(page[:registry.start()]+replacement+page[registry.end():],
+                        encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"US: portrait cover reused as quiz photograph"):
+            country_coverage(self.root,[{"country":"United States"}])
+
     def test_two_paragraph_travel_story_is_required_for_published_country(self):
         path=self.root/"travel-stops.json"
         manifest=json.loads(path.read_text(encoding="utf-8"))

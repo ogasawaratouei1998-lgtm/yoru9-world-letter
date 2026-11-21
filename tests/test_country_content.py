@@ -126,6 +126,22 @@ class CountryContentTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"JP: approved content fails reader readiness"):
             sync_country_content(self.root)
 
+    def test_approved_fallback_must_not_reuse_a_quiz_photo(self):
+        # The first Argentine cover is independent. A broken first image
+        # must not expose the quiz answer via the second cover candidate.
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        argentina=data["countries"]["AR"]
+        self.assertNotEqual(argentina["portraitPhotos"][0]["asset"],
+                            argentina["travelStops"][argentina["quiz"][0]["photoKey"]]["photoAsset"])
+        fallback=next(photo for photo in argentina["portraitPhotos"]
+                      if photo.get("asset")=="assets/travel/iguazu-argentina.jpg")
+        self.assertTrue(fallback.pop("avoidCover"))
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,
+                                    "AR: approved content fails reader readiness: AR: portrait cover reused"):
+            sync_country_content(self.root)
+
     def test_newly_approved_countries_keep_distinct_covers_and_quiz_photos(self):
         from check_country_experience import country_coverage
         rows=country_coverage(ROOT,[{"country":"日本"},{"country":"イギリス"}])

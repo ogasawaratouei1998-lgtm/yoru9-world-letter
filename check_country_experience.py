@@ -70,10 +70,16 @@ def country_coverage(root: Path, stories):
                 stop.get("license")==photo.get("license") and
                 (not photo.get("sourcePage") or photo["sourcePage"]==stop.get("photoPage"))):
                 verified_covers.append(asset)
+            elif (photo.get("asset") and photo.get("url") and photo.get("author")
+                  and photo.get("license") and photo.get("place") and photo.get("caption")):
+                # The browser can fall back to ANY selectable cover. Reject
+                # an unverified fallback instead of silently skipping it here.
+                raise ValueError(code+": selectable cover source/creator does not match local photo manifest")
         if not verified_covers:
             raise ValueError(code+": cover source/creator does not match local photo manifest")
-        # The first vetted photo is the selected national portrait. Other
-        # vetted photos remain independent options, including quiz answers.
+        # The first vetted photo is the selected national portrait. ALL other
+        # eligible photos may become fallbacks when the initial image fails.
+        # None may be a quiz answer, even if the primary cover is distinct.
         lead_cover=verified_covers[0]
         match=re.search(r"(?ms)^ "+re.escape(code)+r":\[(.*?)^ \],",quiz_section)
         if not match or match.group(1).count("question:")<2:
@@ -89,7 +95,7 @@ def country_coverage(root: Path, stories):
             stop=photos.get(key)
             if not stop or stop.get("country")!=name:
                 raise ValueError(code+": quiz photograph missing or belongs to wrong country: "+key)
-            if stop.get("photoAsset")==lead_cover:
+            if stop.get("photoAsset") in verified_covers:
                 raise ValueError(code+": portrait cover reused as quiz photograph")
             if not _licensed_photo(stop):
                 raise ValueError(code+": quiz photograph license/attribution missing")

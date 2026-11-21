@@ -65,9 +65,9 @@ def country_editorial_queue(root: Path) -> dict:
                            for q in quiz_photos)):
             missing.append("two_distinct_licensed_photo_quizzes")
         if (local_covers and any(
-                q and q.get("photoAsset")==local_covers[0]["asset"]
-                for q in quiz_photos)):
-            # The reader deliberately needs a different hero and quiz reveal.
+                q and q.get("photoAsset")==cover["asset"]
+                for q in quiz_photos for cover in local_covers)):
+            # Every possible fallback portrait must differ from quiz reveals.
             missing.append("portrait_photo_reused_in_quiz")
         postcards=[s for s in entry.get("travelStops",{}).values()
                    if not s.get("quizOnly") and not s.get("coverOnly")
