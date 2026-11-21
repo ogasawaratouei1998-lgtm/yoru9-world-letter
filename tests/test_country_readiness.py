@@ -17,6 +17,7 @@ class CountryReadinessTest(unittest.TestCase):
         ready,incomplete=ready_country_codes(ROOT)
         self.assertTrue({"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR"}.issubset(ready))
         self.assertNotIn("NG",ready)
+        self.assertNotIn("AG",ready, "Even complete Antigua facts need separate approval")
         self.assertIn("BR",ready, "Brazil was approved after photos and independent evidence")
         self.assertIn("KR",ready, "Korea was independently approved after complete review")
         self.assertIn("ES",ready,
