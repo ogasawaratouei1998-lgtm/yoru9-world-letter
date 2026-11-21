@@ -8,9 +8,8 @@ on:
   push:
     branches: [main]
     paths:
-      - 'country-expansion-batch-unesco-eight-20261121.json'
-      - 'country-expansion-batch-eight-20261121.json'
-      - 'country-expansion-batch-europe-world-eight-20261121.json'
+      # Every new editorial draft batch triggers its own free photo-source research
+      - 'country-expansion-batch-*.json'
       - 'country_photo_candidates.py'
       - 'country_unesco_source_catalog.py'
       - '.github/workflows/research-country-photos.yml'
