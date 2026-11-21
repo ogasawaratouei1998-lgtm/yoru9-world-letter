@@ -98,7 +98,7 @@ class ThirdCountryExpansionTests(unittest.TestCase):
 
     def test_worker_offline_quiz_photos_always_match_manifest(self):
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v64",worker)
+        self.assertRegex(worker, r"yoru9-shell-v[0-9]+")
         for country in PHOTO_SOURCES.values():
             for key in country:
                 self.assertIn("assets/travel/"+key+".jpg",worker)

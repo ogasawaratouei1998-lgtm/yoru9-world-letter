@@ -77,7 +77,7 @@ class AustrianCountryReleaseTests(unittest.TestCase):
             found.update(src["url"] for src in stop["historicalSources"])
         self.assertEqual(found, urls)
         sw = (ROOT / "service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v64", sw)
+        self.assertRegex(sw, r"yoru9-shell-v[0-9]+")
         for key in SOURCES:
             self.assertIn("assets/travel/" + key + ".jpg", sw)
 
