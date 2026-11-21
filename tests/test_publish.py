@@ -387,6 +387,7 @@ class PublishingTest(unittest.TestCase):
     def test_build_excludes_approved_files(self):
         (self.root/'assets').mkdir()
         (self.root/'assets'/'icon.svg').write_text('<svg></svg>')
+        (self.root/'assets'/'reading-focus.css').write_text('/* fixture CSS */')
         # The production reader includes bundled original news illustrations;
         # the isolated publication fixture must provide them, too.
         import shutil

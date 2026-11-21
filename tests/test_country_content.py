@@ -1,0 +1,112 @@
+"""Country editorial manifest is canonical; pending material cannot ship silently."""
+import json
+from pathlib import Path
+import shutil
+import tempfile
+import unittest
+
+from country_content import check_country_content, load_country_content, sync_country_content
+from check_country_experience import country_coverage
+
+ROOT=Path(__file__).resolve().parents[1]
+FILES=("country-content.json","country-catalog.json","index.html",
+       "world-passport.js","travel-stops.json","country-highlights.json")
+
+
+class CountryContentTest(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        self.root=Path(self.tmp.name)
+        for file in FILES:
+            shutil.copy2(ROOT/file,self.root/file)
+
+    def test_whole_196_location_dataset_matches_runtime(self):
+        doc=check_country_content(ROOT)
+        self.assertEqual(len(doc["countries"]),196)
+        self.assertEqual({code for code,row in doc["countries"].items()
+                          if row["status"]=="approved"},{"IT","DE","US"})
+        self.assertGreaterEqual(len(doc["travelOrder"]),40)
+        self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
+        self.assertEqual(doc["countries"]["NG"]["status"],"pending")
+
+    def test_edited_postcard_must_be_synced_before_release(self):
+        file=self.root/"country-content.json"
+        data=json.loads(file.read_text(encoding="utf-8"))
+        data["countries"]["IT"]["travelStops"]["italy-pisa-tower-postcard"]["travelStory"][0]+=" 昔の風景をたどります。"
+        file.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"IT.travelStops"):
+            check_country_content(self.root)
+        sync_country_content(self.root)
+        check_country_content(self.root)
+        exported=json.loads((self.root/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertEqual(exported["italy-pisa-tower-postcard"]["travelStory"],
+                         data["countries"]["IT"]["travelStops"]["italy-pisa-tower-postcard"]["travelStory"])
+
+    def test_legacy_photo_mutation_is_rejected(self):
+        path=self.root/"travel-stops.json"
+        stops=json.loads(path.read_text(encoding="utf-8"))
+        stops["italy-pisa-tower-postcard"]["country"]="ドイツ"
+        path.write_text(json.dumps(stops,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaises(ValueError):
+            check_country_content(self.root)
+
+    def test_sync_preserves_readiness_of_published_three(self):
+        sync_country_content(self.root)
+        txt=(self.root/"world-passport.js").read_text(encoding="utf-8")
+        section=txt.split(" US:[",1)[1].split("\n});",1)[0]
+        self.assertEqual(section.count("question:"),2,section[:1000])
+        result=country_coverage(self.root,[{"id":"a","country":"イタリア"},
+                                          {"id":"b","country":"ドイツ"},
+                                          {"id":"c","country":"アメリカ合衆国"}])
+        self.assertEqual(set(result),{"IT","DE","US"})
+
+    def test_pending_country_cannot_be_promoted_without_photos(self):
+        file=self.root/"country-content.json"
+        data=json.loads(file.read_text(encoding="utf-8"))
+        data["countries"]["NG"]["status"]="approved"
+        file.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"NG: approval"):
+            load_country_content(self.root)
+
+    def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
+        doc=load_country_content(ROOT)
+        self.assertEqual(sum(bool(stop.get("historicalSources"))
+                             for code in ("IT","DE","US")
+                             for stop in doc["countries"][code]["travelStops"].values()
+                             if stop.get("travelStory")),10)
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["US"]["travelStops"]["us-newyork-postcard"].pop("historicalSources")
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"unsourced history/culture"):
+            load_country_content(self.root)
+
+    def test_photo_credit_cannot_masquerade_as_history(self):
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["IT"]["travelStops"]["italy-pisa-tower-postcard"]["historicalSources"]=[
+            {"name":"写真ページ","url":"https://commons.wikimedia.org/wiki/File:example.jpg",
+             "checkedOn":"2026-11-21"}]
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"photo license cannot replace"):
+            load_country_content(self.root)
+
+    def test_reader_entrypoint_and_external_stylesheet_are_published_together(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        builder=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        self.assertIn('href="#issueGallery"',page)
+        self.assertIn('href="./assets/reading-focus.css"',page)
+        self.assertIn("'assets/reading-focus.css'",builder)
+        self.assertIn("'assets/reading-focus.css'",worker)
+
+    def test_unreviewed_country_no_fabricated_photographs(self):
+        doc=load_country_content(self.root)
+        country=doc["countries"]["NG"]
+        self.assertFalse(country["portraitPhotos"])
+        self.assertFalse(country["travelStops"])
+
+
+if __name__=="__main__":
+    unittest.main()

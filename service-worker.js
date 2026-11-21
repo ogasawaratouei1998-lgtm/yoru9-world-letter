@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v37';
+const SHELL_CACHE = 'yoru9-shell-v38';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -14,7 +14,7 @@ async function expirePreviousGeneratedImages(day,activePaths=[]){
   return match&&(!keep.has(path)||match[1]!==day);
  }).map(req=>cache.delete(req)));
 }
-const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'country-catalog.json', 'country-highlights.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
+const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-passport.js', 'assets/reading-focus.css', 'country-catalog.json', 'country-highlights.json', 'travel-stops.json', 'assets/world-today-illustrated.svg', 'assets/icon.svg', 'assets/icon-192.png', 'assets/icon-512.png', 'assets/apple-touch-icon.png',
  'assets/news/coffee-rescue.svg', 'assets/news/road-typo.svg', 'assets/news/monkey-patrol.svg',
  'assets/news/own-goal-keeper.svg', 'assets/news/police-sweets-wanted.svg',
  'assets/news/mouse-83-tattoos.svg',

@@ -93,3 +93,79 @@ def independently_approved_secondary_quip(story, review):
                 "secondQuipPunchlineWorks")):
         return None
     return second
+
+# Editorial scores are a secondary ranking and review aid, never evidence that
+# a story happened. A reviewer still needs the factual boolean vetoes above.
+RUBRIC_FIELDS=("surprise","mistakeClarity","outcomeIrony","evidence","safety")
+
+
+def editorial_rubric(story_or_review):
+    """Five explicit 1-5 dimensions; absent model metadata stays unscored.
+
+    Safety and evidence are non-compensatory: an amusing outcome cannot offset
+    weak journalism or an unsafe target.
+    """
+    data=story_or_review.get("editorialScores") if isinstance(story_or_review,dict) else None
+    if not isinstance(data,dict) or set(data)!=set(RUBRIC_FIELDS):
+        return None
+    if any(type(data[k]) is not int or not 1<=data[k]<=5 for k in RUBRIC_FIELDS):
+        return None
+    return {key:data[key] for key in RUBRIC_FIELDS}
+
+
+def editorial_rubric_rejection(review):
+    """Only score an actually supplied rubric; legacy verified fixtures remain valid."""
+    if not isinstance(review,dict) or "editorialScores" not in review:
+        return None
+    scores=editorial_rubric(review)
+    if scores is None:
+        return "editorial_scores_invalid"
+    if scores["evidence"]<5 or scores["safety"]<5:
+        return "evidence_or_safety_below_standard"
+    if min(scores[key] for key in ("surprise","mistakeClarity","outcomeIrony"))<4:
+        return "story_not_extraordinary_or_specific"
+    return None
+
+
+def quip_candidates_ranked(story):
+    """Compare proposed first-line punchlines before independent fact review.
+
+    Deterministic form checks remove headline recaps and overused cadences.
+    These scores cannot determine whether a quip is *true* or respectful.
+    The selected line must pass the subsequent source-fidelity AI reviewer.
+    """
+    from difflib import SequenceMatcher
+    from editorial_identity import comic_line_rejection
+    from quip_variety import quip_cadence
+    if not isinstance(story,dict):
+        return []
+    original=story.get("quip")
+    proposed=story.get("quipCandidates")
+    options=[original]+(proposed if isinstance(proposed,list) else [])
+    headline=str(story.get("title","")).strip()
+    summary=str(story.get("summary","")).strip()
+    distinct=[]
+    for index,candidate in enumerate(options[:7]):
+        if not isinstance(candidate,str) or candidate.strip() in {x[2] for x in distinct}:
+            continue
+        line=candidate.strip()
+        if (not 17<=len(line)<=75 or comic_line_rejection(line) is not None):
+            continue
+        title_similarity=SequenceMatcher(None,line,headline).ratio()
+        summary_similarity=SequenceMatcher(None,line,summary).ratio()
+        if title_similarity>=0.82 or summary_similarity>=0.85:
+            continue
+        score=(max(0,100-round(72*title_similarity+28*summary_similarity))
+               - (10 if quip_cadence(line) else 0)
+               - (12 if line.endswith(("という話。","という話","ですね。","ですね")) else 0)
+               + (3 if index==0 else 0))
+        distinct.append((score,index,line))
+    distinct.sort(key=lambda pair:(-pair[0],pair[1]))
+    return [line for _,_,line in distinct]
+
+
+def choose_pre_review_quip(story):
+    """Make no ungrounded punchlines; return None when every draft is weak."""
+    candidates=quip_candidates_ranked(story)
+    return candidates[0] if candidates else None
+

@@ -1610,6 +1610,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 #atlasHero .gallery-image-label{display:block;align-self:flex-start;font-size:.68rem;
  color:#e2f5ec;background:#26485e;padding:4px 8px;border-radius:8px;margin:4px 7px}
 </style>
+<link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
 <body><div class="wrap">
 <a class="skip-link" href="#issueGallery">ニュースを選ぶ</a>
@@ -1628,6 +1629,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
   <h2 class="atlas-title">世界の<span class="atlas-oops">「やらかし」</span><span class="atlas-title-second">ニュース、<span id="atlasStoryCount">…</span>本。</span></h2>
   <p class="atlas-lede" id="atlasLede">この号に収録された、世界の失敗・勘違い・珍事件。</p>
+   <a class="reader-first-link" href="#issueGallery">まずはニュースを選んで読む ›</a>
   <div class="atlas-concept" role="group" aria-label="報道された実話にAIがユーモアのあるツッコミを添える">
    <span class="atlas-real-stamp">実話</span><span class="atlas-concept-arrow" aria-hidden="true">→</span>
    <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span><span class="atlas-brand-copy">創作の冗談</span></p>
@@ -2638,6 +2640,10 @@ function chooseTravelPhoto(story,stops){
  // Always retain authentic article-country alignment; no fake foreign photo.
  if(!sameCountry.length)return null;
  // Avoid two copies in one session, unless it is the ONLY available photograph.
+ // Prefer destinations backed by a separate historical/cultural reference.
+ // A photo's CC license is not evidence for claims in the travel essay.
+ // Never repeat a country's photo before exhausting available vetted images.
+ // Source links enrich reading, but cannot override the trusted rotation.
  let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
  if(!pool.length)pool=sameCountry;
  // First exhaust every licensed photo within the country across page reloads.
@@ -2695,6 +2701,9 @@ function travelPostcardHtml(story,stop){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
+ const heritage=stop&&Array.isArray(stop.historicalSources)?
+  stop.historicalSources.find(source=>source&&source.name&&
+   typeof source.url==='string'&&source.url.startsWith('https://')):null;
  return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する小旅行">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
   '<div class="travel-context" aria-label="記事と旅先の違い">'+
@@ -2719,6 +2728,8 @@ function travelPostcardHtml(story,stop){
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">'+(known?'旅先を地図で見る ↗':'掲載国を地図で見る ↗')+'</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
+   (heritage?'<a href="'+escapeHtml(safeUrl(heritage.url))+'" target="_blank" rel="noopener noreferrer">歴史・文化の資料：'+escapeHtml(heritage.name)+' ↗</a>':
+    '<span class="travel-source-pending">歴史・文化の出典は編集中</span>')+
   '</div>'+
   (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
    '" target="_blank" rel="noopener noreferrer">'+escapeHtml(stop.license)+'</a>（表示範囲を調整）</p>':'')+

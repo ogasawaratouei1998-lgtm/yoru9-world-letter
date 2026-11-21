@@ -1,0 +1,55 @@
+"""Objective scoring metadata cannot replace the independent source audit."""
+import unittest
+
+from editorial_quality import (
+    editorial_rubric, editorial_rubric_rejection,
+    choose_pre_review_quip, quip_candidates_ranked,
+)
+
+
+class EditorialRubricTests(unittest.TestCase):
+    def test_five_explicit_dimensions_and_non_compensatory_vetoes(self):
+        top={"surprise":4,"mistakeClarity":5,"outcomeIrony":4,
+             "evidence":5,"safety":5}
+        self.assertEqual(editorial_rubric({"editorialScores":top}),top)
+        self.assertIsNone(editorial_rubric_rejection({"editorialScores":top}))
+        for name in ("surprise","mistakeClarity","outcomeIrony"):
+            self.assertEqual(editorial_rubric_rejection(
+                {"editorialScores":{**top,name:3}}),
+                "story_not_extraordinary_or_specific")
+        for name in ("evidence","safety"):
+            self.assertEqual(editorial_rubric_rejection(
+                {"editorialScores":{**top,name:4}}),
+                "evidence_or_safety_below_standard")
+        self.assertEqual(editorial_rubric_rejection(
+            {"editorialScores":{**top,"evidence":True}}),
+            "editorial_scores_invalid")
+        self.assertEqual(editorial_rubric_rejection(
+            {"editorialScores":{**top,"unsafeUnknown":5}}),
+            "editorial_scores_invalid")
+        # Older approved editions need not invent retrospective model scores.
+        self.assertIsNone(editorial_rubric_rejection({"approved":True}))
+
+    def test_weak_recap_rejected_when_stronger_option_exists(self):
+        headline="コーヒーの注文で助けを呼び、扉が開く"
+        good="コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"
+        story={"title":headline,"summary":"扉を開けてほしくて宅配を依頼した。",
+               "quip":headline,"quipCandidates":[headline,good]}
+        self.assertEqual(choose_pre_review_quip(story),good)
+        self.assertEqual(quip_candidates_ranked(story),[good])
+        # No model candidate is a verified fact; reviewer B must still audit.
+        self.assertNotIn("editorVerified",story)
+
+    def test_repetitive_stock_reaction_is_discarded(self):
+        good="コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"
+        story={"title":"救助のために配達を注文",
+               "summary":"閉じ込められた男性はコーヒーを頼んだ。",
+               "quip":"計画は予想の斜め上。","quipCandidates":[good]}
+        self.assertEqual(choose_pre_review_quip(story),good)
+        self.assertIsNone(choose_pre_review_quip(
+            {"title":"新聞の見出し","summary":"何も書かれていない。",
+             "quip":"世界は予想外です。","quipCandidates":[]}))
+
+
+if __name__=="__main__":
+    unittest.main()
