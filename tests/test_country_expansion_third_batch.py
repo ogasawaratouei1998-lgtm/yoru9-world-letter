@@ -38,7 +38,7 @@ class ThirdCountryExpansionTests(unittest.TestCase):
 
     def test_three_countries_are_ready_with_two_unrepeated_quiz_photographs(self):
         ready,pending=ready_country_codes(ROOT)
-        self.assertEqual(len(ready),21)
+        self.assertEqual(len(ready),24)
         self.assertEqual(len(self.canonical["countries"]),196)
         for code,files in PHOTO_SOURCES.items():
             with self.subTest(country=code):
