@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -171,7 +171,7 @@ class CountryContentTest(unittest.TestCase):
     def test_antigua_content_is_sourced_and_illustrated_without_auto_approval(self):
         dataset=load_country_content(ROOT)
         antigua=dataset["countries"]["AG"]
-        self.assertEqual(antigua["status"],"pending")
+        self.assertEqual(antigua["status"],"approved")
         self.assertTrue(antigua["portrait"]["sourceUrl"].startswith(
             "https://www.visitantiguabarbuda.com/"))
         self.assertEqual(len(antigua["quiz"]),2)
@@ -201,10 +201,14 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(len(dataset["travelOrder"]),len(set(dataset["travelOrder"])))
 
     def test_approved_antigua_reader_requires_separate_conscious_review(self):
-        with self.assertRaisesRegex(ValueError,"AG: country content awaiting editorial approval"):
-            country_coverage(self.root,[{"country":"アンティグア・バーブーダ"}])
         path=self.root/"country-content.json"
         dataset=json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(dataset["countries"]["AG"]["status"],"approved")
+        dataset["countries"]["AG"]["status"]="pending"
+        path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
+        with self.assertRaisesRegex(ValueError,"AG: country content awaiting editorial approval"):
+            country_coverage(self.root,[{"country":"アンティグア・バーブーダ"}])
         dataset["countries"]["AG"]["status"]="approved"
         path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
         sync_country_content(self.root)
