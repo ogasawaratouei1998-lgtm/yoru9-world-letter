@@ -2825,5 +2825,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "bg-sofia-nevsky-cover": {
+    "country": "ブルガリア",
+    "countryOnly": true,
+    "place": "ソフィア・アレクサンドル・ネフスキー大聖堂",
+    "region": "ソフィア中心部",
+    "latitude": 42.695806,
+    "longitude": 23.332798,
+    "note": "緑色の屋根と大きなドームを持つブルガリア首都ソフィアを象徴する正教会の大聖堂。",
+    "photoCaption": "ソフィアのアレクサンドル・ネフスキー大聖堂（2018年撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/39/Alexander_Nevsky_Cathedral_Sofia.jpg/500px-Alexander_Nevsky_Cathedral_Sofia.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Alexander_Nevsky_Cathedral_Sofia.jpg",
+    "photoAsset": "assets/travel/bg-sofia-nevsky-cover.jpg",
+    "author": "acediscovery",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+  },
+  "bg-rila-monastery-postcard": {
+    "country": "ブルガリア",
+    "countryOnly": true,
+    "place": "リラ修道院",
+    "region": "リラ山地",
+    "latitude": 42.133242,
+    "longitude": 23.340212,
+    "note": "10世紀以来の歴史を持つ修道院で、再建された中庭の回廊や装飾がブルガリアの文化復興を物語る。",
+    "photoCaption": "リラ修道院の回廊と、背後にそびえるリラ山地（2010年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/10/Rila_Monastery_%28view%29.jpg/500px-Rila_Monastery_%28view%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Rila_Monastery_(view).jpg",
+    "photoAsset": "assets/travel/bg-rila-monastery-postcard.jpg",
+    "author": "Jaimrsilva",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "リラ修道院へ近づくと、周囲の山々を背景に石造の壁と建物がまとまって姿を現します。門をくぐると中庭を囲む回廊とアーチが広がり、外側から見た印象とは違う華やかな空間に出会います。壁面の絵や柱の模様を見上げたり、回廊から中庭の向こうを眺めたりしながら、建物の内と外の対照を楽しみたい場所です。",
+      "UNESCOはリラ修道院を、10世紀に始まる信仰の歴史と、後世のブルガリア文化復興にかかわる象徴的な場所として評価しています。現在見られる建築の姿にも複数の時代の改修が重なっています。回廊の壁画や木造部分の装飾を観察すると、宗教だけでなく芸術と共同体の記憶がこの場所を形づくってきたことが感じられます。礼拝を妨げない見学を心がけます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・リラ修道院",
+        "url": "https://whc.unesco.org/en/list/216/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "bg-boyana-church-postcard": {
+    "country": "ブルガリア",
+    "countryOnly": true,
+    "place": "ボヤナ教会",
+    "region": "ソフィア郊外・ボヤナ",
+    "latitude": 42.644672,
+    "longitude": 23.266172,
+    "note": "1259年の中世壁画を含む、小さな建物に豊かな歴史が詰まった世界遺産の教会。",
+    "photoCaption": "ソフィア郊外のボヤナ教会、レンガ造りの後陣（2008年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3f/Boyana_Church_018.JPG/500px-Boyana_Church_018.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Boyana_Church_018.JPG",
+    "photoAsset": "assets/travel/bg-boyana-church-postcard.jpg",
+    "author": "DMY",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "ソフィア郊外のボヤナ教会は、遠くから見ると周囲の緑に溶け込む比較的小さな建物です。しかし内部の壁画に目を向けると、人物の表情や衣服の細部まで描き込まれた豊かな世界が広がります。外観の静けさと内部の絵画の密度を比べながら、限られた空間の中に大きな物語を表現する工夫を感じたい場所です。壁画の保護のため、見学条件や撮影規則を守ります。",
+      "UNESCOはボヤナ教会を、複数の時代の建築が重なり、とりわけ13世紀の壁画が重要な価値を持つ文化遺産として評価しています。壁画には人物の個性を感じさせる表現も見られ、当時の絵画芸術を知る手掛かりになります。一枚ごとの場面だけでなく、壁のどこに何が描かれているかを意識すると、小さな教会全体が絵画のための空間であることが分かります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ボヤナ教会",
+        "url": "https://whc.unesco.org/en/list/42/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
   }
 }
