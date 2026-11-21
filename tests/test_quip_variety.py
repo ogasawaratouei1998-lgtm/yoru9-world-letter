@@ -6,7 +6,8 @@ import tempfile
 import unittest
 
 from auto_editorial import select_diverse_verified_stories,save_editorial_funnel,MANZAI_CRAFT
-from quip_variety import quip_cadence, repeated_cadence_count, quip_variety_metrics
+from quip_variety import (quip_cadence, repeated_cadence_count,
+                          repeated_exact_quip_count, quip_variety_metrics)
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -39,6 +40,27 @@ class QuipVarietyTest(unittest.TestCase):
         self.assertEqual(len(picked),5)
         self.assertEqual({s["id"] for s in picked}&{"E","F"},{"E","F"})
         self.assertEqual(repeated_cadence_count(picked),2)
+
+    def test_exact_duplicate_gags_lose_tiebreak_without_recognizable_cadence(self):
+        common={"country":"US","category":"work",
+                "title":"記録と実際が食い違った事件",
+                "humanMistake":"計画と結果の差が確認された"}
+        repeated=[{**common,"id":str(i),
+                   "quip":"伝票を出したはずが、帰宅したのは伝票だけ。"}
+                  for i in range(4)]
+        distinct=[
+            {**common,"id":"E","quip":"上司の予定表だけが先に謝罪した。"},
+            {**common,"id":"F","quip":"荷物が出勤した頃、伝票は休日だった。"},
+        ]
+        self.assertEqual(repeated_cadence_count(repeated+distinct),0)
+        self.assertEqual(repeated_exact_quip_count(repeated+distinct),3)
+        self.assertEqual(repeated_exact_quip_count(
+            [{"quip":"同じ 笑い。"},{"quip":"同じ笑い。"}]),1)
+        chosen=select_diverse_verified_stories(
+            repeated+distinct,Counter(),Counter(),selection_seed="2026-11-21")
+        self.assertEqual(len(chosen),5)
+        self.assertEqual({x["id"] for x in chosen}&{"E","F"},{"E","F"})
+        self.assertEqual(repeated_exact_quip_count(chosen),2)
 
     def test_five_verified_similar_quips_remain_eligible(self):
         # Never suppress a sourced article or manufacture an alternative joke
