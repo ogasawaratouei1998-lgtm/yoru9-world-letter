@@ -884,8 +884,20 @@
     "license": "CC BY-SA 4.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
     "travelStory": [
-      "ニュージーランド南島のミルフォード・サウンドでは、深い入り江の両側に山々が迫り、切り立った岩壁が水面から立ち上がるように見えます。山の高さと、水面の静けさが一枚の写真の中で対照的に感じられます。",
-      "この地形は氷河の働きによって形づくられたフィヨルドです。雨が多い地域で、天候によっては岩壁を伝う滝が現れます。山と海、霧や雲がつくる風景を想像しながら眺めると、その奥深さが伝わります。"
+      "南島のピオピオタヒ／ミルフォード・サウンドへ向かう道は、それ自体が小旅行です。テ・アナウから続く山道では、ブナの森、氷河が削った谷、切り立つ岩壁が次々と現れます。フィヨルドに着くと、水面から巨大な山が立ち上がり、雨の後には岩肌を伝う滝が幾筋も姿を見せます。写真に写る水の流れを追ってから、周囲の山の稜線を見上げれば、海と山が一つにつながる地形の迫力が伝わります。",
+      "ニュージーランド自然保護局（DOC）は、ミルフォード・サウンドをフィヨルドランド国立公園北西部の海の入り江として紹介しています。氷河が長い時間をかけて地形を削り、いまは森と岩山に雨や滝が重なる風景になりました。この地域を含む「テ・ワヒポウナム―ニュージーランド南西部」はUNESCO世界自然遺産です。晴れた日だけを正解にせず、雨の日の滝や雲の流れまで楽しむのが、この景色との向き合い方かもしれません。"
+    ],
+    "historicalSources": [
+      {
+        "name": "ニュージーランド自然保護局・ミルフォード／ピオピオタヒ",
+        "url": "https://www.doc.govt.nz/milfordroad",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "UNESCO世界遺産センター・テ・ワヒポウナム",
+        "url": "https://whc.unesco.org/en/list/551/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "italy-rome-colosseum-cover": {
@@ -1099,6 +1111,70 @@
       {
         "name": "UNESCO世界遺産センター・ガウディ作品群",
         "url": "https://whc.unesco.org/en/list/320/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "nz-milford-fiord-quiz-image": {
+    "country": "ニュージーランド",
+    "place": "ミルフォード・サウンド（別角度から撮影）",
+    "region": "南島・フィヨルドランド国立公園",
+    "latitude": -44.6735,
+    "longitude": 167.9273,
+    "note": "フィヨルドにそそり立つ山々と水面を一望できる景観。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Milford_Sound_in_Fiordland_National_Park_06.jpg/500px-Milford_Sound_in_Fiordland_National_Park_06.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Milford_Sound_in_Fiordland_National_Park_06.jpg",
+    "photoAsset": "assets/travel/nz-milford-fiord-quiz.jpg",
+    "photoCaption": "ミルフォード・サウンドの山々（2017年撮影）",
+    "author": "Krzysztof Golik",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "nz-aoraki-quiz-image": {
+    "country": "ニュージーランド",
+    "place": "アオラキ／マウント・クック",
+    "region": "南島・カンタベリー地方",
+    "latitude": -44.0887,
+    "longitude": 170.1365,
+    "note": "プカキ湖付近の展望地から望む、ニュージーランド最高峰。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Mount_Cook_NZ.jpg/500px-Mount_Cook_NZ.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Cook_NZ.jpg",
+    "photoAsset": "assets/travel/nz-aoraki-quiz.jpg",
+    "photoCaption": "ピーターズ・ルックアウト付近から見たアオラキ／マウント・クック（2017年撮影）",
+    "author": "Krzysztof Golik",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "nz-tekapo-church-postcard": {
+    "country": "ニュージーランド",
+    "place": "善き羊飼いの教会（レイク・テカポ）",
+    "region": "南島・カンタベリー地方",
+    "latitude": -44.0027,
+    "longitude": 170.482,
+    "note": "湖を背景に立つ小さな石造りの教会。1935年に開かれ、今も礼拝に使われています。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Church_of_the_Good_Shepherd_Lake_Tekapo.jpg/500px-Church_of_the_Good_Shepherd_Lake_Tekapo.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Church_of_the_Good_Shepherd_Lake_Tekapo.jpg",
+    "photoAsset": "assets/travel/nz-tekapo-church.jpg",
+    "photoCaption": "レイク・テカポ湖畔の善き羊飼いの教会（2019年撮影）",
+    "author": "Vincent60030",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "countryOnly": true,
+    "travelStory": [
+      "テカポ湖の岸辺に立つ善き羊飼いの教会は、壮大な山々を背景にした、小さな石造りの建物です。湖の青さを眺めてから視線を手前へ戻すと、教会の素朴な壁と草地、低い丘がひと続きの風景になっています。写真に写る教会を主役にするだけでなく、建物の周りに残る植物や、湖と山のあいだの広さにも目を向けると、ここに建てられた理由が少し想像できるかもしれません。",
+      "教会の公式案内によれば、建物が開かれたのは1935年。周辺の牧畜開拓者を記念して建てられ、地元で集めた石が使われました。建築の際には土地をむやみに変えず、周囲のマタゴウリの低木も残すように伝えられたそうです。美しい湖畔に後から写真映えを狙って置いた施設ではなく、今も地域の人々が祈る場所。外観を静かに眺め、訪れるときは礼拝の場としての敬意を忘れたくありません。"
+    ],
+    "historicalSources": [
+      {
+        "name": "善き羊飼いの教会・公式沿革",
+        "url": "https://www.churchofthegoodshepherd.org.nz/about",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "ニュージーランド歴史遺産庁・指定建造物",
+        "url": "https://www.heritage.org.nz/list-details/311/ChurchoftheGoodShepherd",
         "checkedOn": "2026-11-21"
       }
     ]

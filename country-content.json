@@ -48,7 +48,10 @@
     "germany-neuschwanstein-castle-postcard",
     "spain-sagrada-nativity-quiz-image",
     "spain-alhambra-quiz-image",
-    "spain-park-guell-postcard"
+    "spain-park-guell-postcard",
+    "nz-milford-fiord-quiz-image",
+    "nz-aoraki-quiz-image",
+    "nz-tekapo-church-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2679,19 +2682,21 @@
       "name": "ニュージーランド",
       "status": "pending",
       "portrait": {
-        "lead": "マオリ文化と自然に寄り添う暮らし",
-        "body": "ニュージーランドでは、先住民マオリの言語や芸術、文化が社会の大切な一部をなしています。都市の音楽やカフェ文化、地域ごとの農業・食文化があり、海や山に近い暮らしも特色のひとつです。北島と南島では風土が異なり、自然環境を大切にする取り組みやアウトドアへの親しみが日常のなかに見られます。マオリの伝統と多様な現代文化が重なり合う国です。",
+        "lead": "マオリの文化と南北の大地が織りなす、自然豊かな国",
+        "body": "ニュージーランド（アオテアロア）では、先住民マオリの言語「テ・レオ・マオリ」、彫刻、歌、儀礼などが社会に息づいています。北島には火山地形や都市の文化が広がり、南島には険しい山脈、氷河が刻んだフィヨルド、牧草地や湖が続きます。自然保護を大切にする公園と、ウェリントンやオークランドの芸術・食文化も魅力の一部です。自然の景色だけで国を語らず、多様な人々の暮らしと歴史に目を向けたい場所です。",
         "facts": [
           "首都：ウェリントン",
-          "風景：ミルフォード・サウンド",
-          "文化：マオリ文化・自然体験"
-        ]
+          "自然：ミルフォード・サウンド、アオラキ／マウント・クック",
+          "文化：テ・レオ・マオリ、マオリの芸術"
+        ],
+        "sourceName": "ニュージーランド政府観光局（100% Pure New Zealand）",
+        "sourceUrl": "https://www.newzealand.com/nz/maori-culture/"
       },
       "portraitPhotos": [
         {
           "asset": "assets/travel/nz-milford-sound.jpg",
           "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Milford_Sound_-_New_Zealand.jpg/500px-Milford_Sound_-_New_Zealand.jpg",
-          "caption": "ニュージーランド南島・ミルフォード・サウンドの滝（2005年撮影）",
+          "caption": "ニュージーランド・ミルフォード・サウンドの滝（2005年撮影）",
           "author": "Ryancoke2020",
           "license": "CC BY-SA 4.0",
           "place": "ミルフォード・サウンド"
@@ -2699,28 +2704,30 @@
       ],
       "quiz": [
         {
-          "question": "ミルフォード・サウンドがあるのは？",
+          "question": "ピオピオタヒ／ミルフォード・サウンドがある島は？",
           "options": [
             "北島",
             "南島",
             "チャタム諸島"
           ],
           "answer": 1,
-          "photoKey": "nz-milford-sound-postcard",
+          "photoKey": "nz-milford-fiord-quiz-image",
           "photoLabel": "正解の景色｜南島のミルフォード・サウンド",
-          "fact": "ミルフォード・サウンドはニュージーランド南島のフィヨルドランド国立公園にあります。",
-          "quip": "山と海の共演が大迫力。観客は静かに見上げるしかない。"
+          "fact": "ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。",
+          "quip": "山が水面まで迫ってくる。地図の答えは南島。"
         },
         {
-          "question": "ニュージーランドの先住民族として知られるのは？",
+          "question": "ニュージーランドで最も高い山は？",
           "options": [
-            "サーミ",
-            "イヌイット",
-            "マオリ"
+            "ルアペフ山",
+            "タラナキ山",
+            "アオラキ／マウント・クック"
           ],
           "answer": 2,
-          "fact": "マオリはニュージーランドの先住民族で、言葉や芸術などの文化を受け継いでいます。",
-          "quip": "文化の積み重ねは、世界地図のピンだけでは収まりません。"
+          "photoKey": "nz-aoraki-quiz-image",
+          "photoLabel": "正解の山｜南島・アオラキ／マウント・クック",
+          "fact": "アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。",
+          "quip": "最高峰の答えは、山の名前からして存在感たっぷり。"
         }
       ],
       "travelStops": {
@@ -2740,8 +2747,84 @@
           "license": "CC BY-SA 4.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
           "travelStory": [
-            "ニュージーランド南島のミルフォード・サウンドでは、深い入り江の両側に山々が迫り、切り立った岩壁が水面から立ち上がるように見えます。山の高さと、水面の静けさが一枚の写真の中で対照的に感じられます。",
-            "この地形は氷河の働きによって形づくられたフィヨルドです。雨が多い地域で、天候によっては岩壁を伝う滝が現れます。山と海、霧や雲がつくる風景を想像しながら眺めると、その奥深さが伝わります。"
+            "南島のピオピオタヒ／ミルフォード・サウンドへ向かう道は、それ自体が小旅行です。テ・アナウから続く山道では、ブナの森、氷河が削った谷、切り立つ岩壁が次々と現れます。フィヨルドに着くと、水面から巨大な山が立ち上がり、雨の後には岩肌を伝う滝が幾筋も姿を見せます。写真に写る水の流れを追ってから、周囲の山の稜線を見上げれば、海と山が一つにつながる地形の迫力が伝わります。",
+            "ニュージーランド自然保護局（DOC）は、ミルフォード・サウンドをフィヨルドランド国立公園北西部の海の入り江として紹介しています。氷河が長い時間をかけて地形を削り、いまは森と岩山に雨や滝が重なる風景になりました。この地域を含む「テ・ワヒポウナム―ニュージーランド南西部」はUNESCO世界自然遺産です。晴れた日だけを正解にせず、雨の日の滝や雲の流れまで楽しむのが、この景色との向き合い方かもしれません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "ニュージーランド自然保護局・ミルフォード／ピオピオタヒ",
+              "url": "https://www.doc.govt.nz/milfordroad",
+              "checkedOn": "2026-11-21"
+            },
+            {
+              "name": "UNESCO世界遺産センター・テ・ワヒポウナム",
+              "url": "https://whc.unesco.org/en/list/551/",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        },
+        "nz-milford-fiord-quiz-image": {
+          "country": "ニュージーランド",
+          "place": "ミルフォード・サウンド（別角度から撮影）",
+          "region": "南島・フィヨルドランド国立公園",
+          "latitude": -44.6735,
+          "longitude": 167.9273,
+          "note": "フィヨルドにそそり立つ山々と水面を一望できる景観。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Milford_Sound_in_Fiordland_National_Park_06.jpg/500px-Milford_Sound_in_Fiordland_National_Park_06.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Milford_Sound_in_Fiordland_National_Park_06.jpg",
+          "photoAsset": "assets/travel/nz-milford-fiord-quiz.jpg",
+          "photoCaption": "ミルフォード・サウンドの山々（2017年撮影）",
+          "author": "Krzysztof Golik",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "quizOnly": true
+        },
+        "nz-aoraki-quiz-image": {
+          "country": "ニュージーランド",
+          "place": "アオラキ／マウント・クック",
+          "region": "南島・カンタベリー地方",
+          "latitude": -44.0887,
+          "longitude": 170.1365,
+          "note": "プカキ湖付近の展望地から望む、ニュージーランド最高峰。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bb/Mount_Cook_NZ.jpg/500px-Mount_Cook_NZ.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Cook_NZ.jpg",
+          "photoAsset": "assets/travel/nz-aoraki-quiz.jpg",
+          "photoCaption": "ピーターズ・ルックアウト付近から見たアオラキ／マウント・クック（2017年撮影）",
+          "author": "Krzysztof Golik",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "quizOnly": true
+        },
+        "nz-tekapo-church-postcard": {
+          "country": "ニュージーランド",
+          "place": "善き羊飼いの教会（レイク・テカポ）",
+          "region": "南島・カンタベリー地方",
+          "latitude": -44.0027,
+          "longitude": 170.482,
+          "note": "湖を背景に立つ小さな石造りの教会。1935年に開かれ、今も礼拝に使われています。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Church_of_the_Good_Shepherd_Lake_Tekapo.jpg/500px-Church_of_the_Good_Shepherd_Lake_Tekapo.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Church_of_the_Good_Shepherd_Lake_Tekapo.jpg",
+          "photoAsset": "assets/travel/nz-tekapo-church.jpg",
+          "photoCaption": "レイク・テカポ湖畔の善き羊飼いの教会（2019年撮影）",
+          "author": "Vincent60030",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "countryOnly": true,
+          "travelStory": [
+            "テカポ湖の岸辺に立つ善き羊飼いの教会は、壮大な山々を背景にした、小さな石造りの建物です。湖の青さを眺めてから視線を手前へ戻すと、教会の素朴な壁と草地、低い丘がひと続きの風景になっています。写真に写る教会を主役にするだけでなく、建物の周りに残る植物や、湖と山のあいだの広さにも目を向けると、ここに建てられた理由が少し想像できるかもしれません。",
+            "教会の公式案内によれば、建物が開かれたのは1935年。周辺の牧畜開拓者を記念して建てられ、地元で集めた石が使われました。建築の際には土地をむやみに変えず、周囲のマタゴウリの低木も残すように伝えられたそうです。美しい湖畔に後から写真映えを狙って置いた施設ではなく、今も地域の人々が祈る場所。外観を静かに眺め、訪れるときは礼拝の場としての敬意を忘れたくありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "善き羊飼いの教会・公式沿革",
+              "url": "https://www.churchofthegoodshepherd.org.nz/about",
+              "checkedOn": "2026-11-21"
+            },
+            {
+              "name": "ニュージーランド歴史遺産庁・指定建造物",
+              "url": "https://www.heritage.org.nz/list-details/311/ChurchoftheGoodShepherd",
+              "checkedOn": "2026-11-21"
+            }
           ]
         }
       },

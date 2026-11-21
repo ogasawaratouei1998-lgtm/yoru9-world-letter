@@ -19,6 +19,8 @@ class CountryReadinessTest(unittest.TestCase):
         self.assertNotIn("NG",ready)
         self.assertIn("ES",ready,
                       "Reviewed Spanish destination assets must be eligible")
+        self.assertNotIn("NZ",ready,
+                         "Prepared source photos never constitute editorial approval")
         self.assertTrue(set(incomplete).isdisjoint(ready))
         articles=[
             {"id":"a","country":"イタリア"},

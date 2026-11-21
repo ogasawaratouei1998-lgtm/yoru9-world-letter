@@ -30,7 +30,8 @@ class CountryEditorialQueueTest(unittest.TestCase):
         # All three source records are real, attributed local photographs.
         # Their index-level cover entries predating sourcePage aren't missing.
         # A reused portrait/quiz image is a different and real release defect.
-        self.assertIn("portrait_photo_reused_in_quiz",pending["NZ"]["missing"])
+        self.assertNotIn("portrait_photo_reused_in_quiz",pending["NZ"]["missing"])
+        self.assertEqual(pending["NZ"]["requiredRemaining"],0)
         self.assertNotIn("ES",pending)
         self.assertIn("ES",report["approvedCountries"])
         for code in ("FR","AR","JP","GB"):
@@ -74,8 +75,8 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_short_pending_trip_is_not_reported_ready(self):
         # A two-item array is not enough to be a substantive travel essay.
         report=country_editorial_queue(ROOT)
-        nz=next(row for row in report["prioritizedPending"] if row["code"]=="NZ")
-        self.assertIn("two_paragraph_microtravel",nz["missing"])
+        korea=next(row for row in report["prioritizedPending"] if row["code"]=="KR")
+        self.assertIn("two_paragraph_microtravel",korea["missing"])
 
     def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
         with tempfile.TemporaryDirectory() as dirname:
