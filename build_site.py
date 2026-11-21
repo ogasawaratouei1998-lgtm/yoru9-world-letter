@@ -75,6 +75,7 @@ def bundle_travel_photos(root, output):
         cache_root.mkdir(parents=True,exist_ok=True)
         from check_release_candidate import jpeg_dimensions
     reused=0
+    cache_files={}
     failures = []
     for asset, url in required.items():
         target = output / asset
@@ -92,6 +93,7 @@ def bundle_travel_photos(root, output):
             digest=hashlib.sha256(json.dumps(identity,sort_keys=True,
                                ensure_ascii=False).encode("utf-8")).hexdigest()
             cache_file=cache_root/(digest+".jpg")
+            cache_files[asset]=cache_file
             if cache_file.is_file():
                 try:
                     size=cache_file.stat().st_size
@@ -147,8 +149,58 @@ def bundle_travel_photos(root, output):
                 last_error = str(exc)
         if not target.exists():
             failures.append(f'{asset}: {last_error}')
+    # One trusted recovery source: the current live GitHub Pages build.
+    # Reuse only if its published photo manifest confirms EXACTLY the same
+    # Commons photo, author and license as the locally reviewed manifest.
+    # Never substitute a new or unrelated picture when Wikimedia is throttled.
+    recovered=0
+    if failures and cache_root is not None:
+        public_base='https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/'
+        try:
+            with urlopen(Request(public_base+'travel-stops.json',
+                         headers={'User-Agent':'Yoru9WorldLetter/1.1'}),timeout=12) as response:
+                prior=json.loads(response.read(150_001).decode('utf-8'))
+            if not isinstance(prior,dict):
+                raise ValueError('published photo manifest is malformed')
+        except (OSError,ValueError,UnicodeError,TypeError):
+            prior={}
+        remaining=[]
+        for problem in failures:
+            asset=problem.split(': ',1)[0]
+            selected=next((p for p in stops.values()
+                           if p.get('photoAsset')==asset),None)
+            matching=any(
+                isinstance(p,dict) and selected is not None and
+                all(p.get(field)==selected.get(field) for field in
+                    ('photoAsset','photo','photoPage','author','license','licenseUrl'))
+                for p in prior.values())
+            if not matching:
+                remaining.append(problem)
+                continue
+            target=output/asset
+            try:
+                # asset has already passed a strict local-path regexp; URLs
+                # cannot point to a remote host selected by news or users.
+                with urlopen(Request(public_base+asset,
+                             headers={'User-Agent':'Yoru9WorldLetter/1.1'}),timeout=12) as response:
+                    payload=response.read(2_000_001)
+                    kind=response.headers.get('Content-Type','')
+                if not (payload.startswith(b'\xff\xd8\xff') and
+                        3000<=len(payload)<=2_000_000 and 'image/' in kind):
+                    raise ValueError('published photo bytes are not JPEG')
+                target.write_bytes(payload)
+                width,height=jpeg_dimensions(target)
+                if ((width<1000 or height<540) if asset in country_covers
+                        else (width<330 or height<200)):
+                    raise ValueError('published photo is below original image size gate')
+                shutil.copyfile(target,cache_files[asset])
+                recovered+=1
+            except (OSError,ValueError) as exc:
+                target.unlink(missing_ok=True)
+                remaining.append(problem+'; published copy unavailable: '+type(exc).__name__)
+        failures=remaining
     print(f'旅行写真のサイト内保存：{len(required) - len(failures)}/{len(required)} 件'
-          f'（キャッシュ再利用 {reused} 件）')
+          f'（キャッシュ再利用 {reused} 件、公開済み写真から復旧 {recovered} 件）')
     if failures:
         raise RuntimeError('旅行写真の欠落を防ぐため公開停止：' + '; '.join(failures))
     return len(required)
