@@ -99,7 +99,7 @@ class FourthBatchTests(unittest.TestCase):
 
     def test_offline_shell_caches_the_nine_new_correct_licensed_images(self):
         sw=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v63",sw)
+        self.assertIn("yoru9-shell-v64",sw)
         for entries in PHOTOS.values():
             for key in entries:
                 self.assertIn("assets/travel/"+key+".jpg",sw)
