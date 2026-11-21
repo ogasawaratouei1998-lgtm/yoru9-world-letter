@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -51,10 +51,10 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(postcard["historicalSources"])
         self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
 
-    def test_new_zealand_editorial_content_is_prepared_but_not_auto_approved(self):
+    def test_new_zealand_editorial_content_is_ready_with_separate_approval(self):
         doc=load_country_content(ROOT)
         nz=doc["countries"]["NZ"]
-        self.assertEqual(nz["status"],"pending")
+        self.assertEqual(nz["status"],"approved")
         self.assertTrue(nz["portrait"]["sourceUrl"].startswith(
             "https://www.newzealand.com/"))
         self.assertEqual(len(nz["quiz"]),2)
