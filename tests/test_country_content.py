@@ -77,7 +77,7 @@ class CountryContentTest(unittest.TestCase):
     def test_country_postcard_must_match_its_geographic_record(self):
         path=self.root/"country-content.json"
         doc=json.loads(path.read_text(encoding="utf-8"))
-        doc["countries"]["FR"]["travelStops"]["france-eiffel-postcard"]["country"]="イタリア"
+        doc["countries"]["FR"]["travelStops"]["fr-eiffel-postcard"]["country"]="イタリア"
         path.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
         with self.assertRaisesRegex(ValueError,"wrong-country postcard"):
             load_country_content(self.root)
