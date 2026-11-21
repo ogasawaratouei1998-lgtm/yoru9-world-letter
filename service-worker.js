@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v57';
+const SHELL_CACHE = 'yoru9-shell-v58';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -55,6 +55,7 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/in-jaipur-hawa-mahal-cover.jpg', 'assets/travel/in-taj-mahal-postcard.jpg', 'assets/travel/in-qutb-minar-postcard.jpg',
  'assets/travel/nl-rotterdam-city-cover.jpg', 'assets/travel/nl-amsterdam-canals-postcard.jpg', 'assets/travel/nl-kinderdijk-windmills-postcard.jpg', 'assets/travel/sg-marina-bay-cover.jpg', 'assets/travel/sg-botanic-gardens-postcard.jpg', 'assets/travel/sg-gardens-bay-postcard.jpg', 'assets/travel/mx-bellas-artes-cover.jpg', 'assets/travel/mx-teotihuacan-postcard.jpg', 'assets/travel/mx-chichen-itza-postcard.jpg',
  'assets/travel/ch-lucerne-chapel-cover.jpg', 'assets/travel/ch-bern-old-city-postcard.jpg', 'assets/travel/ch-aletsch-glacier-postcard.jpg', 'assets/travel/pt-belem-tower-cover.jpg', 'assets/travel/pt-jeronimos-monastery-postcard.jpg', 'assets/travel/pt-pena-palace-postcard.jpg', 'assets/travel/gr-athens-skyline-cover.jpg', 'assets/travel/gr-parthenon-postcard.jpg', 'assets/travel/gr-delphi-apollo-postcard.jpg',
+ 'assets/travel/eg-cairo-skyline-cover.jpg', 'assets/travel/eg-giza-pyramid-postcard.jpg', 'assets/travel/eg-abu-simbel-postcard.jpg', 'assets/travel/tr-istanbul-sunset-cover.jpg', 'assets/travel/tr-hagia-sophia-postcard.jpg', 'assets/travel/tr-cappadocia-rocks-postcard.jpg', 'assets/travel/th-bangkok-wat-arun-cover.jpg', 'assets/travel/th-ayutthaya-mahathat-postcard.jpg', 'assets/travel/th-sukhothai-park-postcard.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
