@@ -207,6 +207,9 @@ jobs:
           else
             python auto_editorial.py
           fi
+      - name: Explain any editorial shortfall without sending notifications
+        if: always()
+        run: python editorial_health_report.py
       # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release today's four-or-five verified stories (skip if fewer)
         env:

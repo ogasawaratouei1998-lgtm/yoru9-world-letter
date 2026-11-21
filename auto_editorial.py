@@ -33,12 +33,13 @@ PRIVATE_GOSSIP=re.compile(r"不倫|浮気|私生活|婚外|私的な関係|恋�
 READER_PRESSURE=re.compile(r"あなたより大変|悩みなんて小さい|たかが失敗|感謝すべき|笑うべき|もっと頑張れ|努力が足りない|必ず元気になる|必ず幸せになる|明日は絶対に良くなる|笑わなければならない",re.I)
 
 def semantic_matching_needed(headline_pair_count):
-    """Expand cross-language pairing only when direct retrieved headlines yield few pairs.
+    """AI cross-publisher corroboration has no role in publisher-trust mode.
 
-    This heuristic never approves a story. Mandatory full-text evidence
-    checking and independent fact review still apply to every candidate.
+    One vetted news company's article is sufficient. Local headline grouping
+    can still supply optional creative context without model calls. Keep this
+    helper for stable caller/test compatibility.
     """
-    return headline_pair_count < 2
+    return False
 
 
 def editorial_fit_rejection(story):
@@ -1124,9 +1125,11 @@ FUNNEL_MAP_FIELDS=frozenset({
     "unready_country_codes"
 })
 FUNNEL_STAGES=frozenset({
-    "fresh_filter","fetch_plan","body_fetch","shortlist",
-    "budget_blocked","model_quota_blocked","draft","audit",
-    "country_readiness","four_story_gate","selected"
+    "fresh_filter","publisher_leads_below_four",
+    "fetch_plan","body_fetch","publisher_articles_below_four",
+    "shortlist","budget_blocked","model_quota_blocked",
+    "draft","draft_empty","audit","country_readiness",
+    "four_story_gate","selected"
 })
 
 def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
@@ -1177,8 +1180,10 @@ def main():
         except (KeyError,ValueError,TypeError):continue
         if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
     checkpoint("fresh_filter",fresh=len(recent))
-    if len(recent)<5:
-        print("Not enough fresh leads within seven days; safe skip.");return 0
+    if len(recent)<4:
+        checkpoint("publisher_leads_below_four",fresh=len(recent))
+        print("Fewer than four recent approved-publisher articles; keep existing edition.")
+        return 0
     # Collect actual article bodies before asking the model to draft.
     cache={}
     source_leads=[]
@@ -1220,8 +1225,11 @@ def main():
     print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
-    if len(source_leads)<1:
-        print('No retrieved article bodies; safe skip before AI generation.');return 0
+    if len(source_leads)<4:
+        checkpoint("publisher_articles_below_four",fetchable_original_bodies=len(source_leads))
+        print('Fewer than four readable approved-publisher articles; '
+              'save free AI calls and keep existing edition.')
+        return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
     # Headline overlap is only a discovery heuristic. Even when it finds five
@@ -1233,11 +1241,9 @@ def main():
     # Overlapping windows allow semantic matching across the full fetched set.
     # Headline groups are still included; AI proposals remain unverified.
     semantic=[]
-    # Pair detection from confirmed retrieved headlines already gives editor A
-    # concrete incident hypotheses. The separate semantic matching stage
-    # consumes expensive API requests without verifying ANY story. Skip it
-    # when at least two possible independent-source pairs are already known;
-    # reserve calls for the brief source-fidelity check instead.
+    # One trusted publisher is sufficient, so AI corroboration is never
+    # needed. Local headline pairing remains an optional discovery heuristic,
+    # not a requirement to write or publish any story.
     if semantic_matching_needed(len(groups)):
         for start in range(0,len(source_leads),90):
             if editorial_seconds_remaining()<220:
@@ -1445,7 +1451,8 @@ def main():
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
             "has_model_explanation":any(k in draft_response for k in ("reason","reasons","diagnostics"))
         },sort_keys=True),flush=True)
-        print("No draft stories generated; evidence must not be promoted to publication.",flush=True)
+        checkpoint("draft_empty",drafted=0)
+        print("No usable drafts from approved-publisher articles; keep previous edition.",flush=True)
         return 0
     # Existing paid-free quota allows only a handful of independent B audits.
     # Put drafts whose claimed countries have COMPLETELY curated reader assets
