@@ -134,7 +134,10 @@
     "hu-holloko-village-postcard",
     "pl-warsaw-old-town-cover",
     "pl-wawel-castle-postcard",
-    "pl-wieliczka-salt-chapel-postcard"
+    "pl-wieliczka-salt-chapel-postcard",
+    "si-ljubljana-panorama-cover",
+    "si-skocjan-caves-postcard",
+    "si-triple-bridge-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -6642,7 +6645,7 @@
     },
     "SI": {
       "name": "スロベニア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "地底の大峡谷と、人の歩幅で設計された首都の街並み",
         "body": "スロベニアには、自然の造形と都市の設計思想を異なる角度から体感できる遺産があります。シュコツィアン洞窟群では地下河川が大規模な空間を生み、首都リュブリャナには建築家ヨジェ・プレチニクによる歩行者や日常生活を重視した都市空間が残っています。洞窟の深さを感じる旅と、橋や市場の周囲をゆっくり歩く旅。自然がつくったスケールと、人のためにつくられた空間を比べながら楽しめます。",
@@ -6650,13 +6653,127 @@
           "世界遺産：シュコツィアン洞窟群",
           "世界遺産：リュブリャナのプレチニク建築群"
         ],
-        "photos": [],
+        "photos": [
+          "si-skocjan-caves-postcard",
+          "si-triple-bridge-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：スロベニアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/si"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/si-ljubljana-panorama-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Panorama_Ljubljane.jpg/500px-Panorama_Ljubljane.jpg",
+          "caption": "リュブリャナ城の丘から望む首都の街並み（2021年12月、August Dominus撮影）",
+          "author": "August Dominus",
+          "license": "CC BY-SA 4.0",
+          "place": "リュブリャナ・旧市街の眺望",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Panorama_Ljubljane.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "シュコツィアン洞窟の形成に重要な地形は？",
+          "options": [
+            "カルスト地形",
+            "珊瑚礁",
+            "砂丘"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは石灰岩と水がつくるカルスト地形を洞窟群の重要な価値としています。",
+          "photoLabel": "正解写真｜シュコツィアン洞窟群",
+          "quip": "大峡谷が地下にある。地図の平面だけでは、地球の実力を読み違える。",
+          "photoKey": "si-skocjan-caves-postcard"
+        },
+        {
+          "question": "リュブリャナの世界遺産で重視された設計思想は？",
+          "options": [
+            "人を中心とした都市設計",
+            "巨大な要塞の新設",
+            "砂漠の道路建設"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは建築家プレチニクによる人間中心の都市デザインを評価しています。",
+          "photoLabel": "正解写真｜リュブリャナの三本橋",
+          "quip": "橋一本で足りると思うのは設計者の都合。歩く人のために三本に増やした。",
+          "photoKey": "si-triple-bridge-postcard"
+        }
+      ],
+      "travelStops": {
+        "si-ljubljana-panorama-cover": {
+          "country": "スロベニア",
+          "countryOnly": true,
+          "place": "リュブリャナ・旧市街の眺望",
+          "region": "リュブリャナ・城の丘",
+          "latitude": 46.0489,
+          "longitude": 14.5084,
+          "note": "首都の旧市街を俯瞰すると、赤い屋根と教会の塔、川沿いの街並みが広がる。",
+          "photoCaption": "リュブリャナ城の丘から望む首都の街並み（2021年12月、August Dominus撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Panorama_Ljubljane.jpg/500px-Panorama_Ljubljane.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Panorama_Ljubljane.jpg",
+          "photoAsset": "assets/travel/si-ljubljana-panorama-cover.jpg",
+          "author": "August Dominus",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "si-skocjan-caves-postcard": {
+          "country": "スロベニア",
+          "countryOnly": true,
+          "place": "シュコツィアン洞窟群",
+          "region": "スロベニア南西部・クラス高原",
+          "latitude": 45.6639,
+          "longitude": 13.9893,
+          "note": "レカ川が地下に刻んだ大峡谷と洞窟の世界自然遺産。",
+          "photoCaption": "スロベニアのシュコツィアン洞窟群の岩壁と景観（2024年5月、Jakub Hałun撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/13/%C5%A0kocjan_Caves%2C_Slovenia%2C_20240502_1210_7581.jpg/500px-%C5%A0kocjan_Caves%2C_Slovenia%2C_20240502_1210_7581.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:%C5%A0kocjan_Caves%2C_Slovenia%2C_20240502_1210_7581.jpg",
+          "photoAsset": "assets/travel/si-skocjan-caves-postcard.jpg",
+          "author": "Jakub Hałun",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+          "travelStory": [
+            "シュコツィアンの洞窟へ入ると、外の明るい緑の風景から、岩と水が支配する暗い空間へと一気に移ります。地底の広い空洞や川の流れを見つめると、地下にも巨大な谷が存在することを実感できます。足元の道と遠くの岩壁の距離を比べながら進むと、見慣れた地表の景色とはまったく異なるスケールに驚かされる場所です。",
+            "UNESCOはシュコツィアンを、カルスト地形がよく表れた洞窟群として評価しています。石灰岩が水の浸食を受けて地中に大きな空間や峡谷をつくり、地表とは異なる水の動きが見られます。洞窟では自然保護と安全のため歩行ルートが制限されることがあります。派手な写真を撮るよりも、案内に従って水音や空間の奥行きを感じることが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・シュコツィアン洞窟群",
+              "url": "https://whc.unesco.org/en/list/390/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "si-triple-bridge-postcard": {
+          "country": "スロベニア",
+          "countryOnly": true,
+          "place": "リュブリャナのプレチニク建築群・三本橋",
+          "region": "リュブリャナ旧市街・リュブリャニツァ川",
+          "latitude": 46.0512,
+          "longitude": 14.5062,
+          "note": "建築家プレチニクが歩行者の通行に合わせて再設計した橋の一群。",
+          "photoCaption": "リュブリャナ中心部にある歩行者のための三本橋（2015年6月、JIP撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3a/Triple_Bridge_in_Ljubljana_in_late_June.jpg/500px-Triple_Bridge_in_Ljubljana_in_late_June.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Triple_Bridge_in_Ljubljana_in_late_June.jpg",
+          "photoAsset": "assets/travel/si-triple-bridge-postcard.jpg",
+          "author": "JIP",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "リュブリャナの街を歩くと、川沿いの散策路や橋、市場、広場がゆるやかにつながり、歩く人が自然に立ち止まれる場所が多いことに気づきます。遠くから見て豪華な一つの建物より、日常の道や水辺のつながりが心地よく感じられる景観です。橋のたもとで周囲を見渡し、建築が人の移動や出会いをどう支えているかを考えながら歩きたい街です。",
+            "UNESCOは、第一次世界大戦と第二次世界大戦の間に建築家ヨジェ・プレチニクがリュブリャナで手がけた都市設計を、人を中心に据えた取り組みとして評価しています。橋や市場、公共施設が既存の街や自然環境と丁寧に結びついています。設計者の意図を知ると、何気ない広場や歩道の配置にも街の個性をつくる役割があったことが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リュブリャナのプレチニク建築群",
+              "url": "https://whc.unesco.org/en/list/1643/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "SE": {
