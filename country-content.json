@@ -155,7 +155,10 @@
     "tz-kilimanjaro-postcard",
     "jo-amman-citadel-cover",
     "jo-petra-treasury-postcard",
-    "jo-wadi-rum-sunset-postcard"
+    "jo-wadi-rum-sunset-postcard",
+    "lk-colombo-beira-cover",
+    "lk-sigiriya-postcard",
+    "lk-kandy-tooth-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -5436,7 +5439,7 @@
     },
     "LK": {
       "name": "スリランカ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "岩山の古代都市と、仏教の信仰が息づく歴史都市",
         "body": "スリランカでは、熱帯の緑に包まれた歴史遺産を巡ることで、古代王国の建築と今日まで続く宗教文化の両方に触れられます。シーギリヤには岩山を利用した古代都市の遺構が残り、キャンディには仏教の巡礼地として重要な寺院と歴史的な街並みがあります。高い場所から周囲を見渡す旅と、街中で祈りの場を静かに見つめる旅。異なる視点から、この島の長い歴史を味わうことができます。",
@@ -5444,13 +5447,127 @@
           "世界遺産：古代都市シーギリヤ",
           "世界遺産：聖地キャンディ"
         ],
-        "photos": [],
+        "photos": [
+          "lk-sigiriya-postcard",
+          "lk-kandy-tooth-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：スリランカの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/lk"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/lk-colombo-beira-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Skyline_of_colombo_beira_lake.jpg/500px-Skyline_of_colombo_beira_lake.jpg",
+          "caption": "夕暮れのベイラ湖とコロンボの街並み（2017年5月、Kapila Perera撮影）",
+          "author": "Kapila Perera",
+          "license": "CC BY-SA 4.0",
+          "place": "コロンボ・ベイラ湖",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_colombo_beira_lake.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "シーギリヤの古代都市で特徴的な地形は？",
+          "options": [
+            "広大な氷床",
+            "高くそびえる岩山",
+            "海底火山の火口"
+          ],
+          "answer": 1,
+          "fact": "UNESCOは岩山の上と周囲に広がる古代都市の遺構を評価しています。",
+          "photoLabel": "正解写真｜古代都市シーギリヤ",
+          "quip": "王都の立地条件が、平地ではなく高さ180メートルの岩山。土地選びの段階から工事担当者には難題だったはずだ。",
+          "photoKey": "lk-sigiriya-postcard"
+        },
+        {
+          "question": "キャンディの重要な宗教的伝統は？",
+          "options": [
+            "古代ローマの多神教",
+            "北欧の神話信仰",
+            "仏教"
+          ],
+          "answer": 2,
+          "fact": "UNESCOはキャンディを仏教における重要な巡礼地として紹介しています。",
+          "photoLabel": "正解写真｜聖地キャンディ・仏歯寺",
+          "quip": "王国はなくなっても、祈りの場は残った。歴史の中心人物がいつまでも王様とは限らない。",
+          "photoKey": "lk-kandy-tooth-postcard"
+        }
+      ],
+      "travelStops": {
+        "lk-colombo-beira-cover": {
+          "country": "スリランカ",
+          "countryOnly": true,
+          "place": "コロンボ・ベイラ湖",
+          "region": "コロンボ・ベイラ湖",
+          "latitude": 6.927,
+          "longitude": 79.852,
+          "note": "夕空が湖面に映る。座標は湖の代表地点。",
+          "photoCaption": "夕暮れのベイラ湖とコロンボの街並み（2017年5月、Kapila Perera撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Skyline_of_colombo_beira_lake.jpg/500px-Skyline_of_colombo_beira_lake.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Skyline_of_colombo_beira_lake.jpg",
+          "photoAsset": "assets/travel/lk-colombo-beira-cover.jpg",
+          "author": "Kapila Perera",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "lk-sigiriya-postcard": {
+          "country": "スリランカ",
+          "countryOnly": true,
+          "place": "古代都市シーギリヤ",
+          "region": "中部州・シーギリヤ",
+          "latitude": 7.957,
+          "longitude": 80.76,
+          "note": "樹林に囲まれた岩山。座標は遺跡の代表地点。",
+          "photoCaption": "緑の向こうにそびえるシーギリヤ・ロック（2006年7月、Jolle撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/Sigiriya_Rock.jpg/500px-Sigiriya_Rock.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Sigiriya_Rock.jpg",
+          "photoAsset": "assets/travel/lk-sigiriya-postcard.jpg",
+          "author": "Jolle",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・古代都市シーギリヤ",
+              "url": "https://whc.unesco.org/en/list/202/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "travelStory": [
+            "写真のシーギリヤは、緑の樹林の向こうから巨大な岩が突き出すように見えます。周囲の平地との大きな高低差を意識すると、なぜここが王都として選ばれたのか想像が膨らみます。地図で岩山と周辺の配置を確かめながら、険しい斜面と頂上に建築を組み込んだ古代の設計を読み解く小旅行です。",
+            "UNESCOによれば、5世紀後半のカッサパ1世が都とした遺跡は、周囲から約180メートルそびえる花崗岩の岩山の頂上と斜面に広がります。かつては巨大な獅子をかたどった入口から階段を進む構成でした。わずかな治世に築かれた王都が千年以上残っていることに思いを巡らせると、自然の地形と王権の表現が結びついた建築の意味が見えてきます。"
+          ],
+          "famousTourist": true
+        },
+        "lk-kandy-tooth-postcard": {
+          "country": "スリランカ",
+          "countryOnly": true,
+          "place": "聖地キャンディ・仏歯寺",
+          "region": "中部州・キャンディ",
+          "latitude": 7.2936,
+          "longitude": 80.6413,
+          "note": "仏歯寺の建築と仏教旗。座標は寺院の代表地点。",
+          "photoCaption": "白い壁と赤い屋根を持つキャンディの仏歯寺（2019年4月、Thimuth撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6f/Kandy_Sri_Lanka_Temple_of_the_tooth.jpg/500px-Kandy_Sri_Lanka_Temple_of_the_tooth.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Kandy_Sri_Lanka_Temple_of_the_tooth.jpg",
+          "photoAsset": "assets/travel/lk-kandy-tooth-postcard.jpg",
+          "author": "Thimuth",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・聖地キャンディ",
+              "url": "https://whc.unesco.org/en/list/450/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "travelStory": [
+            "写真に写る仏歯寺では、白い壁と赤い屋根が対照をなし、屋根の下には木の柱が並びます。仏教旗が掲げられた建物の姿を眺めると、ここが単なる昔の建築ではなく、現在も信仰の場であることが伝わります。湖と丘に囲まれた街全体にも想像を広げ、歴史都市の景観と宗教文化のつながりを味わってみましょう。",
+            "UNESCOはキャンディを、1815年に英国の支配下に入るまでシンハラ王国の最後の都だった仏教の聖地として紹介しています。仏歯を祀る寺院は重要な巡礼地であり、今も続く宗教的な営みが世界遺産の魅力を支えています。写真から建築の細部を観察しつつ、礼拝の場としての意味を尊重し、実際に訪れる際は服装や撮影の規則、最新の安全情報を確かめましょう。"
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "LS": {

@@ -116,6 +116,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'石段と石塔で知られる、慶州の世界遺産の寺は？',options:['仏国寺','景福宮','海印寺'],answer:0,photoKey:'korea-bulguksa-quiz-image',photoLabel:'正解の寺院｜慶州・仏国寺',fact:'仏国寺は新羅時代の仏教建築を伝える寺で、石窟庵とともにUNESCO世界遺産に登録されています。',quip:'階段の先まで文化財。登る前から歴史が濃い。'},
   {question:'済州島の城山日出峰を形づくったのは何？',options:['サンゴ礁','人工の盛り土','火山の噴出'],answer:2,photoKey:'korea-seongsan-quiz-image',photoLabel:'正解の地形｜済州島・城山日出峰',fact:'城山日出峰は火山活動で生まれた凝灰丘で、済州島の火山地形の一部として世界自然遺産に登録されています。',quip:'海のそばの巨大な山。正体は火山の作品。'},
  ],
+ LK:[
+  {question:'シーギリヤの古代都市で特徴的な地形は？',options:['広大な氷床','高くそびえる岩山','海底火山の火口'],answer:1,fact:'UNESCOは岩山の上と周囲に広がる古代都市の遺構を評価しています。',photoLabel:'正解写真｜古代都市シーギリヤ',quip:'王都の立地条件が、平地ではなく高さ180メートルの岩山。土地選びの段階から工事担当者には難題だったはずだ。',photoKey:'lk-sigiriya-postcard'},
+  {question:'キャンディの重要な宗教的伝統は？',options:['古代ローマの多神教','北欧の神話信仰','仏教'],answer:2,fact:'UNESCOはキャンディを仏教における重要な巡礼地として紹介しています。',photoLabel:'正解写真｜聖地キャンディ・仏歯寺',quip:'王国はなくなっても、祈りの場は残った。歴史の中心人物がいつまでも王様とは限らない。',photoKey:'lk-kandy-tooth-postcard'},
+ ],
  MX:[
   {question:'テオティワカンの巨大な建築群を貫く大通りの名前は？',options:['死者の大通り','王の道','海沿いの大通り'],answer:0,photoLabel:'正解写真｜テオティワカンの遺跡',fact:'テオティワカンには太陽のピラミッドなどを結ぶ『死者の大通り』が広がっています。',quip:'都市計画のスケールが、徒歩の散歩道を超えている。',photoKey:'mx-teotihuacan-postcard'},
   {question:'チチェン・イッツァにある階段状のピラミッドは何と呼ばれる？',options:['エル・カスティージョ','コロッセオ','クトゥブ・ミナール'],answer:0,photoLabel:'正解写真｜チチェン・イッツァ',fact:'エル・カスティージョはチチェン・イッツァを代表する階段状の石造ピラミッドです。',quip:'古代の街の主役級。階段が一段ずつ存在感を出してきます。',photoKey:'mx-chichen-itza-postcard'},

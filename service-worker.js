@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v77';
+const SHELL_CACHE = 'yoru9-shell-v78';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -92,7 +92,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Tanzania: Dar es Salaam harbour, Stone Town and Kilimanjaro.
  'assets/travel/tz-dar-es-salaam-harbour-cover.jpg', 'assets/travel/tz-stone-town-postcard.jpg', 'assets/travel/tz-kilimanjaro-postcard.jpg',
  // Jordan: Amman, Petra and Wadi Rum.
- 'assets/travel/jo-amman-citadel-cover.jpg', 'assets/travel/jo-petra-treasury-postcard.jpg', 'assets/travel/jo-wadi-rum-sunset-postcard.jpg'];
+ 'assets/travel/jo-amman-citadel-cover.jpg', 'assets/travel/jo-petra-treasury-postcard.jpg', 'assets/travel/jo-wadi-rum-sunset-postcard.jpg',
+ // Sri Lanka: Beira Lake, Sigiriya and Kandy.
+ 'assets/travel/lk-colombo-beira-cover.jpg', 'assets/travel/lk-sigiriya-postcard.jpg', 'assets/travel/lk-kandy-tooth-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
