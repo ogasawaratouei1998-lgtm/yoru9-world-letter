@@ -124,6 +124,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ブリッゲンと深い関係を持つ交易組織は？',options:['ハンザ同盟','東インド会社のみ','マヤの都市国家'],answer:0,photoLabel:'正解写真｜ブリッゲンの木造商館群',fact:'UNESCOはブリッゲンをハンザ同盟の交易史と結び付けて説明しています。',quip:'交易の歴史は木造の壁にも刻まれる。色鮮やかな港の記憶。',photoKey:'no-bryggen-postcard'},
   {question:'フィヨルドの谷を形づくった主な作用は？',options:['氷河の侵食','砂漠の砂嵐','火山灰の堆積のみ'],answer:0,photoLabel:'正解写真｜西ノルウェーのフィヨルド',fact:'UNESCOは西ノルウェーのフィヨルドを氷河による地形の顕著な例としています。',quip:'地形の彫刻家は氷河。作品の大きさに、人間の尺度が追いつかない。',photoKey:'no-geirangerfjord-postcard'},
  ],
+ NP:[
+  {question:'カトマンズ盆地の世界遺産を構成する主な要素は？',options:['氷山上の灯台','宮殿広場や宗教建築','巨大な海底遺跡'],answer:1,fact:'UNESCOは三つの宮殿広場など七つの資産群を挙げています。',photoLabel:'正解写真｜カトマンズ盆地・パタン宮殿広場',quip:'街そのものが博物館。展示物をガラスケースに入れる発想が、ここではむしろ邪魔になる。',photoKey:'np-patan-durbar-postcard'},
+  {question:'サガルマータ国立公園に含まれる著名な山は？',options:['富士山','キリマンジャロ','エベレスト'],answer:2,fact:'UNESCOはエベレストを中心とするヒマラヤの山岳景観を紹介しています。',photoLabel:'正解写真｜サガルマータ国立公園・カラパタールからの眺望',quip:'世界最高峰でも、雲には勝てない。肩書きがどれだけ高くても、天気の都合は聞いてもらえないらしい。',photoKey:'np-everest-postcard'},
+ ],
  NZ:[
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
