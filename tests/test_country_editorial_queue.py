@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AR","BR","DE","ES","FR","GB","IT","JP","KR","NZ","US"])
-        self.assertEqual(report["pendingCountries"],185)
-        self.assertEqual(len(report["prioritizedPending"]),185)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),185)
+        self.assertEqual(report["approvedCountries"],["AG","AR","BR","DE","ES","FR","GB","IT","JP","KR","NZ","US"])
+        self.assertEqual(report["pendingCountries"],184)
+        self.assertEqual(len(report["prioritizedPending"]),184)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),184)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
@@ -114,12 +114,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",brazil["missing"])
             self.assertIn("attributed_country_portrait_photo",brazil["missing"])
 
-    def test_antigua_is_near_ready_but_not_automatically_approved(self):
+    def test_antigua_was_explicitly_approved_after_source_review(self):
         result=country_editorial_queue(ROOT)
-        antigua=next(row for row in result["prioritizedPending"] if row["code"]=="AG")
-        self.assertEqual(antigua["requiredRemaining"],0,antigua["missing"])
-        self.assertNotIn("AG",result["approvedCountries"])
-        self.assertIn("optional_current_topic",antigua["missing"])
+        self.assertIn("AG",result["approvedCountries"])
+        self.assertNotIn("AG",{row["code"] for row in result["prioritizedPending"]})
 
     def test_antigua_quiz_photo_reused_as_cover_is_detected(self):
         with tempfile.TemporaryDirectory() as dirname:
@@ -129,6 +127,7 @@ class CountryEditorialQueueTest(unittest.TestCase):
             path=root/"country-content.json"
             dataset=json.loads(path.read_text(encoding="utf-8"))
             antigua=dataset["countries"]["AG"]
+            antigua["status"]="pending"
             cover=antigua["portraitPhotos"][0]
             cover["asset"]=antigua["travelStops"]["antigua-bettys-hope-quiz-image"]["photoAsset"]
             path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
