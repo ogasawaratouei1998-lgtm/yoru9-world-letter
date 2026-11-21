@@ -119,7 +119,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         dataset=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
         expected=sorted(code for code,country in dataset["countries"].items()
                         if country["status"]=="approved")
-        registry=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\((\\[.*\\])\\);$",
+        registry=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\.freeze\((\[.*\])\);$",
                            page)
         self.assertIsNotNone(registry)
         self.assertEqual(json.loads(registry.group(1)),expected)
