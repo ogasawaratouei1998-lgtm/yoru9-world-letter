@@ -7,7 +7,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from build_site import bundle_travel_photos
+from build_site import bundle_travel_photos, MAX_PUBLIC_PHOTO_MANIFEST_BYTES
 from check_release_candidate import jpeg_dimensions
 
 
@@ -122,6 +122,48 @@ class TravelPhotoCacheTest(unittest.TestCase):
         self.assertTrue(any(url.endswith("/assets/travel/hero.jpg") for url in hits))
         self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(1300,720))
         self.assertEqual(len(list(self.cache.glob("*.jpg"))),1)
+
+    def test_large_public_manifest_recovers_without_repeated_wikimedia_requests(self):
+        from urllib.error import HTTPError
+        second={**self.record,"photoAsset":"assets/travel/second.jpg",
+                "photo":self.record["photo"].replace("hero.jpg","second.jpg"),
+                "photoPage":self.record["photoPage"].replace("hero.jpg","second.jpg")}
+        self.manifest.write_text(json.dumps({"hero":self.record,"second":second}),encoding="utf-8")
+        prior={"padding":{"note":"x"*250_000},"hero":dict(self.record),"second":second}
+        payload=json.dumps(prior).encode("utf-8")
+        self.assertGreater(len(payload),150_001)
+        hits=[]
+        def network(req,timeout):
+            url=req.full_url
+            hits.append(url)
+            if "wikimedia.org" in url:
+                raise HTTPError(url,429,"rate limited",{},None)
+            if url.endswith("/travel-stops.json"):
+                return Response(payload)
+            if url.endswith(("/assets/travel/hero.jpg","/assets/travel/second.jpg")):
+                return Response(jpeg())
+            raise AssertionError(url)
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            self.assertEqual(bundle_travel_photos(self.root,self.output),2)
+        self.assertEqual(sum("wikimedia.org" in u for u in hits),1)
+        self.assertEqual(len(list(self.cache.glob("*.jpg"))),2)
+
+    def test_oversized_public_manifest_fails_closed(self):
+        from urllib.error import HTTPError
+        payload=json.dumps({"padding":"x"*MAX_PUBLIC_PHOTO_MANIFEST_BYTES,
+                            "hero":dict(self.record)}).encode("utf-8")
+        def network(req,timeout):
+            if "wikimedia.org" in req.full_url:
+                raise HTTPError(req.full_url,429,"rate limited",{},None)
+            if req.full_url.endswith("/travel-stops.json"):
+                return Response(payload)
+            raise AssertionError("Must not recover from oversized manifest")
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            with self.assertRaisesRegex(RuntimeError,"旅行写真の欠落を防ぐため公開停止"):
+                bundle_travel_photos(self.root,self.output)
+        self.assertFalse(list(self.cache.glob("*.jpg")))
 
     def test_old_site_with_different_photo_attribution_cannot_substitute(self):
         from urllib.error import HTTPError

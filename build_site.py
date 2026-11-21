@@ -9,6 +9,10 @@ import hashlib
 from datetime import date
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
+from urllib.error import HTTPError
+
+# Bounded for the full 196-country photo catalog, including long travel essays.
+MAX_PUBLIC_PHOTO_MANIFEST_BYTES = 8 * 1024 * 1024
 
 def bundle_travel_photos(root, output):
     """Package real, rights-checked destination photos with the page.
@@ -95,6 +99,7 @@ def bundle_travel_photos(root, output):
     reused=0
     cache_files={}
     failures = []
+    commons_throttled = False
     for asset, url in required.items():
         target = output / asset
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -147,8 +152,8 @@ def bundle_travel_photos(root, output):
             url.replace('/500px-', '/330px-'),
             url.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/').replace('/500px-', '/330px-'),
         ]
-        last_error = 'no sources'
-        for candidate in dict.fromkeys(paths):
+        last_error = 'Wikimedia rate limited; deferred until a later build' if commons_throttled else 'no sources'
+        for candidate in (() if commons_throttled else dict.fromkeys(paths)):
             try:
                 request = Request(candidate, headers={'User-Agent': 'Yoru9WorldLetter/1.1 (educational CC photo previews; GitHub Pages)'})
                 with urlopen(request, timeout=20) as response:
@@ -170,6 +175,13 @@ def bundle_travel_photos(root, output):
                     # the actual image provenance and pixel-quality gate.
                     shutil.copyfile(target,cache_file)
                 break
+            except HTTPError as exc:
+                last_error = str(exc)
+                if exc.code == 429:
+                    # Respect the upstream restriction; do not immediately try
+                    # alternate hosts or widths against the same service.
+                    commons_throttled = True
+                    break
             except (OSError, ValueError) as exc:
                 last_error = str(exc)
         if not target.exists():
@@ -184,7 +196,10 @@ def bundle_travel_photos(root, output):
         try:
             with urlopen(Request(public_base+'travel-stops.json',
                          headers={'User-Agent':'Yoru9WorldLetter/1.1'}),timeout=12) as response:
-                prior=json.loads(response.read(150_001).decode('utf-8'))
+                raw=response.read(MAX_PUBLIC_PHOTO_MANIFEST_BYTES+1)
+            if len(raw)>MAX_PUBLIC_PHOTO_MANIFEST_BYTES:
+                raise ValueError('published photo manifest exceeds bounded size')
+            prior=json.loads(raw.decode('utf-8'))
             if not isinstance(prior,dict):
                 raise ValueError('published photo manifest is malformed')
         except (OSError,ValueError,UnicodeError,TypeError):
