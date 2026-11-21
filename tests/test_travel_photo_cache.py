@@ -158,12 +158,12 @@ class TravelPhotoCacheTest(unittest.TestCase):
             if url.endswith("/travel-stops.json"):
                 return Response(json.dumps(prior).encode("utf-8"))
             if url.endswith("/assets/travel/hero.jpg"):
-                return Response(jpeg(500,300))
+                return Response(jpeg(500,153))
             raise AssertionError("Unexpected request "+url)
         with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
              patch("build_site.urlopen",side_effect=network):
             self.assertEqual(bundle_travel_photos(self.root,self.output),1)
-            self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(500,300))
+            self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(500,153))
             # The same 500px saved image is NOT an acceptable full-width
             # country hero when this country becomes the active edition.
             current.write_text(json.dumps({"stories":[{"country":"United States"}]}),
