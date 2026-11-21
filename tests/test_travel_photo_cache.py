@@ -141,6 +141,36 @@ class TravelPhotoCacheTest(unittest.TestCase):
         self.assertFalse(any(url.endswith("/assets/travel/hero.jpg") for url in hits))
         self.assertFalse(list(self.cache.glob("*.jpg")))
 
+    def test_older_inactive_photo_can_recover_but_cannot_become_new_active_blurry_cover(self):
+        from urllib.error import HTTPError
+        # Fixture page has a US portrait; the current issue is initially DE.
+        (self.root/"index.html").write_text(
+            'const TODAY_COUNTRY_PHOTOS=Object.freeze({"US":[{"asset":"assets/travel/hero.jpg"}]});\n',
+            encoding="utf-8")
+        current=self.root/"data/current.json"
+        current.parent.mkdir(parents=True,exist_ok=True)
+        current.write_text(json.dumps({"stories":[{"country":"Germany"}]}),encoding="utf-8")
+        prior={"hero":dict(self.record)}
+        def network(req,timeout):
+            url=req.full_url
+            if "wikimedia.org" in url:
+                raise HTTPError(url,429,"rate limited",{},None)
+            if url.endswith("/travel-stops.json"):
+                return Response(json.dumps(prior).encode("utf-8"))
+            if url.endswith("/assets/travel/hero.jpg"):
+                return Response(jpeg(500,300))
+            raise AssertionError("Unexpected request "+url)
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            self.assertEqual(bundle_travel_photos(self.root,self.output),1)
+            self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(500,300))
+            # The same 500px saved image is NOT an acceptable full-width
+            # country hero when this country becomes the active edition.
+            current.write_text(json.dumps({"stories":[{"country":"United States"}]}),
+                               encoding="utf-8")
+            with self.assertRaisesRegex(RuntimeError,"旅行写真の欠落を防ぐため公開停止"):
+                bundle_travel_photos(self.root,self.output)
+
     def test_actions_enable_same_cache_for_preview_release_and_deploy(self):
         repo=Path(__file__).resolve().parents[1]
         for path in (".github/workflows/test-publishing.yml",
