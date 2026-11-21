@@ -99,6 +99,21 @@ class CountryContentTest(unittest.TestCase):
                 self.assertTrue(all(110<=len(t)<=360 for t in stop["travelStory"]))
                 self.assertTrue(stop.get("historicalSources"))
 
+    def test_korea_explicit_approval_simulation_qualifies_for_reader(self):
+        # A separate PR must opt in. This fixture tests that all photo, quiz
+        # and independent tourist assets really become usable at that point.
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(data["countries"]["KR"]["status"],"pending")
+        data["countries"]["KR"]["status"]="approved"
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
+        result=country_coverage(self.root,[{"country":"韓国"}])
+        self.assertEqual(set(result),{"KR"})
+        self.assertEqual(result["KR"]["quizRounds"],2)
+        self.assertEqual(result["KR"]["cover"],"assets/travel/seoul-gyeongbokgung.jpg")
+        self.assertEqual(result["KR"]["postcard"],"assets/travel/korea-bulguksa-stairs.jpg")
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
