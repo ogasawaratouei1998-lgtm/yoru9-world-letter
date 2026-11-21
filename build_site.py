@@ -104,7 +104,9 @@ def bundle_travel_photos(root, output):
                             if stop["photoAsset"]==asset)
             identity={"asset":asset,"url":url,"page":provenance["photoPage"],
                       "author":provenance.get("author"),"license":provenance.get("license"),
-                      "licenseUrl":provenance.get("licenseUrl"),"cover":cover}
+                      "licenseUrl":provenance.get("licenseUrl"),
+                      "country":provenance.get("country"),"place":provenance.get("place"),
+                      "cover":cover}
             digest=hashlib.sha256(json.dumps(identity,sort_keys=True,
                                ensure_ascii=False).encode("utf-8")).hexdigest()
             cache_file=cache_root/(digest+".jpg")
@@ -187,7 +189,8 @@ def bundle_travel_photos(root, output):
             matching=any(
                 isinstance(p,dict) and selected is not None and
                 all(p.get(field)==selected.get(field) for field in
-                    ('photoAsset','photo','photoPage','author','license','licenseUrl'))
+                    ('photoAsset','photo','photoPage','author','license','licenseUrl',
+                     'country','place'))
                 for p in prior.values())
             if not matching:
                 remaining.append(problem)
