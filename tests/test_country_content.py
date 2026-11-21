@@ -386,7 +386,7 @@ class CountryContentTest(unittest.TestCase):
                              if p.get("asset")=="assets/travel/fuji-cherry-blossom.jpg")
         japanese_fujisan.pop("avoidCover",None)
         content.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"JP: approved content fails reader readiness"):
+        with self.assertRaisesRegex(ValueError,"JP: invalid approved photo quiz: quiz_cover_overlap"):
             sync_country_content(self.root)
 
     def test_approved_fallback_must_not_reuse_a_quiz_photo(self):
@@ -402,7 +402,7 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(fallback.pop("avoidCover"))
         path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
         with self.assertRaisesRegex(ValueError,
-                                    "AR: approved content fails reader readiness: AR: portrait cover reused"):
+                                    "AR: invalid approved photo quiz: quiz_cover_overlap"):
             sync_country_content(self.root)
 
     def test_newly_approved_countries_keep_distinct_covers_and_quiz_photos(self):
