@@ -96,6 +96,18 @@ def load_country_content(root):
         if entry.get("status") not in ("approved","pending"):
             raise ValueError(code+": unknown country editorial approval status")
         if entry["status"]=="approved":
+            portrait=entry.get("portrait")
+            if not isinstance(portrait,dict) or not portrait.get("sourceName"):
+                raise ValueError(code+": approved portrait requires named cultural source")
+            source_url=portrait.get("sourceUrl")
+            if not isinstance(source_url,str):
+                raise ValueError(code+": approved portrait source URL missing")
+            guide_url=urlsplit(source_url)
+            if (guide_url.scheme!="https" or not guide_url.hostname
+                    or guide_url.username or guide_url.password
+                    or guide_url.hostname.endswith("wikimedia.org")
+                    or guide_url.hostname.endswith("creativecommons.org")):
+                raise ValueError(code+": approved country portrait requires an independent source")
             # Each historical claim needs an independent documentary reference;
             # a CC image credit alone says nothing about the essay's accuracy.
             for key,stop in entry.get("travelStops",{}).items():
