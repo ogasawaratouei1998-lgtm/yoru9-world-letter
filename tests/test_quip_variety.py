@@ -7,7 +7,8 @@ import unittest
 
 from auto_editorial import select_diverse_verified_stories,save_editorial_funnel,MANZAI_CRAFT
 from quip_variety import (quip_cadence, repeated_cadence_count,
-                          repeated_exact_quip_count, quip_variety_metrics)
+                          repeated_exact_quip_count, quip_variety_metrics,
+                          prefer_fresh_quip)
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -21,6 +22,37 @@ class QuipVarietyTest(unittest.TestCase):
         self.assertEqual(quip_cadence("いったいどうすんねん！"),"dousunnen")
         self.assertIsNone(quip_cadence("観客より先に値札が登場。"))
         self.assertIsNone(quip_cadence(None))
+
+    def test_pre_audit_quip_choice_avoids_repeated_cadences(self):
+        first="レシートまで休日出勤してるやないか！"
+        second="給料日より先に領収書が帰宅。"
+        earlier=[{"quip":"鍵が先に帰宅してるやないか！"}]
+        self.assertEqual(prefer_fresh_quip([first,second],earlier),second)
+        self.assertEqual(prefer_fresh_quip([first,second],[]),first)
+        self.assertEqual(prefer_fresh_quip([first],earlier),first)
+        self.assertIsNone(prefer_fresh_quip([],earlier))
+
+    def test_punctuation_and_width_do_not_hide_issue_repetition(self):
+        first="ＡＢＣが先に到着。"
+        duplicate="ABC が先に到着！？"
+        fresh="切符だけが時間通り。"
+        self.assertEqual(repeated_exact_quip_count(
+            [{"quip":first},{"quip":duplicate}]),1)
+        self.assertEqual(prefer_fresh_quip(
+            [duplicate,fresh],[{"quip":first}]),fresh)
+
+    def test_alternatives_never_introduce_unreviewed_text_after_audit(self):
+        from editorial_quality import choose_pre_review_quip,quip_candidates_ranked
+        story={"title":"荷物の配送先を間違えた",
+               "summary":"配送先を取り違えて荷物が事務所へ",
+               "quip":"荷物よりも先に伝票が旅してるやないか！",
+               "quipCandidates":["切符もないのに領収書が一足先に帰宅。"]}
+        ranked=quip_candidates_ranked(story)
+        self.assertEqual(len(ranked),2)
+        chosen=choose_pre_review_quip(story,[{"quip":ranked[0]}])
+        self.assertEqual(chosen,ranked[1])
+        code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
+        self.assertIn("choose_pre_review_quip(story,reviewed=selected)",code)
 
     def test_variety_is_only_a_final_tiebreaker_among_verified_stories(self):
         # All factual, historical, regional, topic and category priorities tie.
