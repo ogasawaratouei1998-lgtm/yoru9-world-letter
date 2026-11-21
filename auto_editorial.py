@@ -1577,6 +1577,8 @@ def main():
             # summary; this is not an independent investigation of journalism.
             reject("publisher_article_not_readable_for_summary");continue
         story["verificationUrls"]=urls
+        if source_title_is_policy_explainer(publisher_titles.get(urls[0],"")):
+            reject("policy_explainer_without_incident_reporting");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
             reject("previously_published");continue
         if BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):
