@@ -513,7 +513,7 @@ class CountryContentTest(unittest.TestCase):
                 self.assertNotEqual(url,stop["photoPage"])
                 self.assertTrue(stop["author"] and stop["license"] and stop["photoAsset"])
         self.assertEqual({code for code,c in data["countries"].items() if c["status"]=="approved"},
-                         {"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AU","CA","IN","NL","SG","MX","CH","PT","GR","EG","TR","TH"})
+                         {"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AT","AU","CA","IN","NL","SG","MX","CH","PT","GR","EG","TR","TH"})
 
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)
