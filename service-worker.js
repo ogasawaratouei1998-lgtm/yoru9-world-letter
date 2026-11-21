@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v44';
+const SHELL_CACHE = 'yoru9-shell-v45';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -37,6 +37,8 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/iguazu-argentina.jpg', 'assets/travel/argentina-mate-quiz.jpg',
  'assets/travel/france-mont-low-tide-quiz.jpg', 'assets/travel/france-nice-coast-quiz.jpg',
  'assets/travel/san-francisco-golden-gate.jpg', 'assets/travel/us-yosemite-granite-quiz.jpg',
+ 'assets/travel/spain-sagrada-nativity-quiz.jpg', 'assets/travel/spain-alhambra-quiz.jpg',
+ 'assets/travel/spain-park-guell-drac.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
