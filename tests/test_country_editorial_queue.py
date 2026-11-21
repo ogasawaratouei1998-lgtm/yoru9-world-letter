@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AR","DE","ES","FR","GB","IT","JP","KR","NZ","US"])
-        self.assertEqual(report["pendingCountries"],186)
-        self.assertEqual(len(report["prioritizedPending"]),186)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),186)
+        self.assertEqual(report["approvedCountries"],["AR","BR","DE","ES","FR","GB","IT","JP","KR","NZ","US"])
+        self.assertEqual(report["pendingCountries"],185)
+        self.assertEqual(len(report["prioritizedPending"]),185)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),185)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
@@ -94,12 +94,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
                        if row["code"]=="KR")
             self.assertIn("two_paragraph_microtravel",korea["missing"])
 
-    def test_brazil_is_prepared_but_remains_pending(self):
+    def test_brazil_is_explicitly_approved_after_photo_and_source_review(self):
         report=country_editorial_queue(ROOT)
-        brazil=next(row for row in report["prioritizedPending"] if row["code"]=="BR")
-        self.assertEqual(brazil["requiredRemaining"],0,brazil["missing"])
-        self.assertNotIn("BR",report["approvedCountries"])
-        self.assertIn("optional_current_topic",brazil["missing"])
+        self.assertIn("BR",report["approvedCountries"])
+        self.assertNotIn("BR",{row["code"] for row in report["prioritizedPending"]})
 
     def test_brazil_cover_source_drift_is_flagged_even_with_usable_quizzes(self):
         with tempfile.TemporaryDirectory() as dirname:
@@ -108,6 +106,7 @@ class CountryEditorialQueueTest(unittest.TestCase):
                 shutil.copy2(ROOT/filename,root/filename)
             path=root/"country-content.json"
             dataset=json.loads(path.read_text(encoding="utf-8"))
+            dataset["countries"]["BR"]["status"]="pending"
             dataset["countries"]["BR"]["portraitPhotos"][0]["author"]="Incorrect photographer"
             path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
             report=country_editorial_queue(root)
