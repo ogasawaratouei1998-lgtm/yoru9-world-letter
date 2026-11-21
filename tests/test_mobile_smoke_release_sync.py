@@ -22,8 +22,11 @@ class PublishedMobileSmokeSyncTest(unittest.TestCase):
             r'<script id="embedded-demo" type="application/json">(.*?)</script>',
             page,re.S).group(1))
         published=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
-        self.assertNotEqual(len(demo["stories"]),len(published["stories"]),
-                            "This regression guards the real asynchronous swap.")
+        self.assertEqual(demo["status"],"demo")
+        self.assertEqual(published["status"],"published")
+        self.assertTrue(1<=len(published["stories"])<=5)
+        # Future nights may have five published stories too: the smoke must
+        # distinguish editions by publication status, not count mismatch.
 
 
 if __name__=="__main__":
