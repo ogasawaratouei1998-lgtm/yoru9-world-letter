@@ -40,6 +40,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
   {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'},
  ],
+ GR:[
+  {question:'アテネのアクロポリスにある有名な神殿は？',options:['パルテノン神殿','タージ・マハル','シェーンブルン宮殿'],answer:0,photoKey:'gr-athens-acropolis-postcard',photoLabel:'正解写真｜アテネのアクロポリス',fact:'アテネのアクロポリスにはパルテノン神殿が残っています。',quip:'街全体が見える高台。古代から絶景の指定席だった。'},
+  {question:'デルフィの聖域と深く結び付く神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoKey:'gr-delphi-apollo-postcard',photoLabel:'正解写真｜デルフィのアポロン神殿',fact:'UNESCOはデルフィをアポロン神の聖域として紹介しています。',quip:'山の静けさが魅力。昔は神託を求める人々で大にぎわい。'},
+ ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
