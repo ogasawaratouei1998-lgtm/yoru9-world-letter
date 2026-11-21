@@ -94,19 +94,22 @@ def independently_approved_secondary_quip(story, review):
         return None
     return second
 
-# Editorial scores are a secondary ranking and review aid, never evidence that
-# a story happened. A reviewer still needs the factual boolean vetoes above.
-RUBRIC_FIELDS=("surprise","mistakeClarity","outcomeIrony","evidence","safety")
+# Four editorial scores evaluate our presentation, not journalistic proof.
+# For new editions publisher trust is checked by publish_approved.py; a model
+# must not give a second evidence score to reporting it did not produce.
+# Legacy approvals may include an ignored "evidence" field for compatibility.
+RUBRIC_FIELDS=("surprise","mistakeClarity","outcomeIrony","safety")
 
 
 def editorial_rubric(story_or_review):
-    """Five explicit 1-5 dimensions; absent model metadata stays unscored.
+    """Four presentation dimensions; publisher identity is a separate gate.
 
-    Safety and evidence are non-compensatory: an amusing outcome cannot offset
-    weak journalism or an unsafe target.
+    Old five-dimension approvals are accepted; their evidence number has no
+    decision power. Journalistic verification is the publisher's responsibility.
     """
     data=story_or_review.get("editorialScores") if isinstance(story_or_review,dict) else None
-    if not isinstance(data,dict) or set(data)!=set(RUBRIC_FIELDS):
+    if not isinstance(data,dict) or not (set(data)==set(RUBRIC_FIELDS) or
+            set(data)==set(RUBRIC_FIELDS)|{"evidence"}):
         return None
     if any(type(data[k]) is not int or not 1<=data[k]<=5 for k in RUBRIC_FIELDS):
         return None
@@ -120,8 +123,8 @@ def editorial_rubric_rejection(review):
     scores=editorial_rubric(review)
     if scores is None:
         return "editorial_scores_invalid"
-    if scores["evidence"]<5 or scores["safety"]<5:
-        return "evidence_or_safety_below_standard"
+    if scores["safety"]<5:
+        return "safety_below_standard"
     if min(scores[key] for key in ("surprise","mistakeClarity","outcomeIrony"))<4:
         return "story_not_extraordinary_or_specific"
     return None
@@ -222,10 +225,10 @@ def choose_pre_review_quip(story, reviewed=()):
 
 
 def verified_rubric_for_edition(review, edition_date):
-    """For fresh AI issues require a complete human-impact-aware 5-factor audit.
+    """For fresh issues require four editorial scores, not proof of reporting.
 
-    Historical hand-reviewed issues keep their original contract and records.
-    A missing dimension must NOT silently bypass the modern quality threshold.
+    Publisher selection is checked by the publisher at the release boundary.
+    Historic approvals remain unaffected.
     """
     if not isinstance(review,dict):
         return False
