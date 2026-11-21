@@ -98,6 +98,72 @@ def _legacy(root):
             "countries":countries}
 
 
+def country_quiz_problems(entry):
+    """Pure structural QA for all two-round, photo-backed country quizzes.
+
+    This does not establish historical truth. It blocks malformed questions
+    and incorrect image/answer wiring before a country can be published.
+    """
+    problems=set()
+    quizzes=entry.get("quiz")
+    if not isinstance(quizzes,list) or len(quizzes)!=2:
+        return ("quiz_content","quiz_photos")
+    stops=entry.get("travelStops",{})
+    if not isinstance(stops,dict):
+        return ("quiz_photos",)
+    cover_assets={photo.get("asset")
+                  for photo in entry.get("portraitPhotos",[])
+                  if isinstance(photo,dict)
+                  and not photo.get("avoidCover") and not photo.get("remoteOnly")}
+    used_keys=set()
+    used_assets=set()
+    for question in quizzes:
+        if not isinstance(question,dict):
+            problems.update(("quiz_content","quiz_photos"))
+            continue
+        for field,length in (("question",10),("fact",20),
+                             ("photoLabel",8),("quip",10)):
+            value=question.get(field)
+            if not isinstance(value,str) or len(value.strip())<length:
+                problems.add("quiz_content")
+        options=question.get("options")
+        if (not isinstance(options,list) or len(options)!=3 or
+                any(not isinstance(option,str) or not option.strip()
+                    for option in options) or
+                len({option.strip().casefold() for option in options
+                     if isinstance(option,str)})!=3 or
+                type(question.get("answer")) is not int or
+                not 0<=question["answer"]<3):
+            problems.add("quiz_content")
+        key=question.get("photoKey")
+        if not isinstance(key,str) or not key.strip() or key in used_keys:
+            problems.add("quiz_photos")
+            continue
+        used_keys.add(key)
+        stop=stops.get(key)
+        if (not isinstance(stop,dict)
+                or stop.get("country")!=entry.get("name")
+                or not isinstance(stop.get("photoAsset"),str)
+                or not re.fullmatch(r"assets/travel/[a-z0-9-]+\.jpg",stop["photoAsset"])
+                or not str(stop.get("photo","")).startswith(
+                    "https://thumb.wikimedia.org/wikipedia/commons/thumb/")
+                or not str(stop.get("photoPage","")).startswith(
+                    "https://commons.wikimedia.org/wiki/File:")
+                or not str(stop.get("licenseUrl","")).startswith(
+                    "https://creativecommons.org/")
+                or not all(isinstance(stop.get(field),str) and stop[field].strip()
+                           for field in ("author","license","photoCaption"))):
+            problems.add("quiz_photos")
+            continue
+        asset=stop["photoAsset"]
+        if asset in used_assets:
+            problems.add("quiz_photos")
+        if asset in cover_assets:
+            problems.add("quiz_cover_overlap")
+        used_assets.add(asset)
+    return tuple(sorted(problems))
+
+
 def load_country_content(root):
     dataset=json.loads((Path(root)/"country-content.json").read_text(encoding="utf-8"))
     if dataset.get("version")!=1 or not isinstance(dataset.get("countries"),dict):
@@ -177,6 +243,9 @@ def load_country_content(root):
         if entry["status"]=="approved":
             if not entry.get("portrait") or not entry["portraitPhotos"] or len(entry["quiz"])<2:
                 raise ValueError(code+": approval without completed country content")
+            problems=country_quiz_problems(entry)
+            if problems:
+                raise ValueError(code+": invalid approved photo quiz: "+", ".join(problems))
     order=dataset.get("travelOrder")
     keys=[key for row in dataset["countries"].values()
           for key in row["travelStops"]]
