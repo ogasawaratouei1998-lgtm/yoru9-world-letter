@@ -799,7 +799,7 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
     """
     from collections import Counter
     from itertools import combinations
-    from quip_variety import repeated_cadence_count
+    from quip_variety import repeated_cadence_count, repeated_exact_quip_count
     if not pool:
         return []
     region_history=Counter()
@@ -860,6 +860,9 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
                 # issue that ends every gag with the same verbal tic.
                 # It is a *tie-breaker*, never a story-quality or truth veto.
                 -repeated_cadence_count(stories),
+                # A noun-ending gag can repeat verbatim without a cadence tag.
+                # Prefer a fresh, already verified angle at an otherwise exact tie.
+                -repeated_exact_quip_count(stories),
                 random_tiebreak(indices))
     best=max(choices,key=diversity_score)
     # Lead with the largest independently audited personal blunder when present.
@@ -1537,8 +1540,11 @@ def main():
             reject(human_issue);continue
         # Compare proposed punchlines before the independent source audit.
         selected_quip=choose_pre_review_quip(story)
-        if selected_quip is not None:
-            story["quip"]=selected_quip
+        if selected_quip is None:
+            # Never fall back to a headline paraphrase or generic punchline.
+            # Source-verified reporting needs an independently witty angle too.
+            reject("quip_without_original_angle");continue
+        story["quip"]=selected_quip
         quip_issue=comic_line_rejection(story["quip"])
         if quip_issue:
             reject(quip_issue);continue
