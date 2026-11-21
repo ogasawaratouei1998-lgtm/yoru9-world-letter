@@ -69,6 +69,35 @@ try{
      document.querySelector('#galleryHeading')?.textContent===
       '世界の「まさか」'+n+'コマ劇場';
    },null,{timeout:35000});
+   // Browse source-approved country stories even when a country has no story
+   // in the latest issue. This is deliberately NOT an extra news-map pin.
+   await page.waitForFunction(()=>{
+    const list=document.querySelector('#approvedAtlasList');
+    return list?.querySelectorAll('.approved-atlas-country').length>=12;
+   },null,{timeout:10000});
+   const countryCount=await page.locator('#approvedAtlasList .approved-atlas-country').count();
+   assert.ok(countryCount>=12,'all twelve approved country guides remain discoverable');
+   const issuePins=await page.locator('#todayMapPins .today-map-pin').count();
+   const reportedCountryCount=await page.evaluate(()=>currentIssueCountries().length);
+   assert.ok(issuePins<=reportedCountryCount,
+     'standalone country browse must not create extra published-issue pins');
+   await page.locator('#approvedAtlasChooser summary').click();
+   const chosen=viewport.width===320?'AG':viewport.width===375?'DE':'FR';
+   await page.locator('#approvedAtlasList .approved-atlas-country[data-country-code="'+chosen+'"]').click();
+   assert.equal(await page.locator('#todayMapIntro').isVisible(),true);
+   assert.equal(await page.locator('#todayMapIntroRead').textContent(),
+    'この国の写真付き3択クイズに挑戦','standalone destinations have no fabricated news button');
+   await page.locator('#todayMapIntroTravel .travel-story p').first().waitFor({state:'visible',timeout:12000});
+   assert.equal(await page.locator('#todayMapIntroTravel .travel-story p').count(),2,
+    'the standalone country trip has two real historical paragraphs');
+   const trip=await page.locator('#todayMapIntroTravel').textContent();
+   assert.ok(trip.includes('歴史・文化の資料：')&&trip.includes('写真：'),
+    'travel experience provides its historical source and exact photo credit');
+   await page.locator('#todayMapIntroRead').click();
+   assert.equal(await page.locator('#todayCountryQuiz').isVisible(),true);
+   assert.ok((await page.locator('#todayQuizQuestion').textContent()).length>=7);
+   await page.locator('#todayQuizClose').click();
+   assert.equal(await page.locator('#todayCountryQuiz').isHidden(),true);
    const editorialCover=await page.evaluate(()=>{
     const hero=document.querySelector('#atlasHero');
     const h2=hero?.querySelector('.atlas-title');
