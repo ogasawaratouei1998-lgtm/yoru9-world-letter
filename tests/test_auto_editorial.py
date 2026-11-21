@@ -603,7 +603,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertLess(len(check),5000)
         self.assertIn("JAPANESE EDITORIAL AND HUMOR REVIEW",check)
         self.assertIn("Trust the reporting company",check)
-        self.assertIn("do NOT",check)
+        self.assertIn("NEVER",check)
         self.assertIn("translationAccurate:boolean",check)
         self.assertIn("legalStatusAccurate:boolean",check)
         self.assertNotIn("factsVerified:boolean",check)
