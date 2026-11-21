@@ -38,6 +38,14 @@ def country_coverage(root: Path, stories):
         if not story_codes:
             raise ValueError("Country not verified for story: "+str(story.get("id","")))
         codes.update(story_codes)
+    # New countries stay in the editorial queue until explicitly approved.
+    # Legacy test fixtures with no canonical manifest retain their old contract.
+    if (root/'country-content.json').is_file():
+        from country_content import load_country_content
+        manifest=load_country_content(root)
+        for code in codes:
+            if manifest['countries'][code]['status']!='approved':
+                raise ValueError(code+': country content awaiting editorial approval')
     for code in sorted(codes):
         guide=re.search(r"(?m)^ "+re.escape(code)+r":\{lead:'([^']+)',body:'([^']+)',facts:\[([^\]]+)",guide_section)
         if not guide or len(guide.group(2))<145 or len(guide.group(1))<12:
