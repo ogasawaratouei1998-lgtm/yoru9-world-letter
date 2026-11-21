@@ -1,0 +1,1609 @@
+:root{color-scheme:dark;--bg:#0b1425;--card:#1b2942;--card2:#293955;--ink:#f8f4ed;--sub:#bac9dc;--gold:#ffd89e;--line:#475773;--mint:#bde9db}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-width:320px;background:radial-gradient(ellipse 600px 360px at 72% 0%,#293e614d,transparent 78%),#0b1425;color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP','Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;line-height:1.85}
+button,a{font:inherit}button{cursor:pointer}a{color:#c1e9d9}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.wrap{max-width:800px;margin:auto;padding:0 22px}.nav{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:24px 0 9px}.logo{font-weight:800;letter-spacing:.03em;font-size:14px}.logo .icon{display:inline-flex;align-items:center;justify-content:center;width:35px;height:35px;margin-right:8px;border-radius:50%;border:1px solid #50607e;background:#233452;color:var(--gold);font-size:22px}.tag{border:1px solid #596986;border-radius:30px;padding:4px 10px;font-size:11px;color:#e0e8f1;white-space:nowrap}
+.hero{text-align:center;padding:32px 0 22px}.stars{font-size:16px;letter-spacing:25px;color:var(--gold);opacity:.7;padding-left:24px}.moon{width:67px;height:67px;margin:25px auto 24px;border-radius:50%;background:var(--gold);position:relative;box-shadow:0 0 47px #ffd89e25}.moon:after{content:"";position:absolute;left:26px;top:-12px;width:62px;height:62px;border-radius:50%;background:#17253d}.eyebrow{font-size:11px;letter-spacing:.17em;color:var(--gold);font-weight:800}.hero h1{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;font-size:clamp(30px,6vw,43px);letter-spacing:.02em;font-weight:650;line-height:1.55;margin:13px 0}.lead{font-size:14px;color:#e0e7f2;line-height:2;margin:0 auto;max-width:570px}.small{font-size:12px;color:var(--sub)}
+.status{border:1px solid var(--line);background:#1b2a43;border-radius:17px;margin:29px 0 32px;padding:13px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px}.status strong{font-size:12px;color:var(--gold)}.status span{font-size:12px;color:#d3dff0}.status .statusline{display:flex;flex-direction:column;gap:2px}.sectionhead{display:flex;justify-content:space-between;align-items:end;border-bottom:1px solid var(--line);padding-bottom:15px;gap:12px}.sectionhead h2{font-size:21px;letter-spacing:.02em;margin:0}.intro{font-size:13px;color:#ced9e8;margin:15px 0 19px}.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}.filter{background:transparent;border:1px solid #60718d;color:#d9e3ed;font-size:12px;border-radius:100px;padding:7px 13px}.filter[aria-pressed="true"]{background:var(--gold);color:#19263b;border-color:var(--gold);font-weight:800}
+.list{display:grid;gap:16px;list-style:none;margin:0;padding:0}.story{border:1px solid #40516f;background:var(--card);border-radius:20px;padding:21px 22px;box-shadow:0 10px 26px #00000012}.story[hidden]{display:none}.storytop{display:flex;align-items:center;flex-wrap:wrap;gap:9px;color:#cad8ea;font-size:12px}.number{width:29px;height:29px;border-radius:50%;background:#344763;color:var(--gold);display:grid;place-items:center;font-size:11px;font-weight:800}.type{margin-left:auto;border:1px solid #5a6e8b;border-radius:20px;padding:2px 10px;font-size:11px}.label{color:var(--gold);font-weight:700;font-size:11px;margin-top:13px}.story h3{font-size:clamp(19px,3.7vw,22px);line-height:1.62;margin:7px 0 10px}.summary{font-size:14px;color:#e4ebf5;margin:0 0 10px}.readbtn{padding:7px 0 0;background:transparent;border:0;color:var(--gold);font-weight:800;font-size:13px}.details{margin-top:18px;padding-top:15px;border-top:1px dashed #657590}.details[hidden]{display:none}.detailtext{font-size:14px;line-height:2;margin:0 0 14px;color:#f2f3f9}.quip{background:var(--card2);border-left:3px solid var(--gold);border-radius:3px 10px 10px 3px;padding:14px 16px;font-size:14px;margin:12px 0 17px}.quiphead{font-size:11px;display:block;font-weight:800;color:var(--gold);margin-bottom:4px}.source{font-size:12px;line-height:1.8;color:#ced9e8;margin:0 0 16px;overflow-wrap:anywhere}.actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px}.share{border:0;background:transparent;color:#e1e8f5;text-decoration:underline;font-size:12px}.empty{border:1px dashed var(--line);border-radius:15px;text-align:center;padding:20px;font-size:13px;color:var(--sub)}.empty[hidden]{display:none}
+.footerpanel{text-align:center;margin:38px 0 20px;border:1px solid #536786;border-radius:22px;background:linear-gradient(155deg,#263958,#15243b);padding:32px 20px}.footerpanel h2{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;font-weight:650;font-size:23px;line-height:1.6;margin:10px 0 14px}.footerpanel p{font-size:14px;color:#e4ebf5;line-height:2}.footerpanel .bye{color:var(--gold);font-weight:700;margin-top:20px}.note{font-size:12px;color:#c3d1e2;line-height:1.9;padding:16px 19px;margin-bottom:29px;border:1px solid #32435f;border-radius:13px;background:#15243a}.note strong{color:var(--gold)}footer{color:#97abc5;font-size:11px;text-align:center;border-top:1px solid #394b64;padding:22px 0 40px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ffe1ac;color:#132036;border-radius:13px;padding:10px 17px;font-size:13px;z-index:10;box-shadow:0 8px 35px #0008}.toast[hidden]{display:none}
+@media(max-width:520px){.wrap{padding:0 17px}.nav{padding-top:14px}.hero{padding-top:26px}.story{padding:19px 16px}.status{flex-direction:column;align-items:start}.sectionhead h2{font-size:19px}}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* v5 — 事実に忠実なニュースと、夜9時配信のための公開号選択 */
+body{background:#0b1528}
+.nav{padding:14px 0 7px}
+.hero{position:relative;isolation:isolate;text-align:left;padding:17px 0 16px;overflow:hidden}
+.hero:before{content:"";position:absolute;z-index:-1;right:-48px;top:16px;width:225px;height:225px;border-radius:100%;background:radial-gradient(circle,#233d60 0%,transparent 70%);opacity:.8}
+.hero-stamp{float:right;margin:9px 10px 0 9px;transform:rotate(11deg);border:3px solid #ffd89e;border-radius:18px;background:#ffd89e;color:#16243b;width:79px;height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;font-size:29px;font-weight:1000;letter-spacing:-2px;box-shadow:5px 6px 0 #40567d;}
+.hero .eyebrow{color:#ffd89e;letter-spacing:.09em;font-size:11px}
+.eyebrow-dot{font-size:9px;margin-right:5px}
+.hero h1{font-family:-apple-system,BlinkMacSystemFont,'Noto Sans JP','Hiragino Kaku Gothic ProN','Yu Gothic',Meiryo,sans-serif;font-size:clamp(28px,7vw,45px);font-weight:900;letter-spacing:-.02em;line-height:1.42;margin:14px 0 12px}
+.hero h1 em{font-style:normal;color:#ffd89e}
+.hero .lead{margin:0;max-width:620px;color:#f5f0eb;font-size:14px;line-height:1.85}
+.hero-note{display:inline-block;margin-top:16px;font-size:12px;font-weight:750;background:#324962;border:1px solid #637894;color:#fff0d8;padding:7px 11px;border-radius:10px;line-height:1.6}
+.status{margin:13px 0 24px;padding:10px 14px;border-radius:12px}
+.sectionhead{padding-bottom:9px}.sectionhead h2{font-size:19px}
+.intro{margin:10px 0 12px;line-height:1.6}
+.filters{margin-bottom:15px}
+.list{gap:13px}
+.story{position:relative;padding:16px 17px;border-color:#51678c}
+.story h3{font-size:clamp(19px,4.3vw,24px);line-height:1.5;margin:6px 0}
+.story .summary{font-size:13px;line-height:1.8;margin:0 0 5px}
+.story .label{margin-top:7px}
+.teaserquip{margin:12px 0 8px;padding:10px 12px;border-radius:9px;background:#f6dba7;color:#1d2940;font-weight:750;font-size:13px;line-height:1.65}
+.teaserquip span{display:block;font-size:10px;letter-spacing:.04em;margin-bottom:2px;color:#5b4932}
+.story .teaserquip{background:#2e405e;color:#f5ebdb;border-left:3px solid #d8b676}
+.story .teaserquip span{color:#f4ce8b}
+.reported{font-size:12px;color:#d3ddea;margin:3px 0 9px;line-height:1.7}
+.offlineNotice{background:#34425a;border:1px solid #cfac70;border-radius:12px;padding:11px 15px;margin:12px 0;font-size:12px;color:#fff1d6;line-height:1.6}
+.offlineNotice[hidden]{display:none}
+.notification-panel{border:1px solid #7b8ca6;border-radius:16px;padding:18px;margin:20px 0;color:#fff0d8}
+.notification-panel[hidden]{display:none}
+.notification-panel h2{font-size:19px}
+.notification-panel button{border-radius:10px;padding:12px 15px;font:inherit;font-weight:700;background:#f6dba7;color:#16233c;cursor:pointer}
+.notification-panel button:disabled{opacity:.55;cursor:default}
+.notification-panel p{font-size:13px;line-height:1.75}
+.date-guide{font-size:12px;color:#d3ddea;margin:5px 0 14px;line-height:1.8}
+.readbtn{padding-top:8px}
+.footerpanel{margin-top:24px}
+.footerpanel h2{font-size:clamp(19px,4.3vw,23px);line-height:1.7}.footerpanel p{margin:14px 0}.footerpanel .message-last{font-size:21px;font-weight:800;color:var(--gold);margin:16px 0 4px}.footerpanel .bye{font-size:12px;font-weight:550;opacity:.92;margin-top:23px}
+@media(max-width:520px){.hero{padding-top:14px}.hero-stamp{width:61px;height:68px;font-size:23px;margin:10px 5px 0 3px;border-width:2px}.hero h1{font-size:27px}.hero .lead{font-size:13px}.hero-note{font-size:11px}.status{margin:11px 0 20px}.story{padding:17px 14px}}
+
+.archivepanel{border:1px solid #415571;background:#142239;border-radius:14px;padding:12px 16px;display:flex;align-items:center;flex-wrap:wrap;gap:9px 14px;margin:14px 0 20px}.archivepanel label{font-size:13px;color:#f8ddb2;font-weight:700}.archivepanel select{background:#243451;color:#f8f4ed;border:1px solid #7886a0;border-radius:8px;font:inherit;padding:6px 9px;max-width:100%}.archivepanel .small{font-size:11px;color:#bbcee1;flex-basis:100%}
+
+/* v6 — 読者が最初に見る、笑いと信頼の約束 */
+.hero-audience{color:#d9e6f6;font-size:14px;line-height:1.65;margin:17px 0 4px;font-weight:750;letter-spacing:.015em}
+.hero h1{font-size:clamp(28px,5.8vw,43px);line-height:1.4;margin:8px 0 13px;max-width:660px}
+.hero-description{font-size:14px;line-height:1.7;color:#d9e6f6;margin:0 0 9px;max-width:580px}.hero-truth{font-size:15px;font-weight:650;color:#f3e5ce;line-height:1.75;margin:0}
+.hero-truth strong{color:#ffd89e}
+@media(max-width:520px){.hero-audience{font-size:12px}.hero h1{font-size:clamp(24px,6.5vw,30px)}.hero-description{font-size:12px}.hero-truth{font-size:13px}}
+.night-quote{margin:22px auto 0;padding:16px 12px;border-top:1px solid #536786;max-width:490px}.night-quote[hidden],.evening-entry a[hidden]{display:none!important}
+.night-quote span{font-size:11px;color:var(--gold);font-weight:750}.night-quote p{font-size:15px;line-height:1.8;margin:7px 0 12px}
+.worldpanel{margin:16px 0 22px;padding:17px;border:1px solid #536786;border-radius:16px;background:#14243d}.worldpanel h2{font-size:17px;margin:0 0 8px}.worldpanel h2:not(:first-child){margin-top:20px}.worldpanel label{font-size:12px;color:#f8ddb2}.worldpanel select{background:#243451;color:#fff;border:1px solid #7886a0;border-radius:8px;padding:7px;max-width:100%}.worldmap{height:190px;position:relative;overflow:hidden;border-radius:12px;background:linear-gradient(145deg,#203e5a,#162b46);border:1px solid #45627e}.worldmap:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 37px,#ffffff10 38px),repeating-linear-gradient(90deg,transparent 0 55px,#ffffff10 56px)}.world-coastlines{position:absolute;inset:0;width:100%;height:100%;display:block}.world-coastlines path{fill:#527b79;stroke:#93b4ae;stroke-width:.24;vector-effect:non-scaling-stroke}.map-fallback{position:absolute;left:10px;bottom:7px;z-index:1;background:#14243dcc;border-radius:7px;padding:4px 7px;font-size:11px;color:#fff0d8;pointer-events:none}
+.map-pin{position:absolute;transform:translate(-50%,-50%);border:2px solid #fff0d1;background:#f6dba7;color:#16243b;border-radius:100%;width:26px;height:26px;font-size:12px;font-weight:900;z-index:1;cursor:pointer}.map-pin:focus-visible{outline:3px solid white}.country-result{border-bottom:1px solid #40516f;padding:9px 0;font-size:12px}.country-result button{border:0;background:none;color:#f6dba7;text-decoration:underline;text-align:left;padding:0;font-size:13px}.map-fallback{font-size:12px;color:#e1e8f5;padding:12px}
+.editor-dashboard{margin:16px 0;border:1px solid #70819b;border-radius:12px;padding:12px;background:#1b2d47}.editor-dashboard summary{cursor:pointer;color:#f6dba7;font-size:14px;font-weight:800}.editor-dashboard .small{line-height:1.7}.editor-stats{margin:12px 0;font-size:13px;color:#f4e5cc}.editor-map{height:175px}.editor-regions{font-size:12px;color:#e4ebf5;margin-top:10px;line-height:1.9}.editor-region{display:flex;justify-content:space-between;gap:10px;border-bottom:1px solid #455772;padding:3px 0}.editor-region.missing{color:#ffd89e}.editor-dashboard .map-pin{width:26px;height:26px;cursor:default}.editor-dashboard .map-pin:disabled{opacity:1}
+.reader-extras{margin:22px 0;border:1px solid #667b98;border-radius:13px;padding:12px;background:#182a42}.reader-extras>summary{color:#f5d8a1;font-weight:750;cursor:pointer;padding:5px 2px}.reader-extras[open]>summary{margin-bottom:15px}.release-status{border-left:3px solid #d5ae67;padding:8px 12px;margin:8px 0 14px;background:#1b2e47;color:#f4e4c8;font-size:13px;line-height:1.65}
+
+.spotlight{margin:7px 0 17px;padding:19px 19px 17px;border:2px solid #e4b86b;border-radius:19px;background:linear-gradient(135deg,#344664,#172740);box-shadow:0 9px 27px #0003}.spotlight-kicker{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.04em}.spotlight h2{font-size:clamp(22px,5.5vw,30px);line-height:1.4;margin:9px 0 16px;font-weight:900}.spotlight-quip-label{color:#f6dba7;font-size:11px;font-weight:850;margin:0 0 3px}.spotlight-quip{font-size:clamp(17px,4.5vw,22px);line-height:1.55;font-weight:850;margin:0 0 14px}.spotlight #spotlightRead{min-height:44px;background:#ffd89e;border:0;border-radius:100px;color:#14223a;font-weight:900;padding:9px 19px}.spotlight[hidden]{display:none}
+@media(max-width:520px){.spotlight{padding:15px 16px;margin:8px 0 14px}.spotlight h2{margin:7px 0 12px}}
+.second-quip{margin:18px 0;padding:16px 17px;background:#243956;border-left:4px solid #ffd89e;border-radius:10px}.second-quip span{display:block;color:#ffd89e;font-size:12px;font-weight:900;margin-bottom:7px}.second-quip p{font-size:clamp(17px,4.5vw,21px);font-weight:900;line-height:1.55;margin:0;color:#fff}
+/* Editorial cover: faithful to the award-first navy-and-gold mockup. */
+.nav{padding:14px 0 9px;gap:6px}.nav .logo{font-size:13px}.nav .logo .icon{width:28px;height:28px;font-size:18px;margin-right:5px}.nav .tag{font-size:10px;padding:3px 7px}
+.spotlight{display:flex;flex-direction:column;align-items:stretch;text-align:left;position:relative;isolation:isolate;overflow:hidden;margin:13px 0 10px;padding:25px 23px 24px;border:1px solid #53627b;border-radius:19px;background:#17243b;box-shadow:0 12px 32px #0004}
+.spotlight[hidden]{display:none}.spotlight-award{display:flex;justify-content:center;margin:3px 0 3px}.spotlight-award svg{width:57px;height:57px}
+.spotlight-kicker{text-align:center;color:#ffd89e;font-size:13px;font-weight:900;letter-spacing:.05em;margin-bottom:14px}
+.spotlight h1{color:#fff;font-size:clamp(27px,6.7vw,43px);line-height:1.43;letter-spacing:-.025em;font-weight:950;margin:0 0 23px;text-wrap:pretty;overflow-wrap:anywhere}
+.spotlight-divider{height:1px;background:#526480;margin:0 0 17px;width:100%}
+.spotlight-quip-label{color:#ffd89e;font-size:12px;font-weight:900;letter-spacing:.03em;margin:0 0 6px}
+.spotlight-quip{color:#fff;font-size:clamp(20px,5.1vw,28px);font-weight:900;line-height:1.52;margin:0 0 24px;text-wrap:pretty;overflow-wrap:anywhere}
+.spotlight #spotlightRead{display:block;width:100%;min-height:53px;background:#ffd89e;border:0;border-radius:100px;color:#17243b;font-size:15px;font-weight:950;padding:12px 15px}
+.hero{padding:9px 3px 15px;text-align:center;overflow:visible}.hero:before{display:none}.hero .eyebrow{font-size:12px;letter-spacing:0;color:#ffd89e}.hero .hero-description{font-size:11px;line-height:1.6;margin:5px auto;color:#c7d4e8}.hero .hero-truth{display:block;float:none;font-size:12px;line-height:1.6;margin:6px auto;color:#e8e0d2}
+@media(max-width:520px){.wrap{padding:0 16px}.nav{padding:10px 0 7px}.spotlight{margin:9px 0 9px;padding:21px 18px 22px}.spotlight h1{margin-bottom:21px}.spotlight-quip{margin-bottom:22px}.hero{padding:8px 2px 13px}}
+/* iPhone-first reading layout: bring the first story forward and keep touch targets generous. */
+.reader-extras{display:grid;gap:10px;margin:22px 0;padding:0;border:0;background:transparent}
+.reader-tool{border:1px solid #667b98;border-radius:14px;background:#182a42;padding:12px 15px}
+.reader-tool>summary{color:#f5d8a1;font-weight:750;cursor:pointer;min-height:44px;display:list-item;align-content:center;line-height:1.6}
+.reader-tool[open]>summary{margin-bottom:10px}
+.reader-tool .archivepanel,.reader-tool .worldpanel{margin-top:8px}
+.filter,.readbtn,.share{min-height:44px;touch-action:manipulation}
+.readbtn{padding:10px 4px;display:inline-flex;align-items:center}
+.filter{font-size:13px;padding:9px 14px}
+.night-quote{margin-top:24px;padding:24px 14px 10px;border-top:1px solid #647996}
+.night-quote p{font-size:clamp(19px,4.8vw,25px);font-weight:750;line-height:1.8;letter-spacing:.02em;margin:14px auto 20px;max-width:24em}
+
+@media(max-width:520px){
+ .hero{padding:10px 0 8px}
+ .hero .eyebrow,.hero-audience{display:none}
+ .hero h1{margin:7px 0 8px;font-size:clamp(25px,6.6vw,31px);line-height:1.34}
+ .hero-stamp{width:49px;height:55px;font-size:18px;margin:4px 6px 0 8px;border-radius:12px}
+ .hero-truth{font-size:12px}
+ .status{margin:10px 0 14px;padding:10px 12px;gap:5px}
+ .sectionhead{padding-bottom:8px}
+ .intro{margin:9px 0 7px;line-height:1.65}
+ .date-guide{margin:5px 0 10px;font-size:11px}
+ .filters{gap:7px;margin-bottom:14px}
+ .story{padding:18px 16px}
+ .story h3{line-height:1.5}
+ .release-status{margin:5px 0 12px;padding:7px 10px}
+}
+/* Clean, accessible lead-story cover: details expand in place, not duplicated below. */
+.spotlight-body{width:100%;margin-top:17px;padding:16px 0 2px;border-top:1px solid #526480;text-align:left}
+.spotlight-body[hidden],.filters[hidden],.filter[hidden],.sectionhead[hidden],.intro[hidden]{display:none}
+.spotlight-body .summary{font-size:15px;line-height:1.85;color:#e9eff8}
+.spotlight-body .reported,.spotlight-body .source{font-size:13px;color:#d6e2f3}
+.spotlight-body .detailtext{font-size:14px}
+.spotlight-body .actions{margin-top:12px}
+.spotlight-body .share{width:auto;min-height:44px;background:transparent;color:#f1e2ba;text-decoration:underline;font-size:13px;padding:8px}
+.hero{padding:6px 0 7px}
+.hero .hero-description{font-size:13px;line-height:1.55;margin:2px auto}
+.hero .hero-truth{font-size:13px;line-height:1.55;margin:2px auto}
+.status{margin:5px 0 6px;padding:8px 12px}
+.status #editionMessage,.edition-context,.note,.source,.storytop,.small{font-size:13px}
+.intro{font-size:13px}
+.nav .tag{font-size:11px;line-height:1.4}
+@media(max-width:520px){
+ .nav .tag{max-width:47%;white-space:normal;text-align:right}
+ .hero{padding:4px 0 7px}
+ .hero .hero-description,.hero .hero-truth{font-size:13px}
+ .spotlight-body{padding-top:13px}
+}
+@media(prefers-reduced-motion:reduce){.reader-tool{scroll-behavior:auto}}
+.edition-context{margin:0 0 15px;border-bottom:1px solid #40516f;padding:0 0 6px;color:#d3ddea;font-size:12px}.edition-context summary{cursor:pointer;min-height:44px;display:list-item;align-content:center;color:#e8c891}.edition-context p{margin:6px 0;line-height:1.7}.status{margin-bottom:8px;padding:9px 12px}.status .statusline{gap:0}.status #editionMessage{font-size:11px}.release-status{margin:4px 0 10px;padding:7px 10px}.intro{margin:6px 0 10px}.story .summary{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.story.expanded .summary{display:block}.story .teaserquip{display:block;overflow-wrap:anywhere}.story.expanded .teaserquip{display:block}@media(max-width:520px){.status{margin:7px 0 8px}.release-status{margin:4px 0 7px}.edition-context{margin-bottom:10px}.story .summary{font-size:14px;line-height:1.75}}\n.detail-language-note{font-size:13px;line-height:1.8;color:#f5d8a1;margin:0 0 12px}.original-detail{border-top:1px dashed #657590;padding:12px 0;margin:12px 0}.original-detail>summary{cursor:pointer;color:var(--gold);font-weight:750;min-height:44px;align-content:center}.original-warning{font-size:12px;color:#cdd8e7;line-height:1.7}.original-detail .detailtext{overflow-wrap:anywhere}
+
+/* Reader typography v7 — iPhone screenshots revealed 10–13px metadata.
+   Keep news titles expressive, but give ordinary text and controls a legible floor.
+   Use rem so browser text-size preferences can scale the interface. */
+.nav .logo{font-size:1rem;line-height:1.5}
+.nav .tag{font-size:.875rem;line-height:1.45;padding:5px 9px}
+.status strong{font-size:1rem;line-height:1.55}
+.status #editionMessage{font-size:.875rem;line-height:1.65}
+.release-status{font-size:.9375rem;line-height:1.7;overflow-wrap:anywhere}
+.edition-context{font-size:.9375rem}
+.edition-context summary{font-size:.9375rem;font-weight:700}
+.edition-context p{font-size:.875rem;line-height:1.75}
+.hero .hero-description,.hero .hero-truth{font-size:1rem;line-height:1.7}
+.sectionhead .small{font-size:.9375rem}
+.intro{font-size:.9375rem;line-height:1.7}
+.filter{font-size:.9375rem;line-height:1.5}
+.storytop{font-size:.875rem;line-height:1.5}
+.storytop .type{font-size:.875rem;line-height:1.5}
+.story .number{font-size:.875rem;min-width:32px;width:32px;height:32px}
+.story .label{font-size:.9375rem;line-height:1.55}
+.story .summary{font-size:clamp(1rem,4.25vw,1.125rem);line-height:1.82}
+.reported,.story .reported{font-size:.875rem;line-height:1.75}
+.teaserquip,.story .teaserquip{font-size:1rem;line-height:1.75}
+.teaserquip span,.story .teaserquip span{font-size:.875rem;line-height:1.5}
+.readbtn{font-size:1rem;line-height:1.5;font-weight:800}
+.details .detailtext,.spotlight-body .detailtext{font-size:1rem;line-height:1.95}
+.detail-language-note,.original-warning{font-size:.9375rem;line-height:1.8}
+.source,.spotlight-body .source,.spotlight-body .reported{font-size:.875rem;line-height:1.8}
+.actions .share,.spotlight-body .share{font-size:.9375rem;line-height:1.5}
+.spotlight-kicker{font-size:1rem;line-height:1.5}
+.spotlight-quip-label{font-size:.9375rem;line-height:1.5}
+.spotlight #spotlightRead{font-size:1.0625rem;line-height:1.55}
+.spotlight-body .summary{font-size:1rem;line-height:1.85}
+.second-quip span{font-size:.9375rem}
+.reader-tool>summary{font-size:1rem;line-height:1.6}
+.archivepanel label,.worldpanel label{font-size:.9375rem}
+.archivepanel .small{font-size:.875rem}
+.archivepanel select,.worldpanel select{font-size:1rem;min-height:44px}
+.worldpanel .small,.map-fallback,.country-result{font-size:.875rem;line-height:1.7}
+.country-result button{font-size:.9375rem;line-height:1.65;min-height:44px}
+.editor-dashboard summary,.editor-stats,.editor-regions{font-size:.875rem;line-height:1.7}
+.notification-panel p,.offlineNotice{font-size:.9375rem;line-height:1.8}
+.notification-panel button{font-size:1rem;min-height:44px}
+#notificationTestButton{margin-top:8px;background:transparent;border:1px solid #f5d8a1;color:#f5d8a1}
+.night-quote span{font-size:.9375rem;line-height:1.6}
+.footerpanel>p:not(.bye){font-size:1rem;line-height:1.9}
+.footerpanel .bye{font-size:.9375rem;line-height:1.8}
+.footerpanel #endprogress{font-size:.875rem;line-height:1.7}
+.note{font-size:.9375rem;line-height:1.85}
+footer{font-size:.8125rem;line-height:1.7}
+@media(max-width:520px){
+ .nav{flex-wrap:wrap;row-gap:6px}
+ .nav .logo{font-size:.9375rem}
+ .nav .tag{max-width:50%;font-size:.8125rem;overflow-wrap:anywhere}
+ .story .summary{font-size:1rem;line-height:1.85}
+ .sectionhead{gap:12px}
+ .sectionhead .small{flex-shrink:0}
+ .spotlight-body{overflow-wrap:anywhere}
+}
+/* Editorial trust and calmer nightly reading. Keep one release status panel. */
+.status{margin:12px 0 14px}
+.status .statusline{width:100%;gap:4px}
+.status .release-status{margin:0;padding:0;background:transparent;border:0;font-size:.9375rem;line-height:1.65}
+.notification-panel{margin:16px 0;padding:12px 15px;background:#17263e}
+.notification-details>summary{font-size:1rem;line-height:1.7;font-weight:750;color:#f5d8a1;cursor:pointer;min-height:44px;align-content:center}
+.notification-settings{padding:10px 0 0}
+.footerpanel{padding:24px 20px}
+.footerpanel h2{margin-bottom:6px}
+.night-quote{margin-top:14px;padding-top:16px}
+.night-quote p{margin:10px auto 15px}
+.correction-flag{display:inline-block;color:#ffe2ad;background:#41432e;border:1px solid #c1a66c;font-size:.875rem;border-radius:8px;padding:2px 8px;margin:5px 0}
+.correction-note{font-size:.9375rem;line-height:1.8;color:#e9d4b6;border-left:3px solid #d4b271;padding:10px 12px;background:#293650;border-radius:0 8px 8px 0}
+.source-evidence{font-size:.9375rem;line-height:1.8;margin:8px 0 16px}
+.source-evidence summary{color:#f5d8a1;cursor:pointer;min-height:44px;align-content:center;font-weight:700}
+.source-evidence ul{padding-left:21px;margin:4px 0 8px}
+.source-evidence li{overflow-wrap:anywhere;margin-bottom:6px}
+
+/* A quiet invitation to read, not a task to complete. */
+.evening-entry{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 12px;flex-wrap:wrap}
+.evening-entry p{font-size:1rem;font-weight:750;letter-spacing:.02em;color:#f3e9d9;margin:0;line-height:1.7}
+.evening-entry a{font-size:.9375rem;line-height:1.55;color:#d4e3f3;text-decoration:underline;text-underline-offset:4px;padding:7px 0;min-height:44px;display:inline-flex;align-items:center}
+.spotlight-award{margin:0 0 6px}
+.evening-moon{font-family:Georgia,serif;font-size:3.1rem;line-height:1.05;color:var(--gold)}
+.spotlight{padding-top:18px}
+.spotlight-kicker{font-size:1rem;letter-spacing:.015em;margin-bottom:10px}
+.hero .hero-description,.hero .hero-truth{font-size:.9375rem;line-height:1.75}
+.hero .hero-truth strong{color:#f4d9a5}
+.footerpanel{padding:25px 19px 22px;scroll-margin-top:16px}
+.footerpanel h2{font-size:clamp(1.25rem,5vw,1.5rem);margin:6px 0 8px}
+.closing-moon{color:var(--gold);font-size:1.8rem;line-height:1.2}
+.night-quote{margin-top:12px;padding:17px 12px 0}
+.night-quote p{font-size:clamp(1.0625rem,4.5vw,1.35rem);line-height:1.8;font-weight:650}
+.footerpanel .bye{font-size:.9375rem;line-height:1.7;margin-top:16px}
+@media(max-width:520px){
+ .evening-entry{gap:3px;margin:2px 0 10px}
+ .evening-entry p{flex-basis:100%}
+ .evening-entry a{font-size:.875rem;padding:5px 0}
+ .spotlight{padding-top:16px}
+ .evening-moon{font-size:2.7rem}
+ .hero{padding:6px 0 8px}
+}
+/* Make the wide world tangible through confirmed locations, not vague slogans. */
+.spotlight-location{font-size:.9375rem;line-height:1.65;text-align:center;color:#e0eaf6;
+ margin:0 0 14px;letter-spacing:.025em;overflow-wrap:anywhere}
+.world-invitation{display:inline-flex;align-items:center;justify-content:center;
+ min-height:44px;margin-top:8px;padding:7px 10px;font-size:.9375rem;
+ line-height:1.55;color:#e5d0a9;text-decoration:underline;text-underline-offset:4px;border-radius:8px}
+.world-invitation:focus-visible{outline:3px solid #ffdc9b;outline-offset:3px}
+#mapExtras{scroll-margin-top:18px}
+@media(max-width:520px){
+ .spotlight-location{font-size:.9375rem;margin-bottom:12px}
+ .world-invitation{width:100%;font-size:.9375rem}
+}
+
+/* Nightly geography-first reading: real countries lead into real stories. */
+.hero{margin:6px 0 12px;padding:12px 14px 14px;text-align:center;border-radius:16px;
+ background:linear-gradient(180deg,#17283f,#152238);border:1px solid #344862}
+.hero .eyebrow{display:block!important;margin:0 0 7px;font-size:.875rem;color:#f0d7a8;letter-spacing:.035em}
+.issue-countries{display:flex;justify-content:center;align-items:center;gap:7px 8px;flex-wrap:wrap;margin:7px auto 9px}
+.countries-intro{display:block;flex-basis:100%;font-size:.875rem;line-height:1.65;color:#c8d7e9}
+.country-chip{display:inline-flex;align-items:center;border:1px solid #7487a3;border-radius:100px;
+ padding:4px 13px;font-size:1rem;font-weight:740;line-height:1.6;color:#ffebcb;background:#263852}
+.country-pending{font-size:.9375rem;color:#d8e2ef}
+.hero .hero-description{font-size:.9375rem;line-height:1.7;color:#d6e2f1;margin:5px auto 3px}
+.hero .hero-truth{font-size:.9375rem;line-height:1.75;color:#d6e2f1;margin:5px auto 3px;font-weight:500}
+.hero .hero-truth strong{color:#f3dcaf;font-weight:700}
+.world-invitation{margin-top:5px}
+.spotlight{margin:0 0 15px;padding:18px 20px 20px;border:1px solid #405a75;
+ background:linear-gradient(155deg,#1c2c45,#16243b);box-shadow:0 5px 17px #0002}
+.spotlight-kicker{font-size:.9375rem;font-weight:760;margin-bottom:9px}
+.spotlight h1{font-size:clamp(1.5rem,5.8vw,2.2rem);line-height:1.52;font-weight:810;letter-spacing:-.015em;margin-bottom:17px}
+.spotlight-quip{font-size:clamp(1.125rem,4.7vw,1.4rem);font-weight:740;line-height:1.65;margin-bottom:16px}
+.spotlight #spotlightRead{min-height:49px;font-size:1rem;font-weight:780;padding:10px 14px;background:#f4d7a6}
+.spotlight-award{margin-bottom:3px}
+.evening-moon{font-size:2.55rem}
+.spotlight-location{text-align:center;font-size:.9375rem;margin-bottom:12px;color:#d6e4f2}
+.sectionhead{margin-top:9px;padding:0 2px 8px}
+.sectionhead h2{font-size:clamp(1.1rem,4.8vw,1.35rem);font-weight:780;line-height:1.5}
+.intro{font-size:.9375rem;line-height:1.75;margin:6px 0 12px}
+.story{box-shadow:0 4px 13px #0002;border-color:#405771;background:#192a42}
+.story h3{font-weight:790;line-height:1.55}
+.issue-details{margin:20px 0 14px}
+.issue-details .status{margin:0 0 5px;padding:10px 13px;background:#16243a;border-color:#344761;box-shadow:none}
+.issue-details .status strong{font-weight:740}
+.issue-details .edition-context{margin:0;padding:0 0 6px}
+.reader-extras{margin-top:14px}
+@media(max-width:520px){
+ .hero{margin:4px 0 12px;padding:12px 13px}
+ .issue-countries{gap:6px}
+ .country-chip{font-size:.9375rem;padding:4px 12px}
+ .hero .hero-description,.hero .hero-truth{font-size:.9375rem}
+ .world-invitation{margin:6px auto 0}
+ .spotlight{padding:17px 17px 19px}
+ .spotlight h1{font-size:clamp(1.5rem,6.0vw,1.85rem);line-height:1.52}
+ .spotlight-quip{font-size:1.125rem}
+ .sectionhead{margin-top:7px}
+}
+
+/* Opt-in micro-travel: no auto-playing media, no forced progression. */
+.travel-slot{margin:11px 0 8px}
+.travel-open{display:inline-flex;align-items:center;justify-content:space-between;gap:12px;
+ max-width:100%;min-height:48px;padding:10px 14px;border:1px solid #9b845f;
+ border-radius:13px;background:linear-gradient(105deg,#354968,#263852);color:#ffe2b0;
+ text-align:left;text-decoration:none;font-size:.9375rem;font-weight:800;line-height:1.6;
+ box-shadow:0 3px 12px #0002}
+.travel-open:hover{background:linear-gradient(105deg,#40567a,#2c425f)}
+.travel-open span{font-size:1.125rem;opacity:.9;flex:none}
+.travel-panel[hidden],.travel-photo[hidden],.travel-photo-error[hidden]{display:none}
+.travel-card{border:1px solid #677c92;background:linear-gradient(150deg,#21334c,#192b43);
+ border-radius:16px;padding:16px;margin:7px 0 16px;color:#f3efe7;overflow-wrap:anywhere}
+.travel-kicker{color:#f8dfb1;font-size:.875rem;font-weight:750;margin:0 0 4px}
+.travel-card h4{font-size:clamp(1.25rem,5vw,1.55rem);margin:0 0 5px;line-height:1.5}
+.travel-country{font-size:.9375rem;line-height:1.7;margin:0 0 10px;color:#e0e8f2}
+.travel-disclaimer{font-size:.8125rem;line-height:1.65;color:#d5e2ee;margin:4px 0 12px;padding:8px 10px;border-left:2px solid #f5d8a1;background:#ffffff08}
+.travel-figure{margin:0 0 12px}
+.travel-photo{display:block;width:100%;height:auto;max-height:255px;object-fit:cover;
+ aspect-ratio:16/9;border-radius:11px;background:#1a2b40}
+.travel-figure figcaption{color:#f2efe8;font-size:.9375rem;line-height:1.85;margin:12px 0 0}
+.travel-caption-label{display:block;color:#f8dfb1;font-size:.75rem;font-weight:850;margin-bottom:4px}
+.travel-story{margin:15px 0 17px;padding:14px 15px;border-radius:13px;background:#203E55;border:1px solid #688CA0}
+.travel-story h5{margin:0 0 10px;color:#FCE0AE;font-size:1.06rem;line-height:1.5}
+.travel-story p{font-size:1rem;line-height:1.9;margin:0 0 13px;color:#F3F2EB}
+.travel-story p:last-child{margin-bottom:0}
+@media(max-width:520px){.travel-story{padding:13px 12px}.travel-story p{font-size:1rem;line-height:1.85}}
+.travel-photo-error,.travel-empty{font-size:.9375rem;line-height:1.75;padding:12px;
+ border:1px dashed #6d8098;border-radius:10px;color:#e5e7ee}
+.travel-note{font-size:.9375rem;line-height:1.7;margin:12px 0}
+.travel-small,.travel-credit,.travel-loading{font-size:.75rem;line-height:1.65;color:#ced9e7;margin:9px 0}
+.travel-links{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0}
+.travel-links a{font-size:.9375rem;line-height:1.6;color:#f5d8a1;min-height:44px;display:inline-flex;align-items:center}
+.travel-credit a{color:#d2eadd}
+.travel-elsewhere{font-size:.875rem;line-height:1.65;color:#e1e8f1;margin:4px 0 10px}
+@media(max-width:520px){
+ .travel-card{padding:14px 13px}
+ .travel-photo{max-height:220px}
+ .travel-note,.travel-figure figcaption{font-size:1rem}
+}
+
+/* v8: the lead incident is the cover; no oversized mission explainer. */
+:root{--safe-top:env(safe-area-inset-top,0px)}
+html{scroll-padding-top:calc(var(--safe-top) + 65px)}
+body{background:#0b1528}
+body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);background:#0b1528;z-index:40;pointer-events:none}
+.wrap{padding-top:calc(var(--safe-top) + 5px)}
+.nav{position:sticky;top:var(--safe-top);z-index:30;margin:0 0 4px;
+ padding:8px 1px 9px;background:#0b1528;border-bottom:1px solid #344761}
+.nav .logo{font-size:.9375rem}
+.nav .tag{font-size:.75rem;max-width:48%;border-color:#455b74;color:#d0ddeb}
+.evening-entry{display:flex;flex-direction:row;flex-wrap:wrap;align-items:center;
+ justify-content:space-between;gap:3px 12px;margin:5px 0 9px}
+.evening-entry p{font-size:.9375rem;font-weight:650;line-height:1.6;flex-basis:auto}
+.evening-entry a{font-size:.8125rem;line-height:1.45;color:#d5dfed;min-height:44px;padding:7px 0}
+.hero{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;
+ flex-wrap:wrap;gap:5px 10px;text-align:left;margin:0 0 11px;padding:0 0 10px;
+ border:0;border-bottom:1px solid #3b4d66;border-radius:0;background:none;box-shadow:none}
+.hero::before{display:none}
+.hero .eyebrow{display:inline-block!important;flex:0 0 auto;margin:0;
+ font-size:.875rem;line-height:1.55;font-weight:680;letter-spacing:0;color:#efd6ac}
+.issue-countries{display:inline-flex;flex:0 1 auto;justify-content:flex-start;
+ align-items:center;gap:5px;margin:0;flex-wrap:wrap}
+.countries-intro{flex:0 0 auto;font-size:.8125rem;line-height:1.5;color:#b6c7da}
+.country-chip{font-size:.8125rem;font-weight:700;line-height:1.5;padding:2px 9px;
+ color:#f2e2c4;background:transparent;border:1px solid #5d718e}
+.spotlight{margin:0 0 14px;padding:16px 18px 15px;display:flex;
+ flex-direction:column;text-align:left;background:#192b43;border:1px solid #526982;
+ border-radius:18px;box-shadow:none}
+.spotlight-topline{display:flex;align-items:center;gap:7px 10px;flex-wrap:wrap;margin:0 0 12px}
+.spotlight-award{display:inline-flex;flex:0 0 auto;margin:0}
+.evening-moon{font-size:1.45rem;line-height:1}
+.spotlight-kicker{margin:0;font-size:.875rem;line-height:1.5;font-weight:760;text-align:left;color:#f2d3a0;letter-spacing:0}
+.spotlight-location{margin:0 0 0 auto;font-size:.8125rem;line-height:1.6;text-align:right;color:#d5dfeb;letter-spacing:0}
+.spotlight h1{font-size:clamp(1.45rem,5.6vw,2rem);line-height:1.45;
+ font-weight:820;letter-spacing:-.015em;margin:0 0 11px;color:#fff4e8}
+.spotlight-brief{font-size:.9875rem;line-height:1.76;color:#dbe5f0;font-weight:480;
+ margin:0 0 13px;overflow-wrap:anywhere}
+.spotlight-divider{background:#415570;margin:0 0 11px}
+.spotlight-quip-label{font-size:.8125rem;line-height:1.5;font-weight:780;color:#f2cd90;margin:0 0 4px}
+.spotlight-quip{font-size:clamp(1rem,4.1vw,1.125rem);line-height:1.7;
+ font-weight:730;color:#fff1df;margin:0 0 13px}
+.spotlight #spotlightRead{display:inline-flex;align-items:center;justify-content:center;
+ align-self:flex-start;width:auto;min-height:44px;background:#ecd4af;color:#15243a;
+ border:1px solid #e7c998;border-radius:11px;font-size:.9375rem;font-weight:800;padding:8px 17px}
+.spotlight .travel-slot{margin:9px 0 0}
+.spotlight .travel-open{font-size:.875rem;min-height:40px;padding:5px 0}
+.spotlight .world-invitation{align-self:flex-start;width:auto;min-height:40px;margin:0;
+ padding:5px 0;font-size:.8125rem;color:#c9d8ea}
+.spotlight-body{margin-top:12px;padding-top:12px}
+.story{box-shadow:none}
+.story h3{font-size:clamp(1.2rem,4.7vw,1.5rem)}
+@media(max-width:520px){
+ .wrap{padding-top:calc(var(--safe-top) + 5px)}
+ .nav{padding:7px 0 8px}
+ .nav .logo{font-size:.875rem}
+ .nav .tag{font-size:.75rem}
+ .evening-entry{gap:3px 9px;margin:4px 0 9px}
+ .evening-entry p{flex-basis:auto;font-size:.875rem}
+ .evening-entry a{font-size:.8125rem}
+ .hero{padding:0 0 10px;margin:0 0 10px;gap:4px 9px}
+ .hero .eyebrow{font-size:.8125rem}
+ .issue-countries{margin:0;gap:4px}
+ .countries-intro{font-size:.75rem}
+ .country-chip{font-size:.75rem;padding:2px 8px}
+ .spotlight{padding:15px 15px 14px}
+ .spotlight-topline{margin-bottom:10px}
+ .spotlight h1{font-size:clamp(1.4rem,5.75vw,1.75rem);line-height:1.47;margin-bottom:9px}
+ .spotlight-brief{font-size:.9375rem;line-height:1.7;margin-bottom:10px}
+ .spotlight-quip{font-size:1.0625rem;line-height:1.65;margin-bottom:12px}
+ .spotlight #spotlightRead{font-size:.9375rem}
+}
+@media(max-width:370px){.evening-entry a{font-size:.75rem}
+ .spotlight-location{margin-left:0;flex-basis:100%;text-align:left}}
+
+/* v9 — refined iPhone-first cover, deliberate story hierarchy and app brand. */
+.skip-link{position:absolute;left:16px;top:-110px;z-index:100;border-radius:10px;
+ background:#fff0d2;color:#15243a;font-weight:850;padding:11px 15px}
+.skip-link:focus{top:calc(env(safe-area-inset-top,0px) + 12px)}
+.nav .logo{display:inline-flex;align-items:center;gap:9px;line-height:1.35;letter-spacing:.012em}
+.nav .logo-mark{width:32px;height:32px;display:block;flex:0 0 32px;border-radius:9px;
+ border:1px solid #526781;background:#14253f;box-shadow:0 2px 8px #0002}
+.nav .tag{border-radius:9px;background:#17253a;padding:6px 9px;color:#dfebf5;
+ font-weight:680;text-align:right;font-variant-numeric:tabular-nums;line-height:1.45}
+.evening-entry{margin:8px 0 11px}
+.evening-entry p{color:#f4e6d0}
+.hero{border-bottom-color:#425775}
+.hero .eyebrow{color:#f1d8a7}
+.country-chip{background:#263a55;border-color:#6b849f}
+.spotlight{position:relative;isolation:isolate;overflow:hidden;
+ background:linear-gradient(160deg,#253b56 0%,#1a2d46 47%,#17263c 100%);
+ border:1px solid #7a8da2;box-shadow:0 12px 30px #020b1b35;
+ border-radius:22px;padding:20px 19px 21px}
+.spotlight:before{content:"";position:absolute;z-index:-1;top:-72px;right:-85px;
+ width:245px;height:245px;border-radius:50%;
+ background:radial-gradient(circle,#e4bb7842 0%,#98adc912 38%,transparent 72%);
+ pointer-events:none}
+.spotlight-topline{padding-bottom:11px;margin-bottom:15px;
+ border-bottom:1px solid #77899c69;gap:6px 10px}
+.evening-moon{color:#ffdb9b;font-size:1.7rem}
+.spotlight-kicker{color:#ffdcaa;font-weight:850;letter-spacing:.035em}
+.spotlight-location{color:#dce8f2;font-weight:680}
+.spotlight h1{color:#fff9ed;font-size:clamp(1.55rem,5.6vw,2.3rem);
+ font-weight:860;line-height:1.42;letter-spacing:-.018em;margin:0 0 13px;
+ text-wrap:pretty}
+.spotlight-brief{font-size:1rem;line-height:1.78;color:#f2f0e9;
+ margin-bottom:17px}
+.spotlight-divider{background:#74839a75;margin-bottom:13px}
+.spotlight-quip-label{color:#ffdc9e;letter-spacing:.025em}
+.spotlight-quip{color:#fff0d7;font-size:clamp(1.0625rem,4.4vw,1.27rem);
+ line-height:1.69;font-weight:770;margin-bottom:19px}
+.spotlight #spotlightRead{background:#ffda9c;border:1px solid #ffe5b9;
+ color:#152439;min-height:50px;padding:10px 20px;
+ font-size:1rem;font-weight:850;box-shadow:0 4px 11px #0710222a}
+.spotlight #spotlightRead:focus-visible{outline-color:#fff}
+.spotlight .travel-slot{margin:17px 0 5px}
+.spotlight .travel-open{min-height:44px;padding:9px 12px;border:1px solid #7088a2;
+ border-radius:11px;background:#273e57;color:#ffebc4;font-size:.9375rem;
+ text-decoration:none;line-height:1.5}
+.spotlight .world-invitation{font-size:.875rem;color:#d8e5ef;
+ text-underline-offset:3px;margin-top:4px;min-height:44px}
+.sectionhead{border-bottom-color:#62758e;padding-top:8px}
+.sectionhead h2{font-weight:850;color:#f8e8d1;line-height:1.5}
+.sectionhead .small{white-space:nowrap;font-variant-numeric:tabular-nums;color:#dce6f1}
+.intro{color:#cddceb}
+.filters[hidden],.sectionhead[hidden],.intro[hidden]{display:none!important}
+.story{background:linear-gradient(152deg,#21344d,#1a2b42);border:1px solid #526a88;
+ border-left:3px solid #d5b47e;border-radius:17px;padding:18px 17px;
+ box-shadow:0 5px 18px #00000016}
+.story:nth-child(even){border-left-color:#9ac5c5}
+.storytop{color:#dbe5ee;font-size:.875rem;gap:8px}
+.number{background:#f3d7a4;color:#1c2b42;font-size:.875rem;width:31px;height:31px}
+.story h3{font-size:clamp(1.22rem,4.6vw,1.55rem);line-height:1.46;
+ margin:10px 0 9px;color:#fff9ed;text-wrap:pretty}
+.story .summary{font-size:.9375rem;line-height:1.76;color:#e6eaf1}
+.story .label{color:#f4d29d;font-size:.8rem;letter-spacing:.015em}
+.story .teaserquip{border-left:3px solid #ffdb9c;background:#30455f;color:#fff4dd;
+ font-size:.95rem;padding:12px 13px;line-height:1.7;margin-top:14px}
+.story .teaserquip span{color:#ffe0ae;font-size:.8rem}
+.story .readbtn{font-size:.9375rem}
+.reader-tool{border-color:#637c98}
+.reader-tool>summary{font-size:.975rem}
+.footerpanel{border-color:#7084a0}
+@media(max-width:520px){
+ .nav .logo{font-size:.89rem;gap:7px}
+ .nav .logo-mark{width:30px;height:30px;flex-basis:30px}
+ .nav .tag{font-size:.7rem;max-width:46%;padding:5px 7px}
+ .evening-entry{margin:6px 0 9px}
+ .spotlight{padding:19px 17px 18px;border-radius:19px}
+ .spotlight-topline{margin-bottom:12px;padding-bottom:10px}
+ .spotlight h1{font-size:clamp(1.52rem,6vw,1.9rem);line-height:1.43}
+ .spotlight-brief{font-size:.975rem;line-height:1.74}
+ .spotlight-quip{font-size:1.1rem;line-height:1.65}
+ .spotlight #spotlightRead{width:100%;align-self:stretch;min-height:52px;
+  border-radius:12px;font-size:1rem}
+ .spotlight .travel-open{width:100%;justify-content:space-between}
+ .story{padding:16px 15px}
+ .story h3{font-size:1.3rem}
+}
+@media(prefers-reduced-motion:no-preference){
+ .story,.spotlight{transition:border-color .2s ease,box-shadow .2s ease}
+ .story:focus-within,.spotlight:focus-within{border-color:#f4cf8e}
+}
+
+/* A small postcard after the article, not another dense information panel. */
+.travel-card{padding:16px 16px 13px;border-color:#7790a7}
+.travel-kicker{font-size:.875rem;color:#ffdfaa;font-weight:850;margin:0 0 7px}
+.travel-disclaimer{background:transparent;border:0;border-left:2px solid #d9bd8d;
+ color:#d9e3ec;font-size:.8125rem;line-height:1.6;padding:2px 0 2px 9px;margin:6px 0 9px}
+.travel-figure{margin:11px 0 8px}
+.travel-figure figcaption{font-size:.9375rem;line-height:1.7;margin:9px 0 0}
+.travel-caption-label{font-size:.8125rem;margin-bottom:3px}
+.travel-links{margin:7px 0 4px}
+.travel-credit{color:#cad7e6;font-size:.75rem;line-height:1.5;margin:7px 0 0}
+.travel-credit a{color:#d6e9d8}
+
+/* World Letter / atlas-first cover, scoped and placed after legacy overrides. */
+#atlasHero{display:flex;flex-direction:column;align-items:stretch;margin:4px 0 16px;
+ padding:17px 17px 15px!important;text-align:left!important;
+ background:linear-gradient(154deg,#1c314b 0%,#14263e 58%,#101e32 100%)!important;
+ border:1px solid #607790!important;border-radius:20px!important;overflow:hidden!important}
+.atlas-heading{width:100%}
+#atlasHero .eyebrow{display:block!important;text-align:left!important;margin:0 0 5px!important;
+ color:#f5d6a1!important;font-size:.72rem!important;font-weight:800;letter-spacing:.12em!important}
+.atlas-title{margin:0;color:#fff5e7;font-size:clamp(1.2rem,4.9vw,1.8rem);
+ line-height:1.46;font-weight:820;letter-spacing:-.02em;overflow-wrap:anywhere}
+.atlas-title span{color:#ffd799;font-variant-numeric:tabular-nums}
+.atlas-lede{font-size:.875rem;color:#d6e3f2;line-height:1.6;margin:4px 0 9px}
+.atlas-brand{font-size:.78rem;color:#d7dfed;letter-spacing:.015em;line-height:1.5;margin:0 0 11px}
+.atlas-map{height:auto;aspect-ratio:2/1;min-height:140px;width:100%;position:relative;
+ border-radius:12px;border:1px solid #49617c;overflow:hidden;isolation:isolate;
+ background-color:#14273d;
+ background-image:linear-gradient(#7e96ab20 1px,transparent 1px),
+ linear-gradient(90deg,#7e96ab20 1px,transparent 1px),
+ radial-gradient(ellipse at 48% 43%,#284766a8 0%,#122338 78%);
+ background-size:100% 25%,12.5% 100%,100% 100%}
+.atlas-map::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+ background:radial-gradient(ellipse at 50% 43%,transparent 35%,#0d1d337a 100%)}
+#coverWorldCoastlines{display:block;width:100%;height:100%;position:absolute;inset:0;z-index:0;
+ fill:#49627b;stroke:#879eb443;stroke-width:.28px;stroke-linejoin:round;opacity:.85}
+.atlas-pins{position:absolute;inset:0;z-index:3;pointer-events:none}
+.atlas-pin{position:absolute;transform:translate(-50%,-50%);display:grid;place-items:center;
+ min-height:32px;min-width:32px;border-radius:50%;border:2px solid #fff3da;
+ background:#f5d28e;color:#13243b;font-size:.8rem;font-weight:900;
+ box-shadow:0 0 0 5px #eabf6240,0 3px 12px #0008;cursor:pointer;
+ pointer-events:auto;touch-action:manipulation}
+.atlas-pin:focus-visible{outline:3px solid #fff;outline-offset:6px}
+.atlas-map-symbol{display:none}
+.atlas-map-caption{margin:9px 0 4px;font-size:.73rem;line-height:1.6;color:#c1d1e4}
+/* Same-edition news appears immediately below the atlas without a page change. */
+.atlas-preview[hidden]{display:none!important}
+.atlas-preview{background:linear-gradient(145deg,#293e58,#182c43);border:1px solid #8b9ba8;
+ border-radius:13px;margin:9px 0 5px;padding:12px 13px;color:#f9f0df}
+.atlas-preview-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:9px}
+.atlas-preview-heading h3{font-size:.98rem;line-height:1.5;margin:0;color:#ffdeaa;font-weight:800}
+.atlas-preview-close{flex:0 0 auto;display:grid;place-items:center;border:1px solid #7087a3;
+ border-radius:50%;width:44px;height:44px;min-height:44px;background:#283e58;color:#f5e8d3}
+.atlas-preview-list{padding:0;margin:5px 0 6px;list-style:none}
+.atlas-preview-list li{border-bottom:1px solid #5167827a;padding:10px 0 11px}
+.atlas-preview-list li:last-child{border-bottom:0}
+.atlas-preview-title{margin:0 0 4px;color:#fff5e7;font-size:.95rem;
+ line-height:1.56;font-weight:780;overflow-wrap:anywhere}
+.atlas-preview-meta{font-size:.75rem;line-height:1.5;color:#cbd9e8;margin:0 0 7px}
+.atlas-preview-read{min-height:44px;padding:9px 14px;border:1px solid #fff0ce;
+ background:#ffdaa0;color:#14253c;border-radius:10px;font-size:.88rem;font-weight:850}
+.atlas-preview-history{display:inline-flex;align-items:center;min-height:44px;padding:7px 2px;
+ background:none;border:0;text-decoration:underline;text-underline-offset:4px;
+ color:#f6dfb8;font-size:.83rem;font-weight:700;line-height:1.5}
+.atlas-pin[aria-pressed="true"]{background:#fff3d7;outline:2px solid #ffdc99;outline-offset:3px}
+#atlasHero .country-chip[aria-pressed="true"]{color:#17253a;background:#ffdaa0;border-color:#fff3d1}
+#atlasHero .issue-countries{display:flex;justify-content:flex-start;margin:5px 0 9px!important;
+ gap:7px 6px;align-items:center}
+#atlasHero .issue-countries .countries-intro{font-size:.8rem;font-weight:770;flex:0 0 auto;
+ margin-right:3px;color:#e7d8ba}
+#atlasHero .country-chip{font-size:.79rem;padding:5px 12px;line-height:1.5;min-height:44px;appearance:none;cursor:pointer;
+ color:#fff0d8;background:#2a405c;border:1px solid #7a8fab;border-radius:100px}
+.atlas-explore{display:inline-flex;align-items:center;gap:8px;justify-content:flex-start;
+ width:max-content;max-width:100%;padding:6px 2px;min-height:44px;
+ font-size:.84rem;line-height:1.6;font-weight:740;color:#ffdc9c!important;
+ text-decoration:underline;text-underline-offset:4px}
+.atlas-explore span{font-size:1.3rem;line-height:1}
+.spotlight{border-color:#8f7f69}
+.spotlight-topline{border-bottom-color:#d5a96c48}
+.spotlight-location{background:#253d57;border:1px solid #68809a;border-radius:99px;
+ padding:3px 10px;color:#f3e6ce}
+.story{border-left-width:3px}
+.story:nth-child(2){background:linear-gradient(145deg,#223550,#17283e)}
+.story:nth-child(3){background:linear-gradient(145deg,#1d3446,#18263c)}
+.story .teaserquip{border-radius:9px}
+.footerpanel{padding:22px 18px 20px;margin-top:25px;border-color:#526a81}
+.footerpanel .closing-moon{font-size:1.55rem}
+.footerpanel .bye{margin-top:12px}
+.disclosure-details{margin:10px 0 23px;border-top:1px solid #3c536d;padding:0 2px;
+ color:#d1dfed}
+.disclosure-details>summary{min-height:44px;padding:10px 3px;font-size:.84rem;
+ cursor:pointer;color:#c2d1e2;line-height:1.65}
+.disclosure-details .note{margin:2px 0 8px;padding:12px 13px;
+ background:#122139;border:1px solid #3e5672;font-size:.86rem;line-height:1.75}
+@media(max-width:520px){
+ #atlasHero{padding:15px 14px 13px!important;border-radius:17px!important;margin:3px 0 14px}
+ .atlas-title{font-size:clamp(1.21rem,5.3vw,1.42rem)}
+ .atlas-lede{font-size:.8125rem}
+ .atlas-map{min-height:135px}
+ .atlas-pin{min-height:31px;min-width:31px}
+ .atlas-map-caption{font-size:.73rem}
+ #atlasHero .country-chip{font-size:.78rem}
+ .spotlight-location{margin:0 0 0 auto}
+ .spotlight h1{font-size:clamp(1.44rem,5.7vw,1.9rem)}
+}
+@media(prefers-reduced-motion:reduce){.atlas-pin{transition:none}}
+
+/* iPhone screenshot refinement — de-duplicate geography, improve scan rhythm.
+   The world atlas stays legible; only unnecessary repetitions and gaps shrink. */
+#atlasHero{margin-bottom:12px!important;padding:14px 15px 12px!important}
+#atlasHero .eyebrow{margin-bottom:4px!important}
+.atlas-title{font-size:clamp(1.16rem,4.5vw,1.65rem);line-height:1.42}
+.atlas-lede{margin:3px 0 8px;line-height:1.45}
+.atlas-brand{margin-bottom:8px}
+.atlas-map-caption{font-size:.75rem;line-height:1.55;margin:7px 0 2px}
+#atlasHero .issue-countries{margin:4px 0 3px!important;gap:5px}
+#atlasHero .issue-countries .countries-intro{font-size:.76rem;margin-right:2px}
+#atlasHero .country-chip{padding:4px 11px;font-size:.76rem}
+.atlas-explore{font-size:.8rem;min-height:44px;margin-top:0;padding:5px 2px}
+.spotlight{padding:15px 16px 17px;margin-bottom:14px}
+.spotlight-topline{margin-bottom:10px;padding-bottom:9px}
+.spotlight h1{font-size:clamp(1.32rem,4.7vw,1.88rem);
+ line-height:1.47;font-weight:800;margin:0 0 11px}
+.spotlight-brief{font-size:.96rem;line-height:1.68;margin-bottom:12px}
+.spotlight-quip{font-size:clamp(1.02rem,4vw,1.18rem);line-height:1.6;margin-bottom:14px}
+.spotlight #spotlightRead{min-height:48px;box-shadow:none}
+.sectionhead .small[hidden]{display:none}
+.issue-details .status{border-radius:12px}
+.reader-extras{gap:7px}
+.reader-tool{border-radius:11px;padding:5px 13px}
+.reader-tool>summary{font-size:.9rem;min-height:44px;padding:6px 0}
+.footerpanel{padding:19px 15px 17px;margin-top:22px}
+.footerpanel h2{font-size:clamp(1.14rem,4.5vw,1.32rem)}
+.footerpanel .bye{font-size:.88rem;margin-top:10px}
+.footerpanel .closing-moon{font-size:1.45rem}
+.night-quote{margin-top:8px;padding:10px 8px 0}
+.night-quote p{font-size:clamp(1rem,4vw,1.15rem);line-height:1.68;
+ font-weight:660;margin:9px auto 12px}
+@media(max-width:520px){
+ #atlasHero{padding:12px 12px 11px!important;margin:3px 0 11px!important}
+ #atlasHero .eyebrow{font-size:.68rem!important}
+ .atlas-title{font-size:clamp(1.18rem,5vw,1.35rem)}
+ .atlas-lede{font-size:.8rem}
+ .atlas-brand{display:block}
+ .atlas-map-caption{font-size:.73rem}
+ #atlasHero .issue-countries{gap:5px 5px}
+ #atlasHero .country-chip{font-size:.73rem;padding:5px 9px;min-height:44px}
+ .atlas-explore{margin:0;font-size:.78rem}
+ .spotlight{padding:15px 15px 17px}
+ .spotlight h1{font-size:clamp(1.31rem,5.3vw,1.51rem);line-height:1.48}
+ .spotlight-brief{font-size:.94rem;line-height:1.7}
+ .spotlight-quip{font-size:1.025rem;line-height:1.65}
+ .spotlight-location{font-size:.78rem;line-height:1.45}
+ .spotlight-topline{gap:5px 7px}
+ .story h3{font-size:1.18rem;line-height:1.5}
+ .story .summary{font-size:.925rem;line-height:1.75}
+ .reader-tool>summary{font-size:.9rem}
+}
+
+/* Phase 2: editorial article cards. Distinguish report from creative AI quip.
+   Applies to lead and supporting cards without changing source news or text. */
+.spotlight-fact{margin:0 0 10px;padding:0 1px}
+.fact-kicker{display:block;color:#c6d7e9;font-size:.76rem;line-height:1.5;
+ font-weight:780;letter-spacing:.035em;margin:0 0 5px}
+.spotlight-fact .spotlight-brief{font-size:clamp(.97rem,2.65vw,1.05rem);
+ line-height:1.73;color:#e6edf5;margin:0;overflow-wrap:anywhere}
+.spotlight .spotlight-divider{width:100%;height:1px;background:#576c84a3;margin:3px 0 13px}
+.spotlight-joke{margin:0 0 13px;padding:13px 14px 12px;border-radius:12px;
+ background:linear-gradient(135deg,#314761,#283b54);border-left:3px solid #f6d091;
+ border-top:1px solid #6e839a6b;border-right:1px solid #6e839a6b;
+ border-bottom:1px solid #6e839a6b}
+.quip-kicker{display:flex;align-items:baseline;justify-content:space-between;
+ flex-wrap:wrap;gap:5px 10px;margin-bottom:7px}
+.spotlight-joke .spotlight-quip-label{margin:0;font-size:.8rem;
+ color:#ffe0a5;letter-spacing:.02em;font-weight:850}
+.humor-marker{font-size:.69rem;line-height:1.45;font-weight:600;
+ color:#d0dded;letter-spacing:.02em}
+.spotlight-joke .spotlight-quip{margin:0;color:#fff7e8;font-size:clamp(1.02rem,3.9vw,1.18rem);
+ line-height:1.65;font-weight:750}
+.story .story-fact{padding:0 0 1px;margin:4px 0 0}
+.story .story-fact .fact-kicker{font-size:.75rem;letter-spacing:.02em;color:#c5d8e8;
+ margin-bottom:4px}
+.story .story-fact .summary{font-size:clamp(.95rem,2.55vw,1.05rem);
+ line-height:1.76;color:#e3ebf5;margin:0}
+.story .teaserquip{margin:13px 0 9px;padding:12px 13px 12px;
+ border:1px solid #7181987a;border-left:3px solid #f6d091;
+ background:linear-gradient(135deg,#31475f,#283d56);color:#fff4e3;
+ font-weight:750;font-size:clamp(.975rem,2.7vw,1.08rem);line-height:1.66}
+.story .teaserquip span{display:flex;align-items:baseline;justify-content:space-between;
+ gap:6px 10px;flex-wrap:wrap;margin:0 0 5px;color:#ffdda2;
+ font-size:.77rem;line-height:1.5;font-weight:850}
+.story .teaserquip .humor-marker{font-size:.69rem;color:#d0dded}
+.story .reported{font-size:.77rem;line-height:1.6;color:#b9cbdc;margin:8px 0 0}
+.story .readbtn{display:flex;align-items:center;justify-content:space-between;
+ width:100%;min-height:48px;margin-top:12px;padding:9px 14px;
+ background:#2b4059;border:1px solid #7d91a8;border-radius:10px;
+ font-size:.92rem;font-weight:800;line-height:1.5;color:#ffe0ac;
+ text-align:left}
+.story .readbtn:hover{border-color:#ffdda6;background:#354d68}
+.story .readbtn:focus-visible{outline:3px solid #ffe0ac;outline-offset:3px}
+.story h3{font-size:clamp(1.18rem,3.5vw,1.38rem);
+ line-height:1.5;letter-spacing:-.012em;margin:9px 0 13px}
+@media(max-width:520px){
+ .spotlight h1{line-height:1.48;margin-bottom:13px}
+ .spotlight-fact{margin-bottom:7px}
+ .spotlight-fact .spotlight-brief{font-size:.97rem;line-height:1.75}
+ .spotlight .spotlight-divider{margin:5px 0 11px}
+ .spotlight-joke{padding:12px 12px 11px;margin:0 0 12px}
+ .spotlight-joke .spotlight-quip{font-size:1.035rem;line-height:1.67}
+ .story h3{font-size:1.16rem;line-height:1.5;margin:8px 0 12px}
+ .story .story-fact .summary{font-size:.96rem;line-height:1.75}
+ .story .teaserquip{font-size:.99rem;line-height:1.7;padding:11px 12px}
+ .story .readbtn{font-size:.9rem}
+}
+
+/* Phase 3: country-grounded travel postcards, never incident-scene photos. */
+.travel-card{position:relative;border-radius:17px;padding:15px 15px 14px;
+ background:linear-gradient(149deg,#213751,#192a41);border:1px solid #69839c}
+.travel-kicker{font-size:.76rem;letter-spacing:.075em;text-transform:uppercase;
+ color:#ffe0a7;margin-bottom:9px}
+.travel-context{display:flex;flex-wrap:wrap;align-items:center;gap:6px 7px;margin:0 0 12px;
+ font-size:.77rem;line-height:1.55}
+.travel-context-story,.travel-context-destination{display:inline-flex;align-items:center;
+ border-radius:100px;padding:5px 10px;border:1px solid #69829c;background:#2c425d;
+ color:#e8f0f6;font-weight:690}
+.travel-context-destination{border-color:#c69e63;color:#ffdfab;background:#493e3b}
+.travel-card h4{font-size:clamp(1.19rem,4.4vw,1.43rem);
+ font-weight:800;line-height:1.5;margin:0 0 9px;color:#fff5e8}
+.travel-trust{display:block;margin:8px 0 12px;padding:10px 12px;
+ border-radius:9px;background:#18283f;border:1px solid #8496a6;
+ font-size:.83rem;font-weight:720;line-height:1.65;color:#f0e1ca}
+.travel-disclaimer{margin:5px 0 13px;color:#c8d7e5;border-left-color:#8fa6bc;
+ font-size:.79rem;line-height:1.68}
+.travel-figure{margin:0 0 11px}
+.travel-photo{aspect-ratio:16/10;max-height:280px;width:100%;
+ border:1px solid #4d637c;border-radius:11px;object-fit:cover}
+.travel-figure figcaption{font-size:.92rem;line-height:1.78;color:#e6eef4;margin-top:11px}
+.travel-figure .travel-caption-label{font-size:.79rem;font-weight:820;color:#ffdda5}
+.travel-links{margin:10px 0;gap:7px 16px}
+.travel-links a{font-size:.88rem;line-height:1.65;min-height:44px;
+ border:1px solid #879db0;border-radius:9px;padding:7px 12px;color:#ffe1ad;
+ text-decoration:underline;text-underline-offset:3px}
+.travel-credit{font-size:.73rem;line-height:1.6;color:#becfdd;margin:7px 0 0}
+.travel-empty{font-size:.9rem;line-height:1.7;margin:12px 0;background:#1a2b42}
+@media(max-width:520px){
+ .travel-card{padding:13px 12px 12px;border-radius:14px}
+ .travel-kicker{font-size:.72rem}
+ .travel-context{font-size:.74rem}
+ .travel-context-story,.travel-context-destination{padding:6px 9px}
+ .travel-trust{font-size:.8rem;padding:9px 10px}
+ .travel-card h4{font-size:1.2rem}
+ .travel-photo{aspect-ratio:16/10;max-height:245px}
+ .travel-links a{flex:1 1 145px;justify-content:center;text-align:center}
+}
+
+/* Evergreen closing: a quiet farewell at any hour, not a second hero card. */
+#closing.footerpanel{margin:20px 0 16px;padding:17px 18px 15px;
+ border-radius:18px;border-color:#5c738f;background:linear-gradient(155deg,#243854,#192a43)}
+#closing .closing-moon{font-size:1.2rem;line-height:1;margin:0 0 6px;color:#ffda9d}
+#closing h2{font-family:'Hiragino Mincho ProN','Yu Mincho',serif;
+ font-size:clamp(1.13rem,4.3vw,1.36rem);line-height:1.56;
+ font-weight:680;letter-spacing:.014em;margin:0 0 7px;color:#f7efe4}
+#closing .closing-afterword{border-top:1px solid #637993;
+ margin:12px auto 0;padding:11px 0 0;max-width:28rem;
+ font-size:clamp(.93rem,3.4vw,1.045rem);font-weight:620;
+ line-height:1.62;color:#e4eaf1}
+#closing .bye{font-size:.85rem;line-height:1.62;letter-spacing:.01em;
+ color:#e7c99c;font-weight:560;margin:7px 0 0}
+#closing .night-quote{margin:12px auto 0;padding:12px 6px 2px;
+ max-width:28rem;border-top:1px solid #637993}
+#closing .night-quote span{font-size:.8rem;line-height:1.5}
+#closing .night-quote p{font-size:clamp(.96rem,3.7vw,1.12rem);
+ line-height:1.68;margin:7px auto 10px;font-weight:650}
+#closing .night-quote:not([hidden])~.closing-afterword{border-top:0;
+ padding-top:2px;margin-top:6px}
+@media(max-width:520px){
+ #closing.footerpanel{margin:19px 0 14px;padding:16px 14px 14px;border-radius:16px}
+ #closing h2{font-size:clamp(1.11rem,4.7vw,1.28rem)}
+ #closing .closing-afterword{font-size:.94rem;margin-top:10px;padding-top:10px}
+ #closing .bye{font-size:.82rem}
+}
+
+/* Brand promise: real international blunders, with a playful AI punchline.
+   The geography remains factual; no fake joke or other invented reporting. */
+#atlasHero .atlas-title{font-size:clamp(1.28rem,4.8vw,1.92rem);
+ line-height:1.36;letter-spacing:-.025em;margin:5px 0 8px}
+#atlasHero .atlas-title-second{display:block;margin-top:2px;letter-spacing:-.015em}
+#atlasHero .atlas-oops{position:relative;display:inline-block;color:#ffdda2;
+ isolation:isolate;white-space:nowrap}
+#atlasHero .atlas-oops::after{content:"";position:absolute;z-index:-1;
+ left:9%;right:6%;height:6px;bottom:2px;border-radius:50%;
+ background:#cc9e555c;transform:rotate(-2deg);pointer-events:none}
+#atlasHero #atlasStoryCount{color:#ffdda2;font-variant-numeric:tabular-nums}
+#atlasHero .atlas-lede{font-size:.84rem;line-height:1.68;
+ color:#e0e9f2;margin:0 0 12px;max-width:42rem}
+#atlasHero .atlas-concept{display:flex;align-items:center;gap:8px;
+ max-width:100%;margin:0 0 13px}
+#atlasHero .atlas-real-stamp{flex:0 0 auto;padding:6px 9px;border-radius:9px;
+ background:#f6ddb0;color:#1c2b42;border:1px solid #ffefce;
+ font-size:.76rem;line-height:1.45;font-weight:900;transform:rotate(-4deg)}
+#atlasHero .atlas-concept-arrow{flex:0 0 auto;color:#ffdba2;
+ font-size:1.05rem;line-height:1}
+#atlasHero .atlas-brand{display:block!important;position:relative;flex:1 1 auto;
+ min-width:0;margin:0;padding:9px 12px 10px;
+ background:linear-gradient(135deg,#2f4866,#27405e);
+ border:1px solid #8ca1b8;border-radius:12px;
+ color:#fff2df;font-size:.82rem;line-height:1.55;font-weight:680;
+ overflow-wrap:anywhere}
+#atlasHero .atlas-brand::after{content:"";position:absolute;width:8px;height:8px;
+ left:-5px;top:17px;background:#2f4866;border-left:1px solid #8ca1b8;
+ border-bottom:1px solid #8ca1b8;transform:rotate(45deg)}
+#atlasHero .atlas-bubble-tag{display:block;width:max-content;
+ color:#ffdfab;font-size:.68rem;font-weight:850;line-height:1.35;
+ letter-spacing:.05em;margin-bottom:2px}
+.spotlight-joke{position:relative}
+.spotlight-joke::after{content:"”";position:absolute;right:13px;top:-16px;
+ font-family:Georgia,serif;font-size:3rem;line-height:1;
+ color:#ffddab;opacity:.25;pointer-events:none}
+@media(max-width:520px){
+ #atlasHero .atlas-title{font-size:clamp(1.25rem,5.3vw,1.45rem);
+  line-height:1.36;margin:4px 0 6px}
+ #atlasHero .atlas-title-second{margin-top:1px}
+ #atlasHero .atlas-lede{font-size:.8rem;line-height:1.63;margin:0 0 11px}
+ #atlasHero .atlas-concept{gap:7px;margin:0 0 11px}
+ #atlasHero .atlas-real-stamp{font-size:.71rem;padding:6px 8px}
+ #atlasHero .atlas-concept-arrow{font-size:.95rem}
+ #atlasHero .atlas-brand{display:block!important;
+  font-size:.77rem;line-height:1.55;padding:8px 10px 9px}
+ #atlasHero .atlas-bubble-tag{font-size:.68rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #atlasHero .atlas-real-stamp{transition:none}
+}
+
+/* Illustrated news digest v1: playfulness without presenting artwork as evidence.
+   Text, source references and original story facts stay fully accessible. */
+#atlasHero{position:relative;background:linear-gradient(155deg,#223B59 0%,#182A43 70%,#203C4B 100%);
+ border:1px solid #7D94AD;border-radius:20px}
+#atlasHero::after{content:"✦";position:absolute;top:13px;right:12px;color:#FDA19A;
+ font-size:1.25rem;pointer-events:none;opacity:.86}
+#atlasHero .atlas-oops{color:#FFD084;transform:rotate(-1.5deg)}
+#atlasHero .atlas-oops::after{height:8px;background:#F88D81A8;bottom:0}
+#atlasHero .atlas-real-stamp{background:#FFE6B5;border-color:#FFEDD0;color:#263A52}
+#atlasHero .atlas-bubble-tag{color:#A9F0DA}
+#atlasHero .atlas-brand{border-color:#84C9BE;background:linear-gradient(135deg,#2D5270,#294761)}
+#atlasHero .atlas-brand::after{background:#2D5270;border-color:#84C9BE}
+#atlasHero .issue-gallery{text-align:left;margin:5px 0 13px;min-width:0}
+#atlasHero .gallery-heading{display:flex;align-items:baseline;justify-content:space-between;
+ gap:10px;margin:0 0 9px;color:#FFF1DE;font-size:.91rem;line-height:1.5}
+#atlasHero .gallery-heading strong{font-weight:900;letter-spacing:.01em}
+#atlasHero .gallery-heading span{color:#B9E9DD;font-size:.77rem;font-weight:720;
+ white-space:nowrap}
+#atlasHero .gallery-track{width:100%;display:grid;grid-auto-flow:column;
+ grid-auto-columns:minmax(142px,1fr);gap:9px;overflow-x:auto;overscroll-behavior-x:contain;
+ scrollbar-width:thin;scrollbar-color:#A7C9C2 transparent;scroll-snap-type:x proximity;
+ padding:1px 1px 8px;box-sizing:border-box}
+#atlasHero .gallery-tile{display:flex;flex-direction:column;align-items:stretch;
+ min-width:0;max-width:100%;width:100%;border:1px solid #6589A7;
+ border-bottom:3px solid #F9C77D;background:#294663;
+ padding:6px 6px 9px;border-radius:13px;color:#FFF5E9;text-align:left;
+ cursor:pointer;scroll-snap-align:start;touch-action:manipulation;
+ transition:transform .18s ease,border-color .18s ease,background .18s ease}
+#atlasHero .gallery-tile:nth-child(2){border-bottom-color:#90D4C6}
+#atlasHero .gallery-tile:nth-child(3){border-bottom-color:#FFA7A0}
+#atlasHero .gallery-tile:hover{transform:translateY(-3px);background:#355574;
+ border-color:#FFDBA2}
+#atlasHero .gallery-tile:focus-visible{outline:3px solid #FFE3B2;outline-offset:2px}
+#atlasHero .gallery-art{display:block;width:100%;height:auto;aspect-ratio:5/3;
+ object-fit:cover;border-radius:9px;background:#F7C6BA}
+#atlasHero .gallery-country{display:block;font-size:.77rem;font-weight:900;
+ line-height:1.45;color:#AEEADB;margin:6px 3px 2px;overflow-wrap:anywhere}
+#atlasHero .gallery-label{display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:2;overflow:hidden;min-height:2.7em;line-height:1.37;
+ font-size:.8rem;font-weight:760;margin:0 3px}
+#atlasHero .gallery-clarity{font-size:.7rem;line-height:1.65;
+ color:#CAD9E6;margin:5px 0 0}
+#atlasHero .atlas-map{border-color:#547D8E;background-color:#22445A}
+.news-visual,.story-visual{position:relative;overflow:hidden;margin:0}
+.news-visual img,.story-visual img{display:block;width:100%;height:auto;object-fit:cover;
+ background:#F9CFAB}
+.spotlight .spotlight-visual{margin:0 0 16px;border-radius:13px;
+ background:#E9C7AA;border:1px solid #6F859A}
+.spotlight .spotlight-visual img{aspect-ratio:16/9;max-height:240px}
+.news-visual figcaption,.story-visual figcaption{position:absolute;bottom:8px;right:8px;
+ z-index:1;font-size:.68rem;line-height:1.55;color:#FFF8EF;background:#172B44E6;
+ padding:4px 9px;border:1px solid #BED2D9A8;border-radius:99px;
+ max-width:calc(100% - 16px);text-align:right}
+.spotlight .spotlight-topline{margin-bottom:11px}
+.spotlight .spotlight-fact{margin-bottom:7px}
+.spotlight .spotlight-joke{border-left:4px solid #FFA1A1;
+ background:linear-gradient(135deg,#354E6A,#273C57)}
+.spotlight .quip-kicker .spotlight-quip-label{color:#FFD9A2}
+.story .story-cover{display:grid;grid-template-columns:minmax(120px,41%) minmax(0,1fr);
+ gap:12px;align-items:start;margin:11px 0 12px}
+.story .story-visual{border-radius:11px;aspect-ratio:4/3;border:1px solid #7394A8}
+.story .story-visual .story-art{height:100%;aspect-ratio:4/3;object-fit:cover}
+.story .story-visual figcaption{font-size:.64rem;right:5px;bottom:5px;padding:3px 6px}
+.story .story-headline{min-width:0}
+.story .story-headline .label{font-size:.73rem;line-height:1.5;
+ margin:0 0 5px;color:#B8EBDD}
+.story .story-cover h3{font-size:clamp(1.05rem,3.5vw,1.32rem);
+ font-weight:850;line-height:1.45;margin:0;display:-webkit-box;
+ -webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}
+.story.expanded .story-cover h3{display:block;overflow:visible}
+.story .story-fact{margin:0 0 4px;padding:0}
+.story .story-fact .fact-kicker{color:#B8E7DB;font-size:.72rem;margin:0 0 3px}
+.story .story-fact .summary{display:-webkit-box;-webkit-box-orient:vertical;
+ -webkit-line-clamp:2;overflow:hidden;line-height:1.68;margin:0;
+ color:#DCE9F1;font-size:.94rem}
+.story.expanded .story-fact .summary{display:block;overflow:visible}
+.story .teaserquip{border-left-color:#FFA5A1;background:#304961;
+ margin:10px 0 9px;padding:10px 12px;line-height:1.58;font-weight:760}
+.story .teaserquip span{color:#FFDBA1;margin-bottom:4px}
+.story .reported{display:none}
+.story.expanded .reported{display:block}
+.story .readbtn{min-height:46px;margin-top:9px;
+ background:#354D67;color:#FFE0AE;border-color:#86A2B5}
+.story:nth-child(even){border-left-color:#89D3C5}
+.story:nth-child(odd){border-left-color:#FFA49F}
+@media(max-width:520px){
+ #atlasHero{border-radius:16px}
+ #atlasHero .issue-gallery{margin:5px 0 10px}
+ #atlasHero .gallery-heading{font-size:.82rem;margin-bottom:7px}
+ #atlasHero .gallery-heading span{font-size:.72rem}
+ #atlasHero .gallery-track{grid-auto-columns:minmax(128px,45%);gap:8px;padding-bottom:6px}
+ #atlasHero .gallery-tile{padding:5px 5px 8px;border-radius:11px}
+ #atlasHero .gallery-label{font-size:.76rem;min-height:2.7em}
+ #atlasHero .gallery-clarity{font-size:.69rem}
+ .spotlight .spotlight-visual{margin:0 0 13px;border-radius:11px}
+ .spotlight .spotlight-visual img{aspect-ratio:16/9;max-height:204px}
+ .spotlight .spotlight-topline{margin-bottom:8px}
+ .story{padding:14px 13px 15px}
+ .story .story-cover{grid-template-columns:minmax(110px,39%) minmax(0,1fr);
+  gap:10px;margin:10px 0 9px}
+ .story .story-cover h3{font-size:1.01rem;line-height:1.44;-webkit-line-clamp:4}
+ .story .story-headline .label{font-size:.72rem}
+ .story .story-fact .summary{font-size:.91rem;line-height:1.66}
+ .story .teaserquip{font-size:.955rem;line-height:1.6;padding:10px 11px}
+ .story .readbtn{margin-top:8px}
+}
+@media(max-width:355px){
+ .story .story-cover{grid-template-columns:minmax(104px,37%) minmax(0,1fr);gap:8px}
+ .story .story-cover h3{font-size:.94rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #atlasHero .gallery-tile{transition:none}
+ #atlasHero .gallery-tile:hover{transform:none}
+}
+
+/* Fix: the narrow iPhone viewport must show EVERY published postcard without
+   a partially clipped third tile. At most 520px use a two-column grid and
+   let the final odd article occupy a full-width horizontal postcard. */
+@media(max-width:520px){
+ #atlasHero .gallery-heading{flex-wrap:wrap;gap:3px 9px}
+ #atlasHero .gallery-heading strong{min-width:0}
+ #atlasHero .gallery-heading span{white-space:normal}
+ #atlasHero .gallery-track{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-flow:row;grid-auto-columns:auto;
+  gap:9px;overflow-x:visible;overscroll-behavior-x:auto;
+  scroll-snap-type:none;scrollbar-width:none;
+  padding:0;min-width:0;max-width:100%;width:100%;box-sizing:border-box
+ }
+ #atlasHero .gallery-tile{min-width:0;width:100%;max-width:100%;
+  height:100%;box-sizing:border-box;scroll-snap-align:none;overflow:hidden}
+ #atlasHero .gallery-art{max-width:100%;min-width:0;aspect-ratio:5/3}
+ #atlasHero .gallery-country,#atlasHero .gallery-label{min-width:0;
+  max-width:100%;overflow-wrap:anywhere}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-column:1/-1;display:grid;
+  grid-template-columns:minmax(0,43%) minmax(0,1fr);
+  grid-template-rows:auto 1fr;align-items:center;align-content:center;
+  gap:0 12px;padding:7px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{
+  grid-column:1;grid-row:1/span 2;width:100%;height:auto;
+  align-self:center;aspect-ratio:5/3;object-fit:cover
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-country{
+  grid-column:2;grid-row:1;align-self:end;margin:0 0 4px;font-size:.8rem
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  grid-column:2;grid-row:2;align-self:start;margin:0;min-height:0;
+  font-size:.87rem;line-height:1.44;-webkit-line-clamp:3
+ }
+}
+@media(max-width:355px){
+ #atlasHero .gallery-track{gap:7px}
+ #atlasHero .gallery-tile{padding:5px}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-template-columns:minmax(0,41%) minmax(0,1fr);
+  gap:0 8px;padding:6px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  font-size:.8rem;line-height:1.42
+ }
+}
+
+/* Playful reading v2: land the first verified joke BEFORE the news list and
+   world map, then reveal the same article (no new fabricated joke/source). */
+/* Compact, text-first opening joke. The only image for a story appears
+   in the clickable three-comic gallery; never crop the same art twice. */
+#atlasHero .quip-teaser[hidden]{display:none!important}
+#atlasHero .quip-teaser{
+ display:block;position:relative;min-width:0;max-width:100%;
+ margin:2px 0 13px;padding:12px 13px 12px;
+ background:linear-gradient(125deg,#305775,#263F60);
+ border:1px solid #91C9BF;border-left:4px solid #FBA69C;
+ border-radius:14px;box-shadow:0 5px 14px #07152724
+}
+#atlasHero .quip-teaser::after{
+ content:"";position:absolute;left:22px;bottom:-8px;width:12px;height:12px;
+ transform:rotate(-45deg);border-left:1px solid #91C9BF;
+ border-bottom:1px solid #91C9BF;background:#263F60;pointer-events:none
+}
+#atlasHero .quip-teaser-body{display:flex;flex-direction:column;min-width:0}
+#atlasHero .quip-teaser-heading{display:flex;align-items:baseline;
+ justify-content:space-between;gap:4px 10px;flex-wrap:wrap;margin:0 0 7px}
+#atlasHero .quip-teaser-kicker{font-size:.78rem;line-height:1.45;
+ font-weight:900;color:#FFE1A7;margin:0}
+#atlasHero .quip-teaser-topic{font-size:.71rem;line-height:1.4;
+ color:#ACEADB;font-weight:760;margin:0;overflow-wrap:anywhere}
+#atlasHero .quip-teaser-line{font-size:clamp(.99rem,3.55vw,1.17rem);
+ line-height:1.58;font-weight:820;color:#FFF8ED;margin:0 0 10px;
+ overflow-wrap:anywhere;text-wrap:pretty}
+#atlasHero .quip-teaser-actions{display:flex;align-items:stretch;
+ flex-wrap:nowrap;gap:8px;margin-top:0;min-width:0}
+#atlasHero #quipTeaserRead{flex:1 1 0;min-width:0;min-height:44px;
+ padding:8px 10px;color:#23354B;background:#FFE0AC;
+ border:1px solid #FFF2D1;border-radius:10px;
+ font-weight:860;font-size:.78rem;line-height:1.4}
+#atlasHero #quipTeaserRead:hover{background:#FFF0CC}
+#atlasHero #quipTeaserRead:focus-visible{outline:3px solid #FFF3D5;outline-offset:3px}
+/* Keep "real reporting / fictional joke" legible, without another
+   explanatory speech bubble before the actual punchline. */
+#atlasHero .atlas-concept{margin:0 0 9px;gap:6px;align-items:center}
+#atlasHero .atlas-real-stamp{font-size:.71rem;line-height:1.35;
+ padding:4px 8px;transform:none}
+#atlasHero .atlas-concept-arrow{font-size:.84rem;line-height:1}
+#atlasHero .atlas-brand{display:flex!important;flex:0 1 auto;
+ align-items:baseline;gap:6px;min-width:0;margin:0;
+ padding:0;border:0;border-radius:0;background:none;line-height:1.35;
+ box-shadow:none;color:#D8E5F0;font-size:.78rem;font-weight:660}
+#atlasHero .atlas-brand::after{content:none}
+#atlasHero .atlas-bubble-tag{display:inline;
+ margin:0;color:#FFE0A9;font-size:.73rem;line-height:1.35}
+#atlasHero .atlas-brand-copy{display:inline;color:#CCDCE8;font-size:.76rem}
+/* Editorially verified article-specific taglines are visual labels, not
+   additional reporting. For future items use the editor-approved short label. */
+#atlasHero .gallery-kicker{display:block;max-width:100%;min-width:0;
+ margin:1px 3px 3px;color:#FFDFAC;font-size:.76rem;line-height:1.45;
+ font-weight:900;overflow-wrap:anywhere}
+#atlasHero .gallery-label{font-size:.79rem;line-height:1.48;
+ color:#F0F5FC;font-weight:720;min-height:2.9em}
+#atlasHero .gallery-tile:nth-child(2) .gallery-kicker{color:#B7F0D6}
+#atlasHero .gallery-tile:nth-child(3) .gallery-kicker{color:#FFC0C8}
+#atlasHero .gallery-tile{box-shadow:0 4px 10px #08192C35}
+#atlasHero .gallery-tile:nth-child(1){background:linear-gradient(140deg,#3C536B,#274262)}
+#atlasHero .gallery-tile:nth-child(2){background:linear-gradient(140deg,#2C5960,#26465C)}
+#atlasHero .gallery-tile:nth-child(3){background:linear-gradient(140deg,#58445C,#343E60)}
+/* Less atlas height so the live story comes into view before scrolling far.
+   Pin position remains percentage-based and still means *country*, not venue. */
+#atlasHero .atlas-map{aspect-ratio:2.32/1;min-height:125px}
+#atlasHero .atlas-map-caption{margin:6px 0 3px;line-height:1.5}
+/* Physically playful comic speech bubbles, but do not conflate them with facts. */
+.spotlight .spotlight-joke{position:relative;overflow:visible;
+ border-radius:19px 19px 19px 8px;border-left:4px solid #FFAAA7;
+ box-shadow:0 5px 11px #07152728;margin-bottom:22px}
+.spotlight .spotlight-joke::before{content:"";position:absolute;
+ left:21px;bottom:-11px;width:17px;height:17px;
+ transform:rotate(-45deg);background:#283E56;
+ border-left:1px solid #6E839A6B;border-bottom:1px solid #6E839A6B;
+ pointer-events:none}
+.story .teaserquip{position:relative;border-radius:16px 16px 16px 7px;
+ box-shadow:0 5px 11px #07152728;margin-bottom:17px}
+.story .teaserquip::after{content:"";position:absolute;left:20px;bottom:-10px;
+ width:15px;height:15px;transform:rotate(-45deg);
+ background:#304961;border-left:1px solid #7181987A;
+ border-bottom:1px solid #7181987A;pointer-events:none}
+@media(max-width:520px){
+ #atlasHero .quip-teaser{padding:11px 11px 10px;margin:2px 0 12px}
+ #atlasHero .quip-teaser-heading{margin:0 0 6px;gap:2px 8px}
+ #atlasHero .quip-teaser-kicker{font-size:.73rem}
+ #atlasHero .quip-teaser-topic{font-size:.68rem}
+ #atlasHero .quip-teaser-line{font-size:.975rem;line-height:1.53;margin-bottom:8px}
+ #atlasHero .quip-teaser-actions{gap:7px}
+ #atlasHero #quipTeaserRead{padding:7px 8px;font-size:.72rem;min-height:44px}
+ #atlasHero .atlas-concept{margin-bottom:8px}
+ #atlasHero .gallery-kicker{font-size:.73rem;margin:1px 3px 2px}
+ #atlasHero .gallery-label{font-size:.74rem;line-height:1.47}
+ #atlasHero .gallery-tile:last-child:nth-child(odd){
+  grid-template-rows:auto auto minmax(0,1fr);
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-art{
+  grid-row:1/span 3
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-kicker{
+  grid-column:2;grid-row:2;align-self:center;margin:0 0 4px
+ }
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{
+  grid-column:2;grid-row:3;align-self:start;min-height:0;
+  -webkit-line-clamp:2
+ }
+ #atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}
+}
+@media(max-width:355px){
+ #atlasHero .quip-teaser{padding:9px}
+ #atlasHero .quip-teaser-line{font-size:.92rem;line-height:1.52}
+ #atlasHero .quip-teaser-actions{gap:6px}
+ #atlasHero .gallery-kicker{font-size:.7rem}
+ #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{font-size:.78rem}
+}
+@media(prefers-reduced-motion:reduce){
+ #atlasHero .gallery-tile{transition:none}
+}
+
+/* The illustrated issue gallery is the ONLY default article index.
+   Actual reportage, sources, second quips and journey cards are still
+   available from each postcard, never permanently deleted. */
+#articleReader[hidden]{display:none!important}
+#articleReader{margin:17px 0 23px;scroll-margin-top:14px}
+#articleReader .article-reader-toolbar{display:flex;flex-wrap:wrap;
+ justify-content:space-between;align-items:center;gap:8px;
+ padding:0 1px 12px;border-bottom:1px solid #536D88;margin-bottom:14px}
+#articleReader #readerSelected{margin:0;color:#D3E9E6;
+ font-size:.86rem;font-weight:830;line-height:1.45}
+#articleReader #readerBack{min-height:44px;padding:8px 13px;
+ border-radius:12px;border:1px solid #91C3BF;background:#2A4661;
+ color:#FFF0DB;font-weight:820;font-size:.83rem;line-height:1.45}
+#articleReader #readerBack:focus-visible{outline:3px solid #FFE0AA;outline-offset:2px}
+#articleReader .sectionhead,#articleReader #intro,
+#articleReader .filters,#articleReader #empty{display:none!important}
+#articleReader .spotlight-visual,#articleReader .story-visual{display:none}
+#articleReader .story-cover{display:block;margin:7px 0 13px}
+#articleReader .story-headline{max-width:100%}
+#articleReader #stories{padding:0;margin:0;list-style:none}
+#articleReader #stories[hidden]{display:none!important}
+#articleReader #stories .story[hidden]{display:none!important}
+#articleReader .spotlight[hidden]{display:none!important}
+#atlasHero .gallery-tile[aria-expanded="true"]{
+ border-color:#FFE3AE;outline:2px solid #F8D297;outline-offset:1px}
+@media(max-width:520px){
+ #articleReader{margin:15px 0 19px}
+ #articleReader .article-reader-toolbar{gap:6px;padding-bottom:10px;margin-bottom:12px}
+ #articleReader #readerSelected{font-size:.79rem}
+ #articleReader #readerBack{font-size:.78rem;padding:8px 10px}
+ #articleReader .story-cover h3{-webkit-line-clamp:unset;display:block;overflow:visible;
+ font-size:1.18rem;line-height:1.5}
+}
+
+/* Each news story is an independent, full-width reading screen.
+   The map, gallery and other articles never stack behind the selected story. */
+body.news-detail-mode main > :not(#articleReader):not(#offlineNotice){display:none!important}
+body.news-detail-mode .wrap > footer,body.news-detail-mode .skip-link{display:none!important}
+body.news-detail-mode #articleReader{display:block;margin:0 auto 24px;max-width:720px}
+body.news-detail-mode #articleReader #stories,
+body.news-detail-mode #articleReader .sectionhead,
+body.news-detail-mode #articleReader .filters,
+body.news-detail-mode #articleReader #intro,
+body.news-detail-mode #articleReader #empty{display:none!important}
+body.news-detail-mode #articleReader .spotlight{display:block;width:100%;margin:0}
+body.news-detail-mode #articleReader .spotlight-visual{display:block}
+body.news-detail-mode #articleReader .article-reader-toolbar{
+ position:sticky;top:env(safe-area-inset-top,0px);z-index:30;
+ background:#101e32f5;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+ border:1px solid #56738c;border-radius:13px;padding:9px 10px;margin:0 0 14px}
+body.news-detail-mode .nav{padding-bottom:10px}
+body.news-detail-mode #spotlightTitle{scroll-margin-top:95px}
+.article-pager{display:flex;gap:10px;justify-content:space-between;margin:17px 0 24px}
+.article-pager button{min-height:48px;flex:1;border:1px solid #8fb6b6;
+ background:#243a56;color:#f6f0e3;border-radius:13px;padding:8px 10px;
+ font-size:.9rem;font-weight:800}
+.article-pager button:disabled{opacity:.35;cursor:not-allowed}
+.article-pager button:focus-visible{outline:3px solid #ffe0aa;outline-offset:2px}
+@media(max-width:520px){
+ body.news-detail-mode #articleReader .article-reader-toolbar{margin-bottom:10px}
+ body.news-detail-mode #articleReader .spotlight{padding:19px 15px}
+ .article-pager{gap:8px}
+ .article-pager button{font-size:.84rem}
+}
+
+/* One story, one reading flow: do not repeat the cover teaser in article view. */
+body.news-detail-mode #articleReader .spotlight{display:flex;flex-direction:column}
+body.news-detail-mode #articleReader .spotlight-topline{order:0}
+body.news-detail-mode #articleReader .spotlight-visual{order:1}
+body.news-detail-mode #articleReader #spotlightTitle{order:2;margin-bottom:13px}
+body.news-detail-mode #articleReader .spotlight-fact,
+body.news-detail-mode #articleReader .spotlight-divider,
+body.news-detail-mode #articleReader #spotlightRead{display:none!important}
+body.news-detail-mode #articleReader #spotlightBody{order:3;margin:0;padding:0;border-top:0}
+body.news-detail-mode #articleReader .article-narrative{margin:0;padding:0;max-width:60ch}
+body.news-detail-mode #articleReader .article-narrative .detailtext{
+ font-size:clamp(1rem,3.8vw,1.1rem);line-height:1.83;
+ letter-spacing:.012em;color:#F5F5F1;margin:0 0 1em;
+ overflow-wrap:anywhere;white-space:pre-line}
+body.news-detail-mode #articleReader .article-narrative .detailtext:last-child{margin-bottom:.85em}
+body.news-detail-mode #articleReader .spotlight-joke{order:4;margin:16px 0 8px}
+body.news-detail-mode #articleReader .travel-slot{order:5}
+body.news-detail-mode #articleReader .reported{margin:2px 0 11px;color:#C6D9E4;font-size:.86rem}
+body.news-detail-mode #articleReader .source{border-top:1px solid #586F87;margin:16px 0 12px;padding:12px 0 0}
+@media(max-width:520px){
+ body.news-detail-mode #articleReader .article-narrative .detailtext{font-size:1rem;line-height:1.8;letter-spacing:0}
+ body.news-detail-mode #articleReader .spotlight-joke{margin-top:13px}
+}
+/* Mobile gallery header: keep the hint within the hero at 320–393px widths. */
+@media(max-width:520px){
+ #atlasHero .gallery-heading{display:flex;flex-wrap:wrap;min-width:0;max-width:100%;align-items:flex-start}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  min-width:0;max-width:100%;overflow-wrap:anywhere;word-break:normal;white-space:normal
+ }
+ #atlasHero .gallery-heading span{display:block;flex:0 1 100%;text-align:left}
+}
+/* Ensure the gallery heading cannot overflow the 320px cover. */
+#atlasHero .issue-gallery{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+@media(max-width:520px){
+ #atlasHero .gallery-heading{display:grid;grid-template-columns:minmax(0,1fr);
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;gap:2px}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  white-space:normal;overflow-wrap:anywhere;text-align:left
+ }
+}
+/* Current-issue map: enlarge the latitude axis for mobile legibility.
+   Artwork and pin coordinates share the same stretched canvas, so pins remain aligned. */
+.today-map-card{margin:6px 0 3px;border:2px solid #8ED5CF;border-radius:17px;
+ background:linear-gradient(135deg,#264964,#2C5266 65%,#31465E);padding:13px 13px 12px;
+ box-shadow:0 9px 21px #0D203B28}
+.today-map-header{display:flex;justify-content:space-between;align-items:center;
+ gap:8px 14px;flex-wrap:wrap;margin-bottom:10px}
+.today-map-kicker{font-size:.65rem;color:#A6E6DB;letter-spacing:.1em;font-weight:850;margin:0 0 3px}
+.today-map-header h3{font-size:1.03rem;color:#FFF0C9;line-height:1.4;margin:0;font-weight:900}
+.today-map-date{color:#FFF5DE;border:1px solid #BBD7CE;border-radius:999px;
+ font-size:.7rem;font-weight:760;line-height:1.4;padding:5px 10px;white-space:nowrap}
+.today-map-canvas{position:relative;width:100%;aspect-ratio:1.8/1;overflow:hidden;
+ border:2px solid #8AC9C7;border-radius:13px;background:#CBEFF0}
+.today-map-art{position:absolute;inset:0;width:100%;height:100%;display:block;object-fit:fill}
+.today-map-pins{position:absolute;inset:0;pointer-events:none}
+.today-map-pin{position:absolute;display:flex;justify-content:center;align-items:center;
+ width:36px;height:36px;padding:0;
+ transform:translate(calc(-50% + var(--map-dx,0px)),calc(-50% + var(--map-dy,0px)));
+ scroll-margin-top:116px;
+ border:2.5px solid #fff;border-radius:50%;background:var(--country-color,#FFF0C9);
+ color:#283E56;box-shadow:0 3px 7px #233F5999;font:900 .9rem system-ui,sans-serif;
+ line-height:1;z-index:1;cursor:pointer;pointer-events:auto;touch-action:manipulation}
+.today-map-pin::before{content:'';position:absolute;inset:-5px;border-radius:50%}
+.today-map-tether{position:absolute;height:2px;background:#213E59AA;pointer-events:none;
+ transform-origin:left center;z-index:0}
+.today-map-tether::before{content:'';position:absolute;left:-3px;top:-3px;
+ width:8px;height:8px;border-radius:50%;background:#22455B;border:1px solid #F5F9E9}
+.today-map-pin[aria-expanded="true"]{outline:3px solid #283E56;outline-offset:2px;z-index:2}
+.today-map-pin:focus-visible{outline:3px solid #283E56;outline-offset:3px}
+.today-map-legend{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0 7px}
+/* Country names open optional, sourced photo quizzes; no stamp collection. */
+#todayMapLegend{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 6px}
+.today-map-country{min-height:44px;border:1px solid #D9DFCE;border-radius:999px;
+ padding:8px 12px;background:var(--country-color,#FFF0C9);color:#283E56;
+ font-size:.79rem;font-weight:860;text-align:center;line-height:1.4;max-width:100%;white-space:normal}
+.today-map-country:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.today-map-intro{margin:16px 0 10px;padding:clamp(17px,3.5vw,30px);border-radius:18px;
+ border:1px solid #A6E6DB;background:linear-gradient(150deg,#1E3C55,#152B41);color:#F8F4ED;
+ box-shadow:0 12px 30px #0D203B35}
+.today-map-intro[hidden]{display:none}
+.today-map-intro{scroll-margin-top:calc(var(--safe-top) + 74px)}
+.today-map-intro-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.today-map-intro h4{margin:0;font-size:clamp(1.75rem,5vw,2.4rem);color:#FFF0C9;line-height:1.35;font-weight:900}
+.today-map-intro .today-map-intro-lead{font-size:clamp(1.1rem,3vw,1.3rem);font-weight:850;color:#B5EBD6;line-height:1.7;margin:15px 0}
+.today-map-intro-photo{margin:19px 0 18px;border-radius:16px;overflow:hidden;background:#25475D;box-shadow:0 10px 25px #081B2B65}
+.today-map-intro-photo[hidden]{display:none}
+.today-map-intro-photo img{display:block;width:100%;height:auto;aspect-ratio:16/10;max-height:440px;object-fit:cover;object-position:center}
+.today-map-intro-photo figcaption{font-size:.8rem;line-height:1.7;color:#E1EBF0;padding:10px 13px}
+.today-map-intro-photo-status,.today-map-intro-place-note{
+ margin:10px 0 14px!important;color:#c3dfe0!important;font-size:.87rem!important;line-height:1.7!important}
+.today-map-intro-news{margin:15px 0 17px;padding:13px 14px;
+ border-radius:12px;border:1px solid #76a9b1;background:#223f55}
+.today-map-intro-news[hidden]{display:none}
+.today-map-intro-news strong{display:block;color:#fff0c9;font-size:.83rem;letter-spacing:.02em}
+.today-map-intro-news p{font-size:.92rem!important;line-height:1.8!important;
+ margin:7px 0 0!important;color:#eaf5f6!important}
+.country-portrait-kicker{font-size:.76rem!important;letter-spacing:.07em;
+ font-weight:850!important;color:#a9e9d8!important;margin:0 0 9px!important}
+.today-map-intro-current{margin:16px 0;padding:15px 16px;border-radius:13px;
+ border:1px solid #8bc7d0;background:linear-gradient(140deg,#24495c,#1d3a4f)}
+.today-map-intro-current[hidden]{display:none}
+.today-map-intro-current .today-country-current-kicker{font-size:.77rem!important;
+ color:#b9f1dc!important;font-weight:850;margin:0 0 6px!important}
+.today-map-intro-current strong{display:block;color:#fff1c8;font-size:1.04rem;line-height:1.6}
+.today-map-intro-current p{font-size:.9rem!important;line-height:1.85!important;
+ margin:8px 0!important;color:#ecf5f6!important}
+.today-map-intro-current small{display:block;color:#b9cfd8;font-size:.74rem;line-height:1.6}
+.today-map-intro-current a{display:inline-block;margin-top:10px;color:#ffe0a7;
+ min-height:36px;text-decoration:underline;text-underline-offset:3px;font-weight:700;font-size:.83rem}
+.today-map-intro-facts{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.today-map-intro-facts span{border:1px solid #89BDB9;border-radius:10px;padding:7px 10px;color:#E9F6F4;font-size:.78rem;line-height:1.5;background:#29465B}
+.today-map-intro p{margin:12px 0 17px;font-size:1.04rem;line-height:2;color:#E5EEF2}
+.today-map-intro-close{padding:5px 10px;min-height:36px;border:1px solid #9CCEC8;
+ border-radius:999px;color:#E9F6F4;background:#2A5060;font-size:.74rem}
+.today-map-intro-read{min-height:44px;padding:9px 14px;border:1px solid #D9DFCE;
+ border-radius:999px;background:#FFF0C9;color:#283E56;font-size:.78rem;font-weight:800}
+.today-map-note{font-size:.73rem;color:#D5E6E7;line-height:1.6;margin:5px 1px 0}
+@media(max-width:520px){.today-map-card{padding:10px 9px;margin-top:3px;border-radius:15px}
+ .today-map-header h3{font-size:.94rem}
+ .today-map-canvas{aspect-ratio:1.65/1;min-height:190px}
+ .today-map-pin{width:36px;height:36px;font-size:.81rem}
+ .today-map-country{font-size:.73rem;padding:7px 10px}.today-map-note{font-size:.7rem}
+ .today-map-intro{padding:16px 14px;margin:14px 0 10px}
+ .today-map-intro h4{font-size:1.8rem}
+ .today-map-intro .today-map-intro-lead{font-size:1.1rem}
+ .today-map-intro-photo img{aspect-ratio:4/3;max-height:360px}
+ .today-map-intro p{font-size:1rem;line-height:1.9}}
+/* Narrow iPhone layout: prevent the gallery hint from overflowing its cover. */
+@media(max-width:520px){
+ #atlasHero .issue-gallery{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+ #atlasHero .gallery-heading{display:grid!important;grid-template-columns:minmax(0,1fr);
+  width:100%;max-width:100%;min-width:0;box-sizing:border-box;overflow:hidden;gap:3px}
+ #atlasHero .gallery-heading strong,#atlasHero .gallery-heading span{
+  display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+  flex:none;overflow-wrap:anywhere;white-space:normal;word-break:normal;text-align:left}
+}
+/* Country features deserve a large landscape and generous editorial typography. */
+.today-map-intro{padding:clamp(16px,3.8vw,27px);border-radius:17px;
+ background:linear-gradient(155deg,#18334b,#122738);box-shadow:0 12px 32px #07142638}
+.today-map-intro h4{font-size:clamp(1.5rem,4.5vw,2rem);letter-spacing:-.015em}
+.today-map-intro .today-map-intro-lead{font-size:clamp(1.04rem,3.25vw,1.22rem);line-height:1.75}
+.today-map-intro-photo{margin:16px 0 17px;border:1px solid #9cc5c1;
+ box-shadow:0 9px 23px #0714264d;background:#243f54}
+.today-map-intro-photo img{width:100%;height:auto;aspect-ratio:16/10;
+ object-fit:cover;object-position:center;max-height:440px}
+.today-map-intro-photo figcaption{font-size:.75rem;line-height:1.65;padding:9px 12px}
+.today-map-intro-photo figcaption a{color:#BDE9DB;text-decoration:underline;text-underline-offset:3px}
+.today-map-intro p{font-size:1rem;line-height:2}
+@media(max-width:520px){
+ .today-map-intro{padding:16px 13px}
+ .today-map-intro-photo img{aspect-ratio:4/3;max-height:none}
+ .today-map-intro h4{font-size:1.55rem}
+}
+/* Use the cover's full inner width for country scenery on narrow phones.
+   A larger 6:5 photograph is still contained within the cover, without page overflow. */
+@media(max-width:520px){
+ #atlasHero .today-map-intro{margin-left:-12px;margin-right:-12px;
+  max-width:calc(100% + 24px);box-sizing:border-box;padding:12px 7px}
+ #atlasHero .today-map-intro-photo img{aspect-ratio:16/10;max-height:400px}
+}
+/* WORLD QUIZ — a simple optional country quiz, separate from the news. */
+.today-map-game-lead{margin:11px 2px 8px;color:#FFE6BA;font-size:.85rem;line-height:1.7;font-weight:780}
+.today-map-country[aria-expanded="true"]{outline:3px solid #fff;outline-offset:2px}
+.today-country-quiz{margin:13px 0 8px;padding:17px 16px;border:2px solid #E9CA95;
+ scroll-margin-top:calc(var(--safe-top) + 82px);
+ border-radius:17px;background:linear-gradient(145deg,#19364E,#142B43);color:#FAF4ED}
+.today-country-quiz[hidden],.today-quiz-result[hidden],.today-quiz-next[hidden]{display:none!important}
+.today-quiz-top{display:flex;justify-content:space-between;align-items:start;gap:12px}
+.today-quiz-kicker{font-size:.72rem;letter-spacing:.055em;color:#B2EEE2;font-weight:900;margin:0 0 4px}
+.today-country-quiz h4{margin:0;color:#FFE9B9;font-size:1.28rem;line-height:1.5}
+.today-quiz-close{min-height:44px;flex:none;background:#315065;color:#FAFAF2;
+ border:1px solid #A9C8C1;border-radius:99px;padding:8px 12px}
+.today-quiz-progress{margin:12px 0 6px;color:#C7E8E2;font-size:.83rem}
+.today-quiz-question{margin:6px 0 12px;font-size:1.12rem;font-weight:850;line-height:1.7}
+.today-quiz-choices{display:grid;gap:9px}
+.today-quiz-choices button{min-height:48px;width:100%;padding:11px 13px;text-align:left;
+ color:#FCFAF3;background:#28526B;border:1px solid #92C4BD;border-radius:11px;
+ font-size:1rem;font-weight:750;line-height:1.5}
+.today-quiz-choices button:disabled{opacity:.8;cursor:default}
+.today-quiz-choices button[data-correct="true"]{background:#245F53;border:2px solid #B2F1D1;opacity:1}
+.today-quiz-choices button[data-picked-wrong="true"]{background:#75464B;border:2px solid #FFC1BA;opacity:1}
+.today-quiz-result{margin-top:12px;padding-top:12px;border-top:1px solid #719C9C}
+.today-quiz-verdict{font-size:1.03rem;font-weight:900;color:#FFE6AE;line-height:1.6;margin:0 0 8px}
+.today-quiz-explain{font-size:.94rem;line-height:1.85;margin:7px 0}
+.today-quiz-joke{padding:10px 12px;background:#2A4858;border-left:3px solid #B3ECDC;
+ border-radius:0 10px 10px 0;font-size:.93rem;line-height:1.75;margin:10px 0}
+.today-quiz-next{width:100%;min-height:47px;background:#FFE0AB;color:#283D51;
+ border:1px solid #FFF2CF;border-radius:11px;font-size:.95rem;font-weight:850;padding:9px}
+.today-quiz-choices button:focus-visible,.today-quiz-next:focus-visible{outline:3px solid white;outline-offset:2px}
+.today-quiz-question:focus{outline:none}
+@media(max-width:520px){.today-country-quiz{padding:14px 12px}
+ .today-map-game-lead{font-size:.8rem}.today-quiz-question{font-size:1.05rem}}
+
+.today-map-intro-source{display:inline-block;color:#C4EFE7;text-decoration:underline;text-underline-offset:3px;font-size:.82rem;line-height:1.6;margin:6px 0 12px}
+.today-map-intro-source[hidden]{display:none!important}
+.today-quiz-steps{display:flex;gap:7px;margin:8px 0 13px}
+.today-quiz-step{flex:1;height:9px;border-radius:12px;background:#47647A;border:1px solid #68939A}
+.today-quiz-step[data-step="current"]{background:#FFE3A7;border-color:#FFF0CC}
+.today-quiz-step[data-step="done"]{background:#97E6C8;border-color:#D2FAE8}
+.today-quiz-choices button[data-correct="true"]::after{content:" ✓";color:#BFFFF1;font-weight:950}
+.today-quiz-choices button[data-picked-wrong="true"]::after{content:" ✕";color:#FFE4DA;font-weight:950}
+/* Every correct quiz answer gets a non-blocking, immediate sparkle burst. */
+#todayQuizChoices{position:relative;isolation:isolate}
+#todayQuizChoices button{position:relative;overflow:visible;transform-origin:center center}
+#todayQuizChoices button[data-popped="true"]{
+ z-index:2;border-color:#FFF6BA;background:linear-gradient(110deg,#286F5B,#3D8570);
+ box-shadow:0 0 0 2px #F3DF9A,0 0 23px #FFD97C99;
+ animation:quiz-choice-pop .52s cubic-bezier(.22,1.45,.32,1) 1 both}
+.quiz-answer-sparks{position:absolute;inset:0;z-index:4;pointer-events:none;overflow:visible}
+.quiz-answer-sparks span{position:absolute;left:50%;top:50%;opacity:0;
+ color:#FFE5A1;font-size:clamp(1.1rem,4vw,1.6rem);font-weight:950;
+ text-shadow:0 1px 8px #F0D18DD0;line-height:1;white-space:nowrap}
+.quiz-answer-sparks span:nth-child(1){--x:-104px;--y:-58px;--r:-60deg;--delay:0ms}
+.quiz-answer-sparks span:nth-child(2){--x:-62px;--y:-76px;--r:65deg;--delay:50ms}
+.quiz-answer-sparks span:nth-child(3){--x:6px;--y:-84px;--r:15deg;--delay:95ms}
+.quiz-answer-sparks span:nth-child(4){--x:72px;--y:-66px;--r:80deg;--delay:30ms}
+.quiz-answer-sparks span:nth-child(5){--x:108px;--y:-26px;--r:125deg;--delay:65ms}
+.quiz-answer-sparks span:nth-child(6){--x:104px;--y:49px;--r:60deg;--delay:85ms}
+.quiz-answer-sparks span:nth-child(7){--x:48px;--y:70px;--r:110deg;--delay:40ms}
+.quiz-answer-sparks span:nth-child(8){--x:-18px;--y:68px;--r:-45deg;--delay:95ms}
+.quiz-answer-sparks span:nth-child(9){--x:-85px;--y:52px;--r:-95deg;--delay:30ms}
+.quiz-answer-sparks span:nth-child(10){--x:-109px;--y:-8px;--r:-120deg;--delay:70ms}
+.quiz-answer-sparks[data-active="true"] span{
+ animation:quiz-sparkle-fly .78s ease-out var(--delay) 1 both}
+@keyframes quiz-sparkle-fly{
+ 0%{opacity:0;transform:translate(-50%,-50%) rotate(0deg) scale(.3)}
+ 24%{opacity:1;transform:translate(-50%,-50%) rotate(8deg) scale(1.28)}
+ 100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(.72)}}
+@keyframes quiz-choice-pop{
+ 0%{transform:scale(.97)} 40%{transform:scale(1.055)} 75%{transform:scale(.99)} 100%{transform:scale(1)}}
+.today-quiz-correct-flash[hidden]{display:none!important}
+.today-quiz-correct-flash{display:flex;align-items:center;justify-content:center;gap:10px;
+ margin:10px auto 0;padding:8px 12px;max-width:285px;min-height:44px;
+ border:1px solid #FFE6A1;border-radius:40px;background:linear-gradient(125deg,#3A7767,#2C554E);
+ color:#FFF2BF;font-size:1.05rem;line-height:1.4;text-align:center;
+ box-shadow:0 4px 18px #FAD17F44;animation:quiz-flash-appear .5s ease-out both}
+.today-quiz-correct-flash span{font-size:1.4rem;line-height:1;color:#FFE5A1}
+@keyframes quiz-flash-appear{
+ 0%{opacity:0;transform:translateY(10px) scale(.84)}
+ 75%{opacity:1;transform:translateY(-2px) scale(1.055)}
+ 100%{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:520px){.quiz-answer-sparks span{font-size:1.22rem}
+ .today-quiz-correct-flash{font-size:.99rem}}
+@media(prefers-reduced-motion:reduce){
+ #todayQuizChoices button[data-popped="true"],
+ .quiz-answer-sparks[data-active="true"] span,
+ .today-quiz-correct-flash{animation:none!important}
+ .quiz-answer-sparks{display:none}
+}
+
+/* Answer photos are visually prominent but never reveal the solution before answering. */
+.today-quiz-photo{margin:14px 0 12px;border:1px solid #A1DAD0;border-radius:15px;
+ overflow:hidden;background:#24425A;box-shadow:0 10px 24px #061F3150}
+.today-quiz-photo[hidden],.today-quiz-photo-notice[hidden]{display:none!important}
+.today-quiz-photo-zoom{display:block;position:relative;width:100%;margin:0;padding:0;
+ border:0;background:#224057;color:#fff;cursor:zoom-in}
+.today-quiz-photo-zoom img{display:block;width:100%;height:auto;aspect-ratio:16/10;
+ object-fit:cover;object-position:center;max-height:420px}
+.today-quiz-photo-zoom span{position:absolute;bottom:10px;right:10px;padding:6px 10px;
+ border-radius:999px;background:#132E3BD9;color:#fff;font-size:.73rem;font-weight:780}
+.today-quiz-photo figcaption{padding:11px 12px 13px;display:grid;gap:6px;color:#E7F2EF;
+ line-height:1.65;font-size:.83rem}
+.today-quiz-photo figcaption strong{color:#FFF2CF;font-size:.94rem}
+.today-quiz-photo-credits{color:#D2E8E3;font-size:.75rem}
+.today-quiz-photo-credits a{color:#B4EAE6;text-decoration:underline;text-underline-offset:3px}
+.today-quiz-photo-notice{padding:10px 12px;margin:11px 0;border:1px solid #94ADA7;
+ border-radius:10px;color:#DFEDE9;font-size:.85rem;line-height:1.65}
+.today-quiz-photo-dialog{width:min(94vw,850px);max-width:94vw;max-height:88dvh;
+ padding:12px;background:#162B40;color:#fff;border:1px solid #B2E4D7;border-radius:16px}
+.today-quiz-photo-dialog::backdrop{background:#071423DE}
+.today-quiz-photo-dialog img{display:block;max-width:100%;width:100%;height:auto;
+ max-height:69dvh;object-fit:contain}
+.today-quiz-photo-dialog p{margin:11px 3px 4px;font-size:.89rem;line-height:1.65;color:#E0F0EC}
+.today-quiz-dialog-close{display:block;margin:0 0 9px auto;min-height:44px;padding:8px 14px;
+ border:1px solid #D6EEE9;border-radius:100px;color:#fff;background:#37566A}
+.today-quiz-photo-zoom:focus-visible,.today-quiz-dialog-close:focus-visible{outline:3px solid #fff;outline-offset:2px}
+@media(max-width:520px){.today-quiz-photo-zoom img{aspect-ratio:5/4;max-height:340px}
+ .today-quiz-photo figcaption{padding:10px}.today-quiz-photo-dialog{padding:8px}}
+
+/* Article-reader consistency: no accidental blue focus border and a vivid single punchline. */
+body.news-detail-mode #articleReader #spotlightTitle{
+  padding:0 0 14px;border-bottom:2px solid #f7d69b80;outline:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke{
+  position:relative;isolation:isolate;overflow:visible;
+  margin:25px 3px 23px;padding:21px 18px 22px;
+  border:3px solid #fff4d7;border-radius:20px 20px 20px 6px;
+  background:linear-gradient(145deg,#fff0c3 0%,#ffd28d 100%);
+  box-shadow:0 8px 0 #a26646,0 18px 30px #0614268c;
+  transform:rotate(-.7deg);
+}
+body.news-detail-mode #articleReader .spotlight-joke::before{
+  content:"";position:absolute;bottom:-17px;left:26px;width:23px;height:23px;
+  background:#ffd28d;border-right:3px solid #fff4d7;border-bottom:3px solid #fff4d7;
+  transform:rotate(45deg);pointer-events:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke::after{
+  content:"!!";position:absolute;right:14px;top:-19px;padding:2px 10px 3px;
+  background:#eb5b56;color:#fff;font-size:1.14rem;line-height:1.2;font-weight:950;
+  border:2px solid #fff4d7;border-radius:9px;transform:rotate(11deg);
+  box-shadow:0 3px 0 #963f3e;opacity:1;pointer-events:none;
+}
+body.news-detail-mode #articleReader .spotlight-joke .quip-kicker{margin:0 0 9px;gap:6px 12px}
+body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip-label{
+  color:#692f25;font-size:1.01rem;font-weight:950;letter-spacing:.04em;
+}
+body.news-detail-mode #articleReader .spotlight-joke .humor-marker{
+  display:inline-block;color:#344861;background:#fff7e4;border:1px solid #e0bc86;
+  padding:3px 8px;border-radius:100px;font-size:.7rem;font-weight:800;
+}
+body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
+  color:#1c2940;font-size:clamp(1.3rem,5.5vw,1.87rem);line-height:1.48;
+  letter-spacing:-.025em;font-weight:950;margin:0;text-shadow:none;
+}
+@keyframes article-quip-pop{
+  0%{opacity:0;transform:translateY(22px) rotate(2deg) scale(.93)}
+  65%{opacity:1;transform:translateY(-5px) rotate(-1.3deg) scale(1.015)}
+  100%{opacity:1;transform:translateY(0) rotate(-.7deg) scale(1)}
+}
+body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{
+  animation:article-quip-pop .55s cubic-bezier(.2,1,.35,1) both;
+}
+@media(max-width:520px){
+  body.news-detail-mode #articleReader #spotlightTitle{padding-bottom:12px}
+  body.news-detail-mode #articleReader .spotlight-joke{padding:19px 14px 20px;margin:24px 2px 23px}
+  body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{font-size:clamp(1.2rem,5.25vw,1.55rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  body.news-detail-mode #articleReader .spotlight-joke.quip-revealed{animation:none}
+}
+
+/* Keep quip metadata legible while centering only the punchline words. */
+.spotlight .spotlight-joke .spotlight-quip,
+body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
+ text-align:center;text-wrap:balance;overflow-wrap:anywhere
+}
+#closing .night-quote .quote-date{display:block;margin:3px auto 0;color:#b3c5d5;font-size:.69rem;line-height:1.5}
+#closing .night-quote p.quote-attribution{font-size:.85rem;font-weight:750;color:#ffd89e;
+ margin:3px auto 8px;line-height:1.55}
+#closing .night-quote .quote-source{display:block;font-size:.72rem;color:#d8e5e9;line-height:1.7}
+#closing .night-quote .quote-source a{color:#c1e9d9;text-decoration:underline;text-underline-offset:3px}
+
+/* One compact, accessible archive immediately below the daily quotation. */
+#closing .quote-archive{max-width:28rem;margin:12px auto 10px;text-align:left}
+#closing .quote-archive summary{
+ cursor:pointer;min-height:48px;display:list-item;list-style-position:inside;
+ border:1px solid #8ba7ba;border-radius:12px;
+ background:#2b4560;color:#ffdeac;font-size:.91rem;font-weight:800;
+ line-height:1.5;padding:12px 13px;
+}
+#closing .quote-archive summary::marker{color:#c7e6db}
+#closing .quote-archive summary:focus-visible,
+#closing .quote-archive a:focus-visible,
+#closing .quote-archive button:focus-visible{outline:3px solid #b9f1de;outline-offset:3px}
+#closing .quote-archive-hint{font-size:.72rem;color:#d3e4e7;font-weight:600}
+#closing .quote-archive-content{padding:12px 3px 0}
+#closing .quote-archive-status{font-size:.77rem;font-weight:500;color:#cbd8e5;line-height:1.65;margin:0 7px 9px}
+#closing .quote-archive-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+#closing .quote-archive-list li{border:1px solid #657f98;border-radius:12px;padding:13px 12px;background:#182b44}
+#closing .quote-archive-list time{display:block;font-size:.75rem;font-weight:750;color:#ffdda2}
+#closing .quote-archive-list .archive-quote-text{
+ font-size:clamp(.91rem,3.6vw,1.03rem);font-weight:680;line-height:1.7;
+ margin:9px 0 5px;text-align:left;overflow-wrap:anywhere
+}
+#closing .quote-archive-list .archive-quote-author{font-size:.79rem;font-weight:700;color:#f6d6a4;margin:0 0 7px}
+#closing .quote-archive-list .archive-quote-source{font-size:.75rem;color:#d1e2e5;line-height:1.65;margin:0}
+#closing .quote-archive-list a{color:#c3eadd;text-decoration:underline;text-underline-offset:3px}
+#closing .quote-archive-more{
+ width:100%;min-height:44px;margin:13px 0 3px;padding:10px 14px;
+ border:1px solid #89bfb4;border-radius:11px;background:#29485a;
+ color:#effff5;font-size:.89rem;font-weight:800;cursor:pointer
+}
+#closing .quote-archive-more[hidden]{display:none}
+@media(max-width:520px){
+ #closing .quote-archive{margin:11px auto 9px}
+ #closing .quote-archive summary{padding:12px 10px}
+ #closing .quote-archive-list li{padding:12px 10px}
+}
+
+/* The nightly notification entry replaces the edition badge at the top right. */
+.nav{flex-wrap:nowrap;overflow:visible}
+.nav .logo{min-width:0;flex:0 1 auto;white-space:nowrap}
+.nav .notification-panel{position:relative;flex:0 0 auto;margin:0;padding:0;background:transparent;border:0}
+.nav .notification-details{position:relative}
+.nav .notification-details>summary{
+ display:flex;align-items:center;gap:7px;min-height:46px;padding:7px 12px;
+ list-style:none;cursor:pointer;border:1px solid #fff0bf;border-radius:12px;
+ background:linear-gradient(130deg,#ffe6a6,#f2b869);color:#14243b;
+ box-shadow:0 3px 12px #f1c6774d;font-size:.81rem;line-height:1.3;font-weight:900;
+ text-align:left}
+.nav .notification-details>summary::-webkit-details-marker{display:none}
+.nav .notification-details>summary::marker{content:""}
+.nav .notification-details>summary:focus-visible{outline:3px solid #c1f4e5;outline-offset:3px}
+.nav .notification-bell{font-size:1.13rem;line-height:1;flex:0 0 auto}
+.nav .notification-label{display:block;white-space:nowrap}
+.nav .notification-label small{display:block;margin-top:2px;font-size:.79rem;line-height:1.2;font-weight:800}
+.nav .notification-details[open]>summary{background:#ffe8b0;border-color:#fff4ce}
+.nav .notification-settings{
+ position:absolute;right:0;top:calc(100% + 8px);z-index:40;
+ width:min(350px,calc(100vw - 32px));max-width:calc(100vw - 32px);
+ padding:16px;border:1px solid #e9c57f;border-radius:14px;
+ background:#182b45;color:#fff0d8;text-align:left;
+ box-shadow:0 15px 36px #000a}
+.nav .notification-settings p{margin:0 0 10px;font-size:.875rem;line-height:1.7;color:#f3e9dc}
+.nav .notification-settings button{display:block;width:100%;margin-top:8px}
+.nav .notification-settings #notificationStatus{margin:11px 0 0;font-size:.82rem;color:#e0eaf3}
+@media(max-width:520px){
+ .nav{flex-wrap:nowrap;gap:6px}
+ .nav .logo{font-size:.79rem;gap:5px}
+ .nav .logo-mark{width:26px;height:26px;flex-basis:26px}
+ .nav .notification-details>summary{min-height:48px;padding:7px 8px;gap:5px;font-size:.74rem}
+ .nav .notification-label small{font-size:.73rem}
+ .nav .notification-bell{font-size:1rem}
+}
+@media(max-width:355px){
+ .nav .logo{font-size:.72rem;gap:4px}
+ .nav .logo-mark{width:24px;height:24px;flex-basis:24px}
+ .nav .notification-details>summary{padding:6px;gap:4px;font-size:.7rem}
+ .nav .notification-label small{font-size:.7rem}
+ .nav .notification-bell{font-size:.92rem}
+}
+
+#atlasHero .gallery-image-label{display:block;align-self:flex-start;font-size:.68rem;
+ color:#e2f5ec;background:#26485e;padding:4px 8px;border-radius:8px;margin:4px 7px}
+
+/* Browse only editorially approved country guides, separately from news pins. */
+.approved-atlas{margin:18px 0 3px;padding:16px;border:1px solid #657a98;border-radius:17px;background:#152741}
+.approved-atlas h4{font-size:17px;line-height:1.55;color:#ffe0ac;margin:0 0 5px}
+.approved-atlas .approved-atlas-note{font-size:12px;line-height:1.85;color:#d5e3f4;margin:6px 0 12px}
+.approved-atlas details{border:1px solid #566b88;background:#1c304b;border-radius:12px;padding:9px 11px}
+.approved-atlas summary{cursor:pointer;color:#ffdfa9;font-weight:800;font-size:13px;min-height:38px;align-content:center}
+.approved-atlas-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px 0 4px}
+.approved-atlas-country{background:#29405e;border:1px solid #8094ac;border-radius:10px;color:#f5f2e9;min-height:44px;padding:8px 9px;font-size:12px;font-weight:700;line-height:1.4;text-align:left;white-space:normal;overflow-wrap:anywhere}
+.approved-atlas-country:hover,.approved-atlas-country:focus-visible{border-color:#ffdfab;background:#385474}
+.prepared-country-travel{margin-top:17px}
+.prepared-country-travel .travel-card{margin-top:9px}
+@media(max-width:520px){.approved-atlas{padding:13px 12px}.approved-atlas-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.approved-atlas-country{font-size:12px;min-height:48px}}

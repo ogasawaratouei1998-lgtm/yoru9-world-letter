@@ -36,7 +36,17 @@
 
 ## 段階的な画面・コード分離（2026-11-21 追加）
 
-`reader_asset_split.py` は既存の編集・テスト用 `index.html` から公開用CSS (`assets/reader-core.css`)、ニュース表示JavaScript (`assets/reader-core.js`)、国紹介・代表写真の独立データモジュール (`assets/reader-country-data.js`)、写真のローテーションと小旅行の独立JavaScript (`assets/reader-travel.js`) を安全に書き出します。GitHub Pagesでは、HTML・CSS・JavaScriptが別ファイルとして配信され、`check_release_candidate.py` と公開後の `check_public_country_release.py` が同一バイト列を検査します。PWAは必要な各資産をバージョン付きキャッシュに保存します。編集原本は従来のHTMLテンプレートに残る移行段階であり、今後はCSS/JavaScript自体もソースごと機能別に分割していきます。
+`reader_asset_split.py` は既存の編集・テスト用 `index.html` から公開用CSS (`assets/reader-core.css`)、ニュース表示JavaScript (`assets/reader-core.js`)、国紹介・代表写真の独立データモジュール (`assets/reader-country-data.js`)、写真のローテーションと小旅行の独立JavaScript (`assets/reader-travel.js`) を安全に書き出します。GitHub Pagesでは、HTML・CSS・JavaScriptが別ファイルとして配信され、`check_release_candidate.py` と公開後の `check_public_country_release.py` が同一バイト列を検査します。PWAは必要な各資産をバージョン付きキャッシュに保存します。編集原本は下記の独立ファイルへ移行しました。互換用HTMLは自動生成され、公開ファイルへの分離と既存テストは維持します。
+
+### 読者画面の編集原本と再生成
+
+- `reader_sources/template.html`：HTML構造。
+- `reader_sources/core.css`：基本スタイル。既存の `assets/reading-focus.css` は独立した追加スタイル。
+- `reader_sources/core.js`：ニュース・画面制御。
+- `reader_sources/travel.js`：小旅行の選定・表示。
+- `reader_sources/country-data.js`：国別JSONから生成されるデータ。直接編集しない。
+
+HTML/CSS/JSを変更した後は `python reader_source.py --sync` で互換用 `index.html` を再生成し、`python reader_source.py --check` で不一致を検出します。国別コンテンツは引き続き `country-content.json` を編集し、`python country_content.py --sync` で国別データ部品と旧出力を同期します。公開前に `country_content.py --check` と回帰テストが一致を確認し、不一致なら公開を止めます。元のHTMLと公開CSS/JSのバイト列を維持する移行であり、既存ニュース・写真・PWAキャッシュ内容は変更しません。さらに地図・記事詳細・UI状態などの機能分離は今後の作業です。
 
 `country_editorial_queue.py --top 8` は未承認国を制作順に並べ、写真、紹介文、文化資料、小旅行、クイズの不足を知らせます。**この報告は国や記事を自動承認しません**。新しい通常号をAI編集する際は2026-11-21以降、五つの評価項目が記録され、裏付け・安全性はいずれも5/5、驚き・判断ミスの明確さ・結果の意外性はいずれも4/5以上でなければ採用しません。基準を満たした記事が4本未満なら前号を維持し、穴埋め記事は作りません。
 

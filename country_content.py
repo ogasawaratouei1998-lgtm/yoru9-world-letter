@@ -283,6 +283,9 @@ def check_country_content(root):
                 country_coverage(root,[{"country":code}])
             except (KeyError,ValueError,TypeError,IndexError,OSError) as exc:
                 raise ValueError(code+": approved content fails reader readiness: "+str(exc)) from exc
+    if (Path(root)/"reader_sources").is_dir():
+        from reader_source import check_reader_source
+        check_reader_source(root)
     return canonical
 
 
@@ -358,6 +361,8 @@ def sync_country_content(root):
     metadata=doc["highlightsMetadata"]
     highlights={**metadata,"highlights":{
         code:c["highlights"] for code,c in countries.items() if c["highlights"]}}
+    from reader_source import sync_country_component
+    sync_country_component(root,html)
     (root/"index.html").write_text(html,encoding="utf-8")
     (root/"world-passport.js").write_text(passport,encoding="utf-8")
     (root/"travel-stops.json").write_text(json.dumps(
