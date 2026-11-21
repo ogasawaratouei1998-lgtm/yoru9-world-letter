@@ -59,6 +59,8 @@ jobs:
           node-version: '22'
       - name: Verify canonical country content has no divergent exports
         run: python country_content.py --check
+      - name: Report pending country editorial preparation without promoting any country
+        run: python country_editorial_queue.py --top 8
       - name: Run publishing and privacy tests
         run: python -m unittest discover -s tests -v
       - name: Restore validated, correctly licensed Wikimedia photos
