@@ -17,6 +17,8 @@ class CountryReadinessTest(unittest.TestCase):
         ready,incomplete=ready_country_codes(ROOT)
         self.assertTrue({"IT","DE","US","FR","AR","JP","GB"}.issubset(ready))
         self.assertNotIn("NG",ready)
+        self.assertNotIn("ES",ready,
+                         "Complete photographs alone do not confer editorial approval")
         self.assertTrue(set(incomplete).isdisjoint(ready))
         articles=[
             {"id":"a","country":"イタリア"},
