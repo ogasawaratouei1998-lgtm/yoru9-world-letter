@@ -22,6 +22,7 @@ ROOT = Path(__file__).resolve().parent
 BATCHES = (
     "country-expansion-batch-eight-20261121.json",
     "country-expansion-batch-unesco-eight-20261121.json",
+    "country-expansion-batch-europe-world-eight-20261121.json",
 )
 API = "https://commons.wikimedia.org/w/api.php"
 LICENSES = {

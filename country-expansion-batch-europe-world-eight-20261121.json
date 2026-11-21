@@ -1,0 +1,640 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Eight additional UNESCO-referenced countries. Sixteen detailed two-paragraph travel essays and photo quizzes. All original photography is missing, not invented or reused; no publishing until distinct licensed JPEGs and integration checks pass.",
+  "countries": {
+    "CZ": {
+      "name": "チェコ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cz",
+      "portrait": {
+        "lead": "尖塔の街と川が包む城下町、長い都市の記憶を歩く国",
+        "body": "チェコの歴史都市では、川を挟んだ街の配置や石造りの橋、城と広場が織りなす景観から、長く受け継がれた都市文化が感じられます。プラハではヴルタヴァ川の両岸に中世からの建築群が広がり、チェスキー・クルムロフでは川の曲流に抱かれた小さな街を見下ろすことができます。賑わう大通りと静かな路地を歩き比べ、街全体のかたちが歴史を物語っていることに気づく旅が魅力です。",
+        "facts": [
+          "世界遺産：プラハ歴史地区",
+          "世界遺産：チェスキー・クルムロフ歴史地区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：チェコの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cz"
+      },
+      "travelDrafts": [
+        {
+          "place": "プラハ歴史地区",
+          "travelStory": [
+            "プラハではヴルタヴァ川に架かるカレル橋から、川面を挟んで並ぶ建物や丘の上の城が見えます。橋上では彫像と歩行者の姿に目が向きますが、岸へ降りて見上げると橋のアーチの連なりが際立ちます。旧市街広場や城の周辺を一度に急いで回るのではなく、橋を渡る前後で街の眺めがどう変わるかを比べると、歩く楽しみが増します。",
+            "UNESCOはプラハ城、聖ヴィート大聖堂、旧市街や新市街などを含む長い都市史の積み重なりを評価しています。さまざまな建築様式が並ぶのは、それぞれ異なる時代に街が広がり、改修されてきたためです。建物一つの豪華さだけに注目するより、坂道や広場、橋が人々の移動をどうつないできたかを考えると、都市全体が立体的に見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プラハ歴史地区",
+              "url": "https://whc.unesco.org/en/list/616/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "プラハ歴史地区を流れる川は？",
+            "options": [
+              "ヴルタヴァ川",
+              "ナイル川",
+              "テムズ川"
+            ],
+            "answer": 0,
+            "fact": "プラハの歴史地区はヴルタヴァ川の両岸に広がっています。",
+            "photoGoal": "プラハ歴史地区の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Prague Charles Bridge Czech Republic",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "チェスキー・クルムロフ歴史地区",
+          "travelStory": [
+            "チェスキー・クルムロフを見渡すと、ヴルタヴァ川が大きく曲がり、その内側に赤い屋根の街並みが集まっていることが分かります。城から眺める街は一枚の絵のようですが、細い路地へ降りると窓や店先、舗装の細部が際立ちます。高い場所から街の輪郭を確かめたあと、川沿いをゆっくり歩いて違う表情を探すのがおすすめです。",
+            "UNESCOは、この街を中央ヨーロッパの歴史都市の保存状態がよい事例として評価しています。城と住宅地、川の地形が組み合わさり、長い年月を通じた街の変化を伝えています。大きく改造されずに残った町割りを意識すると、曲がり角の先に広場が現れることにも意味を感じられます。建物を見るだけでなく、街を歩く順番そのものを楽しみたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・チェスキー・クルムロフ歴史地区",
+              "url": "https://whc.unesco.org/en/list/617/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "チェスキー・クルムロフの旧市街を大きく囲む地形は？",
+            "options": [
+              "川の曲流",
+              "火山の噴火口",
+              "砂丘の列"
+            ],
+            "answer": 0,
+            "fact": "ヴルタヴァ川の曲流と城、旧市街が特徴的な景観をつくっています。",
+            "photoGoal": "チェスキー・クルムロフ歴史地区の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Cesky Krumlov old town Czech Republic",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Prague Czech Republic city panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "PL": {
+      "name": "ポーランド",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/pl",
+      "portrait": {
+        "lead": "中世の広場と、地下深くに広がる塩の回廊",
+        "body": "ポーランドの歴史遺産には、地上の街並みと地下に築かれた産業の世界という鮮やかな対照があります。クラクフの旧市街では広場や王城を結ぶ通りに歴史が残り、ヴィエリチカとボフニャの岩塩坑では、何世紀にもわたる採掘が地下空間の姿を変えてきました。広場に立って人々の交流を思い描く旅と、坑道に刻まれた仕事の歴史を知る旅は、異なる角度から国の文化を伝えてくれます。",
+        "facts": [
+          "世界遺産：クラクフ歴史地区",
+          "世界遺産：ヴィエリチカとボフニャの王立岩塩坑"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ポーランドの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/pl"
+      },
+      "travelDrafts": [
+        {
+          "place": "クラクフ歴史地区",
+          "travelStory": [
+            "クラクフの歴史地区では、広い中央市場広場から小さな通りへ入ると、街の音や建物の密度が変わります。織物会館や教会の塔を見上げたあと、ヴァヴェルの丘へ進むと、街を俯瞰する視点が得られます。ひとつの景色を撮って終えるのではなく、広場、丘、カジミエシュの街並みを歩き比べ、異なる歴史的な区域がどうつながるかを感じたい場所です。",
+            "UNESCOはクラクフの歴史地区を、中世の都市、ヴァヴェルの丘の建築群、カジミエシュを含む複数の区域からなる遺産として評価しています。市場広場の賑わいだけでなく、政治や宗教、商業が街のかたちに与えた影響が見どころです。地図を手に古い通りの配置を見比べれば、街が時代とともに積み重ねてきた役割が分かってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クラクフ歴史地区",
+              "url": "https://whc.unesco.org/en/list/29/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "クラクフ歴史地区の構成要素の一つは？",
+            "options": [
+              "ヴァヴェルの丘",
+              "富士山の五合目",
+              "ヴェネツィアの運河"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは中世都市クラクフ、ヴァヴェルの丘、カジミエシュを含む地区を登録しています。",
+            "photoGoal": "クラクフ歴史地区の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Krakow old town Wawel Poland",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ヴィエリチカとボフニャの王立岩塩坑",
+          "travelStory": [
+            "ヴィエリチカの岩塩坑では、地上の景色とはまったく違う地下の空間が続きます。通路を進むと岩塩を削ってつくった彫刻や礼拝堂が現れ、採掘場だった場所に人々が時間をかけて造形を加えてきたことに驚きます。照明の下で浮かぶ岩肌の質感を眺めながら、地下という環境が仕事と信仰の両方にどう使われてきたのかを想像したい場所です。",
+            "UNESCOはヴィエリチカとボフニャの岩塩坑を、13世紀から20世紀に至る欧州の採掘技術の発展を伝える産業遺産として評価しています。坑道や礼拝堂だけでなく、採掘を支えた施設や城も一つの歴史を構成します。階段や通路の連なりに注目すると、地下空間を安全に使うための知恵が見えてきます。見学は指定された経路と案内に従います。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴィエリチカとボフニャの王立岩塩坑",
+              "url": "https://whc.unesco.org/en/list/32/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヴィエリチカとボフニャで長く採掘されたものは？",
+            "options": [
+              "岩塩",
+              "石炭のみ",
+              "金"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは岩塩の採掘技術と地下施設の歴史を重要な価値として紹介しています。",
+            "photoGoal": "ヴィエリチカとボフニャの王立岩塩坑の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Wieliczka salt mine underground chapel Poland",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Krakow Poland old town panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "SE": {
+      "name": "スウェーデン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/se",
+      "portrait": {
+        "lead": "宮廷の庭園美と、岩に刻まれたはるかな時代の記録",
+        "body": "スウェーデンでは、自然の中に残る古い人々の痕跡と、計画的につくられた宮廷文化の空間を一緒にたどれます。ドロットニングホルムの王領地では宮殿や庭園が整えられ、ターヌムでは岩肌に刻まれた多くの図像が青銅器時代の生活や考え方を伝えています。明確な幾何学を持つ庭園と、岩の凹凸を読み解く屋外の遺跡。見た目はまるで違いますが、どちらも土地に刻まれた人の表現を感じられる場所です。",
+        "facts": [
+          "世界遺産：ドロットニングホルムの王領地",
+          "世界遺産：ターヌムの岩絵群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：スウェーデンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/se"
+      },
+      "travelDrafts": [
+        {
+          "place": "ドロットニングホルムの王領地",
+          "travelStory": [
+            "ドロットニングホルムでは、水辺に立つ宮殿と広い庭園が一体となって見えます。正面から宮殿を眺めると建築の均整が分かり、木々の間を進むと庭園の軸線や奥行きがはっきりします。庭の道を少しずつ歩き、人工的につくられた景色が水面や季節の木々とどう調和するかを確かめると、単なる宮殿見学とは異なる楽しさがあります。",
+            "UNESCOはドロットニングホルムを、宮殿、庭園、劇場などがまとまって残るヨーロッパの王宮文化の遺産として評価しています。宮殿の姿だけではなく、庭園や舞台芸術の施設を含めた空間の使い方が重要です。どの方角へ歩くと何が見えるように設計されたのかを意識すれば、訪れる人の視線まで考えられた宮廷の美意識を感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドロットニングホルムの王領地",
+              "url": "https://whc.unesco.org/en/list/559/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ドロットニングホルムの世界遺産に含まれるのは？",
+            "options": [
+              "宮殿と庭園、劇場",
+              "巨大な鉱山",
+              "ローマの円形競技場"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは宮殿と庭園、歴史的な劇場などを含む王領地を評価しています。",
+            "photoGoal": "ドロットニングホルムの王領地の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Drottningholm Palace garden Sweden",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ターヌムの岩絵群",
+          "travelStory": [
+            "ターヌムでは、岩肌に刻まれた船や人物などの図像を地面のすぐ近くで見ることができます。遠くからはただの平らな岩に見えても、立ち止まって形を追うと、線の連なりから小さな物語が浮かび上がります。複数の岩絵のある場所を巡り、同じ図像がどのように繰り返され、何が異なるのかを見比べると、古い人々への想像が豊かになります。",
+            "UNESCOはターヌムの岩絵群を、北ヨーロッパにおける青銅器時代の生活や信仰の手掛かりとして評価しています。船や動物、人物が刻まれた岩面は、文字とは異なる記録のあり方を示しています。現在見える色の一部は視認しやすくする処置で、図像自体の年代を意味するわけではありません。岩を傷つけず、現地の保護案内に従って観察します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ターヌムの岩絵群",
+              "url": "https://whc.unesco.org/en/list/557/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ターヌムの岩絵と特に結びつく時代は？",
+            "options": [
+              "青銅器時代",
+              "産業革命期のみ",
+              "宇宙開発時代"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはターヌムの岩絵群を北欧青銅器時代の重要な記録とみなしています。",
+            "photoGoal": "ターヌムの岩絵群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Tanum rock carvings Sweden Vitlycke",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Drottningholm Palace Sweden landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "BE": {
+      "name": "ベルギー",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/be",
+      "portrait": {
+        "lead": "石畳の広場と運河の街に、商業都市の長い繁栄を読む",
+        "body": "ベルギーの歴史都市には、職人や商人が活動した時代の街並みが今も暮らしのすぐそばに残っています。ブリュッセルのグラン・プラスは壮麗な建物が囲む都市の中心で、ブルッヘの歴史地区には運河と街路が複雑に重なっています。華やかな正面装飾だけを見るのではなく、商いと日常生活を支えてきた通りや水路をたどると、街の魅力がより鮮やかに見えてくる国です。",
+        "facts": [
+          "世界遺産：ブリュッセルのグラン・プラス",
+          "世界遺産：ブルッヘ歴史地区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ベルギーの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/be"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブリュッセルのグラン・プラス",
+          "travelStory": [
+            "グラン・プラスの広場に立つと、周囲を取り巻くギルドハウスの装飾がそれぞれ違うことに気づきます。正面に並んだ窓や彫像を見比べてから、広場の端に移動すると建物群全体のリズムが分かります。細い通りから急に開けた広場へ出る体験も魅力で、明るさや人の動きを含めて街の中心がどのように使われてきたのか想像したい場所です。",
+            "UNESCOはグラン・プラスを、北ヨーロッパの商業都市として繁栄したブリュッセルの歴史を伝える広場として評価しています。1695年の砲撃で大きな被害を受けた後、建物群が再建されたことも、この景観の重要な背景です。細部の華やかさに目を奪われますが、再建にかかわった商人や職人の活動を考えると、広場全体が街の物語として見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブリュッセルのグラン・プラス",
+              "url": "https://whc.unesco.org/en/list/857/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "グラン・プラスが示すブリュッセルの歴史的役割は？",
+            "options": [
+              "商業都市",
+              "砂漠の交易隊の宿営地",
+              "高山の観測基地"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはグラン・プラスを商業都市として栄えたブリュッセルの象徴として説明しています。",
+            "photoGoal": "ブリュッセルのグラン・プラスの正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Grand Place Brussels guild houses Belgium",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ブルッヘ歴史地区",
+          "travelStory": [
+            "ブルッヘでは、運河沿いを歩くと橋の下から水面へ映る建物が見え、少し離れた路地では煉瓦の壁や石畳の質感に目が向きます。水路と道路が近接するため、同じ街でも徒歩と船上では景色の見え方が変わります。大きな広場を目指すだけでなく、小さな橋を渡るたびに街並みの角度を確かめると、地図だけではつかめない水の都の構造を感じられます。",
+            "UNESCOはブルッヘを、中世の商業都市の町割りと建築がよく残る歴史地区として評価しています。北ヨーロッパの交易に結びついた繁栄は、運河や倉庫、街路の配置にも表れています。現在も生活が続く都市であることを意識しながら、建物と水路の関係をゆっくり読み解くと、観光名所を超えた街の奥行きに気づくことができます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルッヘ歴史地区",
+              "url": "https://whc.unesco.org/en/list/996/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブルッヘの歴史都市景観に特徴的なのは？",
+            "options": [
+              "運河と歴史的街路",
+              "砂丘の連続",
+              "火山の溶岩流"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは中世以来の都市のかたちが残るブルッヘ歴史地区を評価しています。",
+            "photoGoal": "ブルッヘ歴史地区の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Bruges historic centre canals Belgium",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Brussels Grand Place Belgium square",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "RO": {
+      "name": "ルーマニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ro",
+      "portrait": {
+        "lead": "湿地の水路と鮮やかな壁画、自然と祈りの対照",
+        "body": "ルーマニアを旅すると、川が長い時間をかけて生み出した自然と、宗教文化が建築に残した色彩の違いを感じられます。ドナウ・デルタでは水路と湿地が多くの鳥の生息地をつくり、モルダヴィアの教会群には外壁まで広がる壁画が残っています。静かに水辺を観察する旅と、絵画に込められた物語を読み解く旅。それぞれの土地の環境や歴史に合わせて人々が築いてきた世界を知ることができます。",
+        "facts": [
+          "世界遺産：ドナウ・デルタ",
+          "世界遺産：モルダヴィアの教会群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ルーマニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ro"
+      },
+      "travelDrafts": [
+        {
+          "place": "ドナウ・デルタ",
+          "travelStory": [
+            "ドナウ・デルタでは、細い水路の両側に葦が広がり、開けた湖面へ出ると空と水の境界が遠くまで続きます。水鳥が飛び立つ瞬間や、水面に映る草の色の変化を眺めると、同じ湿地でも場所によって表情が違うことが分かります。自然を乱さないよう指定されたルートをたどり、水辺の生き物の存在を静かに感じることが、この景色を楽しむ方法です。",
+            "UNESCOはドナウ・デルタを、河川の堆積作用によってつくられた湿地と多様な鳥類が暮らす重要な自然地域として評価しています。水が運ぶ土砂が地形を変え、島や水路、浅い湖が複雑に入り組んでいます。展望地点での景色を一枚の写真で終わらせず、河口へ向かって水路がどう分かれるかを地図でたどると、この広大な湿地の仕組みがよく分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドナウ・デルタ",
+              "url": "https://whc.unesco.org/en/list/588/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ドナウ・デルタで特に豊かな生き物の一つは？",
+            "options": [
+              "水鳥",
+              "ペンギンだけ",
+              "砂漠のラクダ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはドナウ・デルタを多様な水鳥の生息地として評価しています。",
+            "photoGoal": "ドナウ・デルタの正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Danube Delta Romania reeds birds",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "モルダヴィアの教会群",
+          "travelStory": [
+            "モルダヴィアの教会群では、建物の内部だけでなく外壁にまで広がる壁画が目を引きます。近くで見ると色彩と人物の配置が細かく、建物全体を少し離れて眺めると絵画が壁面を包み込むように見えます。屋根の下や壁の角まで視線を動かし、教会の形そのものが物語を伝える場所になっていることを感じながら見学したいところです。",
+            "UNESCOは15世紀末から16世紀末にかけてのモルダヴィアの教会に残る外壁の宗教画を高く評価しています。壁面いっぱいに描かれた聖書の場面などは、当時の宗教文化や絵画技術を伝えています。建物を一周しながら絵がどこに配置されているかを確かめると、一枚の絵を見るのとは違う、建築と絵画の結びつきが分かります。見学時は宗教施設としての規則を守ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・モルダヴィアの教会群",
+              "url": "https://whc.unesco.org/en/list/598/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "モルダヴィアの教会群を特徴づける装飾は？",
+            "options": [
+              "外壁の壁画",
+              "鉄橋のアーチ",
+              "ガラスの高層塔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは教会の外壁を覆う宗教画を際立った文化的価値として評価しています。",
+            "photoGoal": "モルダヴィアの教会群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Painted monasteries of Bucovina Romania Voronet",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Danube Delta Romania landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "BG": {
+      "name": "ブルガリア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/bg",
+      "portrait": {
+        "lead": "山深い修道院と中世の壁画に、信仰の歴史を探す",
+        "body": "ブルガリアには、山に抱かれた大きな修道院と、都市の近郊に残る小さな教会の両方に、長い宗教文化の歴史が伝えられています。リラ修道院は中庭を囲む建物と山の風景が特徴で、ボヤナ教会には精緻な中世の壁画が残ります。規模の大きさは違っても、建築と絵画が人々の信仰を形にしてきたことがよく分かります。歩く速度を落とし、壁や柱の細部をじっくり見る旅に向いた国です。",
+        "facts": [
+          "世界遺産：リラ修道院",
+          "世界遺産：ボヤナ教会"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ブルガリアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/bg"
+      },
+      "travelDrafts": [
+        {
+          "place": "リラ修道院",
+          "travelStory": [
+            "リラ修道院へ近づくと、周囲の山々を背景に石造の壁と建物がまとまって姿を現します。門をくぐると中庭を囲む回廊とアーチが広がり、外側から見た印象とは違う華やかな空間に出会います。壁面の絵や柱の模様を見上げたり、回廊から中庭の向こうを眺めたりしながら、建物の内と外の対照を楽しみたい場所です。",
+            "UNESCOはリラ修道院を、10世紀に始まる信仰の歴史と、後世のブルガリア文化復興にかかわる象徴的な場所として評価しています。現在見られる建築の姿にも複数の時代の改修が重なっています。回廊の壁画や木造部分の装飾を観察すると、宗教だけでなく芸術と共同体の記憶がこの場所を形づくってきたことが感じられます。礼拝を妨げない見学を心がけます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リラ修道院",
+              "url": "https://whc.unesco.org/en/list/216/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "リラ修道院の周囲に広がる特徴的な環境は？",
+            "options": [
+              "山地",
+              "珊瑚礁",
+              "砂漠のオアシス"
+            ],
+            "answer": 0,
+            "fact": "リラ修道院はブルガリアのリラ山地に位置する歴史的な修道院です。",
+            "photoGoal": "リラ修道院の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Rila Monastery Bulgaria courtyard fresco",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ボヤナ教会",
+          "travelStory": [
+            "ソフィア郊外のボヤナ教会は、遠くから見ると周囲の緑に溶け込む比較的小さな建物です。しかし内部の壁画に目を向けると、人物の表情や衣服の細部まで描き込まれた豊かな世界が広がります。外観の静けさと内部の絵画の密度を比べながら、限られた空間の中に大きな物語を表現する工夫を感じたい場所です。壁画の保護のため、見学条件や撮影規則を守ります。",
+            "UNESCOはボヤナ教会を、複数の時代の建築が重なり、とりわけ13世紀の壁画が重要な価値を持つ文化遺産として評価しています。壁画には人物の個性を感じさせる表現も見られ、当時の絵画芸術を知る手掛かりになります。一枚ごとの場面だけでなく、壁のどこに何が描かれているかを意識すると、小さな教会全体が絵画のための空間であることが分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ボヤナ教会",
+              "url": "https://whc.unesco.org/en/list/42/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ボヤナ教会で評価されている重要な芸術は？",
+            "options": [
+              "中世の壁画",
+              "近代映画のセット",
+              "巨大な機械彫刻"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはボヤナ教会の中世の壁画を重要な文化的価値として紹介しています。",
+            "photoGoal": "ボヤナ教会の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Boyana Church Sofia Bulgaria fresco",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Rila Monastery Bulgaria courtyard",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "CO": {
+      "name": "コロンビア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/co",
+      "portrait": {
+        "lead": "カリブ海の城壁都市と、険しい斜面に続くコーヒー農園",
+        "body": "コロンビアでは、海に面した都市の交易の歴史と、内陸の山地で育まれた農業文化を対照的に楽しめます。カルタヘナには歴史的な城壁や要塞が残り、コーヒー文化的景観には斜面に沿った農園や集落が広がります。海風の通る古い石造建築を歩く時間と、緑の丘を眺めながら人々の仕事に思いをはせる時間。自然条件が文化の形に与えた影響を、二つの風景から感じられる国です。",
+        "facts": [
+          "世界遺産：カルタヘナの港、要塞群と記念建造物群",
+          "世界遺産：コロンビアのコーヒー文化的景観"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：コロンビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/co"
+      },
+      "travelDrafts": [
+        {
+          "place": "カルタヘナの港、要塞群と記念建造物群",
+          "travelStory": [
+            "カルタヘナの歴史地区を歩くと、色彩の豊かな家並みのすぐ近くに分厚い石造の城壁が続いています。高い場所から港の方向へ目を移すと、街が海への出入りを見渡せる位置にあることが分かります。小さな通りを歩く時間と要塞から遠望する時間を組み合わせると、海辺の都市に城壁が築かれた理由を体感できます。日陰の少ない場所では暑さにも配慮して見学したい場所です。",
+            "UNESCOはカルタヘナを、カリブ海での交易と防衛に深くかかわった港湾都市として評価しています。スペイン植民地期につくられた城壁や要塞群は、海上交通を守るための大規模な施設です。住宅街の建物だけでは分からない都市の歴史も、城壁の向きや港との距離を見比べると読み解けます。街が果たしてきた役割の複雑さも忘れずに歩きたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カルタヘナの港、要塞群と記念建造物群",
+              "url": "https://whc.unesco.org/en/list/285/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "カルタヘナの要塞群が守ってきた重要な場所は？",
+            "options": [
+              "港",
+              "高山の氷河",
+              "砂漠の水源"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはカルタヘナの港と防衛施設をカリブ海の歴史に結びつけて評価しています。",
+            "photoGoal": "カルタヘナの港、要塞群と記念建造物群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Cartagena Colombia old town fortifications",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "コロンビアのコーヒー文化的景観",
+          "travelStory": [
+            "コロンビアのコーヒー文化的景観では、緑の斜面に農園が連なり、谷や山並みの間に小さな集落が現れます。近くで見る畑の細かな手入れと、丘の上から眺める農地全体の広がりには、違う美しさがあります。単に緑豊かな風景として見るのではなく、人々が斜面をどのように使い、水や道を確保しながら暮らしてきたかを考えると、土地への理解が深まります。",
+            "UNESCOはこの文化的景観を、山地の厳しい地形や気候に適応して発展したコーヒー栽培の歴史として評価しています。農園だけでなく、集落や生産の仕組み、人々の協働も景観を成り立たせる要素です。景色の美しさと仕事の技術は切り離せません。訪問する際は稼働中の農園や住民の生活を尊重し、案内を受けられる場所で学びたいものです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コロンビアのコーヒー文化的景観",
+              "url": "https://whc.unesco.org/en/list/1121/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "コロンビアのコーヒー文化的景観を特徴づけるのは？",
+            "options": [
+              "山地に適応したコーヒー栽培",
+              "北極の氷上漁業",
+              "海底の石油採掘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは山地で発展したコーヒー栽培と農村文化を評価しています。",
+            "photoGoal": "コロンビアのコーヒー文化的景観の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Coffee Cultural Landscape Colombia coffee finca hills",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Cartagena Colombia walled city aerial",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "ET": {
+      "name": "エチオピア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/et",
+      "portrait": {
+        "lead": "岩を彫り抜いた教会と古代王国の石柱が伝える歴史",
+        "body": "エチオピアの遺産では、石を削り、建て、祈りの場所として使ってきた人々の長い時間を感じられます。ラリベラには岩盤から彫り出された教会群があり、アクスムには古代王国の栄華を伝える石柱や考古遺構が残っています。建物を積み上げるのとは違う造営の発想と、巨大な石を立てた人々の技術。建築の形から歴史を読み解く旅が魅力ですが、地域の安全情報や見学可能状況を優先する必要があります。",
+        "facts": [
+          "世界遺産：ラリベラの岩窟教会群",
+          "世界遺産：アクスム"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：エチオピアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/et"
+      },
+      "travelDrafts": [
+        {
+          "place": "ラリベラの岩窟教会群",
+          "travelStory": [
+            "ラリベラの岩窟教会群では、地面を掘り下げた空間の中に石の建物が姿を現します。岩盤から切り離されるように彫られた教会を上から見下ろすと、通常の建築とは逆に、地面を削ることで建物が現れたことがよく分かります。通路や中庭を結ぶ構造を眺めながら、ここで祈りの場をつくるためにどれほどの工夫が必要だったかを想像したい場所です。",
+            "UNESCOはラリベラの11の岩窟教会を、エチオピアのキリスト教文化を代表する遺産として評価しています。ひとつの教会だけでなく、教会同士を結ぶ通路や周囲の地形を含めた空間の構成が特徴です。建築の技法と現在まで続く信仰の意味を両方知ると、景観がより深く感じられます。訪問については地域の安全情報と宗教上の規則を必ず優先します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラリベラの岩窟教会群",
+              "url": "https://whc.unesco.org/en/list/18/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ラリベラの教会群が特徴的なのはどのような造り方？",
+            "options": [
+              "岩盤を彫り抜く",
+              "氷を積み上げる",
+              "珊瑚を編む"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは岩盤を彫り出した教会群をラリベラの重要な特徴として紹介しています。",
+            "photoGoal": "ラリベラの岩窟教会群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Lalibela rock hewn churches Biete Giyorgis Ethiopia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "アクスム",
+          "travelStory": [
+            "アクスムの遺跡群では、地面からまっすぐ空へ伸びる石柱が印象的です。近づくと、巨大な石の表面に窓や扉のような装飾が刻まれていることに気づきます。遠目には単純な柱に見えても、近くで見ると細部の技術が際立ちます。石柱の大きさだけを眺めるのではなく、周囲に残る遺跡や古代都市との関係を考えると、この場所が持つ歴史の厚みを感じられます。",
+            "UNESCOはアクスムを、アフリカ北東部で発展した古代アクスム王国の中心的な遺跡として評価しています。石柱群や墓などは、この都市が政治や交易で重要な役割を持ったことを伝えます。遠くの地域との交流も含めて歴史を知ると、一つひとつの石造物がより豊かな意味を持って見えてきます。現地での見学は安全情報と文化財保護の案内を踏まえて判断します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アクスム",
+              "url": "https://whc.unesco.org/en/list/15/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "アクスムに残る代表的な遺構は？",
+            "options": [
+              "大きな石柱",
+              "海底トンネル",
+              "近代の滑走路"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは古代アクスム王国にかかわる石柱群などを登録しています。",
+            "photoGoal": "アクスムの正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "commonsSearch": "Aksum Ethiopia ancient stelae obelisk",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Lalibela Ethiopia rock hewn church Bete Giyorgis",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
