@@ -39,13 +39,19 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
         raise AssertionError("Public news issue differs from current release")
     if assets["world-passport.js"] != (root/"world-passport.js").read_bytes():
         raise AssertionError("Public country quiz script is stale or altered")
-    if assets["index.html"] != (root/"index.html").read_bytes():
+    from reader_asset_split import expected_reader_assets
+    expected_reader=expected_reader_assets(root)
+    if assets["index.html"] != expected_reader["index.html"]:
         raise AssertionError("Public reader page is stale or altered")
+    for path in ("assets/reader-core.css","assets/reader-core.js"):
+        if assets.get(path) != expected_reader[path]:
+            raise AssertionError("Published external reader asset stale or altered: "+path)
+    runtime=assets["assets/reader-core.js"].decode("utf-8")
     for text in ("COUNTRY PORTRAIT · 国の魅力",
                  "WORLD POSTCARD · 有名観光地の小旅行",
                  "FAMOUS_TOURIST_LANDMARKS",
                  "currentCountryHighlight(all,currentCode)"):
-        if text not in index:
+        if text not in index + runtime:
             raise AssertionError("Public reader lacks country portrait separation: " + text)
     version = re.compile(r"const SHELL_CACHE = '([^']+)'")
     local = version.search(expected_worker)
@@ -62,7 +68,7 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
                      'id="todayPassportCount"'):
         if obsolete in index:
             raise AssertionError("Retired stamp album has reappeared on public reader")
-    if 'stop.travelStory.map(paragraph=>' not in index:
+    if 'stop.travelStory.map(paragraph=>' not in runtime:
         raise AssertionError("Detailed destination essays are missing from public reader")
     from check_country_experience import country_coverage
     checked=country_coverage(root,current["stories"])
@@ -177,7 +183,8 @@ def fetch_assets(site_url: str, revision: str, names=None) -> dict[str, bytes]:
         raise ValueError("Deployment URL must be a secure public site")
     result = {}
     if names is None:
-        names = ("index.html", "world-passport.js", "service-worker.js",
+        names = ("index.html", "assets/reader-core.css", "assets/reader-core.js",
+                 "world-passport.js", "service-worker.js",
                  "country-highlights.json", "travel-stops.json",
                  "data/current.json", "data/archive/index.json")
     for name in names:
