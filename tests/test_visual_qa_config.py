@@ -14,6 +14,15 @@ class VisualQAConfigTests(unittest.TestCase):
         self.assertIn("document.querySelector('#galleryHeading')?.textContent===",source)
         self.assertNotIn("!el.textContent.includes('準備中')",source)
 
+    def test_visual_smoke_audits_each_story_country_and_actual_photo_provenance(self):
+        source=(ROOT/"tests/mobile_visual_smoke.mjs").read_text(encoding="utf-8")
+        self.assertIn("storyIndex<editorialCover.storyCount",source)
+        self.assertIn("await gallery.nth(storyIndex).click()",source)
+        self.assertIn("s.country===expected.country",source)
+        self.assertIn("s.page.startsWith('https://commons.wikimedia.org/wiki/File:')",source)
+        self.assertIn("the country portrait and story postcard must have different photos",source)
+        self.assertIn("every postcard needs a separate historical/cultural source",source)
+
     def test_github_chrome_has_japanese_fonts_for_real_layout_geometry(self):
         workflow = (ROOT / ".github/workflows/mobile-visual-smoke.yml").read_text(
             encoding="utf-8"
