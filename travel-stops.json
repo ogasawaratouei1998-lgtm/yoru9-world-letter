@@ -1949,5 +1949,224 @@
         "checkedOn": "2026-11-21"
       }
     ]
+  },
+  "ch-lucerne-chapel-cover": {
+    "country": "スイス",
+    "countryOnly": true,
+    "place": "ルツェルンのカペル橋",
+    "region": "ルツェルン・ロイス川",
+    "latitude": 47.0518,
+    "longitude": 8.3077,
+    "note": "街の中心を流れる川にかかる歴史ある屋根付き木造橋。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/The_Chapel_Bridge_in_Lucerne.jpg/500px-The_Chapel_Bridge_in_Lucerne.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:The_Chapel_Bridge_in_Lucerne.jpg",
+    "author": "CulturedWatermelons",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/ch-lucerne-chapel-cover.jpg",
+    "photoCaption": "ルツェルンの湖畔にかかるカペル橋の実景（2020年撮影）",
+    "coverOnly": true
+  },
+  "ch-bern-old-city-postcard": {
+    "country": "スイス",
+    "countryOnly": true,
+    "place": "ベルン旧市街",
+    "region": "ベルン・ポストガッセ",
+    "latitude": 46.948,
+    "longitude": 7.452,
+    "note": "砂岩の家々と回廊が続く、中世の面影を残した街路。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d3/Old_City_of_Bern-Bern.jpg/500px-Old_City_of_Bern-Bern.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Old_City_of_Bern-Bern.jpg",
+    "author": "Yair Haklai",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/ch-bern-old-city-postcard.jpg",
+    "photoCaption": "ベルン旧市街のポストガッセに残る街並み（2015年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "ベルンの旧市街に入ると、道の両側に石造りの建物が続き、歩道の上には長い回廊が伸びています。写真に写るポストガッセでは、窓の並びや建物の高さに細かな違いがあり、ゆっくり歩くほど街の表情が豊かに感じられます。河川に囲まれた街の地形を頭に入れ、路地の奥から広場へ出てみると、歴史地区が生活の場として今も使われていることが見えてきます。",
+      "UNESCOはベルン旧市街を、12世紀に形成された都市の骨格が現在もよく保たれている場所として紹介し、1983年に世界文化遺産へ登録しました。建築は時代ごとに修復や更新が行われていますが、アーケードや噴水などが街の連続性を伝えています。写真に残る整った街並みを単なる『昔の姿』と見るのではなく、都市を使いながら維持してきた人々の歴史として読むと、石の壁の印象も少し変わるでしょう。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ベルン旧市街",
+        "url": "https://whc.unesco.org/en/list/267/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "ch-aletsch-glacier-postcard": {
+    "country": "スイス",
+    "countryOnly": true,
+    "place": "アレッチ氷河",
+    "region": "ヴァレー州・アレッチ地方",
+    "latitude": 46.475,
+    "longitude": 8.07,
+    "note": "高山の谷を長く流れる巨大な氷河と周囲のアルプスの眺め。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a7/Aletsch_Glacier_view.jpg/500px-Aletsch_Glacier_view.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Aletsch_Glacier_view.jpg",
+    "author": "Seba3mmm",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/ch-aletsch-glacier-postcard.jpg",
+    "photoCaption": "アレッチ氷河の周辺を望む山岳風景（2022年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "アレッチ氷河の周辺では、山肌の間を白い氷の流れがゆっくりと続いています。写真に写る氷河の両側には岩と高山の斜面が迫り、遠くの稜線まで視線が伸びます。近くのトレッキング道から見える景色は静かですが、氷河は長い時間をかけて山の谷を削ってきました。目の前の氷と岩の境目をたどると、自然の地形を動かす時間が、人の暮らしとはまったく違う尺度で流れていると感じられます。",
+      "UNESCOの『スイス・アルプス ユングフラウ＝アレッチ』は、2001年に世界自然遺産に登録され、2007年に対象地域が拡張されました。アルプスの氷河の形成と地形の変化を知るうえでも重要な場所で、気候変動の影響を考える視点も欠かせません。雄大な景色を眺めるだけでなく、氷河の長い歴史と現在進む変化の両方に目を向ければ、一枚の山岳写真が伝える意味はさらに深まります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・スイス・アルプス ユングフラウ＝アレッチ",
+        "url": "https://whc.unesco.org/en/list/1037/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "pt-belem-tower-cover": {
+    "country": "ポルトガル",
+    "countryOnly": true,
+    "place": "リスボンのベレンの塔",
+    "region": "リスボン・テージョ川河口",
+    "latitude": 38.6916,
+    "longitude": -9.216,
+    "note": "船で栄えた港の入口に立つ、石造りの歴史的な塔。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/Bel%C3%A9m_Tower_in_Lisbon.jpg/500px-Bel%C3%A9m_Tower_in_Lisbon.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Bel%C3%A9m_Tower_in_Lisbon.jpg",
+    "author": "Lisbon Photoshoots",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/pt-belem-tower-cover.jpg",
+    "photoCaption": "リスボンのテージョ川沿いに立つベレンの塔（2022年撮影）",
+    "coverOnly": true
+  },
+  "pt-jeronimos-monastery-postcard": {
+    "country": "ポルトガル",
+    "countryOnly": true,
+    "place": "ジェロニモス修道院",
+    "region": "リスボン・ベレン地区",
+    "latitude": 38.6979,
+    "longitude": -9.2068,
+    "note": "繊細な石造りの柱と回廊が連なる、ベレン地区の世界遺産。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Mosteiro_Jer%C3%B3nimos%2C_Lisbon.jpg/500px-Mosteiro_Jer%C3%B3nimos%2C_Lisbon.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mosteiro_Jer%C3%B3nimos%2C_Lisbon.jpg",
+    "author": "MiguelNS85",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/pt-jeronimos-monastery-postcard.jpg",
+    "photoCaption": "ジェロニモス修道院の回廊と石造装飾（2015年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "リスボンのベレン地区にあるジェロニモス修道院では、石造りの回廊に足を踏み入れると、柱とアーチが幾何学的な影を落とします。写真に写る中庭を取り巻く通路では、装飾をほどこした石の柱が繰り返し現れ、歩くたびに光の角度が変わります。広い外観を眺めてから回廊の細部に視線を移すと、海に向かって開かれた都市が生んだ建築の表現を、石そのものから感じることができます。",
+      "UNESCOによれば、ジェロニモス修道院は16世紀初めの1502年に建設が始まり、同じベレン地区の塔とともに1983年に世界文化遺産へ登録されました。海洋航海が重要な時代だったポルトガルの歴史を伝える建築です。中庭の細部を見ていると、建物が完成するまでに費やされた職人の時間にも思いが至ります。遠い航路の歴史と、目の前の小さな石の彫刻がつながるのが、この修道院の魅力です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ジェロニモス修道院とベレンの塔",
+        "url": "https://whc.unesco.org/en/list/263/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "pt-pena-palace-postcard": {
+    "country": "ポルトガル",
+    "countryOnly": true,
+    "place": "シントラのペーナ宮殿",
+    "region": "リスボン県・シントラ",
+    "latitude": 38.7876,
+    "longitude": -9.3907,
+    "note": "森に包まれた丘の上に、色鮮やかな宮殿が立つ文化的景観。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/58/Pena_Palace_Sintra.jpg/500px-Pena_Palace_Sintra.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Pena_Palace_Sintra.jpg",
+    "author": "Sergey Pesterev",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/pt-pena-palace-postcard.jpg",
+    "photoCaption": "シントラの丘に建つペーナ宮殿（2011年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "リスボンから西へ向かうと、シントラの緑の丘に色鮮やかなペーナ宮殿が姿を見せます。塔や門、異なる形の屋根が組み合わさり、少し歩くだけで建物の輪郭が変化するのが面白いところです。写真に写る宮殿の外観を見たあと、周囲の木々や石の道へ目を向けると、建築が単独で置かれているのではなく、丘全体の景観と合わせて構想されていることに気づきます。",
+      "UNESCOの『シントラの文化的景観』は1995年に世界文化遺産へ登録されました。19世紀のロマン主義の思想を背景に、宮殿と庭園、森や地形を一体として扱った景観が特徴です。ペーナ宮殿だけでなく、周囲の古い城や庭園などもこの地域の歴史を伝えています。宮殿の鮮やかな色に目を奪われたら、もう一度遠くから丘を眺めてみてください。緑のなかに建物を置いた意味が少しずつ見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・シントラの文化的景観",
+        "url": "https://whc.unesco.org/en/list/723/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "gr-athens-skyline-cover": {
+    "country": "ギリシャ",
+    "countryOnly": true,
+    "place": "アテネの市街地の眺め",
+    "region": "アテネ市街・アクロポリス方面",
+    "latitude": 37.974,
+    "longitude": 23.728,
+    "note": "山々の間に都市が広がる、ギリシャの首都の景観。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3c/Athens_skyline.JPG/500px-Athens_skyline.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Athens_skyline.JPG",
+    "author": "Orlovic",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/gr-athens-skyline-cover.jpg",
+    "photoCaption": "アクロポリスから見渡すアテネ市街の景色（2005年撮影）",
+    "coverOnly": true
+  },
+  "gr-parthenon-postcard": {
+    "country": "ギリシャ",
+    "countryOnly": true,
+    "place": "アクロポリスのパルテノン神殿",
+    "region": "アテネ・アクロポリス",
+    "latitude": 37.9715,
+    "longitude": 23.7267,
+    "note": "都市を見下ろす岩山に立つ、古代ギリシャの石造神殿。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/37/Parthenon_in_Greece.jpg/500px-Parthenon_in_Greece.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Parthenon_in_Greece.jpg",
+    "author": "Srishti Sethi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/gr-parthenon-postcard.jpg",
+    "photoCaption": "アテネのアクロポリスに残るパルテノン神殿（2023年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "アテネの市街地からアクロポリスの岩山を見上げると、頂上にパルテノン神殿の柱が並んでいます。近づくと石の柱は思っていた以上に大きく、柱と柱の間からは遠くまで街が広がるのが見えます。写真に写る神殿の正面を眺めたあと、横に回ってみると、同じ建物でも柱の配置と屋根の輪郭が違って感じられます。古代の建築が、いまも都市の中心的な風景になっている場所です。",
+      "UNESCOはアクロポリスを、古代ギリシャの思想、芸術、宗教を伝える重要な建築群として紹介し、1987年に世界文化遺産へ登録しました。パルテノン神殿だけでなく、複数の神殿や門が岩山の上に集まり、長い年月の戦争や改変、修復を経て現在に伝わっています。一つの美しい建物として写真に収めるだけでなく、残されてきたものと失われた部分の両方を考えると、石の柱の沈黙が少し違うものに感じられます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アテネのアクロポリス",
+        "url": "https://whc.unesco.org/en/list/404/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "gr-delphi-apollo-postcard": {
+    "country": "ギリシャ",
+    "countryOnly": true,
+    "place": "デルフィのアポロン神殿跡",
+    "region": "中央ギリシャ・パルナッソス山麓",
+    "latitude": 38.4829,
+    "longitude": 22.5008,
+    "note": "険しい山の谷を望む場所に残る、古代の神託の聖域。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Delphi_Temple_of_Apollo.jpg/500px-Delphi_Temple_of_Apollo.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Delphi_Temple_of_Apollo.jpg",
+    "author": "Skyring",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/gr-delphi-apollo-postcard.jpg",
+    "photoCaption": "デルフィのアポロン神殿跡と山並み（2017年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "デルフィの遺跡へ向かうと、山の斜面に古い石の柱や建物の基礎が並んでいます。写真のアポロン神殿跡からは谷を隔てた山々が見え、都市のなかにある古代遺跡とは違った迫力があります。石の段差を目で追いながら周囲の山並みに視線を移すと、なぜ人々が遠くからこの場所を訪れたのか、地形の特別さも手がかりになるように感じられます。",
+      "UNESCOはデルフィを、古代ギリシャ世界でアポロンの神託が行われた聖域として紹介しています。各地から使者や参拝者が訪れ、奉納物や建物が積み重なった場所で、1987年に世界文化遺産へ登録されました。遺構を眺めながら、遠くの都市国家から険しい道をたどってきた人々のことを考えてみてください。神殿の柱が一部しか残っていなくても、かつての聖域の広がりを想像できるはずです。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・デルフィの考古遺跡",
+        "url": "https://whc.unesco.org/en/list/393/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
   }
 }
