@@ -11,6 +11,7 @@ import unittest
 from country_content import check_country_content
 from check_country_experience import country_coverage
 from country_readiness import ready_country_codes
+from country_batch_progress import expansion_progress
 
 ROOT=Path(__file__).resolve().parents[1]
 BATCH=("AT","CH","GR","TR","EG","PT")
@@ -88,6 +89,24 @@ class CountryExpansionBatchTests(unittest.TestCase):
                     self.assertTrue(all(
                         stop["photoStatus"]=="not_selected_or_licensed"
                         for stop in draft["travelDrafts"]))
+
+    def test_delegated_batch_reports_five_unpublished_portrait_countries(self):
+        report=expansion_progress(ROOT)
+        self.assertEqual(report["catalogCount"],196)
+        self.assertEqual(report["approvedCount"],19)
+        self.assertEqual(report["pendingCount"],177)
+        self.assertEqual(report["pendingPortraitsPrepared"],
+                         ["AT","CH","EG","PT","TR"])
+        self.assertIn("GR",report["photoReady"])
+        self.assertNotIn("GR",report["pendingCountriesBlocked"])
+        for code in report["pendingPortraitsPrepared"]:
+            with self.subTest(code=code):
+                self.assertIn("attributed_country_portrait_photo",
+                              report["pendingCountriesBlocked"][code])
+                self.assertIn("two_distinct_licensed_photo_quizzes",
+                              report["pendingCountriesBlocked"][code])
+        self.assertNotIn("NL",report["pendingCountriesBlocked"])
+        self.assertNotIn("MX",report["pendingCountriesBlocked"])
 
     def test_greece_has_three_independent_real_photo_credits_and_two_unique_quizzes(self):
         country=self.data["countries"]["GR"]
