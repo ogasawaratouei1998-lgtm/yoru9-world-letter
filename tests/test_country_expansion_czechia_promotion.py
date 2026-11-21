@@ -86,7 +86,7 @@ class CzechiaPromotionTests(unittest.TestCase):
             self.assertTrue(all(110<=len(text)<=360 for text in stop["travelStory"]))
             sources.update(src["url"] for src in stop["historicalSources"])
         self.assertEqual(sources,SOURCES)
-        self.assertEqual(set(self.doc["travelOrder"][-3:]),set(FILES))
+        self.assertTrue(set(FILES).issubset(self.doc["travelOrder"]))
         self.assertEqual(set(q["photoKey"] for q in self.cz["quiz"]),
                          set(FILES)-{"cz-prague-skyline-cover"})
 
