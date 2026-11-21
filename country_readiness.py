@@ -43,6 +43,27 @@ def ready_country_codes(root: Path):
     return frozenset(ready),incomplete
 
 
+
+def story_has_prepared_countries(story, ready):
+    """Scheduling hint only: draft country is NOT verified before source review."""
+    if not isinstance(story,dict):
+        return False
+    codes=country_codes(story.get("country",""))
+    return bool(codes) and all(code in ready for code in codes)
+
+
+def prioritize_ready_drafts(drafts, ready):
+    """Review drafts with ready destinations first, preserving their relative order.
+
+    An AI-written draft country is still an UNVERIFIED claim. This does not
+    approve an incident or discard any draft; the original article and
+    independent reviewer must confirm its location and event afterwards.
+    Cross-border drafts are ready only if every named country is covered.
+    The AI fact-review budget is unchanged, avoiding extra free-tier calls.
+    """
+    return sorted(drafts,key=lambda row:not story_has_prepared_countries(row,ready))
+
+
 def select_ready_stories(stories, root: Path):
     """Keep source-reviewed stories in their existing order; don't fabricate.
 
