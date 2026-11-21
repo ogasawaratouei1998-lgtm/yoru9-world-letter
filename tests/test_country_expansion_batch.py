@@ -93,7 +93,7 @@ class CountryExpansionBatchTests(unittest.TestCase):
         self.assertEqual(len(country["quiz"]),2)
         self.assertEqual(len(country["travelStops"]),3)
         credits={stop["author"] for stop in country["travelStops"].values()}
-        self.assertEqual(credits,{"Stamatis","Geomel","Skyring"})
+        self.assertEqual(credits,{"ArticCynda","Geomel","Skyring"})
         stops=list(country["travelStops"].values())
         self.assertEqual(len({s["photoPage"] for s in stops}),3)
         self.assertEqual(len({s["photoAsset"] for s in stops}),3)
@@ -101,7 +101,7 @@ class CountryExpansionBatchTests(unittest.TestCase):
             "https://thumb.wikimedia.org/wikipedia/commons/thumb/")
             for s in stops))
         self.assertTrue(all(s["license"]=="CC BY-SA 4.0" for s in stops))
-        self.assertEqual(country["portraitPhotos"][0]["author"],"Stamatis")
+        self.assertEqual(country["portraitPhotos"][0]["author"],"ArticCynda")
         keys=[quiz["photoKey"] for quiz in country["quiz"]]
         self.assertEqual(len(set(keys)),2)
         self.assertTrue(all(quiz["photoLabel"].startswith("正解") for quiz in
