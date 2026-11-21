@@ -98,6 +98,9 @@ def bundle_travel_photos(root, output):
     for asset, url in required.items():
         target = output / asset
         target.parent.mkdir(parents=True, exist_ok=True)
+        # Never mistake a leftover image from an earlier build for one
+        # that passed the present manifest/quality validation.
+        target.unlink(missing_ok=True)
         cover=asset in country_covers
         cache_file=None
         if cache_root is not None:
