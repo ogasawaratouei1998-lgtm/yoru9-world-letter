@@ -1,0 +1,639 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "EE": {
+      "name": "エストニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ee",
+      "portrait": {
+        "lead": "石畳の商都と、地球の形を測った科学の足跡",
+        "body": "バルト海に面するエストニアでは、首都タリンの旧市街と、国境を越えて広がる測量の歴史をたどれます。タリンでは城壁や塔のある街を歩き、海上交易が育んだ中世の都市の姿を想像してみましょう。一方、シュトルーヴェの測地弧は、各地の測量地点を結んで地球の大きさと形を調べた科学の遺産です。建物を見上げる旅から、地球そのものを見つめる旅へ、視点が大きく切り替わります。",
+        "facts": [
+          "世界遺産：タリン歴史地区（旧市街）",
+          "世界遺産：シュトルーヴェの測地弧（複数国にまたがる遺産）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：エストニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ee"
+      },
+      "travelDrafts": [
+        {
+          "place": "タリン旧市街",
+          "travelStory": [
+            "タリンの旧市街では、石畳の広場に面する商人の家や教会の塔が、かつてバルト海の交易で栄えた都市の面影を伝えます。狭い通りから広場に出たときの視界の変化や、城壁の内側に集まる建物の配置に目を向けると、中世の都市がどのように暮らしと商業を支えていたか想像できます。",
+            "UNESCOはタリンが13世紀に城を築かれた場所からハンザ同盟の重要な拠点へ発展した歴史を評価しています。火災や戦争をくぐり抜けた商家や公共建築は、当時の経済力を物語る手掛かりです。豪華な建物を眺めるだけでなく、交易によって都市同士が結ばれていた時代の広がりを地図でも確かめてみましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タリン旧市街",
+              "url": "https://whc.unesco.org/en/list/822/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "タリンが中世に発展した交易組織は？",
+            "options": [
+              "ハンザ同盟",
+              "国際連合",
+              "東インド会社"
+            ],
+            "answer": 0,
+            "fact": "バルト海の交易を担ったハンザ同盟の重要な都市でした。",
+            "photoGoal": "タリン旧市街の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Tallinn Town Hall Square Estonia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "タルトゥ旧天文台",
+          "travelStory": [
+            "タルトゥの旧天文台は、大学のある街の丘に建つ科学史の記念物です。装置や建物の写真に目を向けると、夜空を観測する研究と地上の位置を精密に測る研究が、かつて同じ施設で進められていたことを感じられます。小さな観測地点を起点にして、遠く離れた測量点を地図上で結ぶ旅を想像してみましょう。",
+            "タルトゥ大学博物館によれば、旧天文台はシュトルーヴェの測地弧を構成する観測地点の一つです。19世紀に北ヨーロッパから黒海方面まで伸びる測量網が築かれ、地球の形や大きさを精密に知る助けになりました。衛星が利用できなかった時代の成果だと考えると、一つ一つの観測値を積み重ねた研究者の根気に驚かされます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "タルトゥ大学博物館・旧天文台常設展示",
+              "url": "https://muuseum.ut.ee/en/old-observatory-permanent-exhibition",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "シュトルーヴェの測地弧は何を測るための遺産？",
+            "options": [
+              "海の塩分",
+              "地球の形と大きさ",
+              "鉱山の深さ"
+            ],
+            "answer": 1,
+            "fact": "複数国の測量地点を結び、地球の形と大きさを精密に調べました。",
+            "photoGoal": "タルトゥ旧天文台の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Tartu Old Observatory Estonia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Tallinn skyline from Toompea Estonia",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "LV": {
+      "name": "ラトビア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/lv",
+      "portrait": {
+        "lead": "大都市の建築と川沿いの小さな旧市街で、異なる時代を歩く",
+        "body": "ラトビアでは、首都リガの歴史地区と西部のクルディーガ旧市街を比べてみたいところです。リガでは歴史ある街路や装飾豊かな建物に注目すると、都市が変化してきた時間を感じられます。クルディーガでは川と街並みの関係を眺めながら、より小さな都市の歴史を味わえます。建物の規模だけでなく、街を歩く人の目線や水辺の景観から、バルト海沿岸の都市文化を知る旅です。",
+        "facts": [
+          "世界遺産：リガ歴史地区",
+          "世界遺産：クルディーガ旧市街（2023年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ラトビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lv"
+      },
+      "travelDrafts": [
+        {
+          "place": "リガ歴史地区",
+          "travelStory": [
+            "リガでは中世の街路から装飾の豊かな近代建築が並ぶ地区へ、歩く人の視点で街の変化をたどれます。建物の正面を見上げると、植物のような曲線や彫刻が窓の周囲を飾り、通りそのものが美術展示のように感じられます。旧市街の歴史と近代の街づくりを見比べる小旅行です。",
+            "UNESCOはリガの繁栄が中世のハンザ交易にさかのぼる一方、19世紀からの経済発展が周辺の住宅地区を変えたことを伝えています。木造建築やアール・ヌーヴォーの街並みが残り、時代の異なる建築が一つの都市に共存しています。建築の装飾を好みだけで見るのではなく、都市を成長させた人々の営みに重ねて眺めましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リガ歴史地区",
+              "url": "https://whc.unesco.org/en/list/852/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "リガの近代建築を特徴づける様式の一つは？",
+            "options": [
+              "古代エジプト様式",
+              "アール・ヌーヴォー",
+              "インカの石造建築"
+            ],
+            "answer": 1,
+            "fact": "リガの近代的な住宅地区にはアール・ヌーヴォー建築が残ります。",
+            "photoGoal": "リガ歴史地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Riga Alberta iela Art Nouveau architecture Latvia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "クルディーガ旧市街",
+          "travelStory": [
+            "西部ラトビアのクルディーガでは、川と住宅街が近い距離で結びつく景観が印象的です。水辺から屋根の並びや道の曲がり方へ目を移すと、都市が地形に逆らわず成長してきた様子が見えてきます。大都市の華やかな記念建築とは異なり、家々の材料や職人の細かな仕事にゆっくり目を向けたい場所です。",
+            "UNESCOはこの旧市街が16～18世紀にクールラント・ゼムガレン公国の行政と交易の中心へ発展したことを評価しています。木材を使った地域の建築技法に、各地から移り住んだ職人の技術が重なりました。2023年の世界遺産登録は、壮大な宮殿だけではなく、暮らしの風景にも歴史を伝える価値があることを示しています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クルディーガ旧市街",
+              "url": "https://whc.unesco.org/en/list/1658/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "クルディーガの世界遺産登録年は？",
+            "options": [
+              "1980年",
+              "1994年",
+              "2023年"
+            ],
+            "answer": 2,
+            "fact": "クルディーガ旧市街は2023年に世界遺産に登録されました。",
+            "photoGoal": "クルディーガ旧市街の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Kuldiga old town Aleksupite Latvia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Riga skyline Daugava Latvia",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "LT": {
+      "name": "リトアニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/lt",
+      "portrait": {
+        "lead": "歴史都市の屋根の向こうに、風が形づくった砂の半島",
+        "body": "リトアニアには首都ヴィリニュスの歴史地区と、バルト海沿岸に細長く延びるクルシュー砂州があります。旧市街では教会の塔や曲がりくねった街路に目を向け、異なる時代に積み重なった都市の姿を考えてみましょう。砂州では海と潟湖に挟まれた風景から、風が運ぶ砂と人の暮らしの結びつきが見えてきます。石造りの街と移ろう砂の地形という、対照的な景色に出会える国です。",
+        "facts": [
+          "世界遺産：ヴィリニュス歴史地区",
+          "世界遺産：クルシュー砂州（ロシアとの共同登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：リトアニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lt"
+      },
+      "travelDrafts": [
+        {
+          "place": "ヴィリニュス歴史地区",
+          "travelStory": [
+            "ヴィリニュスの旧市街は、教会の塔が見える街路を歩きながら、建築の時代ごとの違いを発見できる場所です。細い路地から広場に出ると、建物の高さや正面の装飾が変わり、同じ旧市街の中にも多様な表情があります。写真では屋根や窓、石とれんがの使い分けまで眺め、街の長い歴史を読み解いてみましょう。",
+            "UNESCOによると、ヴィリニュスは13世紀から18世紀末までリトアニア大公国の政治の中心でした。ゴシック、ルネサンス、バロック、古典主義などの建物が、中世から受け継がれた都市構造に重なっています。一つの様式だけで統一されていないことが、この街の豊かさです。歴史を学ぶと異なる建物の並びにも物語が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴィリニュス歴史地区",
+              "url": "https://whc.unesco.org/en/list/541/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヴィリニュスが歴史的に政治の中心となった国は？",
+            "options": [
+              "リトアニア大公国",
+              "ローマ帝国",
+              "アステカ帝国"
+            ],
+            "answer": 0,
+            "fact": "ヴィリニュスは長くリトアニア大公国の政治の中心でした。",
+            "photoGoal": "ヴィリニュス歴史地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Vilnius St Anne Church Lithuania",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "クルシュー砂州・リトアニア側ニダ",
+          "travelStory": [
+            "バルト海と潟湖に挟まれたクルシュー砂州では、砂丘の起伏と水面の広がりが一つの細長い地形に収まっています。リトアニア側のニダ周辺の写真を眺めると、樹木が生える場所と開けた砂の斜面の対照が見えてきます。風が砂を動かす自然の力を意識しながら、植生を守る人々の仕事にも目を向けたい小旅行です。",
+            "UNESCOは全長98キロメートルのこの砂州を、風や波の作用と、それに対応してきた人間の営みが重なる文化的景観としています。砂の移動を抑える工夫や植林が地形の維持に寄与してきました。ロシアとの共同登録遺産ですが、ここで紹介するのはリトアニア側です。保護区域の立入規則を守る理由も、砂丘の成り立ちから理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クルシュー砂州・リトアニア側ニダ",
+              "url": "https://whc.unesco.org/en/list/994/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "砂州を守るために続けられてきた取り組みは？",
+            "options": [
+              "海底の採掘",
+              "砂の固定と植林",
+              "氷河の人工造成"
+            ],
+            "answer": 1,
+            "fact": "風で動く砂を抑えるため、長年にわたる植林などの取り組みが続いています。",
+            "photoGoal": "クルシュー砂州・リトアニア側ニダの実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Nida Parnidis dune Lithuania Curonian Spit",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Vilnius skyline Gediminas Tower Lithuania",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "SK": {
+      "name": "スロバキア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/sk",
+      "portrait": {
+        "lead": "鉱山町の技術の記憶と、丘の上に広がる城の歴史",
+        "body": "スロバキアでは、バンスカー・シュチャヴニツァの鉱山都市と、スピシュ城を中心とする歴史的な景観をたどる旅ができます。鉱山町では街の起伏や水を扱う技術の痕跡に目を向けると、地下の資源が地上の街づくりにも影響したことが伝わります。城のある丘では、周囲の道や集落を見渡し、防御や交通に地形が果たした役割を想像できます。資源と地形の双方から中欧の歴史を読み解く小旅行です。",
+        "facts": [
+          "世界遺産：バンスカー・シュチャヴニツァ歴史地区と周辺の技術遺産",
+          "世界遺産：レヴォチャ、スピシュ城と関連文化財"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：スロバキアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/sk"
+      },
+      "travelDrafts": [
+        {
+          "place": "バンスカー・シュチャヴニツァ歴史地区",
+          "travelStory": [
+            "山あいに広がるバンスカー・シュチャヴニツァは、坂道と広場の高低差が街に独特の輪郭を与えています。広場に面する歴史建築を見たあとで周囲の丘へ目を移すと、街だけを切り離さず、資源を得るために整えられた仕組みを含めて歴史を知りたくなります。地下にあった仕事が地上の景観へ残した痕跡を探す旅です。",
+            "UNESCOは中世の鉱山拠点が発展し、ルネサンス期の建物や教会、城を備えた都市になった経緯に注目しています。周辺にはかつての鉱業と冶金に関係する技術遺産も残ります。豊かな街並みだけではなく、資源を取り出し加工するための知識が都市を支えたことを考えると、歴史建築と技術史を一緒に楽しめます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バンスカー・シュチャヴニツァ歴史地区",
+              "url": "https://whc.unesco.org/en/list/618/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "この歴史都市の発展を支えた産業は？",
+            "options": [
+              "造船",
+              "鉱業と冶金",
+              "珊瑚の養殖"
+            ],
+            "answer": 1,
+            "fact": "鉱山と金属加工の発展が都市の成長を支えました。",
+            "photoGoal": "バンスカー・シュチャヴニツァ歴史地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Banska Stiavnica Trinity Square Slovakia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "スピシュ城",
+          "travelStory": [
+            "丘の上に広がるスピシュ城の輪郭を遠くから眺めると、塔や城壁が地形の起伏に沿って配置されていることが伝わります。近くの集落との距離や周囲を見渡せる範囲を地図で確かめると、城が単なる大きな建物ではなく、交通や防御に関わる場所だったことを想像できます。形の異なる石造建築を細部まで見たい遺産です。",
+            "UNESCOはスピシュ城を中心に、13～14世紀の軍事、政治、宗教に関係する大規模な建築群が残ることを評価しています。ロマネスクとゴシックの建築が、それぞれの時代の技術や価値観を伝えています。城の大きさだけを競う見方では見落とされる、周辺の宗教施設や歴史的な都市との結びつきにも注目しましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スピシュ城",
+              "url": "https://whc.unesco.org/en/list/620/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "スピシュ城に残る代表的な建築様式は？",
+            "options": [
+              "アール・デコ",
+              "超高層建築",
+              "ロマネスクとゴシック"
+            ],
+            "answer": 2,
+            "fact": "スピシュ城にはロマネスクとゴシックの建築が残っています。",
+            "photoGoal": "スピシュ城の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Spis Castle Slovakia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Bratislava skyline Danube Slovakia",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "ME": {
+      "name": "モンテネグロ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/me",
+      "portrait": {
+        "lead": "山が海へ迫る湾と、氷河の痕跡が残る山岳の国立公園",
+        "body": "モンテネグロでは、アドリア海に通じるコトル湾と内陸のドゥルミトル国立公園が対照的な風景を見せます。コトルでは海と険しい山に囲まれた街の位置に注目し、港と防御施設がどう結びついていたかを想像しましょう。ドゥルミトルでは山の稜線や谷、湖が形づくる広い景観を楽しめます。海辺の歴史都市から山岳自然へと視点を移すことで、同じ国の中にある大きな地形の変化を体感できます。",
+        "facts": [
+          "世界遺産：コトルの自然と文化歴史地域",
+          "世界遺産：ドゥルミトル国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：モンテネグロの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/me"
+      },
+      "travelDrafts": [
+        {
+          "place": "コトル旧市街",
+          "travelStory": [
+            "コトルでは、湾の水面と背後の険しい山、その間に収まる城壁の街が一つの風景をつくります。海に向かう広がりと、山側へ迫る地形の対照に注目すると、港であり防御拠点でもあった都市の立地が理解できます。石造りの街路や建物の細部を眺めながら、海上交流が育んだ文化の厚みを想像してみましょう。",
+            "UNESCOは中世のコトルがアドリア海に面する商業と芸術の中心だったことを紹介しています。1979年の地震によって教会や城壁などが大きな被害を受けましたが、その後の修復によって歴史的景観が守られてきました。現在の街並みには古い建築だけではなく、遺産を次の世代に残そうとした人々の取り組みも刻まれています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コトル旧市街",
+              "url": "https://whc.unesco.org/en/list/125/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "コトルの遺産が大きな被害を受けた1979年の災害は？",
+            "options": [
+              "地震",
+              "隕石落下",
+              "氷河の崩落"
+            ],
+            "answer": 0,
+            "fact": "1979年の地震後、コトルの歴史建築は修復されてきました。",
+            "photoGoal": "コトル旧市街の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Kotor old town walls Montenegro",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ドゥルミトル国立公園",
+          "travelStory": [
+            "ドゥルミトルでは山々の輪郭が湖面に映り、針葉樹の森と岩の稜線が重なる景色に目を奪われます。湖の近くの緑から遠くの峰へ視線を動かすと、同じ山岳地帯でも標高によって環境が変わることが分かります。写真や地図でタラ川の谷へ視点を移せば、湖だけでなく深い峡谷も含む広大な自然の姿が見えてきます。",
+            "UNESCOはドゥルミトルの地形が氷河によって形成され、その中を地表や地下の水が流れることを評価しています。タラ川の深い峡谷、湖、森林がそれぞれ異なる景観と生物の生息環境をつくります。山の美しさを楽しむことと、植物や動物の環境を保護することは切り離せません。撮影や散策は指定された場所から楽しみたい地域です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドゥルミトル国立公園",
+              "url": "https://whc.unesco.org/en/list/100/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ドゥルミトルの地形形成に重要だったものは？",
+            "options": [
+              "珊瑚礁",
+              "氷河",
+              "人工の運河"
+            ],
+            "answer": 1,
+            "fact": "氷河が形成した山岳地形と、河川や湖が公園の特徴です。",
+            "photoGoal": "ドゥルミトル国立公園の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Durmitor Black Lake Crno Jezero Montenegro",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Perast Bay of Kotor Montenegro panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "AL": {
+      "name": "アルバニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/al",
+      "portrait": {
+        "lead": "丘に連なる歴史都市と、水辺に重なる古代の遺跡",
+        "body": "アルバニアでは、ベラトとジロカストラの歴史地区、さらに南部のブトリントの遺跡が魅力です。歴史都市では坂道をたどり、丘の斜面と住宅の配置をじっくり眺めると、建物と地形が一体となった景観が見えてきます。ブトリントでは異なる時代の遺構が重なる場所を歩き、地中海の交流が残した痕跡を考えてみたいところです。暮らしの続く街と考古遺跡を比べながら、建築に現れる歴史の層を味わう旅です。",
+        "facts": [
+          "世界遺産：ベラトとジロカストラの歴史地区",
+          "世界遺産：ブトリント"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アルバニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/al"
+      },
+      "travelDrafts": [
+        {
+          "place": "ベラト歴史地区",
+          "travelStory": [
+            "ベラトの丘に連なる住宅群を眺めると、白い壁と窓の並びが斜面全体を一つの建築のように見せています。低い場所から見上げると家々が重なり、上から眺めるとそれぞれの道や屋根が別の表情を見せます。住宅の集まり方に注目して、限られた地形の中で人々の暮らしがどのように形づくられてきたかを考える小旅行です。",
+            "UNESCOはベラトとジロカストラを、オスマン期の特徴的な建築が残る歴史都市として評価しています。ベラトでは多様な宗教文化の痕跡も街の歴史を知る手掛かりです。美しい外観だけでなく、住居や宗教施設が長い時間をかけて重なった都市として見ると、建物を守る意味が伝わります。現在の住民の暮らしにも配慮したい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ベラト歴史地区",
+              "url": "https://whc.unesco.org/en/list/569/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ベラトの街並みに残る代表的な建築文化は？",
+            "options": [
+              "オスマン期の建築",
+              "近代の宇宙基地",
+              "古代インカの建築"
+            ],
+            "answer": 0,
+            "fact": "ベラトとジロカストラにはオスマン期の建築文化が残ります。",
+            "photoGoal": "ベラト歴史地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Berat Mangalem quarter Albania",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ブトリント遺跡",
+          "travelStory": [
+            "ブトリントの石造遺構では、自然に囲まれた劇場や建物の跡を通して、かつて人々が集った街の面影を想像できます。石の段や壁の配置に目を向けると、その場所で何が行われていたのか考えたくなります。水辺と森の景観を含め、異なる時代の人々が同じ場所を利用してきた理由を地図と写真でたどってみましょう。",
+            "UNESCOはブトリントがギリシャの植民都市、ローマの都市、キリスト教の司教座などを経て発展したことを伝えています。中世後期には周辺が湿地化し、街は放棄されました。現在の考古遺跡には各時代の建物の痕跡が重なり、場所の使われ方が変化した過程を読み取れます。一つの時代だけに注目せず、歴史の積層を楽しみたい遺産です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブトリント遺跡",
+              "url": "https://whc.unesco.org/en/list/570/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブトリントに残る歴史の特徴は？",
+            "options": [
+              "単一の近代工場だけ",
+              "同じ場所に複数時代の都市遺構",
+              "氷河の自然洞窟"
+            ],
+            "answer": 1,
+            "fact": "ギリシャ、ローマ、ビザンツなど異なる時代の遺構が重なります。",
+            "photoGoal": "ブトリント遺跡の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Butrint ancient theatre Albania",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Tirana Skanderbeg Square Albania landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "CY": {
+      "name": "キプロス",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cy",
+      "portrait": {
+        "lead": "地中海の古代遺跡と、山村の教会に描かれた色彩",
+        "body": "キプロスでは、海岸近くのパフォスと山地のトロードス地方に異なる文化の遺産が残ります。パフォスでは古代の建物やモザイクに目を向けると、地中海の歴史が身近になります。山へ移動すれば、トロードスの教会群では外観と内部の豊かな壁画との対照が印象的です。装飾の一つひとつを観察しながら、海上交流の記憶と山の集落が守ってきた信仰の文化をたどる小旅行を楽しめます。",
+        "facts": [
+          "世界遺産：パフォス",
+          "世界遺産：トロードス地方の壁画教会群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：キプロスの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cy"
+      },
+      "travelDrafts": [
+        {
+          "place": "パフォス・ネア・パフォスのモザイク",
+          "travelStory": [
+            "パフォスの遺跡では、石の小片を組み合わせて描かれたモザイクが、古代の住居の床に残っています。遠くからは一つの場面として見える絵も、近づくと小さな色の違いと配置で表現されていることに気づきます。建物の大きさだけではなく、足元を飾った絵の細部から、古代の暮らしや芸術の技術を想像する旅です。",
+            "UNESCOはパフォスを新石器時代から人が暮らし、アフロディテの信仰とも深い関係を持つ場所として紹介しています。複数の時代の住居や劇場、墓などに加え、ネア・パフォスのモザイクが芸術的な価値を伝えています。神話と都市生活がどのように結びついていたかを知ると、床面の絵も単なる装飾ではなく歴史を読む入口になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・パフォス・ネア・パフォスのモザイク",
+              "url": "https://whc.unesco.org/en/list/79/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ネア・パフォスの芸術遺産として知られるものは？",
+            "options": [
+              "氷の彫刻",
+              "鋳鉄の高層塔",
+              "モザイク"
+            ],
+            "answer": 2,
+            "fact": "ネア・パフォスには古代のモザイクが残っています。",
+            "photoGoal": "パフォス・ネア・パフォスのモザイクの実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Nea Paphos House of Dionysos mosaic Cyprus",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "トロードス地方・アシヌ教会",
+          "travelStory": [
+            "トロードス地方の山村の教会は、周囲の地形になじむ控えめな外観と、内部を彩る壁画の対照が大きな魅力です。山の気候に合わせた屋根や、小さな建物に凝縮された宗教美術を観察すると、都市の大きな聖堂とは違う設計の思想が感じられます。アシヌ教会を例に、建物の規模では測れない芸術の豊かさを味わう小旅行です。",
+            "UNESCOはトロードス地方に残る十件の教会・修道院を、ビザンツ美術からその後の時代に至る絵画の変化を示す遺産として登録しています。地域の建築上の工夫と外から伝わった美術の影響が、一つの建物に重なっています。壁画は保護が必要な貴重な文化財でもあるため、実際に見学する場合は礼拝や撮影に関する現地の規則を尊重しましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トロードス地方・アシヌ教会",
+              "url": "https://whc.unesco.org/en/list/351/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "トロードス地方の教会群が特に伝える芸術は？",
+            "options": [
+              "ビザンツ系の壁画",
+              "近代の映画撮影",
+              "海底の彫刻"
+            ],
+            "answer": 0,
+            "fact": "十件の教会・修道院の壁画がビザンツ美術などの変化を伝えます。",
+            "photoGoal": "トロードス地方・アシヌ教会の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Panagia Asinou church Cyprus",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Paphos harbour Cyprus panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "LU": {
+      "name": "ルクセンブルク",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/lu",
+      "portrait": {
+        "lead": "川が刻んだ谷と城壁が語る、中欧の要塞都市の記憶",
+        "body": "ルクセンブルクの首都では、川が刻んだ深い谷と岩の高台が、旧市街の個性を形づくっています。高い場所から街を見渡すと、地形そのものが防御に生かされた理由を想像できます。谷へ視線を移せば、橋や坂道によって異なる高さの街が結ばれていることにも気づきます。かつての要塞の痕跡を探しながら、複数のヨーロッパの勢力が関わった歴史と、現在の都市空間がどう重なっているかを考える旅です。",
+        "facts": [
+          "世界遺産：ルクセンブルク市の旧市街と要塞群",
+          "要塞の大規模な解体は1867年から"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ルクセンブルクの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lu"
+      },
+      "travelDrafts": [
+        {
+          "place": "ルクセンブルク旧市街・グルント地区",
+          "travelStory": [
+            "ルクセンブルク旧市街では、高台の建物から谷底のグルント地区へ向かって視線を移すと、同じ街の中に大きな高低差があることに気づきます。川沿いの建物と岩の上に続く城壁を見比べると、地形が防御と日常の暮らしに関わってきた様子を想像できます。橋によって高さの異なる街が結ばれる景観を楽しむ小旅行です。",
+            "UNESCOはこの街が16世紀から1867年の要塞解体まで、欧州でも重要な防御拠点として発展したことを評価しています。軍事技術の変化に合わせて要塞は改良され、その足元には商業や手工業に従事する人々の地区が形成されました。残された旧市街を見ると、防御のための都市計画と日々の暮らしが重なっていたことが分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ルクセンブルク旧市街・グルント地区",
+              "url": "https://whc.unesco.org/en/list/699/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ルクセンブルクの要塞都市が利用した自然地形は？",
+            "options": [
+              "平坦な塩湖",
+              "深い谷と岩の高台",
+              "珊瑚礁"
+            ],
+            "answer": 1,
+            "fact": "川が刻んだ谷と岩の高台が自然の防御に利用されました。",
+            "photoGoal": "ルクセンブルク旧市街・グルント地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Luxembourg Grund old town Alzette river",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ボックの地下要塞",
+          "travelStory": [
+            "ボックの地下要塞では、岩の内部を通る回廊と、そこから谷を見渡すための開口部が特徴です。地上から見える城壁だけでは想像しにくい防御施設の広がりを、内部の写真や断面を意識しながらたどってみましょう。暗い空間から外の光が差す窓へ視線を移すと、景色を眺めるためではなく防御のために造られた建築だと実感できます。",
+            "ルクセンブルク市観光局によると、ボックの地下要塞の建設は1745年にオーストリアの技術者によって始められました。岩の内部の砲室や通路は要塞都市の防御を支える役割を担いました。今日の都市では地下空間を歴史の記録として見ることができます。地表の街並みと地下の施設を合わせて知ることで、ルクセンブルクの立地の意味がより鮮明になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "ルクセンブルク市観光局・ボックの地下要塞",
+              "url": "https://www.luxembourg-city.com/en/tours-activities/underground/bock-casemates",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ボックの地下要塞の主な用途は？",
+            "options": [
+              "王宮の庭園",
+              "鉄道駅",
+              "軍事防御"
+            ],
+            "answer": 2,
+            "fact": "岩を掘った通路や砲室は要塞都市の防御施設として使われました。",
+            "photoGoal": "ボックの地下要塞の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Bock Casemates Luxembourg interior loopholes",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Luxembourg city Pont Adolphe panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
