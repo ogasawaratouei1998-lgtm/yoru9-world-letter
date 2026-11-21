@@ -125,7 +125,9 @@ edition.stories=[
 verify('same-country deduplication, cross-border and unknown location');
 if(currentIssueCountries().length!==3)throw Error('deduplication failed');
 """)
-        r=subprocess.run(["node","-e",script],capture_output=True,text=True)
+        # Use stdin rather than a single argv entry: growing country data can
+        # exceed Linux MAX_ARG_STRLEN even when the JS itself is valid.
+        r=subprocess.run(["node","-"],input=script,capture_output=True,text=True,encoding="utf-8",timeout=30)
         self.assertEqual(r.returncode,0,r.stderr)
 
 
