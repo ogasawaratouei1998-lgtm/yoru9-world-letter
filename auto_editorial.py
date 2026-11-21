@@ -1297,7 +1297,7 @@ def main():
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+' You are a Japanese comedy show writer working as news editor A. Discover up to 12 REAL, jaw-dropping, comic HUMAN REVERSALS from these fetched original articles (not limited to literal mistakes). FIRST seek spectacular PERSONAL misjudgments: costly but non-tragic wrong purchases or sales, major individual miscalculations, failed ambitious plans, huge self-caused reversals and dramatic sports or workplace blunders with concrete consequences. Routine typos, small orders, minor signs and trivial harmless mix-ups are lower-priority backups, NEVER the first choice when verified substantial individual failures qualify. Do not favor corporate headlines, high-profile resignations, serious disciplinary conflict, emergency harassment, criminal cases, politics, or outcomes that primarily harm victims. A huge loss is not funny by itself; require a clear source-proven decision and safe unexpected reversal. The specific human action, mistake or unexpected decision and its comic consequence must actually be in the fetched source; the reporter need not literally call it a mistake. A dispute or apology alone is not comedy. For EACH incident first identify humanActor, humanMistake (the documented misstep or ironic choice), expectedPlan and observedOutcome; only then privately draft FOUR radically different Japanese punchlines and pick the strongest short unexpected payoff, not a recap or lesson. Give a genuine, substantial individual mistake priority over minor errors and routine corporate stories; require directly documented stakes and a safe comic target, not personal humiliation. Return zero stories if no supported comedic mistake exists. '
       'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
-      'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. The catalog supports 196 reporting locations. Seek neglected countries as sources permit, but NEVER assign the publication market to the news incident or invent a story to fill an unreported country. Never invent facts, URLs, or details. '
+      'Choose at least one article published by a vetted news company; ONE article is enough, with no requirement to prove original reporting or locate a second source. verificationUrls should contain the cited article URL; no further evidence verification is needed. Use its text to draft the summary but do not invent people, quotes, numbers or consequences. The catalog supports 196 reporting locations; never confuse a publisher market with an incident country. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Propose incidents from ALL FOUR categories across multiple nights, prioritizing a neglected category whenever comparable source-supported funny stories exist; five published slots can represent all four categories on some nights. Make work about employees, operators and daily work mishaps, person about individual choices, sports about sporting decisions, and company only about organization-level choices. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Provide three distinct first-quips as quipCandidates (a JSON array, 18-55 Japanese characters per option) and put your strongest first choice in quip. The pipeline compares candidates before independent source review. Never include a mere headline recap. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic routine news without a 4/5 startling documented contrast; an intentional absurd choice is eligible if source-confirmed. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
@@ -1550,7 +1550,7 @@ def main():
         human_issue=human_failure_rejection(story)
         if human_issue:
             reject(human_issue);continue
-        # Compare proposed punchlines before the independent source audit.
+        # Compare proposed punchlines before the editorial joke review.
         selected_quip=choose_pre_review_quip(story,reviewed=selected)
         if selected_quip is None:
             # Never fall back to a headline paraphrase or generic punchline.
@@ -1565,23 +1565,18 @@ def main():
         situational_risk=noncomic_incident_rejection(story)
         if situational_risk:
             reject(situational_risk);continue
-        urls=story.get("verificationUrls",[])
-        if not isinstance(urls,list) or not (1<=len(urls)<=3) or len(set(urls))!=len(urls) or not all(host(u) for u in urls):
-            reject("insufficient_independent_urls");continue
-        single_original=(len(urls)==1)
-        if single_original:
-            if not trusted_original_domain(urls[0]):
-                reject("single_source_unvetted");continue
-        elif (len({host(u) for u in urls})<2 or not any(
-                frozenset(pair) in allowed_pairs
-                for pair in __import__("itertools").combinations(urls,2))):
-            reject("unmatched_source_pair");continue
-        if story["sourceUrl"] not in urls or any(u not in lead_urls for u in urls):
-            reject("urls_not_in_fetched_evidence");continue
-        # A policy/rules explainer is not a first-hand report of a specific
-        # blunder; another original incident-focused reporter can still qualify.
-        if all(source_title_is_policy_explainer(publisher_titles.get(u,"")) for u in urls):
-            reject("policy_explainer_without_incident_reporting");continue
+        # The journalist/publisher is accountable for reporting the facts.
+        # Our app only needs the primary story to come from a trusted outlet.
+        # One cited publisher is sufficient; no original-reporting proof or
+        # cross-publisher corroboration is demanded of the news article.
+        urls=[story.get("sourceUrl","")]
+        if not trusted_original_domain(urls[0]):
+            reject("publisher_not_in_approved_news_registry");continue
+        if urls[0] not in lead_urls or not cache.get(urls[0]):
+            # We still need the article's words to WRITE a faithful Japanese
+            # summary; this is not an independent investigation of journalism.
+            reject("publisher_article_not_readable_for_summary");continue
+        story["verificationUrls"]=urls
         if story["sourceUrl"] in seen or story["id"] in seen:
             reject("previously_published");continue
         if BLOCK.search(" ".join(str(story[k]) for k in ("title","summary","detail","quip"))):
@@ -1591,13 +1586,9 @@ def main():
             reject("invalid_event_key");continue
         if event in seen:
             reject("duplicate_event");continue
-        # Full fetched publisher articles, not model-listed headlines.
-        evidence=[]
-        for url in urls[:3]:
-            if cache.get(url):evidence.append({"url":url,"text":cache[url]})
-        if len(evidence)<1 or (not single_original and
-                              (len(evidence)<2 or len({host(x["url"]) for x in evidence})<2)):
-            reject("insufficient_fetched_original_reporting");continue
+        # The publisher article is composition context, not proof to be
+        # corroborated or fact-checked again by the app.
+        evidence=[{"url":urls[0],"text":cache[urls[0]]}]
         situational_risk=noncomic_incident_rejection(story,evidence)
         if situational_risk:
             reject(situational_risk);continue
@@ -1611,55 +1602,42 @@ def main():
             # Compare AI wording against first-hand reporting; do not investigate
             # the publisher's news again or run a redundant full editorial review.
             audit=ai(
-                "SOURCE-FIDELITY CHECK (one concise pass, no web research): "
-                "The supplied publisher article BODY is the only evidence. A vetted "
-                "publisher's genuine first-hand reporting is sufficient; do NOT "
-                "require a second source or independently re-investigate its claims. "
-                "Reject press releases, reposts, aggregated headlines, syndicated "
-                "copy and summaries that are not demonstrably original reporting. "
-                "Compare the Japanese title, summary, detail, humanActor, "
-                "humanMistake, expectedPlan and observedOutcome to that BODY. "
-                "Flag invented events, people, blame, motives, dates, countries, "
-                "locations, quotations, quantities, damages or endings. "
-                "Reject location claims inferred from the feed's language, "
-                "publisher market or domain instead of the incident itself. "
-                "Reject if the writing shames a person or compares reader pain. "
-                "Reject harassment of firefighters or emergency responders, "
-                "disciplinary intimidation and other noncomic abuse. Check "
-                "translation and legal status carefully (e.g. to be charged is NOT "
-                "arrested or convicted; plant nursery is NOT a botanical garden). "
-                "Require the identified human's documented surprising decision and "
-                "concrete non-tragic result, not generic company news or animal "
-                "novelty. Respect victims and private individuals; the quip must "
-                "be accurate, understandable on first read and end in a genuine "
-                "incident-specific twist, not a recap or moral. "
-                "The first story may be the biggest personal mistake, but large "
-                "losses alone never establish humor or a culprit. Mark "
-                "majorPersonalFailureConfirmed true ONLY for an explicitly "
-                "documented major individual error with extraordinary, non-tragic "
-                "consequences; otherwise false (ranking hint only). "
-                "Set shockFactorConfirmed/stageTsukkomiConfirmed only for a "
-                "source-backed remarkable reversal and a sharp natural quip. "
-                "For an optional quipSecond check its evidence, a DISTINCT premise "
-                "and punchline; if uncertain set all three optional flags false. "
-                "Return booleans; any missing or uncertain REQUIRED answer is false. "
-                "Score five editorial dimensions from 1 to 5: verified surprise, clarity of human mistake, irony of the actual outcome, publisher evidence quality and humane safety. Evidence and safety must score 5 for approval; the other three at least 4. Unverified claims never get high scores. "
-                "Do not enforce extra style preferences or rewrite any story. "
-                "JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,"
-                "dateVerified:boolean,safeTone:boolean,headlineGrounded:boolean,"
+                "JAPANESE EDITORIAL AND HUMOR REVIEW (not a fact-check): "
+                "The article was published by an approved news outlet. Trust "
+                "the reporting company to substantiate its own facts; NEVER "
+                "investigate, corroborate, or demand proof of the journalism. "
+                "Our job is to write an accurate Japanese introduction and "
+                "a brilliant, humane, incident-specific comic remark. Use the "
+                "publisher's text only as writing context so our Japanese prose "
+                "does not introduce invented people, motives, numbers, locations "
+                "or conclusions that the publisher did not say. Review the "
+                "headline's clarity and translation, including legal-status words. "
+                "Reject unsafe humor about victims or harmed individuals, "
+                "cruelty, boring headline recap, generic platitudes, or "
+                "an unclear human mistake/outcome contrast. "
+                "Check the second joke only for a genuinely different, safe "
+                "angle and readable punchline, not for independent evidence. "
+                "Score FOUR app-owned editorial dimensions 1-5: surprise, "
+                "mistakeClarity, outcomeIrony and humane safety. Safety must "
+                "be 5; the other three must be at least 4. No evidence score. "
+                "If unsure about the joke, reject it; never question the "
+                "publisher's responsibility for fact verification. "
+                "Return JSON {approved:boolean,headlineGrounded:boolean,"
                 "translationAccurate:boolean,legalStatusAccurate:boolean,"
-                "humanFailureConfirmed:boolean,humorRespectful:boolean,jokeClear:boolean,"
-                "comicPunchlineWorks:boolean,shockFactorConfirmed:boolean,"
-                "stageTsukkomiConfirmed:boolean,majorPersonalFailureConfirmed:boolean,"
+                "humanFailureConfirmed:boolean,humorRespectful:boolean,"
+                "jokeClear:boolean,comicPunchlineWorks:boolean,"
+                "shockFactorConfirmed:boolean,stageTsukkomiConfirmed:boolean,"
+                "majorPersonalFailureConfirmed:boolean,"
                 "secondQuipFactsVerified:boolean,secondQuipHasNewAngle:boolean,"
-                "secondQuipPunchlineWorks:boolean,editorialScores:{surprise:number,mistakeClarity:number,outcomeIrony:number,evidence:number,safety:number},reason:string}. "
+                "secondQuipPunchlineWorks:boolean,"
+                "editorialScores:{surprise:number,mistakeClarity:number,"
+                "outcomeIrony:number,safety:number},reason:string}. "
                 "Draft: "+json.dumps(story,ensure_ascii=False)+
-                " Previously published incidents: "+json.dumps(past,ensure_ascii=False)+
                 " Already chosen: "+json.dumps(accepted_summaries,ensure_ascii=False)+
-                " Retrieved original publisher texts: "+json.dumps(evidence,ensure_ascii=False),
+                " Publisher's article as WRITING context: "+json.dumps(evidence,ensure_ascii=False),
                 temperature=0.1)
         except RuntimeError as exc:
-            print("Source-fidelity check paused safely:",type(exc).__name__,flush=True)
+            print("Editorial copy review paused safely:",type(exc).__name__,flush=True)
             # Previously audited stories remain eligible, but never accept the interrupted draft.
             break
         if audit.get("approved") is not True:
@@ -1675,19 +1653,15 @@ def main():
             reject("editorial_headline_or_humor_quality_not_confirmed");continue
         score_issue=editorial_rubric_rejection(audit)
         if not verified_rubric_for_edition(audit,day):
-            reject(score_issue or "mandatory_five_factor_review_missing");continue
-        # These are source/translation safeguards, not a second investigation.
-        if any(audit.get(field) is not True for field in
-               ("originalReporting","factsVerified","dateVerified","safeTone")):
-            reject("single_original_not_verified" if single_original
-                   else "multi_source_fidelity_not_verified");continue
-        if single_original:
-            story["sourceBasis"]="original-report"
-            story["originalReportingVerified"]=True
-            story["attributionNote"]=SINGLE_SOURCE_NOTE
+            reject(score_issue or "mandatory_four_factor_editorial_review_missing");continue
+        # No original-report/independent-evidence audit: editorial review
+        # judges only the app's Japanese writing and safe comic interpretation.
+        story.pop("sourceBasis",None)
+        story.pop("originalReportingVerified",None)
+        story.pop("attributionNote",None)
         story["editorVerified"]=True
         story["humorSafe"]=True
-        # Human error and comic impact are specifically source-verified by B.
+        # Human error and comic impact are reviewed as presentation choices.
         story["humanFailureVerified"]=True
         story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)
         story["surpriseVerified"]=audit.get("shockFactorConfirmed") is True
@@ -1698,7 +1672,7 @@ def main():
         if verified_scores is not None:
             story["editorialScores"]=verified_scores
         seen.update((story["sourceUrl"],story["id"],event))
-        # The concise source check also vets any optional second joke. A good
+        # The editorial safety review also vets any optional second joke. A good
         # first joke and verified news article must survive a rejected extra.
         second=independently_approved_secondary_quip(story,audit)
         if second is None or BLOCK.search(second):
@@ -1718,7 +1692,7 @@ def main():
                supplemental_groups_examined=supplemental_groups_examined,
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
-    # Article truthfulness is checked above. Now reconcile the approved
+    # Publisher trust is checked above. Now reconcile the selected
     # article countries with the ACTUAL curated reader assets. A new country
     # cannot silently fall back to another country's photo or a one-question
     # generic quiz. Preserve verified articles' order and original countries.
@@ -1742,11 +1716,11 @@ def main():
                    country_ready_count=len(prepared),
                    unready_country_codes=unready,
                    rejection_reasons=rejection_counts)
-        print("No new edition: fewer than four source-verified, country-ready stories."
+        print("No new edition: fewer than four publisher-sourced, country-ready stories."
               " Preserve the previously published issue.",flush=True)
         return 0
     if not selected:
-        print("No source-verified, country-ready stories; no publication.");return 0
+        print("No publisher-sourced, country-ready stories; no publication.");return 0
     # After source/safety review, select up to five. Never add unverified filler.
     # When too few survive, the counted rejection reasons distinguish real scarcity
     # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
@@ -1763,7 +1737,7 @@ def main():
     checkpoint("selected",selected_for_edition=len(selected),**cadence_metrics)
     print("Quip cadence diagnostic (aggregate only):",
           json.dumps(cadence_metrics,sort_keys=True),flush=True)
-    print("Nightly verified selection:",len(selected),"source-checked stories;",
+    print("Nightly verified selection:",len(selected),"vetted-publisher stories;",
           "minimum 4 verified stories from Nov 21; otherwise keep previous.",flush=True)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
@@ -1785,7 +1759,7 @@ def main():
     # Leave publication fallback to validate_approved, not fresh AI prose.
     payload={"status":"approved","editionDate":day,"editionType":"regular",
              "title":day+"｜世界の大失敗ニュース","editorApproved":True,
-             "factChecked":True,"humorReviewed":True,
+             "humorReviewed":True,
              "approvedBy":"automated-two-stage-review","stories":selected}
     # The reader draws original, bundled SVG illustrations for every story.
     # Never write paid-image WebP plans or imagePath into the approval artifact.
@@ -1800,7 +1774,7 @@ def main():
     if target.exists():return 0
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
-    print("Created AI issue with",len(selected),"verified stories",day)
+    print("Created AI issue with",len(selected),"publisher-sourced stories",day)
     return 0
 
 if __name__=="__main__":
