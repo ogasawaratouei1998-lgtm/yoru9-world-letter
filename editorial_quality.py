@@ -169,3 +169,17 @@ def choose_pre_review_quip(story):
     candidates=quip_candidates_ranked(story)
     return candidates[0] if candidates else None
 
+
+
+def verified_rubric_for_edition(review, edition_date):
+    """For fresh AI issues require a complete human-impact-aware 5-factor audit.
+
+    Historical hand-reviewed issues keep their original contract and records.
+    A missing dimension must NOT silently bypass the modern quality threshold.
+    """
+    if not isinstance(review,dict):
+        return False
+    if str(edition_date)>="2026-11-21":
+        return (editorial_rubric(review) is not None
+                and editorial_rubric_rejection(review) is None)
+    return editorial_rubric_rejection(review) is None
