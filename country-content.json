@@ -101,7 +101,10 @@
     "th-sukhothai-park-postcard",
     "at-vienna-opera-cover",
     "at-schoenbrunn-palace-postcard",
-    "at-salzburg-old-town-postcard"
+    "at-salzburg-old-town-postcard",
+    "no-oslo-skyline-cover",
+    "no-bryggen-postcard",
+    "no-geirangerfjord-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4366,7 +4369,7 @@
     },
     "NO": {
       "name": "ノルウェー",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "木造の港町と、氷河が形づくった深いフィヨルド",
         "body": "ノルウェーでは、海に向かって開かれた町の歴史と、山々に囲まれたフィヨルドの風景が旅の両輪になります。ベルゲンのブリッゲンには木造商館の街並みが残り、ゲイランゲルフィヨルドやネーロイフィヨルドには氷河の侵食がつくった地形が広がります。建物の間に海上交易の歴史を見つけ、次には山と水の距離を船から眺める。人工の風景と自然の風景を行き来することで、この国の姿が鮮やかになります。",
@@ -4375,13 +4378,127 @@
           "世界遺産：ベルゲンのブリッゲン",
           "自然遺産：西ノルウェーのフィヨルド"
         ],
-        "photos": [],
+        "photos": [
+          "no-bryggen-postcard",
+          "no-geirangerfjord-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ノルウェーの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/no"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/no-oslo-skyline-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Skyline_of_Oslo%2C_2019_(01).jpg/500px-Skyline_of_Oslo%2C_2019_(01).jpg",
+          "caption": "オスロ港へ向かう船から見た市街地の眺め（2019年撮影）",
+          "author": "Bahnfrend",
+          "license": "CC BY-SA 4.0",
+          "place": "オスロ市街地",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Oslo%2C_2019_(01).jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ブリッゲンと深い関係を持つ交易組織は？",
+          "options": [
+            "ハンザ同盟",
+            "東インド会社のみ",
+            "マヤの都市国家"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜ブリッゲンの木造商館群",
+          "fact": "UNESCOはブリッゲンをハンザ同盟の交易史と結び付けて説明しています。",
+          "quip": "交易の歴史は木造の壁にも刻まれる。色鮮やかな港の記憶。",
+          "photoKey": "no-bryggen-postcard"
+        },
+        {
+          "question": "フィヨルドの谷を形づくった主な作用は？",
+          "options": [
+            "氷河の侵食",
+            "砂漠の砂嵐",
+            "火山灰の堆積のみ"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜西ノルウェーのフィヨルド",
+          "fact": "UNESCOは西ノルウェーのフィヨルドを氷河による地形の顕著な例としています。",
+          "quip": "地形の彫刻家は氷河。作品の大きさに、人間の尺度が追いつかない。",
+          "photoKey": "no-geirangerfjord-postcard"
+        }
+      ],
+      "travelStops": {
+        "no-oslo-skyline-cover": {
+          "country": "ノルウェー",
+          "countryOnly": true,
+          "place": "オスロ市街地",
+          "region": "オスロ",
+          "latitude": 59.907,
+          "longitude": 10.73,
+          "note": "フィヨルドの奥に広がる北欧の首都の街並み。",
+          "photoCaption": "オスロ港へ向かう船から見た市街地の眺め（2019年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/43/Skyline_of_Oslo%2C_2019_(01).jpg/500px-Skyline_of_Oslo%2C_2019_(01).jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Skyline_of_Oslo%2C_2019_(01).jpg",
+          "photoAsset": "assets/travel/no-oslo-skyline-cover.jpg",
+          "author": "Bahnfrend",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "no-bryggen-postcard": {
+          "country": "ノルウェー",
+          "countryOnly": true,
+          "place": "ブリッゲンの木造商館群",
+          "region": "ベルゲン",
+          "latitude": 60.397,
+          "longitude": 5.324,
+          "note": "交易の歴史が残る港沿いの木造商館群。",
+          "photoCaption": "ベルゲン港に並ぶブリッゲンの歴史的な木造商館群（2021年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/71/Bryggen_-_Bergen%2C_Norway_2021-07-30_(02).jpg/500px-Bryggen_-_Bergen%2C_Norway_2021-07-30_(02).jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Bryggen_-_Bergen%2C_Norway_2021-07-30_(02).jpg",
+          "photoAsset": "assets/travel/no-bryggen-postcard.jpg",
+          "author": "Ryan Hodnett",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ベルゲンの港沿いに並ぶブリッゲンの木造建物は、正面から眺めると色や屋根の形の違いが際立ちます。細い通路へ入ると建物の奥行きが見え、海側だけでは分からない商館のつくりを感じられます。港に立って全体を眺めてから建物の間を歩くことで、昔の商人たちが過ごした場所を具体的に想像できるようになります。",
+            "UNESCOはブリッゲンをハンザ同盟の交易活動と結び付いた歴史的な港湾地区として評価しています。火災や再建を経ながらも、商いに適した木造建築の伝統が残ってきました。色鮮やかな観光名所として見るだけでなく、海から荷が届き、建物の奥へ運ばれた流れを想像すると、港町の仕組みが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブリッゲンの木造商館群",
+              "url": "https://whc.unesco.org/en/list/59/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "no-geirangerfjord-postcard": {
+          "country": "ノルウェー",
+          "countryOnly": true,
+          "place": "西ノルウェーのフィヨルド",
+          "region": "ガイランゲルフィヨルド",
+          "latitude": 62.101,
+          "longitude": 7.206,
+          "note": "氷河がつくった深い谷に海水が入り込んだ景観。",
+          "photoCaption": "南東側から望むガイランゲルフィヨルドと集落（2018年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Geirangerfjord_from_SE_10_2018_3049.jpg/500px-Geirangerfjord_from_SE_10_2018_3049.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Geirangerfjord_from_SE_10_2018_3049.jpg",
+          "photoAsset": "assets/travel/no-geirangerfjord-postcard.jpg",
+          "author": "Mariordo (Mario Roberto Durán Ortiz)",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ゲイランゲルフィヨルドやネーロイフィヨルドでは、水面のすぐ近くから急な斜面が立ち上がり、山の谷間へ海が深く入り込んでいます。船上から見ると両岸の距離や斜面の高さが変わり、同じ景色でも位置によって印象が異なります。谷の奥へ進んでから振り返ると、細く曲がる水路の形がはっきりしてくるのが魅力です。",
+            "UNESCOは西ノルウェーのフィヨルドを、氷河によって形づくられた優れた地形景観として登録しています。険しい岩壁や滝、深い水域が、長い地質学的な時間を物語ります。単に壮大な景観として眺めるだけでなく、氷が地形を削り、海が谷を満たした過程を考えると、一つ一つの曲がり角にも意味が生まれます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・西ノルウェーのフィヨルド",
+              "url": "https://whc.unesco.org/en/list/1195/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "NP": {

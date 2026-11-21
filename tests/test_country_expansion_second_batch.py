@@ -31,9 +31,9 @@ class SecondCountryExpansionTests(unittest.TestCase):
                 self.assertEqual(len(answers),2)
                 self.assertNotIn(cover,answers)
                 self.assertEqual(set(country_coverage(ROOT,[{"country":code}])),{code})
-        self.assertEqual(len(ready),25)
+        self.assertEqual(len(ready),26)
         self.assertEqual(sum(row["status"]=="pending"
-                             for row in source["countries"].values()),171)
+                             for row in source["countries"].values()),170)
 
     def test_new_photo_paths_are_exact_commons_file_hashes_not_other_countries(self):
         source=check_country_content(ROOT)

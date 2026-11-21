@@ -38,9 +38,9 @@ class FourthBatchTests(unittest.TestCase):
 
     def test_twenty_four_countries_are_ready_not_placeholder_approved(self):
         ready,pending=ready_country_codes(ROOT)
-        self.assertEqual(len(ready),25)
+        self.assertEqual(len(ready),26)
         self.assertEqual(sum(row["status"]=="pending"
-                             for row in self.doc["countries"].values()),171)
+                             for row in self.doc["countries"].values()),170)
         for code in PHOTOS:
             with self.subTest(country=code):
                 c=self.doc["countries"][code]
@@ -99,7 +99,7 @@ class FourthBatchTests(unittest.TestCase):
 
     def test_offline_shell_caches_the_nine_new_correct_licensed_images(self):
         sw=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v59",sw)
+        self.assertIn("yoru9-shell-v60",sw)
         for entries in PHOTOS.values():
             for key in entries:
                 self.assertIn("assets/travel/"+key+".jpg",sw)

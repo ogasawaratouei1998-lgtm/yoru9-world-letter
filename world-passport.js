@@ -16,6 +16,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'シドニー・オペラハウスが世界文化遺産に登録された年は？',options:['1973年','2007年','1981年'],answer:1,photoKey:'au-opera-house-postcard',photoLabel:'正解写真｜シドニー・オペラハウス',fact:'UNESCOの世界遺産一覧では、シドニー・オペラハウスの登録年は2007年とされています。',quip:'屋根は帆の形。でも舞台は海上ではなく、ちゃんと劇場の中。'},
   {question:'グレートバリアリーフが世界自然遺産に登録された年は？',options:['1981年','2007年','1999年'],answer:0,photoKey:'au-great-barrier-reef-postcard',photoLabel:'正解写真｜グレートバリアリーフ',fact:'UNESCOはグレートバリアリーフを1981年に世界自然遺産として登録しています。',quip:'青い海の中は大にぎわい。サンゴが街の主役になっている。'},
  ],
+ AT:[
+  {question:'シェーンブルン宮殿がある都市は？',options:['ウィーン','ザルツブルク','インスブルック'],answer:0,photoLabel:'正解写真｜シェーンブルン宮殿と庭園',fact:'シェーンブルン宮殿と庭園はウィーンにある世界文化遺産です。',quip:'宮殿の主役は建物だけじゃない。庭まで揃えて一つの舞台。',photoKey:'at-schoenbrunn-palace-postcard'},
+  {question:'ザルツブルク旧市街の発展に深く関わったのは？',options:['大司教を中心とする宗教都市','海軍の造船都市','砂漠の交易都市'],answer:0,photoLabel:'正解写真｜ザルツブルク旧市街',fact:'UNESCOはザルツブルクの大司教領としての歴史的な都市景観を評価しています。',quip:'旧市街では道を曲がるたび、街が歴史の続きを語り出す。',photoKey:'at-salzburg-old-town-postcard'},
+ ],
  BR:[
   {question:'写真に写るサンパウロの有名な大通りは？',options:['アヴェニーダ・パウリスタ','シャンゼリゼ通り','フィフス・アベニュー'],answer:0,photoKey:'brazil-paulista-quiz-image',photoLabel:'正解の通り｜サンパウロ・アヴェニーダ・パウリスタ',fact:'アヴェニーダ・パウリスタはサンパウロの文化施設が集まる通りで、MASPなどが並びます。',quip:'通りを歩けば美術館が次々登場。散歩が文化祭になりそう。'},
   {question:'ブラジル側から撮影したこの滝は何という？',options:['エンジェルフォール','イグアスの滝','ヴィクトリアの滝'],answer:1,photoKey:'brazil-iguacu-brazil-side-quiz-image',photoLabel:'正解の滝｜ブラジル側から見たイグアスの滝',fact:'イグアスの滝はブラジルとアルゼンチンにまたがり、ブラジル側のイグアス国立公園は1986年にUNESCO世界遺産へ登録されました。',quip:'国境より目立つのは水しぶき。滝の迫力に地図が負ける。'},
@@ -76,6 +80,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'アムステルダムの17世紀運河地区が世界文化遺産に登録された年は？',options:['1997年','2010年','2020年'],answer:1,photoLabel:'正解写真｜アムステルダムの運河',fact:'UNESCOはアムステルダムの17世紀運河地区を2010年に世界文化遺産へ登録しました。',quip:'運河が街の道案内役。水まで都市計画の一員です。',photoKey:'nl-amsterdam-canals-postcard'},
   {question:'キンデルダイクの風車は、主にどのような目的で利用された？',options:['低地の排水','海での漁網の巻き上げ','天体観測'],answer:0,photoLabel:'正解写真｜キンデルダイクの風車',fact:'風車群と水路は、低い土地を排水し守るための水利システムとして整備されました。',quip:'風車は名所になる前から、土地を守る仕事人でした。',photoKey:'nl-kinderdijk-windmills-postcard'},
  ],
+ NO:[
+  {question:'ブリッゲンと深い関係を持つ交易組織は？',options:['ハンザ同盟','東インド会社のみ','マヤの都市国家'],answer:0,photoLabel:'正解写真｜ブリッゲンの木造商館群',fact:'UNESCOはブリッゲンをハンザ同盟の交易史と結び付けて説明しています。',quip:'交易の歴史は木造の壁にも刻まれる。色鮮やかな港の記憶。',photoKey:'no-bryggen-postcard'},
+  {question:'フィヨルドの谷を形づくった主な作用は？',options:['氷河の侵食','砂漠の砂嵐','火山灰の堆積のみ'],answer:0,photoLabel:'正解写真｜西ノルウェーのフィヨルド',fact:'UNESCOは西ノルウェーのフィヨルドを氷河による地形の顕著な例としています。',quip:'地形の彫刻家は氷河。作品の大きさに、人間の尺度が追いつかない。',photoKey:'no-geirangerfjord-postcard'},
+ ],
  NZ:[
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
@@ -100,10 +108,7 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
  ],
- AT:[
-  {question:'シェーンブルン宮殿がある都市は？',options:['ウィーン','ザルツブルク','インスブルック'],answer:0,photoLabel:'正解写真｜シェーンブルン宮殿と庭園',fact:'シェーンブルン宮殿と庭園はウィーンにある世界文化遺産です。',quip:'宮殿の主役は建物だけじゃない。庭まで揃えて一つの舞台。',photoKey:'at-schoenbrunn-palace-postcard'},
-  {question:'ザルツブルク旧市街の発展に深く関わったのは？',options:['大司教を中心とする宗教都市','海軍の造船都市','砂漠の交易都市'],answer:0,photoLabel:'正解写真｜ザルツブルク旧市街',fact:'UNESCOはザルツブルクの大司教領としての歴史的な都市景観を評価しています。',quip:'旧市街では道を曲がるたび、街が歴史の続きを語り出す。',photoKey:'at-salzburg-old-town-postcard'},
- ],
+
 });
 
 let worldPassportActive=null;

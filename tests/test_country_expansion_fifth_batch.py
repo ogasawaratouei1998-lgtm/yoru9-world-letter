@@ -25,11 +25,21 @@ class FifthBatchTests(unittest.TestCase):
         self.assertEqual(self.batch["status"], "pending_photos_not_public")
         approved = [code for code, entry in self.content["countries"].items()
                     if entry["status"] == "approved"]
-        self.assertEqual(len(approved), 25)
+        self.assertEqual(len(approved), 26)
         for code in COUNTRIES:
             with self.subTest(code=code):
                 country = self.content["countries"][code]
                 draft = self.batch["countries"][code]
+                # The eight-country draft is an immutable editing snapshot.
+                # Norway was subsequently promoted with three distinct licensed photographs.
+                if code == "NO":
+                    self.assertEqual(country["status"], "approved")
+                    self.assertEqual(draft["status"], "pending")
+                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertEqual(len(country["portraitPhotos"]), 1)
+                    self.assertEqual(len(country["quiz"]), 2)
+                    self.assertEqual(len(country["travelStops"]), 3)
+                    continue
                 self.assertEqual(country["status"], "pending")
                 self.assertEqual(draft["status"], "pending")
                 self.assertEqual(country["portrait"], draft["portrait"])
@@ -77,11 +87,14 @@ class FifthBatchTests(unittest.TestCase):
 
     def test_queue_counts_unfinished_photographs_as_blockers(self):
         queue = country_editorial_queue(ROOT)
-        self.assertEqual(len(queue["approvedCountries"]), 25)
-        self.assertEqual(queue["pendingCountries"], 171)
+        self.assertEqual(len(queue["approvedCountries"]), 26)
+        self.assertEqual(queue["pendingCountries"], 170)
         entries = {row["code"]: row for row in queue["prioritizedPending"]}
         for code in COUNTRIES:
             with self.subTest(code=code):
+                if code == "NO":
+                    self.assertNotIn(code, entries)
+                    continue
                 self.assertNotIn("substantive_portrait", entries[code]["missing"])
                 self.assertNotIn("portrait_history_culture_source", entries[code]["missing"])
                 self.assertIn("attributed_country_portrait_photo", entries[code]["missing"])
