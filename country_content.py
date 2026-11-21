@@ -96,6 +96,18 @@ def load_country_content(root):
         if entry.get("status") not in ("approved","pending"):
             raise ValueError(code+": unknown country editorial approval status")
         if entry["status"]=="approved":
+            portrait=entry.get("portrait")
+            if not isinstance(portrait,dict) or not portrait.get("sourceName"):
+                raise ValueError(code+": approved portrait requires named cultural source")
+            source_url=portrait.get("sourceUrl")
+            if not isinstance(source_url,str):
+                raise ValueError(code+": approved portrait source URL missing")
+            guide_url=urlsplit(source_url)
+            if (guide_url.scheme!="https" or not guide_url.hostname
+                    or guide_url.username or guide_url.password
+                    or guide_url.hostname.endswith("wikimedia.org")
+                    or guide_url.hostname.endswith("creativecommons.org")):
+                raise ValueError(code+": approved country portrait requires an independent source")
             # Each historical claim needs an independent documentary reference;
             # a CC image credit alone says nothing about the essay's accuracy.
             for key,stop in entry.get("travelStops",{}).items():
@@ -147,6 +159,17 @@ def check_country_content(root):
         for field,value in legacy["countries"][code].items():
             if entry.get(field)!=value:
                 raise ValueError(code+"."+field+": source-of-truth drift; run --sync")
+    # A valid JSON/JS export alone does not mean a newly approved country can
+    # actually render. Audit *all* approvals, not just today's article countries.
+    # This catches cover/quiz reuse, foreign imagery and missing travel options
+    # before a future nightly edition is allowed to reference the country.
+    from check_country_experience import country_coverage
+    for code,entry in canonical["countries"].items():
+        if entry["status"]=="approved":
+            try:
+                country_coverage(root,[{"country":code}])
+            except (KeyError,ValueError,TypeError,IndexError,OSError) as exc:
+                raise ValueError(code+": approved content fails reader readiness: "+str(exc)) from exc
     return canonical
 
 

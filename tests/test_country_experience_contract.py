@@ -41,9 +41,12 @@ class CountryExperienceContractTest(unittest.TestCase):
             country_coverage(self.root,[{"id":"verified-news-example",
                                         "country":"Nigeria"}])
 
-    def test_legacy_country_does_not_bypass_new_country_quality_gate(self):
-        with self.assertRaisesRegex(ValueError,"GB:"):
-            country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"}])
+    def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
+        report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
+                                          {"id":"verified-jp","country":"日本"}])
+        self.assertEqual(set(report),{"GB","JP"})
+        self.assertEqual(report["GB"]["cover"],"assets/travel/wales-cardiff-castle.jpg")
+        self.assertEqual(report["JP"]["cover"],"assets/travel/kyoto-kinkakuji.jpg")
 
     def test_two_paragraph_travel_story_is_required_for_published_country(self):
         path=self.root/"travel-stops.json"

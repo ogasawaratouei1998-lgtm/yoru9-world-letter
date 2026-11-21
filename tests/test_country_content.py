@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -51,7 +51,7 @@ class CountryContentTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             check_country_content(self.root)
 
-    def test_sync_preserves_readiness_of_published_five(self):
+    def test_sync_preserves_readiness_of_published_seven(self):
         sync_country_content(self.root)
         txt=(self.root/"world-passport.js").read_text(encoding="utf-8")
         section=txt.split(" US:[",1)[1].split("\n});",1)[0]
@@ -60,28 +60,59 @@ class CountryContentTest(unittest.TestCase):
                                           {"id":"b","country":"ドイツ"},
                                           {"id":"c","country":"アメリカ合衆国"},
                                           {"id":"d","country":"フランス"},
-                                          {"id":"e","country":"アルゼンチン"}])
-        self.assertEqual(set(result),{"IT","DE","US","FR","AR"})
+                                          {"id":"e","country":"アルゼンチン"},
+                                          {"id":"f","country":"日本"},
+                                          {"id":"g","country":"イギリス"}])
+        self.assertEqual(set(result),{"IT","DE","US","FR","AR","JP","GB"})
 
     def test_pending_country_cannot_be_promoted_without_photos(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
         data["countries"]["NG"]["status"]="approved"
         file.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"NG: approval"):
+        with self.assertRaisesRegex(ValueError,"NG: approved portrait requires named cultural source|NG: approval"):
             load_country_content(self.root)
 
     def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
         doc=load_country_content(ROOT)
         self.assertEqual(sum(bool(stop.get("historicalSources"))
-                             for code in ("IT","DE","US","FR","AR")
+                             for code in ("IT","DE","US","FR","AR","JP","GB")
                              for stop in doc["countries"][code]["travelStops"].values()
-                             if stop.get("travelStory")),17)
+                             if stop.get("travelStory")),26)
         file=self.root/"country-content.json"
         dataset=json.loads(file.read_text(encoding="utf-8"))
         dataset["countries"]["US"]["travelStops"]["us-newyork-postcard"].pop("historicalSources")
         file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
         with self.assertRaisesRegex(ValueError,"unsourced history/culture"):
+            load_country_content(self.root)
+
+    def test_an_approved_country_cannot_repeat_its_quiz_answer_as_lead_cover(self):
+        # A content editor can update JSON and the exported JS consistently,
+        # but country-level visual readiness must still veto the release.
+        content=self.root/"country-content.json"
+        data=json.loads(content.read_text(encoding="utf-8"))
+        japan=data["countries"]["JP"]
+        japanese_fujisan=next(p for p in japan["portraitPhotos"]
+                             if p.get("asset")=="assets/travel/fuji-cherry-blossom.jpg")
+        japanese_fujisan.pop("avoidCover",None)
+        content.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"JP: approved content fails reader readiness"):
+            sync_country_content(self.root)
+
+    def test_newly_approved_countries_keep_distinct_covers_and_quiz_photos(self):
+        from check_country_experience import country_coverage
+        rows=country_coverage(ROOT,[{"country":"日本"},{"country":"イギリス"}])
+        self.assertEqual(set(rows),{"JP","GB"})
+        self.assertEqual(rows["JP"]["cover"],"assets/travel/kyoto-kinkakuji.jpg")
+        self.assertEqual(rows["GB"]["cover"],"assets/travel/wales-cardiff-castle.jpg")
+        self.assertTrue(all(len(row["quizPhotoKeys"])==2 for row in rows.values()))
+
+    def test_approved_country_portrait_requires_independent_cultural_source(self):
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["JP"]["portrait"].pop("sourceUrl")
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"portrait source URL missing"):
             load_country_content(self.root)
 
     def test_photo_credit_cannot_masquerade_as_history(self):
