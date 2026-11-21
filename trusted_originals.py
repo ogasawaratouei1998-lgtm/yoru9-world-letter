@@ -1,7 +1,7 @@
-"""Shared vetted original-reporting publisher list.
+"""Editorially vetted news publishers whose reporting is accepted on trust.
 
-A trusted domain is not alone proof of firsthand reporting. The independent
-reviewer must validate the original article body before it is published.
+Only a valid article URL on this allowlist is required as news provenance;
+fact investigation and corroboration remain the reporting company's job.
 """
 from urllib.parse import urlsplit
 
@@ -26,8 +26,8 @@ TRUSTED_ORIGINAL_PUBLISHERS = (
     "vox.com", "skysports.com", "espn.com", "formula1.com",
     "arstechnica.com", "gizmodo.com", "engadget.com",
     "scientificamerican.com", "rnz.co.nz",
-    # Local original reporting from underrepresented publisher markets.
-    # Domain enrollment does NOT excuse independent article-body verification.
+    # News publishers from underrepresented markets; no additional reporting
+    # verification is imposed by our app.
     "punchng.com", "vanguardngr.com", "guardian.ng",
     "standardmedia.co.ke", "dailymaverick.co.za",
     "myjoyonline.com", "egyptindependent.com", "hespress.com",
