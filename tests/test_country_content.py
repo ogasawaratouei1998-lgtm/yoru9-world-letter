@@ -475,7 +475,7 @@ class CountryContentTest(unittest.TestCase):
                 stop=data["countries"][country]["travelStops"][key]
                 self.assertEqual(stop,export[key])
                 self.assertEqual(len(stop["travelStory"]),2)
-                self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
+                self.assertTrue(all(170<=len(p)<=360 for p in stop["travelStory"]))
                 self.assertIn(fact,"".join(stop["travelStory"]))
                 self.assertIn(url,{source["url"] for source in stop["historicalSources"]})
                 self.assertNotEqual(url,stop["photoPage"])
