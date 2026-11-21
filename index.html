@@ -2638,8 +2638,13 @@ function chooseTravelPhoto(story,stops){
  // Always retain authentic article-country alignment; no fake foreign photo.
  if(!sameCountry.length)return null;
  // Avoid two copies in one session, unless it is the ONLY available photograph.
- let pool=sameCountry.filter(s=>!travelUsedPhotos.has(s.photoAsset));
- if(!pool.length)pool=sameCountry;
+ // Prefer destinations backed by a separate historical/cultural reference.
+ // A photo's CC license is not evidence for claims in the travel essay.
+ const sourced=sameCountry.filter(s=>Array.isArray(s.historicalSources)&&
+  s.historicalSources.some(source=>source&&source.name&&/^https:\/\//.test(source.url)));
+ const candidates=sourced.length?sourced:sameCountry;
+ let pool=candidates.filter(s=>!travelUsedPhotos.has(s.photoAsset));
+ if(!pool.length)pool=candidates;
  // First exhaust every licensed photo within the country across page reloads.
  const unseen=pool.filter(s=>!(travelPhotoHistory[s.country]||[]).includes(s.photoAsset));
  if(unseen.length){
@@ -2695,6 +2700,9 @@ function travelPostcardHtml(story,stop){
   typeof stop.photoAsset==='string'&&/^assets\/travel\/[a-z0-9-]+\.jpg$/.test(stop.photoAsset)&&
   typeof stop.photoPage==='string'&&stop.photoPage.startsWith('https://commons.wikimedia.org/wiki/File:')&&
   typeof stop.licenseUrl==='string'&&stop.licenseUrl.startsWith('https://creativecommons.org/');
+ const heritage=stop&&Array.isArray(stop.historicalSources)?
+  stop.historicalSources.find(source=>source&&source.name&&
+   typeof source.url==='string'&&source.url.startsWith('https://')):null;
  return '<section class="travel-card" aria-label="ニュースとは別の旅先を紹介する小旅行">'+
   '<p class="travel-kicker">WORLD POSTCARD · 有名観光地の小旅行</p>'+
   '<div class="travel-context" aria-label="記事と旅先の違い">'+
@@ -2719,6 +2727,8 @@ function travelPostcardHtml(story,stop){
   '<div class="travel-links">'+
    (mapUrl?'<a href="'+escapeHtml(mapUrl)+'" target="_blank" rel="noopener noreferrer">'+(known?'旅先を地図で見る ↗':'掲載国を地図で見る ↗')+'</a>':'')+
    (photo?'<a href="'+escapeHtml(stop.photoPage)+'" target="_blank" rel="noopener noreferrer">写真の撮影元 ↗</a>':'')+
+   (heritage?'<a href="'+escapeHtml(safeUrl(heritage.url))+'" target="_blank" rel="noopener noreferrer">歴史・文化の資料：'+escapeHtml(heritage.name)+' ↗</a>':
+    '<span class="travel-source-pending">歴史・文化の出典は編集中</span>')+
   '</div>'+
   (photo?'<p class="travel-credit">写真：'+escapeHtml(stop.author)+' / <a href="'+escapeHtml(stop.licenseUrl)+
    '" target="_blank" rel="noopener noreferrer">'+escapeHtml(stop.license)+'</a>（表示範囲を調整）</p>':'')+
