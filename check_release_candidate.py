@@ -140,7 +140,13 @@ def audit(root: Path, site: Path | None = None) -> dict:
     # not merely a path or a successful downloads counter.
     if site is not None:
         site=Path(site)
-        for relative in ("index.html","world-passport.js","service-worker.js",
+        from reader_asset_split import expected_reader_assets
+        browser_assets=expected_reader_assets(root)
+        for relative,expected in browser_assets.items():
+            dest=site/relative
+            require(dest.is_file() and dest.read_bytes()==expected,
+                    '分離済みCSS/JavaScriptの公開ファイルが元データと不一致: '+relative)
+        for relative in ("world-passport.js","service-worker.js",
                          "travel-stops.json","data/current.json"):
             expected=(root/relative).read_bytes()
             dest=site/relative
