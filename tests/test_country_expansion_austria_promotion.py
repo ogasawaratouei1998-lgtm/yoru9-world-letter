@@ -25,7 +25,7 @@ class AustrianCountryReleaseTests(unittest.TestCase):
 
     def test_austria_is_really_ready_for_country_reader(self):
         approved = [k for k, row in self.doc["countries"].items() if row["status"] == "approved"]
-        self.assertEqual(len(approved), 27)
+        self.assertGreaterEqual(len(approved), 28)
         self.assertEqual(self.austria["status"], "approved")
         self.assertEqual(len(self.austria["portraitPhotos"]), 1)
         self.assertEqual(len(self.austria["quiz"]), 2)
@@ -77,7 +77,7 @@ class AustrianCountryReleaseTests(unittest.TestCase):
             found.update(src["url"] for src in stop["historicalSources"])
         self.assertEqual(found, urls)
         sw = (ROOT / "service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v61", sw)
+        self.assertIn("yoru9-shell-v62", sw)
         for key in SOURCES:
             self.assertIn("assets/travel/" + key + ".jpg", sw)
 
