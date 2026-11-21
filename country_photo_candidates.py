@@ -19,11 +19,10 @@ from urllib.parse import urlencode, urlparse
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parent
-BATCHES = (
-    "country-expansion-batch-eight-20261121.json",
-    "country-expansion-batch-unesco-eight-20261121.json",
-    "country-expansion-batch-europe-world-eight-20261121.json",
-)
+# Automatically discover every future editorial batch without code edits.
+# Historical batches with all countries already approved and no photo-search
+# terms remain archived, not silently reintroduced into the research queue.
+BATCH_GLOB = "country-expansion-batch-*.json"
 API = "https://commons.wikimedia.org/w/api.php"
 LICENSES = {
     "CC BY-SA 4.0", "CC BY 4.0", "CC BY-SA 3.0", "CC BY 3.0",
@@ -136,10 +135,13 @@ def draft_queries(root=ROOT):
     """Produce independent cover and two-stop searches for each queued country."""
     seen = set()
     canonical = json.loads((Path(root) / "country-content.json").read_text(encoding="utf-8"))
-    for batch_file in BATCHES:
-        batch = json.loads((Path(root) / batch_file).read_text(encoding="utf-8"))
+    files = sorted(Path(root).glob(BATCH_GLOB))
+    if not files:
+        raise ValueError("No country expansion batch files found")
+    for batch_file in files:
+        batch = json.loads(batch_file.read_text(encoding="utf-8"))
         if batch.get("status") != "pending_photos_not_public":
-            raise ValueError("Unexpected public draft batch: " + batch_file)
+            raise ValueError("Unexpected public draft batch: " + batch_file.name)
         for code, country in batch["countries"].items():
             if code in seen:
                 raise ValueError("Duplicate active draft country: " + code)
@@ -157,6 +159,10 @@ def draft_queries(root=ROOT):
                 terms = (country.get("coverCommonsSearch", ""),
                          *(stop.get("commonsSearch", "") for stop in country["travelDrafts"]))
             if len(terms) != 3 or not all(isinstance(t, str) and len(t.strip()) >= 8 for t in terms):
+                if canonical["countries"][code]["status"] == "approved":
+                    # Historical approved-only batches predate this photo
+                    # research schema; they do not need new candidate scans.
+                    continue
                 raise ValueError("Missing country-specific search vocabulary: " + code)
             labels = ("cover", *(stop["place"] for stop in country["travelDrafts"]))
             for idx, (label, query) in enumerate(zip(labels, terms)):

@@ -1,0 +1,640 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Third eight-country source-backed batch. Every country portrait and 16 place-specific UNESCO travel essays with distinct quiz drafts remain unpublished until three correctly licensed place-matched photographs and end-to-end release checks pass.",
+  "countries": {
+    "DK": {
+      "name": "デンマーク",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/dk",
+      "portrait": {
+        "lead": "海峡を見張る城と赤レンガの聖堂に、北欧の歴史が息づく",
+        "body": "デンマークの歴史遺産は、海とともに生きてきた国の姿を建築から伝えています。ヘルシンゲルにあるクロンボー城はスウェーデンとの間の海峡を見下ろし、ロスキレ大聖堂は赤レンガを積み重ねた北欧の宗教建築を象徴しています。海風の吹く城の外郭を歩く時間と、静かな聖堂の内部で長い王家の歴史に触れる時間。どちらも建物が美しいだけでなく、その場所が担ってきた役割を知ることで印象が深まります。",
+        "facts": [
+          "世界遺産：クロンボー城",
+          "世界遺産：ロスキレ大聖堂"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：デンマークの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/dk"
+      },
+      "travelDrafts": [
+        {
+          "place": "クロンボー城",
+          "travelStory": [
+            "クロンボー城に近づくと、頑丈な城壁と海に向かって開けた視界が一緒に現れます。中庭では整った建築の美しさに気づきますが、外へ出て海峡を見渡せば、なぜここに城が築かれたのかが自然に理解できます。風の強さや船の往来を感じながら外郭を歩き、城の向きと海の狭さを確かめてみると、北欧の歴史が地形と結びついて見えてきます。",
+            "UNESCOによれば、城はデンマークとスウェーデンの間のエーレスンド海峡を押さえる重要な場所に立ち、16～18世紀の北ヨーロッパ史で大きな役割を果たしました。シェイクスピアの『ハムレット』の舞台エルシノアとの結びつきも知られていますが、実際の城を訪れたらまず海に目を向けたいところです。防御のための建築と文化的な物語が同じ景色の中に重なっています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クロンボー城",
+              "url": "https://whc.unesco.org/en/list/696/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "クロンボー城が見下ろす重要な海峡は？",
+            "options": [
+              "エーレスンド海峡",
+              "ジブラルタル海峡",
+              "マラッカ海峡"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはクロンボー城がエーレスンド海峡を押さえる位置に建つと説明しています。",
+            "photoGoal": "クロンボー城が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Kronborg Castle Helsingor Denmark",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ロスキレ大聖堂",
+          "travelStory": [
+            "ロスキレ大聖堂の外観では、赤いレンガでつくられた塔や壁の面が晴れた空と鮮やかな対比を生みます。石造りの大聖堂を想像して訪れると、レンガの質感そのものがこの建築の魅力だと気づくでしょう。建物の周囲をゆっくり歩いて塔と側廊の形を確かめ、内部では墓所や礼拝空間に流れる静かな時間を味わいたい場所です。",
+            "UNESCOはロスキレ大聖堂を、北ヨーロッパで大型の宗教建築にレンガが早期から用いられた重要な例として評価しています。デンマーク王室の墓所としての歴史もあり、建物の増築に異なる時代の建築様式が表れています。ひとつの完成された姿として見るのではなく、長く使われ続けた建築の変化を探すと、大聖堂の奥行きがよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ロスキレ大聖堂",
+              "url": "https://whc.unesco.org/en/list/695/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ロスキレ大聖堂の建築材料で特に重要なのは？",
+            "options": [
+              "レンガ",
+              "氷のブロック",
+              "珊瑚"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは北欧の大型宗教建築における早期のレンガ使用を高く評価しています。",
+            "photoGoal": "ロスキレ大聖堂が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Roskilde Cathedral Denmark brick exterior",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Kronborg Castle Denmark Helsingor sea",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "FI": {
+      "name": "フィンランド",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/fi",
+      "portrait": {
+        "lead": "島をつなぐ要塞と、木造の港町に刻まれた北方の暮らし",
+        "body": "フィンランドの遺産には、海に面した地域ならではの都市の記憶が残っています。ヘルシンキ沖のスオメンリンナは島々に広がる要塞で、ラウマ旧市街には木造の家屋が連なる伝統的な街並みが受け継がれています。海上の防備を目的に計画された大規模な施設と、商いと生活のなかで形づくられた細い通り。海風を感じながらこの二つを比べると、同じ北方の港でも歴史が異なることがよく分かります。",
+        "facts": [
+          "世界遺産：スオメンリンナの要塞",
+          "世界遺産：ラウマ旧市街"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：フィンランドの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/fi"
+      },
+      "travelDrafts": [
+        {
+          "place": "スオメンリンナの要塞",
+          "travelStory": [
+            "スオメンリンナへ向かうと、海の上に島々と低い石造の防壁が少しずつ近づいてきます。島へ着いたら大砲の跡や門、草の生えた防塁を歩き、港の入口を見渡してみたいところです。建物だけを見ていると大きな公園のようにも感じられますが、海へ開いた視界に立つと、島の配置そのものが防衛に利用されていたことが分かります。",
+            "UNESCOはスオメンリンナを、18世紀後半にスウェーデンがヘルシンキ港の入口に築いた海上要塞として評価しています。要塞は一つの島の建物ではなく、複数の島と水路を合わせて構成された軍事建築です。散策中は島ごとの距離や砲台の向きを意識すると、守る対象と海上交通の関係が読み解けます。現在も人々が暮らす場所なので、住民の生活空間への配慮も大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スオメンリンナの要塞",
+              "url": "https://whc.unesco.org/en/list/583/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "スオメンリンナが築かれた主な目的は？",
+            "options": [
+              "港の防衛",
+              "砂漠の灌漑",
+              "山岳農業"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはヘルシンキ港の入口に築かれた18世紀の海上要塞として紹介しています。",
+            "photoGoal": "スオメンリンナの要塞が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Suomenlinna Fortress Helsinki Finland",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ラウマ旧市街",
+          "travelStory": [
+            "ラウマの旧市街では、色づけされた木造の家が細い通りに並び、店先の窓や門のつくりに目を奪われます。大きな記念建造物よりも、ひとつひとつの建物が街並みを形づくっているところが魅力です。交差点で振り返って屋根の重なりを見比べると、木造の家が残る北欧の港町を日常の速度で歩く楽しみが伝わってきます。",
+            "UNESCOによればラウマはフィンランドでも古い港町の一つで、フランシスコ会修道院を中心に街が発展しました。17世紀末の火災を経験しながらも、伝統的な木造の都市景観が受け継がれています。家屋の配置や通りの幅に注目すると、暮らしに合わせて育った都市の姿が感じられます。現在の住宅や店にも使われる場所として、写真撮影では住民の暮らしを尊重したいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラウマ旧市街",
+              "url": "https://whc.unesco.org/en/list/582/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ラウマ旧市街の伝統的な街並みを特徴づけるのは？",
+            "options": [
+              "木造家屋",
+              "大理石の高層塔",
+              "砂漠のテント"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは伝統的な木造建築が残る北欧の港町としてラウマを評価しています。",
+            "photoGoal": "ラウマ旧市街が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Old Rauma wooden houses Finland",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Suomenlinna sea fortress Finland Helsinki",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "HU": {
+      "name": "ハンガリー",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/hu",
+      "portrait": {
+        "lead": "ドナウの岸辺に広がる首都と、農村の記憶を残す小さな村",
+        "body": "ハンガリーでは、大都市の壮麗な景観と伝統的な農村の暮らしを対照的に味わえます。ブダペストではドナウ川の両岸に城地区や歴史建築が広がり、ホッローケーでは古い村落の姿が現在の生活の中に保存されています。橋を渡りながら川と建築を眺める時間と、村の家々の間をゆっくり歩いて風景を味わう時間。規模は違っても、街や村が時代を超えて使われてきたことが、この国の魅力を伝えています。",
+        "facts": [
+          "世界遺産：ブダペストのドナウ河岸とブダ城地区",
+          "世界遺産：ホッローケーの古村落"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ハンガリーの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/hu"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブダペストのドナウ河岸とブダ城地区",
+          "travelStory": [
+            "ブダペストのドナウ川沿いでは、橋の向こうに丘の上のブダ城地区と対岸の歴史建築が重なる景色に出会います。川の片側から眺めた街を、橋を渡って逆の岸から見直すと建物の位置関係ががらりと変わります。夕方の光が水面に広がる時間帯も魅力的ですが、昼間に歩いて川幅や坂道を確かめると、都市が川を軸に発展したことがより実感できます。",
+            "UNESCOはドナウ川の両岸、ブダ城地区、アンドラーシ通りを含め、複数の時代の建築と都市景観を評価しています。古代ローマのアクインクムの遺跡から後世の城郭に至るまで、街には異なる歴史の層が残ります。個別の建物を順番に追うだけではなく、川沿いと丘の高低差を読みながら歩くと、首都の形がどのように出来上がったのかが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブダペストのドナウ河岸とブダ城地区",
+              "url": "https://whc.unesco.org/en/list/400/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブダペストの景観の中心を流れる川は？",
+            "options": [
+              "ドナウ川",
+              "ナイル川",
+              "アマゾン川"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはドナウ川の両岸をブダペストの世界遺産の重要な一部としています。",
+            "photoGoal": "ブダペストのドナウ河岸とブダ城地区が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Budapest Danube Buda Castle Hungary",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ホッローケーの古村落",
+          "travelStory": [
+            "ホッローケーの村を訪ねると、白い壁や木造の細部を持つ小さな家々が通りに沿って連なり、周囲の丘へ視線が抜けます。都市の大きな記念建築とは違い、人々の暮らしの尺度でつくられた道や庭が見どころです。家並みの間を歩きながら建物の色や屋根を比べ、今も人が使う村としての落ち着きを感じたい場所です。",
+            "UNESCOはホッローケーを、17～18世紀に発展した伝統的集落が意図的に守られ、20世紀の農業変革以前の農村生活を伝える例として評価しています。古い家が並んでいることだけが価値なのではなく、村の配置や周囲の土地利用も歴史の一部です。外から眺める際は現在も続く住民の暮らしを尊重するとともに、保存と生活の両立にも目を向けたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホッローケーの古村落",
+              "url": "https://whc.unesco.org/en/list/401/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ホッローケーが伝えるのは主にどのような生活？",
+            "options": [
+              "伝統的な農村生活",
+              "宇宙基地の暮らし",
+              "氷上都市の生活"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは農業の大変革以前の伝統的な農村生活が残る集落として評価しています。",
+            "photoGoal": "ホッローケーの古村落が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Holloko village Hungary traditional houses",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Budapest Hungary Danube Parliament panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "SI": {
+      "name": "スロベニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/si",
+      "portrait": {
+        "lead": "地底の大峡谷と、人の歩幅で設計された首都の街並み",
+        "body": "スロベニアには、自然の造形と都市の設計思想を異なる角度から体感できる遺産があります。シュコツィアン洞窟群では地下河川が大規模な空間を生み、首都リュブリャナには建築家ヨジェ・プレチニクによる歩行者や日常生活を重視した都市空間が残っています。洞窟の深さを感じる旅と、橋や市場の周囲をゆっくり歩く旅。自然がつくったスケールと、人のためにつくられた空間を比べながら楽しめます。",
+        "facts": [
+          "世界遺産：シュコツィアン洞窟群",
+          "世界遺産：リュブリャナのプレチニク建築群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：スロベニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/si"
+      },
+      "travelDrafts": [
+        {
+          "place": "シュコツィアン洞窟群",
+          "travelStory": [
+            "シュコツィアンの洞窟へ入ると、外の明るい緑の風景から、岩と水が支配する暗い空間へと一気に移ります。地底の広い空洞や川の流れを見つめると、地下にも巨大な谷が存在することを実感できます。足元の道と遠くの岩壁の距離を比べながら進むと、見慣れた地表の景色とはまったく異なるスケールに驚かされる場所です。",
+            "UNESCOはシュコツィアンを、カルスト地形がよく表れた洞窟群として評価しています。石灰岩が水の浸食を受けて地中に大きな空間や峡谷をつくり、地表とは異なる水の動きが見られます。洞窟では自然保護と安全のため歩行ルートが制限されることがあります。派手な写真を撮るよりも、案内に従って水音や空間の奥行きを感じることが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・シュコツィアン洞窟群",
+              "url": "https://whc.unesco.org/en/list/390/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "シュコツィアン洞窟の形成に重要な地形は？",
+            "options": [
+              "カルスト地形",
+              "珊瑚礁",
+              "砂丘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは石灰岩と水がつくるカルスト地形を洞窟群の重要な価値としています。",
+            "photoGoal": "シュコツィアン洞窟群が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Skocjan Caves Slovenia underground canyon",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "リュブリャナのプレチニク建築群",
+          "travelStory": [
+            "リュブリャナの街を歩くと、川沿いの散策路や橋、市場、広場がゆるやかにつながり、歩く人が自然に立ち止まれる場所が多いことに気づきます。遠くから見て豪華な一つの建物より、日常の道や水辺のつながりが心地よく感じられる景観です。橋のたもとで周囲を見渡し、建築が人の移動や出会いをどう支えているかを考えながら歩きたい街です。",
+            "UNESCOは、第一次世界大戦と第二次世界大戦の間に建築家ヨジェ・プレチニクがリュブリャナで手がけた都市設計を、人を中心に据えた取り組みとして評価しています。橋や市場、公共施設が既存の街や自然環境と丁寧に結びついています。設計者の意図を知ると、何気ない広場や歩道の配置にも街の個性をつくる役割があったことが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リュブリャナのプレチニク建築群",
+              "url": "https://whc.unesco.org/en/list/1643/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "リュブリャナの世界遺産で重視された設計思想は？",
+            "options": [
+              "人を中心とした都市設計",
+              "巨大な要塞の新設",
+              "砂漠の道路建設"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは建築家プレチニクによる人間中心の都市デザインを評価しています。",
+            "photoGoal": "リュブリャナのプレチニク建築群が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Joze Plecnik Ljubljana Triple Bridge market Slovenia",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Ljubljana Slovenia city Triple Bridge river",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "PH": {
+      "name": "フィリピン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ph",
+      "portrait": {
+        "lead": "山肌を刻む棚田と、交易が育てた石畳の歴史都市",
+        "body": "フィリピンの遺産をたどると、山地の農業と海上交易がそれぞれ独自の文化を育ててきたことが分かります。コルディリェーラの棚田群は険しい斜面を使い続ける人々の知恵を伝え、ビガン歴史都市には中国やヨーロッパなどの影響が混ざり合う街並みが残っています。緑の斜面を見渡す時間と、古い通りを歩く時間では体験がまったく異なりますが、どちらも環境に適応しながら暮らした人々の歴史が感じられます。",
+        "facts": [
+          "世界遺産：フィリピン・コルディリェーラの棚田群",
+          "世界遺産：ビガン歴史都市"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：フィリピンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ph"
+      },
+      "travelDrafts": [
+        {
+          "place": "フィリピン・コルディリェーラの棚田群",
+          "travelStory": [
+            "コルディリェーラの棚田を高い場所から見下ろすと、山の斜面をなぞるように小さな田んぼが何段も続きます。遠目には緑の幾何学模様に見えますが、近づくと水を運ぶ仕組みや畦の細かな曲線に目が向きます。角度を変えて見渡せば、谷の地形に合わせて形が異なることも分かります。写真だけでなく、農業の仕事と結びつく景色として眺めたい場所です。",
+            "UNESCOは棚田群を、先住民イフガオの人々が長い時間をかけて育ててきた生きた文化的景観として評価しています。バタッドやバンガアンなど、登録された複数の地区にはそれぞれ異なる形の棚田があります。観光用に整えられた単一の庭園ではなく、現在も農作業が行われる土地だと意識すると、維持するための知恵や労力の大きさがよく分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・フィリピン・コルディリェーラの棚田群",
+              "url": "https://whc.unesco.org/en/list/722/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "コルディリェーラの棚田を長く維持してきた人々は？",
+            "options": [
+              "イフガオの人々",
+              "古代ローマ軍",
+              "ヴァイキング"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはイフガオの人々の長い農業文化が棚田景観を形づくったと説明しています。",
+            "photoGoal": "フィリピン・コルディリェーラの棚田群が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Batad rice terraces Ifugao Philippines",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ビガン歴史都市",
+          "travelStory": [
+            "ビガンの旧市街を歩くと、石畳の道に沿って古い家屋が並び、窓や屋根、通りの幅から交易都市としての歴史が感じられます。通りの先へ進むにつれて建物の色や細部が変わるため、ひとつの建物だけに目を向けず街全体をゆっくり眺めたいところです。夕方には低い光が壁を照らし、昼とは違った町並みの表情に出会えることもあります。",
+            "UNESCOはビガンを、フィリピンの地域文化に中国やヨーロッパの建築的要素が重なった、保存状態のよい歴史都市として評価しています。植民地時代だけでなく、それ以前から交易の重要な拠点だったことも街の成り立ちに関わっています。装飾や窓の形の違いを探しながら歩くと、異なる文化が混ざり合って独特の街並みをつくった過程を想像できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ビガン歴史都市",
+              "url": "https://whc.unesco.org/en/list/502/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ビガンの歴史的街並みが示す文化の交流先は？",
+            "options": [
+              "中国とヨーロッパなど",
+              "北極圏のみ",
+              "南極大陸のみ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは中国やヨーロッパなどの影響が重なるビガンの都市景観を評価しています。",
+            "photoGoal": "ビガン歴史都市が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Vigan Calle Crisologo historic houses Philippines",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Batad rice terraces Ifugao Philippines mountain",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "MY": {
+      "name": "マレーシア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/my",
+      "portrait": {
+        "lead": "海峡の交易都市と、熱帯の地底に広がる石灰岩の世界",
+        "body": "マレーシアの歴史と自然は、マラッカ海峡を通る人と物の交流、そしてボルネオ島の豊かな森林と洞窟に表れています。ムラカとジョージタウンの歴史都市には東西の文化が交わった建築が残り、グヌン・ムル国立公園には熱帯のカルスト地形と広大な洞窟群が広がっています。建物の装飾に交易の記憶を探す旅と、森林に包まれた洞窟で水と岩の長い作用を感じる旅を、対照的に楽しめる国です。",
+        "facts": [
+          "世界遺産：ムラカとジョージタウンの歴史都市",
+          "世界遺産：グヌン・ムル国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：マレーシアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/my"
+      },
+      "travelDrafts": [
+        {
+          "place": "ムラカとジョージタウンの歴史都市",
+          "travelStory": [
+            "ジョージタウンの旧市街を歩くと、細い商店街の間に異なる色や様式の建物が並び、店先から日々の暮らしの音が聞こえてきます。ムラカでは川沿いの景色や歴史的な建物から、港町に人が集まった時代を想像できます。二つの街を地図で比べながら歩くと、同じ海峡の交易都市でも発展の仕方や景観に違いがあることが見えてきます。",
+            "UNESCOは、ムラカとジョージタウンをマラッカ海峡の東西交易の歴史を伝える都市として評価しています。商業活動や移住を通じて異なる言語・宗教・建築文化が重なり、街並みに独特の多様性が生まれました。建築の正面装飾だけでなく、祈りの場や市場、住宅地の配置にも注目すると、交流が都市全体を形づくってきたことを感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ムラカとジョージタウンの歴史都市",
+              "url": "https://whc.unesco.org/en/list/1223/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ムラカとジョージタウンが発展した重要な背景は？",
+            "options": [
+              "マラッカ海峡の交易",
+              "高山の氷河採掘",
+              "北極探検"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはマラッカ海峡の東西交易を背景に発展した都市として評価しています。",
+            "photoGoal": "ムラカとジョージタウンの歴史都市が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "George Town Penang Malaysia heritage street",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "グヌン・ムル国立公園",
+          "travelStory": [
+            "グヌン・ムルの森林では、緑の木々が密集する地表の下に、驚くほど大きな洞窟の空間が続いています。入口から奥へ進むと岩の模様や暗闇の奥行きが変わり、地上からは想像しにくい規模を実感できます。熱帯の植物に囲まれた遊歩道と洞窟の静けさを比べながら、同じ土地にまったく違う景色が重なっていることを楽しみたい場所です。",
+            "UNESCOはサラワク州のグヌン・ムルを、生物多様性の高さと熱帯カルスト地形の両方で評価しています。数多くの洞窟があり、洞内はコウモリなどの生物のすみかにもなっています。単に巨大な洞窟を見るだけでなく、水が石灰岩を溶かして空間を広げた時間を考えると、景観の意味が深まります。自然保護と安全のため、見学は認められたルートや案内に従う必要があります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グヌン・ムル国立公園",
+              "url": "https://whc.unesco.org/en/list/1013/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "グヌン・ムル国立公園の特徴的な地形は？",
+            "options": [
+              "熱帯のカルスト洞窟",
+              "氷河の氷床",
+              "砂漠の砂丘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは熱帯カルスト地形と洞窟群を重要な価値として評価しています。",
+            "photoGoal": "グヌン・ムル国立公園が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Gunung Mulu National Park Sarawak caves",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "George Town Penang Malaysia heritage shophouses",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "TN": {
+      "name": "チュニジア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/tn",
+      "portrait": {
+        "lead": "古い迷路の街と、地中海を見渡す古代都市の記憶",
+        "body": "チュニジアの地中海沿岸には、異なる時代に栄えた都市の歴史が残っています。首都チュニスのメディナでは細い街路の間に市場や礼拝の場が集まり、カルタゴの考古遺跡では古代の港湾都市が大きな影響力を持っていたことを感じられます。街の中を歩いて生活の密度を味わう時間と、遺跡から海を見渡しながら歴史を想像する時間が、互いに違う魅力を生みます。",
+        "facts": [
+          "世界遺産：チュニスのメディナ",
+          "世界遺産：カルタゴの考古遺跡"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：チュニジアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/tn"
+      },
+      "travelDrafts": [
+        {
+          "place": "チュニスのメディナ",
+          "travelStory": [
+            "チュニスのメディナへ入ると、細く曲がった路地に商店や住宅の扉が連なり、通りごとに空気が変わります。大通りから少し進むだけで人の声や商品の色が近くなり、歴史的な街が今も生活と商いの中心であることを感じられます。建物の装飾だけを探すのではなく、路地の曲がり角や中庭への入口に目を向けると、町のつくりそのものが興味深く見えてきます。",
+            "UNESCOはチュニスのメディナを、北アフリカの早い時期に成立したアラブ・イスラム都市の一つとして評価しています。長くさまざまな王朝のもとで発展し、宗教施設や住宅、商業空間が密接に結びついてきました。ひとつの名所だけでは分からない都市の歴史が、街路を歩くほど浮かび上がります。市場での撮影や礼拝施設の見学では、現在暮らす人々への配慮を忘れたくありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・チュニスのメディナ",
+              "url": "https://whc.unesco.org/en/list/36/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "チュニスのメディナが発展した歴史的都市文化は？",
+            "options": [
+              "アラブ・イスラム文化",
+              "北欧のヴァイキング文化のみ",
+              "インカ文化"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはチュニスのメディナを北アフリカの歴史的なアラブ・イスラム都市として評価しています。",
+            "photoGoal": "チュニスのメディナが確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Medina of Tunis Tunisia narrow souk street",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "カルタゴの考古遺跡",
+          "travelStory": [
+            "カルタゴの遺跡を歩くと、石積みの基礎や古い建物の跡が地中海を見渡す地形の中に点在しています。遠くに海が見える場所に立つと、都市と海上交通の関係を想像しやすくなります。ひとつの巨大な建物が残るのではなく、複数の区域に異なる時代の遺構が分かれているため、地図で位置を確かめながら少しずつたどると理解が深まります。",
+            "UNESCOによるとカルタゴは紀元前9世紀にフェニキア人によって建設され、地中海世界で重要な都市へ成長しました。のちにローマ時代の遺構も重なり、同じ場所に異なる歴史の層が残っています。遺跡を海へ向かう道や丘と結びつけて見れば、都市の広がりをより具体的に感じられます。現在の周辺市街地にも配慮しながら、古代の記憶をたどりたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カルタゴの考古遺跡",
+              "url": "https://whc.unesco.org/en/list/37/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "カルタゴの古代都市を建設した人々は？",
+            "options": [
+              "フェニキア人",
+              "マヤ人",
+              "ヴァイキング"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはカルタゴをフェニキア人が紀元前9世紀に建設した都市として紹介しています。",
+            "photoGoal": "カルタゴの考古遺跡が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Carthage archaeological site Tunisia baths",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Tunis medina Tunisia historic old town",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "GE": {
+      "name": "ジョージア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ge",
+      "portrait": {
+        "lead": "山々に守られた塔の集落と、古都の教会が伝える信仰",
+        "body": "ジョージアでは、コーカサス山脈の険しい地形に合わせて築かれた集落と、古くからの宗教文化を感じられます。上スヴァネティの村々では石の防御塔が山の風景に溶け込み、ムツヘタには古い王国の歴史と深く結びつく教会群が残っています。山並みと塔の輪郭を遠くから眺める時間と、聖堂の周囲をゆっくり歩いて石造建築を見る時間では異なる感動があります。自然条件と歴史が重なった土地の魅力をたどれる国です。",
+        "facts": [
+          "世界遺産：ムツヘタの歴史的建造物群",
+          "世界遺産：上スヴァネティ"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ジョージアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ge"
+      },
+      "travelDrafts": [
+        {
+          "place": "ムツヘタの歴史的建造物群",
+          "travelStory": [
+            "ムツヘタを歩くと、川と山に囲まれた地形の中に古い教会の屋根や塔が見えてきます。大きな聖堂の近くに立てば石壁の模様が分かり、少し離れて眺めると建物と周囲の景色の関係が際立ちます。街路をたどりながら遠くの丘にも目を向けると、この場所が自然の地形を利用して発展した古都であることを感じられるでしょう。",
+            "UNESCOはムツヘタの宗教建築を、中世ジョージアの芸術と文化の重要な証言として評価しています。交易路の交点に位置したことから、周辺世界との交流も文化の発展に影響しました。建物の造形だけでなく、川の合流する地形や道の位置を考えると、古都が歴史の中で担ってきた役割をより豊かに想像できます。宗教施設での見学では現地の規則を尊重します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ムツヘタの歴史的建造物群",
+              "url": "https://whc.unesco.org/en/list/708/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ムツヘタの世界遺産が特に伝える文化は？",
+            "options": [
+              "中世ジョージアの宗教建築",
+              "古代マヤのピラミッド",
+              "日本の城郭"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはムツヘタの歴史的建造物を中世ジョージアの芸術文化を伝える遺産としています。",
+            "photoGoal": "ムツヘタの歴史的建造物群が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Mtskheta Svetitskhoveli Cathedral Georgia",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "上スヴァネティ",
+          "travelStory": [
+            "上スヴァネティの集落では、高いコーカサスの山々を背景に石造の防御塔がいくつも立っています。村の近くに立つと、塔が住宅や道に近接していることに気づき、遠くからは小さく見えた建物が厳しい土地での暮らしを支えてきたことが伝わります。山の斜面や谷の方向にも目を向けながら、建築と自然が一体になった景色をゆっくり味わいたい場所です。",
+            "UNESCOは上スヴァネティを、中世の村落景観と特徴的な塔状住宅がよく残る地域として評価しています。住まいと防御の機能が結びついた建築は、山岳地帯の歴史的な生活を物語ります。景色の壮大さだけに目を奪われず、集落の道や家屋の配置を確かめると、山に囲まれた人々が築いてきた共同体の姿をより深く理解できます。山岳地域の安全情報は訪問時に確認します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・上スヴァネティ",
+              "url": "https://whc.unesco.org/en/list/709/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "上スヴァネティの村落景観に特徴的な建築は？",
+            "options": [
+              "石造の防御塔",
+              "巨大なガラスドーム",
+              "珊瑚でつくった橋"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは塔状住宅や防御塔を特徴とする山岳集落として上スヴァネティを評価しています。",
+            "photoGoal": "上スヴァネティが確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "commonsSearch": "Upper Svaneti Georgia Ushguli defense towers",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Upper Svaneti Georgia medieval towers Mestia mountains",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
