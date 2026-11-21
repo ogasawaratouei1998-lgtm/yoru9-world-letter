@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AG","AR","AU","BR","CA","DE","ES","FR","GB","IN","IT","JP","KR","NZ","US"])
-        self.assertEqual(report["pendingCountries"],181)
-        self.assertEqual(len(report["prioritizedPending"]),181)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),181)
+        self.assertEqual(report["approvedCountries"],["AG","AR","AU","BR","CA","DE","ES","FR","GB","IN","IT","JP","KR","MX","NL","NZ","SG","US"])
+        self.assertEqual(report["pendingCountries"],178)
+        self.assertEqual(len(report["prioritizedPending"]),178)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),178)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
