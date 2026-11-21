@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Three independently sourced country-portrait drafts, paired with six two-paragraph UNESCO mini-travel essays and six country-correct photo-quiz prompts. No photo rights assigned; all three intentionally pending. Future approval requires separate local real JPEG photos with matching Commons origin and license.",
+  "countries": {
+    "AT": {
+      "name": "オーストリア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/at",
+      "travelDrafts": [
+        {
+          "place": "シェーンブルン宮殿と庭園",
+          "travelStory": [
+            "ウィーンのシェーンブルン宮殿では、明るい色の建物の前に広い庭園が伸び、噴水や樹木の列が整然と続いています。建物の近くから庭園の奥まで歩くと、宮殿の大きさだけでなく景色の見せ方まで計算されていることに気づきます。振り返って正面を眺めると、宮殿と緑地がひとつの風景として結ばれているのが伝わります。",
+            "UNESCOによると、シェーンブルン宮殿と庭園は保存状態のよいバロック様式の建築と造園の一体的な景観です。皇帝家の夏の離宮として使われ、庭園も宮廷の生活や美意識の一部でした。華やかな建物の室内を想像するだけでなく、遠くまで続く通路と樹木の配置を眺めれば、自然にまで及んだ当時の設計の意図を考えることができます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・シェーンブルン宮殿と庭園",
+              "url": "https://whc.unesco.org/en/list/786",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "シェーンブルン宮殿がある都市は？",
+            "options": [
+              "ウィーン",
+              "ザルツブルク",
+              "インスブルック"
+            ],
+            "answer": 0,
+            "fact": "シェーンブルン宮殿と庭園はウィーンにある世界文化遺産です。",
+            "photoGoal": "シェーンブルン宮殿と庭園と確認できるCCライセンス付きWikimedia Commonsの別写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ザルツブルク旧市街",
+          "travelStory": [
+            "ザルツブルクの旧市街を歩くと、川沿いの街並みの向こうに教会の塔が立ち、丘には城塞が見えます。広場から石畳の小道へ進むと街の雰囲気が変わり、古い建物の壁や屋根にさまざまな時代の手掛かりが現れます。大きな建築物だけを急いで回るより、路地の角を曲がりながら、都市全体の姿を味わいたい場所です。",
+            "UNESCOはザルツブルク旧市街を、中世から長く宗教都市として発展した景観が残る歴史地区として紹介しています。大司教の統治や芸術活動と結び付いた建物群が、今日の街の構造に影響を残しました。ひとつの名所の年代を覚えるだけでなく、教会、広場、街路がどのように近くに並んでいるかを見ると、都市の歴史が身近になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ザルツブルク旧市街",
+              "url": "https://whc.unesco.org/en/list/784",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ザルツブルク旧市街の発展に深く関わったのは？",
+            "options": [
+              "大司教を中心とする宗教都市",
+              "海軍の造船都市",
+              "砂漠の交易都市"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはザルツブルクの大司教領としての歴史的な都市景観を評価しています。",
+            "photoGoal": "ザルツブルク旧市街と確認できるCCライセンス付きWikimedia Commonsの別写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ]
+    },
+    "TR": {
+      "name": "トルコ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/tr",
+      "travelDrafts": [
+        {
+          "place": "イスタンブール歴史地区",
+          "travelStory": [
+            "イスタンブールの歴史地区では、モスクのドームや石造りの城壁、にぎやかな商店街が近い場所に並んでいます。坂を上ったところから海へ視線を移すと、都市の輪郭が大きく広がり、同じ街の中に異なる時代の建築が重なっていることを実感します。路地を曲がるたびに景色が変わるので、立ち止まって細部を確かめながら歩きたい場所です。",
+            "UNESCOはこの都市が東ローマ帝国とオスマン帝国の首都として発展し、建築や美術などで広い地域へ影響を与えたことを説明しています。世界遺産の範囲は歴史的な半島の複数の地区にまたがります。一つの建物の来歴だけでなく、宗教施設や住宅地、城壁がどのような関係で配置されているかを見ると、長い都市史が立体的に感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・イスタンブール歴史地区",
+              "url": "https://whc.unesco.org/en/list/356",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "イスタンブールに大きな歴史を残した帝国の組み合わせは？",
+            "options": [
+              "東ローマ帝国とオスマン帝国",
+              "インカ帝国とアステカ帝国",
+              "マウリヤ朝とグプタ朝"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは歴史地区の建築に東ローマ帝国とオスマン帝国の影響を認めています。",
+            "photoGoal": "イスタンブール歴史地区と確認できるCCライセンス付きWikimedia Commonsの別写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ギョレメとカッパドキアの岩窟遺跡",
+          "travelStory": [
+            "カッパドキアのギョレメ周辺では、細長い岩の塔や柔らかな曲面を持つ奇岩が谷に並んでいます。遠くからは不思議な自然地形に見えますが、近づくと岩の表面に入口や窓のような開口部が見つかります。谷を歩きながら斜面を見上げれば、風景の美しさだけでなく、この岩山と人々の暮らしとの深い関係に気づくでしょう。",
+            "UNESCOはカッパドキアの地形と、岩を掘り込んでつくられた住居や教会などを合わせて評価しています。自然の岩がそのまま人の活動の場として利用されてきたことが、この景観の特徴です。奇岩だけの写真を撮って終わるのではなく、岩の内部に残る人の営みの痕跡へ視線を移すと、地質と文化がつながる面白さが伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ギョレメとカッパドキアの岩窟遺跡",
+              "url": "https://whc.unesco.org/en/list/357",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ギョレメの岩を掘ってつくられてきたものは？",
+            "options": [
+              "住まいや教会",
+              "近代の高層ビル",
+              "宇宙船の発射台"
+            ],
+            "answer": 0,
+            "fact": "カッパドキアには岩を掘り込んだ住居や教会が残っています。",
+            "photoGoal": "ギョレメとカッパドキアの岩窟遺跡と確認できるCCライセンス付きWikimedia Commonsの別写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ]
+    },
+    "EG": {
+      "name": "エジプト",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/eg",
+      "travelDrafts": [
+        {
+          "place": "ギザからダハシュールまでのピラミッド地帯",
+          "travelStory": [
+            "カイロ近郊のギザで砂漠の台地を眺めると、巨大なピラミッドが空と地平線の間に立っています。近づけば石の一つ一つの大きさを感じ、少し離れると整った輪郭が周囲の景色を支配するように見えてきます。スフィンクスやサッカラなどの遺跡も含めて地図を見渡せば、同じ地域にさまざまな墓地や記念建築が広がっていることに気づきます。",
+            "UNESCOの登録地はギザのピラミッドだけでなく、古都メンフィスとサッカラなど広い範囲の葬送遺跡を含んでいます。階段状のピラミッドから巨大な石造建築へと続く変化は、古代エジプトの王権や建築技術の歴史を考える手掛かりです。一つの有名な建物だけを見て終わらず、別の遺構の形を比べると、長い時間の中で積み重ねられた工夫を感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ギザからダハシュールまでのピラミッド地帯",
+              "url": "https://whc.unesco.org/en/list/86",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ギザのピラミッド地帯の世界遺産に含まれる古代の都市は？",
+            "options": [
+              "メンフィス",
+              "アテネ",
+              "リスボン"
+            ],
+            "answer": 0,
+            "fact": "UNESCOの登録名称にはメンフィスとその墓地遺跡が含まれます。",
+            "photoGoal": "ギザからダハシュールまでのピラミッド地帯の現地写真をWikimedia Commonsから別々に利用許諾確認"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "カイロ歴史地区",
+          "travelStory": [
+            "カイロの歴史地区では、古いモスクのミナレットや石造りの建物が市場の通りの向こうに立っています。店の明かり、行き交う人々の声、狭い路地の曲がり角をたどると、観光写真だけでは分からない街の奥行きに出会えます。大きな建築の前で足を止めたあと、通りの使われ方にも目を向ければ、歴史的な空間が現在の暮らしと結び付いていることに気づきます。",
+            "UNESCOはカイロ歴史地区を、長い都市史を通して建築や宗教文化が重なってきた場所と紹介しています。さまざまな時代のモスクや学校、住宅が残り、都市の姿は一度に完成したものではありません。建物の細部に刻まれた模様を眺めたあとに道のつながりを見渡すと、何世代にもわたり人々が暮らしながら街を変えてきた歴史が感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カイロ歴史地区",
+              "url": "https://whc.unesco.org/en/list/89",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "カイロ歴史地区が世界遺産として評価される理由の一つは？",
+            "options": [
+              "長い都市史と建築文化",
+              "一つの近代工場だけ",
+              "南極の氷河"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはカイロの多様な歴史的建造物と都市景観を評価しています。",
+            "photoGoal": "カイロ歴史地区の現地写真をWikimedia Commonsから別々に利用許諾確認"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ]
+    }
+  }
+}
