@@ -651,6 +651,62 @@ try{
     assert.ok((await postcard.locator('.travel-trust').textContent()).includes('写真はまだ準備中'),
      'the missing photo is distinguished from real news evidence');
    }
+   // Previously the visual smoke tested only the lead story's postcard.
+   // Cover EVERY published article, especially when several reports share a country.
+   for(let storyIndex=1;storyIndex<editorialCover.storyCount;storyIndex++){
+    await page.locator('#readerBack').click();
+    await gallery.nth(storyIndex).click();
+    const expected=await page.evaluate(index=>{
+     const story=edition.stories[index];
+     return {id:story.id,code:countryKeys(story.country)[0],
+      country:countryLabel(story.country),title:story.title};
+    },storyIndex);
+    assert.equal(await page.locator('#spotlightTitle').textContent(),expected.title,
+     'postcard must belong to the correct published article: '+expected.id);
+    const trigger=page.locator('#spotlight .travel-open');
+    assert.equal(await trigger.count(),1,
+     'every article must offer its optional postcard: '+expected.id);
+    assert.equal(await trigger.getAttribute('aria-expanded'),'false');
+    await trigger.click();
+    await page.waitForFunction(()=>{
+     const card=document.querySelector('#spotlight .travel-card');
+     if(!card)return false;
+     const img=card.querySelector('.travel-photo');
+     return img?img.complete&&img.naturalWidth>0:!!card.querySelector('.travel-empty');
+    },null,{timeout:30000});
+    const card=page.locator('#spotlight .travel-card');
+    assert.equal(await card.count(),1,
+     'each opened article shows precisely one postcard: '+expected.id);
+    assert.ok((await card.locator('.travel-context-story').textContent()).includes(expected.country),
+     'article-country label must remain attached to its own article: '+expected.id);
+    const photo=card.locator('.travel-photo');
+    assert.equal(await photo.count(),1,
+     'a fully curated country must not silently lose its tourist photo: '+expected.id);
+    const src=await photo.getAttribute('src');
+    assert.ok(src?.startsWith('./assets/travel/'),
+     'postcard photograph must be locally packaged: '+expected.id);
+    const matches=await page.evaluate(async asset=>{
+     const entries=await loadTravelStops();
+     return Object.values(entries).filter(s=>s.photoAsset===asset)
+      .map(s=>({country:s.country,page:s.photoPage,license:s.licenseUrl,author:s.author}));
+    },src.slice(2));
+    assert.ok(matches.length>0&&matches.every(s=>
+     s.country===expected.country&&
+     s.page.startsWith('https://commons.wikimedia.org/wiki/File:')&&
+     s.license.startsWith('https://creativecommons.org/')&&s.author),
+     'photo provenance MUST belong to actual news country: '+expected.id);
+    const cover=countryCoverAssets.get(expected.code);
+    if(cover)assert.notEqual(src,cover,
+     'the country portrait and story postcard must have different photos: '+expected.id);
+    const essay=card.locator('.travel-story');
+    assert.equal(await essay.locator('p').count(),2,
+     'every article postcard needs both sourced travel paragraphs: '+expected.id);
+    assert.ok((await essay.locator('p').allTextContents()).every(p=>p.length>=70),
+     'no one-line postcard copy is accepted: '+expected.id);
+    assert.ok((await card.locator('.travel-links a').allTextContents())
+     .some(line=>line.includes('歴史・文化の資料')),
+     'every postcard needs a separate historical/cultural source: '+expected.id);
+   }
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<2,'no horizontal overflow: '+overflow+'px');
    assert.deepEqual(errors,[],'no JavaScript uncaught errors');
