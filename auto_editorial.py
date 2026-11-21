@@ -1551,7 +1551,7 @@ def main():
         if human_issue:
             reject(human_issue);continue
         # Compare proposed punchlines before the independent source audit.
-        selected_quip=choose_pre_review_quip(story)
+        selected_quip=choose_pre_review_quip(story,reviewed=selected)
         if selected_quip is None:
             # Never fall back to a headline paraphrase or generic punchline.
             # Source-verified reporting needs an independently witty angle too.
