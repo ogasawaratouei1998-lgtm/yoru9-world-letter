@@ -128,7 +128,10 @@
     "fi-old-rauma-postcard",
     "se-stockholm-gamla-stan-cover",
     "se-drottningholm-palace-postcard",
-    "se-tanum-rock-carvings-postcard"
+    "se-tanum-rock-carvings-postcard",
+    "hu-budapest-parliament-cover",
+    "hu-buda-castle-postcard",
+    "hu-holloko-village-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -3843,7 +3846,7 @@
     },
     "HU": {
       "name": "ハンガリー",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "ドナウの岸辺に広がる首都と、農村の記憶を残す小さな村",
         "body": "ハンガリーでは、大都市の壮麗な景観と伝統的な農村の暮らしを対照的に味わえます。ブダペストではドナウ川の両岸に城地区や歴史建築が広がり、ホッローケーでは古い村落の姿が現在の生活の中に保存されています。橋を渡りながら川と建築を眺める時間と、村の家々の間をゆっくり歩いて風景を味わう時間。規模は違っても、街や村が時代を超えて使われてきたことが、この国の魅力を伝えています。",
@@ -3851,13 +3854,127 @@
           "世界遺産：ブダペストのドナウ河岸とブダ城地区",
           "世界遺産：ホッローケーの古村落"
         ],
-        "photos": [],
+        "photos": [
+          "hu-buda-castle-postcard",
+          "hu-holloko-village-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ハンガリーの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/hu"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/hu-budapest-parliament-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg/500px-Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg",
+          "caption": "ドナウ河畔に建つハンガリー国会議事堂（2015年8月、CivArmy撮影）",
+          "author": "CivArmy",
+          "license": "CC BY-SA 4.0",
+          "place": "ブダペスト・国会議事堂",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ブダペストの景観の中心を流れる川は？",
+          "options": [
+            "ドナウ川",
+            "ナイル川",
+            "アマゾン川"
+          ],
+          "answer": 0,
+          "fact": "UNESCOはドナウ川の両岸をブダペストの世界遺産の重要な一部としています。",
+          "photoLabel": "正解写真｜ドナウ川とブダ城",
+          "quip": "川一本でブダとペストを分けても、最後は橋で合体。都市の主役はずっとドナウ川。",
+          "photoKey": "hu-buda-castle-postcard"
+        },
+        {
+          "question": "ホッローケーが伝えるのは主にどのような生活？",
+          "options": [
+            "伝統的な農村生活",
+            "宇宙基地の暮らし",
+            "氷上都市の生活"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは農業の大変革以前の伝統的な農村生活が残る集落として評価しています。",
+          "photoLabel": "正解写真｜ホッローケーの古村落",
+          "quip": "世界遺産なのに現役の村。『保存のために誰も住めない』では意味がない。",
+          "photoKey": "hu-holloko-village-postcard"
+        }
+      ],
+      "travelStops": {
+        "hu-budapest-parliament-cover": {
+          "country": "ハンガリー",
+          "countryOnly": true,
+          "place": "ブダペスト・国会議事堂",
+          "region": "ブダペスト・ペスト側のドナウ河岸",
+          "latitude": 47.507,
+          "longitude": 19.045,
+          "note": "19世紀末から20世紀初めにかけて建設された新ゴシック様式の国会議事堂。",
+          "photoCaption": "ドナウ河畔に建つハンガリー国会議事堂（2015年8月、CivArmy撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg/500px-Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Hungarian_Parliament_Building%2C_Budapest%2C_Hungary.jpg",
+          "photoAsset": "assets/travel/hu-budapest-parliament-cover.jpg",
+          "author": "CivArmy",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "hu-buda-castle-postcard": {
+          "country": "ハンガリー",
+          "countryOnly": true,
+          "place": "ブダペストのドナウ河岸とブダ城地区",
+          "region": "ブダペスト・ブダ城地区",
+          "latitude": 47.495958,
+          "longitude": 19.039972,
+          "note": "ドナウ川右岸の高台にある歴史的な城郭地区。川沿いの都市景観とともに世界遺産を構成する。",
+          "photoCaption": "ドナウ川越しに望む丘上のブダ城（2016年9月、Michal Klajban撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c2/Buda_Castle%2C_Budapest.jpg/500px-Buda_Castle%2C_Budapest.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Buda_Castle%2C_Budapest.jpg",
+          "photoAsset": "assets/travel/hu-buda-castle-postcard.jpg",
+          "author": "Michal Klajban",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ブダペストのドナウ川沿いでは、橋の向こうに丘の上のブダ城地区と対岸の歴史建築が重なる景色に出会います。川の片側から眺めた街を、橋を渡って逆の岸から見直すと建物の位置関係ががらりと変わります。夕方の光が水面に広がる時間帯も魅力的ですが、昼間に歩いて川幅や坂道を確かめると、都市が川を軸に発展したことがより実感できます。",
+            "UNESCOはドナウ川の両岸、ブダ城地区、アンドラーシ通りを含め、複数の時代の建築と都市景観を評価しています。古代ローマのアクインクムの遺跡から後世の城郭に至るまで、街には異なる歴史の層が残ります。個別の建物を順番に追うだけではなく、川沿いと丘の高低差を読みながら歩くと、首都の形がどのように出来上がったのかが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブダペストのドナウ河岸とブダ城地区",
+              "url": "https://whc.unesco.org/en/list/400/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "hu-holloko-village-postcard": {
+          "country": "ハンガリー",
+          "countryOnly": true,
+          "place": "ホッローケーの古村落",
+          "region": "ノーグラード県・ホッローケー旧村",
+          "latitude": 47.99877,
+          "longitude": 19.58884,
+          "note": "白壁の伝統的な家々が建ち並ぶ、現在も生活が続くパローツ人の歴史村落。",
+          "photoCaption": "木造の軒と白壁の家々が並ぶホッローケーのコシュート通り（2007年9月、Kfbs06撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Holloko_Village_Center.jpg/500px-Holloko_Village_Center.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Holloko_Village_Center.jpg",
+          "photoAsset": "assets/travel/hu-holloko-village-postcard.jpg",
+          "author": "Kfbs06",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "ホッローケーの村を訪ねると、白い壁や木造の細部を持つ小さな家々が通りに沿って連なり、周囲の丘へ視線が抜けます。都市の大きな記念建築とは違い、人々の暮らしの尺度でつくられた道や庭が見どころです。家並みの間を歩きながら建物の色や屋根を比べ、今も人が使う村としての落ち着きを感じたい場所です。",
+            "UNESCOはホッローケーを、17～18世紀に発展した伝統的集落が意図的に守られ、20世紀の農業変革以前の農村生活を伝える例として評価しています。古い家が並んでいることだけが価値なのではなく、村の配置や周囲の土地利用も歴史の一部です。外から眺める際は現在も続く住民の暮らしを尊重するとともに、保存と生活の両立にも目を向けたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホッローケーの古村落",
+              "url": "https://whc.unesco.org/en/list/401/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "ID": {

@@ -80,6 +80,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ドゥブロヴニクが発展した主な背景は？',options:['海上交易','砂漠の遊牧','氷河の採掘'],answer:0,photoLabel:'正解写真｜ドゥブロヴニク旧市街',fact:'UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。',quip:'城壁の外は海、内側は街。地形にまで防御の意志が見える。',photoKey:'hr-dubrovnik-old-city-postcard'},
   {question:'プリトヴィツェの湖と滝を生み出す主な働きは？',options:['石灰華の堆積','流氷の衝突','溶岩の噴出のみ'],answer:0,photoLabel:'正解写真｜プリトヴィツェ湖群国立公園',fact:'UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。',quip:'滝の設計者は水と石灰岩。しかも工事は現在進行形。',photoKey:'hr-plitvice-lakes-postcard'},
  ],
+ HU:[
+  {question:'ブダペストの景観の中心を流れる川は？',options:['ドナウ川','ナイル川','アマゾン川'],answer:0,fact:'UNESCOはドナウ川の両岸をブダペストの世界遺産の重要な一部としています。',photoLabel:'正解写真｜ドナウ川とブダ城',quip:'川一本でブダとペストを分けても、最後は橋で合体。都市の主役はずっとドナウ川。',photoKey:'hu-buda-castle-postcard'},
+  {question:'ホッローケーが伝えるのは主にどのような生活？',options:['伝統的な農村生活','宇宙基地の暮らし','氷上都市の生活'],answer:0,fact:'UNESCOは農業の大変革以前の伝統的な農村生活が残る集落として評価しています。',photoLabel:'正解写真｜ホッローケーの古村落',quip:'世界遺産なのに現役の村。『保存のために誰も住めない』では意味がない。',photoKey:'hu-holloko-village-postcard'},
+ ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
