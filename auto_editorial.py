@@ -3,7 +3,9 @@
 import json, os, re, sys, ipaddress, socket, time
 from country_codes import catalog, country_code, country_codes, country_region
 from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
-from editorial_quality import headline_fidelity_risk, independent_editorial_quality_passed, independently_approved_secondary_quip
+from editorial_quality import (headline_fidelity_risk, independent_editorial_quality_passed,
+    independently_approved_secondary_quip, editorial_rubric,
+    editorial_rubric_rejection, choose_pre_review_quip)
 from editorial_identity import (
     HUMAN_FAILURE_MISSION, human_failure_rejection, comic_line_rejection,
     noncomic_incident_rejection,
@@ -840,6 +842,8 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
         # A country used yesterday is penalized heavily BEFORE any long-run
         # frequency and genre tie-breakers, not silently treated as "fresh".
         return (sum(audited_major_personal_failure(story) for story in stories),
+                # Audited content strength takes priority over novelty of country.
+                sum(sum((editorial_rubric(story) or {}).values()) for story in stories),
                 len(set(known_countries)),len(categories),
                 -sum(recent_country_cooldown[country] for country in known_countries),
                 len(set(known_regions)),
@@ -1079,7 +1083,7 @@ def draft_preflight_viable(story,now):
         return False
     if (editorial_fit_rejection(story) or human_failure_rejection(story)
             or noncomic_incident_rejection(story)
-            or comic_line_rejection(story.get("quip"))):
+            or choose_pre_review_quip(story) is None):
         return False
     if BLOCK.search(" ".join(str(story.get(key,"")) for key in
                              ("title","summary","detail","quip"))):
@@ -1281,7 +1285,7 @@ def main():
       'verificationUrls must include at least ONE exact URL of an actually retrieved, credible original publisher report. Prefer two independent publishers when available. A single ORIGINAL reporting article is acceptable; a syndicated copy, social media repost, aggregator, rumor, or headline without an original reporting body is not. The catalog supports 196 reporting locations. Seek neglected countries as sources permit, but NEVER assign the publication market to the news incident or invent a story to fill an unreported country. Never invent facts, URLs, or details. '
       'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. Propose incidents from ALL FOUR categories across multiple nights, prioritizing a neglected category whenever comparable source-supported funny stories exist; five published slots can represent all four categories on some nights. Make work about employees, operators and daily work mishaps, person about individual choices, sports about sporting decisions, and company only about organization-level choices. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
-      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Select the funniest of three private first-hit alternatives. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic routine news without a 4/5 startling documented contrast; an intentional absurd choice is eligible if source-confirmed. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
+      'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Provide three distinct first-quips as quipCandidates (a JSON array, 18-55 Japanese characters per option) and put your strongest first choice in quip. The pipeline compares candidates before independent source review. Never include a mere headline recap. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic routine news without a 4/5 startling documented contrast; an intentional absurd choice is eligible if source-confirmed. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not select a merely verifiable incident when its actual human mistake lacks a clear, safe, incident-specific comic reversal. Rewrite weak jokes with a new angle; do not replace comedy with vague encouragement or a lesson. Source-proven significant PERSONAL stakes or exceptionally large plan-versus-reality contrast are a selection advantage when humane comedy is possible. Serious harm to victims is NEVER a selection advantage. NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have an original source-supported publication date within the preceding seven days including the edition day in Japan; keep that ACTUAL date intact and never relabel old reporting as new. Prioritize same-day reporting when otherwise comparable. '
       'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
@@ -1530,6 +1534,10 @@ def main():
         human_issue=human_failure_rejection(story)
         if human_issue:
             reject(human_issue);continue
+        # Compare proposed punchlines before the independent source audit.
+        selected_quip=choose_pre_review_quip(story)
+        if selected_quip is not None:
+            story["quip"]=selected_quip
         quip_issue=comic_line_rejection(story["quip"])
         if quip_issue:
             reject(quip_issue);continue
@@ -1616,6 +1624,7 @@ def main():
                 "For an optional quipSecond check its evidence, a DISTINCT premise "
                 "and punchline; if uncertain set all three optional flags false. "
                 "Return booleans; any missing or uncertain REQUIRED answer is false. "
+                "Score five editorial dimensions from 1 to 5: verified surprise, clarity of human mistake, irony of the actual outcome, publisher evidence quality and humane safety. Evidence and safety must score 5 for approval; the other three at least 4. Unverified claims never get high scores. "
                 "Do not enforce extra style preferences or rewrite any story. "
                 "JSON {approved:boolean,originalReporting:boolean,factsVerified:boolean,"
                 "dateVerified:boolean,safeTone:boolean,headlineGrounded:boolean,"
@@ -1624,7 +1633,7 @@ def main():
                 "comicPunchlineWorks:boolean,shockFactorConfirmed:boolean,"
                 "stageTsukkomiConfirmed:boolean,majorPersonalFailureConfirmed:boolean,"
                 "secondQuipFactsVerified:boolean,secondQuipHasNewAngle:boolean,"
-                "secondQuipPunchlineWorks:boolean,reason:string}. "
+                "secondQuipPunchlineWorks:boolean,editorialScores:{surprise:number,mistakeClarity:number,outcomeIrony:number,evidence:number,safety:number},reason:string}. "
                 "Draft: "+json.dumps(story,ensure_ascii=False)+
                 " Previously published incidents: "+json.dumps(past,ensure_ascii=False)+
                 " Already chosen: "+json.dumps(accepted_summaries,ensure_ascii=False)+
@@ -1645,6 +1654,9 @@ def main():
             reject(category);continue
         if not independent_editorial_quality_passed(audit):
             reject("editorial_headline_or_humor_quality_not_confirmed");continue
+        score_issue=editorial_rubric_rejection(audit)
+        if score_issue:
+            reject(score_issue);continue
         # These are source/translation safeguards, not a second investigation.
         if any(audit.get(field) is not True for field in
                ("originalReporting","factsVerified","dateVerified","safeTone")):
@@ -1663,6 +1675,9 @@ def main():
         story["stageTsukkomiVerified"]=audit.get("stageTsukkomiConfirmed") is True
         # Private proof; public JSON never exposes model review fields.
         story["editorQualityVerified"]=True
+        verified_scores=editorial_rubric(audit)
+        if verified_scores is not None:
+            story["editorialScores"]=verified_scores
         seen.update((story["sourceUrl"],story["id"],event))
         # The concise source check also vets any optional second joke. A good
         # first joke and verified news article must survive a rejected extra.
@@ -1673,6 +1688,8 @@ def main():
         else:
             story["quipSecond"]=second
             story["secondQuipVerified"]=True
+        # Draft alternatives are not published or retained in approved data.
+        story.pop("quipCandidates",None)
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         if len(selected)>=9:break
