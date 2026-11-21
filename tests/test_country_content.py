@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -51,15 +51,17 @@ class CountryContentTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             check_country_content(self.root)
 
-    def test_sync_preserves_readiness_of_published_three(self):
+    def test_sync_preserves_readiness_of_published_five(self):
         sync_country_content(self.root)
         txt=(self.root/"world-passport.js").read_text(encoding="utf-8")
         section=txt.split(" US:[",1)[1].split("\n});",1)[0]
         self.assertEqual(section.count("question:"),2,section[:1000])
         result=country_coverage(self.root,[{"id":"a","country":"イタリア"},
                                           {"id":"b","country":"ドイツ"},
-                                          {"id":"c","country":"アメリカ合衆国"}])
-        self.assertEqual(set(result),{"IT","DE","US"})
+                                          {"id":"c","country":"アメリカ合衆国"},
+                                          {"id":"d","country":"フランス"},
+                                          {"id":"e","country":"アルゼンチン"}])
+        self.assertEqual(set(result),{"IT","DE","US","FR","AR"})
 
     def test_pending_country_cannot_be_promoted_without_photos(self):
         file=self.root/"country-content.json"
@@ -72,9 +74,9 @@ class CountryContentTest(unittest.TestCase):
     def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
         doc=load_country_content(ROOT)
         self.assertEqual(sum(bool(stop.get("historicalSources"))
-                             for code in ("IT","DE","US")
+                             for code in ("IT","DE","US","FR","AR")
                              for stop in doc["countries"][code]["travelStops"].values()
-                             if stop.get("travelStory")),10)
+                             if stop.get("travelStory")),17)
         file=self.root/"country-content.json"
         dataset=json.loads(file.read_text(encoding="utf-8"))
         dataset["countries"]["US"]["travelStops"]["us-newyork-postcard"].pop("historicalSources")
