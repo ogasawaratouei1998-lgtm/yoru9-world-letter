@@ -51,7 +51,10 @@
     "spain-park-guell-postcard",
     "nz-milford-fiord-quiz-image",
     "nz-aoraki-quiz-image",
-    "nz-tekapo-church-postcard"
+    "nz-tekapo-church-postcard",
+    "korea-bulguksa-quiz-image",
+    "korea-seongsan-quiz-image",
+    "korea-bulguksa-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2283,16 +2286,55 @@
       "name": "韓国",
       "status": "pending",
       "portrait": {
-        "lead": "伝統とポップカルチャーが交差する、活気ある日常",
-        "body": "韓国では、伝統的な市場の食堂や発酵食の食卓と、現代の音楽・映画・デザイン文化が自然に並んでいます。ソウルでは古い街並みを大切にする地区と新しい文化拠点が共存し、地域によって方言や郷土料理も豊かに異なります。キムチや韓国料理を囲む時間、家族や仲間と食卓を共有する習慣も、暮らしの魅力を知る入口です。",
+        "lead": "王宮から市場の食卓、古代寺院と火山の島へ",
+        "body": "韓国では、朝鮮王朝の宮殿や新羅時代の仏教遺産が、現代の映画・音楽・デザイン文化と共存しています。ソウルの宮殿から慶州の石段をたどり、済州島では海から立ち上がる火山地形に出会えます。食卓にはキムチやナムルなどの小皿料理が並び、土地ごとに調理法や味付けが異なります。観光地の写真だけでなく、地域の料理や生活、受け継がれてきた歴史にも目を向けると、多彩な文化が見えてくる国です。",
         "facts": [
           "首都：ソウル",
-          "食：キムチ・多彩な郷土料理",
-          "文化：映画・音楽・市場"
-        ]
+          "世界遺産：慶州・仏国寺と済州島の火山地形",
+          "食文化：キムチ・ナムルなど地域ごとの料理"
+        ],
+        "sourceName": "韓国観光公社・VISITKOREA（韓国の食文化）",
+        "sourceUrl": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?menuSn=903&vcontsId=229195"
       },
-      "portraitPhotos": [],
-      "quiz": [],
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/seoul-gyeongbokgung.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/01/Gyeongbokgung%2C_Seoul.jpg/500px-Gyeongbokgung%2C_Seoul.jpg",
+          "caption": "ソウル・景福宮（2012年撮影）",
+          "author": "螺钉",
+          "license": "CC BY-SA 3.0",
+          "place": "ソウル・景福宮",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Gyeongbokgung%2C_Seoul.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "石段と石塔で知られる、慶州の世界遺産の寺は？",
+          "options": [
+            "仏国寺",
+            "景福宮",
+            "海印寺"
+          ],
+          "answer": 0,
+          "photoKey": "korea-bulguksa-quiz-image",
+          "photoLabel": "正解の寺院｜慶州・仏国寺",
+          "fact": "仏国寺は新羅時代の仏教建築を伝える寺で、石窟庵とともにUNESCO世界遺産に登録されています。",
+          "quip": "階段の先まで文化財。登る前から歴史が濃い。"
+        },
+        {
+          "question": "済州島の城山日出峰を形づくったのは何？",
+          "options": [
+            "サンゴ礁",
+            "人工の盛り土",
+            "火山の噴出"
+          ],
+          "answer": 2,
+          "photoKey": "korea-seongsan-quiz-image",
+          "photoLabel": "正解の地形｜済州島・城山日出峰",
+          "fact": "城山日出峰は火山活動で生まれた凝灰丘で、済州島の火山地形の一部として世界自然遺産に登録されています。",
+          "quip": "海のそばの巨大な山。正体は火山の作品。"
+        }
+      ],
       "travelStops": {
         "cheonan-painters-coffee-rescue-2026": {
           "country": "韓国",
@@ -2309,8 +2351,15 @@
           "photoPage": "https://commons.wikimedia.org/wiki/File:Independence_Hall_of_Korea(main_hall).jpg",
           "photoAsset": "assets/travel/cheonan-museum.jpg",
           "travelStory": [
-            "天安の独立記念館は、韓国の近現代史を伝える大きな展示施設です。広い敷地には象徴的な建築が配置され、建物の屋根の形や開けた空間が印象に残ります。写真では建築の線と周囲の緑との対比を楽しめます。",
-            "展示や記念の空間がある場所として知られ、単なる記念撮影の背景ではありません。大きな建物の前に広がる空間を眺めながら、歴史を学び、考えるために設計された場所なのだと想像すると、景色が違って見えてきます。"
+            "天安の独立記念館では、広い敷地の先に大きな屋根を広げる建物が現れます。見上げる角度を変えると、屋根の細かな構造や前庭の広さが印象を変え、写真の中でも人と建物の大きさの違いが伝わってきます。緑の中を歩いて建物へ向かう道は、静かに歴史と向き合う時間の入口。観光写真の背景として通り過ぎず、どのような展示がある場所なのかを知ってから眺めたい風景です。",
+            "独立記念館は1987年に開館し、韓国の近現代史や独立運動の資料を収集・展示している施設です。展示を通じて歴史上の出来事に触れる場所であり、大きな屋根を持つ建物はその象徴的な景観の一部となっています。建築を楽しむだけでなく、展示を実際に確かめ、異なる時代の人々が残した記録に目を向けると、この広い敷地が学びと記憶のために設けられた理由が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "韓国独立記念館・公式紹介と沿革",
+              "url": "https://i815.or.kr/2018/introduction/greeting.do",
+              "checkedOn": "2026-11-21"
+            }
           ]
         },
         "korea-country-postcard": {
@@ -2329,8 +2378,79 @@
           "license": "CC BY-SA 3.0",
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
           "travelStory": [
-            "ソウルの景福宮は、朝鮮王朝の歴史を伝える王宮です。色鮮やかな屋根の曲線や木造建築の細部、背景の山々を見渡すと、都の中心にありながら大きな景色の中に建てられていることが分かります。",
-            "かつての宮廷文化を感じられる場所として、現在も人々が訪れます。建物を正面から眺めるだけでなく、屋根の重なりや門から奥へと続く空間に注目すると、建築の配置がつくる落ち着いた雰囲気も味わえます。"
+            "ソウルの景福宮では、大きな門をくぐるたびに違う景色が現れます。木組みの屋根の鮮やかな丹青、広く開けた前庭、奥へと続く宮殿の配置。写真で屋根の曲線を眺めたら、建物を包む北岳山の稜線へ視線を移してみてください。都の中心にありながら、自然の地形が宮殿の背景をつくっています。建物を一枚で切り取るより、門から奥へ歩きながら景色の重なりを確かめたい場所です。",
+            "韓国の国家遺産庁によれば、景福宮は朝鮮王朝が建国された後の1395年に創建され、王朝の中心的な宮殿として使われました。1592年に戦火で失われ、1867年に大規模な再建が行われ、その後も長く修復が続きました。いま見る建物の美しさには、失われたものを取り戻そうとした人々の歴史も重なります。柱や門の向こうに見える空を眺めると、復元されてきた時間の長さも感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "韓国国家遺産庁・景福宮の歴史",
+              "url": "https://royal.khs.go.kr/ENG/contents/E101010000.do",
+              "checkedOn": "2026-11-21"
+            }
+          ]
+        },
+        "korea-bulguksa-quiz-image": {
+          "country": "韓国",
+          "place": "慶州・仏国寺の石段",
+          "region": "慶尚北道・慶州市",
+          "latitude": 35.7901,
+          "longitude": 129.331,
+          "note": "新羅時代の仏教文化を伝える慶州・仏国寺。石段と楼閣が目を引きます。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Bulguksa.jpg/500px-Bulguksa.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Bulguksa.jpg",
+          "photoAsset": "assets/travel/korea-bulguksa-quiz.jpg",
+          "photoCaption": "慶州・仏国寺の石段と楼閣（2012年撮影）",
+          "author": "螺钉",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "quizOnly": true
+        },
+        "korea-seongsan-quiz-image": {
+          "country": "韓国",
+          "place": "済州島・城山日出峰",
+          "region": "済州特別自治道・西帰浦市",
+          "latitude": 33.459,
+          "longitude": 126.942,
+          "note": "済州島の海沿いに立ち上がる火山地形・城山日出峰を写した写真。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Seongsan_Ilchulbong.jpg/500px-Seongsan_Ilchulbong.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Seongsan_Ilchulbong.jpg",
+          "photoAsset": "assets/travel/korea-jeju-seongsan-quiz.jpg",
+          "photoCaption": "済州島の城山日出峰（2012年撮影）",
+          "author": "螺钉",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "quizOnly": true
+        },
+        "korea-bulguksa-postcard": {
+          "country": "韓国",
+          "place": "慶州・仏国寺",
+          "region": "慶尚北道・慶州市",
+          "latitude": 35.7901,
+          "longitude": 129.331,
+          "note": "仏国寺の石段と石造の橋が、色鮮やかな寺院建築へと続いています。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/3e/Korea-Gyeongju-Bulguksa-32.jpg/500px-Korea-Gyeongju-Bulguksa-32.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Korea-Gyeongju-Bulguksa-32.jpg",
+          "photoAsset": "assets/travel/korea-bulguksa-stairs.jpg",
+          "photoCaption": "仏国寺の石段と石橋（2006年撮影）",
+          "author": "Tae Hoon Kang",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "famousTourist": true,
+          "travelStory": [
+            "慶州の仏国寺を訪れると、目の前に石段と石造の橋が大きく立ち上がり、その上に瓦屋根の堂宇が重なって見えます。写真の石積みに注目すると、直線の段差と丸みのある石のアーチが美しく組み合わされています。階段の先にある彩色された木造建築との対比も印象的です。境内では石塔や木造の建物を見比べ、石の静けさと木の華やかさを交互に味わいながら歩きたくなる場所です。",
+            "UNESCOは、仏国寺と石窟庵を8世紀の新羅王国における仏教芸術と建築を伝える世界遺産として評価しています。石造の階段や基壇、寺院の堂宇は、信仰の世界を建築の配置で表現してきました。写真の橋を単なる入口として見るのではなく、俗世から仏の世界へ向かう象徴的な構成として眺めれば、一つひとつの石に意味が感じられます。慶州が古代の都だったことも思い出しながら、ゆっくり歩きたい寺院です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・石窟庵と仏国寺",
+              "url": "https://whc.unesco.org/en/list/736",
+              "checkedOn": "2026-11-21"
+            },
+            {
+              "name": "韓国観光公社・仏国寺の史跡案内",
+              "url": "https://english.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=220016",
+              "checkedOn": "2026-11-21"
+            }
           ]
         }
       },
