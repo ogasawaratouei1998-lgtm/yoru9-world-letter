@@ -6,6 +6,7 @@ from unittest.mock import patch
 
 from check_public_country_release import (inspect_public_assets, inspect_public_visuals,
                                           required_public_visuals, check)
+from reader_asset_split import expected_reader_assets
 
 ROOT = Path(__file__).resolve().parents[1]
 NAMES = ("index.html", "world-passport.js", "service-worker.js",
@@ -16,6 +17,7 @@ NAMES = ("index.html", "world-passport.js", "service-worker.js",
 class PublicCountryReleaseSmokeTest(unittest.TestCase):
     def setUp(self):
         self.assets = {name: (ROOT / name).read_bytes() for name in NAMES}
+        self.assets.update(expected_reader_assets(ROOT))
 
     def test_current_source_matches_required_public_assets(self):
         inspect_public_assets(self.assets, ROOT)
@@ -50,14 +52,14 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
     def test_outdated_pwa_shell_fails(self):
         current = self.assets["service-worker.js"].decode("utf-8")
         self.assets["service-worker.js"] = current.replace(
-            "yoru9-shell-v38", "yoru9-shell-v21"
+            "yoru9-shell-v39", "yoru9-shell-v21"
         ).encode("utf-8")
         with self.assertRaisesRegex(AssertionError, "shell"):
             inspect_public_assets(self.assets, ROOT)
 
     def test_reader_missing_independent_tour_module_fails(self):
-        current = self.assets["index.html"].decode("utf-8")
-        self.assets["index.html"] = current.replace(
+        current = self.assets["assets/reader-core.js"].decode("utf-8")
+        self.assets["assets/reader-core.js"] = current.replace(
             "WORLD POSTCARD · 有名観光地の小旅行",
             "WORLD POSTCARD missing"
         ).encode("utf-8")
