@@ -60,6 +60,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サグラダ・ファミリアが建つ都市は？',options:['マドリード','バルセロナ','セビリア'],answer:1,photoKey:'spain-sagrada-nativity-quiz-image',photoLabel:'正解の建築｜バルセロナのサグラダ・ファミリア・生誕のファサード',fact:'サグラダ・ファミリアの「生誕のファサード」と地下聖堂は、ガウディ作品群としてUNESCO世界遺産に登録されています。',quip:'塔だけじゃない。外壁の細工まで観光案内の主役級。'},
   {question:'写真のアルハンブラ宮殿がある都市は？',options:['グラナダ','バルセロナ','バレンシア'],answer:0,photoKey:'spain-alhambra-quiz-image',photoLabel:'正解の宮殿｜アンダルシアのグラナダ・アルハンブラ宮殿',fact:'アルハンブラ宮殿はグラナダにあり、ヘネラリフェとアルバイシン地区とともに世界遺産に登録されています。',quip:'城壁の奥まで歴史ぎっしり。地図の答えはグラナダ。'},
  ],
+ FI:[
+  {question:'スオメンリンナが築かれた主な目的は？',options:['港の防衛','砂漠の灌漑','山岳農業'],answer:0,fact:'UNESCOはヘルシンキ港の入口に築かれた18世紀の海上要塞として紹介しています。',photoLabel:'正解写真｜スオメンリンナの海上要塞',quip:'海の上で城壁を築く。守備範囲は陸地だけでは足りなかった。',photoKey:'fi-suomenlinna-fortress-postcard'},
+  {question:'ラウマ旧市街の伝統的な街並みを特徴づけるのは？',options:['木造家屋','大理石の高層塔','砂漠のテント'],answer:0,fact:'UNESCOは伝統的な木造建築が残る北欧の港町としてラウマを評価しています。',photoLabel:'正解写真｜木造のラウマ旧市街',quip:'古い木の家が並ぶ街。建て替えの速さより、残す技術で勝負した。',photoKey:'fi-old-rauma-postcard'},
+ ],
  FR:[
   {question:'モン・サン＝ミシェルの景色を変えるのは？',options:['火山の噴火','オーロラ','潮の満ち引き'],answer:2,photoKey:'fr-mont-low-tide-quiz-image',photoLabel:'正解の景色｜潮の満ち引きの影響を受ける干潟',fact:'ノルマンディーのモン・サン＝ミシェルは、潮の満ち引きで周囲の景色が変わります。',quip:'景色の模様替え係は海。毎日、無給で大仕事。'},
   {question:'フランス南部の海岸が面するのは？',options:['地中海','カリブ海','北極海'],answer:0,photoKey:'fr-mediterranean-quiz-image',photoLabel:'正解の海｜南フランス・ニースの地中海',fact:'フランスは大西洋と地中海の両方に面しています。',quip:'北極海でバカンスを始めたら、水着より防寒着が主役。'},
