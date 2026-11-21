@@ -239,45 +239,54 @@ class PublishingTest(unittest.TestCase):
         self.assertEqual(len(published["stories"]),len(data["stories"]))
         self.assertNotIn("editorQualityVerified",published["stories"][0])
 
-    def test_november_21_final_release_requires_all_five_review_scores(self):
-        # The generator already checks these, but the publication boundary
-        # must also reject tampered artifacts and manual low-quality approvals.
+    def test_current_publisher_trust_replaces_app_fact_check(self):
+        # The cited trusted news company is accountable for the reporting.
+        # No second news source, original-report proof, factChecked metadata,
+        # AI evidence score, or re-investigation by this application.
         source=Path(__file__).resolve().parents[1]/"data/approved/2026-11-20.json"
         data=json.loads(source.read_text(encoding="utf-8"))
         data["editionDate"]="2026-11-21"
-        data["approvedBy"]="human-editorial-five-factor-review"
+        data["approvedBy"]="publisher-trust-review"
         data.pop("fourStoryStaticIllustrationReissue",None)
-        for story in data["stories"]:
+        data.pop("factChecked",None)
+        scores={"surprise":4,"mistakeClarity":4,"outcomeIrony":4,"safety":5}
+        for i,story in enumerate(data["stories"]):
             story["reported"]="2026-11-20"
-            story.pop("editorialScores",None)
-        with self.assertRaisesRegex(ValueError,"5項目品質審査"):
+            story["sourceUrl"]=f"https://www.bbc.com/news/articles/fixture-{i}"
+            for field in ("verificationUrls","originalReportingVerified",
+                          "sourceBasis","attributionNote","editorVerified",
+                          "editorialScores"):
+                story.pop(field,None)
+        with self.assertRaisesRegex(ValueError,"編集品質4項目"):
             validate_approved(data,"2026-11-21")
-
-        good={"surprise":4,"mistakeClarity":4,"outcomeIrony":4,
-              "evidence":5,"safety":5}
         for story in data["stories"]:
-            story["editorialScores"]=dict(good)
+            story["editorialScores"]=dict(scores)
         public=validate_approved(data,"2026-11-21")
         self.assertEqual(len(public["stories"]),4)
-        self.assertNotIn("editorialScores",public["stories"][0],
-                         "Private review scores must never leak into the public reader")
-
-        for dimension in good:
-            with self.subTest(dimension=dimension):
-                damaged=dict(good)
-                damaged[dimension]-=1
+        for old,new in zip(data["stories"],public["stories"]):
+            self.assertEqual(new["verificationUrls"],[old["sourceUrl"]])
+            self.assertNotIn("sourceBasis",new)
+            self.assertNotIn("attributionNote",new)
+            self.assertNotIn("editorialScores",new)
+        # An irrelevant old AI evidence grade, even 1, has NO veto.
+        data["stories"][0]["editorialScores"]={**scores,"evidence":1}
+        self.assertEqual(len(validate_approved(data,"2026-11-21")["stories"]),4)
+        data["stories"][0]["editorialScores"]=dict(scores)
+        for dimension in scores:
+            with self.subTest(editorial_dimension=dimension):
+                damaged={**scores,dimension:scores[dimension]-1}
                 data["stories"][0]["editorialScores"]=damaged
-                with self.assertRaisesRegex(ValueError,"5項目品質審査"):
+                with self.assertRaisesRegex(ValueError,"編集品質4項目"):
                     validate_approved(data,"2026-11-21")
-        for malformed in ({"surprise":True,**{k:v for k,v in good.items() if k!="surprise"}},
-                          {k:v for k,v in good.items() if k!="safety"},
-                          {**good,"unknownDimension":5}):
-            with self.subTest(malformed=malformed):
-                data["stories"][0]["editorialScores"]=malformed
-                with self.assertRaisesRegex(ValueError,"5項目品質審査"):
-                    validate_approved(data,"2026-11-21")
-        data["stories"][0]["editorialScores"]=dict(good)
-        # Historic Nov 20 corrections retain their original contract.
+        data["stories"][0]["editorialScores"]=dict(scores)
+        data["stories"][0]["sourceUrl"]="https://random-blog.example/not-news"
+        with self.assertRaisesRegex(ValueError,"承認済みの報道機関"):
+            validate_approved(data,"2026-11-21")
+        # A credible outlet's one URL remains enough even when no optional
+        # verificationUrls are supplied and old facts flags are absent.
+        data["stories"][0]["sourceUrl"]="https://www.nhk.or.jp/news/articles/fixture"
+        self.assertEqual(len(validate_approved(data,"2026-11-21")["stories"]),4)
+        # Existing immutable November 20 corrections retain legacy checks.
         historical=json.loads(source.read_text(encoding="utf-8"))
         self.assertEqual(len(validate_approved(historical,"2026-11-20")["stories"]),4)
 
