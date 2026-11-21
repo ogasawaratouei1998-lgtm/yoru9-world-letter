@@ -112,6 +112,56 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("displayedCountryCoverAssets.set(currentCode,chosen.asset||'')", page)
         self.assertIn("!conflictsWithCountryCover(s)", page)
 
+    def test_approved_atlas_has_independent_navigation_and_no_fake_country_pins(self):
+        import json
+        import re
+        page=self.page
+        dataset=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+        expected=sorted(code for code,country in dataset["countries"].items()
+                        if country["status"]=="approved")
+        registry=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\((\\[.*\\])\\);$",
+                           page)
+        self.assertIsNotNone(registry)
+        self.assertEqual(json.loads(registry.group(1)),expected)
+        self.assertIn('id="approvedAtlas" aria-labelledby="approvedAtlasTitle"',page)
+        self.assertIn('id="approvedAtlasList" role="group"',page)
+        self.assertIn("function renderApprovedAtlas()",page)
+        self.assertIn("function approvedAtlasItems()",page)
+        self.assertIn("renderApprovedAtlas();",page)
+        self.assertIn("const countries=currentIssueCountries()",page)
+        self.assertIn("pins.replaceChildren();legend.replaceChildren()",page)
+        self.assertIn("button.addEventListener('click',()=>showTodayCountryIntro(item))",page)
+        self.assertIn("const hasNews=Array.isArray(item.indices)&&item.indices.length>0",page)
+        self.assertIn("read.dataset.action=hasNews?'news':'quiz'",page)
+        self.assertIn("if(read.dataset.action==='quiz')",page)
+        self.assertIn("if(item)startWorldPassport(item)",page)
+        self.assertNotIn("stampbook",page.lower())
+
+    def test_every_prepared_country_has_a_separate_sourced_travel_photo(self):
+        import json
+        dataset=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+        for code,country in dataset["countries"].items():
+            if country["status"]!="approved":
+                continue
+            with self.subTest(country=code):
+                main_cover=next(p["asset"] for p in country["portraitPhotos"]
+                                if p.get("asset") and not p.get("avoidCover")
+                                and not p.get("remoteOnly"))
+                trips=[stop for stop in country["travelStops"].values()
+                       if not stop.get("coverOnly") and not stop.get("quizOnly")
+                       and stop.get("photoAsset")!=main_cover
+                       and isinstance(stop.get("travelStory"),list)
+                       and len(stop["travelStory"])==2
+                       and all(len(text.strip())>=110 for text in stop["travelStory"])
+                       and stop.get("historicalSources")
+                       and stop.get("author") and stop.get("license")]
+                self.assertTrue(trips,code+" lacks a distinct sourced microtravel")
+                self.assertTrue(all(stop["country"]==country["name"] for stop in trips))
+        self.assertIn('id="todayMapIntroTravel"',self.page)
+        self.assertIn("function approvedAtlasTravelOptions(item,stops)",self.page)
+        self.assertIn("travelPostcardHtml({country:item.name},stop,true)",self.page)
+        self.assertIn("standalone?'国紹介：':'記事の舞台（国） '",self.page)
+
     def test_country_buttons_launch_passport_game_not_the_article(self):
         page = self.page
         game = (ROOT / "world-passport.js").read_text(encoding="utf-8")
