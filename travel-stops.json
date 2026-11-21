@@ -3409,5 +3409,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "is-reykjavik-cover": {
+    "country": "アイスランド",
+    "countryOnly": true,
+    "place": "レイキャビク・市街の眺望",
+    "region": "レイキャビク・ハットルグリムス教会",
+    "latitude": 64.1417,
+    "longitude": -21.9266,
+    "note": "低層の街並みの向こうに雪をまとった山並みが広がる。",
+    "photoCaption": "ハットルグリムス教会から望むレイキャビクの街並み（2017年4月、Wa17gs撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/31/Reykjavik_from_Hallgrimskikrja.jpg/500px-Reykjavik_from_Hallgrimskikrja.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Reykjavik_from_Hallgrimskikrja.jpg",
+    "photoAsset": "assets/travel/is-reykjavik-cover.jpg",
+    "author": "Wa17gs",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "is-thingvellir-postcard": {
+    "country": "アイスランド",
+    "countryOnly": true,
+    "place": "シンクヴェトリル国立公園・アルマンナギャウ",
+    "region": "アイスランド南西部",
+    "latitude": 64.259206,
+    "longitude": -21.12336,
+    "note": "岩壁の間を歩くと大地の裂け目の規模が伝わる。",
+    "photoCaption": "アルマンナギャウの岩壁と遊歩道（2022年6月、Olga Ernst撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/51/Almannagj%C3%A1%2C_%C3%9Eingvellir_National_Park_%28Iceland%29.jpg/500px-Almannagj%C3%A1%2C_%C3%9Eingvellir_National_Park_%28Iceland%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Almannagj%C3%A1%2C_%C3%9Eingvellir_National_Park_%28Iceland%29.jpg",
+    "photoAsset": "assets/travel/is-thingvellir-postcard.jpg",
+    "author": "Olga Ernst",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "シンクヴェトリルでは、草の生えた溶岩原と岩の割れ目の間を歩きながら、地形の大きな線を目で追うことができます。広い谷を見渡す場所に立つと、ひとつの写真では伝わりにくい起伏と空の広さが感じられます。周囲の山並みや湖まで視線を動かし、議会が開かれた土地の輪郭を確かめながら散策したい場所です。",
+      "UNESCOによれば、この場所では930年にアルシングと呼ばれる野外集会が始まり、長く島全体にかかわる議論が行われました。現在の遊歩道を歩く時も、壮観な地形だけを眺めるのではなく、遠くから人々が集まった歴史を思い描くと景色が違って見えてきます。自然地形と共同体の記憶が重なる点こそ、この公園の際立った魅力です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・シンクヴェトリル国立公園",
+        "url": "https://whc.unesco.org/en/list/1152/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "is-jokulsarlon-postcard": {
+    "country": "アイスランド",
+    "countryOnly": true,
+    "place": "ヴァトナヨークトル国立公園・ヨークルスアゥルロゥン氷河湖",
+    "region": "アイスランド南東部",
+    "latitude": 64.050825,
+    "longitude": -16.197494,
+    "note": "氷河から崩れた氷が湖に浮かぶ、刻々と変化する景観。",
+    "photoCaption": "ヨークルスアゥルロゥン氷河湖に浮かぶ氷塊（2024年7月、Jakub Hałun撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0e/J%C3%B6kuls%C3%A1rl%C3%B3n_glacier_lagoon%2C_Iceland%2C_20240718_1544_2213.jpg/500px-J%C3%B6kuls%C3%A1rl%C3%B3n_glacier_lagoon%2C_Iceland%2C_20240718_1544_2213.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:J%C3%B6kuls%C3%A1rl%C3%B3n_glacier_lagoon%2C_Iceland%2C_20240718_1544_2213.jpg",
+    "photoAsset": "assets/travel/is-jokulsarlon-postcard.jpg",
+    "author": "Jakub Hałun",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "travelStory": [
+      "ヴァトナヨークトル国立公園の魅力は、氷河がゆったり横たわる姿と、その下で活動する火山の力が同じ大地にあることです。氷の端で水が流れ出す場所や、砂礫の平野へ続く景色を見ると、風景が今も少しずつ姿を変えていることが実感できます。安全な展望地点から、白い氷と暗い地表の境界をじっくり見比べたい場所です。",
+      "UNESCOは、この広大な国立公園を火と氷の作用が表れる地域として評価しています。氷の下の噴火が引き起こす急な洪水は、平野や川筋を変えることがあります。その仕組みを知ると、目の前の谷や扇状に広がる土地が単なる眺めではなく、火山活動と水が共同でつくった記録だと分かります。訪問時は必ず現地の気象と立入情報を優先します。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ヴァトナヨークトル国立公園",
+        "url": "https://whc.unesco.org/en/list/1604/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
