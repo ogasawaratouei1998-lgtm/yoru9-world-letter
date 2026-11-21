@@ -44,15 +44,16 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
     if assets["index.html"] != expected_reader["index.html"]:
         raise AssertionError("Public reader page is stale or altered")
     for path in ("assets/reader-core.css","assets/reader-core.js",
-                 "assets/reader-country-data.js"):
+                 "assets/reader-country-data.js","assets/reader-travel.js"):
         if assets.get(path) != expected_reader[path]:
             raise AssertionError("Published external reader asset stale or altered: "+path)
     runtime=assets["assets/reader-core.js"].decode("utf-8")
+    travel_module=assets["assets/reader-travel.js"].decode("utf-8")
     for text in ("COUNTRY PORTRAIT · 国の魅力",
                  "WORLD POSTCARD · 有名観光地の小旅行",
                  "FAMOUS_TOURIST_LANDMARKS",
                  "currentCountryHighlight(all,currentCode)"):
-        if text not in index + runtime:
+        if text not in index + runtime + travel_module:
             raise AssertionError("Public reader lacks country portrait separation: " + text)
     version = re.compile(r"const SHELL_CACHE = '([^']+)'")
     local = version.search(expected_worker)
@@ -69,7 +70,7 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
                      'id="todayPassportCount"'):
         if obsolete in index:
             raise AssertionError("Retired stamp album has reappeared on public reader")
-    if 'stop.travelStory.map(paragraph=>' not in runtime:
+    if 'stop.travelStory.map(paragraph=>' not in travel_module:
         raise AssertionError("Detailed destination essays are missing from public reader")
     from check_country_experience import country_coverage
     checked=country_coverage(root,current["stories"])
@@ -185,7 +186,7 @@ def fetch_assets(site_url: str, revision: str, names=None) -> dict[str, bytes]:
     result = {}
     if names is None:
         names = ("index.html", "assets/reader-core.css", "assets/reader-core.js",
-                 "assets/reader-country-data.js",
+                 "assets/reader-country-data.js", "assets/reader-travel.js",
                  "world-passport.js", "service-worker.js",
                  "country-highlights.json", "travel-stops.json",
                  "data/current.json", "data/archive/index.json")
