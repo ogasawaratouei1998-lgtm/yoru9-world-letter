@@ -9,14 +9,14 @@ import json
 from pathlib import Path
 import re
 
-from country_codes import country_codes
+from country_codes import country_codes, catalog
 
-COUNTRY_NAMES = {
-    "KR": "韓国", "BR": "ブラジル", "AG": "アンティグア・バーブーダ",
-    "IT": "イタリア", "DE": "ドイツ", "US": "アメリカ合衆国",
-    "AR": "アルゼンチン", "FR": "フランス", "GB": "イギリス",
-    "ES": "スペイン", "JP": "日本", "NZ": "ニュージーランド",
-}
+# Use the SAME 196-location geography as article normalization and the
+# country editorial manifest. A second hardcoded name whitelist would block
+# a newly prepared country or silently require an unrelated Python edit.
+COUNTRY_NAMES = {record["code"]: record["name"] for record in catalog()}
+if len(COUNTRY_NAMES) != len(catalog()):
+    raise ValueError("Duplicate code in the canonical country catalog")
 
 
 def country_coverage(root: Path, stories):
@@ -83,8 +83,8 @@ def country_coverage(root: Path, stories):
             raise ValueError(code+": both quiz answers need distinct licensed photographs")
         name=COUNTRY_NAMES.get(code)
         if not name:
-            # More countries can be added to the curated registry after review.
-            raise ValueError(code+": country photo/name registry not reviewed")
+            # A recognized ISO code must always resolve in the canonical catalog.
+            raise ValueError(code+": country not in canonical catalog")
         for key in keys:
             stop=photos.get(key)
             if not stop or stop.get("country")!=name:
