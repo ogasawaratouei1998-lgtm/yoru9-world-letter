@@ -552,8 +552,20 @@
     "photoPage": "https://commons.wikimedia.org/wiki/File:La_Sagrada_Familia%2C_Barcelona.jpg",
     "photoAsset": "assets/travel/barcelona-sagrada.jpg",
     "travelStory": [
-      "バルセロナのサグラダ・ファミリアは、細く伸びる塔と、彫刻のように表情豊かな外壁が印象的な建築です。近づいて細部を眺めるほど、直線だけでは説明できない独特の造形に気づきます。写真では上から下まで、ひとつずつ形を探してみてください。",
-      "建築家アントニ・ガウディが関わったこの聖堂は、長い年月をかけて建設が続いてきました。宗教的な意味を持つ細部と大胆な建築表現が重なる姿は、バルセロナの街の創造性を象徴しています。"
+      "バルセロナの通りから見上げるサグラダ・ファミリアは、尖塔の高さばかりが目立ちます。けれど近づいて生誕のファサードに視線を移すと、植物や人物を思わせる細かな彫刻が壁面を埋め、まるで建物全体で物語を語っているようです。広場から塔のシルエットを確かめ、足元で石の彫刻を一つずつ探すと、写真で知っていた聖堂がまったく違う表情を見せます。",
+      "この聖堂の建設は1882年に始まり、翌年からアントニ・ガウディが設計を引き継ぎました。UNESCOに登録されているのは建物全体ではなく、ガウディが手がけた生誕のファサードと地下聖堂です。創建から長い時を経た現在も、人々の手で建設と保存が続きます。石の形を追ってから再び空に伸びる塔を見上げると、一つの街が何世代にもわたって受け継ぐ仕事の大きさを感じられます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "サグラダ・ファミリア公式・建設の歴史",
+        "url": "https://sagradafamilia.org/en/history-of-the-temple",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "UNESCO世界遺産センター・ガウディ作品群",
+        "url": "https://whc.unesco.org/en/list/320/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "antigua-dockyard-postcard": {
@@ -1023,6 +1035,70 @@
       {
         "name": "ドイツ政府観光局 Germany Travel",
         "url": "https://www.germany.travel/en/royal-palaces-castles/neuschwanstein-castle.html",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "spain-sagrada-nativity-quiz-image": {
+    "country": "スペイン",
+    "place": "サグラダ・ファミリア・生誕のファサード",
+    "region": "カタルーニャ州・バルセロナ",
+    "latitude": 41.4036,
+    "longitude": 2.1744,
+    "note": "ガウディが構想した聖堂の生誕のファサード。宗教彫刻が細部まで刻まれています。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1c/Exterior_of_the_Sagrada_Fam%C3%ADlia_%285%29.jpg/960px-Exterior_of_the_Sagrada_Fam%C3%ADlia_%285%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Exterior_of_the_Sagrada_Fam%C3%ADlia_(5).jpg",
+    "photoAsset": "assets/travel/spain-sagrada-nativity-quiz.jpg",
+    "photoCaption": "サグラダ・ファミリアの生誕のファサード（2017年撮影）",
+    "author": "Joseolgon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "spain-alhambra-quiz-image": {
+    "country": "スペイン",
+    "place": "グラナダ・アルハンブラ宮殿",
+    "region": "アンダルシア州・グラナダ",
+    "latitude": 37.176,
+    "longitude": -3.589,
+    "note": "グラナダに残るアルハンブラ宮殿。宮殿群の建築と丘陵の景色を紹介します。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Granada_alhambra.jpg/960px-Granada_alhambra.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Granada_alhambra.jpg",
+    "photoAsset": "assets/travel/spain-alhambra-quiz.jpg",
+    "photoCaption": "グラナダ・アルハンブラ宮殿の全景（2018年撮影）",
+    "author": "KP FM",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "quizOnly": true
+  },
+  "spain-park-guell-postcard": {
+    "country": "スペイン",
+    "place": "バルセロナ・グエル公園",
+    "region": "カタルーニャ州・バルセロナ",
+    "latitude": 41.4145,
+    "longitude": 2.1527,
+    "note": "モザイクで彩られた「ドラゴン」の噴水が、グエル公園の階段で訪問者を迎えます。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Park_G%C3%BCell_-_main_steps_and_Drac_03.jpg/960px-Park_G%C3%BCell_-_main_steps_and_Drac_03.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Park_G%C3%BCell_-_main_steps_and_Drac_03.jpg",
+    "photoAsset": "assets/travel/spain-park-guell-drac.jpg",
+    "photoCaption": "グエル公園の階段にあるモザイクの「ドラゴン」（2024年撮影）",
+    "author": "Joe Mabel",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "グエル公園の入口から階段を上ると、青や黄の破砕タイルをまとった「ドラゴン」の噴水が現れます。曲線を描く手すり、石を積み上げた壁、木々の緑が一つになり、建物と自然の境目がやわらいで見える場所です。写真の小さな色のかけらに注目してから、階段全体の形へ視線を広げると、ガウディが素材を遊び心のある景色に変えていく工夫が見えてきます。",
+      "この公園は1900年に住宅地の計画として始まりましたが、当初の構想のまま完成したわけではありません。のちに市の公園となり、1984年にガウディ作品群としてUNESCO世界遺産に登録されました。今では観光地として知られる階段やモザイクも、都市の新しい暮らし方を試みた計画の一部だったのです。色彩豊かな噴水を眺めながら、その試みが市民の公園へ変わった歴史まで味わえます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "グエル公園公式・公園の起源と計画",
+        "url": "https://parkguell.barcelona/en/park-guell/origin-and-creation",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "UNESCO世界遺産センター・ガウディ作品群",
+        "url": "https://whc.unesco.org/en/list/320/",
         "checkedOn": "2026-11-21"
       }
     ]
