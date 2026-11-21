@@ -124,7 +124,7 @@
     },
     "GR": {
       "name": "ギリシャ",
-      "status": "pending",
+      "status": "approved",
       "portraitSource": "https://whc.unesco.org/en/statesparties/gr",
       "travelDrafts": [
         {
@@ -151,7 +151,8 @@
             "fact": "アテネのアクロポリスにはパルテノン神殿が残っています。",
             "photoGoal": "アテネのアクロポリスと確認できるCCライセンス付きWikimedia Commonsの別写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/gr-athens-acropolis-postcard.jpg"
         },
         {
           "place": "デルフィの考古遺跡",
@@ -177,7 +178,8 @@
             "fact": "UNESCOはデルフィをアポロン神の聖域として紹介しています。",
             "photoGoal": "デルフィの考古遺跡と確認できるCCライセンス付きWikimedia Commonsの別写真"
           },
-          "photoStatus": "not_selected_or_licensed"
+          "photoStatus": "licensed_commons_and_approved",
+          "photoAsset": "assets/travel/gr-delphi-apollo-postcard.jpg"
         }
       ]
     },
