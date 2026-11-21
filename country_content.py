@@ -92,6 +92,14 @@ def load_country_content(root):
     if set(dataset["countries"])!=codes:
         raise ValueError("Country dataset must cover all 196 reporting locations")
     from urllib.parse import urlsplit
+    names={item["code"]:item["name"] for item in catalog}
+    if len(names)!=len(catalog):
+        raise ValueError("Duplicate location codes in canonical country catalog")
+    # A local file path denotes one *specific* verified photograph. The same
+    # path may appear in multiple postcards only when country AND Wikimedia
+    # provenance agree. Neither pending content nor approved news can relabel
+    # a picture as a different country or a different licensed photograph.
+    photo_provenance={}
     for code,entry in dataset["countries"].items():
         if entry.get("status") not in ("approved","pending"):
             raise ValueError(code+": unknown country editorial approval status")
@@ -135,6 +143,22 @@ def load_country_content(root):
                 or not isinstance(entry.get("travelStops"),dict)
                 or not isinstance(entry.get("highlights"),list)):
             raise ValueError(code+": malformed curated country content")
+        if entry.get("name")!=names[code]:
+            raise ValueError(code+": canonical country name does not match geographic catalog")
+        for key,stop in entry["travelStops"].items():
+            if not isinstance(stop,dict) or stop.get("country")!=names[code]:
+                raise ValueError(code+": wrong-country postcard: "+key)
+            asset=stop.get("photoAsset")
+            if not isinstance(asset,str) or not re.fullmatch(
+                    r"assets/travel/[a-z0-9-]+\\.jpg",asset):
+                raise ValueError(code+": invalid postcard photograph: "+key)
+            provenance=(code,stop.get("photo"),stop.get("photoPage"),
+                        stop.get("author"),stop.get("license"),
+                        stop.get("licenseUrl"))
+            previous=photo_provenance.setdefault(asset,provenance)
+            if previous!=provenance:
+                raise ValueError(code+": photograph reused with conflicting "
+                                 "country/source/creator/license: "+asset)
         if entry["status"]=="approved":
             if not entry.get("portrait") or not entry["portraitPhotos"] or len(entry["quiz"])<2:
                 raise ValueError(code+": approval without completed country content")
