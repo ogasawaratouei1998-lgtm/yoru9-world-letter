@@ -15,7 +15,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class CountryReadinessTest(unittest.TestCase):
     def test_current_real_countries_are_eligible_but_unprepared_world_locations_are_not(self):
         ready,incomplete=ready_country_codes(ROOT)
-        self.assertTrue({"IT","DE","US"}.issubset(ready))
+        self.assertTrue({"IT","DE","US","FR","AR"}.issubset(ready))
         self.assertNotIn("NG",ready)
         self.assertTrue(set(incomplete).isdisjoint(ready))
         articles=[
