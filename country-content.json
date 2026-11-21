@@ -2680,7 +2680,7 @@
     },
     "NZ": {
       "name": "ニュージーランド",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "マオリの文化と南北の大地が織りなす、自然豊かな国",
         "body": "ニュージーランド（アオテアロア）では、先住民マオリの言語「テ・レオ・マオリ」、彫刻、歌、儀礼などが社会に息づいています。北島には火山地形や都市の文化が広がり、南島には険しい山脈、氷河が刻んだフィヨルド、牧草地や湖が続きます。自然保護を大切にする公園と、ウェリントンやオークランドの芸術・食文化も魅力の一部です。自然の景色だけで国を語らず、多様な人々の暮らしと歴史に目を向けたい場所です。",
@@ -2825,7 +2825,8 @@
               "url": "https://www.heritage.org.nz/list-details/311/ChurchoftheGoodShepherd",
               "checkedOn": "2026-11-21"
             }
-          ]
+          ],
+          "famousTourist": true
         }
       },
       "highlights": [
@@ -2847,7 +2848,19 @@
           "sourceName": "ダニーデン公式観光案内",
           "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
         }
-      ]
+      ],
+      "approval": {
+        "reviewedOn": "2026-11-21",
+        "reason": "New Zealand official culture, DOC/UNESCO Milford, Lake Tekapo church heritage sources; 3 independently attributed CC BY-SA 4.0 photo records; preapproval 502 tests, downloaded media and three mobile viewport checks passed.",
+        "sources": [
+          "https://www.newzealand.com/nz/maori-culture/",
+          "https://www.doc.govt.nz/milfordroad",
+          "https://whc.unesco.org/en/list/551/",
+          "https://www.churchofthegoodshepherd.org.nz/about",
+          "https://www.heritage.org.nz/list-details/311/ChurchoftheGoodShepherd"
+        ],
+        "photoReview": "https://commons.wikimedia.org/wiki/File:Church_of_the_Good_Shepherd_Lake_Tekapo.jpg"
+      }
     },
     "OM": {
       "name": "オマーン",
