@@ -52,14 +52,14 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
     def test_outdated_pwa_shell_fails(self):
         current = self.assets["service-worker.js"].decode("utf-8")
         self.assets["service-worker.js"] = current.replace(
-            "yoru9-shell-v41", "yoru9-shell-v21"
+            "yoru9-shell-v42", "yoru9-shell-v21"
         ).encode("utf-8")
         with self.assertRaisesRegex(AssertionError, "shell"):
             inspect_public_assets(self.assets, ROOT)
 
     def test_reader_missing_independent_tour_module_fails(self):
-        current = self.assets["assets/reader-core.js"].decode("utf-8")
-        self.assets["assets/reader-core.js"] = current.replace(
+        current = self.assets["assets/reader-travel.js"].decode("utf-8")
+        self.assets["assets/reader-travel.js"] = current.replace(
             "WORLD POSTCARD · 有名観光地の小旅行",
             "WORLD POSTCARD missing"
         ).encode("utf-8")
