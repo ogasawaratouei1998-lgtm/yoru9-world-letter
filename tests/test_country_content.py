@@ -30,6 +30,27 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
 
+    def test_spain_source_review_is_prepared_but_approval_is_separate(self):
+        doc=load_country_content(ROOT)
+        spain=doc["countries"]["ES"]
+        self.assertEqual(spain["status"],"pending")
+        self.assertTrue(spain["portrait"]["sourceUrl"].startswith(
+            "https://www.spain.info/"))
+        self.assertEqual(len(spain["quiz"]),2)
+        quiz_keys={item["photoKey"] for item in spain["quiz"]}
+        self.assertEqual(len(quiz_keys),2)
+        covers={item["asset"] for item in spain["portraitPhotos"]
+                if not item.get("avoidCover") and not item.get("remoteOnly")}
+        assets={spain["travelStops"][key]["photoAsset"] for key in quiz_keys}
+        self.assertTrue(covers.isdisjoint(assets))
+        self.assertTrue(all(spain["travelStops"][key]["quizOnly"]
+                            for key in quiz_keys))
+        postcard=spain["travelStops"]["spain-park-guell-postcard"]
+        self.assertEqual(len(postcard["travelStory"]),2)
+        self.assertTrue(all(len(p)>=110 for p in postcard["travelStory"]))
+        self.assertTrue(postcard["historicalSources"])
+        self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
