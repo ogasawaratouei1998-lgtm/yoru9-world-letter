@@ -47,7 +47,7 @@ class ReaderSourceTest(unittest.TestCase):
         before = {p.name:p.read_bytes() for p in (self.root/"reader_sources").iterdir()}
         html = render_reader(self.root)
         registry = before["country-data.js"].decode("utf-8")
-        changed = registry+"// test registry update\n"
+        changed = registry+"\n"
         updated = render_reader(self.root, country_data=changed)
         sync_country_component(self.root, updated)
         sync_reader_source(self.root)
