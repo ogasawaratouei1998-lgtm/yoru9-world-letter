@@ -326,7 +326,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("publisher_not_in_approved_news_registry",code)
         self.assertIn("publisher_article_not_readable_for_summary",code)
         self.assertIn("validate_approved(payload,day)",code)
-        self.assertIn("a syndicated copy, social media repost",code)
+        self.assertIn("One cited publisher is sufficient",code)
 
     def test_ai_audit_does_not_require_a_compulsory_life_lesson(self):
         from pathlib import Path
@@ -1137,7 +1137,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
                         editorial.incident_priority({'title':title,'url':'https://straitstimes.com/b'}))
         source=__import__('inspect').getsource(editorial.main)
         self.assertIn('publisher_titles={',source)
-        self.assertIn('source_title_is_policy_explainer(publisher_titles.get(u,""))',source)
+        self.assertIn('source_title_is_policy_explainer(publisher_titles.get(urls[0],""))',source)
         self.assertIn('policy_explainer_without_incident_reporting',source)
     def test_creative_scope_relaxed_but_source_and_safety_guards_retained(self):
         from pathlib import Path
