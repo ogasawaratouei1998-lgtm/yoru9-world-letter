@@ -66,6 +66,20 @@ class CountryExperienceContractTest(unittest.TestCase):
             manifest[key]["photoAsset"] for key in spain["quizPhotoKeys"]])
         self.assertEqual(spain["postcard"],"assets/travel/spain-park-guell-drac.jpg")
 
+    def test_new_zealand_approval_requires_separate_licensed_photo_quizzes(self):
+        rows=country_coverage(ROOT,[{"country":"ニュージーランド"}])
+        self.assertEqual(set(rows),{"NZ"})
+        nz=rows["NZ"]
+        self.assertEqual(nz["quizRounds"],2)
+        self.assertEqual(len(set(nz["quizPhotoKeys"])),2)
+        manifest=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        self.assertNotIn(nz["cover"],[
+            manifest[key]["photoAsset"] for key in nz["quizPhotoKeys"]])
+        self.assertEqual(nz["postcard"],"assets/travel/nz-tekapo-church.jpg")
+        self.assertTrue(manifest["nz-tekapo-church-postcard"]["famousTourist"])
+        self.assertTrue(all(manifest[key].get("quizOnly")
+                            for key in nz["quizPhotoKeys"]))
+
     def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
         report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
                                           {"id":"verified-jp","country":"日本"}])
