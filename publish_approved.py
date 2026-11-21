@@ -161,8 +161,11 @@ def validate_approved(data, expected_date):
         require(isinstance(data.get('specialReason'), str) and len(data['specialReason'].strip()) >= 15,
                 '特集号には過去の報道を掲載する理由と説明が必要です')
     require(isinstance(data.get('title'), str) and 5 <= len(data['title'].strip()) <= 100, '配信号タイトルが必要です')
-    require(data.get('editorApproved') is True and data.get('factChecked') is True and data.get('humorReviewed') is True,
-            '編集承認・事実確認・ユーモア審査が未完了です')
+    # A vetted publisher is responsible for checking the reported facts.
+    # Starting 21 November, this app reviews editorial tone, not the reporting.
+    require(data.get('editorApproved') is True and data.get('humorReviewed') is True
+            and (issue_day >= date(2026, 11, 21) or data.get('factChecked') is True),
+            '編集承認・ユーモア審査が未完了です')
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
     # The explicitly reviewed second Nov 20 correction uses free illustrations.
@@ -230,8 +233,9 @@ def validate_approved(data, expected_date):
         if edition_type == 'regular':
             require(delta_days <= 7, f'{i}本目の報道が8日以上古いです。通常号には掲載せず特集号として明示してください')
         require(valid_url(story['sourceUrl']), f'{i}本目のsourceUrlが安全なHTTPS URLではありません')
-        require(story.get('editorVerified') is True and story.get('humorSafe') is True,
-                f'{i}本目は個別の事実確認・危害配慮が未承認です')
+        require(story.get('humorSafe') is True
+                and (issue_day >= date(2026, 11, 21) or story.get('editorVerified') is True),
+                f'{i}本目はツッコミの安全性が未承認です')
         automated = data.get('approvedBy') == 'automated-two-stage-review'
         if issue_day >= date(2026, 11, 18) and (automated or hard_reissue or source_checked_correction):
             require(story.get('editorQualityVerified') is True,
@@ -264,46 +268,49 @@ def validate_approved(data, expected_date):
                         isinstance(story.get('observedOutcome'),str) and
                         story['expectedPlan'] != story['observedOutcome'],
                         f'{i}本目は事実で裏付けられた期待と結果の差がありません')
-        urls = story.get('verificationUrls')
-        # Existing historical/special records retain their original two-source
-        # contract. New regular issues may use ONE verified original publisher
-        # if the concise source-fidelity check confirmed its original body.
-        min_sources = 1 if edition_type == 'regular' and issue_day >= date(2026, 11, 17) else 2
-        require(isinstance(urls, list) and len(urls) >= min_sources and all(valid_url(u) for u in urls),
-                f'{i}本目は{min_sources}件以上の検証用HTTPS URLが必要です')
-        require(story['sourceUrl'] in urls, f'{i}本目の出典が検証用URLに含まれていません')
-        require(len(set(urls)) == len(urls), f'{i}本目の検証用URLが重複しています')
-        domains = {urlsplit(u).hostname.lower().removeprefix('www.') for u in urls}
-        if len(urls) == 1:
-            require(trusted_original_domain(urls[0]),
-                    f'{i}本目の単独報道元は審査済み媒体ではありません')
-            require(story.get('sourceBasis') == 'original-report' and
-                    story.get('originalReportingVerified') is True,
-                    f'{i}本目の独自取材を出典本文との照合で確認してください')
-            require(story.get('attributionNote') == SINGLE_SOURCE_NOTE,
-                    f'{i}本目の単独報道の注意書きがありません')
+        # Source accountability belongs to the reporting company, not this app.
+        # The ONLY news-evidence criterion for modern editions is whether the
+        # cited article URL belongs to a pre-vetted news publisher.
+        # No compulsory second outlet, original-reporting proof, re-investigation,
+        # or AI evidence score. Keep historic approvals on their original rules.
+        if issue_day >= date(2026, 11, 21):
+            require(trusted_original_domain(story['sourceUrl']),
+                    f'{i}本目の出典は承認済みの報道機関ではありません')
+            urls = [story['sourceUrl']]
         else:
-            require(len(domains) >= 2, f'{i}本目の複数出典は独立したドメインが必要です')
+            urls = story.get('verificationUrls')
+            min_sources = 1 if edition_type == 'regular' and issue_day >= date(2026, 11, 17) else 2
+            require(isinstance(urls, list) and len(urls) >= min_sources and all(valid_url(u) for u in urls),
+                    f'{i}本目は{min_sources}件以上の検証用HTTPS URLが必要です')
+            require(story['sourceUrl'] in urls, f'{i}本目の出典が検証用URLに含まれていません')
+            require(len(set(urls)) == len(urls), f'{i}本目の検証用URLが重複しています')
+            domains = {urlsplit(u).hostname.lower().removeprefix('www.') for u in urls}
+            if len(urls) == 1:
+                require(trusted_original_domain(urls[0]),
+                        f'{i}本目の単独報道元は審査済み媒体ではありません')
+                require(story.get('sourceBasis') == 'original-report' and
+                        story.get('originalReportingVerified') is True,
+                        f'{i}本目の独自取材を出典本文との照合で確認してください')
+                require(story.get('attributionNote') == SINGLE_SOURCE_NOTE,
+                        f'{i}本目の単独報道の注意書きがありません')
+            else:
+                require(len(domains) >= 2, f'{i}本目の複数出典は独立したドメインが必要です')
         require(story['id'] not in ids and story['sourceUrl'] not in sources, '記事IDまたは出典URLが重複しています')
         ids.add(story['id'])
         sources.add(story['sourceUrl'])
-        # Model-editor and human-editor drafts share the same final release
-        # threshold. An imported artifact or manually staged approval must
-        # not bypass the five-factor review performed during drafting.
-        # This final check is intentionally independent of the generator:
-        # fact/safety scores cannot be compensated by an amusing surprise.
+        # News provenance is the vetted publisher above. Only the FOUR
+        # app-owned editorial dimensions remain scored (humor and safety).
         if issue_day >= date(2026, 11, 21):
             from editorial_quality import verified_rubric_for_edition
             require(verified_rubric_for_edition(story, expected_date),
-                    f'{i}本目の5項目品質審査が不足または基準未満です'
-                    '（驚き・判断ミス・結果の意外性は各4以上、'
-                    '裏付け・安全性は各5が必須）')
+                    f'{i}本目の編集品質4項目が不足または基準未満です'
+                    '（驚き・判断ミス・結果の意外性は各4以上、安全性は5が必須）')
         # Editorial review metadata is kept in the repository, not public story JSON.
         public_story = {key: story[key].strip() for key in REQUIRED_STORY}
         # Readers can inspect supporting sources, without exposing private AI
         # verification prompts or editorial-review records.
         public_story['verificationUrls'] = list(urls)
-        if len(urls) == 1:
+        if len(urls) == 1 and issue_day < date(2026, 11, 21):
             public_story['sourceBasis'] = 'original-report'
             public_story['attributionNote'] = SINGLE_SOURCE_NOTE
         if 'correctionNote' in story:

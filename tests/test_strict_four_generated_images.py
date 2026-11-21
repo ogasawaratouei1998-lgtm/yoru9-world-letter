@@ -22,7 +22,7 @@ def fake_webp():
 def approved(count=4,date=DAY):
     stories=[]
     for i in range(count):
-        url=f"https://original{i}.example.com/news-{i}"
+        url=f"https://www.bbc.com/news/articles/example-{i}"
         stories.append({
             "id":f"verified-story-{i}","country":"日本",
             "category":"person","categoryLabel":"個人の失敗",

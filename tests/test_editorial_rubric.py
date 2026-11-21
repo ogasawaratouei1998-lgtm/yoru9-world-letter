@@ -8,33 +8,36 @@ from editorial_quality import (
 
 
 class EditorialRubricTests(unittest.TestCase):
-    def test_five_explicit_dimensions_and_non_compensatory_vetoes(self):
+    def test_four_editorial_dimensions_and_publisher_owned_evidence(self):
         top={"surprise":4,"mistakeClarity":5,"outcomeIrony":4,
              "evidence":5,"safety":5}
-        self.assertEqual(editorial_rubric({"editorialScores":top}),top)
+        self.assertEqual(editorial_rubric({"editorialScores":top}),
+                         {key:top[key] for key in ("surprise","mistakeClarity","outcomeIrony","safety")})
         self.assertIsNone(editorial_rubric_rejection({"editorialScores":top}))
         for name in ("surprise","mistakeClarity","outcomeIrony"):
             self.assertEqual(editorial_rubric_rejection(
                 {"editorialScores":{**top,name:3}}),
                 "story_not_extraordinary_or_specific")
-        for name in ("evidence","safety"):
-            self.assertEqual(editorial_rubric_rejection(
-                {"editorialScores":{**top,name:4}}),
-                "evidence_or_safety_below_standard")
         self.assertEqual(editorial_rubric_rejection(
-            {"editorialScores":{**top,"evidence":True}}),
-            "editorial_scores_invalid")
+            {"editorialScores":{**top,"safety":4}}),"safety_below_standard")
+        # Journalism is vouched for by the publisher, never by model points.
+        self.assertIsNone(editorial_rubric_rejection(
+            {"editorialScores":{**top,"evidence":1}}))
+        self.assertIsNone(editorial_rubric_rejection(
+            {"editorialScores":{**top,"evidence":True}}))
         self.assertEqual(editorial_rubric_rejection(
             {"editorialScores":{**top,"unsafeUnknown":5}}),
             "editorial_scores_invalid")
         # Older approved editions need not invent retrospective model scores.
         self.assertIsNone(editorial_rubric_rejection({"approved":True}))
 
-    def test_new_editions_require_all_five_review_dimensions(self):
+    def test_new_editions_require_four_editorial_dimensions(self):
         top={"surprise":4,"mistakeClarity":5,"outcomeIrony":4,
              "evidence":5,"safety":5}
         self.assertFalse(verified_rubric_for_edition({"approved":True},"2026-11-21"))
         self.assertTrue(verified_rubric_for_edition({"editorialScores":top},"2026-11-21"))
+        self.assertTrue(verified_rubric_for_edition({"editorialScores":{
+            k:v for k,v in top.items() if k!="evidence"}},"2026-11-21"))
         self.assertFalse(verified_rubric_for_edition({"editorialScores":{**top,"safety":4}},"2026-11-21"))
         self.assertTrue(verified_rubric_for_edition({"approved":True},"2026-11-20"))
 
