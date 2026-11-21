@@ -101,6 +101,46 @@ class TravelPhotoCacheTest(unittest.TestCase):
                 bundle_travel_photos(self.root,self.output)
         self.assertEqual(list(self.cache.glob("*.jpg")),[])
 
+    def test_wikimedia_rate_limit_recovers_only_provenance_matched_previous_photo(self):
+        from urllib.error import HTTPError
+        hits=[]
+        prior={"hero":dict(self.record)}
+        def network(req,timeout):
+            url=req.full_url
+            hits.append(url)
+            if "wikimedia.org" in url:
+                raise HTTPError(url,429,"rate limited",{},None)
+            if url.endswith("/travel-stops.json"):
+                return Response(json.dumps(prior).encode("utf-8"))
+            if url.endswith("/assets/travel/hero.jpg"):
+                return Response(jpeg())
+            raise AssertionError("Unexpected download: "+url)
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            self.assertEqual(bundle_travel_photos(self.root,self.output),1)
+        self.assertTrue(any(url.endswith("/travel-stops.json") for url in hits))
+        self.assertTrue(any(url.endswith("/assets/travel/hero.jpg") for url in hits))
+        self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(1300,720))
+        self.assertEqual(len(list(self.cache.glob("*.jpg"))),1)
+
+    def test_old_site_with_different_photo_attribution_cannot_substitute(self):
+        from urllib.error import HTTPError
+        prior={"hero":{**self.record,"author":"Different photographer"}}
+        hits=[]
+        def network(req,timeout):
+            hits.append(req.full_url)
+            if "wikimedia.org" in req.full_url:
+                raise HTTPError(req.full_url,429,"rate limited",{},None)
+            if req.full_url.endswith("/travel-stops.json"):
+                return Response(json.dumps(prior).encode("utf-8"))
+            raise AssertionError("Must never fetch unverified old-site JPEG")
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            with self.assertRaisesRegex(RuntimeError,"旅行写真の欠落を防ぐため公開停止"):
+                bundle_travel_photos(self.root,self.output)
+        self.assertFalse(any(url.endswith("/assets/travel/hero.jpg") for url in hits))
+        self.assertFalse(list(self.cache.glob("*.jpg")))
+
     def test_actions_enable_same_cache_for_preview_release_and_deploy(self):
         repo=Path(__file__).resolve().parents[1]
         for path in (".github/workflows/test-publishing.yml",
