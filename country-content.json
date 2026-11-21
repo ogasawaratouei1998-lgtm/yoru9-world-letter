@@ -119,7 +119,10 @@
     "be-bruges-belfry-postcard",
     "bg-sofia-nevsky-cover",
     "bg-rila-monastery-postcard",
-    "bg-boyana-church-postcard"
+    "bg-boyana-church-postcard",
+    "dk-copenhagen-skyline-cover",
+    "dk-kronborg-castle-postcard",
+    "dk-roskilde-cathedral-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2276,7 +2279,7 @@
     },
     "DK": {
       "name": "デンマーク",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "海峡を見張る城と赤レンガの聖堂に、北欧の歴史が息づく",
         "body": "デンマークの歴史遺産は、海とともに生きてきた国の姿を建築から伝えています。ヘルシンゲルにあるクロンボー城はスウェーデンとの間の海峡を見下ろし、ロスキレ大聖堂は赤レンガを積み重ねた北欧の宗教建築を象徴しています。海風の吹く城の外郭を歩く時間と、静かな聖堂の内部で長い王家の歴史に触れる時間。どちらも建物が美しいだけでなく、その場所が担ってきた役割を知ることで印象が深まります。",
@@ -2284,13 +2287,127 @@
           "世界遺産：クロンボー城",
           "世界遺産：ロスキレ大聖堂"
         ],
-        "photos": [],
+        "photos": [
+          "dk-kronborg-castle-postcard",
+          "dk-roskilde-cathedral-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：デンマークの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/dk"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/dk-copenhagen-skyline-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Copenhagen_skyline%2C_Denmark.jpg/500px-Copenhagen_skyline%2C_Denmark.jpg",
+          "caption": "クリスチャンスボー城から望むコペンハーゲンの街並み（2016年、CivArmy撮影）",
+          "author": "CivArmy",
+          "license": "CC BY-SA 4.0",
+          "place": "コペンハーゲンの街並み",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Copenhagen_skyline%2C_Denmark.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "クロンボー城が見下ろす重要な海峡は？",
+          "options": [
+            "エーレスンド海峡",
+            "ジブラルタル海峡",
+            "マラッカ海峡"
+          ],
+          "answer": 0,
+          "fact": "UNESCOはクロンボー城がエーレスンド海峡を押さえる位置に建つと説明しています。",
+          "photoLabel": "正解写真｜クロンボー城",
+          "quip": "海峡が狭ければ城の仕事は増える。最高の立地で、常に見張り番。",
+          "photoKey": "dk-kronborg-castle-postcard"
+        },
+        {
+          "question": "ロスキレ大聖堂の建築材料で特に重要なのは？",
+          "options": [
+            "レンガ",
+            "氷のブロック",
+            "珊瑚"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは北欧の大型宗教建築における早期のレンガ使用を高く評価しています。",
+          "photoLabel": "正解写真｜ロスキレ大聖堂",
+          "quip": "レンガが主役の大聖堂。積み重ねたのは建材だけでなく、王家の歴史。",
+          "photoKey": "dk-roskilde-cathedral-postcard"
+        }
+      ],
+      "travelStops": {
+        "dk-copenhagen-skyline-cover": {
+          "country": "デンマーク",
+          "countryOnly": true,
+          "place": "コペンハーゲンの街並み",
+          "region": "コペンハーゲン中心部",
+          "latitude": 55.6751,
+          "longitude": 12.5683,
+          "note": "首都コペンハーゲンに広がる歴史的建築と街路の景観。",
+          "photoCaption": "クリスチャンスボー城から望むコペンハーゲンの街並み（2016年、CivArmy撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Copenhagen_skyline%2C_Denmark.jpg/500px-Copenhagen_skyline%2C_Denmark.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Copenhagen_skyline%2C_Denmark.jpg",
+          "photoAsset": "assets/travel/dk-copenhagen-skyline-cover.jpg",
+          "author": "CivArmy",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "dk-kronborg-castle-postcard": {
+          "country": "デンマーク",
+          "countryOnly": true,
+          "place": "クロンボー城",
+          "region": "ヘルシンゲル・エーレスンド海峡",
+          "latitude": 56.03873,
+          "longitude": 12.62169,
+          "note": "デンマークとスウェーデンの海峡を見張る16世紀の城塞。",
+          "photoCaption": "エーレスンド海峡に面するクロンボー城の外観（2018年、Danicholson撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Kronbore_Castle.jpg/500px-Kronbore_Castle.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Kronbore_Castle.jpg",
+          "photoAsset": "assets/travel/dk-kronborg-castle-postcard.jpg",
+          "author": "Danicholson",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "クロンボー城に近づくと、頑丈な城壁と海に向かって開けた視界が一緒に現れます。中庭では整った建築の美しさに気づきますが、外へ出て海峡を見渡せば、なぜここに城が築かれたのかが自然に理解できます。風の強さや船の往来を感じながら外郭を歩き、城の向きと海の狭さを確かめてみると、北欧の歴史が地形と結びついて見えてきます。",
+            "UNESCOによれば、城はデンマークとスウェーデンの間のエーレスンド海峡を押さえる重要な場所に立ち、16～18世紀の北ヨーロッパ史で大きな役割を果たしました。シェイクスピアの『ハムレット』の舞台エルシノアとの結びつきも知られていますが、実際の城を訪れたらまず海に目を向けたいところです。防御のための建築と文化的な物語が同じ景色の中に重なっています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クロンボー城",
+              "url": "https://whc.unesco.org/en/list/696/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "dk-roskilde-cathedral-postcard": {
+          "country": "デンマーク",
+          "countryOnly": true,
+          "place": "ロスキレ大聖堂",
+          "region": "シェラン島・ロスキレ",
+          "latitude": 55.6427,
+          "longitude": 12.0806,
+          "note": "レンガ造りの大聖堂。デンマーク王家の墓所としても知られる世界遺産。",
+          "photoCaption": "ロスキレのドムキルケ通りから望む大聖堂（2021年、Chris06撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/2021_Roskilde_Cathedral_(16).jpg/500px-2021_Roskilde_Cathedral_(16).jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:2021_Roskilde_Cathedral_(16).jpg",
+          "photoAsset": "assets/travel/dk-roskilde-cathedral-postcard.jpg",
+          "author": "Chris06",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ロスキレ大聖堂の外観では、赤いレンガでつくられた塔や壁の面が晴れた空と鮮やかな対比を生みます。石造りの大聖堂を想像して訪れると、レンガの質感そのものがこの建築の魅力だと気づくでしょう。建物の周囲をゆっくり歩いて塔と側廊の形を確かめ、内部では墓所や礼拝空間に流れる静かな時間を味わいたい場所です。",
+            "UNESCOはロスキレ大聖堂を、北ヨーロッパで大型の宗教建築にレンガが早期から用いられた重要な例として評価しています。デンマーク王室の墓所としての歴史もあり、建物の増築に異なる時代の建築様式が表れています。ひとつの完成された姿として見るのではなく、長く使われ続けた建築の変化を探すと、大聖堂の奥行きがよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ロスキレ大聖堂",
+              "url": "https://whc.unesco.org/en/list/695/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "DO": {
