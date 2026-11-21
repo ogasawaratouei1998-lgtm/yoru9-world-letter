@@ -14,10 +14,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["DE","IT","US"])
-        self.assertEqual(report["pendingCountries"],193)
-        self.assertEqual(len(report["prioritizedPending"]),193)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),193)
+        self.assertEqual(report["approvedCountries"],["AR","DE","FR","IT","US"])
+        self.assertEqual(report["pendingCountries"],191)
+        self.assertEqual(len(report["prioritizedPending"]),191)
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),191)
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
@@ -29,14 +29,14 @@ class CountryEditorialQueueTest(unittest.TestCase):
         pending={x["code"]:x for x in report["prioritizedPending"]}
         # All three source records are real, attributed local photographs.
         # Their index-level cover entries predating sourcePage aren't missing.
-        for code in ("AR","FR","JP"):
+        for code in ("JP",):
             self.assertNotIn("attributed_country_portrait_photo",
                              pending[code]["missing"])
         # A reused portrait/quiz image is a different and real release defect.
         for code in ("ES","JP","GB","NZ"):
             self.assertIn("portrait_photo_reused_in_quiz",pending[code]["missing"])
         for code in ("FR","AR"):
-            self.assertNotIn("portrait_photo_reused_in_quiz",pending[code]["missing"])
+            self.assertIn(code,report["approvedCountries"])
 
     def test_missing_heritage_source_remains_an_actionable_review_item(self):
         with tempfile.TemporaryDirectory() as dirname:
