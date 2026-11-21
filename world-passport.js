@@ -60,6 +60,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
   {question:'古代ギリシャのデルフィで神託と深く関わった神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoLabel:'正解写真｜デルフィのアポロン神殿跡',fact:'デルフィの聖域はアポロンの神託で知られ、UNESCO世界遺産にも登録されています。',quip:'山奥の相談所に世界中から人が集まる、古代の人気ぶり。',photoKey:'gr-delphi-apollo-postcard'},
  ],
+ HR:[
+  {question:'ドゥブロヴニクが発展した主な背景は？',options:['海上交易','砂漠の遊牧','氷河の採掘'],answer:0,photoLabel:'正解写真｜ドゥブロヴニク旧市街',fact:'UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。',quip:'城壁の外は海、内側は街。地形にまで防御の意志が見える。',photoKey:'hr-dubrovnik-old-city-postcard'},
+  {question:'プリトヴィツェの湖と滝を生み出す主な働きは？',options:['石灰華の堆積','流氷の衝突','溶岩の噴出のみ'],answer:0,photoLabel:'正解写真｜プリトヴィツェ湖群国立公園',fact:'UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。',quip:'滝の設計者は水と石灰岩。しかも工事は現在進行形。',photoKey:'hr-plitvice-lakes-postcard'},
+ ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
@@ -116,7 +120,6 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
  ],
-
 });
 
 let worldPassportActive=null;
@@ -247,98 +250,3 @@ document.getElementById('todayQuizPhotoZoom').addEventListener('click',openWorld
 document.getElementById('todayQuizPhotoDialogClose').addEventListener('click',()=>{
  const dialog=document.getElementById('todayQuizPhotoDialog');
  if(dialog.open)dialog.close();
-});
-document.getElementById('todayQuizPhotoDialog').addEventListener('click',event=>{
- if(event.target===event.currentTarget)event.currentTarget.close();
-});
-/* Each correctly selected answer earns a separate burst, before any country stamp.
-   Decorations are aria-hidden, use no sound, and never intercept pointer events. */
-function celebrateWorldPassportCorrect(button,streak){
- if(!button)return;
- button.dataset.popped='true';
- const burst=document.createElement('span');
- burst.className='quiz-answer-sparks';
- burst.dataset.active='true';
- burst.setAttribute('aria-hidden','true');
- const shapes=['✦','★','✧','✦','◆','★','✧','✦','★','✧'];
- for(const shape of shapes){
-  const particle=document.createElement('span');
-  particle.textContent=shape;
-  burst.append(particle);
- }
- button.append(burst);
- const flash=$('todayQuizCorrectFlash');
- flash.hidden=false;
- $('todayQuizCorrectFlashLabel').textContent=streak>1
-  ?streak+'連続正解！':'正解！ キラッとひらめいた！';
-}
-
-function renderWorldPassportRound(){
- const run=worldPassportActive;if(!run)return;
- const q=run.questions[run.step];
- run.answered=false;
- resetWorldPassportPhoto();
- $('todayQuizTitle').textContent=run.item.name+'の「へぇ！」クイズ';
- $('todayQuizProgress').textContent='第'+(run.step+1)+'問 / '+run.questions.length+'問 · 景色と文化の3択';
- const steps=$('todayQuizSteps');steps.replaceChildren();
- run.questions.forEach((_,i)=>{
-  const bar=document.createElement('span');bar.className='today-quiz-step';
-  bar.dataset.step=i<run.step?'done':i===run.step?'current':'waiting';
-  bar.setAttribute('aria-label','第'+(i+1)+'問');
-  steps.append(bar);
- });
- $('todayQuizCorrectFlash').hidden=true;
- $('todayQuizResult').hidden=true;
- $('todayQuizNext').hidden=true;
- $('todayQuizQuestion').textContent=q.question;
- const options=$('todayQuizChoices');options.replaceChildren();
- q.options.forEach((answer,i)=>{
-  const button=document.createElement('button');
-  button.type='button';button.textContent=String(i+1)+' · '+answer;
-  button.addEventListener('click',()=>answerWorldPassport(i));
-  options.append(button);
- });
-}
-function answerWorldPassport(picked){
- const run=worldPassportActive;
- if(!run||run.answered)return;
- const question=run.questions[run.step];
- if(!question||picked<0||picked>=question.options.length)return;
- run.answered=true;
- const correct=picked===question.answer;
- if(correct)run.streak++;else run.streak=0;
- const mark=$('todayQuizSteps').children[run.step];
- if(mark)mark.dataset.step='done';
- $('todayQuizChoices').querySelectorAll('button').forEach((button,index)=>{
-  button.disabled=true;
-  if(index===question.answer)button.dataset.correct='true';
-  if(index===picked&&!correct)button.dataset.pickedWrong='true';
- });
- if(correct)celebrateWorldPassportCorrect($('todayQuizChoices').querySelectorAll('button')[picked],run.streak);
- $('todayQuizVerdict').textContent=correct
-  ?'正解！ '+(run.streak>1?run.streak+'問連続正解！':'その通り！')
-  :'惜しい！ 正解は「'+question.options[question.answer]+'」。';
- $('todayQuizExplanation').textContent=question.fact;
- $('todayQuizJoke').textContent='AIツッコミ（創作の冗談）：'+question.quip;
- $('todayQuizResult').hidden=false;
- revealWorldPassportAnswerPhoto(question);
- const next=$('todayQuizNext');
- next.textContent=run.step<run.questions.length-1?'次の問題へ →':'閉じる';
- next.hidden=false;
-}
-function finishWorldPassport(){
- const run=worldPassportActive;
- if(!run||!run.answered)return;
- if(run.step<run.questions.length-1){
-  run.step++;
-  renderWorldPassportRound();
-  focusWorldPassportQuestion(run);
- }else{
-  closeWorldPassport();
-  const legend=$('todayMapLegend');
-  if(legend&&typeof legend.scrollIntoView==='function')
-   legend.scrollIntoView({block:'nearest',behavior:'auto'});
- }
-}
-document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
-document.getElementById('todayQuizNext').addEventListener('click',finishWorldPassport);
