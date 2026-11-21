@@ -2898,5 +2898,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "dk-copenhagen-skyline-cover": {
+    "country": "デンマーク",
+    "countryOnly": true,
+    "place": "コペンハーゲンの街並み",
+    "region": "コペンハーゲン中心部",
+    "latitude": 55.6751,
+    "longitude": 12.5683,
+    "note": "首都コペンハーゲンに広がる歴史的建築と街路の景観。",
+    "photoCaption": "クリスチャンスボー城から望むコペンハーゲンの街並み（2016年、CivArmy撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2b/Copenhagen_skyline%2C_Denmark.jpg/500px-Copenhagen_skyline%2C_Denmark.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Copenhagen_skyline%2C_Denmark.jpg",
+    "photoAsset": "assets/travel/dk-copenhagen-skyline-cover.jpg",
+    "author": "CivArmy",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "dk-kronborg-castle-postcard": {
+    "country": "デンマーク",
+    "countryOnly": true,
+    "place": "クロンボー城",
+    "region": "ヘルシンゲル・エーレスンド海峡",
+    "latitude": 56.03873,
+    "longitude": 12.62169,
+    "note": "デンマークとスウェーデンの海峡を見張る16世紀の城塞。",
+    "photoCaption": "エーレスンド海峡に面するクロンボー城の外観（2018年、Danicholson撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Kronbore_Castle.jpg/500px-Kronbore_Castle.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Kronbore_Castle.jpg",
+    "photoAsset": "assets/travel/dk-kronborg-castle-postcard.jpg",
+    "author": "Danicholson",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "クロンボー城に近づくと、頑丈な城壁と海に向かって開けた視界が一緒に現れます。中庭では整った建築の美しさに気づきますが、外へ出て海峡を見渡せば、なぜここに城が築かれたのかが自然に理解できます。風の強さや船の往来を感じながら外郭を歩き、城の向きと海の狭さを確かめてみると、北欧の歴史が地形と結びついて見えてきます。",
+      "UNESCOによれば、城はデンマークとスウェーデンの間のエーレスンド海峡を押さえる重要な場所に立ち、16～18世紀の北ヨーロッパ史で大きな役割を果たしました。シェイクスピアの『ハムレット』の舞台エルシノアとの結びつきも知られていますが、実際の城を訪れたらまず海に目を向けたいところです。防御のための建築と文化的な物語が同じ景色の中に重なっています。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・クロンボー城",
+        "url": "https://whc.unesco.org/en/list/696/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "dk-roskilde-cathedral-postcard": {
+    "country": "デンマーク",
+    "countryOnly": true,
+    "place": "ロスキレ大聖堂",
+    "region": "シェラン島・ロスキレ",
+    "latitude": 55.6427,
+    "longitude": 12.0806,
+    "note": "レンガ造りの大聖堂。デンマーク王家の墓所としても知られる世界遺産。",
+    "photoCaption": "ロスキレのドムキルケ通りから望む大聖堂（2021年、Chris06撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0b/2021_Roskilde_Cathedral_(16).jpg/500px-2021_Roskilde_Cathedral_(16).jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:2021_Roskilde_Cathedral_(16).jpg",
+    "photoAsset": "assets/travel/dk-roskilde-cathedral-postcard.jpg",
+    "author": "Chris06",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ロスキレ大聖堂の外観では、赤いレンガでつくられた塔や壁の面が晴れた空と鮮やかな対比を生みます。石造りの大聖堂を想像して訪れると、レンガの質感そのものがこの建築の魅力だと気づくでしょう。建物の周囲をゆっくり歩いて塔と側廊の形を確かめ、内部では墓所や礼拝空間に流れる静かな時間を味わいたい場所です。",
+      "UNESCOはロスキレ大聖堂を、北ヨーロッパで大型の宗教建築にレンガが早期から用いられた重要な例として評価しています。デンマーク王室の墓所としての歴史もあり、建物の増築に異なる時代の建築様式が表れています。ひとつの完成された姿として見るのではなく、長く使われ続けた建築の変化を探すと、大聖堂の奥行きがよく伝わります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ロスキレ大聖堂",
+        "url": "https://whc.unesco.org/en/list/695/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
   }
 }
