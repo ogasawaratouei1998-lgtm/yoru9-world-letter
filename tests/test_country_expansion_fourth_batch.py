@@ -39,7 +39,8 @@ class FourthBatchTests(unittest.TestCase):
     def test_twenty_four_countries_are_ready_not_placeholder_approved(self):
         ready,pending=ready_country_codes(ROOT)
         self.assertEqual(len(ready),24)
-        self.assertEqual(len(pending),172)
+        self.assertEqual(sum(row["status"]=="pending"
+                             for row in self.doc["countries"].values()),172)
         for code in PHOTOS:
             with self.subTest(country=code):
                 c=self.doc["countries"][code]
