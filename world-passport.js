@@ -24,6 +24,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ケベック旧市街の歴史地区が世界文化遺産に登録された年は？',options:['2007年','1985年','1950年'],answer:1,photoKey:'ca-old-quebec-postcard',photoLabel:'正解写真｜ケベック旧市街',fact:'ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。',quip:'城壁の街。いまは観光客のカメラがあちこちに陣取っている。'},
   {question:'カナダで最初の国立公園として知られる場所は？',options:['バンフ国立公園','ヨセミテ国立公園','フィヨルドランド国立公園'],answer:0,photoKey:'ca-banff-lake-louise-postcard',photoLabel:'正解写真｜バンフ国立公園',fact:'1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。',quip:'カナダで最初の国立公園。絶景にも歴史にも先輩の貫禄。'},
  ],
+ CH:[
+  {question:'ベルン旧市街が世界文化遺産に登録された年は？',options:['1983年','2001年','2015年'],answer:0,photoLabel:'正解写真｜ベルン旧市街',fact:'UNESCO世界遺産センターによると、ベルン旧市街は1983年に登録されました。',quip:'時計を見上げる街でも、歴史の時間はずっと長い。',photoKey:'ch-bern-old-city-postcard'},
+  {question:'ユングフラウ＝アレッチの世界自然遺産への初回登録年は？',options:['1983年','2001年','2020年'],answer:1,photoLabel:'正解写真｜アレッチ氷河',fact:'UNESCOによれば同地域は2001年に世界自然遺産に初登録され、2007年に拡張されました。',quip:'氷の流れはゆっくり。でも残した地形はとびきり大きい。',photoKey:'ch-aletsch-glacier-postcard'},
+ ],
  DE:[
   {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',options:['ベルリン','ミュンヘン','ケルン'],answer:2,photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
   {question:'ノイシュヴァンシュタイン城があるドイツの州は？',options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'},
@@ -39,6 +43,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  GB:[
   {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
   {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'},
+ ],
+ GR:[
+  {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
+  {question:'古代ギリシャのデルフィで神託と深く関わった神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoLabel:'正解写真｜デルフィのアポロン神殿跡',fact:'デルフィの聖域はアポロンの神託で知られ、UNESCO世界遺産にも登録されています。',quip:'山奥の相談所に世界中から人が集まる、古代の人気ぶり。',photoKey:'gr-delphi-apollo-postcard'},
  ],
  IN:[
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
@@ -67,6 +75,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  NZ:[
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
+ ],
+ PT:[
+  {question:'ジェロニモス修道院とベレンの塔が世界文化遺産に登録された年は？',options:['1983年','1995年','2015年'],answer:0,photoLabel:'正解写真｜ジェロニモス修道院',fact:'UNESCOはジェロニモス修道院とベレンの塔を1983年に世界文化遺産へ登録しています。',quip:'海へ出た時代の記憶が、石の柱までぎっしり残る。',photoKey:'pt-jeronimos-monastery-postcard'},
+  {question:'シントラの文化的景観が世界文化遺産に登録された年は？',options:['1983年','1995年','2007年'],answer:1,photoLabel:'正解写真｜シントラのペーナ宮殿',fact:'UNESCOによるシントラの文化的景観の登録年は1995年です。',quip:'森の中に宮殿。景色の設計まで王宮級のこだわり。',photoKey:'pt-pena-palace-postcard'},
  ],
  SG:[
   {question:'シンガポール植物園が世界文化遺産に登録された年は？',options:['1997年','2015年','2025年'],answer:1,photoLabel:'正解写真｜シンガポール植物園',fact:'UNESCO世界遺産センターの登録情報によると、シンガポール植物園の登録年は2015年です。',quip:'高層ビルの街で、植物も世界遺産の主役です。',photoKey:'sg-botanic-gardens-postcard'},
