@@ -51,6 +51,28 @@ class CountryContentTest(unittest.TestCase):
         self.assertTrue(postcard["historicalSources"])
         self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
 
+    def test_new_zealand_editorial_content_is_prepared_but_not_auto_approved(self):
+        doc=load_country_content(ROOT)
+        nz=doc["countries"]["NZ"]
+        self.assertEqual(nz["status"],"pending")
+        self.assertTrue(nz["portrait"]["sourceUrl"].startswith(
+            "https://www.newzealand.com/"))
+        self.assertEqual(len(nz["quiz"]),2)
+        quiz_keys={q["photoKey"] for q in nz["quiz"]}
+        self.assertEqual(len(quiz_keys),2)
+        covers={p["asset"] for p in nz["portraitPhotos"]
+                if not p.get("avoidCover") and not p.get("remoteOnly")}
+        answers={nz["travelStops"][key]["photoAsset"] for key in quiz_keys}
+        self.assertTrue(covers.isdisjoint(answers))
+        self.assertTrue(all(nz["travelStops"][key].get("quizOnly") for key in quiz_keys))
+        for key in ("nz-milford-sound-postcard","nz-tekapo-church-postcard"):
+            with self.subTest(destination=key):
+                stop=nz["travelStops"][key]
+                self.assertEqual(len(stop["travelStory"]),2)
+                self.assertTrue(all(len(p)>=110 for p in stop["travelStory"]))
+                self.assertTrue(stop.get("historicalSources"))
+        self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
