@@ -95,6 +95,23 @@ class CountryExperienceContractTest(unittest.TestCase):
         self.assertEqual(stops["korea-bulguksa-postcard"]["author"],"Tae Hoon Kang")
         self.assertEqual(stops["korea-bulguksa-postcard"]["license"],"CC BY 2.0")
 
+    def test_approved_brazil_has_separate_cover_quiz_and_brazilian_tour(self):
+        report=country_coverage(self.root,[{"country":"ブラジル"}])
+        self.assertEqual(set(report),{"BR"})
+        brazil=report["BR"]
+        self.assertEqual(brazil["cover"],"assets/travel/brazil-rio-christ-cover.jpg")
+        self.assertEqual(brazil["postcard"],"assets/travel/brazil-iguacu-brazil-side-postcard.jpg")
+        self.assertEqual(brazil["quizPhotoKeys"],[
+            "brazil-paulista-quiz-image","brazil-iguacu-brazil-side-quiz-image"])
+        self.assertEqual(brazil["quizRounds"],2)
+        manifest=json.loads((self.root/"travel-stops.json").read_text(encoding="utf-8"))
+        photo_assets={manifest[key]["photoAsset"] for key in brazil["quizPhotoKeys"]}
+        self.assertNotIn(brazil["cover"],photo_assets)
+        self.assertNotIn(brazil["postcard"],photo_assets)
+        self.assertEqual(manifest["brazil-country-postcard"]["author"],"Flaviohmg")
+        self.assertEqual(manifest["brazil-iguacu-brazil-side-quiz-image"]["author"],
+                         "MurielDamiana")
+
     def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
         report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
                                           {"id":"verified-jp","country":"日本"}])
