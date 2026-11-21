@@ -81,6 +81,40 @@ class CountryExperienceContractTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"US: portrait cover reused as quiz photograph"):
             country_coverage(self.root,[{"country":"United States"}])
 
+    def test_incomplete_selectable_us_fallback_is_never_silently_skipped(self):
+        import re
+        original=(self.root/"index.html").read_text(encoding="utf-8")
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\\.freeze\\((.*)\\);$",original)
+        self.assertIsNotNone(registry)
+        for missing_field in ("asset","url","caption","author","license","place"):
+            with self.subTest(missing_field=missing_field):
+                covers=json.loads(registry.group(1))
+                fallback=next(photo for photo in covers["US"]
+                              if photo.get("asset")=="assets/travel/new-york-skyline.jpg")
+                fallback.pop(missing_field)
+                replacement="const TODAY_COUNTRY_PHOTOS=Object.freeze("+json.dumps(
+                    covers,ensure_ascii=False,separators=(",",":"))+");"
+                (self.root/"index.html").write_text(
+                    original[:registry.start()]+replacement+original[registry.end():],
+                    encoding="utf-8")
+                with self.assertRaisesRegex(ValueError,"US: selectable cover"):
+                    country_coverage(self.root,[{"country":"US"}])
+
+    def test_cover_url_must_match_licensed_postcard_not_only_its_asset(self):
+        import re
+        path=self.root/"index.html"
+        page=path.read_text(encoding="utf-8")
+        registry=re.search(r"(?m)^const TODAY_COUNTRY_PHOTOS=Object\\.freeze\\((.*)\\);$",page)
+        self.assertIsNotNone(registry)
+        covers=json.loads(registry.group(1))
+        covers["US"][1]["url"]=covers["US"][0]["url"]
+        replacement="const TODAY_COUNTRY_PHOTOS=Object.freeze("+json.dumps(
+            covers,ensure_ascii=False,separators=(",",":"))+");"
+        path.write_text(page[:registry.start()]+replacement+page[registry.end():],
+                        encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"US: selectable cover"):
+            country_coverage(self.root,[{"country":"US"}])
+
     def test_two_paragraph_travel_story_is_required_for_published_country(self):
         path=self.root/"travel-stops.json"
         manifest=json.loads(path.read_text(encoding="utf-8"))
