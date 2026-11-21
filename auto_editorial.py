@@ -5,7 +5,8 @@ from country_codes import catalog, country_code, country_codes, country_region
 from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from editorial_quality import (headline_fidelity_risk, independent_editorial_quality_passed,
     independently_approved_secondary_quip, editorial_rubric,
-    editorial_rubric_rejection, choose_pre_review_quip)
+    editorial_rubric_rejection, verified_rubric_for_edition,
+    choose_pre_review_quip)
 from editorial_identity import (
     HUMAN_FAILURE_MISSION, human_failure_rejection, comic_line_rejection,
     noncomic_incident_rejection,
@@ -1655,8 +1656,8 @@ def main():
         if not independent_editorial_quality_passed(audit):
             reject("editorial_headline_or_humor_quality_not_confirmed");continue
         score_issue=editorial_rubric_rejection(audit)
-        if score_issue:
-            reject(score_issue);continue
+        if not verified_rubric_for_edition(audit,day):
+            reject(score_issue or "mandatory_five_factor_review_missing");continue
         # These are source/translation safeguards, not a second investigation.
         if any(audit.get(field) is not True for field in
                ("originalReporting","factsVerified","dateVerified","safeTone")):
