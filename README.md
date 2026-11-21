@@ -30,7 +30,7 @@
 
 ## 段階的な画面・コード分離（2026-11-21 追加）
 
-`reader_asset_split.py` は既存の編集・テスト用 `index.html` から公開用CSS (`assets/reader-core.css`)、ニュース表示JavaScript (`assets/reader-core.js`)、国紹介・代表写真の独立データモジュール (`assets/reader-country-data.js`) を安全に書き出します。GitHub Pagesでは、HTML・CSS・JavaScriptが別ファイルとして配信され、`check_release_candidate.py` と公開後の `check_public_country_release.py` が同一バイト列を検査します。PWAは両資産を新しいキャッシュに保存します。編集原本は従来のHTMLテンプレートに残る移行段階であり、今後はCSS/JavaScript自体もソースごと機能別に分割していきます。
+`reader_asset_split.py` は既存の編集・テスト用 `index.html` から公開用CSS (`assets/reader-core.css`)、ニュース表示JavaScript (`assets/reader-core.js`)、国紹介・代表写真の独立データモジュール (`assets/reader-country-data.js`)、写真のローテーションと小旅行の独立JavaScript (`assets/reader-travel.js`) を安全に書き出します。GitHub Pagesでは、HTML・CSS・JavaScriptが別ファイルとして配信され、`check_release_candidate.py` と公開後の `check_public_country_release.py` が同一バイト列を検査します。PWAは必要な各資産をバージョン付きキャッシュに保存します。編集原本は従来のHTMLテンプレートに残る移行段階であり、今後はCSS/JavaScript自体もソースごと機能別に分割していきます。
 
 `country_editorial_queue.py --top 8` は未承認国を制作順に並べ、写真、紹介文、文化資料、小旅行、クイズの不足を知らせます。**この報告は国や記事を自動承認しません**。新しい通常号をAI編集する際は2026-11-21以降、五つの評価項目が記録され、裏付け・安全性はいずれも5/5、驚き・判断ミスの明確さ・結果の意外性はいずれも4/5以上でなければ採用しません。基準を満たした記事が4本未満なら前号を維持し、穴埋め記事は作りません。
 
