@@ -92,7 +92,10 @@
     "gr-delphi-apollo-postcard",
     "eg-cairo-skyline-cover",
     "eg-giza-pyramid-postcard",
-    "eg-abu-simbel-postcard"
+    "eg-abu-simbel-postcard",
+    "tr-istanbul-sunset-cover",
+    "tr-hagia-sophia-postcard",
+    "tr-cappadocia-rocks-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -5045,11 +5048,136 @@
     },
     "TR": {
       "name": "トルコ",
-      "status": "pending",
-      "portrait": null,
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "status": "approved",
+      "portrait": {
+        "lead": "大陸をつなぐ海峡と、石の歴史が重なる国",
+        "body": "トルコはヨーロッパとアジアにまたがる国で、イスタンブールにはボスポラス海峡を挟んで異なる地域の景色が広がります。旧市街ではビザンツ帝国やオスマン帝国の時代を伝える建物が隣り合い、中央アナトリアのカッパドキアには火山由来の岩を削った谷や住居の跡が残ります。市場や食卓には地域ごとの文化が息づき、大都市と内陸の町で印象も大きく変わります。歴史の建築と自然が生んだ不思議な地形を一緒に味わえる国です。",
+        "facts": [
+          "首都：アンカラ",
+          "世界遺産：イスタンブール歴史地区",
+          "世界遺産：ギョレメ国立公園とカッパドキアの岩窟群"
+        ],
+        "sourceName": "UNESCO世界遺産センター・イスタンブール歴史地区",
+        "sourceUrl": "https://whc.unesco.org/en/list/356/",
+        "photos": [
+          "tr-hagia-sophia-postcard",
+          "tr-cappadocia-rocks-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/tr-istanbul-sunset-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Istanbul_sky2.jpg/500px-Istanbul_sky2.jpg",
+          "caption": "イスタンブールの海辺と夕暮れの空（2020年撮影）",
+          "author": "Mobina iz",
+          "license": "CC BY-SA 4.0",
+          "place": "イスタンブールの海辺の夕景",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Istanbul_sky2.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "アヤソフィアを含むイスタンブール歴史地区の世界遺産登録年は？",
+          "options": [
+            "1979年",
+            "1985年",
+            "2007年"
+          ],
+          "answer": 1,
+          "photoLabel": "正解写真｜イスタンブールのアヤソフィア",
+          "fact": "UNESCOはイスタンブール歴史地区を1985年に世界文化遺産へ登録しました。",
+          "quip": "ドーム一つに幾つもの時代。建物の履歴書が長すぎる。",
+          "photoKey": "tr-hagia-sophia-postcard"
+        },
+        {
+          "question": "カッパドキアの塔のような奇岩ができた主な自然の働きは？",
+          "options": [
+            "火山性の地層が風雨で削られた",
+            "サンゴの成長",
+            "湖面の凍結だけ"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜カッパドキアの奇岩",
+          "fact": "UNESCOは火山性の地形が浸食され、特異な谷や奇岩を生んだと解説しています。",
+          "quip": "地球の彫刻作品。しかも全部ちょっとずつ形が違う。",
+          "photoKey": "tr-cappadocia-rocks-postcard"
+        }
+      ],
+      "travelStops": {
+        "tr-istanbul-sunset-cover": {
+          "country": "トルコ",
+          "countryOnly": true,
+          "place": "イスタンブールの海辺の夕景",
+          "region": "イスタンブール・マルマラ海沿岸",
+          "latitude": 40.9655,
+          "longitude": 28.7967,
+          "note": "海に面した街が夕暮れに見せる風景。",
+          "photoCaption": "イスタンブールの海辺と夕暮れの空（2020年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Istanbul_sky2.jpg/500px-Istanbul_sky2.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Istanbul_sky2.jpg",
+          "photoAsset": "assets/travel/tr-istanbul-sunset-cover.jpg",
+          "author": "Mobina iz",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "tr-hagia-sophia-postcard": {
+          "country": "トルコ",
+          "countryOnly": true,
+          "place": "アヤソフィア",
+          "region": "イスタンブール・スルタンアフメット地区",
+          "latitude": 41.0086,
+          "longitude": 28.9802,
+          "note": "異なる時代にさまざまな役割を担ってきた大ドームの建築。",
+          "photoCaption": "イスタンブールの歴史的建築アヤソフィア（2021年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Hagia_Sophia_Istanbul_4.jpg/500px-Hagia_Sophia_Istanbul_4.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Istanbul_4.jpg",
+          "photoAsset": "assets/travel/tr-hagia-sophia-postcard.jpg",
+          "author": "Adnane Chahboun",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "イスタンブールの旧市街を歩くと、巨大なドームを持つアヤソフィアの建築が姿を現します。外観のどの方向から見ても、中央の屋根を支える建物の複雑な重なりに目を奪われます。写真に写る建物の形だけでなく、近くに立つ別の宗教建築や広場にも注目すると、この街にさまざまな文化が積み重なってきたことが感じられます。一つの時代だけでは説明できない場所です。",
+            "UNESCOの『イスタンブール歴史地区』は1985年に世界文化遺産に登録されました。ビザンツ帝国の首都コンスタンティノープルの時代からオスマン帝国の時代にかけ、建築は役割や姿を変えながら都市の中心に残りました。アヤソフィアも、その長い歴史を象徴する建造物の一つです。大きなドームがつくる空間を思い浮かべながら、建物そのものが何世紀にもわたる街の記憶を抱えていることを考えてみたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・イスタンブール歴史地区",
+              "url": "https://whc.unesco.org/en/list/356/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "tr-cappadocia-rocks-postcard": {
+          "country": "トルコ",
+          "countryOnly": true,
+          "place": "カッパドキアの奇岩群",
+          "region": "ネヴシェヒル県・カッパドキア",
+          "latitude": 38.643,
+          "longitude": 34.832,
+          "note": "火山の地層を風雨が削って生まれた、塔のような岩の景観。",
+          "photoCaption": "カッパドキアの『妖精の煙突』と呼ばれる奇岩群（2017年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Kapadokya_peri_bacalar%C4%B1.jpg/500px-Kapadokya_peri_bacalar%C4%B1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Kapadokya_peri_bacalar%C4%B1.jpg",
+          "photoAsset": "assets/travel/tr-cappadocia-rocks-postcard.jpg",
+          "author": "Muhammed Diler",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "カッパドキアでは、地面から細長い塔のように伸びる奇岩があちこちに現れます。『妖精の煙突』とも呼ばれるその形は一つずつ異なり、谷に並ぶ姿を眺めると、自然が時間をかけて彫刻をつくったように感じられます。写真に写る岩の輪郭を追いながら足元の谷へ視線を移すと、同じ地層でも削られ方によって景色が大きく変わることがわかります。人の手が加わった洞窟と自然の岩を見比べるのも面白い場所です。",
+            "UNESCOはギョレメ国立公園とカッパドキアの岩窟群を1985年に複合遺産として登録しました。火山性の地層が風雨に浸食されてできた谷や奇岩のなかに、人々が住居や礼拝の空間を掘り込んできた歴史があります。地形そのものが変化しただけでなく、人々もその岩を暮らしに活用してきました。岩の形の不思議さを楽しみながら、自然と人間がつくった二重の風景として眺めると旅が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ギョレメ国立公園とカッパドキアの岩窟群",
+              "url": "https://whc.unesco.org/en/list/357/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "TV": {
