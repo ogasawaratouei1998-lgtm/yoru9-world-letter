@@ -45,6 +45,21 @@ def _extract_photos(html):
     return json.loads(lines[0][len(prefix):-2])
 
 
+def _extract_approved_codes(html):
+    """The browseable atlas may show only explicitly approved destinations."""
+    rows=[line for line in html.splitlines()
+          if line.startswith("const APPROVED_COUNTRY_CODES=Object.freeze(")]
+    prefix="const APPROVED_COUNTRY_CODES=Object.freeze("
+    if len(rows)!=1 or not rows[0].endswith(");"):
+        raise ValueError("Approved country atlas registry missing or ambiguous")
+    values=json.loads(rows[0][len(prefix):-2])
+    if (not isinstance(values,list) or
+            any(not isinstance(code,str) for code in values) or
+            len(values)!=len(set(values))):
+        raise ValueError("Approved country atlas contains malformed codes")
+    return values
+
+
 def _legacy(root):
     root=Path(root)
     html=(root/"index.html").read_text(encoding="utf-8")
@@ -174,6 +189,11 @@ def load_country_content(root):
 def check_country_content(root):
     """Fail closed on ANY inconsistent legacy registry, with no silent repair."""
     canonical=load_country_content(root)
+    expected=sorted(code for code,entry in canonical["countries"].items()
+                    if entry["status"]=="approved")
+    atlas=_extract_approved_codes((Path(root)/"index.html").read_text(encoding="utf-8"))
+    if atlas!=expected:
+        raise ValueError("Approved country atlas drift: pending location or stale approval; use --sync")
     legacy=_legacy(root)
     if canonical["travelOrder"]!=legacy["travelOrder"]:
         raise ValueError("Travel stop order drift: use country_content.py --sync")
@@ -257,6 +277,13 @@ def sync_country_content(root):
                    lambda match:line,html)
     if n!=1:
         raise ValueError("Country cover-photo registry missing")
+    approved_line="const APPROVED_COUNTRY_CODES=Object.freeze("+json.dumps(
+        sorted(code for code,entry in countries.items()
+               if entry["status"]=="approved"),ensure_ascii=False,separators=(",",":"))+");"
+    html,n=re.subn(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\(.*\\);$",
+                   lambda match:approved_line,html)
+    if n!=1:
+        raise ValueError("Approved country atlas registry missing")
     stops={key:next(c["travelStops"][key] for c in countries.values()
                     if key in c["travelStops"]) for key in doc["travelOrder"]}
     metadata=doc["highlightsMetadata"]
