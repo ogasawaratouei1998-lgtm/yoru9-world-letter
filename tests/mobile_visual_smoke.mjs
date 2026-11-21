@@ -443,7 +443,15 @@ try{
    // Only the current edition is mapped: real country centroids over a
    // pastel illustrated map; neither monthly shelf nor past issue map exists.
    const today=page.locator('#todayMapSection');
-   assert.equal(await today.count(),1,'current-edition map is visible');
+   const explore=page.locator('#worldExplore');
+   assert.equal(await today.count(),1,'current-edition map is retained');
+   assert.equal(await explore.evaluate(el=>el.open),false,'optional world exploration is initially collapsed');
+   assert.equal(await today.isHidden(),true,'map does not compete with the news gallery');
+   assert.equal(await gallery.first().isVisible(),true,'news remains directly accessible');
+   await explore.locator('summary').first().click();
+   await today.waitFor({state:'visible'});
+   await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+   assert.equal(await explore.evaluate(el=>el.open),true);
    assert.equal(await page.locator('#monthRetrospective').count(),0,
     'monthly shelf is fully removed');
    await page.waitForFunction(()=>document.querySelectorAll('#todayMapLegend .today-map-country').length>0,
@@ -740,6 +748,13 @@ try{
    assert.ok((await page.locator('#todayQuizQuestion').textContent()).length>=7);
    await page.locator('#todayQuizClose').click();
    assert.equal(await page.locator('#todayCountryQuiz').isHidden(),true);
+   await explore.locator('summary').first().click();
+   assert.equal(await today.isHidden(),true,'world exploration can be closed again');
+   assert.equal(await gallery.first().isVisible(),true,'closing exploration preserves news');
+   await explore.locator('summary').first().click();
+   await today.waitFor({state:'visible'});
+   assert.equal(await pins.count(),uniqueMappedCountries,'reopening preserves exact issue countries');
+   assert.equal(await page.locator('#todayCountryQuiz').isHidden(),true,'closed quiz does not reappear');
    const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-window.innerWidth);
    assert.ok(overflow<2,'no horizontal overflow: '+overflow+'px');
    assert.deepEqual(errors,[],'no JavaScript uncaught errors');
