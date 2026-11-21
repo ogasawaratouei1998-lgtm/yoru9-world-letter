@@ -32,6 +32,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',options:['ベルリン','ミュンヘン','ケルン'],answer:2,photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
   {question:'ノイシュヴァンシュタイン城があるドイツの州は？',options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'},
  ],
+ EG:[
+  {question:'ギザのピラミッド群を含むメンフィスの墓地遺跡の世界遺産登録年は？',options:['1979年','1985年','2001年'],answer:0,photoLabel:'正解写真｜ギザの大ピラミッド',fact:'UNESCOによると、メンフィスとその墓地遺跡は1979年に世界文化遺産へ登録されました。',quip:'古代の建築なのに、街の景色に今も堂々と割り込んでくる。',photoKey:'eg-giza-pyramid-postcard'},
+  {question:'アブ・シンベルなどのヌビア遺跡群を救うため、国際的な保存活動を主導した機関は？',options:['UNESCO','欧州中央銀行','国際オリンピック委員会'],answer:0,photoLabel:'正解写真｜アブ・シンベル大神殿',fact:'UNESCOが1960年から1980年にかけて進めた国際保存活動により、神殿などが水没の危機から救われました。',quip:'古代の巨像を動かしたのは、現代の大きなチームワーク。',photoKey:'eg-abu-simbel-postcard'},
+ ],
  ES:[
   {question:'サグラダ・ファミリアが建つ都市は？',options:['マドリード','バルセロナ','セビリア'],answer:1,photoKey:'spain-sagrada-nativity-quiz-image',photoLabel:'正解の建築｜バルセロナのサグラダ・ファミリア・生誕のファサード',fact:'サグラダ・ファミリアの「生誕のファサード」と地下聖堂は、ガウディ作品群としてUNESCO世界遺産に登録されています。',quip:'塔だけじゃない。外壁の細工まで観光案内の主役級。'},
   {question:'写真のアルハンブラ宮殿がある都市は？',options:['グラナダ','バルセロナ','バレンシア'],answer:0,photoKey:'spain-alhambra-quiz-image',photoLabel:'正解の宮殿｜アンダルシアのグラナダ・アルハンブラ宮殿',fact:'アルハンブラ宮殿はグラナダにあり、ヘネラリフェとアルバイシン地区とともに世界遺産に登録されています。',quip:'城壁の奥まで歴史ぎっしり。地図の答えはグラナダ。'},
@@ -83,6 +87,14 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  SG:[
   {question:'シンガポール植物園が世界文化遺産に登録された年は？',options:['1997年','2015年','2025年'],answer:1,photoLabel:'正解写真｜シンガポール植物園',fact:'UNESCO世界遺産センターの登録情報によると、シンガポール植物園の登録年は2015年です。',quip:'高層ビルの街で、植物も世界遺産の主役です。',photoKey:'sg-botanic-gardens-postcard'},
   {question:'スーパーツリー・グローブに集まっている巨大な樹木型構造物は何本？',options:['3本','12本','40本'],answer:1,photoLabel:'正解写真｜ガーデンズ・バイ・ザ・ベイ',fact:'公式案内では、18本あるスーパーツリーのうち12本がスーパーツリー・グローブに集まっています。',quip:'スーパーツリーが12本。樹木界の未来都市です。',photoKey:'sg-gardens-bay-postcard'},
+ ],
+ TH:[
+  {question:'アユタヤ歴史都市が世界文化遺産に登録された年は？',options:['1985年','1991年','2007年'],answer:1,photoLabel:'正解写真｜アユタヤのワット・マハータート',fact:'UNESCO世界遺産センターの登録情報では、アユタヤ歴史都市の登録年は1991年です。',quip:'木の根が歴史を包む。自然の展示方法には驚かされる。',photoKey:'th-ayutthaya-mahathat-postcard'},
+  {question:'UNESCOのスコータイ歴史都市群を構成する主な歴史都市は全部でいくつ？',options:['1つ','3つ','6つ'],answer:1,photoLabel:'正解写真｜スコータイ歴史公園',fact:'UNESCO登録資産はスコータイ、シーサッチャナーライ、カムペーンペットの三つの歴史都市から構成されています。',quip:'都の歴史も一か所では終わらない。見どころが三都市分。',photoKey:'th-sukhothai-park-postcard'},
+ ],
+ TR:[
+  {question:'アヤソフィアを含むイスタンブール歴史地区の世界遺産登録年は？',options:['1979年','1985年','2007年'],answer:1,photoLabel:'正解写真｜イスタンブールのアヤソフィア',fact:'UNESCOはイスタンブール歴史地区を1985年に世界文化遺産へ登録しました。',quip:'ドーム一つに幾つもの時代。建物の履歴書が長すぎる。',photoKey:'tr-hagia-sophia-postcard'},
+  {question:'カッパドキアの塔のような奇岩ができた主な自然の働きは？',options:['火山性の地層が風雨で削られた','サンゴの成長','湖面の凍結だけ'],answer:0,photoLabel:'正解写真｜カッパドキアの奇岩',fact:'UNESCOは火山性の地形が浸食され、特異な谷や奇岩を生んだと解説しています。',quip:'地球の彫刻作品。しかも全部ちょっとずつ形が違う。',photoKey:'tr-cappadocia-rocks-postcard'},
  ],
  US:[
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},

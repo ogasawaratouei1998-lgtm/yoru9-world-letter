@@ -16,22 +16,28 @@ class CountryBatchProgressTests(unittest.TestCase):
         cls.catalog=check_country_content(ROOT)["countries"]
         cls.batch=json.loads((ROOT/"country-expansion-batch-at-tr-eg-20261121.json").read_text(encoding="utf-8"))
 
-    def test_three_country_portraits_prepared_but_without_license_data(self):
+    def test_original_draft_snapshot_and_current_photo_ready_states(self):
         self.assertEqual(set(self.batch["countries"]),CODES)
         self.assertEqual(self.batch["status"],"pending_photos_not_public")
         for code in CODES:
             with self.subTest(country=code):
                 canonical=self.catalog[code]
                 draft=self.batch["countries"][code]
-                self.assertEqual(canonical["status"],"pending")
                 self.assertEqual(draft["status"],"pending")
                 self.assertEqual(canonical["name"],draft["name"])
                 self.assertGreaterEqual(len(canonical["portrait"]["body"]),145)
                 self.assertTrue(canonical["portrait"]["sourceUrl"].startswith(
-                    "https://whc.unesco.org/en/statesparties/"))
-                self.assertEqual(canonical["portraitPhotos"],[])
-                self.assertEqual(canonical["quiz"],[])
-                self.assertEqual(canonical["travelStops"],{})
+                    "https://whc.unesco.org/en/"))
+                if code=="AT":
+                    self.assertEqual(canonical["status"],"pending")
+                    self.assertEqual(canonical["portraitPhotos"],[])
+                    self.assertEqual(canonical["quiz"],[])
+                    self.assertEqual(canonical["travelStops"],{})
+                else:
+                    self.assertEqual(canonical["status"],"approved")
+                    self.assertEqual(len(canonical["portraitPhotos"]),1)
+                    self.assertEqual(len(canonical["quiz"]),2)
+                    self.assertEqual(len(canonical["travelStops"]),3)
 
     def test_six_real_unesco_destinations_have_individual_two_paragraph_essays(self):
         seen=set()
@@ -57,19 +63,21 @@ class CountryBatchProgressTests(unittest.TestCase):
                     self.assertTrue(q["photoGoal"])
         self.assertEqual(len(seen),6)
 
-    def test_summary_separates_approved_from_nondisplayable_drafts(self):
+    def test_summary_preserves_austria_draft_and_approved_turkiye_egypt(self):
         report=expansion_progress(ROOT)
         self.assertEqual(report["catalogCount"],196)
-        self.assertEqual(report["approvedCount"],21)
-        self.assertEqual(report["pendingCount"],175)
-        for code in CODES:
-            with self.subTest(code=code):
-                self.assertIn(code,report["pendingPortraitsPrepared"])
-                self.assertNotIn(code,report["photoReady"])
-                self.assertIn("attributed_country_portrait_photo",
-                              report["pendingCountriesBlocked"][code])
-                self.assertIn("two_distinct_licensed_photo_quizzes",
-                              report["pendingCountriesBlocked"][code])
+        self.assertEqual(report["approvedCount"],24)
+        self.assertEqual(report["pendingCount"],172)
+        self.assertIn("AT",report["pendingPortraitsPrepared"])
+        self.assertNotIn("AT",report["photoReady"])
+        self.assertIn("attributed_country_portrait_photo",
+                      report["pendingCountriesBlocked"]["AT"])
+        self.assertIn("two_distinct_licensed_photo_quizzes",
+                      report["pendingCountriesBlocked"]["AT"])
+        for code in ("TR","EG"):
+            self.assertNotIn(code,report["pendingPortraitsPrepared"])
+            self.assertIn(code,report["photoReady"])
+            self.assertNotIn(code,report["pendingCountriesBlocked"])
         for code in ("NL","SG","MX","CH","GR","PT"):
             self.assertIn(code,report["photoReady"])
 

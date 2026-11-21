@@ -38,7 +38,7 @@ class ThirdCountryExpansionTests(unittest.TestCase):
 
     def test_three_countries_are_ready_with_two_unrepeated_quiz_photographs(self):
         ready,pending=ready_country_codes(ROOT)
-        self.assertEqual(len(ready),21)
+        self.assertEqual(len(ready),24)
         self.assertEqual(len(self.canonical["countries"]),196)
         for code,files in PHOTO_SOURCES.items():
             with self.subTest(country=code):
@@ -98,7 +98,7 @@ class ThirdCountryExpansionTests(unittest.TestCase):
 
     def test_worker_offline_quiz_photos_always_match_manifest(self):
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v57",worker)
+        self.assertIn("yoru9-shell-v58",worker)
         for country in PHOTO_SOURCES.values():
             for key in country:
                 self.assertIn("assets/travel/"+key+".jpg",worker)

@@ -2168,5 +2168,224 @@
         "checkedOn": "2026-11-21"
       }
     ]
+  },
+  "eg-cairo-skyline-cover": {
+    "country": "エジプト",
+    "countryOnly": true,
+    "place": "カイロの市街地",
+    "region": "カイロ",
+    "latitude": 30.044,
+    "longitude": 31.236,
+    "note": "多くの建物がひしめく、ナイル沿いの首都の風景。",
+    "photoCaption": "カイロの建物が重なる都市の眺め（2025年撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cairo-skyline.jpg/500px-Cairo-skyline.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Cairo-skyline.jpg",
+    "photoAsset": "assets/travel/eg-cairo-skyline-cover.jpg",
+    "author": "Ahmed Atef (El-Mosawer)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "eg-giza-pyramid-postcard": {
+    "country": "エジプト",
+    "countryOnly": true,
+    "place": "ギザの大ピラミッド",
+    "region": "ギザのピラミッド地区",
+    "latitude": 29.9792,
+    "longitude": 31.1342,
+    "note": "巨大な石の三角形が、現代の街並みの向こうに立つ世界遺産。",
+    "photoCaption": "市街地の向こうにそびえるギザの大ピラミッド（2024年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Great_Pyramid_Giza.jpg/500px-Great_Pyramid_Giza.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Great_Pyramid_Giza.jpg",
+    "photoAsset": "assets/travel/eg-giza-pyramid-postcard.jpg",
+    "author": "Ireneusz Jerzy Borysiewicz",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ギザのピラミッドへ向かうと、遠くの街の建物の上に三角形の石の巨体が姿を現します。写真では一つの大きな形に見えても、近づくと幾つもの石の層が重なっていることがわかり、人の手で築かれた建造物だという事実に驚かされます。砂漠だけの風景と思われがちですが、都市のすぐそばにあることも特徴です。現代の道路や家々と古代の石の遺跡を同じ視野に入れると、時間の隔たりが鮮明になります。",
+      "UNESCOの『メンフィスとその墓地遺跡』にはギザからダハシュールまでのピラミッド群が含まれ、1979年に世界文化遺産へ登録されました。クフ王の大ピラミッドを含む墓地遺跡は、古代エジプトの王権や建築技術を伝える重要な証拠です。壮大さを眺めたあと、なぜこんな規模の建造物が造られたのかを考えると、石のかたまりが古代社会の組織と人々の営みを語る場所に変わります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・メンフィスとその墓地遺跡",
+        "url": "https://whc.unesco.org/en/list/86/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "eg-abu-simbel-postcard": {
+    "country": "エジプト",
+    "countryOnly": true,
+    "place": "アブ・シンベル大神殿",
+    "region": "アスワン県・ナセル湖畔",
+    "latitude": 22.3372,
+    "longitude": 31.6258,
+    "note": "岩山をくり抜いて造られた大きな神殿と王の像。",
+    "photoCaption": "巨大な王の像が並ぶアブ・シンベル大神殿（2023年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Abu_Simbel_Great_Temple.jpg/500px-Abu_Simbel_Great_Temple.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Abu_Simbel_Great_Temple.jpg",
+    "photoAsset": "assets/travel/eg-abu-simbel-postcard.jpg",
+    "author": "Benjamin Inbar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "アブ・シンベルの大神殿では、岩の壁から切り出された巨大な王の坐像が入口に並び、見上げるだけで圧倒されます。近づくと像の足元に小さな人の形も刻まれていることに気づき、古代の建築がどのように王の力を表現したかが伝わってきます。湖の近くにある現在の神殿は、実は最初に建てられた場所から移されたものです。その事実を知ってから正面を見直すと、もう一つの歴史が見えてきます。",
+      "UNESCOによれば、アブ・シンベルやフィラエの遺跡群はナイル川の水位上昇で水没する危険があり、1960年から1980年にかけた国際的な保存活動によって救われました。神殿は大きな石のブロックに分けて移設され、1979年にはヌビア遺跡群として世界遺産へ登録されています。古代に造られた神殿が現代の技術と国際協力によって守られたことを思えば、この巨像は二つの時代の挑戦を伝えているようです。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アブ・シンベルからフィラエまでのヌビア遺跡群",
+        "url": "https://whc.unesco.org/en/list/88/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "tr-istanbul-sunset-cover": {
+    "country": "トルコ",
+    "countryOnly": true,
+    "place": "イスタンブールの海辺の夕景",
+    "region": "イスタンブール・マルマラ海沿岸",
+    "latitude": 40.9655,
+    "longitude": 28.7967,
+    "note": "海に面した街が夕暮れに見せる風景。",
+    "photoCaption": "イスタンブールの海辺と夕暮れの空（2020年撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Istanbul_sky2.jpg/500px-Istanbul_sky2.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Istanbul_sky2.jpg",
+    "photoAsset": "assets/travel/tr-istanbul-sunset-cover.jpg",
+    "author": "Mobina iz",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "tr-hagia-sophia-postcard": {
+    "country": "トルコ",
+    "countryOnly": true,
+    "place": "アヤソフィア",
+    "region": "イスタンブール・スルタンアフメット地区",
+    "latitude": 41.0086,
+    "longitude": 28.9802,
+    "note": "異なる時代にさまざまな役割を担ってきた大ドームの建築。",
+    "photoCaption": "イスタンブールの歴史的建築アヤソフィア（2021年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6c/Hagia_Sophia_Istanbul_4.jpg/500px-Hagia_Sophia_Istanbul_4.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Hagia_Sophia_Istanbul_4.jpg",
+    "photoAsset": "assets/travel/tr-hagia-sophia-postcard.jpg",
+    "author": "Adnane Chahboun",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "イスタンブールの旧市街を歩くと、巨大なドームを持つアヤソフィアの建築が姿を現します。外観のどの方向から見ても、中央の屋根を支える建物の複雑な重なりに目を奪われます。写真に写る建物の形だけでなく、近くに立つ別の宗教建築や広場にも注目すると、この街にさまざまな文化が積み重なってきたことが感じられます。一つの時代だけでは説明できない場所です。",
+      "UNESCOの『イスタンブール歴史地区』は1985年に世界文化遺産に登録されました。ビザンツ帝国の首都コンスタンティノープルの時代からオスマン帝国の時代にかけ、建築は役割や姿を変えながら都市の中心に残りました。アヤソフィアも、その長い歴史を象徴する建造物の一つです。大きなドームがつくる空間を思い浮かべながら、建物そのものが何世紀にもわたる街の記憶を抱えていることを考えてみたい場所です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・イスタンブール歴史地区",
+        "url": "https://whc.unesco.org/en/list/356/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "tr-cappadocia-rocks-postcard": {
+    "country": "トルコ",
+    "countryOnly": true,
+    "place": "カッパドキアの奇岩群",
+    "region": "ネヴシェヒル県・カッパドキア",
+    "latitude": 38.643,
+    "longitude": 34.832,
+    "note": "火山の地層を風雨が削って生まれた、塔のような岩の景観。",
+    "photoCaption": "カッパドキアの『妖精の煙突』と呼ばれる奇岩群（2017年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Kapadokya_peri_bacalar%C4%B1.jpg/500px-Kapadokya_peri_bacalar%C4%B1.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Kapadokya_peri_bacalar%C4%B1.jpg",
+    "photoAsset": "assets/travel/tr-cappadocia-rocks-postcard.jpg",
+    "author": "Muhammed Diler",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "カッパドキアでは、地面から細長い塔のように伸びる奇岩があちこちに現れます。『妖精の煙突』とも呼ばれるその形は一つずつ異なり、谷に並ぶ姿を眺めると、自然が時間をかけて彫刻をつくったように感じられます。写真に写る岩の輪郭を追いながら足元の谷へ視線を移すと、同じ地層でも削られ方によって景色が大きく変わることがわかります。人の手が加わった洞窟と自然の岩を見比べるのも面白い場所です。",
+      "UNESCOはギョレメ国立公園とカッパドキアの岩窟群を1985年に複合遺産として登録しました。火山性の地層が風雨に浸食されてできた谷や奇岩のなかに、人々が住居や礼拝の空間を掘り込んできた歴史があります。地形そのものが変化しただけでなく、人々もその岩を暮らしに活用してきました。岩の形の不思議さを楽しみながら、自然と人間がつくった二重の風景として眺めると旅が深まります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ギョレメ国立公園とカッパドキアの岩窟群",
+        "url": "https://whc.unesco.org/en/list/357/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "th-bangkok-wat-arun-cover": {
+    "country": "タイ",
+    "countryOnly": true,
+    "place": "バンコクのワット・アルン",
+    "region": "バンコク・チャオプラヤー川西岸",
+    "latitude": 13.7437,
+    "longitude": 100.4889,
+    "note": "チャオプラヤー川のほとりにそびえる装飾的な仏教寺院。",
+    "photoCaption": "バンコクの川沿いに建つワット・アルン（2016年撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Bangkok_Wat_Arun.jpg/500px-Bangkok_Wat_Arun.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Bangkok_Wat_Arun.jpg",
+    "photoAsset": "assets/travel/th-bangkok-wat-arun-cover.jpg",
+    "author": "Cun Cun",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "th-ayutthaya-mahathat-postcard": {
+    "country": "タイ",
+    "countryOnly": true,
+    "place": "アユタヤのワット・マハータート遺跡",
+    "region": "アユタヤ県・アユタヤ歴史公園",
+    "latitude": 14.3568,
+    "longitude": 100.5685,
+    "note": "古都の寺院跡に、木の根と石の仏像が重なる風景。",
+    "photoCaption": "樹木の根に包まれた仏頭が残るワット・マハータート（2019年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Ayutthaya_Wat_Mahathat_01.jpg/500px-Ayutthaya_Wat_Mahathat_01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Ayutthaya_Wat_Mahathat_01.jpg",
+    "photoAsset": "assets/travel/th-ayutthaya-mahathat-postcard.jpg",
+    "author": "ErwinMeier",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "アユタヤのワット・マハータートでは、崩れた煉瓦の壁や石の仏像が木々の間に残っています。写真でよく知られるのは、成長した木の根に包まれた仏頭です。静かな表情の周囲を根が取り囲む姿は、一度見たら忘れられない印象を残します。遺跡全体へ視線を広げると、今は建物の一部しか残っていなくても、かつてここが人々の集まる都市の寺院だったことを想像できます。",
+      "UNESCOはアユタヤを、1350年ごろから発展したシャム王国の都の遺跡として紹介しています。川に囲まれた場所に都市が築かれ、交易や文化の中心として栄えました。現在の歴史都市は1991年に世界文化遺産へ登録されています。写真の仏頭だけを切り取らず、周囲の煉瓦の基壇や道筋、残された塔の形をたどってみると、今の静けさの向こうに古都のにぎわいが見えてくるようです。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アユタヤ歴史都市",
+        "url": "https://whc.unesco.org/en/list/576/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
+  },
+  "th-sukhothai-park-postcard": {
+    "country": "タイ",
+    "countryOnly": true,
+    "place": "スコータイ歴史公園",
+    "region": "スコータイ県・スコータイ",
+    "latitude": 17.02,
+    "longitude": 99.71,
+    "note": "古い都の寺院や仏像が公園の緑の中に保存された遺跡。",
+    "photoCaption": "スコータイ歴史公園に残る寺院と石造建築（2012年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Sukhothai_HistoricalPark.jpg/500px-Sukhothai_HistoricalPark.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sukhothai_HistoricalPark.jpg",
+    "photoAsset": "assets/travel/th-sukhothai-park-postcard.jpg",
+    "author": "Khunmoohan",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "スコータイ歴史公園を歩くと、広い空の下に古い寺院の基壇や仏像が現れます。緑の芝生と水辺、赤みを帯びた石の遺構が重なり、ゆっくりと眺めたくなる景色です。写真に写る建築を正面から見たあと、少し距離を取って周囲の配置を確かめると、一つの寺院だけでなく、都の空間の広がりも感じられます。静かな公園に残る建物をたどりながら、かつての人々の生活を想像したい場所です。",
+      "UNESCOはスコータイと関連する歴史都市を、タイの初期王国の都市文化を示す遺産として1991年に登録しました。スコータイ、シーサッチャナーライ、カムペーンペットの三つの都市遺跡が一体となって評価されています。写真に写る寺院だけでなく、都市を形づくった建築や宗教、美術の発展にも注目したいところです。点在する遺構を一つの地図で見比べれば、遠く離れた場所が同じ時代の文化で結び付いていたことが伝わってきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・スコータイと周辺の歴史都市群",
+        "url": "https://whc.unesco.org/en/list/574/",
+        "checkedOn": "2026-11-21"
+      }
+    ],
+    "famousTourist": true
   }
 }
