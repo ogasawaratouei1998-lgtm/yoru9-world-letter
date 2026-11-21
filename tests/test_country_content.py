@@ -440,6 +440,26 @@ class CountryContentTest(unittest.TestCase):
         self.assertIn("'assets/reading-focus.css'",builder)
         self.assertIn("'assets/reading-focus.css'",worker)
 
+    def test_microtravel_rewrites_preserve_exact_sources_and_specific_facts(self):
+        data=check_country_content(ROOT)
+        stops=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        expectations=(
+            ("GB","flight-wrong-country","1845年","https://www.edinburghcastle.scot/see-and-do/highlights/st-margarets-chapel/"),
+            ("GB","uk-country-postcard","火薬庫","https://www.edinburghcastle.scot/see-and-do/highlights/st-margarets-chapel/"),
+            ("JP","japan-country-postcard","寺伝","https://www.senso-ji.jp/about/chronology.html"),
+            ("US","faa-router-ground-stop-2026","約18億年前","https://www.nps.gov/grca/learn/education/geology.htm"),
+            ("US","us-golden-gate-postcard","下塗り","https://www.goldengate.org/bridge/history-research/bridge-features/color-art-deco-styling/"),
+        )
+        for code,key,fact,url in expectations:
+            with self.subTest(key=key):
+                stop=data["countries"][code]["travelStops"][key]
+                self.assertEqual(stop,stops[key])
+                self.assertEqual(len(stop["travelStory"]),2)
+                self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
+                self.assertIn(fact,"".join(stop["travelStory"]))
+                self.assertIn(url,{s["url"] for s in stop["historicalSources"]})
+                self.assertNotEqual(stop["photoPage"],url)
+
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)
         country=doc["countries"]["NG"]
