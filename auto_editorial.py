@@ -140,6 +140,13 @@ MANZAI_CRAFT=(
     "abstract analogy, or 'you had to be there' context. The headline "
     "already tells WHO and WHAT, so never just retell it with 'まさか' "
     "or add the funny proper noun as the supposed payoff. "
+    "Across an issue, do not end every tsukkomi with the same catchphrase "
+    "such as やないか or かい. Try genuinely different punchline rhythms "
+    "only when natural: a terse role reversal, an earned question, "
+    "a concrete noun-ending twist, or a sharp standard-Japanese observation. "
+    "Kansai dialect is welcome when it fits, not a mandatory template. "
+    "NEVER sacrifice fact fidelity, humane tone or the incident-specific "
+    "last beat merely to make the grammatical ending different. "
     "The LAST beat must add a new, source-grounded funny connection or "
     "role inversion that was not already explicit in the title/summary; "
     "it must make sense on a first reading WITHOUT the audience doing "
@@ -789,6 +796,7 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
     """
     from collections import Counter
     from itertools import combinations
+    from quip_variety import repeated_cadence_count
     if not pool:
         return []
     region_history=Counter()
@@ -843,6 +851,10 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
                 -sum(region_history[region] for region in known_regions),
                 -sum(country_history[country] for country in known_countries),
                 -sum(lifetime_country_history[country] for country in known_countries),
+                # At otherwise equal factual/region/genre priority, avoid an
+                # issue that ends every gag with the same verbal tic.
+                # It is a *tie-breaker*, never a story-quality or truth veto.
+                -repeated_cadence_count(stories),
                 random_tiebreak(indices))
     best=max(choices,key=diversity_score)
     # Lead with the largest independently audited personal blunder when present.
@@ -1084,7 +1096,8 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "independent_approved","selected_for_edition",
     "country_ready_articles","country_ready_count",
     "supplemental_attempts","supplemental_generated",
-    "supplemental_groups_examined"
+    "supplemental_groups_examined",
+    "repeated_quip_cadences","recognized_quip_cadences"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
@@ -1690,7 +1703,11 @@ def main():
     selected=select_diverse_verified_stories(selected,
         country_history,category_history,topic_history,lifetime_history,
         recent_country_cooldown=cooldown,selection_seed=now.date().isoformat())
-    checkpoint("selected",selected_for_edition=len(selected))
+    from quip_variety import quip_variety_metrics
+    cadence_metrics=quip_variety_metrics(selected)
+    checkpoint("selected",selected_for_edition=len(selected),**cadence_metrics)
+    print("Quip cadence diagnostic (aggregate only):",
+          json.dumps(cadence_metrics,sort_keys=True),flush=True)
     print("Nightly verified selection:",len(selected),"source-checked stories;",
           "minimum 4 verified stories from Nov 21; otherwise keep previous.",flush=True)
     print("30-day editorial diversity:",json.dumps({
