@@ -23,12 +23,21 @@ class ThirdEightCountryExpansionTests(unittest.TestCase):
         for code, draft in self.draft["countries"].items():
             with self.subTest(code=code):
                 entry = self.canonical["countries"][code]
-                self.assertEqual(entry["status"], "pending")
                 self.assertEqual(entry["name"], draft["name"])
-                self.assertEqual(entry["portrait"], draft["portrait"])
-                self.assertEqual(entry["portraitPhotos"], [])
-                self.assertEqual(entry["travelStops"], {})
-                self.assertEqual(entry["quiz"], [])
+                self.assertEqual(draft["status"], "pending")
+                if code == "DK":
+                    # Immutable draft snapshot; the country later gained reviewed CC photos.
+                    self.assertEqual(entry["status"], "approved")
+                    self.assertEqual(entry["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertEqual(len(entry["portraitPhotos"]), 1)
+                    self.assertEqual(len(entry["travelStops"]), 3)
+                    self.assertEqual(len(entry["quiz"]), 2)
+                else:
+                    self.assertEqual(entry["status"], "pending")
+                    self.assertEqual(entry["portrait"], draft["portrait"])
+                    self.assertEqual(entry["portraitPhotos"], [])
+                    self.assertEqual(entry["travelStops"], {})
+                    self.assertEqual(entry["quiz"], [])
                 self.assertGreaterEqual(len(entry["portrait"]["body"]), 145)
                 self.assertEqual(entry["portrait"]["sourceUrl"],
                                  "https://whc.unesco.org/en/statesparties/" + code.lower())
