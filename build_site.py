@@ -128,7 +128,7 @@ def bundle_travel_photos(root, output):
                     w,h=jpeg_dimensions(cache_file)
                     if ((w<1000 or h<540) if asset in active_covers else
                             (w<330 or h<200) if asset in active_photos else
-                            (w<300 or h<160)):
+                            (w<300 or h<140)):
                         raise ValueError("cached image resolution inadequate")
                     shutil.copyfile(cache_file,target)
                     reused+=1
@@ -218,7 +218,7 @@ def bundle_travel_photos(root, output):
                 width,height=jpeg_dimensions(target)
                 if ((width<1000 or height<540) if asset in active_covers
                         else (width<330 or height<200) if asset in active_photos
-                        else (width<300 or height<160)):
+                        else (width<300 or height<140)):
                     raise ValueError('published photo below native pixel requirement: '+
                                      str(width)+'x'+str(height))
                 shutil.copyfile(target,cache_files[asset])
