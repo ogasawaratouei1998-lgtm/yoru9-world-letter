@@ -1730,5 +1730,224 @@
         "checkedOn": "2026-11-21"
       }
     ]
+  },
+  "nl-rotterdam-city-cover": {
+    "country": "オランダ",
+    "countryOnly": true,
+    "place": "ロッテルダムの都市景観",
+    "region": "南ホラント州・ロッテルダム",
+    "latitude": 51.9225,
+    "longitude": 4.4792,
+    "note": "新旧の建築が並ぶロッテルダムの都市景観。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Rotterdam_(1).jpg/500px-Rotterdam_(1).jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Rotterdam_(1).jpg",
+    "author": "Elekes Andor",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/nl-rotterdam-city-cover.jpg",
+    "photoCaption": "オランダ・ロッテルダムの現代的な街並み（2019年撮影）",
+    "coverOnly": true
+  },
+  "nl-amsterdam-canals-postcard": {
+    "country": "オランダ",
+    "countryOnly": true,
+    "place": "アムステルダムの運河地区",
+    "region": "北ホラント州・アムステルダム",
+    "latitude": 52.369,
+    "longitude": 4.8827,
+    "note": "水路沿いに細長い家々が並ぶ、17世紀に整備された運河の街並み。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7c/Amsterdam_Canal_June_2019.jpg/500px-Amsterdam_Canal_June_2019.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Amsterdam_Canal_June_2019.jpg",
+    "author": "Azzalini Fabio",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/nl-amsterdam-canals-postcard.jpg",
+    "photoCaption": "アムステルダムの橋から眺めた運河（2019年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "アムステルダムの運河を歩くと、水面の両側に細長い建物が続き、橋を渡るたびに街の角度が変わります。運河沿いに並ぶ家々の屋根や窓は一軒ずつ違っていて、同じ水辺でも表情は豊かです。写真に写る橋から街を眺めたあと、水路に沿って数分歩いてみると、船のための通り道が、人々の暮らす街の骨格にもなっていることを実感できます。",
+      "UNESCOによれば、シンゲル運河の内側に広がる17世紀の環状運河地区は、都市計画と水利技術を組み合わせた街づくりの代表例です。2010年に世界文化遺産へ登録されました。水辺に似た形の建物が整然と並ぶようで、よく見ると間口や切妻屋根、建築装飾には違いがあります。運河を美しい景色として楽しみながら、それを計画し、維持してきた都市の歴史にも思いを巡らせたくなります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アムステルダムの運河地区",
+        "url": "https://whc.unesco.org/en/list/1349/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "nl-kinderdijk-windmills-postcard": {
+    "country": "オランダ",
+    "countryOnly": true,
+    "place": "キンデルダイクの風車群",
+    "region": "南ホラント州・キンデルダイク",
+    "latitude": 51.8847,
+    "longitude": 4.6365,
+    "note": "低地の水を管理するための風車が、水路に沿って並ぶ世界遺産。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b9/Kinderdijk_windmills_v3.jpg/500px-Kinderdijk_windmills_v3.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Kinderdijk_windmills_v3.jpg",
+    "author": "Rudolphous",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/nl-kinderdijk-windmills-postcard.jpg",
+    "photoCaption": "キンデルダイクに並ぶ伝統的な排水風車（2012年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "キンデルダイクの水路沿いを歩くと、羽根を大きく広げた風車が次々と現れます。草地、水面、空がゆったりと重なり、どこを向いても絵になる眺めです。けれども風車は、昔から景色を飾るために建てられたわけではありません。水辺に立って羽根の向きを眺めると、風を利用して低い土地を守ろうとしてきた人々の工夫が、目の前の風景として残っていることに気づきます。",
+      "UNESCOは、キンデルダイク＝エルスハウトの風車群を、オランダの排水技術の発達を伝える文化的景観として1997年に世界遺産登録しました。風車だけでなく、排水路、水門、揚水施設などが一体となって土地を守る仕組みを形づくっています。水車を観光の象徴として見るだけでは、その真価は伝わりません。水がどちらへ流れ、誰が土地を維持したのかを想像すると、静かな田園の風景が一段と奥深く見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・キンデルダイクの風車群",
+        "url": "https://whc.unesco.org/en/list/818/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "sg-marina-bay-cover": {
+    "country": "シンガポール",
+    "countryOnly": true,
+    "place": "マリーナ湾のアートサイエンス・ミュージアムとホテル",
+    "region": "マリーナ湾",
+    "latitude": 1.2836,
+    "longitude": 103.8593,
+    "note": "夜の湾岸に広がる、都市の建築と光の眺め。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Marina_Bay_Sands%2C_Singapore-3491.jpg/500px-Marina_Bay_Sands%2C_Singapore-3491.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Marina_Bay_Sands%2C_Singapore-3491.jpg",
+    "author": "Bijay Chaurasia Photography",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/sg-marina-bay-cover.jpg",
+    "photoCaption": "夜のマリーナベイ・サンズとアートサイエンス・ミュージアム（2023年撮影）",
+    "coverOnly": true
+  },
+  "sg-botanic-gardens-postcard": {
+    "country": "シンガポール",
+    "countryOnly": true,
+    "place": "シンガポール植物園",
+    "region": "タングリン地区",
+    "latitude": 1.3138,
+    "longitude": 103.8159,
+    "note": "熱帯植物の保存と研究の歴史を持つ、都市の緑の世界遺産。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e3/Singapore_Botanic_Gardens.jpg/500px-Singapore_Botanic_Gardens.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Singapore_Botanic_Gardens.jpg",
+    "author": "Songpyeon",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/sg-botanic-gardens-postcard.jpg",
+    "photoCaption": "シンガポール植物園の緑と園内の景色（2013年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "街のにぎわいからシンガポール植物園へ入ると、木々の葉が大きく広がり、周囲の空気まで変わったように感じられます。遊歩道を進むと池や花壇、背の高い熱帯植物が姿を現し、都会のすぐそばに広い緑の空間があることを実感します。写真に写る庭園の景色を眺めたあと、葉の形や樹木の高さに注目してみると、ひとくちに熱帯の植物と言ってもその姿が実に多様だとわかります。",
+      "UNESCOは、この植物園が英国植民地期の庭園から、植物研究と教育を担う施設へと発展してきた歴史を紹介しています。園芸やゴム産業の発展とも関わり、2015年に世界文化遺産へ登録されました。単なる休憩場所として見るのではなく、植物を集め、育て、調べてきた研究の歴史を思い浮かべると、足元の小さな葉にも別の意味が生まれます。都市の成長と植物を守る営みが重なる場所です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・シンガポール植物園",
+        "url": "https://whc.unesco.org/en/list/1483/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "sg-gardens-bay-postcard": {
+    "country": "シンガポール",
+    "countryOnly": true,
+    "place": "ガーデンズ・バイ・ザ・ベイ",
+    "region": "マリーナ・サウス",
+    "latitude": 1.2816,
+    "longitude": 103.8636,
+    "note": "巨大なスーパーツリーが並ぶ、マリーナ湾沿いの植物園。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Gardens-by-the-bay.jpg/500px-Gardens-by-the-bay.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Gardens-by-the-bay.jpg",
+    "author": "Nightcrafter",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/sg-gardens-bay-postcard.jpg",
+    "photoCaption": "ガーデンズ・バイ・ザ・ベイのスーパーツリー（2013年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "マリーナ湾の公園へ足を踏み入れると、空へ伸びる巨大なスーパーツリーが現れます。木のように見えても、幹や枝は植物を育てるために設計された構造物です。足元から見上げると大きさに圧倒され、少し離れると緑に覆われた庭園のなかで独特の景観を形づくっていることがわかります。写真を撮るなら、スーパーツリーだけでなく周囲の植栽や空の広がりまで一緒に眺めたい場所です。",
+      "ガーデンズ・バイ・ザ・ベイの公式案内によると、園内には18本のスーパーツリーがあり、そのうち12本がスーパーツリー・グローブに集まっています。高さや姿が異なる構造物は、都市の緑化を象徴する風景になりました。自然の樹木と人がつくった人工の『樹木』が同じ庭園に並ぶ様子は、建築と園芸が出会った実験のようです。夜には光の演出も加わり、昼間とは違う表情が見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "ガーデンズ・バイ・ザ・ベイ公式案内・スーパーツリー",
+        "url": "https://www.gardensbythebay.com.sg/en/things-to-do/attractions/supertree-grove.html",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "mx-bellas-artes-cover": {
+    "country": "メキシコ",
+    "countryOnly": true,
+    "place": "メキシコシティのベジャス・アルテス宮殿",
+    "region": "メキシコシティ中心部",
+    "latitude": 19.4352,
+    "longitude": -99.141,
+    "note": "中心街に建つ装飾的な文化施設の建築。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/41/Palacio_de_Bellas_Artes%2C_Mexico_City_01.jpg/500px-Palacio_de_Bellas_Artes%2C_Mexico_City_01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Palacio_de_Bellas_Artes%2C_Mexico_City_01.jpg",
+    "author": "Bodhisattwa",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/mx-bellas-artes-cover.jpg",
+    "photoCaption": "メキシコシティのベジャス・アルテス宮殿（2015年撮影）",
+    "coverOnly": true
+  },
+  "mx-teotihuacan-postcard": {
+    "country": "メキシコ",
+    "countryOnly": true,
+    "place": "テオティワカンの太陽のピラミッドと大通り",
+    "region": "メキシコ州・テオティワカン遺跡",
+    "latitude": 19.6925,
+    "longitude": -98.8438,
+    "note": "巨大なピラミッドと古代都市の大通りが続く遺跡群。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/19/Teotihuacan_Mexico_2018.jpg/500px-Teotihuacan_Mexico_2018.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Teotihuacan_Mexico_2018.jpg",
+    "author": "Gzzz",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/mx-teotihuacan-postcard.jpg",
+    "photoCaption": "テオティワカンの太陽のピラミッドと死者の大通り（2018年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "テオティワカンの遺跡を歩くと、広い大通りの向こうに大きなピラミッドがそびえます。石造りの建築と乾いた高原の景色が重なり、古代都市がどれほど大きかったかを想像させます。写真に写る太陽のピラミッドから周囲の街路へ目を移すと、建物がそれぞれ勝手に建てられたのではなく、都市全体の配置のなかに置かれていることに気づきます。近くで見る石積みと、遠くから見る都市の輪郭を見比べたい場所です。",
+      "UNESCOはテオティワカンを、メソアメリカの古代都市文化に大きな影響を与えた都市として紹介しています。太陽のピラミッドや月のピラミッド、死者の大通りが大規模な都市計画を伝え、1987年に世界文化遺産へ登録されました。現在の名称は後の時代の人々によるものです。誰が暮らし、どのように都市が使われていたのかを想像しながら歩くと、遺跡の巨大さだけでなく、失われた街の生活にも目が向きます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・テオティワカン",
+        "url": "https://whc.unesco.org/en/list/414/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "mx-chichen-itza-postcard": {
+    "country": "メキシコ",
+    "countryOnly": true,
+    "place": "チチェン・イッツァのエル・カスティージョ",
+    "region": "ユカタン州・チチェン・イッツァ",
+    "latitude": 20.6843,
+    "longitude": -88.5678,
+    "note": "マヤ文明の都市に立つ階段状の石造ピラミッド。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/64/Chich%C3%A9n_Itz%C3%A1%2C_Meksiko.jpg/500px-Chich%C3%A9n_Itz%C3%A1%2C_Meksiko.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Chich%C3%A9n_Itz%C3%A1%2C_Meksiko.jpg",
+    "author": "August Dominus",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "photoAsset": "assets/travel/mx-chichen-itza-postcard.jpg",
+    "photoCaption": "チチェン・イッツァのエル・カスティージョのピラミッド（2022年撮影）",
+    "famousTourist": true,
+    "travelStory": [
+      "チチェン・イッツァの遺跡へ向かうと、段を重ねた大きなピラミッド、エル・カスティージョが目に入ります。広場のなかに立つ建物は見る位置によって輪郭が変わり、階段のまっすぐな線と石造りの段差が強い印象を残します。写真に写る階段を目でたどるだけでも、古代の人々がどのように空間を設計したかを感じられます。周囲の建物との距離も確かめながら、都市全体の広がりを見渡したい場所です。",
+      "UNESCOによると、チチェン・イッツァはマヤ文明を代表する古代都市の一つで、さまざまな建築様式の影響を受けながら発展してきました。エル・カスティージョのほか球戯場や戦士の神殿などの遺構が残り、1988年に世界文化遺産へ登録されています。一つのピラミッドだけを見て終えるのではなく、広場や他の建築をあわせて歩くと、多様な用途を持った都市だったことがより鮮明に見えてきます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・チチェン・イッツァ",
+        "url": "https://whc.unesco.org/en/list/483/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
   }
 }
