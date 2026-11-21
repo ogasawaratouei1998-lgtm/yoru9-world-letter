@@ -15,9 +15,9 @@ ROOT=Path(__file__).resolve().parents[1]
 class CountryReadinessTest(unittest.TestCase):
     def test_current_real_countries_are_eligible_but_unprepared_world_locations_are_not(self):
         ready,incomplete=ready_country_codes(ROOT)
-        self.assertTrue({"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR"}.issubset(ready))
+        self.assertTrue({"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR"}.issubset(ready))
         self.assertNotIn("NG",ready)
-        self.assertNotIn("BR",ready, "Source-ready Brazil must not auto-publish")
+        self.assertIn("BR",ready, "Brazil was approved after photos and independent evidence")
         self.assertIn("KR",ready, "Korea was independently approved after complete review")
         self.assertIn("ES",ready,
                       "Reviewed Spanish destination assets must be eligible")
