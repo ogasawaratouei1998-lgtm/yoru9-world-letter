@@ -35,8 +35,13 @@ permissions:
   pages: write
   id-token: write
 
+# Reader deployment should not share the nightly publisher's queue.
+# GitHub concurrency retains only one waiting job in a group; frequent
+# 21:00-23:00 JST nightly schedules used to evict queued country-site deploys.
+# Keep independent reader deploys serialized, with the checkout pinned to
+# current main and a published-site smoke check after GitHub Pages responds.
 concurrency:
-  group: github-pages
+  group: reader-pages-deploy
   cancel-in-progress: false
 
 jobs:
