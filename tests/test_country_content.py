@@ -222,6 +222,30 @@ class CountryContentTest(unittest.TestCase):
         self.assertNotIn(report["AG"]["cover"],
                          {photos[k]["photoAsset"] for k in report["AG"]["quizPhotoKeys"]})
 
+    def test_approved_country_atlas_is_exact_and_pending_codes_cannot_leak(self):
+        import re
+        doc=load_country_content(ROOT)
+        expected=sorted(code for code,entry in doc["countries"].items()
+                        if entry["status"]=="approved")
+        page=(self.root/"index.html")
+        original=page.read_text(encoding="utf-8")
+        match=re.search(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\((\\[.*\\])\\);$",
+                        original)
+        self.assertIsNotNone(match)
+        self.assertEqual(json.loads(match.group(1)),expected)
+        self.assertNotIn("NG",expected)
+        altered=original[:match.start(1)]+json.dumps(expected+["NG"])+original[match.end(1):]
+        page.write_text(altered,encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"Approved country atlas drift"):
+            check_country_content(self.root)
+        sync_country_content(self.root)
+        check_country_content(self.root)
+        restored=page.read_text(encoding="utf-8")
+        self.assertNotIn('"NG"]',restored.split("const APPROVED_COUNTRY_CODES",1)[1]
+                         .split(");",1)[0])
+        self.assertEqual(load_country_content(self.root)["countries"]["NG"]["status"],
+                         "pending")
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
