@@ -88,6 +88,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'タージ・マハルの建設を命じたムガル帝国の皇帝は？',options:['シャー・ジャハーン','アクバル','アショーカ王'],answer:0,photoKey:'in-taj-mahal-postcard',photoLabel:'正解写真｜タージ・マハル',fact:'UNESCOは、シャー・ジャハーンが妻ムムターズ・マハルを追悼するために建設を命じたと説明しています。',quip:'大理石で伝えた追悼の思い。手紙では到底収まらない大きさ。'},
   {question:'クトゥブ・ミナールの高さはおよそ何メートル？',options:['24.5メートル','72.5メートル','150メートル'],answer:1,photoKey:'in-qutb-minar-postcard',photoLabel:'正解写真｜クトゥブ・ミナール',fact:'UNESCOによると、クトゥブ・ミナールの高さは72.5メートルです。',quip:'高さ72.5メートル。見上げる首にも歴史の授業が始まる。'},
  ],
+ IE:[
+  {question:'ブルー・ナ・ボーニャで知られる遺産は？',options:['近代の高層ビル','先史時代の巨石遺跡','海底の沈没船'],answer:1,fact:'UNESCOはこの地域を先史時代の巨石芸術の重要な集積地として紹介しています。',photoLabel:'正解写真｜ブルー・ナ・ボーニャの考古遺跡群・ニューグレンジ',quip:'文字がなくても石は語る。五千年先に残る説明書を作る技術、現代のアプリにも欲しい。',photoKey:'ie-newgrange-postcard'},
+  {question:'スケリッグ・マイケルに残る主な遺構は？',options:['競馬場','巨大な造船所','修道院'],answer:2,fact:'UNESCOはスケリッグ・マイケルの修道院遺跡を文化遺産として評価しています。',photoLabel:'正解写真｜スケリッグ・マイケル',quip:'修道院の立地条件が厳しい。日常から離れるために、海まで越えるとは徹底している。',photoKey:'ie-skellig-michael-postcard'},
+ ],
  IT:[
   {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',options:['ピサ','ローマ','ミラノ'],answer:0,photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',quip:'斜めに立っても、長年しっかり観光の主役。'},
   {question:'ヴェネツィアの街を象徴する大きな水路は？',options:['ライン川','大運河','テムズ川'],answer:1,photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',quip:'道路を探すより、舟を探したほうが早い日もある。'},
