@@ -91,9 +91,33 @@ def load_country_content(root):
     codes={entry["code"] for entry in catalog}
     if set(dataset["countries"])!=codes:
         raise ValueError("Country dataset must cover all 196 reporting locations")
+    from urllib.parse import urlsplit
     for code,entry in dataset["countries"].items():
         if entry.get("status") not in ("approved","pending"):
             raise ValueError(code+": unknown country editorial approval status")
+        if entry["status"]=="approved":
+            # Each historical claim needs an independent documentary reference;
+            # a CC image credit alone says nothing about the essay's accuracy.
+            for key,stop in entry.get("travelStops",{}).items():
+                if not stop.get("travelStory"):
+                    continue
+                sources=stop.get("historicalSources")
+                if not isinstance(sources,list) or not sources:
+                    raise ValueError(code+": unsourced history/culture for "+key)
+                for source in sources:
+                    if not isinstance(source,dict) or not isinstance(source.get("name"),str):
+                        raise ValueError(code+": malformed historical source for "+key)
+                    address=source.get("url")
+                    if not isinstance(address,str):
+                        raise ValueError(code+": missing historical source URL for "+key)
+                    url=urlsplit(address)
+                    if (url.scheme!="https" or not url.hostname or url.username
+                            or url.password or url.hostname.endswith("wikimedia.org")
+                            or url.hostname.endswith("creativecommons.org")):
+                        raise ValueError(code+": photo license cannot replace a historical source: "+key)
+                    if not isinstance(source.get("checkedOn"),str) or not re.fullmatch(
+                            r"\\d{4}-\\d{2}-\\d{2}",source["checkedOn"]):
+                        raise ValueError(code+": historical source review date missing: "+key)
         if (not isinstance(entry.get("quiz"),list)
                 or not isinstance(entry.get("portraitPhotos"),list)
                 or not isinstance(entry.get("travelStops"),dict)
