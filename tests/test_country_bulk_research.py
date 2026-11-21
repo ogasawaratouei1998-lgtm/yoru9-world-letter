@@ -1,0 +1,56 @@
+"""All-country research is complete in scope, but never auto-approves."""
+import json
+from pathlib import Path
+import unittest
+from unittest.mock import patch
+from urllib.error import HTTPError
+
+from country_bulk_research import make_plan, research_shard, combine, SHARDS
+
+ROOT = Path(__file__).resolve().parents[1]
+
+class AllCountryResearchTests(unittest.TestCase):
+    def test_every_pending_country_and_three_slots_without_approval(self):
+        d = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
+        pending = {code for code, row in d.items() if row["status"] == "pending"}
+        plan = make_plan(ROOT)
+        self.assertEqual({c["code"] for c in plan["countries"]}, pending)
+        self.assertEqual(plan["slotCount"], len(pending)*3)
+        self.assertEqual(plan["catalogCount"], 196)
+        for c in plan["countries"]:
+            self.assertFalse(c["publicationEligible"])
+            self.assertEqual([s["slot"] for s in c["slots"]], [0, 1, 2])
+            self.assertTrue(all(not s["publicationEligible"] for s in c["slots"]))
+        reports = [research_shard(plan, i, fetch=lambda q: [], sleep_seconds=0) for i in range(SHARDS)]
+        combined = combine(plan, reports)
+        self.assertEqual(combined["reportedSlots"], plan["slotCount"])
+        self.assertEqual(combined["missingSlots"], [])
+        self.assertFalse(combined["publicationEligible"])
+        self.assertGreater(len(combine(plan, reports[:-1])["missingSlots"]), 0)
+        with self.assertRaises(ValueError):
+            combine(plan, reports+[reports[0]])
+
+    def test_undrafted_country_uses_official_site_only_when_available(self):
+        d = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
+        pending = {code for code, row in d.items() if row["status"] == "pending"}
+        with patch("country_bulk_research.draft_queries", return_value=[]):
+            inventory = {"countries": {code: {"sampleSourcePages": []} for code in pending}}
+            code = sorted(pending)[0]
+            inventory["countries"][code]["sampleSourcePages"] = [{"name": "Fixture heritage", "sourceUrl": "https://whc.unesco.org/en/list/123/"}]
+            plan = make_plan(ROOT, inventory)
+            row = next(c for c in plan["countries"] if c["code"]==code)
+            self.assertEqual(row["slots"][1]["officialSourceCandidate"], "https://whc.unesco.org/en/list/123/")
+            self.assertIsNone(row["slots"][2]["searchQuery"])
+            self.assertEqual(row["slots"][2]["origin"], "independent_source_required")
+
+    def test_rate_limit_defers_remaining_searches_without_inventing_results(self):
+        plan = make_plan(ROOT)
+        calls = []
+        def fail(query):
+            calls.append(query)
+            raise HTTPError("https://commons.wikimedia.org/", 429, "Too many requests", {}, None)
+        report = research_shard(plan, 0, fetch=fail, sleep_seconds=0)
+        self.assertEqual(len(calls), 1)
+        self.assertEqual(report["statusCounts"]["search_failed"], 1)
+        self.assertGreater(report["statusCounts"].get("rate_limited_deferred", 0), 0)
+        self.assertTrue(all(not r["candidates"] for r in report["results"]))

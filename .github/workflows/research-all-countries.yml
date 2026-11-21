@@ -1,0 +1,94 @@
+name: Research all pending countries in parallel
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'country_bulk_research.py'
+      - 'tests/test_country_bulk_research.py'
+      - '.github/workflows/research-all-countries.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/research-all-countries.yml'
+      - 'country_bulk_research.py'
+  schedule:
+    - cron: '25 3 * * 1,4'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: all-country-research-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python country_content.py --check
+      - run: python -m unittest discover -s tests -p test_country_bulk_research.py -v
+      - run: python country_bulk_research.py plan --output reports/all-country-plan.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: all-country-plan
+          path: reports/all-country-plan.json
+          if-no-files-found: error
+          retention-days: 14
+  research:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: all-country-plan
+          path: reports
+      - run: python country_bulk_research.py research --plan reports/all-country-plan.json --shard ${{ matrix.shard }} --output reports/shard-${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: all-country-shard-${{ matrix.shard }}
+          path: reports/shard-${{ matrix.shard }}.json
+          if-no-files-found: error
+          retention-days: 14
+  consolidate:
+    needs: [plan, research]
+    if: always() && needs.plan.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: all-country-plan
+          path: reports
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: all-country-shard-*
+          path: reports/shards
+      - run: python country_bulk_research.py combine --plan reports/all-country-plan.json --input-dir reports/shards --output reports/all-country-research.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: all-country-research
+          path: reports/all-country-research.json
+          if-no-files-found: warn
+          retention-days: 14
