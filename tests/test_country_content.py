@@ -73,6 +73,32 @@ class CountryContentTest(unittest.TestCase):
                 self.assertTrue(stop.get("historicalSources"))
         self.assertEqual(len(doc["travelOrder"]),len(set(doc["travelOrder"])))
 
+    def test_korea_source_review_is_complete_without_automatically_approving(self):
+        doc=load_country_content(ROOT)
+        korea=doc["countries"]["KR"]
+        self.assertEqual(korea["status"],"pending")
+        self.assertEqual(len(korea["quiz"]),2)
+        covers={p["asset"] for p in korea["portraitPhotos"]
+                if not p.get("avoidCover") and not p.get("remoteOnly")}
+        keys={q["photoKey"] for q in korea["quiz"]}
+        self.assertEqual(len(keys),2)
+        images={korea["travelStops"][k]["photoAsset"] for k in keys}
+        self.assertTrue(covers.isdisjoint(images))
+        self.assertEqual(len(images),2)
+        self.assertTrue(all(korea["travelStops"][k].get("quizOnly")
+                            for k in keys))
+        self.assertEqual(korea["portraitPhotos"][0]["author"],"螺钉")
+        self.assertEqual(korea["travelStops"]["korea-bulguksa-postcard"]["license"],
+                         "CC BY 2.0")
+        self.assertTrue(korea["portrait"]["sourceUrl"].startswith("https://english.visitkorea.or.kr/"))
+        for key,stop in korea["travelStops"].items():
+            if not stop.get("travelStory"):
+                continue
+            with self.subTest(destination=key):
+                self.assertEqual(len(stop["travelStory"]),2)
+                self.assertTrue(all(110<=len(t)<=360 for t in stop["travelStory"]))
+                self.assertTrue(stop.get("historicalSources"))
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
