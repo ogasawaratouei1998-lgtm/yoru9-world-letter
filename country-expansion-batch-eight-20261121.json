@@ -1,0 +1,624 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-21",
+  "status": "pending_photos_not_public",
+  "description": "Eight UNESCO-referenced country portraits, sixteen distinct two-paragraph microtrip drafts and sixteen photo quiz drafts. No reused or unverified photo, no automatic publication. Austria remains in the prior backlog.",
+  "countries": {
+    "ID": {
+      "name": "インドネシア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/id",
+      "portrait": {
+        "lead": "寺院の石彫と火山島の風景、多彩な文化が連なる群島",
+        "body": "赤道付近に多くの島が連なるインドネシアでは、土地ごとに異なる信仰や建築、自然が重なり合っています。ジャワ島のボロブドゥールは仏教寺院の石造建築で、近くのプランバナンにはヒンドゥー教寺院群が立ちます。同じ地域に異なる時代の祈りの場所が残ることが、歴史の厚みを感じさせます。市場の賑わいや田園の向こうに遺跡が現れる景観をたどると、この群島を単一の文化では語れないことが見えてきます。",
+        "facts": [
+          "地域：東南アジアの群島国家",
+          "世界遺産：ボロブドゥール寺院遺跡群",
+          "世界遺産：プランバナン寺院遺跡群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：インドネシアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/id"
+      },
+      "travelDrafts": [
+        {
+          "place": "ボロブドゥール寺院遺跡群",
+          "travelStory": [
+            "ジャワ島のボロブドゥールでは、石の回廊を少しずつ上るにつれて、足元に彫られた物語と周囲の景色の両方が広がります。近くで見る浮彫は細かな場面の連続なのに、離れると巨大な段状の建築として一つにまとまるのが不思議です。正面から全景を眺め、階を上がりながら目線の変化を比べたい場所です。",
+            "UNESCOはボロブドゥールを8〜9世紀の仏教遺産として紹介し、方形の段と円形の壇、その上に並ぶ仏塔が独特の構成を形づくると説明しています。石彫を一枚の絵として見るだけでなく、歩く順序そのものが建築の体験になっていることを意識すると、遺跡の奥行きが変わります。仏塔越しの遠景も、時間をかけて眺める価値があります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ボロブドゥール寺院遺跡群",
+              "url": "https://whc.unesco.org/en/list/592/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ボロブドゥールで中心となる宗教的伝統は？",
+            "options": [
+              "仏教",
+              "キリスト教",
+              "古代ギリシャ神話"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはボロブドゥールを仏教寺院遺跡群として登録しています。",
+            "photoGoal": "ボロブドゥール寺院遺跡群が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "プランバナン寺院遺跡群",
+          "travelStory": [
+            "プランバナンでは、空に向かって細く伸びる石の塔が、広い敷地の中に幾重にも立ち並んでいます。ひとつの塔に近づくと壁面の細工が見え、少し離れると塔の高低差が生む輪郭が鮮やかになります。遠望と細部の両方を楽しめる場所なので、建物の間をゆっくり歩き、光の当たり方による石の表情を見比べたくなります。",
+            "UNESCOの解説によれば、プランバナンはシヴァ神を中心とする大規模なヒンドゥー教寺院遺跡群です。並び立つ高い祠堂や周囲の小堂は、古い信仰が建築に表れた姿を示しています。同じジャワ島のボロブドゥールと対比しながら眺めると、異なる宗教的伝統が近い地域に残した景観の多彩さを感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プランバナン寺院遺跡群",
+              "url": "https://whc.unesco.org/en/list/642/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "プランバナン寺院群の主要な宗教は？",
+            "options": [
+              "仏教",
+              "ヒンドゥー教",
+              "イスラム教"
+            ],
+            "answer": 1,
+            "fact": "UNESCOはプランバナン寺院群をヒンドゥー教寺院として紹介しています。",
+            "photoGoal": "プランバナン寺院遺跡群が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "VN": {
+      "name": "ベトナム",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/vn",
+      "portrait": {
+        "lead": "川と港町に育まれた交易文化、石灰岩の海と歴史都市",
+        "body": "ベトナムでは、川沿いの暮らしや古い交易港の面影と、自然の造形が近い距離にあります。中部のホイアンには、各地の商人が行き交った時代の町割りと木造建築が残り、北部のハロン湾周辺には海から立ち上がる石灰岩の島々が広がります。市場の通りに目を向ける旅と、船上から海の地形を眺める旅ではまったく異なる印象に出会えます。文化と自然を別々に味わえることが、この国の豊かさです。",
+        "facts": [
+          "地域：東南アジア",
+          "世界遺産：ホイアン旧市街",
+          "世界遺産：ハロン湾・カットバ群島"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ベトナムの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/vn"
+      },
+      "travelDrafts": [
+        {
+          "place": "ホイアン旧市街",
+          "travelStory": [
+            "ホイアンの旧市街では、川に沿った通りに古い家屋が連なり、店先や屋根の形から港町の歴史が伝わります。木造の建物、狭い道、橋や市場が近くに集まるため、短い散歩でも町の表情が次々と変わります。川側と街路側で同じ建物の印象が違うことにも注目しながら、通りを一筋ずつ歩いてみたい場所です。",
+            "UNESCOはホイアンを15〜19世紀の交易港の姿をよく残した都市と評価しています。現地の伝統に加えて、中国や日本などから来た人々の影響が、建物や街路に重なりました。ひとつの建築様式だけに注目するのでなく、商いの場として町全体がどう機能していたかを想像すると、散歩の風景がより立体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホイアン旧市街",
+              "url": "https://whc.unesco.org/en/list/948/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ホイアン旧市街が特に栄えた役割は？",
+            "options": [
+              "鉱山都市",
+              "国際交易港",
+              "砂漠の要塞"
+            ],
+            "answer": 1,
+            "fact": "UNESCOはホイアンを15〜19世紀の東南アジア交易港として紹介しています。",
+            "photoGoal": "ホイアン旧市街が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ハロン湾・カットバ群島",
+          "travelStory": [
+            "ハロン湾の船上からは、海面に浮かぶ石灰岩の島が次々と現れ、進む角度によって形を変えて見えます。水面の静けさと切り立つ岩の輪郭の対比が特徴で、遠くの島は霞に溶け込むこともあります。晴れた日の眺望だけでなく、光が弱い時間帯の濃淡にも目を向けながら、自然がつくった景色をゆっくり眺めたい場所です。",
+            "UNESCOはハロン湾とカットバ群島を、石灰岩の地形と島々の景観、生態系が結び付いた自然遺産として扱っています。長い時間をかけた侵食や地質の変化が、海と島の複雑な形をつくりました。写真一枚では見えない広がりを地図で確認し、船の位置が変わるたび景色を比べると、その地形の大きさを実感できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハロン湾・カットバ群島",
+              "url": "https://whc.unesco.org/en/list/672/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ハロン湾・カットバ群島で知られる地形は？",
+            "options": [
+              "石灰岩の島々",
+              "活火山の噴火口",
+              "巨大な氷床"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは石灰岩地形と島の景観を自然遺産の価値として紹介しています。",
+            "photoGoal": "ハロン湾・カットバ群島が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "ZA": {
+      "name": "南アフリカ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/za",
+      "portrait": {
+        "lead": "海に囲まれた記憶の島と、世界的に珍しい花の多様性",
+        "body": "南アフリカでは、多様な自然と近現代史の記憶が強い存在感を放っています。ケープタウン沖のロベン島には政治犯の収容に使われた施設が残り、同じ地域のケープ植物区保護地域には他にはない多様な植物が育まれています。海を渡って歴史を考える時間と、野生の花が広がる風景を見つめる時間は別の体験ですが、どちらも土地を理解する大切な入口です。美しさだけで語らず、背景も知って旅したい国です。",
+        "facts": [
+          "地域：アフリカ南部",
+          "世界遺産：ロベン島",
+          "自然遺産：ケープ植物区保護地域"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：南アフリカの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/za"
+      },
+      "travelDrafts": [
+        {
+          "place": "ロベン島",
+          "travelStory": [
+            "ケープタウン沖のロベン島を訪ねる体験は、海を渡るところから始まります。対岸の街並みを振り返り、島に残る建物や収容施設を見ると、距離の近さとは対照的な隔絶の歴史が迫ってきます。景観だけを写真に収めるのではなく、そこに長く暮らすことを強いられた人々の時間を考え、案内や説明を丁寧に読みたい場所です。",
+            "UNESCOはロベン島を、政治的抑圧を受けた人々の歴史と、自由と民主主義への闘いを伝える遺産として評価しています。ネルソン・マンデラを含む多くの人々が投獄された記録は、施設の建物に重い意味を与えています。旅先の一つとして消費せず、現地の語りに耳を傾けることが、この場所を訪ねる価値につながります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ロベン島",
+              "url": "https://whc.unesco.org/en/list/916/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ロベン島が世界遺産として重視される理由は？",
+            "options": [
+              "政治的抑圧と自由への闘いの記憶",
+              "古代ローマの円形劇場",
+              "巨大な氷河湖"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはロベン島を抑圧と自由への闘いの歴史を伝える場所として登録しています。",
+            "photoGoal": "ロベン島が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ケープ植物区保護地域",
+          "travelStory": [
+            "ケープ地方の自然を歩くと、同じ斜面にも背の低い灌木やさまざまな花が入り混じり、植物の形や色の違いが目に入ります。壮大な山の稜線に目を奪われがちですが、足元にある葉の形や花の配置を比べると、景色が一段と豊かになります。限られた範囲に異なる植物が集中する風景を、歩く速さを落として楽しみたい場所です。",
+            "UNESCOはケープ植物区保護地域を、特に豊かな植物の固有性と多様性で評価しています。この地域に見られる植物群は世界的にも特徴的で、自然環境の保全が重要な課題です。名の知れた動物だけでなく、地味に見える小さな植物にも目を向けると、なぜこの場所が特別なのかを実感しやすくなります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ケープ植物区保護地域",
+              "url": "https://whc.unesco.org/en/list/1007/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ケープ植物区保護地域が高く評価されるのは？",
+            "options": [
+              "豊富な固有植物",
+              "大規模な古代宮殿",
+              "火山島の溶岩湖"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはケープ植物区保護地域の固有性と植物多様性を評価しています。",
+            "photoGoal": "ケープ植物区保護地域が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "KE": {
+      "name": "ケニア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ke",
+      "portrait": {
+        "lead": "スワヒリ海岸の港町と、海を見守った石造りの要塞",
+        "body": "ケニアの魅力は、草原や野生動物だけではありません。インド洋に面した沿岸部には、長い交流の歴史を物語る港町が残ります。ラム旧市街の狭い路地や伝統家屋にはスワヒリ文化の特徴が見られ、モンバサのフォート・ジーザスには海上交易をめぐる勢力の交代が刻まれています。街路の細部と大きな要塞を見比べれば、さまざまな地域が海でつながっていたことが伝わります。土地の暮らしと歴史をあわせて知りたい国です。",
+        "facts": [
+          "地域：東アフリカ",
+          "世界遺産：ラム旧市街",
+          "世界遺産：モンバサのフォート・ジーザス"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ケニアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ke"
+      },
+      "travelDrafts": [
+        {
+          "place": "ラム旧市街",
+          "travelStory": [
+            "インド洋沿岸のラム旧市街を歩くと、建物が近くに迫る細い路地と、木の扉や壁の装飾が目を引きます。大きな通りだけを急いで通り過ぎるよりも、家々の入口や広場の配置を観察すると、長く続いてきた暮らしの姿が見えてきます。港へ通じる道をたどり、海との距離を感じるのもこの町ならではの楽しみです。",
+            "UNESCOはラム旧市街を、東アフリカで保存状態のよいスワヒリの集落として評価しています。海の交易と結び付いた都市文化が、建築や街路、生活の習慣に受け継がれてきました。石と木の細部を眺めながら歩くと、古い都市の歴史が遺跡の中ではなく、今も人が暮らす町の形に残っていることを感じます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラム旧市街",
+              "url": "https://whc.unesco.org/en/list/1055/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ラム旧市街と深く関わる文化は？",
+            "options": [
+              "スワヒリ文化",
+              "マヤ文明",
+              "ヴァイキング文化"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはラム旧市街をスワヒリの歴史的集落として紹介しています。",
+            "photoGoal": "ラム旧市街が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "モンバサのフォート・ジーザス",
+          "travelStory": [
+            "モンバサのフォート・ジーザスでは、厚い石壁と広い中庭、海を見渡す位置関係が印象に残ります。建物の中を歩いてから外へ出ると、防御施設としての姿と港を見張る役割がつながって見えます。石積みの輪郭を近くで確かめたあと、遠くの海を眺めれば、この要塞がなぜこの場所に築かれたかを考える手掛かりになります。",
+            "UNESCOによると、フォート・ジーザスは16世紀末にポルトガル人によって建設された要塞で、インド洋の交易や支配をめぐる歴史を物語ります。設計に表れた軍事建築の考え方を知ると、単に古い石造建物を見るのとは異なる体験になります。港と城壁を一つの風景として眺めることが歴史を理解する近道です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・モンバサのフォート・ジーザス",
+              "url": "https://whc.unesco.org/en/list/1295/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "フォート・ジーザスの建設を進めたのは？",
+            "options": [
+              "ポルトガル人",
+              "古代インカ",
+              "モンゴル帝国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはフォート・ジーザスが16世紀末にポルトガル人によって建てられた要塞と説明しています。",
+            "photoGoal": "モンバサのフォート・ジーザスが明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "MA": {
+      "name": "モロッコ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ma",
+      "portrait": {
+        "lead": "迷宮のような旧市街と、土壁の集落が語る交易の歴史",
+        "body": "モロッコの古い都市を歩くと、細い通路や工房、市場が連続する街並みに出会えます。フェズのメディナは歴史的な都市生活の中心で、アイト・ベン・ハドゥには土を用いた伝統的な集落景観が残ります。人が行き交う街の賑わいと、乾いた土地に立つ集落の静かな輪郭を比べると、同じ国の中でも異なる建築の知恵が見えます。建物の素材、門の形、街路の曲がり方から歴史を読み取りたい国です。",
+        "facts": [
+          "地域：北アフリカ",
+          "世界遺産：フェズ旧市街",
+          "世界遺産：アイト・ベン・ハドゥ"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：モロッコの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ma"
+      },
+      "travelDrafts": [
+        {
+          "place": "フェズ旧市街",
+          "travelStory": [
+            "フェズの旧市街では、狭い路地が複雑につながり、角を曲がるたびに門や工房、小さな広場が現れます。建物が密集する景色の中で、木彫りやタイル、壁の装飾の違いを見つけるのも楽しみです。地図だけでは分かりにくい街の奥行きを、歩く速さで感じながら、古い都市の生活が今も続いていることに目を向けたい場所です。",
+            "UNESCOはフェズのメディナを、イスラム世界の都市文化や建築の歴史を伝える重要な場所として登録しています。宗教施設や商業施設、住居が近い距離に集まる町の構造そのものが見どころです。単一の名建築を訪ねて終えるのではなく、道を行き来する人々の動きと建物の配置を一緒に眺めると、都市が育まれた時間を感じます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・フェズ旧市街",
+              "url": "https://whc.unesco.org/en/list/170/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "フェズのメディナが伝えるのはどんな都市文化？",
+            "options": [
+              "歴史的なイスラム都市文化",
+              "南極の研究基地",
+              "近代の宇宙都市"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはフェズ旧市街を歴史的なイスラム都市の重要な事例として登録しています。",
+            "photoGoal": "フェズ旧市街が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "アイト・ベン・ハドゥ",
+          "travelStory": [
+            "アイト・ベン・ハドゥでは、土色の建物が斜面に折り重なり、周囲の乾いた景色と一体になって見えます。遠くからは一つの大きな塊のようですが、近づくにつれ塔や壁、通路の起伏が現れます。建物の輪郭と土地の色がつながっていることを確かめ、晴れた光の下で陰影が変わる様子をゆっくり味わいたい場所です。",
+            "UNESCOはこのクサルを、モロッコ南部に見られる伝統的な土造りの建築と集落の優れた例として紹介しています。防御的な構造を持つ住居群がまとまり、地域の建築技術を伝えてきました。豪華な装飾を見る場所とは違い、材料の選び方や壁の厚さ、集落全体の配置に目を向けることで、暮らしの工夫が読み取れます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アイト・ベン・ハドゥ",
+              "url": "https://whc.unesco.org/en/list/444/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "アイト・ベン・ハドゥの建築で特徴的な素材は？",
+            "options": [
+              "土を用いた建築",
+              "氷のブロック",
+              "鋼鉄製のドーム"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはアイト・ベン・ハドゥを伝統的な土造りの集落建築として説明しています。",
+            "photoGoal": "アイト・ベン・ハドゥが明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "NO": {
+      "name": "ノルウェー",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/no",
+      "portrait": {
+        "lead": "木造の港町と、氷河が形づくった深いフィヨルド",
+        "body": "ノルウェーでは、海に向かって開かれた町の歴史と、山々に囲まれたフィヨルドの風景が旅の両輪になります。ベルゲンのブリッゲンには木造商館の街並みが残り、ゲイランゲルフィヨルドやネーロイフィヨルドには氷河の侵食がつくった地形が広がります。建物の間に海上交易の歴史を見つけ、次には山と水の距離を船から眺める。人工の風景と自然の風景を行き来することで、この国の姿が鮮やかになります。",
+        "facts": [
+          "地域：北ヨーロッパ",
+          "世界遺産：ベルゲンのブリッゲン",
+          "自然遺産：西ノルウェーのフィヨルド"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ノルウェーの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/no"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブリッゲンの木造商館群",
+          "travelStory": [
+            "ベルゲンの港沿いに並ぶブリッゲンの木造建物は、正面から眺めると色や屋根の形の違いが際立ちます。細い通路へ入ると建物の奥行きが見え、海側だけでは分からない商館のつくりを感じられます。港に立って全体を眺めてから建物の間を歩くことで、昔の商人たちが過ごした場所を具体的に想像できるようになります。",
+            "UNESCOはブリッゲンをハンザ同盟の交易活動と結び付いた歴史的な港湾地区として評価しています。火災や再建を経ながらも、商いに適した木造建築の伝統が残ってきました。色鮮やかな観光名所として見るだけでなく、海から荷が届き、建物の奥へ運ばれた流れを想像すると、港町の仕組みが見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブリッゲンの木造商館群",
+              "url": "https://whc.unesco.org/en/list/59/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブリッゲンと深い関係を持つ交易組織は？",
+            "options": [
+              "ハンザ同盟",
+              "東インド会社のみ",
+              "マヤの都市国家"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはブリッゲンをハンザ同盟の交易史と結び付けて説明しています。",
+            "photoGoal": "ブリッゲンの木造商館群が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "西ノルウェーのフィヨルド",
+          "travelStory": [
+            "ゲイランゲルフィヨルドやネーロイフィヨルドでは、水面のすぐ近くから急な斜面が立ち上がり、山の谷間へ海が深く入り込んでいます。船上から見ると両岸の距離や斜面の高さが変わり、同じ景色でも位置によって印象が異なります。谷の奥へ進んでから振り返ると、細く曲がる水路の形がはっきりしてくるのが魅力です。",
+            "UNESCOは西ノルウェーのフィヨルドを、氷河によって形づくられた優れた地形景観として登録しています。険しい岩壁や滝、深い水域が、長い地質学的な時間を物語ります。単に壮大な景観として眺めるだけでなく、氷が地形を削り、海が谷を満たした過程を考えると、一つ一つの曲がり角にも意味が生まれます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・西ノルウェーのフィヨルド",
+              "url": "https://whc.unesco.org/en/list/1195/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "フィヨルドの谷を形づくった主な作用は？",
+            "options": [
+              "氷河の侵食",
+              "砂漠の砂嵐",
+              "火山灰の堆積のみ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは西ノルウェーのフィヨルドを氷河による地形の顕著な例としています。",
+            "photoGoal": "西ノルウェーのフィヨルドが明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "CL": {
+      "name": "チリ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/cl",
+      "portrait": {
+        "lead": "太平洋の港町と、ラパ・ヌイの独自文化がつながる国",
+        "body": "南北に長いチリでは、地域ごとに風景も歴史も大きく異なります。港町バルパライソの丘陵と街路には海上交易の時代が刻まれ、太平洋のラパ・ヌイにはモアイ像で知られる独自の文化遺産が残ります。階段や路地から港を見下ろす眺めと、島の広い空の下に立つ石像の景観は対照的です。地図上では離れた場所にある二つの世界をたどることで、チリの文化の幅広さを感じられます。",
+        "facts": [
+          "地域：南アメリカ西岸",
+          "世界遺産：バルパライソの歴史地区",
+          "世界遺産：ラパ・ヌイ国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：チリの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/cl"
+      },
+      "travelDrafts": [
+        {
+          "place": "バルパライソの歴史地区",
+          "travelStory": [
+            "バルパライソでは、港を囲む丘の斜面に建物が並び、階段や曲がりくねった通りが上下の街を結びます。海の近くから丘を見上げた景色と、高い場所から港を見下ろす景色を比べると、地形に合わせて発展した町の姿が分かります。坂道と建物の関係に注目しながら歩けば、一つの港町の風景に多くの表情があることを発見できます。",
+            "UNESCOはバルパライソの歴史地区を、19世紀の海上交易と都市発展を伝える景観として評価しています。急な地形に応じて作られた街路や建築は、港の活動と密接に結び付いています。美しい色合いだけを見るのでなく、船から届いた人や物が丘の町へどう移動したかを想像すると、坂と港の距離に歴史が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バルパライソの歴史地区",
+              "url": "https://whc.unesco.org/en/list/959/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "バルパライソの都市景観と特に結び付くのは？",
+            "options": [
+              "太平洋の港と丘陵",
+              "砂漠のオアシスのみ",
+              "氷河湖の湖畔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはバルパライソを太平洋交易に支えられた港湾都市として紹介しています。",
+            "photoGoal": "バルパライソの歴史地区が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ラパ・ヌイ国立公園",
+          "travelStory": [
+            "ラパ・ヌイでは、広い草地と太平洋を背景に石造のモアイが並ぶ景観に出会えます。像を遠くから眺めると、その形は海や丘の輪郭と重なり、近くで見ると石を彫った手仕事が感じられます。島の歴史を伝える場所として、眺望の良さだけでなく、どの方向に像が配置されているかにも気を配りたい場所です。",
+            "UNESCOはラパ・ヌイ国立公園を、島に根付いた独自の文化が生み出した彫像と儀礼的な景観として評価しています。モアイや祭祀の場は、人々の信仰や社会の歴史を考える重要な手掛かりです。石像を単なる珍しい造形として消費せず、土地の人々が受け継いできた文化遺産であることを意識して眺めると、見方が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラパ・ヌイ国立公園",
+              "url": "https://whc.unesco.org/en/list/715/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "ラパ・ヌイ国立公園で知られる石造彫刻は？",
+            "options": [
+              "モアイ",
+              "スフィンクス",
+              "兵馬俑"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはラパ・ヌイのモアイを独自文化の代表的な遺産として評価しています。",
+            "photoGoal": "ラパ・ヌイ国立公園が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "PE": {
+      "name": "ペルー",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/pe",
+      "portrait": {
+        "lead": "インカの都市遺産とアンデスの山々、石の街路が語る歴史",
+        "body": "ペルーを旅すると、山の地形と都市の歴史が深く結び付いていることに気づきます。マチュ・ピチュにはアンデスの急峻な地形に寄り添うインカ時代の遺構が残り、クスコの中心部にはインカの都市構造とその後の建築が重なる街並みがあります。山並みを背景にした遺跡を眺める体験と、街の石壁を間近で見る体験では、同じ歴史の異なる側面が浮かび上がります。地形を読みながら歩くほど面白さが増す国です。",
+        "facts": [
+          "地域：南アメリカのアンデス地方",
+          "世界遺産：マチュ・ピチュ",
+          "世界遺産：クスコの市街"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ペルーの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/pe"
+      },
+      "travelDrafts": [
+        {
+          "place": "マチュ・ピチュ",
+          "travelStory": [
+            "山の稜線に抱かれたマチュ・ピチュでは、石造りの建物や段々畑が急な斜面に沿って広がっています。少し離れた場所から見渡すと、都市の遺構と背後の山々が一つの景観に収まります。石壁の細かな組み方に近づいて目を向けたあと、再び全景を見ると、地形と建築を結び付けた工夫がより鮮やかに感じられます。",
+            "UNESCOはマチュ・ピチュを、インカ文明の建築と周囲の自然環境が結び付いた複合遺産として評価しています。山の地形を巧みに生かした配置は、都市の建築技術や土地との関係を物語ります。写真では壮大な眺望に目が行きますが、道や石段の位置にも注目することで、かつての人々がこの場所をどう使ったかを想像できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マチュ・ピチュ",
+              "url": "https://whc.unesco.org/en/list/274/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "マチュ・ピチュと深く結び付く文明は？",
+            "options": [
+              "インカ文明",
+              "古代ギリシャ",
+              "フェニキア文明"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。",
+            "photoGoal": "マチュ・ピチュが明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "クスコの市街",
+          "travelStory": [
+            "クスコの古い街路では、大きな石を組み合わせた壁と、その上に重なる後代の建物が目を引きます。広場から細い道へ入ると、建物の角や壁面に異なる時代の痕跡が現れます。教会や広場だけを急いで巡るより、足元の石と建物の境目を見比べると、長い歴史が街全体に積み重なっていることが伝わります。",
+            "UNESCOはクスコを、インカ帝国の重要な都市であり、スペイン統治期の建築が重なった歴史都市として評価しています。都市の基盤となった石造建築と、その後の街並みが同じ場所で共存していることが特徴です。石の壁を見てから広場へ戻ると、都市の変化が建物一つではなく空間全体に刻まれていることを感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クスコの市街",
+              "url": "https://whc.unesco.org/en/list/273/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "quizDraft": {
+            "question": "クスコに重なる二つの歴史的な建築の流れは？",
+            "options": [
+              "インカ期とスペイン統治期",
+              "江戸時代と明治時代",
+              "古代ローマとヴァイキング"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。",
+            "photoGoal": "クスコの市街が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
