@@ -112,6 +112,23 @@ class CountryExperienceContractTest(unittest.TestCase):
         self.assertEqual(manifest["brazil-iguacu-brazil-side-quiz-image"]["author"],
                          "MurielDamiana")
 
+    def test_antigua_coast_quizzes_never_reuse_national_cover_or_tour_photo(self):
+        report=country_coverage(self.root,[{"country":"アンティグア・バーブーダ"}])
+        self.assertEqual(set(report),{"AG"})
+        ag=report["AG"]
+        self.assertEqual(ag["cover"],"assets/travel/antigua-english-harbour-cover.jpg")
+        self.assertEqual(ag["postcard"],"assets/travel/antigua-dockyard.jpg")
+        self.assertEqual(ag["quizPhotoKeys"],[
+            "antigua-bettys-hope-quiz-image","antigua-devils-bridge-quiz-image"])
+        manifest=json.loads((self.root/"travel-stops.json").read_text(encoding="utf-8"))
+        assets={manifest[k]["photoAsset"] for k in ag["quizPhotoKeys"]}
+        self.assertEqual(len(assets),2)
+        self.assertNotIn(ag["cover"],assets)
+        self.assertNotIn(ag["postcard"],assets)
+        self.assertEqual(manifest["antigua-english-harbour-cover"]["license"],"CC BY 4.0")
+        self.assertEqual(manifest["antigua-devils-bridge-postcard"]["author"],
+                         "Dr. Thomas Liptak")
+
     def test_new_countries_have_complete_local_quiz_and_portrait_assets(self):
         report=country_coverage(self.root,[{"id":"verified-uk","country":"イギリス"},
                                           {"id":"verified-jp","country":"日本"}])
