@@ -89,7 +89,10 @@
     "pt-pena-palace-postcard",
     "gr-athens-skyline-cover",
     "gr-parthenon-postcard",
-    "gr-delphi-apollo-postcard"
+    "gr-delphi-apollo-postcard",
+    "eg-cairo-skyline-cover",
+    "eg-giza-pyramid-postcard",
+    "eg-abu-simbel-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -1704,11 +1707,136 @@
     },
     "EG": {
       "name": "エジプト",
-      "status": "pending",
-      "portrait": null,
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "status": "approved",
+      "portrait": {
+        "lead": "ナイル川の歴史と砂漠の遺跡が、現代の街の活気と重なる国",
+        "body": "エジプトではナイル川沿いに古代から都市が育ち、今もカイロの市場や暮らしの中に長い歴史が重なっています。ギザの巨大なピラミッドは古代の王の墓として知られ、南のアブ・シンベルには岩山を削って造られた神殿があります。地中海沿岸の港町と乾燥した砂漠、ナイル流域の緑が対照的な風景をつくり、同じ国でも旅する地域によって印象が大きく変わります。名所の大きさだけでなく、誰が建設し、後の時代にどう守られてきたのかにも注目したい国です。",
+        "facts": [
+          "首都：カイロ",
+          "世界遺産：ギザのピラミッド群（1979年登録）",
+          "世界遺産：アブ・シンベルからフィラエまでのヌビア遺跡群"
+        ],
+        "sourceName": "UNESCO世界遺産センター・メンフィスとその墓地遺跡",
+        "sourceUrl": "https://whc.unesco.org/en/list/86/",
+        "photos": [
+          "eg-giza-pyramid-postcard",
+          "eg-abu-simbel-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/eg-cairo-skyline-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cairo-skyline.jpg/500px-Cairo-skyline.jpg",
+          "caption": "カイロの建物が重なる都市の眺め（2025年撮影）",
+          "author": "Ahmed Atef (El-Mosawer)",
+          "license": "CC BY-SA 4.0",
+          "place": "カイロの市街地",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Cairo-skyline.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ギザのピラミッド群を含むメンフィスの墓地遺跡の世界遺産登録年は？",
+          "options": [
+            "1979年",
+            "1985年",
+            "2001年"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜ギザの大ピラミッド",
+          "fact": "UNESCOによると、メンフィスとその墓地遺跡は1979年に世界文化遺産へ登録されました。",
+          "quip": "古代の建築なのに、街の景色に今も堂々と割り込んでくる。",
+          "photoKey": "eg-giza-pyramid-postcard"
+        },
+        {
+          "question": "アブ・シンベルなどのヌビア遺跡群を救うため、国際的な保存活動を主導した機関は？",
+          "options": [
+            "UNESCO",
+            "欧州中央銀行",
+            "国際オリンピック委員会"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜アブ・シンベル大神殿",
+          "fact": "UNESCOが1960年から1980年にかけて進めた国際保存活動により、神殿などが水没の危機から救われました。",
+          "quip": "古代の巨像を動かしたのは、現代の大きなチームワーク。",
+          "photoKey": "eg-abu-simbel-postcard"
+        }
+      ],
+      "travelStops": {
+        "eg-cairo-skyline-cover": {
+          "country": "エジプト",
+          "countryOnly": true,
+          "place": "カイロの市街地",
+          "region": "カイロ",
+          "latitude": 30.044,
+          "longitude": 31.236,
+          "note": "多くの建物がひしめく、ナイル沿いの首都の風景。",
+          "photoCaption": "カイロの建物が重なる都市の眺め（2025年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Cairo-skyline.jpg/500px-Cairo-skyline.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Cairo-skyline.jpg",
+          "photoAsset": "assets/travel/eg-cairo-skyline-cover.jpg",
+          "author": "Ahmed Atef (El-Mosawer)",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "eg-giza-pyramid-postcard": {
+          "country": "エジプト",
+          "countryOnly": true,
+          "place": "ギザの大ピラミッド",
+          "region": "ギザのピラミッド地区",
+          "latitude": 29.9792,
+          "longitude": 31.1342,
+          "note": "巨大な石の三角形が、現代の街並みの向こうに立つ世界遺産。",
+          "photoCaption": "市街地の向こうにそびえるギザの大ピラミッド（2024年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f5/Great_Pyramid_Giza.jpg/500px-Great_Pyramid_Giza.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Great_Pyramid_Giza.jpg",
+          "photoAsset": "assets/travel/eg-giza-pyramid-postcard.jpg",
+          "author": "Ireneusz Jerzy Borysiewicz",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ギザのピラミッドへ向かうと、遠くの街の建物の上に三角形の石の巨体が姿を現します。写真では一つの大きな形に見えても、近づくと幾つもの石の層が重なっていることがわかり、人の手で築かれた建造物だという事実に驚かされます。砂漠だけの風景と思われがちですが、都市のすぐそばにあることも特徴です。現代の道路や家々と古代の石の遺跡を同じ視野に入れると、時間の隔たりが鮮明になります。",
+            "UNESCOの『メンフィスとその墓地遺跡』にはギザからダハシュールまでのピラミッド群が含まれ、1979年に世界文化遺産へ登録されました。クフ王の大ピラミッドを含む墓地遺跡は、古代エジプトの王権や建築技術を伝える重要な証拠です。壮大さを眺めたあと、なぜこんな規模の建造物が造られたのかを考えると、石のかたまりが古代社会の組織と人々の営みを語る場所に変わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・メンフィスとその墓地遺跡",
+              "url": "https://whc.unesco.org/en/list/86/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "eg-abu-simbel-postcard": {
+          "country": "エジプト",
+          "countryOnly": true,
+          "place": "アブ・シンベル大神殿",
+          "region": "アスワン県・ナセル湖畔",
+          "latitude": 22.3372,
+          "longitude": 31.6258,
+          "note": "岩山をくり抜いて造られた大きな神殿と王の像。",
+          "photoCaption": "巨大な王の像が並ぶアブ・シンベル大神殿（2023年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Abu_Simbel_Great_Temple.jpg/500px-Abu_Simbel_Great_Temple.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Abu_Simbel_Great_Temple.jpg",
+          "photoAsset": "assets/travel/eg-abu-simbel-postcard.jpg",
+          "author": "Benjamin Inbar",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "アブ・シンベルの大神殿では、岩の壁から切り出された巨大な王の坐像が入口に並び、見上げるだけで圧倒されます。近づくと像の足元に小さな人の形も刻まれていることに気づき、古代の建築がどのように王の力を表現したかが伝わってきます。湖の近くにある現在の神殿は、実は最初に建てられた場所から移されたものです。その事実を知ってから正面を見直すと、もう一つの歴史が見えてきます。",
+            "UNESCOによれば、アブ・シンベルやフィラエの遺跡群はナイル川の水位上昇で水没する危険があり、1960年から1980年にかけた国際的な保存活動によって救われました。神殿は大きな石のブロックに分けて移設され、1979年にはヌビア遺跡群として世界遺産へ登録されています。古代に造られた神殿が現代の技術と国際協力によって守られたことを思えば、この巨像は二つの時代の挑戦を伝えているようです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アブ・シンベルからフィラエまでのヌビア遺跡群",
+              "url": "https://whc.unesco.org/en/list/88/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "ER": {
