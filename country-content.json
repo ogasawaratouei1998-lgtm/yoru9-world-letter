@@ -143,7 +143,10 @@
     "ie-skellig-michael-postcard",
     "is-reykjavik-cover",
     "is-thingvellir-postcard",
-    "is-jokulsarlon-postcard"
+    "is-jokulsarlon-postcard",
+    "kh-phnom-penh-palace-cover",
+    "kh-angkor-wat-postcard",
+    "kh-preah-vihear-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4880,7 +4883,7 @@
     },
     "KH": {
       "name": "カンボジア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "森林に抱かれた古代都市と、山上に続く石造寺院の回廊",
         "body": "カンボジアには、石造建築に残るクメール文化の規模と繊細さを実感できる遺産が点在しています。アンコールの寺院群では建築と水利、森林の景観が重なり、プレアヴィヒア寺院では高地の地形に沿って回廊と聖域が連なります。寺院を一枚の記念写真に収めるだけでなく、入口から奥へ進むにつれて空間がどう変わるかを見てみると、造営した人々の思想が感じられます。歴史を尊重しながらゆっくり訪れたい国です。",
@@ -4888,13 +4891,132 @@
           "世界遺産：アンコール",
           "世界遺産：プレアヴィヒア寺院"
         ],
-        "photos": [],
+        "photos": [
+          "kh-angkor-wat-postcard",
+          "kh-preah-vihear-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：カンボジアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/kh"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/kh-phnom-penh-palace-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg/500px-04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg",
+          "caption": "プノンペン王宮のプレア・ティネアン・ポチャニ（2019年11月、PsamatheM撮影）",
+          "author": "PsamatheM",
+          "license": "CC BY-SA 4.0",
+          "place": "プノンペン・王宮のプレア・ティネアン・ポチャニ",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "アンコールの寺院群と結びつく歴史的な王朝は？",
+          "options": [
+            "ローマ帝国",
+            "クメール王朝",
+            "アステカ帝国"
+          ],
+          "answer": 1,
+          "fact": "UNESCOはアンコールをクメール王朝の主要な遺産として扱っています。",
+          "photoLabel": "正解写真｜アンコール遺跡群・アンコール・ワット",
+          "quip": "寺院だけでなく都市全体が巨大だった。地図を拡大するたび、当時の建築計画の規模にこちらの想像力が負ける。",
+          "photoKey": "kh-angkor-wat-postcard"
+        },
+        {
+          "question": "プレアヴィヒア寺院で特に重要な宗教的対象は？",
+          "options": [
+            "古代ローマの皇帝",
+            "北欧神話の神々",
+            "シヴァ神"
+          ],
+          "answer": 2,
+          "fact": "UNESCOはプレアヴィヒア寺院をシヴァ神に捧げられた建築として説明しています。",
+          "photoLabel": "正解写真｜プレアヴィヒア寺院",
+          "quip": "山の形に合わせて寺院を設計した。平地に戻して効率化する、という発想ではこの傑作は生まれない。",
+          "photoKey": "kh-preah-vihear-postcard"
+        }
+      ],
+      "travelStops": {
+        "kh-phnom-penh-palace-cover": {
+          "country": "カンボジア",
+          "countryOnly": true,
+          "place": "プノンペン・王宮のプレア・ティネアン・ポチャニ",
+          "region": "プノンペン・王宮",
+          "latitude": 11.56373,
+          "longitude": 104.931534,
+          "note": "金色の屋根飾りが印象的な王宮の建物。",
+          "photoCaption": "プノンペン王宮のプレア・ティネアン・ポチャニ（2019年11月、PsamatheM撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/17/04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg/500px-04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:04-Preah_Tineang_Phochani_Royal_Palace-nX-1.jpg",
+          "photoAsset": "assets/travel/kh-phnom-penh-palace-cover.jpg",
+          "author": "PsamatheM",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "kh-angkor-wat-postcard": {
+          "country": "カンボジア",
+          "countryOnly": true,
+          "place": "アンコール遺跡群・アンコール・ワット",
+          "region": "シェムリアップ",
+          "latitude": 13.412933,
+          "longitude": 103.863944,
+          "note": "朝の光の中、クメール建築の塔が輪郭を現す。",
+          "photoCaption": "朝焼けを背に浮かぶアンコール・ワットの塔（2018年7月、Christophe95撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/79/Angkor_Wat_at_sunrise_4.jpg/500px-Angkor_Wat_at_sunrise_4.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Angkor_Wat_at_sunrise_4.jpg",
+          "photoAsset": "assets/travel/kh-angkor-wat-postcard.jpg",
+          "author": "Christophe95",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "アンコールの寺院群では、石で組まれた長い回廊と塔が幾重にも現れ、歩くたびに建築の縮尺が変わって見えます。アンコール・ワットの整った姿だけでなく、バイヨンやタ・プロームなど、場所によって異なる意匠にも注目したいところです。木々の影が石壁に落ちる時間帯には、建造物と周囲の自然が同じ風景をつくっていることがよく分かります。",
+            "UNESCOはアンコールをクメール王朝の都市と寺院建築の大規模な遺産として評価しています。寺院は単体で存在したのではなく、広い地域の水利施設や街の構造とつながっていました。地図で遺跡群の広がりを確かめてから見学すると、石彫の細部と都市全体の計画を結びつけて楽しめます。保護のため指定された通路や見学規則を守ることも大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンコール",
+              "url": "https://whc.unesco.org/en/list/668/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "kh-preah-vihear-postcard": {
+          "country": "カンボジア",
+          "countryOnly": true,
+          "place": "プレアヴィヒア寺院",
+          "region": "プレアヴィヒア州・タイ国境付近",
+          "latitude": 14.39,
+          "longitude": 104.6804,
+          "note": "山上のクメール宗教建築。現在は写真で楽しむバーチャル小旅行として紹介。",
+          "photoCaption": "プレアヴィヒア寺院の石造建築（2010年8月、William Brehm撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Preah-vihear.jpg/500px-Preah-vihear.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Preah-vihear.jpg",
+          "photoAsset": "assets/travel/kh-preah-vihear-postcard.jpg",
+          "author": "William Brehm",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "travelStory": [
+            "写真の中のプレアヴィヒア寺院は、断崖に近い高地に築かれ、長い参道に沿って建物が連なります。石造の入口を額縁のように眺めると、建物を一つずつ通過することで景色が変わる設計が想像できます。遠い平野を見渡す地形と宗教建築の関係を、実際に足を運ばずとも、写真と地図から読み解くことができます。",
+            "UNESCOはシヴァ神に捧げられたこの寺院を、約800メートルの軸線に沿った建築と自然地形の調和から評価しています。一方、タイ国境から30km以内は日本の外務省による渡航中止勧告の対象です（2026年11月22日確認）。現地への訪問は勧めません。いまは写真で歴史を味わい、渡航を検討する場合には必ず外務省の最新の危険情報を確認してください。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プレアヴィヒア寺院",
+              "url": "https://whc.unesco.org/en/list/1224/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・カンボジアの危険情報",
+              "url": "https://www.anzen.mofa.go.jp/info/pchazardspecificinfo_2026T075.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "KI": {
