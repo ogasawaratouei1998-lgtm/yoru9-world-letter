@@ -33,6 +33,10 @@ def approved(count=4,date=DAY):
             "sourceName":"取材元","sourceUrl":url,"reported":date,
             "verificationUrls":[url,f"https://independent{i}.example.org/news-{i}"],
             "editorVerified":True,"humorSafe":True,
+            # Modern approved test fixtures must satisfy the same mandatory
+            # non-compensatory editorial rubric as actual nightly candidates.
+            "editorialScores":{"surprise":4,"mistakeClarity":4,
+                               "outcomeIrony":4,"evidence":5,"safety":5},
         })
     return {"status":"approved","editionDate":date,"editionType":"regular",
             "title":date+"｜世界の大失敗ニュース",
