@@ -114,6 +114,29 @@ class CountryEditorialQueueTest(unittest.TestCase):
             self.assertIn("invalid_selectable_portrait_photo",brazil["missing"])
             self.assertIn("attributed_country_portrait_photo",brazil["missing"])
 
+    def test_antigua_is_near_ready_but_not_automatically_approved(self):
+        result=country_editorial_queue(ROOT)
+        antigua=next(row for row in result["prioritizedPending"] if row["code"]=="AG")
+        self.assertEqual(antigua["requiredRemaining"],0,antigua["missing"])
+        self.assertNotIn("AG",result["approvedCountries"])
+        self.assertIn("optional_current_topic",antigua["missing"])
+
+    def test_antigua_quiz_photo_reused_as_cover_is_detected(self):
+        with tempfile.TemporaryDirectory() as dirname:
+            root=Path(dirname)
+            for name in ("country-content.json","country-catalog.json"):
+                shutil.copy2(ROOT/name,root/name)
+            path=root/"country-content.json"
+            dataset=json.loads(path.read_text(encoding="utf-8"))
+            antigua=dataset["countries"]["AG"]
+            cover=antigua["portraitPhotos"][0]
+            cover["asset"]=antigua["travelStops"]["antigua-bettys-hope-quiz-image"]["photoAsset"]
+            path.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+            result=country_editorial_queue(root)
+            row=next(item for item in result["prioritizedPending"] if item["code"]=="AG")
+            self.assertIn("invalid_selectable_portrait_photo",row["missing"])
+            self.assertIn("portrait_photo_reused_in_quiz",row["missing"])
+
     def test_history_source_on_unrelated_cover_does_not_certify_the_trip(self):
         with tempfile.TemporaryDirectory() as dirname:
             root=Path(dirname)
