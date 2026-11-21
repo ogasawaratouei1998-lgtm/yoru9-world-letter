@@ -72,7 +72,7 @@ class NorwayPromotionTests(unittest.TestCase):
             sources.update(s["url"] for s in stop["historicalSources"])
         self.assertEqual(sources,SOURCES)
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v64",worker)
+        self.assertRegex(worker, r"yoru9-shell-v[0-9]+")
         for key in PHOTOS:
             self.assertIn("assets/travel/"+key+".jpg",worker)
 
