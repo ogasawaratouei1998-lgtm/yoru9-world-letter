@@ -100,6 +100,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ピサの斜塔が建っているのは、イタリアのどの都市？',options:['ピサ','ローマ','ミラノ'],answer:0,photoKey:'italy-pisa-tower-postcard',photoLabel:'正解の建築｜ピサの斜塔',fact:'ピサの斜塔は、トスカーナ州ピサにある大聖堂の鐘楼です。',quip:'斜めに立っても、長年しっかり観光の主役。'},
   {question:'ヴェネツィアの街を象徴する大きな水路は？',options:['ライン川','大運河','テムズ川'],answer:1,photoKey:'italy-venice-grand-canal-postcard',photoLabel:'正解の水景｜ヴェネツィアの大運河',fact:'ヴェネツィアの大運河は歴史的な建物に沿って流れ、街の水上交通を支えています。',quip:'道路を探すより、舟を探したほうが早い日もある。'},
  ],
+ JO:[
+  {question:'ペトラの古代都市と深く結びつく人々は？',options:['マヤ人','ナバテア人','ヴァイキング'],answer:1,fact:'UNESCOはペトラをナバテア人の都市として紹介しています。',photoLabel:'正解写真｜ペトラ遺跡・エル・ハズネ',quip:'岩を削って建物を造るとは、資材調達の発想が逆だ。工事のやり直しが利かない分、設計図の責任は重い。',photoKey:'jo-petra-treasury-postcard'},
+  {question:'ワディ・ラムが評価される二つの側面は？',options:['海洋と造船','氷河と製鉄','自然と文化'],answer:2,fact:'UNESCOはワディ・ラムを自然と文化の双方に価値がある遺産として扱っています。',photoLabel:'正解写真｜ワディ・ラム保護地域',quip:'砂漠に残る一万年以上の人の記録。電波がなくても、歴史はちゃんと保存されていた。',photoKey:'jo-wadi-rum-sunset-postcard'},
+ ],
  JP:[
   {question:'富士山がまたがる2つの県は？',options:['長野県と岐阜県','京都府と滋賀県','山梨県と静岡県'],answer:2,photoKey:'japan-fuji-postcard',photoLabel:'正解の山｜山梨県・静岡県にまたがる富士山',fact:'富士山は山梨県と静岡県にまたがる日本で最も高い山です。',quip:'存在感が大きすぎて二つの県にまたがってしまった。'},
   {question:'東京・浅草の浅草寺があるのはどこ？',options:['京都府','東京都','奈良県'],answer:1,photoKey:'japan-country-postcard',photoLabel:'正解の寺院｜東京・浅草寺',fact:'浅草寺は東京都台東区浅草にあり、雷門などで知られています。',quip:'雷門は人気者。記念写真の行列まで名物になりそう。'},

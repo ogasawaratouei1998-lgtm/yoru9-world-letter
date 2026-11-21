@@ -3706,5 +3706,88 @@
       }
     ],
     "famousTourist": true
+  },
+  "jo-amman-citadel-cover": {
+    "country": "ヨルダン",
+    "countryOnly": true,
+    "place": "アンマン・城塞の丘からの眺望",
+    "region": "アンマン・城塞の丘",
+    "latitude": 31.954636,
+    "longitude": 35.936967,
+    "note": "城塞の丘から眺める首都の街並み。",
+    "photoCaption": "アンマンの丘に広がる街並みとヨルダン国旗（2014年8月、Garikoitz Knörr撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/74/Amman%2C_view_from_the_Citadel.JPG/500px-Amman%2C_view_from_the_Citadel.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Amman%2C_view_from_the_Citadel.JPG",
+    "photoAsset": "assets/travel/jo-amman-citadel-cover.jpg",
+    "author": "Garikoitz Knörr",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "jo-petra-treasury-postcard": {
+    "country": "ヨルダン",
+    "countryOnly": true,
+    "place": "ペトラ遺跡・エル・ハズネ",
+    "region": "マアーン県・ペトラ",
+    "latitude": 30.3221,
+    "longitude": 35.4516,
+    "note": "岩を彫り出した建築。座標はエル・ハズネの位置。",
+    "photoCaption": "赤い岩壁に彫られたエル・ハズネの正面（2015年6月、Davidchocron撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Petra%2C_Jordan_-The_Treasury.JPG/500px-Petra%2C_Jordan_-The_Treasury.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Petra%2C_Jordan_-The_Treasury.JPG",
+    "photoAsset": "assets/travel/jo-petra-treasury-postcard.jpg",
+    "author": "Davidchocron",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ペトラ",
+        "url": "https://whc.unesco.org/en/list/326/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・ヨルダン危険情報",
+        "url": "https://www.anzen.mofa.go.jp/m/mbhazardinfo1_054.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "travelStory": [
+      "写真のエル・ハズネは、赤みを帯びた岩壁を彫り込んだ建築です。柱や破風の整った形と、その周囲に残る自然の岩肌を見比べると、石を積み上げるのとは異なる建築の発想が見えてきます。地図で峡谷と周囲の遺構の位置関係を確かめながら、砂漠の交易路に築かれた都市の規模を想像してみましょう。",
+      "UNESCOはペトラをナバテア人の古代都市として位置づけ、岩を削った建築と水を管理する技術を重視しています。乾いた土地で都市の暮らしを支えた水路や貯水の工夫に目を向けると、美しい正面だけでは伝わらない歴史が見えてきます。外務省はヨルダン全土を危険レベル2とし、不要不急の渡航を控えるよう求めています（2026年11月22日確認）。今回は写真で歴史を楽しみ、現地への不要不急の訪問は勧めません。"
+    ],
+    "famousTourist": true
+  },
+  "jo-wadi-rum-sunset-postcard": {
+    "country": "ヨルダン",
+    "countryOnly": true,
+    "place": "ワディ・ラム保護地域",
+    "region": "ヨルダン南部・ワディ・ラム",
+    "latitude": 29.493627,
+    "longitude": 35.395773,
+    "note": "砂漠の岩山と夕景。写真で楽しむバーチャル小旅行。",
+    "photoCaption": "夕日に染まるワディ・ラムの岩山と砂漠（2022年11月、Trldp撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Sunset_in_Wadi_Rum.jpg/500px-Sunset_in_Wadi_Rum.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sunset_in_Wadi_Rum.jpg",
+    "photoAsset": "assets/travel/jo-wadi-rum-sunset-postcard.jpg",
+    "author": "Trldp",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ワディ・ラム保護地域",
+        "url": "https://whc.unesco.org/en/list/1377/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・ヨルダン危険情報",
+        "url": "https://www.anzen.mofa.go.jp/m/mbhazardinfo1_054.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "travelStory": [
+      "夕暮れの写真では、砂の平地の向こうに岩山の稜線が何層にも重なり、光が弱まるにつれて岩の輪郭が浮かび上がります。ワディ・ラムでは、砂岩の断崖や峡谷、自然のアーチなど、表情の異なる地形が広がっています。広い空と大地の色を見比べながら、風景が長い時間をかけて形づくられたことを想像できる場所です。",
+      "UNESCOはワディ・ラムを自然と文化の双方に価値を持つ複合遺産として評価し、岩絵や碑文など約1万2000年に及ぶ人の営みの痕跡を紹介しています。砂漠は歴史のない空白ではなく、自然と暮らしが交わった場所です。外務省はヨルダン全土を危険レベル2とし、不要不急の渡航を控えるよう求めています（2026年11月22日確認）。いまは写真と地図を通じて遺産を味わい、不要不急の現地訪問は勧めません。"
+    ],
+    "famousTourist": true
   }
 }
