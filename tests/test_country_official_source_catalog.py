@@ -1,5 +1,6 @@
 """UNESCO feed inventory maps sources to the correct countries without approval."""
 from pathlib import Path
+import json
 import unittest
 
 from country_unesco_source_catalog import build_inventory, collect_sites
@@ -25,10 +26,12 @@ class OfficialUNESCOSourceIndexTests(unittest.TestCase):
     def test_covers_every_pending_country_without_making_up_heritage_sites(self):
         doc = build_inventory(ROOT, EXAMPLE)
         self.assertEqual(doc["catalogCount"], 196)
-        self.assertEqual(doc["pendingCount"], 171)
-        self.assertTrue(doc["countries"]["KH"]["sourceFound"])
-        self.assertTrue(doc["countries"]["JO"]["sourceFound"])
-        self.assertFalse(doc["countries"]["NO"]["sourceFound"])
+        canonical = json.loads((ROOT / "country-content.json").read_text(encoding="utf-8"))
+        expected_pending = sum(c["status"] == "pending" for c in canonical["countries"].values())
+        self.assertEqual(doc["pendingCount"], expected_pending)
+        for code, country in doc["countries"].items():
+            # This fixture names KH/JO only; never fabricate a source for others.
+            self.assertEqual(country["sourceFound"], code in ("KH", "JO"))
         for entry in doc["countries"].values():
             self.assertEqual(entry["editorialStatus"], "pending")
             self.assertFalse(entry["portraitApproved"])
