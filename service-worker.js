@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v70';
+const SHELL_CACHE = 'yoru9-shell-v71';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -78,7 +78,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Hungary: three distinct Commons images of Budapest Parliament, Buda Castle and Holloko old village.
  'assets/travel/hu-budapest-parliament-cover.jpg', 'assets/travel/hu-buda-castle-postcard.jpg', 'assets/travel/hu-holloko-village-postcard.jpg',
  // Poland: separate Warsaw Old Town, Wawel Castle and Wieliczka salt chapel photographs.
- 'assets/travel/pl-warsaw-old-town-cover.jpg', 'assets/travel/pl-wawel-castle-postcard.jpg', 'assets/travel/pl-wieliczka-salt-chapel-postcard.jpg'];
+ 'assets/travel/pl-warsaw-old-town-cover.jpg', 'assets/travel/pl-wawel-castle-postcard.jpg', 'assets/travel/pl-wieliczka-salt-chapel-postcard.jpg',
+ // Slovenia: independent Ljubljana panorama, Skocjan caves and Plecnik's Triple Bridge.
+ 'assets/travel/si-ljubljana-panorama-cover.jpg', 'assets/travel/si-skocjan-caves-postcard.jpg', 'assets/travel/si-triple-bridge-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
