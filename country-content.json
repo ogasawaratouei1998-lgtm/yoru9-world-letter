@@ -95,7 +95,10 @@
     "eg-abu-simbel-postcard",
     "tr-istanbul-sunset-cover",
     "tr-hagia-sophia-postcard",
-    "tr-cappadocia-rocks-postcard"
+    "tr-cappadocia-rocks-postcard",
+    "th-bangkok-wat-arun-cover",
+    "th-ayutthaya-mahathat-postcard",
+    "th-sukhothai-park-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4985,11 +4988,136 @@
     },
     "TH": {
       "name": "タイ",
-      "status": "pending",
-      "portrait": null,
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "status": "approved",
+      "portrait": {
+        "lead": "水辺の寺院と古都の遺跡に、今の市場の活気が重なる国",
+        "body": "タイでは首都バンコクの川沿いに寺院や市場が集まり、交通の多い通りと静かな水路が隣り合っています。北へ向かうと、アユタヤやスコータイに昔の都の建築と仏像が残り、歴史公園として保存されています。南部の海岸や島々、北部の山地など自然も多彩で、地域ごとに料理や暮らしの風景が異なります。寺院をただ美しい写真として見るだけでなく、都市の発展や信仰、保存の歴史まで知ると旅の見え方が豊かになります。",
+        "facts": [
+          "首都：バンコク",
+          "世界遺産：アユタヤ歴史都市（1991年登録）",
+          "世界遺産：スコータイと周辺の歴史都市群"
+        ],
+        "sourceName": "UNESCO世界遺産センター・アユタヤ歴史都市",
+        "sourceUrl": "https://whc.unesco.org/en/list/576/",
+        "photos": [
+          "th-ayutthaya-mahathat-postcard",
+          "th-sukhothai-park-postcard"
+        ]
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/th-bangkok-wat-arun-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Bangkok_Wat_Arun.jpg/500px-Bangkok_Wat_Arun.jpg",
+          "caption": "バンコクの川沿いに建つワット・アルン（2016年撮影）",
+          "author": "Cun Cun",
+          "license": "CC BY-SA 4.0",
+          "place": "バンコクのワット・アルン",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Bangkok_Wat_Arun.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "アユタヤ歴史都市が世界文化遺産に登録された年は？",
+          "options": [
+            "1985年",
+            "1991年",
+            "2007年"
+          ],
+          "answer": 1,
+          "photoLabel": "正解写真｜アユタヤのワット・マハータート",
+          "fact": "UNESCO世界遺産センターの登録情報では、アユタヤ歴史都市の登録年は1991年です。",
+          "quip": "木の根が歴史を包む。自然の展示方法には驚かされる。",
+          "photoKey": "th-ayutthaya-mahathat-postcard"
+        },
+        {
+          "question": "UNESCOのスコータイ歴史都市群を構成する主な歴史都市は全部でいくつ？",
+          "options": [
+            "1つ",
+            "3つ",
+            "6つ"
+          ],
+          "answer": 1,
+          "photoLabel": "正解写真｜スコータイ歴史公園",
+          "fact": "UNESCO登録資産はスコータイ、シーサッチャナーライ、カムペーンペットの三つの歴史都市から構成されています。",
+          "quip": "都の歴史も一か所では終わらない。見どころが三都市分。",
+          "photoKey": "th-sukhothai-park-postcard"
+        }
+      ],
+      "travelStops": {
+        "th-bangkok-wat-arun-cover": {
+          "country": "タイ",
+          "countryOnly": true,
+          "place": "バンコクのワット・アルン",
+          "region": "バンコク・チャオプラヤー川西岸",
+          "latitude": 13.7437,
+          "longitude": 100.4889,
+          "note": "チャオプラヤー川のほとりにそびえる装飾的な仏教寺院。",
+          "photoCaption": "バンコクの川沿いに建つワット・アルン（2016年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Bangkok_Wat_Arun.jpg/500px-Bangkok_Wat_Arun.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Bangkok_Wat_Arun.jpg",
+          "photoAsset": "assets/travel/th-bangkok-wat-arun-cover.jpg",
+          "author": "Cun Cun",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "th-ayutthaya-mahathat-postcard": {
+          "country": "タイ",
+          "countryOnly": true,
+          "place": "アユタヤのワット・マハータート遺跡",
+          "region": "アユタヤ県・アユタヤ歴史公園",
+          "latitude": 14.3568,
+          "longitude": 100.5685,
+          "note": "古都の寺院跡に、木の根と石の仏像が重なる風景。",
+          "photoCaption": "樹木の根に包まれた仏頭が残るワット・マハータート（2019年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/da/Ayutthaya_Wat_Mahathat_01.jpg/500px-Ayutthaya_Wat_Mahathat_01.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Ayutthaya_Wat_Mahathat_01.jpg",
+          "photoAsset": "assets/travel/th-ayutthaya-mahathat-postcard.jpg",
+          "author": "ErwinMeier",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "アユタヤのワット・マハータートでは、崩れた煉瓦の壁や石の仏像が木々の間に残っています。写真でよく知られるのは、成長した木の根に包まれた仏頭です。静かな表情の周囲を根が取り囲む姿は、一度見たら忘れられない印象を残します。遺跡全体へ視線を広げると、今は建物の一部しか残っていなくても、かつてここが人々の集まる都市の寺院だったことを想像できます。",
+            "UNESCOはアユタヤを、1350年ごろから発展したシャム王国の都の遺跡として紹介しています。川に囲まれた場所に都市が築かれ、交易や文化の中心として栄えました。現在の歴史都市は1991年に世界文化遺産へ登録されています。写真の仏頭だけを切り取らず、周囲の煉瓦の基壇や道筋、残された塔の形をたどってみると、今の静けさの向こうに古都のにぎわいが見えてくるようです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アユタヤ歴史都市",
+              "url": "https://whc.unesco.org/en/list/576/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "th-sukhothai-park-postcard": {
+          "country": "タイ",
+          "countryOnly": true,
+          "place": "スコータイ歴史公園",
+          "region": "スコータイ県・スコータイ",
+          "latitude": 17.02,
+          "longitude": 99.71,
+          "note": "古い都の寺院や仏像が公園の緑の中に保存された遺跡。",
+          "photoCaption": "スコータイ歴史公園に残る寺院と石造建築（2012年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Sukhothai_HistoricalPark.jpg/500px-Sukhothai_HistoricalPark.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Sukhothai_HistoricalPark.jpg",
+          "photoAsset": "assets/travel/th-sukhothai-park-postcard.jpg",
+          "author": "Khunmoohan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "スコータイ歴史公園を歩くと、広い空の下に古い寺院の基壇や仏像が現れます。緑の芝生と水辺、赤みを帯びた石の遺構が重なり、ゆっくりと眺めたくなる景色です。写真に写る建築を正面から見たあと、少し距離を取って周囲の配置を確かめると、一つの寺院だけでなく、都の空間の広がりも感じられます。静かな公園に残る建物をたどりながら、かつての人々の生活を想像したい場所です。",
+            "UNESCOはスコータイと関連する歴史都市を、タイの初期王国の都市文化を示す遺産として1991年に登録しました。スコータイ、シーサッチャナーライ、カムペーンペットの三つの都市遺跡が一体となって評価されています。写真に写る寺院だけでなく、都市を形づくった建築や宗教、美術の発展にも注目したいところです。点在する遺構を一つの地図で見比べれば、遠く離れた場所が同じ時代の文化で結び付いていたことが伝わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・スコータイと周辺の歴史都市群",
+              "url": "https://whc.unesco.org/en/list/574/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "TJ": {
