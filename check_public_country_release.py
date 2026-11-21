@@ -43,7 +43,8 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
     expected_reader=expected_reader_assets(root)
     if assets["index.html"] != expected_reader["index.html"]:
         raise AssertionError("Public reader page is stale or altered")
-    for path in ("assets/reader-core.css","assets/reader-core.js"):
+    for path in ("assets/reader-core.css","assets/reader-core.js",
+                 "assets/reader-country-data.js"):
         if assets.get(path) != expected_reader[path]:
             raise AssertionError("Published external reader asset stale or altered: "+path)
     runtime=assets["assets/reader-core.js"].decode("utf-8")
@@ -184,6 +185,7 @@ def fetch_assets(site_url: str, revision: str, names=None) -> dict[str, bytes]:
     result = {}
     if names is None:
         names = ("index.html", "assets/reader-core.css", "assets/reader-core.js",
+                 "assets/reader-country-data.js",
                  "world-passport.js", "service-worker.js",
                  "country-highlights.json", "travel-stops.json",
                  "data/current.json", "data/archive/index.json")
