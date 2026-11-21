@@ -119,6 +119,52 @@ class CountryContentTest(unittest.TestCase):
         self.assertEqual(result["KR"]["cover"],"assets/travel/seoul-gyeongbokgung.jpg")
         self.assertEqual(result["KR"]["postcard"],"assets/travel/korea-bulguksa-stairs.jpg")
 
+    def test_brazil_has_independent_brazil_side_photo_and_two_distinct_quizzes(self):
+        data=load_country_content(ROOT)
+        brazil=data["countries"]["BR"]
+        self.assertEqual(brazil["status"],"pending")
+        self.assertTrue(brazil["portrait"]["sourceUrl"].startswith("https://www.visitbrasil.com/"))
+        self.assertEqual(len(brazil["quiz"]),2)
+        keys=[item["photoKey"] for item in brazil["quiz"]]
+        self.assertEqual(len(set(keys)),2)
+        self.assertIn("brazil-iguacu-brazil-side-quiz-image",keys)
+        self.assertEqual(brazil["travelStops"]["brazil-iguacu-brazil-side-quiz-image"]["author"],
+                         "MurielDamiana")
+        self.assertTrue(all(brazil["travelStops"][key]["quizOnly"] for key in keys))
+        cover=brazil["portraitPhotos"][0]
+        self.assertEqual(cover["asset"],"assets/travel/brazil-rio-christ-cover.jpg")
+        photo_assets=[brazil["travelStops"][key]["photoAsset"] for key in keys]
+        postcard=brazil["travelStops"]["brazil-country-postcard"]
+        self.assertEqual(postcard["author"],"Flaviohmg")
+        self.assertIn("Iguaçu_Falls",postcard["photoPage"])
+        self.assertNotEqual(postcard["photoAsset"],
+                            brazil["travelStops"]["guaira-degavar-road-marking-2026"]["photoAsset"])
+        self.assertEqual(len(set([cover["asset"],postcard["photoAsset"]]+photo_assets)),4)
+        self.assertEqual(brazil["travelStops"]["brazil-museum-tomorrow-postcard"]["author"],
+                         "Leonardo Chavez")
+        for stop in brazil["travelStops"].values():
+            if not stop.get("travelStory"):
+                continue
+            self.assertEqual(len(stop["travelStory"]),2)
+            self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
+            self.assertTrue(stop.get("historicalSources"))
+
+    def test_brazil_is_complete_only_after_separate_editorial_approval(self):
+        path=self.root/"country-content.json"
+        data=json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(data["countries"]["BR"]["status"],"pending")
+        with self.assertRaisesRegex(ValueError,"BR: country content awaiting editorial approval"):
+            country_coverage(self.root,[{"country":"ブラジル"}])
+        data["countries"]["BR"]["status"]="approved"
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
+        result=country_coverage(self.root,[{"country":"ブラジル"}])
+        self.assertEqual(set(result),{"BR"})
+        self.assertEqual(result["BR"]["quizRounds"],2)
+        self.assertEqual(result["BR"]["cover"],"assets/travel/brazil-rio-christ-cover.jpg")
+        self.assertEqual(result["BR"]["postcard"],
+                         "assets/travel/brazil-iguacu-brazil-side-postcard.jpg")
+
     def test_edited_postcard_must_be_synced_before_release(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))

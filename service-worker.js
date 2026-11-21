@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v47';
+const SHELL_CACHE = 'yoru9-shell-v49';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -42,7 +42,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/nz-milford-fiord-quiz.jpg', 'assets/travel/nz-aoraki-quiz.jpg',
  'assets/travel/nz-tekapo-church.jpg',
  'assets/travel/korea-bulguksa-quiz.jpg', 'assets/travel/korea-jeju-seongsan-quiz.jpg',
- 'assets/travel/korea-bulguksa-stairs.jpg', 'assets/travel/seoul-gyeongbokgung.jpg',
+ 'assets/travel/korea-bulguksa-stairs.jpg',
+ // Brazil: exact-source Rio cover; distinct quiz photos; Brazil-side Iguaçu and museum tourist postcards.
+ 'assets/travel/brazil-rio-christ-cover.jpg', 'assets/travel/brazil-paulista-quiz.jpg', 'assets/travel/brazil-iguacu-brazil-side-quiz.jpg', 'assets/travel/brazil-iguacu-brazil-side-postcard.jpg', 'assets/travel/brazil-rio-museum-tomorrow.jpg', 'assets/travel/seoul-gyeongbokgung.jpg',
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg'];
 
