@@ -1,8 +1,11 @@
 """Offline unit regressions for the post-deployment public-site smoke check."""
 from pathlib import Path
 import unittest
+import json
+from unittest.mock import patch
 
-from check_public_country_release import inspect_public_assets
+from check_public_country_release import (inspect_public_assets, inspect_public_visuals,
+                                          required_public_visuals, check)
 
 ROOT = Path(__file__).resolve().parents[1]
 NAMES = ("index.html", "world-passport.js", "service-worker.js",
@@ -60,3 +63,55 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
         ).encode("utf-8")
         with self.assertRaisesRegex(AssertionError, "stale or altered|separation"):
             inspect_public_assets(self.assets, ROOT)
+
+
+    def test_live_visual_manifest_covers_map_news_art_and_active_country_photos(self):
+        current = json.loads(self.assets["data/current.json"])
+        required = required_public_visuals(ROOT, current)
+        self.assertIn("assets/world-today-illustrated.svg", required)
+        self.assertGreaterEqual(sum(name.startswith("assets/news/") for name in required), 4)
+        self.assertGreaterEqual(sum(name.startswith("assets/travel/") for name in required), 9)
+        self.assertTrue(any(required[name] == (1000, 540) for name in required))
+
+    def test_missing_published_country_photo_blocks_notification(self):
+        path = next(name for name in required_public_visuals(
+            ROOT, json.loads(self.assets["data/current.json"])
+        ) if name.startswith("assets/travel/"))
+        with self.assertRaisesRegex(AssertionError, "visual asset missing"):
+            inspect_public_visuals({}, ROOT, {path: (330, 200)})
+
+    def test_corrupt_published_jpeg_blocks_notification(self):
+        with self.assertRaisesRegex(AssertionError, "JPEG is missing or corrupt"):
+            inspect_public_visuals({"assets/travel/invalid.jpg": b"not a jpeg"},
+                                   ROOT, {"assets/travel/invalid.jpg": (330, 200)})
+
+    def test_low_resolution_published_photo_blocks_notification(self):
+        # SOF0 size header: nominal 200x100, even when file is padded.
+        payload = (b"\xff\xd8\xff\xc0\x00\x11\x08" +
+                   (100).to_bytes(2, "big") + (200).to_bytes(2, "big") +
+                   b"\x03\x01\x11\x00\x02\x11\x00\x03\x11\x00" +
+                   b"\x00" * 3500 + b"\xff\xd9")
+        with self.assertRaisesRegex(AssertionError, "low resolution"):
+            inspect_public_visuals({"assets/travel/tiny.jpg": payload},
+                                   ROOT, {"assets/travel/tiny.jpg": (330, 200)})
+
+    def test_tampered_map_svg_blocks_notification(self):
+        name = "assets/world-today-illustrated.svg"
+        original = (ROOT / name).read_bytes()
+        changed = original.replace(b"<svg", b"<svg data-tampered='yes'", 1)
+        self.assertNotEqual(original, changed)
+        with self.assertRaisesRegex(AssertionError, "illustration differs"):
+            inspect_public_visuals({name: changed}, ROOT, {name: None})
+
+    def test_deploy_smoke_fetches_binary_images_after_core_data(self):
+        # Prevent a regression to the previous text-only live-site check.
+        with patch("check_public_country_release.fetch_assets",
+                   side_effect=[self.assets, {}]) as fetch, patch(
+                       "check_public_country_release.inspect_public_visuals"
+                   ) as inspect:
+            check("https://example.org/reader/", "sha", ROOT, retries=1)
+        self.assertEqual(fetch.call_count, 2)
+        manifest = required_public_visuals(
+            ROOT, json.loads(self.assets["data/current.json"]))
+        self.assertEqual(set(fetch.call_args_list[1].args[2]), set(manifest))
+        inspect.assert_called_once()

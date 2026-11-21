@@ -11,7 +11,9 @@ import argparse
 import json
 from pathlib import Path
 import re
+import tempfile
 import time
+import xml.etree.ElementTree as ET
 from urllib.parse import quote, urljoin, urlparse
 from urllib.request import Request, urlopen
 
@@ -69,15 +71,116 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
             raise AssertionError("Public country guide lacks its full curated quiz/travel data")
 
 
-def fetch_assets(site_url: str, revision: str) -> dict[str, bytes]:
+
+def required_public_visuals(root: Path, current: dict) -> dict[str, tuple[int, int] | None]:
+    """Identify the actual reader's local image dependencies for this issue.
+
+    All photos from countries present in the issue are checked, not merely
+    one representative cover. A fresh nightly story without commissioned
+    artwork uses its deterministic inline SVG and needs no external image.
+    """
+    from check_country_experience import country_coverage
+    from country_codes import country_codes
+
+    countries = country_coverage(root, current["stories"])
+    codes = set(countries)
+    travel = json.loads((root / "travel-stops.json").read_text(encoding="utf-8"))
+    visuals: dict[str, tuple[int, int] | None] = {
+        "assets/world-today-illustrated.svg": None
+    }
+    for key, stop in travel.items():
+        if not (set(country_codes(stop.get("country"))) & codes):
+            continue
+        asset = stop.get("photoAsset", "")
+        if not re.fullmatch(r"assets/travel/[a-z0-9-]+\.jpg", asset):
+            raise ValueError("Invalid active country photo: " + key)
+        visuals[asset] = (330, 200)
+
+    # Covers can rotate. The public check must catch missing alternatives
+    # even if the editorial release gate verified the first portrait.
+    page = (root / "index.html").read_text(encoding="utf-8")
+    prefix = "const TODAY_COUNTRY_PHOTOS=Object.freeze("
+    rows = [line for line in page.splitlines() if line.startswith(prefix)]
+    if len(rows) != 1 or not rows[0].endswith(");"):
+        raise ValueError("Reader photo registry is missing")
+    registry = json.loads(rows[0][len(prefix):-2])
+    for code in codes:
+        for candidate in registry.get(code, []):
+            if candidate.get("avoidCover") or candidate.get("remoteOnly"):
+                continue
+            asset = candidate.get("asset")
+            if asset in visuals:
+                visuals[asset] = (1000, 540)
+
+    section = page.split("const NEWS_ARTWORK=Object.freeze({", 1)[1].split("\n});", 1)[0]
+    artworks = dict(re.findall(r"'([^']+)':'([a-z0-9-]+\.svg)'", section))
+    for story in current["stories"]:
+        filename = artworks.get(story.get("id"))
+        if filename:
+            visuals["assets/news/" + filename] = None
+    return dict(sorted(visuals.items()))
+
+
+def inspect_public_visuals(assets: dict[str, bytes], root: Path,
+                           required: dict[str, tuple[int, int] | None]) -> None:
+    """Fail closed on 404s, corrupt/low-resolution photos and stale artwork.
+
+    When the exact built artifact exists, photo bytes must match it as well:
+    a different (even visually plausible) photograph must not silently
+    replace the reviewed, correctly licensed destination.
+    """
+    from check_release_candidate import jpeg_dimensions
+
+    with tempfile.TemporaryDirectory() as directory:
+        temp = Path(directory) / "downloaded.jpg"
+        for relative, minimum in required.items():
+            if relative not in assets:
+                raise AssertionError("Published visual asset missing: " + relative)
+            payload = assets[relative]
+            if minimum is None:
+                if not 150 <= len(payload) <= 2_000_000:
+                    raise AssertionError("Published illustration is empty: " + relative)
+                try:
+                    svg = ET.fromstring(payload)
+                except ET.ParseError as exc:
+                    raise AssertionError("Published SVG is corrupt: " + relative) from exc
+                if svg.tag != "{http://www.w3.org/2000/svg}svg" or any(
+                    element.tag.endswith(("script", "foreignObject"))
+                    for element in svg.iter()
+                ):
+                    raise AssertionError("Published illustration is invalid: " + relative)
+                original = root / relative
+                if not original.is_file() or payload != original.read_bytes():
+                    raise AssertionError("Published illustration differs from source: " + relative)
+            else:
+                if (not 3000 <= len(payload) <= 2_000_000 or
+                        not payload.startswith(b"\xff\xd8\xff") or
+                        not payload.endswith(b"\xff\xd9")):
+                    raise AssertionError("Published JPEG is missing or corrupt: " + relative)
+                temp.write_bytes(payload)
+                try:
+                    width, height = jpeg_dimensions(temp)
+                except (OSError, ValueError) as exc:
+                    raise AssertionError("Published JPEG has invalid dimensions: " + relative) from exc
+                if width < minimum[0] or height < minimum[1]:
+                    raise AssertionError("Published photo is low resolution: " + relative)
+                packaged = root / "_site" / relative
+                if packaged.parent.parent.exists() and not packaged.is_file():
+                    raise AssertionError("Built reader is missing photo: " + relative)
+                if packaged.is_file() and payload != packaged.read_bytes():
+                    raise AssertionError("Published photo differs from licensed build: " + relative)
+
+def fetch_assets(site_url: str, revision: str, names=None) -> dict[str, bytes]:
     base = site_url.rstrip("/") + "/"
     parsed = urlparse(base)
     if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password:
         raise ValueError("Deployment URL must be a secure public site")
     result = {}
-    for name in ("index.html", "world-passport.js", "service-worker.js",
+    if names is None:
+        names = ("index.html", "world-passport.js", "service-worker.js",
                  "country-highlights.json", "travel-stops.json",
-                 "data/current.json", "data/archive/index.json"):
+                 "data/current.json", "data/archive/index.json")
+    for name in names:
         url = urljoin(base, name) + "?deploy=" + quote(revision, safe="")
         request = Request(url, headers={"Cache-Control": "no-cache",
                                        "User-Agent": "Yoru9ReleaseSmoke/1.0"})
@@ -95,8 +198,11 @@ def check(site_url: str, revision: str, root: Path, retries: int = 5) -> None:
         raise ValueError("invalid retry count")
     for attempt in range(retries):
         try:
-            inspect_public_assets(fetch_assets(site_url, revision), root)
-            print("Published Country Portrait + microtravel smoke: PASS")
+            public = fetch_assets(site_url, revision)
+            inspect_public_assets(public, root)
+            required = required_public_visuals(root, json.loads(public["data/current.json"]))
+            inspect_public_visuals(fetch_assets(site_url, revision, tuple(required)), root, required)
+            print("Published reader and "+str(len(required))+" visual assets: PASS")
             return
         except (AssertionError, OSError, ValueError, json.JSONDecodeError) as exc:
             if attempt == retries - 1:
