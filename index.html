@@ -1660,6 +1660,8 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-responsive"></div>
   <p class="gallery-clarity">各画像は記事をもとに制作した創作イメージです。ニュース現場の写真ではありません。</p>
  </section>
+ <details class="world-explore" id="worldExplore">
+  <summary id="worldExploreToggle"><span class="world-explore-title">世界を旅する</span><span class="world-explore-hint">配信国マップ・国紹介・小旅行・写真クイズ</span></summary>
  <section class="today-map-card" id="todayMapSection" aria-labelledby="todayMapTitle">
   <header class="today-map-header">
    <div><p class="today-map-kicker">WORLD LETTER · ON THE MAP</p><h3 id="todayMapTitle">配信国マップ</h3></div>
@@ -1729,6 +1731,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
    </details>
   </section>
  </section>
+ </details>
  </section>
 <section class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden>
  <div class="article-reader-toolbar"><button id="readerBack" type="button">‹ ニュース一覧へ</button><p id="readerSelected" aria-live="polite">記事を読む</p></div>
@@ -2271,6 +2274,15 @@ function renderTodayMap(){
 }
 function setReleaseStatus(message){$('releaseStatus').textContent=message}
 // Bind UI events outside the pure country-coordinate module used by regression tests.
+$('worldExplore').addEventListener('toggle',()=>{
+ if($('worldExplore').open){
+  // Closed details have zero map dimensions; recompute after layout on opening.
+  requestAnimationFrame(positionTodayMapPins);
+ }else{
+  hideTodayCountryIntro();
+  closeWorldPassport();
+ }
+});
 $('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
 $('todayMapIntroRead').addEventListener('click',()=>{
  const read=$('todayMapIntroRead');

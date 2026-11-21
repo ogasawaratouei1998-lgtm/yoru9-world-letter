@@ -216,6 +216,18 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertLess(page.index('id="issueGallery"'),page.index('id="articleReader"'))
         self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
+    def test_world_exploration_is_optional_and_remains_after_news(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        opening='<details class="world-explore" id="worldExplore">'
+        self.assertEqual(page.count(opening),1)
+        self.assertLess(page.index('id="issueGallery"'),page.index(opening))
+        self.assertLess(page.index(opening),page.index('id="todayMapSection"'))
+        self.assertLess(page.index('id="approvedAtlas"'),page.index('id="articleReader"'))
+        self.assertIn("$('worldExplore').addEventListener('toggle'",page)
+        self.assertIn("requestAnimationFrame(positionTodayMapPins);",page)
+        css=(ROOT/"assets/reading-focus.css").read_text(encoding="utf-8")
+        self.assertIn(".world-explore>summary:focus-visible",css)
+
     def test_five_playful_improvements_appear_without_unverified_new_claims(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         cover=page[page.index('<section class="hero" id="atlasHero"'):

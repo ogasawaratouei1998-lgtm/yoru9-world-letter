@@ -17,3 +17,14 @@
 @media(prefers-reduced-motion:reduce){
  .reader-first-link{transition:none}
 }
+
+/* Optional geography and travel, closed by default on all screen widths. */
+.world-explore{min-width:0;margin:8px 0 0;border:1px solid #809bab;border-radius:13px;background:#203a52;color:#f8e9ce}
+.world-explore>summary{display:flex;flex-direction:column;justify-content:center;position:relative;gap:3px;min-height:54px;padding:10px 42px 10px 13px;cursor:pointer;list-style:none;text-align:left}
+.world-explore>summary::-webkit-details-marker{display:none}
+.world-explore>summary::after{content:'＋';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:1.1rem;font-weight:800}
+.world-explore[open]>summary::after{content:'−'}
+.world-explore>summary:focus-visible{outline:3px solid #ffe3b2;outline-offset:3px;border-radius:12px}
+.world-explore-title{font-size:.95rem;font-weight:850;line-height:1.45}
+.world-explore-hint{font-size:.75rem;color:#cde1eb;line-height:1.55;overflow-wrap:anywhere}
+.world-explore>.today-map-card{margin:0 8px 8px}
