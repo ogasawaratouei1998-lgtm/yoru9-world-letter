@@ -1,0 +1,39 @@
+name: Research licensed country photographs
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 11:20 JST on Monday and Thursday; no paid services or push notifications
+    - cron: '20 2 * * 1,4'
+  push:
+    branches: [main]
+    paths:
+      - 'country-expansion-batch-unesco-eight-20261121.json'
+      - 'country-expansion-batch-eight-20261121.json'
+      - 'country_photo_candidates.py'
+      - '.github/workflows/research-country-photos.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify the canonical dataset without publishing pending countries
+        run: python country_content.py --check
+      - name: Research Commons JPEGs and license metadata without selecting images
+        run: python country_photo_candidates.py --output reports/country-photo-candidates.json --limit 3
+      - name: Preserve source links, photographer credits, CC licenses and required visual checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: country-photo-metadata-candidates
+          path: reports/country-photo-candidates.json
+          if-no-files-found: warn
+          retention-days: 14
