@@ -107,7 +107,10 @@
     "no-geirangerfjord-postcard",
     "pe-lima-plaza-mayor-cover",
     "pe-machu-picchu-postcard",
-    "pe-cusco-historic-center-postcard"
+    "pe-cusco-historic-center-postcard",
+    "cz-prague-skyline-cover",
+    "cz-charles-bridge-postcard",
+    "cz-cesky-krumlov-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -1666,7 +1669,7 @@
     },
     "CZ": {
       "name": "チェコ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "尖塔の街と川が包む城下町、長い都市の記憶を歩く国",
         "body": "チェコの歴史都市では、川を挟んだ街の配置や石造りの橋、城と広場が織りなす景観から、長く受け継がれた都市文化が感じられます。プラハではヴルタヴァ川の両岸に中世からの建築群が広がり、チェスキー・クルムロフでは川の曲流に抱かれた小さな街を見下ろすことができます。賑わう大通りと静かな路地を歩き比べ、街全体のかたちが歴史を物語っていることに気づく旅が魅力です。",
@@ -1674,13 +1677,127 @@
           "世界遺産：プラハ歴史地区",
           "世界遺産：チェスキー・クルムロフ歴史地区"
         ],
-        "photos": [],
+        "photos": [
+          "cz-charles-bridge-postcard",
+          "cz-cesky-krumlov-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：チェコの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/cz"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/cz-prague-skyline-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Prague_skyline_at_dawn.jpg/500px-Prague_skyline_at_dawn.jpg",
+          "caption": "カレル橋から東を望むプラハ旧市街の朝焼け（2014年撮影）",
+          "author": "Petar Milošević",
+          "license": "CC BY-SA 4.0",
+          "place": "プラハ旧市街の朝焼け",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Prague_skyline_at_dawn.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "プラハ歴史地区を流れる川は？",
+          "options": [
+            "ヴルタヴァ川",
+            "ナイル川",
+            "テムズ川"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜プラハ歴史地区",
+          "fact": "プラハの歴史地区はヴルタヴァ川の両岸に広がっています。",
+          "quip": "橋を渡るだけで、プラハの歴史が川の両岸に広がる。",
+          "photoKey": "cz-charles-bridge-postcard"
+        },
+        {
+          "question": "チェスキー・クルムロフの旧市街を大きく囲む地形は？",
+          "options": [
+            "川の曲流",
+            "火山の噴火口",
+            "砂丘の列"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜チェスキー・クルムロフ歴史地区",
+          "fact": "ヴルタヴァ川の曲流と城、旧市街が特徴的な景観をつくっています。",
+          "quip": "城下町を囲むのは城壁だけじゃない。川の曲がり方まで絵になる。",
+          "photoKey": "cz-cesky-krumlov-postcard"
+        }
+      ],
+      "travelStops": {
+        "cz-prague-skyline-cover": {
+          "country": "チェコ",
+          "countryOnly": true,
+          "place": "プラハ旧市街の朝焼け",
+          "region": "プラハ",
+          "latitude": 50.086389,
+          "longitude": 14.411667,
+          "note": "尖塔と街灯が朝焼けに浮かぶ、プラハ旧市街の歴史的な眺め。",
+          "photoCaption": "カレル橋から東を望むプラハ旧市街の朝焼け（2014年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2c/Prague_skyline_at_dawn.jpg/500px-Prague_skyline_at_dawn.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Prague_skyline_at_dawn.jpg",
+          "photoAsset": "assets/travel/cz-prague-skyline-cover.jpg",
+          "author": "Petar Milošević",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "cz-charles-bridge-postcard": {
+          "country": "チェコ",
+          "countryOnly": true,
+          "place": "プラハ歴史地区",
+          "region": "プラハ・カレル橋",
+          "latitude": 50.0868,
+          "longitude": 14.4104,
+          "note": "ヴルタヴァ川を渡る歴史的な橋と、石造りの塔の夜景。",
+          "photoCaption": "夜のヴルタヴァ川に映るカレル橋と旧市街の橋塔（2022年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Charles_Bridge_in_Old_Prague.jpg/500px-Charles_Bridge_in_Old_Prague.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Charles_Bridge_in_Old_Prague.jpg",
+          "photoAsset": "assets/travel/cz-charles-bridge-postcard.jpg",
+          "author": "Flukes69",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "プラハではヴルタヴァ川に架かるカレル橋から、川面を挟んで並ぶ建物や丘の上の城が見えます。橋上では彫像と歩行者の姿に目が向きますが、岸へ降りて見上げると橋のアーチの連なりが際立ちます。旧市街広場や城の周辺を一度に急いで回るのではなく、橋を渡る前後で街の眺めがどう変わるかを比べると、歩く楽しみが増します。",
+            "UNESCOはプラハ城、聖ヴィート大聖堂、旧市街や新市街などを含む長い都市史の積み重なりを評価しています。さまざまな建築様式が並ぶのは、それぞれ異なる時代に街が広がり、改修されてきたためです。建物一つの豪華さだけに注目するより、坂道や広場、橋が人々の移動をどうつないできたかを考えると、都市全体が立体的に見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・プラハ歴史地区",
+              "url": "https://whc.unesco.org/en/list/616/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "cz-cesky-krumlov-postcard": {
+          "country": "チェコ",
+          "countryOnly": true,
+          "place": "チェスキー・クルムロフ歴史地区",
+          "region": "南ボヘミア州",
+          "latitude": 48.809958,
+          "longitude": 14.325414,
+          "note": "赤い屋根の街並みが川の曲流に沿って広がる歴史都市。",
+          "photoCaption": "ヴルタヴァ川の曲流に抱かれるチェスキー・クルムロフ旧市街（2023年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bc/Cesky_Krumlov_Landscape.jpg/500px-Cesky_Krumlov_Landscape.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Cesky_Krumlov_Landscape.jpg",
+          "photoAsset": "assets/travel/cz-cesky-krumlov-postcard.jpg",
+          "author": "MihaiAlinAnghel",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "チェスキー・クルムロフを見渡すと、ヴルタヴァ川が大きく曲がり、その内側に赤い屋根の街並みが集まっていることが分かります。城から眺める街は一枚の絵のようですが、細い路地へ降りると窓や店先、舗装の細部が際立ちます。高い場所から街の輪郭を確かめたあと、川沿いをゆっくり歩いて違う表情を探すのがおすすめです。",
+            "UNESCOは、この街を中央ヨーロッパの歴史都市の保存状態がよい事例として評価しています。城と住宅地、川の地形が組み合わさり、長い年月を通じた街の変化を伝えています。大きく改造されずに残った町割りを意識すると、曲がり角の先に広場が現れることにも意味を感じられます。建物を見るだけでなく、街を歩く順番そのものを楽しみたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・チェスキー・クルムロフ歴史地区",
+              "url": "https://whc.unesco.org/en/list/617/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "DE": {
