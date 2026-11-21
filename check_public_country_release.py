@@ -92,7 +92,7 @@ def required_public_visuals(root: Path, current: dict) -> dict[str, tuple[int, i
         if not (set(country_codes(stop.get("country"))) & codes):
             continue
         asset = stop.get("photoAsset", "")
-        if not re.fullmatch(r"assets/travel/[a-z0-9-]+\\.jpg", asset):
+        if not re.fullmatch(r"assets/travel/[a-z0-9-]+\.jpg", asset):
             raise ValueError("Invalid active country photo: " + key)
         visuals[asset] = (330, 200)
 
@@ -113,7 +113,7 @@ def required_public_visuals(root: Path, current: dict) -> dict[str, tuple[int, i
                 visuals[asset] = (1000, 540)
 
     section = page.split("const NEWS_ARTWORK=Object.freeze({", 1)[1].split("\n});", 1)[0]
-    artworks = dict(re.findall(r"'([^']+)':'([a-z0-9-]+\\.svg)'", section))
+    artworks = dict(re.findall(r"'([^']+)':'([a-z0-9-]+\.svg)'", section))
     for story in current["stories"]:
         filename = artworks.get(story.get("id"))
         if filename:
@@ -154,8 +154,8 @@ def inspect_public_visuals(assets: dict[str, bytes], root: Path,
                     raise AssertionError("Published illustration differs from source: " + relative)
             else:
                 if (not 3000 <= len(payload) <= 2_000_000 or
-                        not payload.startswith(b"\\xff\\xd8\\xff") or
-                        not payload.endswith(b"\\xff\\xd9")):
+                        not payload.startswith(b"\xff\xd8\xff") or
+                        not payload.endswith(b"\xff\xd9")):
                     raise AssertionError("Published JPEG is missing or corrupt: " + relative)
                 temp.write_bytes(payload)
                 try:
