@@ -88,6 +88,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
  ],
+ PE:[
+  {question:'マチュ・ピチュと深く結び付く文明は？',options:['インカ文明','古代ギリシャ','フェニキア文明'],answer:0,photoLabel:'正解写真｜マチュ・ピチュ',fact:'UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。',quip:'山頂の絶景だけじゃない。石段にも都市を造った人の意志がある。',photoKey:'pe-machu-picchu-postcard'},
+  {question:'クスコに重なる二つの歴史的な建築の流れは？',options:['インカ期とスペイン統治期','江戸時代と明治時代','古代ローマとヴァイキング'],answer:0,photoLabel:'正解写真｜クスコの市街',fact:'UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。',quip:'壁の継ぎ目が、千年単位の都市のリレーを見せてくれる。',photoKey:'pe-cusco-historic-center-postcard'},
+ ],
  PT:[
   {question:'ジェロニモス修道院とベレンの塔が世界文化遺産に登録された年は？',options:['1983年','1995年','2015年'],answer:0,photoLabel:'正解写真｜ジェロニモス修道院',fact:'UNESCOはジェロニモス修道院とベレンの塔を1983年に世界文化遺産へ登録しています。',quip:'海へ出た時代の記憶が、石の柱までぎっしり残る。',photoKey:'pt-jeronimos-monastery-postcard'},
   {question:'シントラの文化的景観が世界文化遺産に登録された年は？',options:['1983年','1995年','2007年'],answer:1,photoLabel:'正解写真｜シントラのペーナ宮殿',fact:'UNESCOによるシントラの文化的景観の登録年は1995年です。',quip:'森の中に宮殿。景色の設計まで王宮級のこだわり。',photoKey:'pt-pena-palace-postcard'},

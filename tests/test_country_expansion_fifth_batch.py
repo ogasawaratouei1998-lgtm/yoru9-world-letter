@@ -25,14 +25,14 @@ class FifthBatchTests(unittest.TestCase):
         self.assertEqual(self.batch["status"], "pending_photos_not_public")
         approved = [code for code, entry in self.content["countries"].items()
                     if entry["status"] == "approved"]
-        self.assertEqual(len(approved), 26)
+        self.assertEqual(len(approved), 27)
         for code in COUNTRIES:
             with self.subTest(code=code):
                 country = self.content["countries"][code]
                 draft = self.batch["countries"][code]
                 # The eight-country draft is an immutable editing snapshot.
                 # Norway was subsequently promoted with three distinct licensed photographs.
-                if code == "NO":
+                if code in ("NO","PE"):
                     self.assertEqual(country["status"], "approved")
                     self.assertEqual(draft["status"], "pending")
                     self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
@@ -87,12 +87,12 @@ class FifthBatchTests(unittest.TestCase):
 
     def test_queue_counts_unfinished_photographs_as_blockers(self):
         queue = country_editorial_queue(ROOT)
-        self.assertEqual(len(queue["approvedCountries"]), 26)
-        self.assertEqual(queue["pendingCountries"], 170)
+        self.assertEqual(len(queue["approvedCountries"]), 27)
+        self.assertEqual(queue["pendingCountries"], 169)
         entries = {row["code"]: row for row in queue["prioritizedPending"]}
         for code in COUNTRIES:
             with self.subTest(code=code):
-                if code == "NO":
+                if code in ("NO","PE"):
                     self.assertNotIn(code, entries)
                     continue
                 self.assertNotIn("substantive_portrait", entries[code]["missing"])

@@ -104,7 +104,10 @@
     "at-salzburg-old-town-postcard",
     "no-oslo-skyline-cover",
     "no-bryggen-postcard",
-    "no-geirangerfjord-postcard"
+    "no-geirangerfjord-postcard",
+    "pe-lima-plaza-mayor-cover",
+    "pe-machu-picchu-postcard",
+    "pe-cusco-historic-center-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4732,7 +4735,7 @@
     },
     "PE": {
       "name": "ペルー",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "インカの都市遺産とアンデスの山々、石の街路が語る歴史",
         "body": "ペルーを旅すると、山の地形と都市の歴史が深く結び付いていることに気づきます。マチュ・ピチュにはアンデスの急峻な地形に寄り添うインカ時代の遺構が残り、クスコの中心部にはインカの都市構造とその後の建築が重なる街並みがあります。山並みを背景にした遺跡を眺める体験と、街の石壁を間近で見る体験では、同じ歴史の異なる側面が浮かび上がります。地形を読みながら歩くほど面白さが増す国です。",
@@ -4741,13 +4744,127 @@
           "世界遺産：マチュ・ピチュ",
           "世界遺産：クスコの市街"
         ],
-        "photos": [],
+        "photos": [
+          "pe-machu-picchu-postcard",
+          "pe-cusco-historic-center-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ペルーの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/pe"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/pe-lima-plaza-mayor-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Plaza_Mayor_de_Lima_04.jpg/500px-Plaza_Mayor_de_Lima_04.jpg",
+          "caption": "リマのマヨール広場と歴史的建築（2023年撮影）",
+          "author": "Ovruni",
+          "license": "CC BY-SA 4.0",
+          "place": "リマのマヨール広場",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Plaza_Mayor_de_Lima_04.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "マチュ・ピチュと深く結び付く文明は？",
+          "options": [
+            "インカ文明",
+            "古代ギリシャ",
+            "フェニキア文明"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜マチュ・ピチュ",
+          "fact": "UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。",
+          "quip": "山頂の絶景だけじゃない。石段にも都市を造った人の意志がある。",
+          "photoKey": "pe-machu-picchu-postcard"
+        },
+        {
+          "question": "クスコに重なる二つの歴史的な建築の流れは？",
+          "options": [
+            "インカ期とスペイン統治期",
+            "江戸時代と明治時代",
+            "古代ローマとヴァイキング"
+          ],
+          "answer": 0,
+          "photoLabel": "正解写真｜クスコの市街",
+          "fact": "UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。",
+          "quip": "壁の継ぎ目が、千年単位の都市のリレーを見せてくれる。",
+          "photoKey": "pe-cusco-historic-center-postcard"
+        }
+      ],
+      "travelStops": {
+        "pe-lima-plaza-mayor-cover": {
+          "country": "ペルー",
+          "countryOnly": true,
+          "place": "リマのマヨール広場",
+          "region": "リマ",
+          "latitude": -12.045,
+          "longitude": -77.03,
+          "note": "歴史地区に囲まれた首都の中心広場。",
+          "photoCaption": "リマのマヨール広場と歴史的建築（2023年撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Plaza_Mayor_de_Lima_04.jpg/500px-Plaza_Mayor_de_Lima_04.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Plaza_Mayor_de_Lima_04.jpg",
+          "photoAsset": "assets/travel/pe-lima-plaza-mayor-cover.jpg",
+          "author": "Ovruni",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "pe-machu-picchu-postcard": {
+          "country": "ペルー",
+          "countryOnly": true,
+          "place": "マチュ・ピチュ",
+          "region": "クスコ県",
+          "latitude": -13.163,
+          "longitude": -72.545,
+          "note": "山の地形に寄り添うインカ都市遺跡。",
+          "photoCaption": "アンデスの山並みに抱かれたマチュ・ピチュ（2012年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9e/Machu_Picchu%2C_Per%C3%BA.jpg/500px-Machu_Picchu%2C_Per%C3%BA.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Machu_Picchu%2C_Per%C3%BA.jpg",
+          "photoAsset": "assets/travel/pe-machu-picchu-postcard.jpg",
+          "author": "Rodolfo pimentel",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "山の稜線に抱かれたマチュ・ピチュでは、石造りの建物や段々畑が急な斜面に沿って広がっています。少し離れた場所から見渡すと、都市の遺構と背後の山々が一つの景観に収まります。石壁の細かな組み方に近づいて目を向けたあと、再び全景を見ると、地形と建築を結び付けた工夫がより鮮やかに感じられます。",
+            "UNESCOはマチュ・ピチュを、インカ文明の建築と周囲の自然環境が結び付いた複合遺産として評価しています。山の地形を巧みに生かした配置は、都市の建築技術や土地との関係を物語ります。写真では壮大な眺望に目が行きますが、道や石段の位置にも注目することで、かつての人々がこの場所をどう使ったかを想像できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マチュ・ピチュ",
+              "url": "https://whc.unesco.org/en/list/274/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "pe-cusco-historic-center-postcard": {
+          "country": "ペルー",
+          "countryOnly": true,
+          "place": "クスコの市街",
+          "region": "クスコ",
+          "latitude": -13.517,
+          "longitude": -71.978,
+          "note": "インカとスペイン統治期の街並みが重なる旧都。",
+          "photoCaption": "クスコのマヨール広場と歴史地区（2009年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5f/Main_Square_and_Historic_Center%2C_Cusco%2C_PE.jpg/500px-Main_Square_and_Historic_Center%2C_Cusco%2C_PE.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Main_Square_and_Historic_Center%2C_Cusco%2C_PE.jpg",
+          "photoAsset": "assets/travel/pe-cusco-historic-center-postcard.jpg",
+          "author": "Clyde Charles Brown",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "クスコの古い街路では、大きな石を組み合わせた壁と、その上に重なる後代の建物が目を引きます。広場から細い道へ入ると、建物の角や壁面に異なる時代の痕跡が現れます。教会や広場だけを急いで巡るより、足元の石と建物の境目を見比べると、長い歴史が街全体に積み重なっていることが伝わります。",
+            "UNESCOはクスコを、インカ帝国の重要な都市であり、スペイン統治期の建築が重なった歴史都市として評価しています。都市の基盤となった石造建築と、その後の街並みが同じ場所で共存していることが特徴です。石の壁を見てから広場へ戻ると、都市の変化が建物一つではなく空間全体に刻まれていることを感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・クスコの市街",
+              "url": "https://whc.unesco.org/en/list/273/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "PH": {

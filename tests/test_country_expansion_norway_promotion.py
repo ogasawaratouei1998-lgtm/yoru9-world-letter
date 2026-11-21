@@ -27,13 +27,13 @@ class NorwayPromotionTests(unittest.TestCase):
 
     def test_ready_norway_is_a_real_twenty_sixth_approved_country(self):
         approved=[c for c,v in self.doc["countries"].items() if v["status"]=="approved"]
-        self.assertEqual(len(approved),26)
+        self.assertEqual(len(approved),27)
         self.assertEqual(self.norway["status"],"approved")
         self.assertEqual(len(self.norway["portraitPhotos"]),1)
         self.assertEqual(len(self.norway["quiz"]),2)
         self.assertEqual(set(self.norway["travelStops"]),set(PHOTOS))
         ready,broken=ready_country_codes(ROOT)
-        self.assertEqual(len(ready),26)
+        self.assertEqual(len(ready),27)
         self.assertIn("NO",ready)
         self.assertNotIn("NO",broken)
         experience=country_coverage(ROOT,[{"country":"ノルウェー"}])
@@ -72,7 +72,7 @@ class NorwayPromotionTests(unittest.TestCase):
             sources.update(s["url"] for s in stop["historicalSources"])
         self.assertEqual(sources,SOURCES)
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v60",worker)
+        self.assertIn("yoru9-shell-v61",worker)
         for key in PHOTOS:
             self.assertIn("assets/travel/"+key+".jpg",worker)
 

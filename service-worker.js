@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v60';
+const SHELL_CACHE = 'yoru9-shell-v61';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -59,7 +59,8 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/news/category-work.svg', 'assets/news/category-company.svg',
  'assets/news/category-person.svg', 'assets/news/category-sports.svg',
  'assets/travel/at-vienna-opera-cover.jpg', 'assets/travel/at-schoenbrunn-palace-postcard.jpg', 'assets/travel/at-salzburg-old-town-postcard.jpg',
- 'assets/travel/no-oslo-skyline-cover.jpg', 'assets/travel/no-bryggen-postcard.jpg', 'assets/travel/no-geirangerfjord-postcard.jpg'];
+ 'assets/travel/no-oslo-skyline-cover.jpg', 'assets/travel/no-bryggen-postcard.jpg', 'assets/travel/no-geirangerfjord-postcard.jpg',
+ 'assets/travel/pe-lima-plaza-mayor-cover.jpg', 'assets/travel/pe-machu-picchu-postcard.jpg', 'assets/travel/pe-cusco-historic-center-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
