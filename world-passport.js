@@ -32,6 +32,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ベルン旧市街が世界文化遺産に登録された年は？',options:['1983年','2001年','2015年'],answer:0,photoLabel:'正解写真｜ベルン旧市街',fact:'UNESCO世界遺産センターによると、ベルン旧市街は1983年に登録されました。',quip:'時計を見上げる街でも、歴史の時間はずっと長い。',photoKey:'ch-bern-old-city-postcard'},
   {question:'ユングフラウ＝アレッチの世界自然遺産への初回登録年は？',options:['1983年','2001年','2020年'],answer:1,photoLabel:'正解写真｜アレッチ氷河',fact:'UNESCOによれば同地域は2001年に世界自然遺産に初登録され、2007年に拡張されました。',quip:'氷の流れはゆっくり。でも残した地形はとびきり大きい。',photoKey:'ch-aletsch-glacier-postcard'},
  ],
+ CZ:[
+  {question:'プラハ歴史地区を流れる川は？',options:['ヴルタヴァ川','ナイル川','テムズ川'],answer:0,photoLabel:'正解写真｜プラハ歴史地区',fact:'プラハの歴史地区はヴルタヴァ川の両岸に広がっています。',quip:'橋を渡るだけで、プラハの歴史が川の両岸に広がる。',photoKey:'cz-charles-bridge-postcard'},
+  {question:'チェスキー・クルムロフの旧市街を大きく囲む地形は？',options:['川の曲流','火山の噴火口','砂丘の列'],answer:0,photoLabel:'正解写真｜チェスキー・クルムロフ歴史地区',fact:'ヴルタヴァ川の曲流と城、旧市街が特徴的な景観をつくっています。',quip:'城下町を囲むのは城壁だけじゃない。川の曲がり方まで絵になる。',photoKey:'cz-cesky-krumlov-postcard'},
+ ],
  DE:[
   {question:'ライン川沿いで、二つの大きな塔の大聖堂が知られる都市は？',options:['ベルリン','ミュンヘン','ケルン'],answer:2,photoKey:'germany-cologne-cathedral-postcard',photoLabel:'正解の建築｜ケルン大聖堂',fact:'ケルン大聖堂はライン川沿いの都市ケルンにあるゴシック様式の大聖堂です。',quip:'塔が高すぎて、街のランドマークが自己主張を忘れない。'},
   {question:'ノイシュヴァンシュタイン城があるドイツの州は？',options:['バイエルン州','ブランデンブルク州','ヘッセン州'],answer:0,photoKey:'germany-neuschwanstein-castle-postcard',photoLabel:'正解の城｜ノイシュヴァンシュタイン城',fact:'ノイシュヴァンシュタイン城は、ドイツ南部バイエルン州にある19世紀の城です。',quip:'絵本のような城だけれど、背景は本物のアルプス山麓。'},

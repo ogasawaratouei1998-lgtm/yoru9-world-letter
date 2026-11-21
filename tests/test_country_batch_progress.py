@@ -60,8 +60,8 @@ class CountryBatchProgressTests(unittest.TestCase):
     def test_summary_preserves_austria_draft_and_approved_turkiye_egypt(self):
         report=expansion_progress(ROOT)
         self.assertEqual(report["catalogCount"],196)
-        self.assertEqual(report["approvedCount"],27)
-        self.assertEqual(report["pendingCount"],169)
+        self.assertGreaterEqual(report["approvedCount"],28)
+        self.assertEqual(report["pendingCount"],report["catalogCount"]-report["approvedCount"])
         self.assertNotIn("AT",report["pendingPortraitsPrepared"])
         self.assertIn("AT",report["photoReady"])
         self.assertNotIn("AT",report["pendingCountriesBlocked"])

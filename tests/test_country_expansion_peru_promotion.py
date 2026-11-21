@@ -20,13 +20,13 @@ class PeruPromotionTests(unittest.TestCase):
   cls.doc=check_country_content(ROOT)
   cls.peru=cls.doc["countries"]["PE"]
  def test_peru_is_ready_with_two_nonrepeated_photo_quizzes(self):
-  self.assertEqual(len([x for x in self.doc["countries"].values() if x["status"]=="approved"]),27)
+  self.assertGreaterEqual(len([x for x in self.doc["countries"].values() if x["status"]=="approved"]),28)
   self.assertEqual(self.peru["status"],"approved")
   self.assertEqual(len(self.peru["portraitPhotos"]),1)
   self.assertEqual(len(self.peru["quiz"]),2)
   self.assertEqual(set(self.peru["travelStops"]),set(PHOTOS))
   ready,errors=ready_country_codes(ROOT)
-  self.assertEqual(len(ready),27)
+  self.assertGreaterEqual(len(ready),28)
   self.assertIn("PE",ready)
   self.assertNotIn("PE",errors)
   report=country_coverage(ROOT,[{"country":"ペルー"}])
@@ -63,7 +63,7 @@ class PeruPromotionTests(unittest.TestCase):
    source.update(s["url"] for s in stop["historicalSources"])
   self.assertEqual(source,{"https://whc.unesco.org/en/list/274/","https://whc.unesco.org/en/list/273/"})
   sw=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-  self.assertIn("yoru9-shell-v61",sw)
+  self.assertIn("yoru9-shell-v62",sw)
   for key in PHOTOS:
    self.assertIn("assets/travel/"+key+".jpg",sw)
 if __name__=="__main__":

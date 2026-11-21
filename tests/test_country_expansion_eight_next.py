@@ -23,12 +23,21 @@ class NextEightCountryBatchTests(unittest.TestCase):
         for code, draft in self.batch["countries"].items():
             with self.subTest(country=code):
                 entry = self.canonical["countries"][code]
-                self.assertEqual(entry["status"], "pending")
                 self.assertEqual(entry["name"], draft["name"])
-                self.assertEqual(entry["portrait"], draft["portrait"])
-                self.assertEqual(entry["portraitPhotos"], [])
-                self.assertEqual(entry["travelStops"], {})
-                self.assertEqual(entry["quiz"], [])
+                if code == "CZ":
+                    # The original pending draft remains an immutable snapshot;
+                    # the approved Czech reader must now have real independent photos.
+                    self.assertEqual(entry["status"], "approved")
+                    self.assertEqual(entry["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertEqual(len(entry["portraitPhotos"]), 1)
+                    self.assertEqual(len(entry["travelStops"]), 3)
+                    self.assertEqual(len(entry["quiz"]), 2)
+                else:
+                    self.assertEqual(entry["status"], "pending")
+                    self.assertEqual(entry["portrait"], draft["portrait"])
+                    self.assertEqual(entry["portraitPhotos"], [])
+                    self.assertEqual(entry["travelStops"], {})
+                    self.assertEqual(entry["quiz"], [])
                 self.assertGreaterEqual(len(entry["portrait"]["body"]), 145)
                 self.assertEqual(entry["portrait"]["sourceUrl"],
                                  "https://whc.unesco.org/en/statesparties/" + code.lower())

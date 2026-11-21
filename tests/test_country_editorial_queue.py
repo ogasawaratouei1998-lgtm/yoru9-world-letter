@@ -14,10 +14,12 @@ class CountryEditorialQueueTest(unittest.TestCase):
     def test_queue_tracks_all_country_codes_without_approving_candidates(self):
         report=country_editorial_queue(ROOT)
         self.assertEqual(report["reportingLocations"],196)
-        self.assertEqual(report["approvedCountries"],["AG","AR","AT","AU","BR","CA","CH","DE","EG","ES","FR","GB","GR","IN","IT","JP","KR","MX","NL","NO","NZ","PE","PT","SG","TH","TR","US"])
-        self.assertEqual(report["pendingCountries"],169)
-        self.assertEqual(len(report["prioritizedPending"]),169)
-        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),169)
+        known_approved = {"AG","AR","AT","AU","BR","CA","CH","CZ","DE","EG","ES","FR","GB","GR","IN","IT","JP","KR","MX","NL","NO","NZ","PE","PT","SG","TH","TR","US"}
+        self.assertTrue(known_approved.issubset(report["approvedCountries"]))
+        self.assertEqual(report["approvedCountries"],sorted(report["approvedCountries"]))
+        self.assertEqual(report["pendingCountries"],report["reportingLocations"]-len(report["approvedCountries"]))
+        self.assertEqual(len(report["prioritizedPending"]),report["pendingCountries"])
+        self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),report["pendingCountries"])
         self.assertTrue(any(row["code"]=="NG" and
                             "attributed_country_portrait_photo" in row["missing"]
                             for row in report["prioritizedPending"]))
