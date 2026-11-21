@@ -14,11 +14,14 @@ RUNTIME_CLOSE = "\n</script>"
 STYLE_TAG = '<link rel="stylesheet" href="./assets/reader-core.css">'
 RUNTIME_TAG = '<script src="./assets/reader-core.js"></script>'
 COUNTRY_TAG = '<script src="./assets/reader-country-data.js"></script>'
+TRAVEL_TAG = '<script src="./assets/reader-travel.js"></script>'
 COUNTRY_OPEN = "const TODAY_COUNTRY_PHOTOS=Object.freeze("
 COUNTRY_GUIDES = "const TODAY_COUNTRY_GUIDES=Object.freeze({"
 COUNTRY_END = "// Track the photograph that actually loaded"
+TRAVEL_OPEN = "/* Optional 30-second journey:"
+TRAVEL_END = "function updateFilters(){"
 ASSETS = ("assets/reader-core.css", "assets/reader-core.js",
-          "assets/reader-country-data.js")
+          "assets/reader-country-data.js", "assets/reader-travel.js")
 
 
 def rendered_reader_assets(source: str) -> dict[str, bytes]:
@@ -54,8 +57,23 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
     if not country_script.endswith("});"):
         raise ValueError("Country guide registry is not terminated")
     runtime = runtime[:country_start] + runtime[country_end:]
-    source = (source[:start] + COUNTRY_TAG + "\n" + RUNTIME_TAG +
-              source[end + len(RUNTIME_CLOSE):])
+    # Isolate optional microtravel selection and the postcode click listener.
+    # Neither publication approval nor fact-checking moves into this module.
+    if runtime.count(TRAVEL_OPEN) != 1 or runtime.count(TRAVEL_END) != 1:
+        raise ValueError("Travel reader module anchors are missing or ambiguous")
+    travel_start = runtime.index(TRAVEL_OPEN)
+    travel_end = runtime.index(TRAVEL_END,travel_start)
+    travel_script = runtime[travel_start:travel_end].strip()
+    for required in ("function travelPostcardHtml(",
+                     "function chooseTravelPhoto(",
+                     "document.querySelector('main').addEventListener('click',async event=>"):
+        if required not in travel_script:
+            raise ValueError("Travel reader module incomplete: "+required)
+    runtime = runtime[:travel_start] + runtime[travel_end:]
+    # Classic scripts share global lexical declarations, loaded in the
+    # order country data, microtravel feature, then primary news reader.
+    source = (source[:start] + COUNTRY_TAG + "\n" + TRAVEL_TAG +
+              "\n" + RUNTIME_TAG + source[end + len(RUNTIME_CLOSE):])
     if "<script>\n'use strict';" in source or "<style>\n" in source:
         raise ValueError("Inline reader assets remain unexpectedly")
     return {
@@ -63,6 +81,7 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
         ASSETS[0]: (stylesheet + "\n").encode("utf-8"),
         ASSETS[1]: (runtime + "\n").encode("utf-8"),
         ASSETS[2]: ("'use strict';\n" + country_script + "\n").encode("utf-8"),
+        ASSETS[3]: ("'use strict';\n" + travel_script + "\n").encode("utf-8"),
     }
 
 
