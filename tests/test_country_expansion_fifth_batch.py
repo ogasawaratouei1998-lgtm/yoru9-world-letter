@@ -25,7 +25,7 @@ class FifthBatchTests(unittest.TestCase):
         self.assertEqual(self.batch["status"], "pending_photos_not_public")
         approved = [code for code, entry in self.content["countries"].items()
                     if entry["status"] == "approved"]
-        self.assertEqual(len(approved), 24)
+        self.assertEqual(len(approved), 25)
         for code in COUNTRIES:
             with self.subTest(code=code):
                 country = self.content["countries"][code]
@@ -77,8 +77,8 @@ class FifthBatchTests(unittest.TestCase):
 
     def test_queue_counts_unfinished_photographs_as_blockers(self):
         queue = country_editorial_queue(ROOT)
-        self.assertEqual(len(queue["approvedCountries"]), 24)
-        self.assertEqual(queue["pendingCountries"], 172)
+        self.assertEqual(len(queue["approvedCountries"]), 25)
+        self.assertEqual(queue["pendingCountries"], 171)
         entries = {row["code"]: row for row in queue["prioritizedPending"]}
         for code in COUNTRIES:
             with self.subTest(code=code):

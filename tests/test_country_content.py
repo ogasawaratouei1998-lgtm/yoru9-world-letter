@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AU","CA","IN","NL","SG","MX","CH","PT","GR","EG","TR","TH"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AT","AU","CA","IN","NL","SG","MX","CH","PT","GR","EG","TR","TH"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
