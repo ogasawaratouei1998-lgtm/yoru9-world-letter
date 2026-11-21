@@ -624,8 +624,21 @@
     "photoPage": "https://commons.wikimedia.org/wiki/File:Nelson's_Dockyard_Antigua.jpg",
     "photoAsset": "assets/travel/antigua-dockyard.jpg",
     "travelStory": [
-      "アンティグア島のネルソンズ・ドックヤードは、海と港の歴史が重なる場所です。ヤシの木の間に古い石造りの建物が並び、港町の景色に落ち着いた表情を与えています。明るい空や海辺の光と建物の質感を見比べると、独特の魅力が伝わります。",
-      "ここは18〜19世紀の海軍基地の歴史を伝えるエリアで、現在も歴史的な港の景観が残されています。カリブの自然と船の往来がつくってきた暮らしを思い浮かべながら眺めると、リゾートとは違う島の一面に出会えます。"
+      "イングリッシュ・ハーバーに着くと、石造りの建物の向こうに白い帆船のマストが何本も伸びています。アンティグア島のネルソンズ・ドックヤードは、古い海軍造船所が今も港の風景の一部になっている場所。ヤシの葉が揺れる庭を抜け、かつて船を整備した建物と岸壁を見比べると、同じ水辺に異なる時代が重なっていることに気づきます。海に出る船を眺めながら、倉庫や石積みの形にも目を凝らしたい港です。",
+      "この造船所と周辺の防衛施設は、2016年にユネスコ世界文化遺産へ登録されました。深い天然の湾と周囲の丘を利用した18世紀の英国海軍拠点で、建造と維持には奴隷にされたアフリカ系の人々の労働が深く関わっています。観光客がくつろぐ現在の風景だけでなく、誰が建物を造り、誰がそこで働かされたのかを考えてこそ、港の歴史が立体的に見えます。港を歩く時間を、海の美しさと人々の記憶の両方を知る時間にしたい場所です。"
+    ],
+    "famousTourist": true,
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アンティグア海軍造船所",
+        "url": "https://whc.unesco.org/en/list/1499/",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "アンティグア国立公園局・造船所の沿革",
+        "url": "https://www.nationalparksantigua.com/tours/nelsons-dockyard-national-park/",
+        "checkedOn": "2026-11-21"
+      }
     ]
   },
   "us-golden-gate-postcard": {
@@ -1360,6 +1373,86 @@
       {
         "name": "リオ市開発公社・明日の博物館",
         "url": "https://www.ccpar.rio/museu-do-amanha/",
+        "checkedOn": "2026-11-21"
+      }
+    ]
+  },
+  "antigua-english-harbour-cover": {
+    "country": "アンティグア・バーブーダ",
+    "place": "ネルソンズ・ドックヤードの港と船",
+    "region": "アンティグア島・イングリッシュ・ハーバー",
+    "latitude": 17.008377,
+    "longitude": -61.764462,
+    "note": "古い石造りの港湾施設の近くに帆船が並ぶ、イングリッシュ・ハーバーの景観。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Antigua_English_Harbour_Nelson's_Dockyard_2.jpg/500px-Antigua_English_Harbour_Nelson's_Dockyard_2.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Antigua_English_Harbour_Nelson's_Dockyard_2.jpg",
+    "photoAsset": "assets/travel/antigua-english-harbour-cover.jpg",
+    "photoCaption": "イングリッシュ・ハーバーの歴史的な造船所とヨット（2025年撮影）",
+    "author": "Dr. Thomas Liptak",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "coverOnly": true
+  },
+  "antigua-bettys-hope-quiz-image": {
+    "country": "アンティグア・バーブーダ",
+    "place": "ベティーズ・ホープの製糖風車",
+    "region": "アンティグア島・セントピーター教区",
+    "latitude": 17.08129,
+    "longitude": -61.74531,
+    "note": "砂糖プランテーションの跡地に残る石造りの風車。植民地時代の労働の歴史を伝えます。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/Bettys_Hope_auf_Antigua.JPG/500px-Bettys_Hope_auf_Antigua.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Bettys_Hope_auf_Antigua.JPG",
+    "photoAsset": "assets/travel/antigua-bettys-hope-quiz.jpg",
+    "photoCaption": "ベティーズ・ホープの復元された製糖風車（2012年撮影）",
+    "author": "reisedoktor.com",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "quizOnly": true
+  },
+  "antigua-devils-bridge-quiz-image": {
+    "country": "アンティグア・バーブーダ",
+    "place": "アンティグアのデビルズ・ブリッジ",
+    "region": "アンティグア島・ウィリキーズ付近",
+    "latitude": 17.100925,
+    "longitude": -61.678555,
+    "note": "石灰岩の地形が海の浸食を受けてできた自然のアーチ。荒波への接近には注意が必要。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Antigua_natural_stone_bridge.jpg/500px-Antigua_natural_stone_bridge.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Antigua_natural_stone_bridge.jpg",
+    "photoAsset": "assets/travel/antigua-devils-bridge-quiz.jpg",
+    "photoCaption": "大西洋の波に削られたデビルズ・ブリッジ（2004年撮影）",
+    "author": "Z_dead",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "quizOnly": true
+  },
+  "antigua-devils-bridge-postcard": {
+    "country": "アンティグア・バーブーダ",
+    "place": "デビルズ・ブリッジの岩礁",
+    "region": "アンティグア島東部・ウィリキーズ",
+    "latitude": 17.100612,
+    "longitude": -61.678565,
+    "note": "大西洋の波が長い年月をかけて削った石灰岩の海岸。波しぶきに注意して陸側から眺めたい。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a5/Antigua_Willikies_Devil's_Bridge_National_Park.jpg/500px-Antigua_Willikies_Devil's_Bridge_National_Park.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Antigua_Willikies_Devil's_Bridge_National_Park.jpg",
+    "photoAsset": "assets/travel/antigua-devils-bridge-coast.jpg",
+    "photoCaption": "デビルズ・ブリッジ国立公園の岩礁（2025年撮影）",
+    "author": "Dr. Thomas Liptak",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "アンティグア島の東海岸で海へ向かうと、波に洗われた石灰岩が複雑な形をつくるデビルズ・ブリッジが現れます。自然のアーチを遠くから眺めると、岩の上に空が見え、その下では大西洋の波がしぶきを上げています。穏やかな砂浜の印象とは違い、海と岩が絶えずぶつかる場所です。岩の色、波の白さ、背後に広がる青い水平線を見比べるだけでも、島の自然の力強さが伝わってきます。",
+      "アンティグア・バーブーダ政府観光局は、この橋を長年の波の浸食がつくった自然の石灰岩のアーチと説明しています。付近には波が岩の穴から吹き上がる場所もあり、形そのものが海との長い関係を物語ります。名前にはさまざまな伝承がありますが、裏付けのない逸話を史実として語る必要はありません。強い波が来ることもあるので、岩の縁へ近づきすぎず、安全な場所から地形の成り立ちを想像しながら眺めたい景色です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "アンティグア・バーブーダ政府観光局・自然の海岸とデビルズ・ブリッジ",
+        "url": "https://www.visitantiguabarbuda.com/?taxonomy=interests&term=beach",
+        "checkedOn": "2026-11-21"
+      },
+      {
+        "name": "政府観光局・観光名所一覧",
+        "url": "https://www.visitantiguabarbuda.com/public_relations/28014/",
         "checkedOn": "2026-11-21"
       }
     ]
