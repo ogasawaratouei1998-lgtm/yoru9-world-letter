@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v65';
+const SHELL_CACHE = 'yoru9-shell-v66';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -68,7 +68,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Belgium: three independent Commons photos with location and creator provenance.
  'assets/travel/be-atomium-brussels-cover.jpg', 'assets/travel/be-grand-place-postcard.jpg', 'assets/travel/be-bruges-belfry-postcard.jpg',
  // Bulgaria: three independent visibly checked Commons originals, no quiz/cover overlap.
- 'assets/travel/bg-sofia-nevsky-cover.jpg', 'assets/travel/bg-rila-monastery-postcard.jpg', 'assets/travel/bg-boyana-church-postcard.jpg'];
+ 'assets/travel/bg-sofia-nevsky-cover.jpg', 'assets/travel/bg-rila-monastery-postcard.jpg', 'assets/travel/bg-boyana-church-postcard.jpg',
+ // Denmark: three independent place-matched Commons photographs with named authors.
+ 'assets/travel/dk-copenhagen-skyline-cover.jpg', 'assets/travel/dk-kronborg-castle-postcard.jpg', 'assets/travel/dk-roskilde-cathedral-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
