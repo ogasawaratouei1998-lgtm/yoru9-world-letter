@@ -3633,5 +3633,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "tz-dar-es-salaam-harbour-cover": {
+    "country": "タンザニア",
+    "countryOnly": true,
+    "place": "ダルエスサラーム港",
+    "region": "ダルエスサラーム・港湾地区",
+    "latitude": -6.823,
+    "longitude": 39.285,
+    "note": "インド洋に面する港の船舶と貨物施設。",
+    "photoCaption": "ダルエスサラーム港の埠頭と船舶（2021年6月、Kipala撮影）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Dar_es_Salaam_Harbour.jpg/500px-Dar_es_Salaam_Harbour.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Dar_es_Salaam_Harbour.jpg",
+    "photoAsset": "assets/travel/tz-dar-es-salaam-harbour-cover.jpg",
+    "author": "Kipala",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "tz-stone-town-postcard": {
+    "country": "タンザニア",
+    "countryOnly": true,
+    "place": "ザンジバルのストーン・タウン",
+    "region": "ザンジバル島・旧市街",
+    "latitude": -6.16306,
+    "longitude": 39.18917,
+    "note": "交易都市の歴史を伝える細い路地。座標は旧市街の世界遺産代表地点。",
+    "photoCaption": "ストーン・タウンの狭い路地と建物（2016年7月、Mo son撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f1/Stone_town_street.jpg/500px-Stone_town_street.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Stone_town_street.jpg",
+    "photoAsset": "assets/travel/tz-stone-town-postcard.jpg",
+    "author": "Mo son",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ザンジバルのストーン・タウンを歩くと、細い道が折れ曲がり、木彫の扉や古い建物の外壁が次々と現れます。海沿いの風景と内側の街路を行き来すると、この町が港として発展してきたことを自然に感じられます。大きな建物だけを探すのではなく、道幅や建具の細部に目を向けると、長く人々が行き交った歴史の手触りが残っていることに気づきます。",
+      "UNESCOはこの街を、東アフリカのスワヒリ文化とインド洋を介した交流が建築や街路に表れた貴重な遺産と評価しています。一方、ザンジバルは奴隷交易の歴史とも深く結びつき、その廃止をめぐる活動の記憶も残る場所です。美しい彫刻や石造の街並みだけでなく、繁栄の背後にあった人々の苦難にも目を向けることで、歴史をより深く理解できます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ザンジバルのストーン・タウン",
+        "url": "https://whc.unesco.org/en/list/173/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "tz-kilimanjaro-postcard": {
+    "country": "タンザニア",
+    "countryOnly": true,
+    "place": "キリマンジャロ国立公園・モシ市街からの遠望",
+    "region": "キリマンジャロ州・モシ",
+    "latitude": -3.355,
+    "longitude": 37.339167,
+    "note": "市街地から望むアフリカ最高峰。撮影地点は公園外のモシ。",
+    "photoCaption": "モシの建物越しに望むキリマンジャロ（2019年12月、Ganeshpednekar撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Mount_Kilimanjaro_from_Moshi.jpg/500px-Mount_Kilimanjaro_from_Moshi.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Mount_Kilimanjaro_from_Moshi.jpg",
+    "photoAsset": "assets/travel/tz-kilimanjaro-postcard.jpg",
+    "author": "Ganeshpednekar",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "写真は国立公園の外、モシの市街地から見上げたキリマンジャロです。建物の屋根の向こうに浮かぶ大きな山体と、頂上付近の白い部分を眺めると、街の暮らしとアフリカ最高峰の距離の近さが印象に残ります。山頂の景色だけを目的にするのではなく、麓から一つの山が地平線を変えている様子を写真や地図で楽しむ小旅行です。",
+      "UNESCOは標高5895メートルのキリマンジャロを、アフリカ最高峰の火山性山塊として評価しています。山麓から山頂まで植生が段階的に変わり、山地林には多様な動物が生息します。高所では低酸素や急な天候変化の危険があるため、安易な登山は勧めません。写真を通して地形や生態系を知るだけでも、自然保護の大切さを考えるきっかけになります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・キリマンジャロ国立公園",
+        "url": "https://whc.unesco.org/en/list/403/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
