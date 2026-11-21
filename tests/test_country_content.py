@@ -69,6 +69,38 @@ class CountryContentTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"NG: approval"):
             load_country_content(self.root)
 
+    def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
+        doc=load_country_content(ROOT)
+        self.assertEqual(sum(bool(stop.get("historicalSources"))
+                             for code in ("IT","DE","US")
+                             for stop in doc["countries"][code]["travelStops"].values()
+                             if stop.get("travelStory")),10)
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["US"]["travelStops"]["us-newyork-postcard"].pop("historicalSources")
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"unsourced history/culture"):
+            load_country_content(self.root)
+
+    def test_photo_credit_cannot_masquerade_as_history(self):
+        file=self.root/"country-content.json"
+        dataset=json.loads(file.read_text(encoding="utf-8"))
+        dataset["countries"]["IT"]["travelStops"]["italy-pisa-tower-postcard"]["historicalSources"]=[
+            {"name":"写真ページ","url":"https://commons.wikimedia.org/wiki/File:example.jpg",
+             "checkedOn":"2026-11-21"}]
+        file.write_text(json.dumps(dataset,ensure_ascii=False),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"photo license cannot replace"):
+            load_country_content(self.root)
+
+    def test_reader_entrypoint_and_external_stylesheet_are_published_together(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        builder=(ROOT/"build_site.py").read_text(encoding="utf-8")
+        worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
+        self.assertIn('href="#issueGallery"',page)
+        self.assertIn('href="./assets/reading-focus.css"',page)
+        self.assertIn("'assets/reading-focus.css'",builder)
+        self.assertIn("'assets/reading-focus.css'",worker)
+
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)
         country=doc["countries"]["NG"]
