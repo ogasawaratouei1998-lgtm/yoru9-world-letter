@@ -57,7 +57,7 @@
     "korea-bulguksa-postcard",
     "brazil-rio-christ-cover",
     "brazil-paulista-quiz-image",
-    "brazil-iguacu-panorama-quiz-image",
+    "brazil-iguacu-brazil-side-quiz-image",
     "brazil-museum-tomorrow-postcard"
   ],
   "highlightsMetadata": {
@@ -558,7 +558,7 @@
             "ヴィクトリアの滝"
           ],
           "answer": 1,
-          "photoKey": "brazil-iguacu-panorama-quiz-image",
+          "photoKey": "brazil-iguacu-brazil-side-quiz-image",
           "photoLabel": "正解の滝｜ブラジル側から見たイグアスの滝",
           "fact": "イグアスの滝はブラジルとアルゼンチンにまたがり、ブラジル側のイグアス国立公園は1986年にUNESCO世界遺産へ登録されました。",
           "quip": "国境より目立つのは水しぶき。滝の迫力に地図が負ける。"
@@ -682,22 +682,6 @@
           "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
           "quizOnly": true
         },
-        "brazil-iguacu-panorama-quiz-image": {
-          "country": "ブラジル",
-          "place": "ブラジル側から眺めたイグアスの滝",
-          "region": "パラナ州・フォス・ド・イグアス",
-          "latitude": -25.691667,
-          "longitude": -54.437953,
-          "note": "ブラジル側の展望地点から撮影したイグアスの滝のパノラマ。",
-          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2f/Igua%C3%A7u-falls-panorama.jpg/500px-Igua%C3%A7u-falls-panorama.jpg",
-          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguaçu-falls-panorama.jpg",
-          "photoAsset": "assets/travel/brazil-iguacu-panorama-quiz.jpg",
-          "photoCaption": "ブラジル側から望むイグアスの滝のパノラマ（2017年撮影）",
-          "author": "Bruno Viecelli",
-          "license": "CC BY-SA 4.0",
-          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
-          "quizOnly": true
-        },
         "brazil-museum-tomorrow-postcard": {
           "country": "ブラジル",
           "place": "リオデジャネイロ・明日の博物館",
@@ -729,6 +713,22 @@
               "checkedOn": "2026-11-21"
             }
           ]
+        },
+        "brazil-iguacu-brazil-side-quiz-image": {
+          "country": "ブラジル",
+          "place": "ブラジル側から眺めたイグアスの滝",
+          "region": "パラナ州・フォス・ド・イグアス",
+          "latitude": -25.691667,
+          "longitude": -54.437953,
+          "note": "ブラジル側の撮影場所から望むイグアスの滝と周囲の緑。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/68/Iguazu_Falls_%28view_from_Brazilian_side%29.jpg/500px-Iguazu_Falls_%28view_from_Brazilian_side%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Iguazu_Falls_(view_from_Brazilian_side).jpg",
+          "photoAsset": "assets/travel/brazil-iguacu-brazil-side-quiz.jpg",
+          "photoCaption": "ブラジル側から望むイグアスの滝（2016年撮影）",
+          "author": "MurielDamiana",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "quizOnly": true
         }
       },
       "highlights": []
