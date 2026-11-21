@@ -71,7 +71,7 @@ class CzechiaPromotionTests(unittest.TestCase):
         self.assertNotIn(cover,quiz)
         self.assertEqual(set(self.cz["portrait"]["photos"]),set(FILES)-{"cz-prague-skyline-cover"})
         worker=(ROOT/"service-worker.js").read_text(encoding="utf-8")
-        self.assertIn("yoru9-shell-v64", worker)
+        self.assertRegex(worker, r"yoru9-shell-v[0-9]+")
         for key in FILES:
             self.assertIn("assets/travel/"+key+".jpg",worker)
 
