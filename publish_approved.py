@@ -287,6 +287,17 @@ def validate_approved(data, expected_date):
         require(story['id'] not in ids and story['sourceUrl'] not in sources, '記事IDまたは出典URLが重複しています')
         ids.add(story['id'])
         sources.add(story['sourceUrl'])
+        # Model-editor and human-editor drafts share the same final release
+        # threshold. An imported artifact or manually staged approval must
+        # not bypass the five-factor review performed during drafting.
+        # This final check is intentionally independent of the generator:
+        # fact/safety scores cannot be compensated by an amusing surprise.
+        if issue_day >= date(2026, 11, 21):
+            from editorial_quality import verified_rubric_for_edition
+            require(verified_rubric_for_edition(story, expected_date),
+                    f'{i}本目の5項目品質審査が不足または基準未満です'
+                    '（驚き・判断ミス・結果の意外性は各4以上、'
+                    '裏付け・安全性は各5が必須）')
         # Editorial review metadata is kept in the repository, not public story JSON.
         public_story = {key: story[key].strip() for key in REQUIRED_STORY}
         # Readers can inspect supporting sources, without exposing private AI
