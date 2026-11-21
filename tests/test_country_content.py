@@ -25,7 +25,7 @@ class CountryContentTest(unittest.TestCase):
         doc=check_country_content(ROOT)
         self.assertEqual(len(doc["countries"]),196)
         self.assertEqual({code for code,row in doc["countries"].items()
-                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR"})
+                          if row["status"]=="approved"},{"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR"})
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
         self.assertEqual(doc["countries"]["NG"]["status"],"pending")
@@ -122,7 +122,7 @@ class CountryContentTest(unittest.TestCase):
     def test_brazil_has_independent_brazil_side_photo_and_two_distinct_quizzes(self):
         data=load_country_content(ROOT)
         brazil=data["countries"]["BR"]
-        self.assertEqual(brazil["status"],"pending")
+        self.assertEqual(brazil["status"],"approved")
         self.assertTrue(brazil["portrait"]["sourceUrl"].startswith("https://www.visitbrasil.com/"))
         self.assertEqual(len(brazil["quiz"]),2)
         keys=[item["photoKey"] for item in brazil["quiz"]]
@@ -149,10 +149,13 @@ class CountryContentTest(unittest.TestCase):
             self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
             self.assertTrue(stop.get("historicalSources"))
 
-    def test_brazil_is_complete_only_after_separate_editorial_approval(self):
+    def test_brazil_publication_requires_explicit_editorial_approval(self):
         path=self.root/"country-content.json"
         data=json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(data["countries"]["BR"]["status"],"pending")
+        self.assertEqual(data["countries"]["BR"]["status"],"approved")
+        data["countries"]["BR"]["status"]="pending"
+        path.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
+        sync_country_content(self.root)
         with self.assertRaisesRegex(ValueError,"BR: country content awaiting editorial approval"):
             country_coverage(self.root,[{"country":"ブラジル"}])
         data["countries"]["BR"]["status"]="approved"
