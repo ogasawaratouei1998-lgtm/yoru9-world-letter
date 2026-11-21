@@ -54,7 +54,7 @@ class CountryContentTest(unittest.TestCase):
     def test_sync_preserves_readiness_of_published_three(self):
         sync_country_content(self.root)
         txt=(self.root/"world-passport.js").read_text(encoding="utf-8")
-        section=txt.split(" US:[",1)[1].split(" NZ:[",1)[0]
+        section=txt.split(" US:[",1)[1].split("\n});",1)[0]
         self.assertEqual(section.count("question:"),2,section[:1000])
         result=country_coverage(self.root,[{"id":"a","country":"イタリア"},
                                           {"id":"b","country":"ドイツ"},
