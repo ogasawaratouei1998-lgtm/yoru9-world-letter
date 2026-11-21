@@ -280,7 +280,7 @@ def sync_country_content(root):
     approved_line="const APPROVED_COUNTRY_CODES=Object.freeze("+json.dumps(
         sorted(code for code,entry in countries.items()
                if entry["status"]=="approved"),ensure_ascii=False,separators=(",",":"))+");"
-    html,n=re.subn(r"(?m)^const APPROVED_COUNTRY_CODES=Object\\.freeze\\(.*\\);$",
+    html,n=re.subn(r"(?m)^const APPROVED_COUNTRY_CODES=Object\.freeze\(.*\);$",
                    lambda match:approved_line,html)
     if n!=1:
         raise ValueError("Approved country atlas registry missing")
