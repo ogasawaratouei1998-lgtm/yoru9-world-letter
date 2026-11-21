@@ -125,7 +125,10 @@
     "dk-roskilde-cathedral-postcard",
     "fi-helsinki-cathedral-cover",
     "fi-suomenlinna-fortress-postcard",
-    "fi-old-rauma-postcard"
+    "fi-old-rauma-postcard",
+    "se-stockholm-gamla-stan-cover",
+    "se-drottningholm-palace-postcard",
+    "se-tanum-rock-carvings-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -6424,7 +6427,7 @@
     },
     "SE": {
       "name": "スウェーデン",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "宮廷の庭園美と、岩に刻まれたはるかな時代の記録",
         "body": "スウェーデンでは、自然の中に残る古い人々の痕跡と、計画的につくられた宮廷文化の空間を一緒にたどれます。ドロットニングホルムの王領地では宮殿や庭園が整えられ、ターヌムでは岩肌に刻まれた多くの図像が青銅器時代の生活や考え方を伝えています。明確な幾何学を持つ庭園と、岩の凹凸を読み解く屋外の遺跡。見た目はまるで違いますが、どちらも土地に刻まれた人の表現を感じられる場所です。",
@@ -6432,13 +6435,127 @@
           "世界遺産：ドロットニングホルムの王領地",
           "世界遺産：ターヌムの岩絵群"
         ],
-        "photos": [],
+        "photos": [
+          "se-drottningholm-palace-postcard",
+          "se-tanum-rock-carvings-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：スウェーデンの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/se"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/se-stockholm-gamla-stan-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Stockholm-Gamla-Stan-panorama.jpg/500px-Stockholm-Gamla-Stan-panorama.jpg",
+          "caption": "ストックホルムの旧市街ガムラスタンの街並み（2013年、Acediscovery撮影）",
+          "author": "Acediscovery",
+          "license": "CC BY 4.0",
+          "place": "ストックホルム・ガムラスタン",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Stockholm-Gamla-Stan-panorama.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ドロットニングホルムの世界遺産に含まれるのは？",
+          "options": [
+            "宮殿と庭園、劇場",
+            "巨大な鉱山",
+            "ローマの円形競技場"
+          ],
+          "answer": 0,
+          "fact": "UNESCOは宮殿と庭園、歴史的な劇場などを含む王領地を評価しています。",
+          "photoLabel": "正解写真｜ドロットニングホルム宮殿",
+          "quip": "庭園の木の並びまで王家仕様。『ちょっと整えて』の規模が違う。",
+          "photoKey": "se-drottningholm-palace-postcard"
+        },
+        {
+          "question": "ターヌムの岩絵と特に結びつく時代は？",
+          "options": [
+            "青銅器時代",
+            "産業革命期のみ",
+            "宇宙開発時代"
+          ],
+          "answer": 0,
+          "fact": "UNESCOはターヌムの岩絵群を北欧青銅器時代の重要な記録とみなしています。",
+          "photoLabel": "正解写真｜ターヌムの岩絵",
+          "quip": "青銅器時代のメッセージ、保存期間は数千年。クラウドより石が強かった。",
+          "photoKey": "se-tanum-rock-carvings-postcard"
+        }
+      ],
+      "travelStops": {
+        "se-stockholm-gamla-stan-cover": {
+          "country": "スウェーデン",
+          "countryOnly": true,
+          "place": "ストックホルム・ガムラスタン",
+          "region": "ストックホルム・旧市街",
+          "latitude": 59.326,
+          "longitude": 18.07,
+          "note": "色とりどりの建物と塔が連なるスウェーデン首都の歴史地区。",
+          "photoCaption": "ストックホルムの旧市街ガムラスタンの街並み（2013年、Acediscovery撮影）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5e/Stockholm-Gamla-Stan-panorama.jpg/500px-Stockholm-Gamla-Stan-panorama.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Stockholm-Gamla-Stan-panorama.jpg",
+          "photoAsset": "assets/travel/se-stockholm-gamla-stan-cover.jpg",
+          "author": "Acediscovery",
+          "license": "CC BY 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+        },
+        "se-drottningholm-palace-postcard": {
+          "country": "スウェーデン",
+          "countryOnly": true,
+          "place": "ドロットニングホルムの王領地",
+          "region": "ストックホルム郊外・エーケレー",
+          "latitude": 59.32167,
+          "longitude": 17.88611,
+          "note": "17世紀の王宮と庭園、劇場が一体となった世界文化遺産。",
+          "photoCaption": "整った庭園から見上げるドロットニングホルム宮殿の正面（2019年、Anubhuti.Battu撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Drottningholm_palace_Stockholm.jpg/500px-Drottningholm_palace_Stockholm.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Drottningholm_palace_Stockholm.jpg",
+          "photoAsset": "assets/travel/se-drottningholm-palace-postcard.jpg",
+          "author": "Anubhuti.Battu",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "ドロットニングホルムでは、水辺に立つ宮殿と広い庭園が一体となって見えます。正面から宮殿を眺めると建築の均整が分かり、木々の間を進むと庭園の軸線や奥行きがはっきりします。庭の道を少しずつ歩き、人工的につくられた景色が水面や季節の木々とどう調和するかを確かめると、単なる宮殿見学とは異なる楽しさがあります。",
+            "UNESCOはドロットニングホルムを、宮殿、庭園、劇場などがまとまって残るヨーロッパの王宮文化の遺産として評価しています。宮殿の姿だけではなく、庭園や舞台芸術の施設を含めた空間の使い方が重要です。どの方角へ歩くと何が見えるように設計されたのかを意識すれば、訪れる人の視線まで考えられた宮廷の美意識を感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドロットニングホルムの王領地",
+              "url": "https://whc.unesco.org/en/list/559/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "se-tanum-rock-carvings-postcard": {
+          "country": "スウェーデン",
+          "countryOnly": true,
+          "place": "ターヌムの岩絵群",
+          "region": "スウェーデン西岸・ターヌム",
+          "latitude": 58.70111,
+          "longitude": 11.34111,
+          "note": "青銅器時代の船や人物が岩肌に刻まれた世界文化遺産。",
+          "photoCaption": "ターヌム・ヴィトリュッケの岩面に刻まれた船の図像（2007年、Boberger撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/98/Rock_carving_Vitlycke_Tanum.JPG/500px-Rock_carving_Vitlycke_Tanum.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Rock_carving_Vitlycke_Tanum.JPG",
+          "photoAsset": "assets/travel/se-tanum-rock-carvings-postcard.jpg",
+          "author": "Boberger",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "ターヌムでは、岩肌に刻まれた船や人物などの図像を地面のすぐ近くで見ることができます。遠くからはただの平らな岩に見えても、立ち止まって形を追うと、線の連なりから小さな物語が浮かび上がります。複数の岩絵のある場所を巡り、同じ図像がどのように繰り返され、何が異なるのかを見比べると、古い人々への想像が豊かになります。",
+            "UNESCOはターヌムの岩絵群を、北ヨーロッパにおける青銅器時代の生活や信仰の手掛かりとして評価しています。船や動物、人物が刻まれた岩面は、文字とは異なる記録のあり方を示しています。現在見える色の一部は視認しやすくする処置で、図像自体の年代を意味するわけではありません。岩を傷つけず、現地の保護案内に従って観察します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ターヌムの岩絵群",
+              "url": "https://whc.unesco.org/en/list/557/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "SZ": {
