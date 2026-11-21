@@ -160,7 +160,9 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn('id="todayMapIntroTravel"',self.page)
         self.assertIn("function approvedAtlasTravelOptions(item,stops)",self.page)
         self.assertIn("travelPostcardHtml({country:item.name},stop,true)",self.page)
-        self.assertIn("standalone?'国紹介：':'記事の舞台（国） '",self.page)
+        self.assertIn("国紹介と旅先の関係",self.page)
+        self.assertIn("記事と旅先の違い",self.page)
+        self.assertIn("(standalone?countryContext:storyContext)",self.page)
 
     def test_country_buttons_launch_passport_game_not_the_article(self):
         page = self.page
