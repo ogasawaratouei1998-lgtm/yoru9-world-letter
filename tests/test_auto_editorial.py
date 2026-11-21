@@ -626,12 +626,17 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("The reader now displays a sourced quote by JST date",main)
         self.assertIn('validate_approved(payload,day)',main)
 
-    def test_semantic_matching_is_optional_to_preserve_fact_review_quota(self):
+    def test_one_publisher_requires_no_ai_cross_media_pairing(self):
         from auto_editorial import semantic_matching_needed
-        self.assertTrue(semantic_matching_needed(0))
-        self.assertTrue(semantic_matching_needed(1))
-        self.assertFalse(semantic_matching_needed(2))
-        self.assertFalse(semantic_matching_needed(3))
+        for count in (0,1,2,3,24):
+            self.assertFalse(semantic_matching_needed(count))
+        source=__import__("inspect").getsource(editorial.main)
+        self.assertIn("if semantic_matching_needed(len(groups)):",source)
+        self.assertIn("groups.extend([[item] for item in unpaired])",source)
+        self.assertIn('trusted_original_domain(lead.get("url",""))',source)
+        self.assertIn("if len(recent)<4:",source)
+        self.assertIn("if len(source_leads)<4:",source)
+        self.assertIn('checkpoint("draft_empty",drafted=0)',source)
 
     def test_human_failure_must_be_central_not_animal_novelty(self):
         from editorial_identity import human_failure_rejection, comic_line_rejection
