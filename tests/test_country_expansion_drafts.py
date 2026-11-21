@@ -86,7 +86,7 @@ class CountryExpansionDraftTests(unittest.TestCase):
             html)
         self.assertIsNotNone(match)
         atlas=json.loads(match.group(1))
-        self.assertEqual(len(atlas),18)
+        self.assertEqual(len(atlas),21)
         self.assertTrue(COUNTRIES.issubset(atlas))
         self.assertTrue(COUNTRIES.issubset(
             {code for code,country in self.country["countries"].items()
