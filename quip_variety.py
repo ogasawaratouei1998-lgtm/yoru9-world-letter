@@ -6,6 +6,7 @@ checks; it must not rewrite news, add jokes or consume AI API calls.
 """
 from collections import Counter
 import re
+import unicodedata
 
 
 _PUNCTUATION=re.compile(r"[\s。！!？?…」』\u3000]+$")
@@ -44,13 +45,45 @@ def repeated_cadence_count(stories):
 
 
 
+def normalized_quip_text(line):
+    """Ignore cosmetic spacing, width, and punctuation, not substantive words."""
+    if not isinstance(line,str):
+        return ""
+    return "".join(ch for ch in unicodedata.normalize("NFKC",line)
+                   if not ch.isspace() and not unicodedata.category(ch).startswith("P"))
+
+
+def prefer_fresh_quip(candidates, reviewed):
+    """Prefer variation among already form-checked candidates BEFORE audit.
+
+    Preserve candidate order for ties. Never invent or rewrite a joke, and
+    never discard a fact-checked story just because a cadence is repeated.
+    The selected candidate still requires independent factual/comedy review.
+    """
+    texts=set()
+    cadences=Counter()
+    for row in reviewed:
+        if not isinstance(row,dict):
+            continue
+        line=row.get("quip")
+        key=normalized_quip_text(line)
+        if key:
+            texts.add(key)
+        cadence=quip_cadence(line)
+        if cadence:
+            cadences[cadence]+=1
+    return min(candidates,key=lambda line:(
+        normalized_quip_text(line) in texts,
+        cadences[quip_cadence(line)]),default=None)
+
+
 def repeated_exact_quip_count(stories):
-    """Count verbatim punchline repetitions after ignoring whitespace.
+    """Count punchline repetitions after cosmetic normalization.
 
     This is only an issue-level selection tiebreaker; it cannot approve or
     rewrite a joke, add invented facts, or disqualify a published article.
     """
-    text=[re.sub(r"\s+","",row.get("quip","")) for row in stories
+    text=[normalized_quip_text(row.get("quip","")) for row in stories
           if isinstance(row,dict) and isinstance(row.get("quip"),str)]
     counts=Counter(line for line in text if line)
     return sum(max(0,n-1) for n in counts.values())
