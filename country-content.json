@@ -976,7 +976,7 @@
     },
     "ES": {
       "name": "スペイン",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "食と音楽、地域ごとの文化が華やぐ国",
         "body": "スペインは地域ごとに言語、料理、祭り、歴史的建築が異なり、一つの名所だけでは語れない国です。バルセロナにはガウディの建築、南部アンダルシアにはイスラム時代の宮殿とフラメンコ、北部にはバスク地方独自の食文化があります。広場で人が集い、友人や家族と小皿料理を囲む時間も旅の魅力。地中海沿岸から大西洋側、内陸の都市まで、異なる風土が重なって豊かな文化をつくっています。",
@@ -1143,7 +1143,18 @@
           "sourceName": "マドリード市公式観光案内",
           "sourceUrl": "https://www.esmadrid.com/en/whats-on/feriarte-ifema-madrid"
         }
-      ]
+      ],
+      "approval": {
+        "reviewedOn": "2026-11-21",
+        "reason": "Source-reviewed portrait and travel history; three distinct credited CC BY-SA 4.0 quiz/travel photos; source, publishing safety, site build and mobile checks passed.",
+        "sources": [
+          "https://www.spain.info/en/about-spain/",
+          "https://sagradafamilia.org/en/history-of-the-temple",
+          "https://parkguell.barcelona/en/park-guell/origin-and-creation",
+          "https://whc.unesco.org/en/list/320/",
+          "https://whc.unesco.org/en/list/314/"
+        ]
+      }
     },
     "EE": {
       "name": "エストニア",
