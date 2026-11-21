@@ -71,7 +71,10 @@
     "ca-banff-lake-louise-postcard",
     "in-jaipur-hawa-mahal-cover",
     "in-taj-mahal-postcard",
-    "in-qutb-minar-postcard"
+    "in-qutb-minar-postcard",
+    "gr-santorini-caldera-cover",
+    "gr-athens-acropolis-postcard",
+    "gr-delphi-apollo-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2401,7 +2404,7 @@
     },
     "GR": {
       "name": "ギリシャ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "古代文明の遺跡と島々の暮らしが地中海に広がる国",
         "body": "ギリシャの首都アテネには古代の神殿が残り、アクロポリスの高台からは現代の都市が見渡せます。山の斜面にあるデルフィには、古代に人々の信仰を集めた聖域の遺構が点在しています。一方、港町や島々では海に近い暮らしや土地ごとの料理が息づき、伝統と現在が自然につながっています。石造りの遺跡の壮大さだけでなく、それを取り囲む自然や街の営みにも目を向けたい国です。",
@@ -2410,13 +2413,127 @@
           "世界遺産：アテネのアクロポリス",
           "古代遺跡：デルフィ"
         ],
-        "photos": [],
+        "photos": [
+          "gr-athens-acropolis-postcard",
+          "gr-delphi-apollo-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ギリシャの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/gr"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/gr-santorini-caldera-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Santorini_panorama.jpg/500px-Santorini_panorama.jpg",
+          "caption": "サントリーニ島のカルデラと街並みを望むパノラマ（2020年撮影）",
+          "author": "Stamatis",
+          "license": "CC BY-SA 4.0",
+          "place": "サントリーニ島のカルデラ景観",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Santorini_panorama.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "アテネのアクロポリスにある有名な神殿は？",
+          "options": [
+            "パルテノン神殿",
+            "タージ・マハル",
+            "シェーンブルン宮殿"
+          ],
+          "answer": 0,
+          "photoKey": "gr-athens-acropolis-postcard",
+          "photoLabel": "正解写真｜アテネのアクロポリス",
+          "fact": "アテネのアクロポリスにはパルテノン神殿が残っています。",
+          "quip": "街全体が見える高台。古代から絶景の指定席だった。"
+        },
+        {
+          "question": "デルフィの聖域と深く結び付く神は？",
+          "options": [
+            "アポロン",
+            "ポセイドン",
+            "ヘルメス"
+          ],
+          "answer": 0,
+          "photoKey": "gr-delphi-apollo-postcard",
+          "photoLabel": "正解写真｜デルフィのアポロン神殿",
+          "fact": "UNESCOはデルフィをアポロン神の聖域として紹介しています。",
+          "quip": "山の静けさが魅力。昔は神託を求める人々で大にぎわい。"
+        }
+      ],
+      "travelStops": {
+        "gr-santorini-caldera-cover": {
+          "country": "ギリシャ",
+          "countryOnly": true,
+          "place": "サントリーニ島のカルデラ景観",
+          "region": "エーゲ海・サントリーニ島",
+          "latitude": 36.456,
+          "longitude": 25.365,
+          "note": "火山の地形と青い海、集落の眺めが重なるサントリーニ島の風景。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2e/Santorini_panorama.jpg/500px-Santorini_panorama.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Santorini_panorama.jpg",
+          "photoAsset": "assets/travel/gr-santorini-caldera-cover.jpg",
+          "photoCaption": "サントリーニ島のカルデラと街並みを望むパノラマ（2020年撮影）",
+          "author": "Stamatis",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "coverOnly": true
+        },
+        "gr-athens-acropolis-postcard": {
+          "country": "ギリシャ",
+          "countryOnly": true,
+          "place": "アテネのアクロポリス",
+          "region": "アテネ・アクロポリスの丘",
+          "latitude": 37.9719,
+          "longitude": 23.7267,
+          "note": "都市を見下ろす岩山に古代神殿群が立つ、アテネの象徴的な遺跡。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f4/AcropolisAthens.jpg/500px-AcropolisAthens.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:AcropolisAthens.jpg",
+          "photoAsset": "assets/travel/gr-athens-acropolis-postcard.jpg",
+          "photoCaption": "ギリシャ・アテネのアクロポリスの建造物（2012年撮影）",
+          "author": "Geomel",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "アテネの街を見下ろす岩山の上には、パルテノン神殿をはじめとする古代の建築が残っています。柱の間から青空をのぞき、足元に広がる現代の街を眺めると、一つの場所に長い時間が重なっていることに気づきます。少し移動するたびに建物の線や石の陰影が変わり、遠景と近景の両方から楽しめる遺跡です。",
+            "UNESCOはアテネのアクロポリスの建築群を、古代ギリシャ文明の芸術や宗教、都市文化を伝える重要な遺産と説明しています。残された神殿は単に古い石造建築ではなく、都市が何を尊び、どのような技術を積み重ねてきたかを示しています。丘の上で見た石柱を思い浮かべながら街へ降りると、都市全体の歴史がいっそう近く感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アテネのアクロポリス",
+              "url": "https://whc.unesco.org/en/list/404",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        },
+        "gr-delphi-apollo-postcard": {
+          "country": "ギリシャ",
+          "countryOnly": true,
+          "place": "デルフィの考古遺跡",
+          "region": "中央ギリシャ・デルフィ",
+          "latitude": 38.4813,
+          "longitude": 22.5005,
+          "note": "山の斜面に古代の聖域が広がり、神殿跡の向こうに谷を望む。",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/Delphi_Temple_of_Apollo.jpg/500px-Delphi_Temple_of_Apollo.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Delphi_Temple_of_Apollo.jpg",
+          "photoAsset": "assets/travel/gr-delphi-apollo-postcard.jpg",
+          "photoCaption": "デルフィ遺跡のアポロン神殿跡と山あいの風景（2017年撮影）",
+          "author": "Skyring",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "デルフィの遺跡は山の斜面に広がり、石段や柱の向こうには谷の景色が開けています。かつての神殿や劇場の跡を歩くと、周囲の山の形と建造物の配置が深く結び付いているのを感じます。古代の人々がなぜこの場所を特別に考えたのか、自然の眺めと人の手で築かれた遺構を一緒に見ながら想像してみたくなります。",
+            "UNESCOによると、デルフィは古代ギリシャの重要な聖域で、アポロン神と結び付いていました。各地の支配者や都市国家などが奉納品を持ち寄り、ギリシャ世界の広い範囲に影響を与えていました。静かな石の遺構を見渡したあとで、かつて遠方から人々がここへ集まった様子を思い浮かべれば、山あいの景色に古代の活気が重なります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・デルフィの考古遺跡",
+              "url": "https://whc.unesco.org/en/list/393",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "GD": {
