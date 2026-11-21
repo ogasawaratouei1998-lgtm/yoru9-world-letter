@@ -10,6 +10,8 @@ on:
       - 'auto_editorial.py'
       - 'editorial_identity.py'
       - 'editorial_quality.py'
+      - 'quip_variety.py'
+      - 'country_readiness.py'
       - 'trusted_originals.py'
       - 'collect_candidates.py'
       - 'stage_review.py'
