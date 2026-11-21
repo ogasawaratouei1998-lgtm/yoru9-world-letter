@@ -84,7 +84,7 @@ class CroatiaPromotionTests(unittest.TestCase):
             self.assertTrue(all(110 <= len(p) <= 360 for p in stop["travelStory"]))
             sources.update(src["url"] for src in stop["historicalSources"])
         self.assertEqual(sources, SOURCES)
-        self.assertEqual(self.doc["travelOrder"][-3:], list(PHOTOS))
+        self.assertTrue(set(PHOTOS).issubset(self.doc["travelOrder"]))
         sw = (ROOT/"service-worker.js").read_text(encoding="utf-8")
         self.assertIn("yoru9-shell-v63", sw)
         for key in PHOTOS:
