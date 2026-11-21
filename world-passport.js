@@ -120,6 +120,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'マチュ・ピチュと深く結び付く文明は？',options:['インカ文明','古代ギリシャ','フェニキア文明'],answer:0,photoLabel:'正解写真｜マチュ・ピチュ',fact:'UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。',quip:'山頂の絶景だけじゃない。石段にも都市を造った人の意志がある。',photoKey:'pe-machu-picchu-postcard'},
   {question:'クスコに重なる二つの歴史的な建築の流れは？',options:['インカ期とスペイン統治期','江戸時代と明治時代','古代ローマとヴァイキング'],answer:0,photoLabel:'正解写真｜クスコの市街',fact:'UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。',quip:'壁の継ぎ目が、千年単位の都市のリレーを見せてくれる。',photoKey:'pe-cusco-historic-center-postcard'},
  ],
+ PL:[
+  {question:'クラクフ歴史地区の構成要素の一つは？',options:['ヴァヴェルの丘','富士山の五合目','ヴェネツィアの運河'],answer:0,fact:'UNESCOは中世都市クラクフ、ヴァヴェルの丘、カジミエシュを含む地区を登録しています。',photoLabel:'正解写真｜クラクフ・ヴァヴェルの丘',quip:'城を見上げて歴史を感じたら、広場で商人の時代を感じる。クラクフは二段構え。',photoKey:'pl-wawel-castle-postcard'},
+  {question:'ヴィエリチカとボフニャで長く採掘されたものは？',options:['岩塩','石炭のみ','金'],answer:0,fact:'UNESCOは岩塩の採掘技術と地下施設の歴史を重要な価値として紹介しています。',photoLabel:'正解写真｜ヴィエリチカの聖キンガ礼拝堂',quip:'塩を掘っていたら地下に礼拝堂まで造った。採掘現場の仕事が芸術になった。',photoKey:'pl-wieliczka-salt-chapel-postcard'},
+ ],
  PT:[
   {question:'ジェロニモス修道院とベレンの塔が世界文化遺産に登録された年は？',options:['1983年','1995年','2015年'],answer:0,photoLabel:'正解写真｜ジェロニモス修道院',fact:'UNESCOはジェロニモス修道院とベレンの塔を1983年に世界文化遺産へ登録しています。',quip:'海へ出た時代の記憶が、石の柱までぎっしり残る。',photoKey:'pt-jeronimos-monastery-postcard'},
   {question:'シントラの文化的景観が世界文化遺産に登録された年は？',options:['1983年','1995年','2007年'],answer:1,photoLabel:'正解写真｜シントラのペーナ宮殿',fact:'UNESCOによるシントラの文化的景観の登録年は1995年です。',quip:'森の中に宮殿。景色の設計まで王宮級のこだわり。',photoKey:'pt-pena-palace-postcard'},
