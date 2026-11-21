@@ -147,6 +147,17 @@ def check_country_content(root):
         for field,value in legacy["countries"][code].items():
             if entry.get(field)!=value:
                 raise ValueError(code+"."+field+": source-of-truth drift; run --sync")
+    # A valid JSON/JS export alone does not mean a newly approved country can
+    # actually render. Audit *all* approvals, not just today's article countries.
+    # This catches cover/quiz reuse, foreign imagery and missing travel options
+    # before a future nightly edition is allowed to reference the country.
+    from check_country_experience import country_coverage
+    for code,entry in canonical["countries"].items():
+        if entry["status"]=="approved":
+            try:
+                country_coverage(root,[{"country":code}])
+            except (KeyError,ValueError,TypeError,IndexError,OSError) as exc:
+                raise ValueError(code+": approved content fails reader readiness: "+str(exc)) from exc
     return canonical
 
 
