@@ -38,7 +38,7 @@ class ReaderAssetSplitTest(unittest.TestCase):
         for path in ("assets/reader-core.css","assets/reader-core.js",
                      "assets/reading-focus.css"):
             self.assertIn("'"+path+"'",worker)
-        self.assertIn("yoru9-shell-v39",worker)
+        self.assertIn("yoru9-shell-v40",worker)
 
     def test_release_smoke_fetches_external_code(self):
         from inspect import getsource
