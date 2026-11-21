@@ -48,6 +48,17 @@ class EditorialRubricTests(unittest.TestCase):
         # No model candidate is a verified fact; reviewer B must still audit.
         self.assertNotIn("editorVerified",story)
 
+    def test_pipeline_cannot_use_a_headline_echo_when_every_quip_fails(self):
+        import inspect
+        import auto_editorial
+        echo="荷物を送り間違え、受取先も書き間違えた"
+        self.assertIsNone(choose_pre_review_quip(
+            {"title":echo,"summary":echo+"。","quip":echo,
+             "quipCandidates":[echo]}))
+        source=inspect.getsource(auto_editorial.main)
+        self.assertIn('reject("quip_without_original_angle");continue',source)
+        self.assertIn('story["quip"]=selected_quip',source)
+
     def test_repetitive_stock_reaction_is_discarded(self):
         good="コーヒー4杯を頼んで、いちばん先に欲しかったのが出口。"
         story={"title":"救助のために配達を注文",
