@@ -206,7 +206,10 @@
     "al-butrint-theatre-postcard",
     "gh-aburi-mampong-cover",
     "gh-besease-shrine-postcard",
-    "gh-cape-coast-castle-postcard"
+    "gh-cape-coast-castle-postcard",
+    "mt-mdina-cathedral-cover",
+    "mt-valletta-harbour-postcard",
+    "mt-hagar-qim-temple-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -7398,7 +7401,7 @@
     },
     "MT": {
       "name": "マルタ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "要塞都市の石畳から、はるかな先史時代の神殿へ",
         "body": "地中海に浮かぶマルタでは、海を守る要塞都市と先史時代の巨石神殿を一つの旅で見比べられます。首都ヴァレッタには騎士団の時代に形づくられた街路や建築が残り、島々に点在する巨石神殿はそれよりはるかに古い信仰や建築の技術を伝えています。海に面した石造りの街と、石を積んだ神殿を歩き比べると、同じ石の風景が異なる時代の人々によって全く別の意味を持っていたことが分かります。",
@@ -7406,13 +7409,142 @@
           "世界遺産：ヴァレッタ市街",
           "世界遺産：マルタの巨石神殿群"
         ],
-        "photos": [],
+        "photos": [
+          "mt-valletta-harbour-postcard",
+          "mt-hagar-qim-temple-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：マルタの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/mt"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/mt-mdina-cathedral-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Malta_Mdina_BW_2011-10-05_12-41-38.JPG/960px-Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+          "caption": "イムディーナの聖パウロ大聖堂と石畳の広場（2011年）",
+          "author": "Berthold Werner",
+          "license": "CC BY-SA 3.0",
+          "place": "イムディーナ・聖パウロ大聖堂",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Malta_Mdina_BW_2011-10-05_12-41-38.JPG"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ヴァレッタの都市形成に深く関わった組織は？",
+          "options": [
+            "聖ヨハネ騎士団",
+            "東インド会社",
+            "ハンザ同盟"
+          ],
+          "answer": 0,
+          "fact": "UNESCOはヴァレッタの建設と発展を聖ヨハネ騎士団の歴史に結びつけています。",
+          "quip": "港を守るための都市設計。景色の美しさには、守りの合理性も組み込まれています。",
+          "photoLabel": "正解写真｜ヴァレッタ市街",
+          "photoKey": "mt-valletta-harbour-postcard"
+        },
+        {
+          "question": "マルタの巨石神殿群が分布する島々は？",
+          "options": [
+            "マルタ島とゴゾ島",
+            "アイスランド島とグリーンランド島",
+            "シチリア島とサルデーニャ島"
+          ],
+          "answer": 0,
+          "fact": "UNESCOの登録にはマルタ島とゴゾ島にある複数の巨石神殿が含まれます。",
+          "quip": "千年単位で歴史をさかのぼると、石積みの技術そのものが主役になります。",
+          "photoLabel": "正解写真｜マルタの巨石神殿群（ハジャー・イム）",
+          "photoKey": "mt-hagar-qim-temple-postcard"
+        }
+      ],
+      "travelStops": {
+        "mt-mdina-cathedral-cover": {
+          "country": "マルタ",
+          "countryOnly": true,
+          "place": "イムディーナ・聖パウロ大聖堂",
+          "region": "イムディーナ",
+          "latitude": 35.886303,
+          "longitude": 14.403239,
+          "note": "Commonsに記録された撮影位置。街路の状況は最新資料も確認してください。",
+          "photoCaption": "イムディーナの聖パウロ大聖堂と石畳の広場（2011年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Malta_Mdina_BW_2011-10-05_12-41-38.JPG/960px-Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+          "photoAsset": "assets/travel/mt-mdina-cathedral-cover.jpg",
+          "author": "Berthold Werner",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "coverOnly": true
+        },
+        "mt-valletta-harbour-postcard": {
+          "country": "マルタ",
+          "countryOnly": true,
+          "place": "ヴァレッタ市街",
+          "region": "ヴァレッタ",
+          "latitude": 35.90056,
+          "longitude": 14.51444,
+          "note": "UNESCOの遺産代表地点で、写真の正確な撮影位置ではありません。",
+          "photoCaption": "グランドハーバーから眺めたヴァレッタの城壁と石造建築（2015年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Valletta%2C_Malta_%2845400880161%29.jpg/960px-Valletta%2C_Malta_%2845400880161%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Valletta,_Malta_(45400880161).jpg",
+          "photoAsset": "assets/travel/mt-valletta-harbour-postcard.jpg",
+          "author": "Mike McBey",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "travelStory": [
+            "ヴァレッタの高台から港を眺めると、海へ向けて築かれた城壁と、まっすぐ延びる街路の関係が見えてきます。坂道を歩くと石造建築の壁やバルコニーが連なり、角を曲がるたびに港の青さが視界に入ります。眺めの良い場所から街全体の形を確かめたあと、歴史ある通りをゆっくり歩いて細部を味わいたい都市です。",
+            "UNESCOはヴァレッタを、16世紀に聖ヨハネ騎士団によって整えられた要塞都市として評価しています。聖ヨハネ大聖堂や騎士団ゆかりの建物がまとまって残り、軍事的な防御と都市生活が同じ空間に組み込まれています。海から見た城壁の役割と、街の中の整然とした道の配置を重ねて見ると、都市設計の意図がより分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ヴァレッタ市街",
+              "url": "https://whc.unesco.org/en/list/131",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・マルタ",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_195.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "mt-hagar-qim-temple-postcard": {
+          "country": "マルタ",
+          "countryOnly": true,
+          "place": "マルタの巨石神殿群（ハジャー・イム）",
+          "region": "マルタ島南部",
+          "latitude": 35.827828,
+          "longitude": 14.441789,
+          "note": "UNESCOの遺産代表地点で、写真の正確な撮影位置ではありません。",
+          "photoCaption": "保護用の屋根の下にあるハジャー・イムの巨石壁（2021年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg/960px-%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:%C4%A6a%C4%A1ar_Qim,_isla_de_Malta,_Malta,_2021-08-25,_DD_67.jpg",
+          "photoAsset": "assets/travel/mt-hagar-qim-temple-postcard.jpg",
+          "author": "Diego Delso (delso.photo)",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "マルタの巨石神殿では、丸みを帯びた大きな石を積んだ壁や入り口から、古い時代の人々が空間をつくる工夫を感じられます。狭い通路を通って内部の区画へ目を向けると、現代の建物とは異なる建築の考え方が伝わってきます。屋外展示や保護設備の案内を守り、石の大きさだけでなく配置や向きにも注目して見学したい場所です。",
+            "UNESCOはゴゾ島のジュガンティーヤをはじめ、マルタ島とゴゾ島に残る複数の先史時代の神殿群を一つの世界遺産として登録しています。巨大な石材が組み合わされた建築は、古くから続く島の文化を示しています。各神殿が別の場所にあることを理解し、遺構の形を比べることで、共通する建築技術と場所ごとの個性が分かってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マルタの巨石神殿群",
+              "url": "https://whc.unesco.org/en/list/132",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・マルタ",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_195.html",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "UNESCO世界遺産センター・マルタ巨石神殿の登録区域図",
+              "url": "https://whc.unesco.org/en/list/132/maps/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "MM": {
