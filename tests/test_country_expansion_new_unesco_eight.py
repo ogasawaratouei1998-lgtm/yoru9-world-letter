@@ -24,7 +24,16 @@ class NextEightUnescoCountryTests(unittest.TestCase):
             with self.subTest(code=code):
                 country = self.doc["countries"][code]
                 self.assertEqual(country["name"], draft["name"])
-                self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                if code == "AM" and country["status"] == "approved":
+                    # The November 21 research snapshot is immutable. A later
+                    # independent release adds current country-specific MOFA
+                    # precautions without deleting sourced historic content.
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
+                    self.assertIn("危険レベル4", country["portrait"]["body"])
+                    self.assertIn("危険レベル2", country["portrait"]["body"])
+                    self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
+                else:
+                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
                 self.assertEqual(country["portrait"]["sourceUrl"],
                                  "https://whc.unesco.org/en/statesparties/" + code.lower())
