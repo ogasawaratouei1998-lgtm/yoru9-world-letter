@@ -1045,6 +1045,8 @@ def valid_recent_reported(raw, now):
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
 
+MAX_FOCUSED_DRAFT_GROUPS=3
+
 def source_bound_batch_drafts(response, groups):
     """Keep at most one unverified draft per article-evidence group.
 
@@ -1057,7 +1059,7 @@ def source_bound_batch_drafts(response, groups):
     if not isinstance(proposed,list) or not isinstance(groups,list):
         return []
     selected=[]
-    for group in groups[:2]:
+    for group in groups[:MAX_FOCUSED_DRAFT_GROUPS]:
         articles=group.get("articles",[]) if isinstance(group,dict) else []
         allowed={article.get("url") for article in articles
                  if isinstance(article,dict)
@@ -1412,21 +1414,21 @@ def main():
             0 if g["groupId"]>PRIMARY_EDITORIAL_GROUPS else 1,
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
-        # Pair two independent significant-personal-incident groups per request.
-        # The previous read-only run needed 12 separate A calls to obtain
-        # three draftable stories, and B then hit HTTP 429. Halving these
-        # drafting calls reserves more of the key's rate/quota budget for B.
+        # Use three independent incident groups per A-editor request.
+        # Prior read-only runs needed many A calls to obtain
+        # a few drafts, and B eventually hit HTTP 429. Batching three
+        # groups per request reserves more of the quota/time budget for B.
         # Each drafted incident must cite exactly its OWN group evidence;
         # cross-group invented corroboration is rejected downstream.
         print("Supplementing insufficient editorial drafts in pairs:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),20),2):
+        for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
-            batch=retry_candidates[start:min(start+2,20,len(retry_candidates))]
+            batch=retry_candidates[start:min(start+MAX_FOCUSED_DRAFT_GROUPS,20,len(retry_candidates))]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+QUIP_ALTERNATIVE_REQUIREMENT+
-                " You are editor A. Review two incident candidates SEPARATELY. "
+                " You are editor A. Review each incident candidate SEPARATELY. "
                 "FIRST seek a verifiable, significant PERSONAL miscalculation or "
                 "large non-tragic outcome of a named individual's decision. "
                 "Do NOT downgrade to trivial typos, routine deliveries or minor "
@@ -1539,12 +1541,12 @@ def main():
             grouped_evidence, attempted_group_ids, used_urls)
         print("After-review never-prompted source groups:",len(remaining),
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
-        for offset in range(0,min(len(remaining),20),2):
+        for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
             if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
                 print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
                 break
-            batch=remaining[offset:offset+2]
+            batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
             retry_prompt=(
                 EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+
                 QUIP_ALTERNATIVE_REQUIREMENT+
