@@ -96,6 +96,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
   {question:'古代ギリシャのデルフィで神託と深く関わった神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoLabel:'正解写真｜デルフィのアポロン神殿跡',fact:'デルフィの聖域はアポロンの神託で知られ、UNESCO世界遺産にも登録されています。',quip:'山奥の相談所に世界中から人が集まる、古代の人気ぶり。',photoKey:'gr-delphi-apollo-postcard'},
  ],
+ GT:[
+  {question:'ティカル国立公園はどの種類の世界遺産？',options:['文化遺産のみ','文化と自然の複合遺産','自然遺産のみ'],answer:1,fact:'ティカルは考古学的価値と生物多様性の両方を評価された世界複合遺産です。',photoLabel:'正解写真｜ティカル国立公園・大広場',quip:'神殿だけでなく森も遺産。都市計画の主役が、千年後には森林にもなった。',photoKey:'gt-tikal-plaza-postcard'},
+  {question:'旧都から首都が移転する契機となった大地震は何年？',options:['1543年','1773年','1979年'],answer:1,fact:'1773年の地震による甚大な被害を機に、当局は首都の移転を決めました。',photoLabel:'正解写真｜アンティグア・グアテマラの大聖堂跡',quip:'首都は移っても、街の記憶は引っ越さなかった。',photoKey:'gt-antigua-cathedral-postcard'},
+ ],
  HR:[
   {question:'ドゥブロヴニクが発展した主な背景は？',options:['海上交易','砂漠の遊牧','氷河の採掘'],answer:0,photoLabel:'正解写真｜ドゥブロヴニク旧市街',fact:'UNESCOは歴史的な地中海の海洋勢力としてのドゥブロヴニクを説明しています。',quip:'城壁の外は海、内側は街。地形にまで防御の意志が見える。',photoKey:'hr-dubrovnik-old-city-postcard'},
   {question:'プリトヴィツェの湖と滝を生み出す主な働きは？',options:['石灰華の堆積','流氷の衝突','溶岩の噴出のみ'],answer:0,photoLabel:'正解写真｜プリトヴィツェ湖群国立公園',fact:'UNESCOは石灰華の堆積が天然の障壁や湖、滝を形成すると説明しています。',quip:'滝の設計者は水と石灰岩。しかも工事は現在進行形。',photoKey:'hr-plitvice-lakes-postcard'},
