@@ -30,6 +30,66 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "country": "ガーナ",
       "place": "ケープコースト城"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "GH-0.jpg",
+      "sha256": "ce564c0a463deca82fca09085ff5c9320a84442e0a32ca058c0cc516d659f07f",
+      "cover": true,
+      "photoAsset": "assets/travel/gh-aburi-mampong-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Aburi_Mampong_Green_landscape.jpg/960px-Aburi_Mampong_Green_landscape.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Aburi_Mampong_Green_landscape.jpg",
+      "author": "Penwills",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "ガーナ",
+      "place": "アブリ・マンポン"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "MT-0.jpg",
+      "sha256": "af3fa256d9f4f7b2d7226ceb435f2c1efcdc714a081dc0171494d825e0471274",
+      "cover": true,
+      "photoAsset": "assets/travel/mt-mdina-cathedral-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Malta_Mdina_BW_2011-10-05_12-41-38.JPG/960px-Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+      "author": "Berthold Werner",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "マルタ",
+      "place": "イムディーナ・聖パウロ大聖堂"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "MT-1.jpg",
+      "sha256": "144263e6cb061ae2fee43e2e78e14eae784ea6240b87b8da781d8edb992f8067",
+      "cover": false,
+      "photoAsset": "assets/travel/mt-valletta-harbour-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Valletta%2C_Malta_%2845400880161%29.jpg/960px-Valletta%2C_Malta_%2845400880161%29.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Valletta,_Malta_(45400880161).jpg",
+      "author": "Mike McBey",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "country": "マルタ",
+      "place": "ヴァレッタ市街"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "MT-2.jpg",
+      "sha256": "5ab4cddf3f14e4675074f354ffe9b26495ef7b4bc7a06b5eb3be825a3f73037f",
+      "cover": false,
+      "photoAsset": "assets/travel/mt-hagar-qim-temple-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg/960px-%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:%C4%A6a%C4%A1ar_Qim,_isla_de_Malta,_Malta,_2021-08-25,_DD_67.jpg",
+      "author": "Diego Delso (delso.photo)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "マルタ",
+      "place": "マルタの巨石神殿群（ハジャー・イム）"
     }
   ]
 }

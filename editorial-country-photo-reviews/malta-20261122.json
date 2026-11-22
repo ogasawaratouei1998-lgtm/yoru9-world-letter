@@ -7,7 +7,7 @@
     "artifactId": 14735202454,
     "name": "editorial-review-bundle"
   },
-  "status": "visual_and_license_review_completed_not_public",
+  "status": "visual_and_license_review_completed_1280px_cover_available_release_checks_pending",
   "publicationEligible": false,
   "photos": [
     {
@@ -85,8 +85,17 @@
   ],
   "safetyNote": "As of 2026-11-22 MOFA lists no current danger or infectious disease advisory; general safety guidance remains applicable.",
   "requiredBeforeApproval": [
-    "exact_original_1280px_cover_download_and_resolution_verification",
-    "canonical_runtime_offline_synchronization",
-    "full_build_and_mobile_preflight"
-  ]
+    "restore_checksum_pinned_1280px_cover_and_verified_postcards",
+    "full_public_build_and_mobile_preflight"
+  ],
+  "highResolutionCover": {
+    "runId": 44986532608,
+    "artifactId": 14739947105,
+    "file": "MT-0.jpg",
+    "sha256": "af3fa256d9f4f7b2d7226ceb435f2c1efcdc714a081dc0171494d825e0471274",
+    "width": 1280,
+    "height": 974,
+    "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+    "visuallyComparedToOriginalPreview": true
+  }
 }

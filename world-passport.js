@@ -172,6 +172,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'テオティワカンの巨大な建築群を貫く大通りの名前は？',options:['死者の大通り','王の道','海沿いの大通り'],answer:0,photoLabel:'正解写真｜テオティワカンの遺跡',fact:'テオティワカンには太陽のピラミッドなどを結ぶ『死者の大通り』が広がっています。',quip:'都市計画のスケールが、徒歩の散歩道を超えている。',photoKey:'mx-teotihuacan-postcard'},
   {question:'チチェン・イッツァにある階段状のピラミッドは何と呼ばれる？',options:['エル・カスティージョ','コロッセオ','クトゥブ・ミナール'],answer:0,photoLabel:'正解写真｜チチェン・イッツァ',fact:'エル・カスティージョはチチェン・イッツァを代表する階段状の石造ピラミッドです。',quip:'古代の街の主役級。階段が一段ずつ存在感を出してきます。',photoKey:'mx-chichen-itza-postcard'},
  ],
+ MT:[
+  {question:'ヴァレッタの都市形成に深く関わった組織は？',options:['聖ヨハネ騎士団','東インド会社','ハンザ同盟'],answer:0,fact:'UNESCOはヴァレッタの建設と発展を聖ヨハネ騎士団の歴史に結びつけています。',quip:'港を守るための都市設計。景色の美しさには、守りの合理性も組み込まれています。',photoLabel:'正解写真｜ヴァレッタ市街',photoKey:'mt-valletta-harbour-postcard'},
+  {question:'マルタの巨石神殿群が分布する島々は？',options:['マルタ島とゴゾ島','アイスランド島とグリーンランド島','シチリア島とサルデーニャ島'],answer:0,fact:'UNESCOの登録にはマルタ島とゴゾ島にある複数の巨石神殿が含まれます。',quip:'千年単位で歴史をさかのぼると、石積みの技術そのものが主役になります。',photoLabel:'正解写真｜マルタの巨石神殿群（ハジャー・イム）',photoKey:'mt-hagar-qim-temple-postcard'},
+ ],
  NG:[
   {question:'オスン・オショグボの聖なる森と深く結び付く文化は？',options:['インカの文化','ヨルバの文化','ヴァイキングの文化'],answer:1,fact:'UNESCOはヨルバの信仰と森、川、彫刻が結び付く文化遺産として評価しています。',quip:'森が文化の記憶を守る。展示室よりもずっと広い、暮らしと信仰の記録です。',photoLabel:'正解写真｜オスン・オショグボの聖なる森',photoKey:'ng-osun-grove-postcard'},
   {question:'スクルの文化的景観に残る、かつての重要な産業は？',options:['製鉄','製紙','時計製造'],answer:0,fact:'UNESCOは鉄を精錬した炉の遺構を、スクルの社会や交易の歴史を示すものと評価しています。',quip:'石の道をたどると、製鉄の歴史に行き着く。風景そのものが仕事の記録になっています。',photoLabel:'正解写真｜スクルの文化的景観',photoKey:'ng-sukur-postcard'},
