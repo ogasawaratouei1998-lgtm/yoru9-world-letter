@@ -449,8 +449,9 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
                 self.assertTrue(-90<=stop["latitude"]<=90)
                 self.assertTrue(-180<=stop["longitude"]<=180)
                 self.assertTrue(stop["photo"].startswith("https://thumb.wikimedia.org/wikipedia/commons/thumb/"))
-                # Wikimedia disallows arbitrary 640px thumbnails since 2026.
-                self.assertIn("/500px-",stop["photo"])
+                # Use Wikimedia standard widths; panoramic photos need enough vertical pixels.
+                # https://www.mediawiki.org/wiki/Common_thumbnail_sizes
+                self.assertRegex(stop["photo"], r"/(?:500|960|1280)px-[^/]+$")
                 self.assertRegex(stop["photoAsset"],r"^assets/travel/[a-z0-9-]+\.jpg$")
                 self.assertTrue(stop["photoPage"].startswith("https://commons.wikimedia.org/wiki/File:"))
                 self.assertTrue(stop["licenseUrl"].startswith("https://creativecommons.org/"))
