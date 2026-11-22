@@ -10,6 +10,15 @@ from country_bulk_research import make_plan, research_shard, combine, SHARDS, co
 ROOT = Path(__file__).resolve().parents[1]
 
 class AllCountryResearchTests(unittest.TestCase):
+    def test_honduras_reserve_search_excludes_different_patuca_river(self):
+        plan = make_plan(ROOT)
+        honduras = next(row for row in plan["countries"] if row["code"] == "HN")
+        slot = honduras["slots"][2]
+        self.assertEqual(slot["origin"], "existing_draft")
+        self.assertIn("Plátano", slot["searchQuery"])
+        self.assertIn("-Patuca", slot["searchQuery"])
+        self.assertFalse(honduras["publicationEligible"])
+
     def test_every_pending_country_and_three_slots_without_approval(self):
         d = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
         pending = {code for code, row in d.items() if row["status"] == "pending"}
