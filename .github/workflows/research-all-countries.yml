@@ -2,15 +2,7 @@ name: Research all pending countries in parallel
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [main]
-    paths:
-      - 'country_bulk_research.py'
-      - 'tests/test_country_bulk_research.py'
-      - 'country_review_bundle.py'
-      - 'tests/test_country_review_bundle.py'
-      - 'country-expansion-batch-*.json'
-      - '.github/workflows/research-all-countries.yml'
+  # PR safety tests run offline in test-publishing; network research runs after merge.
   push:
     branches: [main]
     paths:
@@ -25,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: all-country-research-${{ github.ref }}
+  group: country-commons-research
   cancel-in-progress: false
 
 jobs:
@@ -53,7 +45,7 @@ jobs:
     timeout-minutes: 35
     strategy:
       fail-fast: false
-      max-parallel: 3
+      max-parallel: 2
       matrix:
         shard: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
