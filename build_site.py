@@ -144,13 +144,19 @@ def bundle_travel_photos(root, output):
         # Package a 1280px licensed thumbnail locally when Wikimedia provides
         # one; 500px and 330px originals remain safe fallback sources.
         # No third-party URL is needed to display a successful bundled cover.
-        large = url.replace('/500px-', '/1280px-')
+        # Commons thumbnails in newer reviewed manifests may be 600/960px,
+        # not just the historic 500px. Change only the final thumbnail width;
+        # preserve the exact original file identity and attribution.
+        def thumbnail_width(address, width):
+            return re.sub(r'/[0-9]+px-(?=[^/]+$)', f'/{width}px-', address)
+        large = thumbnail_width(url, 1280)
+        small = thumbnail_width(url, 330)
         paths = ([large, large.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/')]
                  if asset in country_covers and large != url else []) + [
             url,
             url.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/'),
-            url.replace('/500px-', '/330px-'),
-            url.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/').replace('/500px-', '/330px-'),
+            small,
+            small.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/'),
         ]
         last_error = 'Wikimedia rate limited; deferred until a later build' if commons_throttled else 'no sources'
         for candidate in (() if commons_throttled else dict.fromkeys(paths)):
@@ -177,7 +183,7 @@ def bundle_travel_photos(root, output):
                 break
             except HTTPError as exc:
                 last_error = str(exc)
-                if exc.code == 429:
+                if exc.code in (429, 503):
                     # Respect the upstream restriction; do not immediately try
                     # alternate hosts or widths against the same service.
                     commons_throttled = True

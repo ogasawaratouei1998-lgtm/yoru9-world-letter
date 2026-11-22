@@ -4929,5 +4929,88 @@
       }
     ],
     "famousTourist": true
+  },
+  "al-tirana-skanderbeg-cover": {
+    "country": "アルバニア",
+    "countryOnly": true,
+    "place": "ティラナ・スカンデルベグ広場",
+    "region": "ティラナ",
+    "latitude": 41.3275,
+    "longitude": 19.8187,
+    "note": "見どころの代表地点。正確な撮影位置ではありません。",
+    "photoCaption": "スカンデルベグ像と広場を囲む建物（2014年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Monumento_a_Skanderbeg%2C_Tirana%2C_Albania%2C_2014-04-17%2C_DD_02.JPG/960px-Monumento_a_Skanderbeg%2C_Tirana%2C_Albania%2C_2014-04-17%2C_DD_02.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Monumento_a_Skanderbeg,_Tirana,_Albania,_2014-04-17,_DD_02.JPG",
+    "photoAsset": "assets/travel/al-tirana-skanderbeg-cover.jpg",
+    "author": "Diego Delso (delso.photo)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "coverOnly": true
+  },
+  "al-berat-mangalem-postcard": {
+    "country": "アルバニア",
+    "countryOnly": true,
+    "place": "ベラト歴史地区",
+    "region": "ベラト・マンガレム地区",
+    "latitude": 40.705,
+    "longitude": 19.951,
+    "note": "見どころの代表地点。正確な撮影位置ではありません。",
+    "photoCaption": "オスム川沿いから見たマンガレム地区の白い住宅群（2014年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cc/Berat%2C_Mangalem_quarter%2C_Albania.JPG/960px-Berat%2C_Mangalem_quarter%2C_Albania.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Berat,_Mangalem_quarter,_Albania.JPG",
+    "photoAsset": "assets/travel/al-berat-mangalem-postcard.jpg",
+    "author": "Avi1111 dr. avishai teicher",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ベラトの丘に連なる住宅群を眺めると、白い壁と窓の並びが斜面全体を一つの建築のように見せています。低い場所から見上げると家々が重なり、上から眺めるとそれぞれの道や屋根が別の表情を見せます。住宅の集まり方に注目して、限られた地形の中で人々の暮らしがどのように形づくられてきたかを考える小旅行です。",
+      "UNESCOはベラトとジロカストラを、オスマン期の特徴的な建築が残る歴史都市として評価しています。ベラトでは多様な宗教文化の痕跡も街の歴史を知る手掛かりです。美しい外観だけでなく、住居や宗教施設が長い時間をかけて重なった都市として見ると、建物を守る意味が伝わります。現在の住民の暮らしにも配慮したい場所です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ベラト歴史地区",
+        "url": "https://whc.unesco.org/en/list/569/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・アルバニア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_196.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "al-butrint-theatre-postcard": {
+    "country": "アルバニア",
+    "countryOnly": true,
+    "place": "ブトリント遺跡",
+    "region": "ヴロラ州・サランダ地区",
+    "latitude": 39.745732,
+    "longitude": 20.02095,
+    "note": "見どころの代表地点。正確な撮影位置ではありません。",
+    "photoCaption": "アスクレピオスの聖域と古代劇場の石造遺構（2008年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/27/Butrint_Albania_5_Asclepios_Sanctuary_and_Greek_Theatre.jpg/960px-Butrint_Albania_5_Asclepios_Sanctuary_and_Greek_Theatre.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Butrint_Albania_5_Asclepios_Sanctuary_and_Greek_Theatre.jpg",
+    "photoAsset": "assets/travel/al-butrint-theatre-postcard.jpg",
+    "author": "Images by Gina",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "ブトリントの石造遺構では、自然に囲まれた劇場や建物の跡を通して、かつて人々が集った街の面影を想像できます。石の段や壁の配置に目を向けると、その場所で何が行われていたのか考えたくなります。水辺と森の景観を含め、異なる時代の人々が同じ場所を利用してきた理由を地図と写真でたどってみましょう。",
+      "UNESCOはブトリントがギリシャの植民都市、ローマの都市、キリスト教の司教座などを経て発展したことを伝えています。中世後期には周辺が湿地化し、街は放棄されました。現在の考古遺跡には各時代の建物の痕跡が重なり、場所の使われ方が変化した過程を読み取れます。一つの時代だけに注目せず、歴史の積層を楽しみたい遺産です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ブトリント遺跡",
+        "url": "https://whc.unesco.org/en/list/570/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・アルバニア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_196.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
