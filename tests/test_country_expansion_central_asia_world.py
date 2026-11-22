@@ -16,21 +16,33 @@ class CentralAsiaWorldExpansionTests(unittest.TestCase):
         cls.batch = json.loads((ROOT / FILENAME).read_text(encoding="utf-8"))
         cls.canonical = json.loads((ROOT / "country-content.json").read_text(encoding="utf-8"))
 
-    def test_eight_unique_countries_are_staged_but_never_published(self):
+    def test_eight_original_drafts_remain_immutable_after_separate_approval(self):
         self.assertEqual(self.batch["status"], "pending_photos_not_public")
         self.assertEqual(set(self.batch["countries"]), CODES)
         for code, draft in self.batch["countries"].items():
             with self.subTest(country=code):
                 country = self.canonical["countries"][code]
                 self.assertEqual(draft["status"], "pending")
-                self.assertEqual(country["status"], "pending")
-                self.assertEqual(draft["portrait"], country["portrait"])
                 self.assertEqual(draft["name"], country["name"])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
-                self.assertEqual(country["portrait"]["photos"], [])
-                self.assertEqual(country["portraitPhotos"], [])
-                self.assertEqual(country["quiz"], [])
-                self.assertEqual(country["travelStops"], {})
+                if code == "MT":
+                    # Immutable November 21 draft later received three independently
+                    # reviewed CC photos and two rich UNESCO-backed travel trips.
+                    self.assertEqual(country["status"], "approved")
+                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertEqual(country["portrait"]["lead"], draft["portrait"]["lead"])
+                    self.assertEqual(country["portrait"]["facts"], draft["portrait"]["facts"])
+                    self.assertEqual(len(country["portrait"]["photos"]), 2)
+                    self.assertEqual(len(country["portraitPhotos"]), 1)
+                    self.assertEqual(len(country["quiz"]), 2)
+                    self.assertEqual(len(country["travelStops"]), 3)
+                else:
+                    self.assertEqual(country["status"], "pending")
+                    self.assertEqual(draft["portrait"], country["portrait"])
+                    self.assertEqual(country["portrait"]["photos"], [])
+                    self.assertEqual(country["portraitPhotos"], [])
+                    self.assertEqual(country["quiz"], [])
+                    self.assertEqual(country["travelStops"], {})
                 self.assertEqual(country["highlights"], [])
                 self.assertEqual(
                     country["portrait"]["sourceUrl"],
