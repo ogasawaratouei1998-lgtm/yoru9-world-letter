@@ -96,6 +96,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ムツヘタの世界遺産が特に伝える文化は？',options:['古代マヤのピラミッド','中世ジョージアの宗教建築','日本の城郭'],answer:1,fact:'UNESCOはムツヘタの歴史的建造物を中世ジョージアの芸術文化を伝える遺産としています。',photoLabel:'正解写真｜ムツヘタ・スヴェティツホヴェリ大聖堂',quip:'石の聖堂が残したのは建築の技術だけではない。文字を読めなくても、信仰が街の中心だったことが伝わってくる。',photoKey:'ge-mtskheta-cathedral-postcard'},
   {question:'上スヴァネティの村落景観に特徴的な建築は？',options:['巨大なガラスドーム','珊瑚でつくった橋','石造の防御塔'],answer:2,fact:'UNESCOは塔状住宅や防御塔を特徴とする山岳集落として上スヴァネティを評価しています。',photoLabel:'正解写真｜上スヴァネティ・ウシュグリ',quip:'塔と住宅が一組になる。山の景色を飾るためではなく、暮らしを守るための建築だった。',photoKey:'ge-ushguli-tower-postcard'},
  ],
+ GH:[
+  {question:'アサンテの建物の伝統的な浮き彫りには何が込められている？',options:['工事の契約番号','宗教や考え方の象徴','近代の交通標識'],answer:1,fact:'壁面の装飾文様はアサンテの人々の信仰や考え方を表す象徴です。',quip:'装飾は壁の飾りで終わらない。文字とは違う方法で、信仰と知恵を次の世代へ伝えます。',photoLabel:'正解写真｜アサンテの伝統的建造物群（ベセアセの聖所）',photoKey:'gh-besease-shrine-postcard'},
+  {question:'ケープコースト城が伝える重大な歴史は？',options:['南極探検','大西洋奴隷貿易','月面着陸'],answer:1,fact:'城塞群は交易の歴史と、奴隷にされた人々が強制的に移送された歴史を伝えます。',quip:'美しい海と白い城壁。その景色の奥に、決して忘れてはならない歴史があります。',photoLabel:'正解写真｜ケープコースト城',photoKey:'gh-cape-coast-castle-postcard'},
+ ],
  GR:[
   {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
   {question:'古代ギリシャのデルフィで神託と深く関わった神は？',options:['アポロン','ポセイドン','ヘルメス'],answer:0,photoLabel:'正解写真｜デルフィのアポロン神殿跡',fact:'デルフィの聖域はアポロンの神託で知られ、UNESCO世界遺産にも登録されています。',quip:'山奥の相談所に世界中から人が集まる、古代の人気ぶり。',photoKey:'gr-delphi-apollo-postcard'},
