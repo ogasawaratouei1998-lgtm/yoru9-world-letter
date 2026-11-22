@@ -30,8 +30,12 @@ class NeverRepeatedSourceGroupTests(unittest.TestCase):
             group(2, "Apparently independent incident", same_url, "https://other.example/2"),
             group(3, "Another original article", "https://new.example/3"),
         ]
-        result = editorial.select_untried_source_groups(groups, {1}, {same_url})
+        result = editorial.select_untried_source_groups(groups, {1}, set())
         self.assertEqual([item["groupId"] for item in result], [3])
+        # The duplicate article is blocked solely by the attempted publisher
+        # URL; a missing draft/verification URL never erases that history.
+        second = editorial.select_untried_source_groups(groups, {1}, {same_url})
+        self.assertEqual([item["groupId"] for item in second], [3])
 
     def test_initial_context_is_focused_and_source_pool_is_large(self):
         self.assertLessEqual(editorial.PRIMARY_EDITORIAL_GROUPS, 8)
