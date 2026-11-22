@@ -53,6 +53,7 @@ DRAFT_SEARCH_REFINEMENTS = {
     ("BW", 0): '"Chobe River" Botswana landscape -Anhinga -bird',
     ("KE", 0): 'Lamu Kenya waterfront old town -pharmacy',
     ("MY", 2): '"Deer Cave" Mulu -planarian -Bipalium',
+    ("HN", 2): '"Río Plátano Biosphere Reserve" Honduras rainforest -Patuca',
     ("TN", 2): '"Antonine Baths" Carthage -Dougga',
 }
 
