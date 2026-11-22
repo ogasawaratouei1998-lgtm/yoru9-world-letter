@@ -20,9 +20,10 @@ class CountryEditorialQueueTest(unittest.TestCase):
         self.assertEqual(report["pendingCountries"],report["reportingLocations"]-len(report["approvedCountries"]))
         self.assertEqual(len(report["prioritizedPending"]),report["pendingCountries"])
         self.assertEqual(len({row["code"] for row in report["prioritizedPending"]}),report["pendingCountries"])
-        self.assertTrue(any(row["code"]=="NG" and
-                            "attributed_country_portrait_photo" in row["missing"]
-                            for row in report["prioritizedPending"]))
+        doc=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+        empty={code for code,entry in doc["countries"].items() if entry["status"]=="pending" and not entry["portraitPhotos"]}
+        self.assertTrue(empty.issubset({row["code"] for row in report["prioritizedPending"]
+                            if "attributed_country_portrait_photo" in row["missing"]}))
         self.assertTrue(all(row["requiredRemaining"]>=0
                             for row in report["prioritizedPending"]))
 
