@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v83';
+const SHELL_CACHE = 'yoru9-shell-v84';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -104,7 +104,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Slovakia.
  'assets/travel/sk-bratislava-danube-cover.jpg', 'assets/travel/sk-banska-trinity-square-postcard.jpg', 'assets/travel/sk-spis-castle-postcard.jpg',
  // Vietnam.
- 'assets/travel/vn-hoian-street-cover.jpg', 'assets/travel/vn-hoian-thubon-postcard.jpg', 'assets/travel/vn-halong-bay-postcard.jpg'];
+ 'assets/travel/vn-hoian-street-cover.jpg', 'assets/travel/vn-hoian-thubon-postcard.jpg', 'assets/travel/vn-halong-bay-postcard.jpg',
+ // Guatemala: include all three reviewed photos in the offline shell.
+ 'assets/travel/gt-atitlan-cover.jpg', 'assets/travel/gt-tikal-plaza-postcard.jpg', 'assets/travel/gt-antigua-cathedral-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
