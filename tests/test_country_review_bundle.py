@@ -73,6 +73,8 @@ class ReviewBundleTests(unittest.TestCase):
         self.assertFalse(make_queue(report, data)[0]["threeDistinctCandidates"])
         report["results"][0] = row("KE", 0, ["Lamu_Pharmacy.jpg"])
         report["results"][1] = row("KE", 1, ["Old_Town.jpg"])
+        self.assertFalse(make_queue(report, data)[0]["threeDistinctCandidates"])
+        report["results"][0] = row("KE", 0, ["Cover.jpg"])
         self.assertTrue(make_queue(report, data)[0]["threeDistinctCandidates"])
 
     def test_visual_rejections_record_costa_rica_panorama_failures(self):
@@ -103,3 +105,27 @@ class ReviewBundleTests(unittest.TestCase):
         self.assertEqual(candidate_identity(queue["KE"]["slots"][1]["candidate"]), "Old Town.jpg")
         self.assertEqual(candidate_identity(queue["MU"]["slots"][0]["candidate"]), "Port Louis.jpg")
         self.assertTrue(all(not item["publicationEligible"] for item in queue.values()))
+
+    def test_reviewed_wrong_country_and_non_site_images_are_replaced(self):
+        cases = [
+            ("KE", 0, "Lamu_Pharmacy.jpg"),
+            ("BD", 1, "A_view_from_the_Mosque_(8540808429).jpg"),
+            ("IQ", 1, "Assur_stuck.jpg"),
+            ("LB", 0, "The_landscape_of_Lebanon_with_its_famous_tree_cedar_of_Lebanon_(FL63289561).jpg"),
+            ("LB", 2, "Lebanon_mountains_from_near_Maqial_el_Qalaa.jpg"),
+            ("LY", 0, "The_Romantic_Landscape_-_geograph.org.uk_-_1803291.jpg"),
+            ("MM", 2, "Hanlin_-_Pyu_Ancient_City.JPG"),
+            ("MU", 0, "Landscape_near_Les_Mariannes,_Mauritius,_2007-09-09.jpg"),
+            ("MU", 1, "Aapravasi_ghat_museum,_Port_Louis,_Mauritius.jpg"),
+            ("NE", 0, "Aso_Rock_52_-_landscape_in_Abuja,_Nigeria_(2026).jpg"),
+        ]
+        for code, slot, rejected in cases:
+            with self.subTest(code=code, slot=slot):
+                data = {code: {"name": code, "status": "pending"}}
+                records = [row(code, i, [str(i) + ".jpg"]) for i in range(3)]
+                records[slot] = row(code, slot, [rejected, "Alternative.jpg"])
+                result = make_queue({"results": records}, data)[0]
+                self.assertTrue(result["threeDistinctCandidates"])
+                self.assertEqual(candidate_identity(result["slots"][slot]["candidate"]), "Alternative.jpg")
+                self.assertEqual(len(result["slots"][slot]["visualRejections"]), 1)
+                self.assertFalse(result["publicationEligible"])
