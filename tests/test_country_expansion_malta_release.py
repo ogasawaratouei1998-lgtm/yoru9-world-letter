@@ -40,19 +40,25 @@ class MaltaReleaseTests(unittest.TestCase):
         entry = check_country_content(ROOT)["countries"]["MT"]
         records = json.loads((ROOT / "editorial-country-photo-reviews/cache-seeds.json").read_text(encoding="utf-8"))["photos"]
         own = [x for x in records if x["country"] == "マルタ"]
-        self.assertEqual({x["file"] for x in own}, {"MT-1.jpg", "MT-2.jpg"})
+        self.assertEqual({x["file"] for x in own}, {"MT-0.jpg", "MT-1.jpg", "MT-2.jpg"})
         keys = {x["photoAsset"] for x in own}
-        self.assertEqual(keys, {entry["travelStops"][q["photoKey"]]["photoAsset"] for q in entry["quiz"]})
-        self.assertNotIn(entry["portraitPhotos"][0]["asset"], keys)
+        self.assertEqual(keys, {s["photoAsset"] for s in entry["travelStops"].values()})
+        self.assertIn(entry["portraitPhotos"][0]["asset"], keys)
+        self.assertEqual(sum(x["cover"] for x in own), 1)
+        reviewed = json.loads((ROOT / "editorial-country-photo-reviews/malta-20261122.json").read_text(encoding="utf-8"))
+        self.assertEqual(reviewed["highResolutionCover"]["width"], 1280)
+        self.assertEqual(reviewed["highResolutionCover"]["height"], 974)
+        self.assertEqual(reviewed["highResolutionCover"]["sha256"],
+                         next(x for x in own if x["cover"])["sha256"])
         for record in own:
             stop = next(x for x in entry["travelStops"].values() if x["photoAsset"] == record["photoAsset"])
             for field in ("photoAsset", "photo", "photoPage", "author", "license",
                           "licenseUrl", "country", "place"):
                 self.assertEqual(stop[field], record[field])
             self.assertRegex(record["sha256"], r"^[0-9a-f]{64}$")
-            self.assertEqual(record["runId"], 44974749380)
-            self.assertFalse(record["cover"])
+            self.assertEqual(record["runId"], 44986532608)
+            self.assertEqual(record["cover"], bool(stop.get("coverOnly")))
         cover = entry["travelStops"]["mt-mdina-cathedral-cover"]
         self.assertTrue(cover["coverOnly"])
         self.assertIn("/960px-", cover["photo"])
-        self.assertNotIn(cover["photoAsset"], keys)
+        self.assertIn(cover["photoAsset"], keys)
