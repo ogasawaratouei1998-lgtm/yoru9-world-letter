@@ -637,12 +637,15 @@ def available_model():
 ACTIVE_MODEL=None
 AI_QUOTA_BLOCKED=False
 RUN_DEADLINE=None
+# The public model catalog is constant for one 9-minute review session.
+# Avoid an extra authenticated provider GET on every A/B-editor call.
+RUN_MODEL_CATALOG=None
 
 def editorial_seconds_remaining():
     return float("inf") if RUN_DEADLINE is None else max(0.0,RUN_DEADLINE-time.monotonic())
 
 def ai(prompt,temperature=0.1):
-    global ACTIVE_MODEL, AI_QUOTA_BLOCKED
+    global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
     if AI_QUOTA_BLOCKED:raise RuntimeError("Gemini API quota/permission circuit open; no publication")
     if editorial_seconds_remaining()<=5:
@@ -651,7 +654,13 @@ def ai(prompt,temperature=0.1):
     if RUN_DEADLINE is not None:call_deadline=min(call_deadline,RUN_DEADLINE)
     def bounded_timeout():
         return min(40,max(1,call_deadline-time.monotonic()))
-    models=available_models()
+    if RUN_DEADLINE is None:
+        # Standalone/test calls still resolve the live catalog independently.
+        models=available_models()
+    else:
+        if RUN_MODEL_CATALOG is None:
+            RUN_MODEL_CATALOG=tuple(available_models())
+        models=list(RUN_MODEL_CATALOG)
     if ACTIVE_MODEL in models:
         models=[ACTIVE_MODEL]+[model for model in models if model!=ACTIVE_MODEL]
     data={"contents":[{"parts":[{"text":prompt}]}],
@@ -1190,7 +1199,7 @@ def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
     return output
 
 def main():
-    global RUN_DEADLINE, AI_QUOTA_BLOCKED
+    global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY:
@@ -1198,6 +1207,7 @@ def main():
     # Leave headroom before GitHub's 12-minute limit to fail closed, not get cancelled.
     RUN_DEADLINE=time.monotonic()+540
     AI_QUOTA_BLOCKED=False
+    RUN_MODEL_CATALOG=None
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
     funnel={"collected":len(leads)}
     def checkpoint(stage, **fields):
