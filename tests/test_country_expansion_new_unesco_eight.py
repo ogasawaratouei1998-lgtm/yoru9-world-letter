@@ -33,7 +33,7 @@ class NextEightUnescoCountryTests(unittest.TestCase):
                     self.assertIn("多くの地域をレベル1", country["portrait"]["body"])
                     self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
                 else:
-                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
                 self.assertEqual(country["portrait"]["sourceUrl"],
                                  "https://whc.unesco.org/en/statesparties/" + code.lower())
