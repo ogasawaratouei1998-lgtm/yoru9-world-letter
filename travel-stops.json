@@ -5193,5 +5193,98 @@
       }
     ],
     "famousTourist": true
+  },
+  "dz-hassania-mountains-cover": {
+    "country": "アルジェリア",
+    "countryOnly": true,
+    "place": "エル・ハッサニアの山並み",
+    "region": "アイン・デフラ県・エル・ハッサニア（自治体参考地点）",
+    "latitude": 35.9892,
+    "longitude": 1.9319,
+    "note": "エル・ハッサニア自治体の参考位置。写真の正確な撮影点ではありません。アイン・デフラ県の大部分は危険レベル3であり、渡航は止めてください。",
+    "photoCaption": "アイン・デフラ県の山並みと森林を遠望した景色（2018年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/LAndscape_from_Hassania%2C_Ain_el_defla.jpg/960px-LAndscape_from_Hassania%2C_Ain_el_defla.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:LAndscape_from_Hassania,_Ain_el_defla.jpg",
+    "photoAsset": "assets/travel/dz-hassania-mountains-cover.jpg",
+    "author": "FETHI BOUHAOUCHINE",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "coverOnly": true
+  },
+  "dz-beni-hammad-minaret-postcard": {
+    "country": "アルジェリア",
+    "countryOnly": true,
+    "place": "ベニ・ハンマードの城塞",
+    "region": "ムシラ県（世界遺産代表地点）",
+    "latitude": 35.81844,
+    "longitude": 4.78684,
+    "note": "UNESCO世界遺産の代表地点。撮影位置とは異なります。最新の外務省危険情報を確認してください。",
+    "photoCaption": "山地に残るベニ・ハンマードの大モスクのミナレット（2010年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg/960px-Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Qal%27at_Bani_Hammad,_M%27Sila_Province,_Algeria_2010-2.jpg",
+    "photoAsset": "assets/travel/dz-beni-hammad-minaret-postcard.jpg",
+    "author": "Yelles",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "山の斜面を背景に、石を積み上げた四角い塔がそびえています。周囲の地面に残る低い壁と塔を見比べると、現在は静かな場所にかつて大きな街が存在したことを想像できます。山の斜面と建物の位置関係を眺め、都を守るために地形をどう使ったのか、写真から読み取ってみましょう。",
+      "ハンマード朝の最初の都は1007年に築かれ、軍事拠点から繁栄する都市へと発展しました。現在も大モスクの塔や宮殿、城壁などの遺構が残っています。ユネスコはこの遺跡を、当時の北アフリカの建築と都市文化を知るうえで重要な証拠として評価しています。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ベニ・ハンマードの城塞",
+        "url": "https://whc.unesco.org/en/list/102/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・アルジェリア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "UNESCO・ベニ・ハンマード世界遺産の登録区域図",
+        "url": "https://whc.unesco.org/en/list/102/maps/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "dz-djemila-roman-ruins-postcard": {
+    "country": "アルジェリア",
+    "countryOnly": true,
+    "place": "ジェミラのローマ遺跡",
+    "region": "セティフ県（写真撮影位置）",
+    "latitude": 36.321023,
+    "longitude": 5.735891,
+    "note": "Commonsに登録された撮影地点。実際の渡航を勧めるものではありません。",
+    "photoCaption": "ジェミラの石柱群と古代ローマの遺構を望むパノラマ（2016年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg/960px-Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Panorama_Djemila_(Cuicul)_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+    "photoAsset": "assets/travel/dz-djemila-roman-ruins-postcard.jpg",
+    "author": "habib kaki",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "travelStory": [
+      "山に囲まれた斜面に石の建物が集まる風景は、平坦な場所に広がる古代都市とは異なる表情を見せます。広場へつながる通りや建物の高さの違いに目を向けると、当時の人々が地形に合わせて街を整えていたことがうかがえます。石の遺構の向こうに市場や日常の暮らしを想像してみましょう。",
+      "古代の名をクイクルというジェミラは、ローマ皇帝ネルウァの時代に植民市として建設されました。標高約900メートルという山地にありながら、広場や神殿、凱旋門などが造られました。三世紀初頭には城壁の外にも市街地が広がり、地形に合わせて古代ローマ式の都市計画が発展した例です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ジェミラ",
+        "url": "https://whc.unesco.org/en/list/191/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・アルジェリア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "UNESCO・ジェミラ世界遺産の登録区域図",
+        "url": "https://whc.unesco.org/en/list/191/maps/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
