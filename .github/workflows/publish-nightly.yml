@@ -193,7 +193,7 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-      # One explicitly requested on-demand retry on Nov 22; normal code pushes
+      # Same-day on-demand retry after synchronized safety tests; ordinary pushes
       # never run news discovery or the paid/free-tier AI API. Existing per-day
       # publication, source, editorial, photo and public-site gates remain intact.
       - name: Collect fresh leads when no approved issue exists
