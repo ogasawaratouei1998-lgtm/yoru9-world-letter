@@ -1,10 +1,11 @@
 import json
+import hashlib
 from pathlib import Path
 import tempfile
 import unittest
 from urllib.error import HTTPError
 
-from country_review_bundle import candidate_identity, make_queue, valid_preview_url, write_bundle
+from country_review_bundle import candidate_identity, make_queue, review_image_url, valid_preview_url, write_bundle
 
 def candidate(name):
     return {"commonsPage": "https://commons.wikimedia.org/wiki/File:" + name,
@@ -34,6 +35,33 @@ class ReviewBundleTests(unittest.TestCase):
             self.assertFalse(s["publicationEligible"])
             index = json.loads((Path(tmp) / "review-index.json").read_text())
             self.assertTrue(all(not slot["visualVerified"] for slot in index["queue"][0]["slots"]))
+
+    def test_review_requests_release_size_cover_and_pins_downloaded_bytes(self):
+        report = {"results": [row("AA", s, [str(s) + ".jpg"]) for s in range(3)]}
+        candidate = report["results"][0]["candidates"][0]
+        candidate["dimensions"] = [4000, 3000]
+        candidate["preview"] += "?utm_source=commons"
+        self.assertIn("/1280px-", review_image_url(candidate, 0))
+        self.assertEqual(review_image_url(candidate, 1), candidate["preview"])
+        self.assertEqual(candidate_identity(candidate), "0.jpg")
+        data = {"AA": {"name": "Draft", "status": "pending"}}
+        queue = make_queue(report, data)
+        payload = b"\xff\xd8test\xff\xd9"
+        urls = []
+        def fetch(url):
+            urls.append(url)
+            return payload
+        with tempfile.TemporaryDirectory() as tmp:
+            summary = write_bundle(queue, tmp, 12, fetch=fetch, sleep_seconds=0)
+            self.assertEqual(len(urls), 3)
+            self.assertIn("/1280px-", urls[0])
+            self.assertIn("/960px-", urls[1])
+            self.assertEqual(queue[0]["slots"][0]["previewSha256"], hashlib.sha256(payload).hexdigest())
+            self.assertEqual(queue[0]["slots"][0]["downloadedUrl"], urls[0])
+            self.assertFalse(summary["publicationEligible"])
+            self.assertFalse(queue[0]["slots"][0]["visualVerified"])
+        candidate["dimensions"] = [800, 532]
+        self.assertEqual(review_image_url(candidate, 0), candidate["preview"])
 
     def test_reused_original_or_mismatched_metadata_is_not_ready(self):
         self.assertFalse(valid_preview_url("https://upload.wikimedia.org.evil.example/wikipedia/commons/a/ab/A.jpg"))
