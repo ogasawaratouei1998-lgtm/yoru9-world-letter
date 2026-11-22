@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from urllib.error import HTTPError
 
-from country_review_bundle import candidate_identity, make_queue, review_image_url, valid_preview_url, write_bundle
+from country_review_bundle import candidate_identity, cover_native_resolution_problem, make_queue, review_image_url, valid_preview_url, write_bundle
 
 def candidate(name):
     return {"commonsPage": "https://commons.wikimedia.org/wiki/File:" + name,
@@ -62,6 +62,43 @@ class ReviewBundleTests(unittest.TestCase):
             self.assertFalse(queue[0]["slots"][0]["visualVerified"])
         candidate["dimensions"] = [800, 532]
         self.assertEqual(review_image_url(candidate, 0), candidate["preview"])
+
+    def test_extreme_panorama_never_becomes_unbuildable_country_cover(self):
+        wide = candidate("Wide.jpg")
+        wide["dimensions"] = [4912, 1080]
+        normal = candidate("Normal.jpg")
+        normal["dimensions"] = [2400, 1600]
+        self.assertIn("panorama", cover_native_resolution_problem(wide))
+        self.assertIsNone(cover_native_resolution_problem(normal))
+        self.assertIn("1000x540", cover_native_resolution_problem({"dimensions": [960, 720]}))
+        self.assertIn("Invalid", cover_native_resolution_problem({"dimensions": [True, 720]}))
+        self.assertIsNone(cover_native_resolution_problem(candidate("NoDimensions.jpg")))
+        data = {"AA": {"name": "Draft", "status": "pending"}}
+        result = make_queue({"results": [
+            {"countryCode": "AA", "slot": 0, "origin": "existing_draft",
+             "candidates": [wide, normal]},
+            row("AA", 1, ["FirstStop.jpg"]),
+            row("AA", 2, ["SecondStop.jpg"]),
+        ]}, data)[0]
+        self.assertEqual(candidate_identity(result["slots"][0]["candidate"]), "Normal.jpg")
+        self.assertEqual(result["candidateCounts"], [1, 1, 1])
+        self.assertEqual(len(result["slots"][0]["visualRejections"]), 1)
+        self.assertFalse(result["publicationEligible"])
+
+    def test_latest_malaysia_animal_is_not_cave_and_uzbek_panorama_not_cover(self):
+        for code, slot, bad in [
+            ("MY", 2, "Blue-throated_Litter_Skink_(Sphenomorphus_cyanolaemus)_female_(15385530980).jpg"),
+            ("UZ", 0, "Panorama_of_Registan_Complex_-_Samarkand_-_Uzbekistan_(7480216380).jpg"),
+        ]:
+            with self.subTest(code=code):
+                data = {code: {"name": code, "status": "pending"}}
+                records = [row(code, i, [str(i)+".jpg"]) for i in range(3)]
+                records[slot] = row(code, slot, [bad, "Alternate.jpg"])
+                queued = make_queue({"results": records}, data)[0]
+                self.assertEqual(candidate_identity(queued["slots"][slot]["candidate"]), "Alternate.jpg")
+                self.assertEqual(len(queued["slots"][slot]["visualRejections"]), 1)
+                self.assertTrue(queued["threeDistinctCandidates"])
+                self.assertFalse(queued["publicationEligible"])
 
     def test_reused_original_or_mismatched_metadata_is_not_ready(self):
         self.assertFalse(valid_preview_url("https://upload.wikimedia.org.evil.example/wikipedia/commons/a/ab/A.jpg"))
