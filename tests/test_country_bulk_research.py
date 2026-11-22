@@ -30,6 +30,17 @@ class AllCountryResearchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             combine(plan, reports+[reports[0]])
 
+    def test_south_africa_photo_search_targets_distinct_documentary_subjects(self):
+        plan = make_plan(ROOT)
+        za = next(c for c in plan["countries"] if c["code"] == "ZA")
+        self.assertEqual(len(za["slots"]), 3)
+        self.assertIn("Table Mountain", za["slots"][0]["searchQuery"])
+        self.assertIn("prison courtyard", za["slots"][1]["searchQuery"])
+        self.assertIn("fynbos protea", za["slots"][2]["searchQuery"])
+        self.assertEqual(len({s["searchQuery"] for s in za["slots"]}), 3)
+        self.assertTrue(all(s["origin"] == "existing_draft" for s in za["slots"]))
+        self.assertFalse(za["publicationEligible"])
+
     def test_undrafted_country_uses_official_site_only_when_available(self):
         d = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
         pending = {code for code, row in d.items() if row["status"] == "pending"}

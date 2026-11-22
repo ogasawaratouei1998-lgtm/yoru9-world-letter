@@ -136,6 +136,9 @@ class ReviewBundleTests(unittest.TestCase):
 
     def test_reviewed_wrong_country_and_non_site_images_are_replaced(self):
         cases = [
+            ("ZA", 0, "Cape_Town_(ZA),_Table_Mountain_--_2024_--_2821.jpg"),
+            ("ZA", 1, "Robben_Island,_South_Africa_(3263091144).jpg"),
+            ("ZA", 2, "Cape_Town_(ZA),_Table_Mountain_--_2024_--_2822.jpg"),
             ("BW", 0, "Anhinga_rufa_-Chobe_River_front,_Botswana-8.jpg"),
             ("HN", 0, "Comayagua_Cathedral.jpg"),
             ("KE", 0, "Lamu_Pharmacy2021.jpg"),
