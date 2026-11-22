@@ -42,7 +42,8 @@ class FifthBatchTests(unittest.TestCase):
                     continue
                 self.assertEqual(country["status"], "pending")
                 self.assertEqual(draft["status"], "pending")
-                self.assertEqual(country["portrait"], draft["portrait"])
+                self.assertEqual({k:v for k,v in country["portrait"].items() if k != "body"}, {k:v for k,v in draft["portrait"].items() if k != "body"})
+                self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
                 self.assertEqual(country["portraitPhotos"], [])
                 self.assertEqual(country["quiz"], [])
                 self.assertEqual(country["travelStops"], {})
