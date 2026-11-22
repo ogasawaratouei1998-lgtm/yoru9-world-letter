@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "LB": {
+      "name": "レバノン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/lb",
+      "portrait": {
+        "lead": "直線の街路と巨大神殿、ベカー高原の石に刻まれた時間",
+        "body": "レバノン東部のベカー高原には、八世紀のウマイヤ朝都市の姿を伝えるアンジャルと、ローマ時代の壮大な神殿群を残すバールベックがあります。前者では直交する街路や列柱から計画都市の機能を読み解き、後者では大きな柱と細かな彫刻から信仰と建築の重なりを見つめます。二つの時代の石造遺構を地図と資料でたどる、現地渡航を推奨しない誌上旅行です。過去の写真に写る姿と現在の遺構状況は同じとは限らず、撮影地点・時期・再利用許諾を照合して掲載します。",
+        "facts": [
+          "世界文化遺産：アンジャル（1984年登録）",
+          "世界文化遺産：バールベック（1984年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：レバノンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/lb"
+      },
+      "travelDrafts": [
+        {
+          "place": "アンジャルのウマイヤ朝都市遺跡",
+          "travelStory": [
+            "アンジャルの遺跡を広くとらえた写真では、低い石積みの壁や列柱がほぼ直線的に並ぶ様子が見えます。ひとつの柱頭だけでは街の大きさが分からないため、道の交差や建物の区画を一緒に見てみましょう。大きな通りに沿って視線を進めると、宮殿や浴場、居住地を配置した計画都市の姿が少しずつ立ち上がってきます。石の高さよりも、規則的な配置に注目する小旅行です。",
+            "UNESCOによると、アンジャルは八世紀初頭にカリフのワリード一世の時代に築かれたウマイヤ朝都市で、東西と南北の幹線が交差して市域を四区画に分けていました。交易路の結節点に位置する一方、その存続期間は長くありませんでした。ローマ風の装飾にも見える石材を単なる古典建築の遺物と決めつけず、初期イスラム期の都市計画と技術の移行を示す遺構として読むと、写真の細部が違って見えます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンジャル",
+              "url": "https://whc.unesco.org/en/list/293/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "アンジャル遺跡が特に伝えるのは何時代の都市計画？",
+            "options": [
+              "ウマイヤ朝時代",
+              "産業革命期",
+              "先史時代の洞窟生活"
+            ],
+            "answer": 0,
+            "fact": "アンジャルはウマイヤ朝の八世紀の計画都市であり、直交する街路と建築区画の遺構が残ります。",
+            "photoGoal": "単独の柱頭や無関係なアンジャル市街ではなく、世界遺産の遺跡内に続く街路・列柱・城壁を確認できる実写を選ぶ。過去の不適切な柱頭単写候補は使わない。"
+          },
+          "commonsSearch": "Anjar Umayyad archaeological city Lebanon ruins colonnaded avenue walls",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "バールベックの神殿群",
+          "travelStory": [
+            "バールベックの写真では、高くそびえる柱の列と、その足元を囲む石の広場の比率に注目します。ひとつの柱だけを切り取るより、基壇や隣接する建物まで入った構図のほうが神殿の規模を想像しやすくなります。ジュピター神殿の大きな柱とバッカス神殿の装飾を比べ、遠景から近景へ視線を動かすように、石に刻まれた構造と装飾の役割を写真でたどりましょう。",
+            "UNESCOは、バールベックをフェニキアの信仰とギリシャ・ローマ世界の神々が重なった大規模な聖域として説明しています。ローマ時代には二百年以上にわたって巨大な神殿建築が造られ、ジュピター、バッカス、ヴィーナスなどの神殿が関係しています。壮大な建築を単なる大きさの競争と見るのではなく、古い信仰が別の文化の建築様式と結びついていった歴史として眺める小旅行です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バールベック",
+              "url": "https://whc.unesco.org/en/list/294/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "バールベックの神殿群が特に発展した時代は？",
+            "options": [
+              "石器時代",
+              "ローマ帝国時代",
+              "現代の高層建築時代"
+            ],
+            "answer": 1,
+            "fact": "バールベックの巨大な神殿群は、とりわけローマ時代に整備された宗教建築の遺産です。",
+            "photoGoal": "960×194など極端に横長の既存候補を再利用せず、バールベックの実際の神殿全景・柱群を縦横比と場所まで検証した写真を探す。"
+          },
+          "commonsSearch": "Baalbek Lebanon Jupiter temple columns Bacchus temple archaeological site photograph",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Forest of the Cedars of God Bsharri Lebanon cedar trees mountains landscape photograph",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "RS": {
+      "name": "セルビア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/rs",
+      "portrait": {
+        "lead": "白い大理石の修道院とローマ皇帝の宮殿跡をめぐる",
+        "body": "セルビア中部のストゥデニツァ修道院は、中世国家の成立と信仰、美術の歴史を伝える場所です。東部のガムジグラード＝ロムリアーナでは、ローマ帝国の皇帝ガレリウスに関わる宮殿や霊廟群が、城壁の内外に分かれて残ります。白い石造の宗教建築と、皇帝の権威や儀礼を表した古代の遺構を見比べると、同じ国でも人々が残そうとしたものの違いが見えてきます。実写写真の地名・作者・権利を独立確認し、絵画やイメージ画像を風景写真として扱いません。",
+        "facts": [
+          "世界文化遺産：ストゥデニツァ修道院（1986年登録）",
+          "世界文化遺産：ガムジグラード＝ロムリアーナ、ガレリウスの宮殿（2007年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：セルビアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/rs"
+      },
+      "travelDrafts": [
+        {
+          "place": "ストゥデニツァ修道院",
+          "travelStory": [
+            "ストゥデニツァ修道院の写真を眺めると、緑に囲まれた敷地に白い大理石の教会が立つ姿が印象に残ります。屋根や壁の輪郭を遠景でつかんだら、窓や入口の石彫、教会内部に伝わるフレスコ画へと目を移しましょう。建物の外観だけでは分からない信仰の歴史が、美術の細部から見えてきます。静かな建物の配置を地図で確かめながら、建築と絵画が語る時間を重ねて読む誌上旅行です。",
+            "UNESCOは、この修道院が十二世紀末に中世セルビア国家の創始者ステファン・ネマニャによって創建されたことを説明しています。聖母教会と王の教会には、十三～十四世紀のビザンティン美術の重要な絵画が伝わります。写真を見て白い石の美しさに惹かれたら、建立した人々や修道生活、絵画を描いた職人の営みにも思いを向けてみましょう。建築だけではない文化の層が、この場所の価値を深めています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ストゥデニツァ修道院",
+              "url": "https://whc.unesco.org/en/list/389/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ストゥデニツァ修道院に伝わる重要な美術は？",
+            "options": [
+              "古代エジプトのパピルス",
+              "十三～十四世紀のビザンティン絵画",
+              "現代のネオン看板"
+            ],
+            "answer": 1,
+            "fact": "ストゥデニツァ修道院の教会には十三～十四世紀のビザンティン絵画が伝わっています。",
+            "photoGoal": "セルビア中部のストゥデニツァ修道院と確認できる白い大理石の建物を実写で捉え、別の修道院や絵画を混同しない。"
+          },
+          "commonsSearch": "Studenica Monastery Serbia white marble Church of the Virgin exterior photo",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ガムジグラード＝ロムリアーナの宮殿跡",
+          "travelStory": [
+            "ガムジグラード＝ロムリアーナの遺跡では、崩れた石の壁が広い地面を囲い、かつての宮殿の輪郭を示しています。建物そのものが残っていない部分でも、城壁や塔の基礎をつないで想像すると、単なる一つの館ではなく大きな複合施設だったことが分かります。写真では石積みの規模を確認し、地図では宮殿群と近くの記念建造物の位置関係をたどる小旅行です。",
+            "UNESCOによれば、東セルビアのこの遺跡は三世紀末から四世紀初頭に皇帝ガレリウスが建設させた宮殿と記念施設の複合体です。皇帝の母ロムラに由来するフェリクス・ロムリアーナの名でも知られます。防御施設に囲まれた宮殿と、霊廟などの記念建造物が結びつく構成は、古代ローマの政治や儀礼を理解する手掛かりになります。石の跡だけから、そこに込められた権威と追悼の意味を読み解けます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ガムジグラード＝ロムリアーナ、ガレリウスの宮殿",
+              "url": "https://whc.unesco.org/en/list/1253/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ロムリアーナの宮殿群を造らせた人物は？",
+            "options": [
+              "ローマ皇帝ガレリウス",
+              "ナポレオン一世",
+              "アレクサンドロス大王"
+            ],
+            "answer": 0,
+            "fact": "ガムジグラード＝ロムリアーナはローマ皇帝ガレリウスが建設させた宮殿と記念施設の遺跡です。",
+            "photoGoal": "東セルビアのガムジグラード遺跡内の城壁・宮殿跡を確認し、復元模型や他国のローマ遺跡写真と取り違えない。"
+          },
+          "commonsSearch": "Gamzigrad Romuliana Felix Romuliana Serbia Roman palace ruins actual photograph",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Uvac River meanders Serbia Special Nature Reserve landscape photograph",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "PY": {
+      "name": "パラグアイ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/py",
+      "portrait": {
+        "lead": "赤い大地に残る二つの伝道集落、建築から歴史を読む",
+        "body": "パラグアイ南部のラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲは、一つの世界文化遺産として登録された二つのイエズス会伝道施設です。赤みのある石の壁や教会の遺構から、十七～十八世紀のラ・プラタ川流域で営まれた集落の構造を読み解けます。建築の美しさだけでなく、ヨーロッパから来た宣教者と先住のグアラニーの人々の交流、宗教・社会制度の変化を含む複雑な歴史も考える誌上旅行です。写真は二つの場所を明確に区別し、同じ遺跡の別角度を誤って二地点として扱いません。",
+        "facts": [
+          "世界文化遺産：ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群（1993年登録）",
+          "登録遺産はトリニダードとヘスースの異なる二つの遺構から構成"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：パラグアイの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/py"
+      },
+      "travelDrafts": [
+        {
+          "place": "ラ・サンティシマ・トリニダード・デ・パラナ",
+          "travelStory": [
+            "トリニダードの伝道施設跡では、広い草地に赤みのある石壁やアーチが立ち並びます。写真を見ながら、教会の遺構だけでなく、かつての広場や暮らしのための建物がどのように配置されていたかを想像してみましょう。壁の影が地面に落ちる場所をたどると、宗教施設でありながら多くの人々が日々の生活を営む集落でもあったことが伝わってきます。",
+            "UNESCOが1993年に世界文化遺産に登録したこの遺構は、ラ・プラタ川流域に展開したイエズス会の伝道集落の歴史を示します。建築の一部にはヨーロッパの宗教美術と先住の文化的要素が重なり、街路や広場の配置には独自の社会組織が表れています。華やかな石の装飾だけを眺めるのではなく、建物を造り、暮らした人々の多様な立場を考えることで、遺跡が語る歴史をより立体的に読み取れます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+              "url": "https://whc.unesco.org/en/list/648/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "トリニダードの遺構は何の施設を中心とする集落だった？",
+            "options": [
+              "近代の鉄道工場",
+              "イエズス会の伝道施設",
+              "ローマ帝国の軍港"
+            ],
+            "answer": 1,
+            "fact": "トリニダードはイエズス会の伝道集落に由来し、教会などの建築遺構が残っています。",
+            "photoGoal": "Trinidad del Parana の遺跡・教会壁の全景を確認し、アルゼンチンの Trinidad 遺跡や別の Paraguayan mission と取り違えない。"
+          },
+          "commonsSearch": "La Santisima Trinidad de Parana Paraguay Jesuit mission church ruins panorama",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ヘスース・デ・タバランゲ",
+          "travelStory": [
+            "ヘスース・デ・タバランゲの写真では、大きな石の入口や教会の壁が、空を背景に輪郭を描いています。崩れた部分の向こうに見える風景も含めて眺めると、完成した宗教建築とは異なる遺構の静けさが伝わります。トリニダードの写真と比べながら、門や窓の形、壁の厚さ、広場との位置関係の違いを探してみましょう。二つの伝道施設が別々の場所にあったことが地図からも分かります。",
+            "UNESCOは、ヘスースの伝道施設をトリニダードとともに、十七～十八世紀のイエズス会の活動と、ラ・プラタ川流域の社会・文化の変化を示す遺産として位置づけています。伝道集落の石造建築は、宗教的な目的と、そこで暮らした人々の社会的な営みが重なった場所です。残された壁だけでは当時の生活のすべては分かりませんが、異なる遺構を比較することで、その歴史を一つの物語に単純化せず考えられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+              "url": "https://whc.unesco.org/en/list/648/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "世界遺産に登録された二つの伝道施設の所在地は？",
+            "options": [
+              "スペイン",
+              "フィリピン",
+              "パラグアイ"
+            ],
+            "answer": 2,
+            "fact": "トリニダードとヘスース・デ・タバランゲの伝道施設はパラグアイにあり、同じ世界遺産を構成します。",
+            "photoGoal": "ヘスース・デ・タバランゲの教会遺構を実際に撮影した写真を選び、トリニダード側の写真を使い回さない。"
+          },
+          "commonsSearch": "Jesus de Tavarangue Paraguay Jesuit mission church ruins gate photograph",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Paraguay Asuncion city waterfront landscape panorama photograph",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
