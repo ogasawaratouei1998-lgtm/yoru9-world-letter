@@ -315,6 +315,51 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "country": "ニカラグア",
       "place": "レオン・ビエホ遺跡"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "PK-0.jpg",
+      "sha256": "f82dacad4491295d10224846a9f0f8bb12443a9d6b9bd5546bcdf2e5fc551e27",
+      "cover": true,
+      "photoAsset": "assets/travel/pk-hingol-rock-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Hungol_Landscape.JPG/960px-Hungol_Landscape.JPG",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Hungol_Landscape.JPG",
+      "author": "Bilal Mirza",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "パキスタン",
+      "place": "ヒンゴル国立公園の岩山"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "PK-1.jpg",
+      "sha256": "51c9f0a28332036ea67df226d2a861df032c0082d344b311f13ab33e63eee19b",
+      "cover": false,
+      "photoAsset": "assets/travel/pk-moenjodaro-ruins-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Other_side_of_Moenjodaro_by_Usman_Ghani.jpg/960px-Other_side_of_Moenjodaro_by_Usman_Ghani.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Other_side_of_Moenjodaro_by_Usman_Ghani.jpg",
+      "author": "Usman.pg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "パキスタン",
+      "place": "モヘンジョダロの考古遺跡"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "PK-2.jpg",
+      "sha256": "7868c67edc4267cc822cf12870c0f7e9d573bd57bea0750062354854cd5b3c6c",
+      "cover": false,
+      "photoAsset": "assets/travel/pk-takht-bahi-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Takht_Bahi.jpg/960px-Takht_Bahi.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Takht_Bahi.jpg",
+      "author": "Bakhtiar Ahmed",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "パキスタン",
+      "place": "タフティ・バヒー仏教僧院遺跡"
     }
   ]
 }
