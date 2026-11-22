@@ -4690,5 +4690,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "vn-hoian-street-cover": {
+    "country": "ベトナム",
+    "countryOnly": true,
+    "place": "ホイアンの街路",
+    "region": "ホイアン（代表地点）",
+    "latitude": 15.879,
+    "longitude": 108.329,
+    "note": "地図は紹介地域の代表地点。漢字の刻まれた門と自転車の行き交うホイアンの街路（2009年）。",
+    "photoCaption": "漢字の刻まれた門と自転車の行き交うホイアンの街路（2009年）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Street_Scene_-_Hoi_An_-_Vietnam.JPG/500px-Street_Scene_-_Hoi_An_-_Vietnam.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Street_Scene_-_Hoi_An_-_Vietnam.JPG",
+    "photoAsset": "assets/travel/vn-hoian-street-cover.jpg",
+    "author": "Photo by Adam Jones adamjones.freeservers.com",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "vn-hoian-thubon-postcard": {
+    "country": "ベトナム",
+    "countryOnly": true,
+    "place": "ホイアン旧市街・トゥボン川沿い",
+    "region": "ホイアン",
+    "latitude": 15.876453,
+    "longitude": 108.32315,
+    "note": "撮影地点の座標。ホンラン橋から見渡す川沿いの歴史的家屋と水面の反射（2020年）。",
+    "photoCaption": "ホンラン橋から見渡す川沿いの歴史的家屋と水面の反射（2020年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f2/H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-01.jpg/500px-H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:H%E1%BB%99i_An%2C_Ancient_Town%2C_2020-01_CN-01.jpg",
+    "photoAsset": "assets/travel/vn-hoian-thubon-postcard.jpg",
+    "author": "© Steffen Schmitz (Carschten) / Wikimedia Commons",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "川の水面に屋根や黄色い壁が映り、ホイアン旧市街の家並みがもう一つの街を描いているようです。ホンラン橋から撮影されたこの写真では、川沿いに建物が連なる様子がよく分かります。街路側から見る店先とは違う水辺の表情に注目すると、河川交通と街の暮らしが結びついていた理由が見えてきます。",
+      "UNESCOによれば、ホイアンは十五〜十九世紀に栄えた交易港で、中国や日本などの文化が現地の建築と融合しました。川に平行する通りと直交する小路が残り、商家は道路から客を迎え、川から荷を運ぶのにも適していました。水辺の家並みを単なる景勝地としてではなく、商取引を支えた都市の仕組みとして眺めましょう。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ホイアン旧市街",
+        "url": "https://whc.unesco.org/en/list/948/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "vn-halong-bay-postcard": {
+    "country": "ベトナム",
+    "countryOnly": true,
+    "place": "ハロン湾",
+    "region": "ハロン湾・カットバ群島（代表地点）",
+    "latitude": 20.91,
+    "longitude": 107.15,
+    "note": "地図は紹介地域の代表地点。船上から見た霞む石灰岩の島々（2008年）。",
+    "photoCaption": "船上から見た霞む石灰岩の島々（2008年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Sailing_in_Ha_Long_Bay%2C_Vietnam.jpg/500px-Sailing_in_Ha_Long_Bay%2C_Vietnam.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sailing_in_Ha_Long_Bay%2C_Vietnam.jpg",
+    "photoAsset": "assets/travel/vn-halong-bay-postcard.jpg",
+    "author": "© Vyacheslav Argenberg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "travelStory": [
+      "船の帆柱や索の向こうに、霞をまとった石灰岩の島々が浮かんでいます。近くの岩峰は輪郭がはっきりし、遠方の島は水墨画のように薄く見えます。地図と写真を見比べると、ひとつの島だけではなく大小の岩峰が連なる海域全体が見どころだと分かります。天候で変わる景色も想像できる小旅行です。",
+      "ハロン湾とカットバ群島は、UNESCOが評価する海に浸水した塔状カルストの代表例です。石灰岩の溶食や長い地形変化によって、孤立した岩塔やまとまった峰、洞窟などが形成されました。この海域は独特の生態系も支えています。実際の船旅では天候や運航規制を優先し、自然保護のための見学ルールを守る必要があります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ハロン湾・カットバ群島",
+        "url": "https://whc.unesco.org/en/list/672/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }

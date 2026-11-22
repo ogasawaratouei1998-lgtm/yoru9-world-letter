@@ -32,7 +32,7 @@ class FifthBatchTests(unittest.TestCase):
                 draft = self.batch["countries"][code]
                 # The eight-country draft is an immutable editing snapshot.
                 # Norway was subsequently promoted with three distinct licensed photographs.
-                if code in ("NO","PE","ID","MA"):
+                if code in ("NO","PE","ID","MA","VN"):
                     self.assertEqual(country["status"], "approved")
                     self.assertEqual(draft["status"], "pending")
                     self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
@@ -92,7 +92,7 @@ class FifthBatchTests(unittest.TestCase):
         entries = {row["code"]: row for row in queue["prioritizedPending"]}
         for code in COUNTRIES:
             with self.subTest(code=code):
-                if code in ("NO","PE","ID","MA"):
+                if code in ("NO","PE","ID","MA","VN"):
                     self.assertNotIn(code, entries)
                     continue
                 self.assertNotIn("substantive_portrait", entries[code]["missing"])
