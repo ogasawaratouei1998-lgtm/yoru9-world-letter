@@ -178,6 +178,7 @@ class ReviewBundleTests(unittest.TestCase):
             ("ZA", 2, "Cape_Town_(ZA),_Table_Mountain_--_2024_--_2822.jpg"),
             ("BW", 0, "Anhinga_rufa_-Chobe_River_front,_Botswana-8.jpg"),
             ("HN", 0, "Comayagua_Cathedral.jpg"),
+            ("HN", 2, "Río_Patuca.jpg"),
             ("KE", 0, "Lamu_Pharmacy2021.jpg"),
             ("KZ", 2, "Tamgaly-Tas_Petroglyphs.JPG"),
             ("MY", 2, "Ongoing_Repairs_after_storm_of_the_previous_day_(15385239799).jpg"),

@@ -52,7 +52,8 @@ DRAFT_SEARCH_REFINEMENTS = {
     ("KZ", 2): 'Tamgaly Chu Ili petroglyphs Kazakhstan -"Tamgaly-Tas" -Buddha',
     ("BW", 0): '"Chobe River" Botswana landscape -Anhinga -bird',
     ("KE", 0): 'Lamu Kenya waterfront old town -pharmacy',
-    ("MY", 2): '"Deer Cave" Mulu -planarian -Bipalium',
+    ("MY", 2): '"Deer Cave" Mulu Sarawak entrance cave -skink -lizard -planarian -repairs',
+    ("HN", 2): '"Río Plátano Biosphere Reserve" Honduras rainforest -Patuca',
     ("TN", 2): '"Antonine Baths" Carthage -Dougga',
 }
 

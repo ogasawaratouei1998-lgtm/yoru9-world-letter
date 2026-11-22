@@ -30,6 +30,20 @@ class AllCountryResearchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             combine(plan, reports+[reports[0]])
 
+    def test_honduras_and_malaysia_research_excludes_visually_wrong_heritage_subjects(self):
+        plan = make_plan(ROOT)
+        countries = {row["code"]: row for row in plan["countries"]}
+        for code, tokens, excluded in (
+            ("HN", ("Plátano", "rainforest"), "-Patuca"),
+            ("MY", ("Deer Cave", "Sarawak"), "-skink"),
+        ):
+            with self.subTest(code=code):
+                slot = countries[code]["slots"][2]
+                self.assertTrue(all(term in slot["searchQuery"] for term in tokens))
+                self.assertIn(excluded, slot["searchQuery"])
+                self.assertEqual(slot["origin"], "existing_draft")
+                self.assertFalse(countries[code]["publicationEligible"])
+
     def test_south_africa_photo_search_targets_distinct_documentary_subjects(self):
         plan = make_plan(ROOT)
         za = next(c for c in plan["countries"] if c["code"] == "ZA")
