@@ -53,6 +53,10 @@ def candidate_identity(candidate):
 # A rejection is scoped to the country and slot; it does not allege a license
 # problem or prohibit the photograph in other editorial contexts.
 VISUAL_REJECTIONS = {
+    # Exact 2026-11-22 JPEG review from run 45017850362, artifact 14752761810.
+    ("LB", 1): {"Anjar - chapiteau.jpg": "Isolated column-capital detail with no clear view of the Anjar archaeological city."},
+    ("RS", 0): {"A landscape painting by Nikola Bešević.jpg": "Framed painting of a landscape, not a real on-location photographic cover."},
+    ("RW", 2): {"Hyperolius castaneus egg clutches Nyungwe National Park, Rwanda.jpg": "Multi-panel close-up of amphibian eggs, not an identifying view of Nyungwe National Park for the virtual-heritage postcard."},
     # Reviewed exact JPEGs in artifact 14735202454 on 2026-11-22.
     ("BW", 0): {"Anhinga rufa -Chobe River front, Botswana-8.jpg": "Portrait-format bird close-up, not a national landscape."},
     ("HN", 0): {"Comayagua Cathedral.jpg": "Tall portrait format with extensive sky; insufficient landscape composition for country cover."},
@@ -66,12 +70,15 @@ VISUAL_REJECTIONS = {
                  "Lamu Pharmacy2021.jpg": "Pharmacy interior, not a country landscape."},
     ("BD", 1): {"A view from the Mosque (8540808429).jpg": "View through a dark arch; the mosque complex itself is not shown."},
     ("IQ", 1): {"Assur stuck.jpg": "Isolated decorated object instead of a view of the archaeological site."},
-    ("LB", 0): {"The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289561).jpg": "Portrait-oriented archival photograph, unsuitable for the landscape cover."},
-    ("LB", 2): {"Lebanon mountains from near Maqial el Qalaa.jpg": "Mountain road without the Baalbek archaeological monuments."},
+    ("LB", 0): {"The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289561).jpg": "Portrait-oriented archival photograph, unsuitable for the landscape cover.",
+                 "The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289029).jpg": "Black-and-white view of armed people inside a vehicle, not a Lebanese landscape or cedar-country cover."},
+    ("LB", 2): {"Lebanon mountains from near Maqial el Qalaa.jpg": "Mountain road without the Baalbek archaeological monuments.",
+                 "Pano Baalbek 1.jpg": "Extreme five-to-one panorama: 960x194 preview below 200px postcard minimum; a normal-height site view is required."},
     ("LY", 0): {"The Romantic Landscape - geograph.org.uk - 1803291.jpg": "Unrelated geograph UK landscape, not Libya."},
     ("MM", 2): {"Hanlin - Pyu Ancient City.JPG": "Heritage marker rather than the archaeological remains."},
     ("MU", 1): {"Aapravasi ghat museum, Port Louis, Mauritius.jpg": "Entrance sign dominates the view; insufficient historical building context."},
-    ("NE", 0): {"Aso Rock 52 - landscape in Abuja, Nigeria (2026).jpg": "Abuja is in Nigeria, not Niger."},
+    ("NE", 0): {"Aso Rock 52 - landscape in Abuja, Nigeria (2026).jpg": "Abuja is in Nigeria, not Niger.",
+                 "Aso Rock 51 - landscape in Abuja, Nigeria (2026).jpg": "Aso Rock is in Abuja, Nigeria; this is not a photo of Niger."},
     ("CR", 0): {"1999 casona santa rosa Panorama.jpg": "Historical pre-fire house panorama; too narrow for the present-day country cover."},
     ("CR", 1): {"Santa Rosa guanacaste.jpg": "Very narrow pasture panorama; insufficient visual context for the conservation-area story."},
     ("KE", 1): {
