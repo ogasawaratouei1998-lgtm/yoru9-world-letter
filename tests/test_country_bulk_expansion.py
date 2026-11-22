@@ -2,9 +2,11 @@
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+from urllib.error import HTTPError
 
 from country_content import check_country_content
-from country_photo_candidates import draft_queries, plain, valid_candidate
+from country_photo_candidates import draft_queries, generate_report, plain, valid_candidate
 
 ROOT = Path(__file__).resolve().parents[1]
 COHORT = {"IS", "IE", "HR", "KH", "NP", "TZ", "JO", "LK"}
@@ -97,6 +99,32 @@ class BulkCountryExpansionTests(unittest.TestCase):
         page["imageinfo"][0]["extmetadata"]["LicenseShortName"]["value"] = "CC BY-NC 4.0"
         self.assertIsNone(valid_candidate(page))
         self.assertEqual(plain("A <em>clean</em> credit"), "A clean credit")
+
+
+class StandalonePhotoThrottlingTests(unittest.TestCase):
+    def test_rate_limit_defers_remaining_tasks_without_more_network_requests(self):
+        tasks = [{"countryCode": "AA", "searchQuery": "first place", "role": "cover"},
+                 {"countryCode": "BB", "searchQuery": "second place", "role": "cover"},
+                 {"countryCode": "CC", "searchQuery": "third place", "role": "cover"}]
+        for code in (429, 503):
+            with self.subTest(code=code):
+                calls = []
+                def fetch(query):
+                    calls.append(query)
+                    if query == "second place":
+                        raise HTTPError("https://commons.wikimedia.org/", code, "temporary restriction", {}, None)
+                    return []
+                with patch("country_photo_candidates.draft_queries", return_value=tasks):
+                    report = generate_report(fetch=fetch, sleep_seconds=0)
+                self.assertEqual(calls, ["first place", "second place"])
+                self.assertEqual(report["searchCount"], 3)
+                self.assertEqual(report["failedSearches"], 1)
+                self.assertEqual(report["deferredSearches"], 1)
+                self.assertEqual([row["status"] for row in report["results"]],
+                                 ["no_matching_metadata", "search_failed", "rate_limited_deferred"])
+                self.assertEqual(report["results"][1]["httpStatus"], code)
+                self.assertTrue(all(row["manualVisualReviewRequired"] for row in report["results"]))
+                self.assertTrue(all(not row["candidates"] for row in report["results"]))
 
 
 if __name__ == "__main__":
