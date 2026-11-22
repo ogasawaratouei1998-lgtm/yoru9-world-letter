@@ -30,5 +30,9 @@ class GhanaReleaseTests(unittest.TestCase):
             self.assertTrue(all(110 <= len(p) <= 360 for p in stop["travelStory"]))
             self.assertTrue(any(s["url"].startswith("https://www.anzen.mofa.go.jp/") for s in stop["historicalSources"]))
             self.assertTrue(any(s["url"].startswith("https://whc.unesco.org/") for s in stop["historicalSources"]))
-        self.assertIn("奴隷貿易", row["quiz"][1]["fact"])
+        quiz = row["quiz"][1]
+        self.assertEqual(quiz["options"][quiz["answer"]], "大西洋奴隷貿易")
+        self.assertIn("奴隷にされた人々", quiz["fact"])
+        self.assertIn("強制的に移送", quiz["fact"])
+        self.assertIn("奴隷貿易", row["travelStops"][quiz["photoKey"]]["travelStory"][1])
         self.assertEqual(set(country_coverage(ROOT, [{"country": "GH"}])), {"GH"})
