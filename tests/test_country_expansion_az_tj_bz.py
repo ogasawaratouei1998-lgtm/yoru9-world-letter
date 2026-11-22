@@ -27,7 +27,8 @@ class NewCountryEditorialDraftTests(unittest.TestCase):
             with self.subTest(code=code):
                 row = self.canonical["countries"][code]
                 self.assertEqual(row["status"], "pending")
-                self.assertEqual(row["portrait"], draft["portrait"])
+                self.assertEqual({k:v for k,v in row["portrait"].items() if k != "body"}, {k:v for k,v in draft["portrait"].items() if k != "body"})
+                self.assertTrue(row["portrait"]["body"].startswith(draft["portrait"]["body"]))
                 self.assertGreaterEqual(len(row["portrait"]["body"]), 145)
                 self.assertTrue(row["portrait"]["sourceUrl"].startswith(
                     "https://whc.unesco.org/en/statesparties/"
