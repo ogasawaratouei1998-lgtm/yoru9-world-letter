@@ -173,6 +173,12 @@ class ReviewBundleTests(unittest.TestCase):
 
     def test_reviewed_wrong_country_and_non_site_images_are_replaced(self):
         cases = [
+            ("LB", 0, "The_landscape_of_Lebanon_with_its_famous_tree_cedar_of_Lebanon_(FL63289029).jpg"),
+            ("LB", 1, "Anjar_-_chapiteau.jpg"),
+            ("LB", 2, "Pano_Baalbek_1.jpg"),
+            ("NE", 0, "Aso_Rock_51_-_landscape_in_Abuja,_Nigeria_(2026).jpg"),
+            ("RS", 0, "A_landscape_painting_by_Nikola_Bešević.jpg"),
+            ("RW", 2, "Hyperolius_castaneus_egg_clutches_Nyungwe_National_Park,_Rwanda.jpg"),
             ("ZA", 0, "Cape_Town_(ZA),_Table_Mountain_--_2024_--_2821.jpg"),
             ("ZA", 1, "Robben_Island,_South_Africa_(3263091144).jpg"),
             ("ZA", 2, "Cape_Town_(ZA),_Table_Mountain_--_2024_--_2822.jpg"),
