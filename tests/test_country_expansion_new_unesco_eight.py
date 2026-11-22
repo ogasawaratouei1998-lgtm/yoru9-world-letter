@@ -24,7 +24,16 @@ class NextEightUnescoCountryTests(unittest.TestCase):
             with self.subTest(code=code):
                 country = self.doc["countries"][code]
                 self.assertEqual(country["name"], draft["name"])
-                self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
+                if code == "AM" and country["status"] == "approved":
+                    # The original source-backed draft is immutable; approval
+                    # separately appends verified current regional danger levels.
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
+                    self.assertIn("危険レベル4", country["portrait"]["body"])
+                    self.assertIn("隣接地域をレベル2", country["portrait"]["body"])
+                    self.assertIn("多くの地域をレベル1", country["portrait"]["body"])
+                    self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
+                else:
+                    self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
                 self.assertEqual(country["portrait"]["sourceUrl"],
                                  "https://whc.unesco.org/en/statesparties/" + code.lower())

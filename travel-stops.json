@@ -5370,6 +5370,99 @@
     ],
     "famousTourist": true
   },
+  "am-yerevan-republic-square-cover": {
+    "country": "アルメニア",
+    "countryOnly": true,
+    "place": "エレバン・共和国広場",
+    "region": "エレバン市中心部",
+    "latitude": 40.1776,
+    "longitude": 44.5126,
+    "note": "共和国広場の代表地点であり、実際の撮影位置ではありません。外務省の地域別危険情報を確認してください。",
+    "photoCaption": "雨上がりの共和国広場と石造りの建物。曇り空の下で街の広がりを捉えた実景写真。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/86/Republic-square-Yerevan_(5).JPG/960px-Republic-square-Yerevan_(5).JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Republic-square-Yerevan_(5).JPG",
+    "photoAsset": "assets/travel/am-yerevan-republic-square-cover.jpg",
+    "author": "23artashes",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "coverOnly": true
+  },
+  "am-haghpat-monastery-postcard": {
+    "country": "アルメニア",
+    "countryOnly": true,
+    "place": "ハフパト修道院",
+    "region": "ロリ地方・UNESCO世界遺産登録構成地",
+    "latitude": 41.0938278,
+    "longitude": 44.7123944,
+    "note": "UNESCO登録地の代表地点で、正確な撮影位置ではありません。地域別危険情報を確認してください。",
+    "photoCaption": "ハフパト修道院の石造聖堂と鐘楼。谷と緑に囲まれた中世の建築を写した写真。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b2/Haghpat_monastery_complex_cutted_026.jpg/960px-Haghpat_monastery_complex_cutted_026.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Haghpat_monastery_complex_cutted_026.jpg",
+    "photoAsset": "assets/travel/am-haghpat-monastery-postcard.jpg",
+    "author": "Ahaik",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "ハフパトとサナヒンでは、厚い石壁と小さな開口部がつくる陰影に目を向けながら建物の周囲を歩きたいところです。外観は簡潔に見えても、礼拝や学びに用いられた空間を思い浮かべると、静かな中庭が別の表情を見せます。二つの修道院をひとまとめの写真として扱わず、それぞれの地形や建物の配置を比べることでも発見があります。",
+      "UNESCOは十〜十三世紀に繁栄した二つの修道院を重要な学問の中心地とし、サナヒンでは装飾写本と書の教育が知られていたと記しています。ビザンツ系の宗教建築とコーカサス地方の伝統的な建築要素が融合した点も評価されています。岩を積んだ建物の美しさだけでなく、知識を伝える場所として機能していた歴史に触れると印象が深まります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ハフパトとサナヒンの修道院群",
+        "url": "https://whc.unesco.org/en/list/777/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ：アルメニア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_199.html",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "UNESCO世界遺産センター・構成資産の登録位置",
+        "url": "https://whc.unesco.org/en/list/777/maps/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "am-geghard-rock-monastery-postcard": {
+    "country": "アルメニア",
+    "countryOnly": true,
+    "place": "ゲガルド修道院の岩窟空間",
+    "region": "コタイク地方・UNESCO世界遺産代表地点",
+    "latitude": 40.1404389,
+    "longitude": 44.818525,
+    "note": "UNESCO登録地の代表地点で、正確な撮影位置ではありません。地域別危険情報を確認してください。",
+    "photoCaption": "岩を掘り込んだゲガルド修道院の入口と彫刻。岩肌と石造装飾の細部を示す写真。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/5b/Beautiful_Geghard_Monastery.jpg/500px-Beautiful_Geghard_Monastery.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Beautiful_Geghard_Monastery.jpg",
+    "photoAsset": "assets/travel/am-geghard-rock-monastery-postcard.jpg",
+    "author": "c a r a m e l",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "ゲガルド修道院では、切り立った岩壁のそばに建物があり、場所によっては岩を掘り込んだ内部空間へとつながります。外の自然光から石に囲まれた部屋へ移ると、同じ修道院の中でも光と音の感じ方が変わるでしょう。彫刻や入口の形を眺めるだけでなく、崖と建物のつながりを意識することで、この場所ならではの魅力が分かります。",
+      "UNESCOはゲガルド修道院を、岩から彫り出された教会や墓所を含む中世アルメニア建築の重要な遺産と説明しています。修道院群はアザト川上流域の険しい崖に囲まれ、建築と風景が深く結びついています。岩窟の内部だけを切り取った写真と谷全体の景色を見比べると、信仰の空間が自然の地形に合わせて成立していることを理解できます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ゲガルド修道院とアザト川上流域",
+        "url": "https://whc.unesco.org/en/list/960/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ：アルメニア",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_199.html",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "UNESCO世界遺産センター・構成資産の登録位置",
+        "url": "https://whc.unesco.org/en/list/960/maps/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
   "bd-jaflong-tea-country-cover": {
     "country": "バングラデシュ",
     "countryOnly": true,

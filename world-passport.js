@@ -12,6 +12,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'イグアスの滝を包む風景は？',options:['熱帯の森','氷の洞窟','砂漠の砂丘'],answer:0,photoKey:'ar-iguazu-postcard',photoLabel:'正解の風景｜イグアスの滝と熱帯の森',fact:'アルゼンチン北東部のイグアスの滝は、熱帯の森に囲まれています。',quip:'水の勢いがすごすぎて、森まで拍手しているように見える。'},
   {question:'アルゼンチンのマテ茶に似合うのは？',options:['車の給油','語らいのひととき','壁のペンキ塗り'],answer:1,photoKey:'ar-mate-quiz-image',photoLabel:'正解の文化｜マテ茶の器とボンビージャ',fact:'マテ茶はアルゼンチンの日常や人との語らいの中で親しまれています。',quip:'どれだけ話が弾んでも、オチまでは淹れてくれない。'},
  ],
+ AM:[
+  {question:'ハフパトとサナヒンの修道院が果たした役割は？',options:['学問や文化の中心地','海軍の造船基地','砂漠の天文台'],answer:0,fact:'UNESCOは両修道院を重要な学問の中心地と説明しています。',quip:'石造りの修道院は祈りの場であり、学びの拠点でもあったのです。',photoLabel:'正解写真｜ハフパト修道院',photoKey:'am-haghpat-monastery-postcard'},
+  {question:'ゲガルド修道院の独特な建築に使われるのは？',options:['岩を掘り込んだ教会や墓所','氷で造られた礼拝堂','海上に浮かぶ木造宮殿'],answer:0,fact:'UNESCOは岩を彫り込んでつくられた教会や墓所を特徴として挙げています。',quip:'自然の岩がそのまま建築材料。削り出された空間そのものが見どころです。',photoLabel:'正解写真｜ゲガルド修道院の岩窟空間',photoKey:'am-geghard-rock-monastery-postcard'},
+ ],
  AG:[
   {question:'アンティグア島のベティーズ・ホープに残る風車は、かつて何に使われた？',options:['サトウキビを搾る作業','港に船を導く灯台','天体を観測する施設'],answer:0,photoKey:'antigua-bettys-hope-quiz-image',photoLabel:'正解の遺構｜ベティーズ・ホープの製糖風車',fact:'ベティーズ・ホープは砂糖プランテーションの跡地で、風車はサトウキビを搾る施設でした。そこでは奴隷にされた人々が労働を強いられた歴史も伝えられています。',quip:'丸い石塔は飾りじゃない。風の力まで製糖に動員していた。'},
   {question:'アンティグア島の自然の石橋『デビルズ・ブリッジ』を削り出したのは？',options:['船で運んだ石材','大西洋の波の浸食','火山から流れた溶岩'],answer:1,photoKey:'antigua-devils-bridge-quiz-image',photoLabel:'正解の自然景観｜アンティグア島・デビルズ・ブリッジ',fact:'デビルズ・ブリッジはアンティグア島東部にある石灰岩の自然のアーチ。大西洋の波が長い年月をかけて形をつくりました。',quip:'橋を設計したのは人間じゃなく、休みなく押し寄せる波。'},
