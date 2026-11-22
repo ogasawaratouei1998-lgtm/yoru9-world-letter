@@ -37,6 +37,17 @@ class NeverRepeatedSourceGroupTests(unittest.TestCase):
         second = editorial.select_untried_source_groups(groups, {1}, {same_url})
         self.assertEqual([item["groupId"] for item in second], [3])
 
+    def test_three_group_batches_keep_each_publisher_provenance(self):
+        urls = [f"https://publisher-{i}.example/real-news" for i in range(3)]
+        groups = [group(i + 1, "Human error and documented consequence", url)
+                  for i, url in enumerate(urls)]
+        drafts = [{"sourceUrl": url, "verificationUrls": [url]} for url in urls]
+        cross = {"sourceUrl": urls[0], "verificationUrls": [urls[0], urls[2]]}
+        selected = editorial.source_bound_batch_drafts(
+            {"stories": [cross, *drafts]}, groups)
+        self.assertEqual(selected, drafts)
+        self.assertEqual(editorial.MAX_FOCUSED_DRAFT_GROUPS, 3)
+
     def test_initial_context_is_focused_and_source_pool_is_large(self):
         self.assertLessEqual(editorial.PRIMARY_EDITORIAL_GROUPS, 8)
         self.assertGreaterEqual(editorial.EDITORIAL_SHORTLIST_LIMIT, 48)
