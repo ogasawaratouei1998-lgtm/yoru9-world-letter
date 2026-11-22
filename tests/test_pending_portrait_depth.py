@@ -10,16 +10,18 @@ class PendingCountryPortraitDepthTests(unittest.TestCase):
         countries = check_country_content(ROOT)["countries"]
         prepared = {code: row for code, row in countries.items()
                     if row["status"] == "pending" and row.get("portrait")}
-        self.assertGreaterEqual(len(prepared), 31)
         for code, row in prepared.items():
             with self.subTest(code=code):
                 self.assertGreaterEqual(len(row["portrait"]["body"]), 145)
                 self.assertTrue(row["portrait"].get("sourceUrl", "").startswith("https://"))
+        # Don't freeze the number of pending countries: future verified releases
+        # must be allowed to transition to approved without breaking this test.
         for code in ("BH", "MU"):
-            self.assertEqual(countries[code]["status"], "pending")
-            self.assertEqual(countries[code]["portraitPhotos"], [])
-            self.assertEqual(countries[code]["quiz"], [])
-            self.assertEqual(countries[code]["travelStops"], {})
+            self.assertGreaterEqual(len(countries[code]["portrait"]["body"]), 145)
+            if countries[code]["status"] == "pending":
+                self.assertEqual(countries[code]["portraitPhotos"], [])
+                self.assertEqual(countries[code]["quiz"], [])
+                self.assertEqual(countries[code]["travelStops"], {})
 
 if __name__ == "__main__":
     unittest.main()
