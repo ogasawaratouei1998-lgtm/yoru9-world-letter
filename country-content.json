@@ -194,7 +194,10 @@
     "sk-spis-castle-postcard",
     "vn-hoian-street-cover",
     "vn-hoian-thubon-postcard",
-    "vn-halong-bay-postcard"
+    "vn-halong-bay-postcard",
+    "gt-atitlan-cover",
+    "gt-tikal-plaza-postcard",
+    "gt-antigua-cathedral-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4367,7 +4370,7 @@
     },
     "GT": {
       "name": "グアテマラ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "森に立つマヤの神殿と、震災の記憶を残す古都",
         "body": "グアテマラの北部では、熱帯林の樹冠からティカルの神殿が姿を現します。古代の都市と多様な生態系が重なる景観です。一方、アンティグアでは直交する街路と植民地時代の建築が残り、地震と都市の移転をめぐる歴史をたどれます。異なる時代の建造物を見比べ、自然と人間の暮らしの関係を考える誌上旅行です。実際の渡航を推奨するものではありません。外務省は2026年11月22日確認時点で国内に危険レベル1・2を発出しており、渡航前には最新情報の確認が必要です。",
@@ -4375,13 +4378,137 @@
           "世界複合遺産：ティカル国立公園",
           "世界文化遺産：アンティグア・グアテマラ"
         ],
-        "photos": [],
+        "photos": [
+          "gt-tikal-plaza-postcard",
+          "gt-antigua-cathedral-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：グアテマラの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/gt"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/gt-atitlan-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/1_lake_atitlan_panorama_2009.jpg/500px-1_lake_atitlan_panorama_2009.jpg",
+          "caption": "アティトラン湖と火山、サン・アントニオ・パロポの集落（2009年）",
+          "author": "chensiyuan",
+          "license": "CC BY-SA 4.0",
+          "place": "アティトラン湖",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:1_lake_atitlan_panorama_2009.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ティカル国立公園はどの種類の世界遺産？",
+          "options": [
+            "文化遺産のみ",
+            "文化と自然の複合遺産",
+            "自然遺産のみ"
+          ],
+          "answer": 1,
+          "fact": "ティカルは考古学的価値と生物多様性の両方を評価された世界複合遺産です。",
+          "photoLabel": "正解写真｜ティカル国立公園・大広場",
+          "quip": "神殿だけでなく森も遺産。都市計画の主役が、千年後には森林にもなった。",
+          "photoKey": "gt-tikal-plaza-postcard"
+        },
+        {
+          "question": "旧都から首都が移転する契機となった大地震は何年？",
+          "options": [
+            "1543年",
+            "1773年",
+            "1979年"
+          ],
+          "answer": 1,
+          "fact": "1773年の地震による甚大な被害を機に、当局は首都の移転を決めました。",
+          "photoLabel": "正解写真｜アンティグア・グアテマラの大聖堂跡",
+          "quip": "首都は移っても、街の記憶は引っ越さなかった。",
+          "photoKey": "gt-antigua-cathedral-postcard"
+        }
+      ],
+      "travelStops": {
+        "gt-atitlan-cover": {
+          "country": "グアテマラ",
+          "countryOnly": true,
+          "place": "アティトラン湖",
+          "region": "ソロラ県・アティトラン湖（代表地点）",
+          "latitude": 14.688,
+          "longitude": -91.133,
+          "note": "地図は紹介地域の代表地点で、正確な撮影位置ではありません。アティトラン湖と火山、サン・アントニオ・パロポの集落（2009年）。実際の渡航を推奨しません。",
+          "photoCaption": "アティトラン湖と火山、サン・アントニオ・パロポの集落（2009年）",
+          "coverOnly": true,
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6a/1_lake_atitlan_panorama_2009.jpg/500px-1_lake_atitlan_panorama_2009.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:1_lake_atitlan_panorama_2009.jpg",
+          "photoAsset": "assets/travel/gt-atitlan-cover.jpg",
+          "author": "chensiyuan",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+        },
+        "gt-tikal-plaza-postcard": {
+          "country": "グアテマラ",
+          "countryOnly": true,
+          "place": "ティカル国立公園・大広場",
+          "region": "ペテン県・ティカル国立公園（代表地点）",
+          "latitude": 17.217,
+          "longitude": -89.617,
+          "note": "地図は紹介地域の代表地点で、正確な撮影位置ではありません。ティカルの大広場と向かい合う二つの神殿を収めたパノラマ。実際の渡航を推奨しません。",
+          "photoCaption": "ティカルの大広場と向かい合う二つの神殿を収めたパノラマ",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/6e/Tikal-Plaza-Mayor-Panorama.jpg/960px-Tikal-Plaza-Mayor-Panorama.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Tikal-Plaza-Mayor-Panorama.jpg",
+          "photoAsset": "assets/travel/gt-tikal-plaza-postcard.jpg",
+          "author": "Bjørn Christian Tørrissen",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "このティカルのパノラマには、大広場を挟んで向かい合う二つの石造神殿が写っています。階段や建物の輪郭を追うと、森の中に広場を設け、その両側に大きな建築を配置した都市の構想を想像できます。実際の広場の見え方とは異なる広角の写真であることにも留意しながら、建物と広場の関係を読み解きましょう。",
+            "UNESCOは約5万7600ヘクタールの公園を、マヤ文明の考古学遺産と豊かな生物多様性の両面から評価しています。儀礼の場所や住居などの遺構が残り、都市の営みを知る手がかりになります。1979年の登録が示すのは、石造建築を保存することと、周囲の森を守ることを切り離さない考え方です。 外務省の最新の危険情報を優先し、ここでは写真を通じて歴史を学びましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ティカル国立公園",
+              "url": "https://whc.unesco.org/en/list/64/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省・グアテマラ危険情報（2026年4月28日更新）",
+              "url": "https://www.anzen.mofa.go.jp/info/pchazardspecificinfo_2026T044.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "gt-antigua-cathedral-postcard": {
+          "country": "グアテマラ",
+          "countryOnly": true,
+          "place": "アンティグア・グアテマラの大聖堂跡",
+          "region": "アンティグア旧市街（代表地点）",
+          "latitude": 14.5565,
+          "longitude": -90.7338,
+          "note": "地図は紹介地域の代表地点で、正確な撮影位置ではありません。アンティグアの旧大聖堂の遺構（2000年撮影）。実際の渡航を推奨しません。",
+          "photoCaption": "アンティグアの旧大聖堂の遺構（2000年撮影）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/96/Ruins_of_an_Old_Cathedral_-_Antigua_Guatemala_2000.jpg/500px-Ruins_of_an_Old_Cathedral_-_Antigua_Guatemala_2000.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Ruins_of_an_Old_Cathedral_-_Antigua_Guatemala_2000.jpg",
+          "photoAsset": "assets/travel/gt-antigua-cathedral-postcard.jpg",
+          "author": "Alex Guerrero",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+          "travelStory": [
+            "2000年に撮られたアンティグアの大聖堂跡には、壁の一部やアーチの痕跡が残っています。建物が完全に残っていなくても、石や漆喰の壁の形状から、かつての空間の大きさを想像できます。旧市街の街路を地図上でも確かめて、建物の遺構と都市計画の関係を考える誌上旅行です。",
+            "この都市はスペイン植民地時代の政治や宗教の中心でしたが、1773年の大地震で大きな被害を受け、当局は首都の移転を決めました。その後も住み続けた人々がいたため、旧都には歴史的建造物と暮らしの記憶が残ります。UNESCOは16世紀の都市計画や、地震の多い土地で発展した建築にも価値を認めています。 外務省の最新の危険情報を優先し、ここでは写真を通じて歴史を学びましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンティグア・グアテマラ",
+              "url": "https://whc.unesco.org/en/list/65/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省・グアテマラ危険情報（2026年4月28日更新）",
+              "url": "https://www.anzen.mofa.go.jp/info/pchazardspecificinfo_2026T044.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "GY": {
