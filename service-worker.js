@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v90';
+const SHELL_CACHE = 'yoru9-shell-v91';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -118,7 +118,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Botswana: three source-checked CC wildlife and heritage photographs.
  'assets/travel/bw-chobe-elephant-cover.jpg', 'assets/travel/bw-okavango-delta-postcard.jpg', 'assets/travel/bw-tsodilo-hills-postcard.jpg',
  // Algeria: reviewed CC landmark photographs, separate from the Botswana assets.
- 'assets/travel/dz-hassania-mountains-cover.jpg', 'assets/travel/dz-beni-hammad-minaret-postcard.jpg', 'assets/travel/dz-djemila-roman-ruins-postcard.jpg'];
+ 'assets/travel/dz-hassania-mountains-cover.jpg', 'assets/travel/dz-beni-hammad-minaret-postcard.jpg', 'assets/travel/dz-djemila-roman-ruins-postcard.jpg',
+ // Bangladesh: three individually licensed documentary photographs.
+ 'assets/travel/bd-jaflong-tea-country-cover.jpg', 'assets/travel/bd-nine-dome-mosque-postcard.jpg', 'assets/travel/bd-somapura-mahavihara-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
