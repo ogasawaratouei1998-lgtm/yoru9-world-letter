@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "countryCode": "BW",
+  "reviewedOn": "2026-11-22",
+  "status": "photo_identity_and_license_reviewed_release_checks_pending",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 44986532608,
+    "artifactId": 14739947105,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "file": "BW-0.jpg",
+      "sha256": "18a147c6257937f9849752f1448d083a105ea6a05e3df8a4ad1a92d037c1e144",
+      "width": 1280,
+      "height": 853,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Sunset_and_elephant.jpg",
+      "photoAsset": "assets/travel/bw-chobe-elephant-cover.jpg",
+      "author": "E.A.A.Oliveira",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "place": "チョベ川（ゾウの暮らす水辺）",
+      "checkedOn": "2026-11-22",
+      "visualReview": "Elephant silhouette at Chobe River; exact location within reach is not geotagged."
+    },
+    {
+      "slot": 1,
+      "file": "BW-1.jpg",
+      "sha256": "c3ed0e76c19235f8785500e91b49cc8bbd3896df317b053612faf4432483fadd",
+      "width": 960,
+      "height": 640,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_del_delta_del_Okavango,_Botsuana,_2018-08-01,_DD_23.jpg",
+      "photoAsset": "assets/travel/bw-okavango-delta-postcard.jpg",
+      "author": "Diego Delso (delso.photo)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "place": "オカバンゴ・デルタ",
+      "checkedOn": "2026-11-22",
+      "visualReview": "Aerial wetland channels and seasonal islands of Okavango Delta."
+    },
+    {
+      "slot": 2,
+      "file": "BW-2.jpg",
+      "sha256": "3d7491354613228166dae0c5fe0e093d644629f237a94836a3ba3b4dc99fde96",
+      "width": 960,
+      "height": 638,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Tsodilo_Hills,_Botswana1.jpg",
+      "photoAsset": "assets/travel/bw-tsodilo-hills-postcard.jpg",
+      "author": "Joachim Huber",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "place": "ツォディロの岩山",
+      "checkedOn": "2026-11-22",
+      "visualReview": "Tsodilo Hills site landscape; rock paintings are not visible in this photograph."
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/list/1432/",
+    "https://whc.unesco.org/en/list/1021/",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_296.html"
+  ],
+  "requiredBeforeApproval": [
+    "checksum_verified_restore_in_build",
+    "canonical_runtime_full_regression",
+    "mobile_visual_preflight"
+  ]
+}
