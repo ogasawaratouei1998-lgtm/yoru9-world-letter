@@ -64,6 +64,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'クロンボー城が見下ろす重要な海峡は？',options:['エーレスンド海峡','ジブラルタル海峡','マラッカ海峡'],answer:0,fact:'UNESCOはクロンボー城がエーレスンド海峡を押さえる位置に建つと説明しています。',photoLabel:'正解写真｜クロンボー城',quip:'海峡が狭ければ城の仕事は増える。最高の立地で、常に見張り番。',photoKey:'dk-kronborg-castle-postcard'},
   {question:'ロスキレ大聖堂の建築材料で特に重要なのは？',options:['レンガ','氷のブロック','珊瑚'],answer:0,fact:'UNESCOは北欧の大型宗教建築における早期のレンガ使用を高く評価しています。',photoLabel:'正解写真｜ロスキレ大聖堂',quip:'レンガが主役の大聖堂。積み重ねたのは建材だけでなく、王家の歴史。',photoKey:'dk-roskilde-cathedral-postcard'},
  ],
+ DZ:[
+  {question:'ベニ・ハンマードの城塞が築かれた目的と歴史は？',options:['ハンマード朝の最初の都','古代エジプトの港','近代の鉄道駅'],answer:0,fact:'1007年に築かれた軍事拠点がハンマード朝の都として発展し、モスクや宮殿の跡を残しました。',quip:'山の静けさに残る塔は、かつてここが都だった証拠。時代の大きさを一基の塔が語ります。',photoLabel:'正解写真｜ベニ・ハンマードの城塞',photoKey:'dz-beni-hammad-minaret-postcard'},
+  {question:'ジェミラの都市計画の特徴は？',options:['海底に建てた街','山地に合わせたローマ式都市計画','木造だけの遊牧集落'],answer:1,fact:'ローマ式の広場や公共建築を山地の制約に合わせて配置した点が世界遺産として評価されています。',quip:'山地にも都市の設計図がある。ローマの街づくりは平野だけのものではありません。',photoLabel:'正解写真｜ジェミラのローマ遺跡',photoKey:'dz-djemila-roman-ruins-postcard'},
+ ],
  EG:[
   {question:'ギザのピラミッド群を含むメンフィスの墓地遺跡の世界遺産登録年は？',options:['1979年','1985年','2001年'],answer:0,photoLabel:'正解写真｜ギザの大ピラミッド',fact:'UNESCOによると、メンフィスとその墓地遺跡は1979年に世界文化遺産へ登録されました。',quip:'古代の建築なのに、街の景色に今も堂々と割り込んでくる。',photoKey:'eg-giza-pyramid-postcard'},
   {question:'アブ・シンベルなどのヌビア遺跡群を救うため、国際的な保存活動を主導した機関は？',options:['UNESCO','欧州中央銀行','国際オリンピック委員会'],answer:0,photoLabel:'正解写真｜アブ・シンベル大神殿',fact:'UNESCOが1960年から1980年にかけて進めた国際保存活動により、神殿などが水没の危機から救われました。',quip:'古代の巨像を動かしたのは、現代の大きなチームワーク。',photoKey:'eg-abu-simbel-postcard'},
