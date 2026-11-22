@@ -81,3 +81,53 @@ class AllCountryResearchTests(unittest.TestCase):
             result = research_shard(plan, 0, fetch=lambda query: [candidate, right], sleep_seconds=0)
         self.assertEqual(result["results"][0]["candidates"], [right])
         self.assertFalse(result["results"][0].get("publicationEligible", False))
+
+    def test_draft_alternate_search_uses_at_most_two_queries(self):
+        plan = {"shards": 8, "countries": [{"code": "BW", "country": "Botswana", "shard": 0,
+            "slots": [{"slot": 0, "searchQuery": "long query", "alternateSearchQuery": "Chobe River Botswana",
+                       "origin": "existing_draft", "publicationEligible": False}]}]}
+        candidate = {"commonsPage": "fixture", "publicationEligible": False}
+        calls = []
+        def fetch(query):
+            calls.append(query)
+            return [] if query == "long query" else [candidate, candidate]
+        with patch("country_bulk_research.valid_candidate", side_effect=lambda x: x):
+            row = research_shard(plan, 0, fetch=fetch, sleep_seconds=0)["results"][0]
+        self.assertEqual(calls, ["long query", "Chobe River Botswana"])
+        self.assertEqual(row["attemptedQueries"], calls)
+        self.assertEqual(row["candidates"], [candidate])
+        self.assertFalse(row["publicationEligible"])
+        self.assertEqual(row["status"], "metadata_candidates_only")
+        with patch("country_bulk_research.valid_candidate", side_effect=lambda x: x):
+            row = research_shard(plan, 0, fetch=lambda q: [candidate], sleep_seconds=0)["results"][0]
+        self.assertEqual(row["attemptedQueries"], ["long query"])
+
+    def test_alternate_not_attempted_after_rate_limit(self):
+        plan = {"shards": 8, "countries": [{"code": "BW", "country": "Botswana", "shard": 0,
+            "slots": [{"slot": 0, "searchQuery": "first", "alternateSearchQuery": "second",
+                       "origin": "existing_draft"},
+                      {"slot": 1, "searchQuery": "third", "origin": "existing_draft"}]}]}
+        calls = []
+        def fetch(query):
+            calls.append(query)
+            raise HTTPError("https://commons.wikimedia.org/", 429, "rate limited", {}, None)
+        rows = research_shard(plan, 0, fetch=fetch, sleep_seconds=0)["results"]
+        self.assertEqual(calls, ["first"])
+        self.assertEqual(rows[1]["status"], "rate_limited_deferred")
+
+    def test_targeted_search_preserves_draft_place_and_no_approval(self):
+        plan = make_plan(ROOT)
+        countries = {c["code"]: c for c in plan["countries"]}
+        for code, slot, query in [
+            ("BW", 0, "Chobe River Botswana"), ("GH", 1, "Besease shrine"),
+            ("HN", 1, "Copan ruins")
+        ]:
+            if code in countries:
+                row = countries[code]["slots"][slot]
+                self.assertEqual(row["alternateSearchQuery"], query)
+                self.assertFalse(row["publicationEligible"])
+        if "TN" in countries:
+            row = countries["TN"]["slots"][2]
+            self.assertIn("Carthage", row["searchQuery"])
+            self.assertIn("-Dougga", row["searchQuery"])
+            self.assertIn("originalSearchQuery", row)

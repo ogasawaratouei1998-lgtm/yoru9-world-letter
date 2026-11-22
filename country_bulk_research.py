@@ -21,6 +21,36 @@ from country_unesco_source_catalog import build_inventory, download_feed
 ROOT = Path(__file__).resolve().parent
 SHARDS = 8
 
+# Bounded alternative search vocabulary for empty results in the 2026-11-22
+# all-country research artifact. These are search terms only, not place verification.
+DRAFT_SEARCH_ALTERNATIVES = {
+    ("AL", 0): "Skanderbeg Square Tirana",
+    ("AM", 0): "Yerevan Republic Square",
+    ("AM", 1): "Haghpat Monastery",
+    ("BO", 0): "La Paz Bolivia city",
+    ("BO", 2): "Potosi Bolivia historic city",
+    ("BW", 0): "Chobe River Botswana",
+    ("GH", 1): "Besease shrine",
+    ("HN", 0): "Comayagua Cathedral",
+    ("HN", 1): "Copan ruins",
+    ("HN", 2): "Rio Platano Honduras",
+    ("KZ", 0): "Turkestan Kazakhstan",
+    ("KZ", 1): "Mausoleum of Khoja Ahmed Yasawi",
+    ("KZ", 2): "Tamgaly petroglyphs",
+    ("MT", 0): "Mdina Malta",
+    ("MT", 2): "Hagar Qim temple",
+    ("MY", 0): "Penang shophouses",
+    ("UZ", 0): "Samarkand Registan panorama",
+    ("UZ", 2): "Bukhara Kalyan minaret",
+}
+# The latest results for these searches were the wrong subject despite
+# containing the named site in their metadata. Use a more specific subject.
+DRAFT_SEARCH_REFINEMENTS = {
+    ("MY", 2): '"Deer Cave" Mulu -planarian -Bipalium',
+    ("TN", 2): '"Antonine Baths" Carthage -Dougga',
+}
+
+
 def _normalized_words(value):
     if not isinstance(value, str):
         return ""
@@ -79,6 +109,12 @@ def make_plan(root, inventory=None):
                     raise ValueError("Draft photo roles invalid: " + code)
                 item.update(place=existing[slot]["place"], searchQuery=existing[slot]["searchQuery"],
                             origin="existing_draft")
+                key = (code, slot)
+                if key in DRAFT_SEARCH_REFINEMENTS:
+                    item["originalSearchQuery"] = item["searchQuery"]
+                    item["searchQuery"] = DRAFT_SEARCH_REFINEMENTS[key]
+                if key in DRAFT_SEARCH_ALTERNATIVES:
+                    item["alternateSearchQuery"] = DRAFT_SEARCH_ALTERNATIVES[key]
             elif slot == 0:
                 # Quote the full country name and avoid unrelated generic search hits.
                 item.update(searchQuery='"' + english.replace('"', '') + '" landscape',
@@ -121,30 +157,42 @@ def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0):
                 row["status"] = "rate_limited_deferred"
             else:
                 row["status"] = "no_matching_metadata"
-                try:
-                    seen = set()
-                    for page in fetch(query):
-                        candidate = valid_candidate(page)
-                        if candidate and slot.get("origin") == "country_cover_research":
-                            if not cover_metadata_matches_country(candidate, slot.get("countryNames", [])):
-                                continue
-                        if candidate and candidate["commonsPage"] not in seen:
-                            row["candidates"].append(candidate)
-                            seen.add(candidate["commonsPage"])
-                            if len(seen) == 3:
-                                break
-                    if seen:
-                        row["status"] = "metadata_candidates_only"
-                except HTTPError as exc:
-                    row["status"] = "search_failed"
-                    row["httpStatus"] = exc.code
-                    if exc.code in (429, 503):
-                        throttled = True
-                except (URLError, TimeoutError, ValueError, OSError) as exc:
-                    row["status"] = "search_failed"
-                    row["errorType"] = type(exc).__name__
-                if sleep_seconds:
-                    time.sleep(sleep_seconds)
+                seen = set()
+                # At most two requests per slot; no retry after errors or throttling.
+                queries = [query]
+                alternate = slot.get("alternateSearchQuery")
+                if (slot.get("origin") == "existing_draft" and isinstance(alternate, str)
+                        and alternate.strip() and alternate != query):
+                    queries.append(alternate)
+                row["attemptedQueries"] = []
+                for term in queries:
+                    row["attemptedQueries"].append(term)
+                    try:
+                        for page in fetch(term):
+                            candidate = valid_candidate(page)
+                            if candidate and slot.get("origin") == "country_cover_research":
+                                if not cover_metadata_matches_country(candidate, slot.get("countryNames", [])):
+                                    continue
+                            if candidate and candidate["commonsPage"] not in seen:
+                                row["candidates"].append(candidate)
+                                seen.add(candidate["commonsPage"])
+                                if len(seen) == 3:
+                                    break
+                        if seen:
+                            row["status"] = "metadata_candidates_only"
+                    except HTTPError as exc:
+                        row["status"] = "search_failed"
+                        row["httpStatus"] = exc.code
+                        if exc.code in (429, 503):
+                            throttled = True
+                    except (URLError, TimeoutError, ValueError, OSError) as exc:
+                        row["status"] = "search_failed"
+                        row["errorType"] = type(exc).__name__
+                    finally:
+                        if sleep_seconds:
+                            time.sleep(sleep_seconds)
+                    if seen or row["status"] == "search_failed":
+                        break
             rows.append(row)
     return {"shard": shard, "results": rows, "statusCounts": dict(Counter(r["status"] for r in rows))}
 
