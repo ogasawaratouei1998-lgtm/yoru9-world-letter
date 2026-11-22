@@ -1080,6 +1080,31 @@ def source_bound_batch_drafts(response, groups):
     return selected
 
 
+# The November 22 A-editor request combined 24 long article groups with
+# diagnostics and returned two drafts. A smaller initial evidence window
+# leaves model context for actual incident writing; a larger overall queue
+# preserves independent sources for post-audit recovery.
+PRIMARY_EDITORIAL_GROUPS=6
+EDITORIAL_SHORTLIST_LIMIT=64
+
+def select_untried_source_groups(groups, attempted_ids, used_urls):
+    """Select source groups never attempted by the A-editor.
+
+    Never spend scarce independent review quota re-prompting the same evidence
+    when an earlier response returned zero stories. A failed/empty request is
+    still an attempt. Every recovered draft remains UNVERIFIED and goes through
+    the ordinary publisher-text, human-humor and B-editor checks.
+    """
+    return sorted(
+        (group for group in groups
+         if group["groupId"] not in attempted_ids
+         and not any(article["url"] in used_urls for article in group["articles"])),
+        key=lambda group:(
+            min(incident_priority(article)[0] for article in group["articles"]),
+            group["groupId"],
+        ),
+    )
+
 def draft_preflight_viable(story,now):
     """Fast comedy and date screening, never replaces source/fact review.
 
@@ -1274,7 +1299,7 @@ def main():
     # multi-region shortlist. Doing that selected only the first English
     # keyword matches and made newly registered local publishers invisible.
     groups.extend([[item] for item in unpaired])
-    groups=prioritize_comic_groups(groups,limit=36)
+    groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)
     shortlisted_regions=Counter()
     for group in groups:
         for region in {country_region(x.get("sourcecountry")) for x in group}:
@@ -1282,7 +1307,7 @@ def main():
     checkpoint("shortlist",candidate_review_groups=len(groups),
                paired_groups=sum(len(g)>=2 for g in groups),
                single_original_groups=sum(len(g)==1 for g in groups),
-               first_ai_batch_groups=min(24,len(groups)),
+               first_ai_batch_groups=min(PRIMARY_EDITORIAL_GROUPS,len(groups)),
                publisher_regions_shortlist=dict(shortlisted_regions))
     print('Review groups:',len(groups),'including original single-publisher reports;',raw_group_count,'initial pair hypotheses',flush=True)
     if len(groups)<1:
@@ -1291,10 +1316,10 @@ def main():
     # A flat article list can hide which sources are meant to corroborate one another.
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
         "url":item["url"],"text":item["text"][:4800]} for item in group]}
-        for i,group in enumerate(groups[:36])]
+        for i,group in enumerate(groups[:EDITORIAL_SHORTLIST_LIMIT])]
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
     allowed_pairs=set()
-    for group in groups[:36]:
+    for group in groups[:EDITORIAL_SHORTLIST_LIMIT]:
         for i,first in enumerate(group):
             for second in group[i+1:]:
                 if host(first["url"])!=host(second["url"]):
@@ -1314,7 +1339,8 @@ def main():
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
-      'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:24],ensure_ascii=False))
+      'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
+    attempted_group_ids={g["groupId"] for g in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]}
     if editorial_seconds_remaining()<100:
         checkpoint("budget_blocked")
         print("Editorial budget too low for safe independent review; no new publication.",flush=True)
@@ -1332,16 +1358,16 @@ def main():
         "no_respectful_comic_angle","other"}
     group_reasons={}
     if isinstance(diagnostics,list):
-        for item in diagnostics[:min(24,len(grouped_evidence))]:
+        for item in diagnostics[:min(PRIMARY_EDITORIAL_GROUPS,len(grouped_evidence))]:
             if not isinstance(item,dict):continue
             group_id=item.get("groupId")
             code=item.get("reasonCode")
-            if type(group_id) is int and 1<=group_id<=min(24,len(grouped_evidence)) and code in valid_codes:
+            if type(group_id) is int and 1<=group_id<=min(PRIMARY_EDITORIAL_GROUPS,len(grouped_evidence)) and code in valid_codes:
                 group_reasons[group_id]=code
     print("AI candidate group assessment:",json.dumps({
         "assessed":len(group_reasons),
-        "total":min(24,len(grouped_evidence)),
-        "fresh_backup_groups":max(0,len(grouped_evidence)-24),
+        "total":min(PRIMARY_EDITORIAL_GROUPS,len(grouped_evidence)),
+        "fresh_backup_groups":max(0,len(grouped_evidence)-PRIMARY_EDITORIAL_GROUPS),
         "reason_counts":{code:list(group_reasons.values()).count(code) for code in sorted(set(group_reasons.values()))}
     },sort_keys=True),flush=True)
     supplemental_attempts=0
@@ -1375,7 +1401,7 @@ def main():
                        for article in group["articles"])
         ),key=lambda g:(
             min(incident_priority(article)[0] for article in g["articles"]),
-            0 if g["groupId"]>24 else 1,
+            0 if g["groupId"]>PRIMARY_EDITORIAL_GROUPS else 1,
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
             g["groupId"]))
         # Pair two independent significant-personal-incident groups per request.
@@ -1417,6 +1443,9 @@ def main():
                 "Edition date JST: "+day+
                 ". Candidate groups (hypotheses, NOT proof): "+
                 json.dumps(batch,ensure_ascii=False))
+            # A failed or empty A call still marks its source groups as tried.
+            # Keep post-audit refill for independent, never-prompted articles.
+            attempted_group_ids.update(group["groupId"] for group in batch)
             try:
                 supplemental_attempts+=1
                 supplemental_groups_examined+=len(batch)
@@ -1495,13 +1524,10 @@ def main():
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
                    if isinstance(url,str)}
-        remaining=sorted(
-            (group for group in grouped_evidence
-             if not any(article["url"] in used_urls for article in group["articles"])),
-            key=lambda group:(
-                min(incident_priority(article)[0] for article in group["articles"]),
-                group["groupId"]))
-        print("After-review source-bound refill candidates:",len(remaining),flush=True)
+        remaining=select_untried_source_groups(
+            grouped_evidence, attempted_group_ids, used_urls)
+        print("After-review never-prompted source groups:",len(remaining),
+              "earlier groups attempted:",len(attempted_group_ids),flush=True)
         for offset in range(0,min(len(remaining),20),2):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
             if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
@@ -1528,6 +1554,7 @@ def main():
                 "when evidence is missing, harmful or not funny. Edition date: "+
                 day+". Candidate publisher text: "+
                 json.dumps(batch,ensure_ascii=False))
+            attempted_group_ids.update(group["groupId"] for group in batch)
             try:
                 supplemental_attempts+=1
                 supplemental_groups_examined+=len(batch)
