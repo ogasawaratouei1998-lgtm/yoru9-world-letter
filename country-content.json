@@ -221,7 +221,10 @@
     "am-geghard-rock-monastery-postcard",
     "bd-jaflong-tea-country-cover",
     "bd-nine-dome-mosque-postcard",
-    "bd-somapura-mahavihara-postcard"
+    "bd-somapura-mahavihara-postcard",
+    "ni-matagalpa-hills-cover",
+    "ni-leon-cathedral-postcard",
+    "ni-leon-viejo-ruins-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -8375,11 +8378,146 @@
     },
     "NI": {
       "name": "ニカラグア",
-      "status": "pending",
-      "portrait": null,
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "status": "approved",
+      "portrait": {
+        "lead": "レオンの白い聖堂から、火山の麓で眠る最初期の街へ",
+        "body": "ニカラグアには、独立した時代を生きる二つの世界遺産が残っています。レオンの白い大聖堂はバロックと新古典主義を融合させ、地震への備えを考えた低い塔と厚い壁が街の風景をつくります。一方、マナグア湖のほとりのレオン・ビエホ遺跡には、16世紀の都市の道路や建物の基礎が地中に残されていました。二つの「レオン」を写真で歩き比べると、都市が受け継いだものと、自然災害によって場所を移した歴史が見えてきます。2026年11月22日確認時点、外務省は全土に危険レベル1（十分注意）を発出しています。これは実際の渡航を勧めるものではなく、歴史と風景を学ぶ誌上旅行です。",
+        "facts": [
+          "世界文化遺産：レオン大聖堂（2011年）",
+          "世界文化遺産：レオン・ビエホ遺跡（2000年）",
+          "外務省：2026年11月22日現在、全土に危険レベル1"
+        ],
+        "photos": [
+          "ni-leon-cathedral-postcard",
+          "ni-leon-viejo-ruins-postcard"
+        ],
+        "sourceName": "UNESCO世界遺産センター：ニカラグア登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ni"
+      },
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/ni-matagalpa-hills-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg/960px-Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg",
+          "caption": "マタガルパ近郊フィンカ・エスペランサ・ベルデから柵越しに眺めた山並み",
+          "place": "マタガルパ近郊の緑の丘",
+          "author": "Adam Jones from Kelowna, BC, Canada",
+          "license": "CC BY-SA 2.0",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_(31275806990).jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "レオン大聖堂の建築に表れる主な様式の組み合わせは？",
+          "options": [
+            "後期バロックと新古典主義",
+            "古代ギリシャの神殿とピラミッド",
+            "中世日本の寝殿造りと書院造り"
+          ],
+          "answer": 0,
+          "fact": "1747年から19世紀初頭にかけて建設された聖堂には、後期バロックと新古典主義、地域の建築技術が融合しています。",
+          "quip": "優美な外観の裏には地震への備え。建築は見た目だけでなく、土地の知恵でもあります。",
+          "photoLabel": "正解写真｜レオン大聖堂とマキシモ・ヘレス記念碑",
+          "photoKey": "ni-leon-cathedral-postcard"
+        },
+        {
+          "question": "レオン・ビエホの都市が移転した背景にあるのは？",
+          "options": [
+            "極地探検のための移動",
+            "火山の噴火や1610年の地震",
+            "新しい海底都市の建設"
+          ],
+          "answer": 1,
+          "fact": "モモトンボ火山の噴火や1610年の地震などを経て、レオンの旧市街は放棄・移転されました。",
+          "quip": "都市の歴史には、完成した建物だけでなく、離れた場所の選択も刻まれています。",
+          "photoLabel": "正解写真｜レオン・ビエホ遺跡",
+          "photoKey": "ni-leon-viejo-ruins-postcard"
+        }
+      ],
+      "travelStops": {
+        "ni-matagalpa-hills-cover": {
+          "country": "ニカラグア",
+          "countryOnly": true,
+          "place": "マタガルパ近郊の緑の丘",
+          "region": "マタガルパ近郊の代表地点",
+          "latitude": 12.9249,
+          "longitude": -85.9163,
+          "note": "マタガルパ市街の代表地点であり、写真の正確な撮影位置ではありません。",
+          "photoCaption": "マタガルパ近郊フィンカ・エスペランサ・ベルデから柵越しに眺めた山並み",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg/960px-Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_(31275806990).jpg",
+          "photoAsset": "assets/travel/ni-matagalpa-hills-cover.jpg",
+          "author": "Adam Jones from Kelowna, BC, Canada",
+          "license": "CC BY-SA 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+          "coverOnly": true
+        },
+        "ni-leon-cathedral-postcard": {
+          "country": "ニカラグア",
+          "countryOnly": true,
+          "place": "レオン大聖堂とマキシモ・ヘレス記念碑",
+          "region": "レオン市・UNESCO世界遺産代表地点",
+          "latitude": 12.435,
+          "longitude": -86.8781,
+          "note": "UNESCOの遺産代表地点で、写真の正確な撮影座標ではありません。",
+          "photoCaption": "レオン大聖堂を背景に立つマキシモ・ヘレスの記念碑（2008年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Maximo_Jerez_Monument_-_Le%C3%B3n%2C_Nicaragua_2.jpg/960px-Maximo_Jerez_Monument_-_Le%C3%B3n%2C_Nicaragua_2.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Maximo_Jerez_Monument_-_Le%C3%B3n,_Nicaragua_2.jpg",
+          "photoAsset": "assets/travel/ni-leon-cathedral-postcard.jpg",
+          "author": "eric molina",
+          "license": "CC BY 2.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+          "famousTourist": true,
+          "travelStory": [
+            "広場に立って白い大聖堂を見上げると、低く幅の広い塔や穏やかに曲線を描く正面が、街の空に大きく浮かび上がります。写真では記念碑の奥に聖堂が見え、人々が集う公共空間と宗教建築の結び付きを感じられます。細部の装飾だけでなく、地震の多い土地に適した建物の輪郭にも注目したいところです。",
+            "UNESCOによるとレオン大聖堂は1747年から19世紀初頭にかけて建設され、後期バロックから新古典主義への移行を示しています。スペイン由来の平面構成に、グアテマラで発展した建築表現と地域の仕事が重なりました。低く厚い塔や水平性を強調した姿は地震への応答でもあり、外観の美しさから土地の環境と建築技術の交流を読み取れます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・レオン大聖堂",
+              "url": "https://whc.unesco.org/en/list/1236/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・ニカラグア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_254.html",
+              "checkedOn": "2026-11-22"
+            }
+          ]
+        },
+        "ni-leon-viejo-ruins-postcard": {
+          "country": "ニカラグア",
+          "countryOnly": true,
+          "place": "レオン・ビエホ遺跡",
+          "region": "プエルト・モモトンボ付近・UNESCO世界遺産代表地点",
+          "latitude": 12.40047,
+          "longitude": -86.61634,
+          "note": "UNESCOの遺産代表地点で、写真の正確な撮影座標ではありません。",
+          "photoCaption": "保護用屋根と石の基礎が残るレオン・ビエホ遺跡（2004年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/Ruinas_leon_viejo01.jpg/960px-Ruinas_leon_viejo01.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Ruinas_leon_viejo01.jpg",
+          "photoAsset": "assets/travel/ni-leon-viejo-ruins-postcard.jpg",
+          "author": "HHaefner",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "famousTourist": true,
+          "travelStory": [
+            "マナグア湖の西端にあるレオン・ビエホ遺跡では、かつての通りや建物の跡を、低い壁と基礎の並びから想像できます。保護屋根の下の遺構や地面の区画を眺め、どこが住居や宗教施設だったのかを探してみましょう。現在のレオン大聖堂とは離れた場所にある、もう一つのレオンの存在が街の歴史を立体的にします。",
+            "この都市は1524年にスペイン人によって建設されましたが、1578年のモモトンボ火山の噴火と1610年の地震などの災害を経て移転されました。UNESCOは道路の配置や宗教施設、民家の遺構が初期のスペイン植民都市の計画をよく伝えると評価しています。埋もれたまま残った部分が多く、古い町並みの痕跡は、災害と人々の選択が都市の運命を変えたことを静かに語ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・レオン・ビエホ遺跡",
+              "url": "https://whc.unesco.org/en/list/613/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・ニカラグア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_254.html",
+              "checkedOn": "2026-11-22"
+            }
+          ]
+        }
+      },
       "highlights": []
     },
     "NL": {

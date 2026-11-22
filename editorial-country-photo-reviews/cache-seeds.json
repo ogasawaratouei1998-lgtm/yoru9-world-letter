@@ -270,6 +270,51 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "country": "バングラデシュ",
       "place": "パハルプールのソーマプラ大僧院跡"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "NI-0.jpg",
+      "sha256": "f510eb25e7754122b377caf81a7782913681e8ef041b8aa7ac337c4d6532e81d",
+      "cover": true,
+      "photoAsset": "assets/travel/ni-matagalpa-hills-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg/960px-Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_%2831275806990%29.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_(31275806990).jpg",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "country": "ニカラグア",
+      "place": "マタガルパ近郊の緑の丘"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "NI-1.jpg",
+      "sha256": "8fdc1435c50ef63ef0eba1e5d9028ad7dbe24de0f0e792da9a86c4f1cbe919b1",
+      "cover": false,
+      "photoAsset": "assets/travel/ni-leon-cathedral-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/99/Maximo_Jerez_Monument_-_Le%C3%B3n%2C_Nicaragua_2.jpg/960px-Maximo_Jerez_Monument_-_Le%C3%B3n%2C_Nicaragua_2.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Maximo_Jerez_Monument_-_Le%C3%B3n,_Nicaragua_2.jpg",
+      "author": "eric molina",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "country": "ニカラグア",
+      "place": "レオン大聖堂とマキシモ・ヘレス記念碑"
+    },
+    {
+      "runId": 45017850362,
+      "artifactId": 14752761810,
+      "file": "NI-2.jpg",
+      "sha256": "a2f51df9172b5ce6d29f6cdb3fd36b2d35b3ed648913f94191b4271663644585",
+      "cover": false,
+      "photoAsset": "assets/travel/ni-leon-viejo-ruins-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/12/Ruinas_leon_viejo01.jpg/960px-Ruinas_leon_viejo01.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Ruinas_leon_viejo01.jpg",
+      "author": "HHaefner",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "ニカラグア",
+      "place": "レオン・ビエホ遺跡"
     }
   ]
 }
