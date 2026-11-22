@@ -14,6 +14,18 @@ from urllib.error import HTTPError
 # Bounded for the full 196-country photo catalog, including long travel essays.
 MAX_PUBLIC_PHOTO_MANIFEST_BYTES = 8 * 1024 * 1024
 
+def photo_cache_path(cache_root, stop, cover):
+    """One provenance-sensitive cache identity for downloads and reviewed seeds."""
+    identity = {"asset": stop["photoAsset"], "url": stop["photo"],
+                "page": stop["photoPage"], "author": stop.get("author"),
+                "license": stop.get("license"), "licenseUrl": stop.get("licenseUrl"),
+                "country": stop.get("country"), "place": stop.get("place"),
+                "cover": cover}
+    digest = hashlib.sha256(json.dumps(identity, sort_keys=True,
+                           ensure_ascii=False).encode("utf-8")).hexdigest()
+    return Path(cache_root) / (digest + ".jpg")
+
+
 def bundle_travel_photos(root, output):
     """Package real, rights-checked destination photos with the page.
 
@@ -113,14 +125,7 @@ def bundle_travel_photos(root, output):
             # only its previously downloaded image bytes may be reused.
             provenance=next(stop for stop in stops.values()
                             if stop["photoAsset"]==asset)
-            identity={"asset":asset,"url":url,"page":provenance["photoPage"],
-                      "author":provenance.get("author"),"license":provenance.get("license"),
-                      "licenseUrl":provenance.get("licenseUrl"),
-                      "country":provenance.get("country"),"place":provenance.get("place"),
-                      "cover":cover}
-            digest=hashlib.sha256(json.dumps(identity,sort_keys=True,
-                               ensure_ascii=False).encode("utf-8")).hexdigest()
-            cache_file=cache_root/(digest+".jpg")
+            cache_file=photo_cache_path(cache_root, provenance, cover)
             cache_files[asset]=cache_file
             if cache_file.is_file():
                 try:
