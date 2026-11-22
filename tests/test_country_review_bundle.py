@@ -54,3 +54,36 @@ class ReviewBundleTests(unittest.TestCase):
             s = write_bundle(queue, tmp, 12, fetch=throttle, sleep_seconds=0)
             self.assertEqual(s["downloadedUnreviewedPreviews"], 0)
             self.assertEqual(queue[0]["slots"][1]["previewStatus"], "rate_limited_deferred")
+
+    def test_visual_rejection_is_scoped_and_next_distinct_original_is_used(self):
+        data = {"KE": {"name": "Kenya", "status": "pending"}}
+        report = {"results": [
+            row("KE", 0, ["Cover.jpg"]),
+            row("KE", 1, ["Lamu_Pharmacy.jpg", "Lamu%20Pharmacy.jpg", "Old_Town.jpg"]),
+            row("KE", 2, ["Fort.jpg"]),
+        ]}
+        queue = make_queue(report, data)
+        slot = queue[0]["slots"][1]
+        self.assertEqual(candidate_identity(slot["candidate"]), "Old Town.jpg")
+        self.assertEqual(len(slot["visualRejections"]), 1)
+        self.assertEqual(slot["visualRejections"][0]["originalIdentity"], "Lamu Pharmacy.jpg")
+        self.assertFalse(slot["visualVerified"])
+        self.assertFalse(queue[0]["publicationEligible"])
+        report["results"][1] = row("KE", 1, ["Lamu_Pharmacy.jpg"])
+        self.assertFalse(make_queue(report, data)[0]["threeDistinctCandidates"])
+        report["results"][0] = row("KE", 0, ["Lamu_Pharmacy.jpg"])
+        report["results"][1] = row("KE", 1, ["Old_Town.jpg"])
+        self.assertTrue(make_queue(report, data)[0]["threeDistinctCandidates"])
+
+    def test_visual_rejections_record_costa_rica_panorama_failures(self):
+        data = {"CR": {"name": "Costa Rica", "status": "pending"}}
+        report = {"results": [
+            row("CR", 0, ["1999_casona_santa_rosa_Panorama.jpg", "Forest.jpg"]),
+            row("CR", 1, ["Santa_Rosa_guanacaste.jpg", "Conservation_Area.jpg"]),
+            row("CR", 2, ["Spheres.jpg"]),
+        ]}
+        queue = make_queue(report, data)
+        self.assertEqual(queue[0]["candidateCounts"], [1, 1, 1])
+        self.assertEqual([len(s["visualRejections"]) for s in queue[0]["slots"]], [1, 1, 0])
+        self.assertTrue(queue[0]["threeDistinctCandidates"])
+        self.assertFalse(queue[0]["publicationEligible"])
