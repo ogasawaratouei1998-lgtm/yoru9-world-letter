@@ -5,17 +5,14 @@ on:
   schedule:
     # 11:20 JST on Monday and Thursday; no paid services or push notifications
     - cron: '20 2 * * 1,4'
-  push:
-    branches: [main]
-    paths:
-      # Every new editorial draft batch triggers its own free photo-source research
-      - 'country-expansion-batch-*.json'
-      - 'country_photo_candidates.py'
-      - 'country_unesco_source_catalog.py'
-      - '.github/workflows/research-country-photos.yml'
+  # Batch merges already trigger the all-country research workflow.
 
 permissions:
   contents: read
+
+concurrency:
+  group: country-commons-research
+  cancel-in-progress: false
 
 jobs:
   research:
