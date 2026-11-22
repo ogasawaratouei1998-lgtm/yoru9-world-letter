@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "DZ": {
+      "name": "アルジェリア",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/dz",
+      "portrait": {
+        "lead": "山の地形に刻まれた古代ローマと中世のイスラム都市",
+        "body": "北アフリカのアルジェリアには、山地に合わせて造られた古代ローマの都市ジェミラと、ハンマード朝の最初の都ベニ・ハンマードの城塞が残ります。広場、石造りの建物、城壁の跡を通して、異なる時代の都市文化を読み解く誌上旅行です。2026年11月22日確認時点で外務省の危険情報が発出され、一部国境地帯などはレベル4です。実際の渡航を勧めるものではありません。",
+        "facts": [
+          "ベニ・ハンマードの城塞：1980年世界遺産登録",
+          "ジェミラ：1982年世界遺産登録"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アルジェリアの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/dz"
+      },
+      "travelDrafts": [
+        {
+          "place": "ベニ・ハンマードの城塞",
+          "travelStory": [
+            "山の斜面を背景に、石を積み上げた四角い塔がそびえています。周囲の地面に残る低い壁と塔を見比べると、現在は静かな場所にかつて大きな街が存在したことを想像できます。山の斜面と建物の位置関係を眺め、都を守るために地形をどう使ったのか、写真から読み取ってみましょう。",
+            "ハンマード朝の最初の都は1007年に築かれ、軍事拠点から繁栄する都市へと発展しました。現在も大モスクの塔や宮殿、城壁などの遺構が残っています。ユネスコはこの遺跡を、当時の北アフリカの建築と都市文化を知るうえで重要な証拠として評価しています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ベニ・ハンマードの城塞",
+              "url": "https://whc.unesco.org/en/list/102/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・アルジェリア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ベニ・ハンマードの城塞が築かれた目的と歴史は？",
+            "options": [
+              "ハンマード朝の最初の都",
+              "古代エジプトの港",
+              "近代の鉄道駅"
+            ],
+            "answer": 0,
+            "fact": "1007年に築かれた軍事拠点がハンマード朝の都として発展し、モスクや宮殿の跡を残しました。",
+            "photoGoal": "ベニ・ハンマードの城塞の実際の遺構を確認できる権利確認済みの風景写真"
+          },
+          "commonsSearch": "Qal'at Bani Hammad M'Sila Province Algeria 2010-2 Yelles",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ジェミラ",
+          "travelStory": [
+            "山に囲まれた斜面に石の建物が集まる風景は、平坦な場所に広がる古代都市とは異なる表情を見せます。広場へつながる通りや建物の高さの違いに目を向けると、当時の人々が地形に合わせて街を整えていたことがうかがえます。石の遺構の向こうに市場や日常の暮らしを想像してみましょう。",
+            "古代の名をクイクルというジェミラは、ローマ皇帝ネルウァの時代に植民市として建設されました。標高約900メートルという山地にありながら、広場や神殿、凱旋門などが造られました。三世紀初頭には城壁の外にも市街地が広がり、地形に合わせて古代ローマ式の都市計画が発展した例です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ジェミラ",
+              "url": "https://whc.unesco.org/en/list/191/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・アルジェリア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ジェミラの都市計画の特徴は？",
+            "options": [
+              "海底に建てた街",
+              "山地に合わせたローマ式都市計画",
+              "木造だけの遊牧集落"
+            ],
+            "answer": 1,
+            "fact": "ローマ式の広場や公共建築を山地の制約に合わせて配置した点が世界遺産として評価されています。",
+            "photoGoal": "ジェミラの実際の遺構を確認できる権利確認済みの風景写真"
+          },
+          "commonsSearch": "Djémila Algeria Roman ruins panorama",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Hassania Ain el Defla Algeria landscape",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
