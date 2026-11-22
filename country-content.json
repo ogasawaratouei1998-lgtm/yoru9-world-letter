@@ -209,7 +209,10 @@
     "gh-cape-coast-castle-postcard",
     "mt-mdina-cathedral-cover",
     "mt-valletta-harbour-postcard",
-    "mt-hagar-qim-temple-postcard"
+    "mt-hagar-qim-temple-postcard",
+    "dz-hassania-mountains-cover",
+    "dz-beni-hammad-minaret-postcard",
+    "dz-djemila-roman-ruins-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -2900,7 +2903,7 @@
     },
     "DZ": {
       "name": "アルジェリア",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "山の地形に刻まれた古代ローマと中世のイスラム都市",
         "body": "北アフリカのアルジェリアには、山地に合わせて造られた古代ローマの都市ジェミラと、ハンマード朝の最初の都ベニ・ハンマードの城塞が残ります。広場、石造りの建物、城壁の跡を通して、異なる時代の都市文化を読み解く誌上旅行です。2026年11月22日確認時点で外務省の危険情報が発出され、一部国境地帯などはレベル4です。実際の渡航を勧めるものではありません。",
@@ -2908,13 +2911,147 @@
           "ベニ・ハンマードの城塞：1980年世界遺産登録",
           "ジェミラ：1982年世界遺産登録"
         ],
-        "photos": [],
+        "photos": [
+          "dz-beni-hammad-minaret-postcard",
+          "dz-djemila-roman-ruins-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：アルジェリアの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/dz"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/dz-hassania-mountains-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/LAndscape_from_Hassania%2C_Ain_el_defla.jpg/960px-LAndscape_from_Hassania%2C_Ain_el_defla.jpg",
+          "caption": "アイン・デフラ県の山並みと森林を遠望した景色（2018年）",
+          "author": "FETHI BOUHAOUCHINE",
+          "license": "CC BY-SA 4.0",
+          "place": "エル・ハッサニアの山並み",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:LAndscape_from_Hassania,_Ain_el_defla.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "ベニ・ハンマードの城塞が築かれた目的と歴史は？",
+          "options": [
+            "ハンマード朝の最初の都",
+            "古代エジプトの港",
+            "近代の鉄道駅"
+          ],
+          "answer": 0,
+          "fact": "1007年に築かれた軍事拠点がハンマード朝の都として発展し、モスクや宮殿の跡を残しました。",
+          "quip": "山の静けさに残る塔は、かつてここが都だった証拠。時代の大きさを一基の塔が語ります。",
+          "photoLabel": "正解写真｜ベニ・ハンマードの城塞",
+          "photoKey": "dz-beni-hammad-minaret-postcard"
+        },
+        {
+          "question": "ジェミラの都市計画の特徴は？",
+          "options": [
+            "海底に建てた街",
+            "山地に合わせたローマ式都市計画",
+            "木造だけの遊牧集落"
+          ],
+          "answer": 1,
+          "fact": "ローマ式の広場や公共建築を山地の制約に合わせて配置した点が世界遺産として評価されています。",
+          "quip": "山地にも都市の設計図がある。ローマの街づくりは平野だけのものではありません。",
+          "photoLabel": "正解写真｜ジェミラのローマ遺跡",
+          "photoKey": "dz-djemila-roman-ruins-postcard"
+        }
+      ],
+      "travelStops": {
+        "dz-hassania-mountains-cover": {
+          "country": "アルジェリア",
+          "countryOnly": true,
+          "place": "エル・ハッサニアの山並み",
+          "region": "アイン・デフラ県・エル・ハッサニア（自治体参考地点）",
+          "latitude": 35.9892,
+          "longitude": 1.9319,
+          "note": "エル・ハッサニア自治体の参考位置。写真の正確な撮影点ではありません。アイン・デフラ県の大部分は危険レベル3であり、渡航は止めてください。",
+          "photoCaption": "アイン・デフラ県の山並みと森林を遠望した景色（2018年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/LAndscape_from_Hassania%2C_Ain_el_defla.jpg/960px-LAndscape_from_Hassania%2C_Ain_el_defla.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:LAndscape_from_Hassania,_Ain_el_defla.jpg",
+          "photoAsset": "assets/travel/dz-hassania-mountains-cover.jpg",
+          "author": "FETHI BOUHAOUCHINE",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "coverOnly": true
+        },
+        "dz-beni-hammad-minaret-postcard": {
+          "country": "アルジェリア",
+          "countryOnly": true,
+          "place": "ベニ・ハンマードの城塞",
+          "region": "ムシラ県（世界遺産代表地点）",
+          "latitude": 35.81844,
+          "longitude": 4.78684,
+          "note": "UNESCO世界遺産の代表地点。撮影位置とは異なります。最新の外務省危険情報を確認してください。",
+          "photoCaption": "山地に残るベニ・ハンマードの大モスクのミナレット（2010年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg/960px-Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Qal%27at_Bani_Hammad,_M%27Sila_Province,_Algeria_2010-2.jpg",
+          "photoAsset": "assets/travel/dz-beni-hammad-minaret-postcard.jpg",
+          "author": "Yelles",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "山の斜面を背景に、石を積み上げた四角い塔がそびえています。周囲の地面に残る低い壁と塔を見比べると、現在は静かな場所にかつて大きな街が存在したことを想像できます。山の斜面と建物の位置関係を眺め、都を守るために地形をどう使ったのか、写真から読み取ってみましょう。",
+            "ハンマード朝の最初の都は1007年に築かれ、軍事拠点から繁栄する都市へと発展しました。現在も大モスクの塔や宮殿、城壁などの遺構が残っています。ユネスコはこの遺跡を、当時の北アフリカの建築と都市文化を知るうえで重要な証拠として評価しています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ベニ・ハンマードの城塞",
+              "url": "https://whc.unesco.org/en/list/102/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・アルジェリア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "UNESCO・ベニ・ハンマード世界遺産の登録区域図",
+              "url": "https://whc.unesco.org/en/list/102/maps/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "dz-djemila-roman-ruins-postcard": {
+          "country": "アルジェリア",
+          "countryOnly": true,
+          "place": "ジェミラのローマ遺跡",
+          "region": "セティフ県（写真撮影位置）",
+          "latitude": 36.321023,
+          "longitude": 5.735891,
+          "note": "Commonsに登録された撮影地点。実際の渡航を勧めるものではありません。",
+          "photoCaption": "ジェミラの石柱群と古代ローマの遺構を望むパノラマ（2016年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg/960px-Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Panorama_Djemila_(Cuicul)_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+          "photoAsset": "assets/travel/dz-djemila-roman-ruins-postcard.jpg",
+          "author": "habib kaki",
+          "license": "CC BY 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+          "travelStory": [
+            "山に囲まれた斜面に石の建物が集まる風景は、平坦な場所に広がる古代都市とは異なる表情を見せます。広場へつながる通りや建物の高さの違いに目を向けると、当時の人々が地形に合わせて街を整えていたことがうかがえます。石の遺構の向こうに市場や日常の暮らしを想像してみましょう。",
+            "古代の名をクイクルというジェミラは、ローマ皇帝ネルウァの時代に植民市として建設されました。標高約900メートルという山地にありながら、広場や神殿、凱旋門などが造られました。三世紀初頭には城壁の外にも市街地が広がり、地形に合わせて古代ローマ式の都市計画が発展した例です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ジェミラ",
+              "url": "https://whc.unesco.org/en/list/191/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・アルジェリア",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "UNESCO・ジェミラ世界遺産の登録区域図",
+              "url": "https://whc.unesco.org/en/list/191/maps/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "EC": {
