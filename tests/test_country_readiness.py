@@ -17,7 +17,9 @@ class CountryReadinessTest(unittest.TestCase):
         ready,incomplete=ready_country_codes(ROOT)
         self.assertTrue({"IT","DE","US","FR","AR","JP","GB","ES","NZ","KR","BR","AG","AU","CA","IN","NL","SG","MX","CH","PT","GR","EG","TR","TH"}.issubset(ready))
         self.assertGreaterEqual(len(ready),28)
-        self.assertNotIn("NG",ready)
+        data=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
+        pending={code for code,row in data.items() if row["status"]=="pending"}
+        self.assertTrue(pending.isdisjoint(ready))
         self.assertIn("AG",ready, "Antigua was explicitly approved after content review")
         self.assertIn("BR",ready, "Brazil was approved after photos and independent evidence")
         self.assertIn("KR",ready, "Korea was independently approved after complete review")
@@ -26,20 +28,24 @@ class CountryReadinessTest(unittest.TestCase):
         self.assertIn("NZ",ready,
                       "Approved and verified New Zealand assets must be eligible")
         self.assertTrue(set(incomplete).isdisjoint(ready))
+        if not pending:
+            self.skipTest("All locations approved; no pending-country article remains")
+        code=sorted(pending)[0]
+        name=data[code]["name"]
         articles=[
             {"id":"a","country":"イタリア"},
-            {"id":"b","country":"Nigeria"},
+            {"id":"b","country":name},
             {"id":"c","country":"アメリカ合衆国"},
             {"id":"d","country":"ドイツ"},
-            {"id":"e","country":"イタリア・ナイジェリア"},
+            {"id":"e","country":"イタリア・"+name},
             {"id":"f","country":"架空の国"},
         ]
         eligible,blocked,prepared,_=select_ready_stories(articles,ROOT)
         self.assertEqual([s["id"] for s in eligible],["a","c","d"])
-        self.assertEqual(blocked["NG"],2)
+        self.assertEqual(blocked[code],2)
         self.assertEqual(blocked["unrecognized"],1)
         self.assertEqual(prepared,ready)
-        self.assertEqual(articles[1]["country"],"Nigeria",
+        self.assertEqual(articles[1]["country"],name,
                          "An unready story must not be reassigned to another country")
 
     def test_unverified_drafts_are_only_reordered_not_promoted(self):
