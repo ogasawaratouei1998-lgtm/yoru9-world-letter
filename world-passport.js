@@ -4,6 +4,10 @@
  * licensed sources and are disclosed only after answering. */
 'use strict';
 const WORLD_PASSPORT_QUIZZES=Object.freeze({
+ AL:[
+  {question:'ベラトの街並みに残る代表的な建築文化は？',options:['オスマン期の建築','近代の宇宙基地','古代インカの建築'],answer:0,fact:'ベラトとジロカストラにはオスマン期の建築文化が残ります。',quip:'窓の数だけ街の歴史。丘全体が建築の資料室です。',photoLabel:'正解写真｜ベラト歴史地区',photoKey:'al-berat-mangalem-postcard'},
+  {question:'ブトリントに残る歴史の特徴は？',options:['単一の近代工場だけ','同じ場所に複数時代の都市遺構','氷河の自然洞窟'],answer:1,fact:'ギリシャ、ローマ、ビザンツなど異なる時代の遺構が重なります。',quip:'何世紀もの都市が同じ場所に重なっています。遺跡は歴史の重ね着です。',photoLabel:'正解写真｜ブトリント遺跡',photoKey:'al-butrint-theatre-postcard'},
+ ],
  AR:[
   {question:'イグアスの滝を包む風景は？',options:['熱帯の森','氷の洞窟','砂漠の砂丘'],answer:0,photoKey:'ar-iguazu-postcard',photoLabel:'正解の風景｜イグアスの滝と熱帯の森',fact:'アルゼンチン北東部のイグアスの滝は、熱帯の森に囲まれています。',quip:'水の勢いがすごすぎて、森まで拍手しているように見える。'},
   {question:'アルゼンチンのマテ茶に似合うのは？',options:['車の給油','語らいのひととき','壁のペンキ塗り'],answer:1,photoKey:'ar-mate-quiz-image',photoLabel:'正解の文化｜マテ茶の器とボンビージャ',fact:'マテ茶はアルゼンチンの日常や人との語らいの中で親しまれています。',quip:'どれだけ話が弾んでも、オチまでは淹れてくれない。'},
