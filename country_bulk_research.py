@@ -10,7 +10,9 @@ import argparse
 from collections import Counter
 import json
 from pathlib import Path
+import re
 import time
+import unicodedata
 from urllib.error import HTTPError, URLError
 
 from country_photo_candidates import draft_queries, fetch_commons, valid_candidate
@@ -18,6 +20,27 @@ from country_unesco_source_catalog import build_inventory, download_feed
 
 ROOT = Path(__file__).resolve().parent
 SHARDS = 8
+
+def _normalized_words(value):
+    if not isinstance(value, str):
+        return ""
+    return " ".join(re.findall(r"[^\W_]+", unicodedata.normalize("NFKC", value).casefold()))
+
+
+def cover_metadata_matches_country(candidate, country_names):
+    """Triage only: require a complete country-name phrase in cover metadata.
+
+    Commons search can return files containing only a generic word such as
+    "landscape" from a different country. Match whole words to avoid treating
+    Nigeria as Niger. This check cannot replace a review of the actual image.
+    """
+    fields = [_normalized_words(candidate.get(key)) for key in ("file", "description")]
+    for name in country_names:
+        phrase = _normalized_words(name)
+        if len(phrase) >= 4 and any(" " + phrase + " " in " " + field + " " for field in fields):
+            return True
+    return False
+
 
 def make_plan(root, inventory=None):
     root = Path(root)
@@ -40,7 +63,9 @@ def make_plan(root, inventory=None):
         country = index[code]
         english = next((a for a in country.get("aliases", []) if isinstance(a, str) and a.strip()), country["name"])
         # Prefer explicit longer aliases over an abbreviation, e.g. UAE.
-        english = max((a for a in country.get("aliases", []) if isinstance(a, str) and a.strip()), key=len, default=english)
+        aliases = [a.strip() for a in country.get("aliases", []) if isinstance(a, str) and a.strip()]
+        latin_aliases = [a for a in aliases if re.search(r"[A-Za-z]", a)]
+        english = max(latin_aliases or aliases, key=len, default=english)
         source = (inventory or {}).get("countries", {}).get(code, {})
         official = source.get("sampleSourcePages", [])
         existing = drafts.get(code, [])
@@ -55,7 +80,10 @@ def make_plan(root, inventory=None):
                 item.update(place=existing[slot]["place"], searchQuery=existing[slot]["searchQuery"],
                             origin="existing_draft")
             elif slot == 0:
-                item.update(searchQuery=english + " landscape city architecture", origin="country_cover_research")
+                # Quote the full country name and avoid unrelated generic search hits.
+                item.update(searchQuery='"' + english.replace('"', '') + '" landscape',
+                            origin="country_cover_research",
+                            countryNames=[country["name"], *aliases])
             elif len(official) >= slot:
                 site = official[slot - 1]
                 item.update(place=site["name"], searchQuery=site["name"] + " " + english,
@@ -97,6 +125,9 @@ def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0):
                     seen = set()
                     for page in fetch(query):
                         candidate = valid_candidate(page)
+                        if candidate and slot.get("origin") == "country_cover_research":
+                            if not cover_metadata_matches_country(candidate, slot.get("countryNames", [])):
+                                continue
                         if candidate and candidate["commonsPage"] not in seen:
                             row["candidates"].append(candidate)
                             seen.add(candidate["commonsPage"])

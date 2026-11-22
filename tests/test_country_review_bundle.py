@@ -87,3 +87,19 @@ class ReviewBundleTests(unittest.TestCase):
         self.assertEqual([len(s["visualRejections"]) for s in queue[0]["slots"]], [1, 1, 0])
         self.assertTrue(queue[0]["threeDistinctCandidates"])
         self.assertFalse(queue[0]["publicationEligible"])
+
+    def test_second_pharmacy_and_wrong_country_cover_are_not_selected(self):
+        data = {"KE": {"name": "Kenya", "status": "pending"},
+                "MU": {"name": "Mauritius", "status": "pending"}}
+        report = {"results": [
+            row("KE", 0, ["Cover.jpg"]),
+            row("KE", 1, ["Lamu_Pharmacy2021.jpg", "Old_Town.jpg"]),
+            row("KE", 2, ["Fort.jpg"]),
+            row("MU", 0, ["Hausdülmen_--_2014_--_5879.jpg", "Port_Louis.jpg"]),
+            row("MU", 1, ["Aapravasi.jpg"]),
+            row("MU", 2, ["Le_Morne.jpg"]),
+        ]}
+        queue = {item["code"]: item for item in make_queue(report, data)}
+        self.assertEqual(candidate_identity(queue["KE"]["slots"][1]["candidate"]), "Old Town.jpg")
+        self.assertEqual(candidate_identity(queue["MU"]["slots"][0]["candidate"]), "Port Louis.jpg")
+        self.assertTrue(all(not item["publicationEligible"] for item in queue.values()))
