@@ -28,8 +28,9 @@ class NextEightUnescoCountryTests(unittest.TestCase):
                     # The original source-backed draft is immutable; approval
                     # separately appends verified current regional danger levels.
                     self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
-                    for level in ("危険レベル4", "危険レベル2", "危険レベル1"):
-                        self.assertIn(level, country["portrait"]["body"])
+                    self.assertIn("危険レベル4", country["portrait"]["body"])
+                    self.assertIn("隣接地域をレベル2", country["portrait"]["body"])
+                    self.assertIn("多くの地域をレベル1", country["portrait"]["body"])
                     self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
                 else:
                     self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
