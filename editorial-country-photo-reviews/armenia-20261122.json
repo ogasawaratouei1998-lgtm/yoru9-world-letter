@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "countryCode": "AM",
+  "reviewedOn": "2026-11-22",
+  "status": "visually_and_license_reviewed_not_public_until_ci",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 44986532608,
+    "artifactId": 14739947105,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "file": "AM-0.jpg",
+      "sha256": "1bfe43b8cdd69fae0a3dbe9646936445d8577d8f7fdcd97fa3be95c8ac14cd60",
+      "dimensions": [
+        1280,
+        960
+      ],
+      "photoAsset": "assets/travel/am-yerevan-republic-square-cover.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Republic-square-Yerevan_(5).JPG",
+      "author": "23artashes",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "エレバン・共和国広場",
+      "downloadedFromArtifact": true,
+      "siteVisuallyReviewed": true,
+      "reviewNote": "Rainy Yerevan Republic Square and monumental urban facade; country cover is not claimed as UNESCO property."
+    },
+    {
+      "slot": 1,
+      "file": "AM-1.jpg",
+      "sha256": "12dd9c53d292c9190f0a47efdb58c44f04caa95d23d51c6527f8871fd9d13eea",
+      "dimensions": [
+        960,
+        720
+      ],
+      "photoAsset": "assets/travel/am-haghpat-monastery-postcard.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Haghpat_monastery_complex_cutted_026.jpg",
+      "author": "Ahaik",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "ハフパト修道院",
+      "downloadedFromArtifact": true,
+      "siteVisuallyReviewed": true,
+      "reviewNote": "Haghpat church/bell tower exterior confirmed on Commons and UNESCO component map."
+    },
+    {
+      "slot": 2,
+      "file": "AM-2.jpg",
+      "sha256": "6a55c94e493b009ed0ffff3534181229edeba4530871988bd68ea0f80aef684b",
+      "dimensions": [
+        800,
+        532
+      ],
+      "photoAsset": "assets/travel/am-geghard-rock-monastery-postcard.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Beautiful_Geghard_Monastery.jpg",
+      "author": "c a r a m e l",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "place": "ゲガルド修道院の岩窟空間",
+      "downloadedFromArtifact": true,
+      "siteVisuallyReviewed": true,
+      "reviewNote": "Geghard carved rock chapel entrance; native 800×532 jpeg is sufficient only as a history postcard, never a retina cover."
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/list/777/",
+    "https://whc.unesco.org/en/list/777/maps/",
+    "https://whc.unesco.org/en/list/960/",
+    "https://whc.unesco.org/en/list/960/maps/",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_199.html"
+  ],
+  "safetyNote": "MOFA Armenia 2026-11-22: border region level 4, adjacent level 2, Yerevan and most other areas level 1. This is a desk-based cultural trip, not travel encouragement.",
+  "requiredBeforeApproval": [
+    "validate_source_page_filename_author_and_license",
+    "canonical_runtime_export_consistency",
+    "sha256_pinned_asset_downloads",
+    "full_public_site_build",
+    "mobile_320_375_393_preview"
+  ]
+}
