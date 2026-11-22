@@ -40,6 +40,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'写真に写るサンパウロの有名な大通りは？',options:['アヴェニーダ・パウリスタ','シャンゼリゼ通り','フィフス・アベニュー'],answer:0,photoKey:'brazil-paulista-quiz-image',photoLabel:'正解の通り｜サンパウロ・アヴェニーダ・パウリスタ',fact:'アヴェニーダ・パウリスタはサンパウロの文化施設が集まる通りで、MASPなどが並びます。',quip:'通りを歩けば美術館が次々登場。散歩が文化祭になりそう。'},
   {question:'ブラジル側から撮影したこの滝は何という？',options:['エンジェルフォール','イグアスの滝','ヴィクトリアの滝'],answer:1,photoKey:'brazil-iguacu-brazil-side-quiz-image',photoLabel:'正解の滝｜ブラジル側から見たイグアスの滝',fact:'イグアスの滝はブラジルとアルゼンチンにまたがり、ブラジル側のイグアス国立公園は1986年にUNESCO世界遺産へ登録されました。',quip:'国境より目立つのは水しぶき。滝の迫力に地図が負ける。'},
  ],
+ BW:[
+  {question:'オカバンゴ・デルタの水が広がる時期の特徴は？',options:['現地の乾季に洪水が到達する','冬の雪解けだけで増水する','海の満潮だけで増水する'],answer:0,fact:'上流からの水が現地の乾季に届き、湿地の季節的な変化を生みます。',quip:'海まで届かなくても、内陸に豊かな湿地は生まれる。水の行き先も生態系の一部です。',photoLabel:'正解写真｜オカバンゴ・デルタ',photoKey:'bw-okavango-delta-postcard'},
+  {question:'ツォディロに多数残る文化的な記録は？',options:['紙の地図','岩絵','青銅製の貨幣'],answer:1,fact:'岩絵は四千五百点を超え、考古学資料とともに長い人間活動の記録を伝えます。',quip:'丘の写真は文化史への入口。岩絵が刻まれた長い時間を、資料とともにたどります。',photoLabel:'正解写真｜ツォディロの岩山',photoKey:'bw-tsodilo-hills-postcard'},
+ ],
  CA:[
   {question:'ケベック旧市街の歴史地区が世界文化遺産に登録された年は？',options:['2007年','1985年','1950年'],answer:1,photoKey:'ca-old-quebec-postcard',photoLabel:'正解写真｜ケベック旧市街',fact:'ケベック旧市街の歴史地区は1985年に世界文化遺産へ登録されました。',quip:'城壁の街。いまは観光客のカメラがあちこちに陣取っている。'},
   {question:'カナダで最初の国立公園として知られる場所は？',options:['バンフ国立公園','ヨセミテ国立公園','フィヨルドランド国立公園'],answer:0,photoKey:'ca-banff-lake-louise-postcard',photoLabel:'正解写真｜バンフ国立公園',fact:'1885年に始まったバンフは、カナダで最初の国立公園として公園局に紹介されています。',quip:'カナダで最初の国立公園。絶景にも歴史にも先輩の貫禄。'},
