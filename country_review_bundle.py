@@ -8,6 +8,7 @@ Never write to country-content.json or the published site.
 from __future__ import annotations
 
 import argparse
+import hashlib
 from collections import defaultdict
 from itertools import product
 import json
@@ -142,6 +143,22 @@ def download_preview(url):
         raise ValueError("Preview size or JPEG markers invalid")
     return data
 
+def review_image_url(candidate, slot):
+    """Prefer release-size covers without requesting a second preview.
+
+    The original Commons file identity is unchanged; this is not approval.
+    Small original files stay at native resolution and remain subject to QA.
+    """
+    preview = candidate["preview"]
+    dimensions = candidate.get("dimensions", [])
+    if slot == 0 and len(dimensions) == 2 and dimensions[0] >= 1280:
+        larger = re.sub(r"/[0-9]+px-(?=[^/?]+(?:\?|$))", "/1280px-", preview)
+        if (valid_preview_url(larger) and
+                _commons_identity(larger) == candidate_identity(candidate)):
+            return larger
+    return preview
+
+
 def write_bundle(queue, output, limit, fetch=download_preview, sleep_seconds=1.0):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
@@ -156,10 +173,13 @@ def write_bundle(queue, output, limit, fetch=download_preview, sleep_seconds=1.0
                 slot["previewStatus"] = "rate_limited_deferred"
                 continue
             try:
-                data = fetch(candidate["preview"])
+                reviewed_url = review_image_url(candidate, slot["slot"])
+                data = fetch(reviewed_url)
                 dest = row["code"] + "-" + str(slot["slot"]) + ".jpg"
                 (output / dest).write_bytes(data)
-                slot.update(previewFile=dest, previewStatus="downloaded_unreviewed")
+                slot.update(previewFile=dest, previewStatus="downloaded_unreviewed",
+                            downloadedUrl=reviewed_url,
+                            previewSha256=hashlib.sha256(data).hexdigest())
             except HTTPError as exc:
                 slot["previewStatus"] = "http_error_" + str(exc.code)
                 if exc.code in (429, 503):
