@@ -5,7 +5,7 @@ import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
 
-from country_bulk_research import make_plan, research_shard, combine, SHARDS
+from country_bulk_research import make_plan, research_shard, combine, SHARDS, cover_metadata_matches_country
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -54,3 +54,30 @@ class AllCountryResearchTests(unittest.TestCase):
         self.assertEqual(report["statusCounts"]["search_failed"], 1)
         self.assertGreater(report["statusCounts"].get("rate_limited_deferred", 0), 0)
         self.assertTrue(all(not r["candidates"] for r in report["results"]))
+
+    def test_country_cover_metadata_rejects_unrelated_landscape_and_partial_country_names(self):
+        self.assertFalse(cover_metadata_matches_country(
+            {"file": "File:Black and white Paris landscape.jpg", "description": "Paris, France"},
+            ["Central African Republic", "中央アフリカ共和国"]))
+        self.assertFalse(cover_metadata_matches_country(
+            {"file": "File:Landscape Nigeria.jpg"}, ["Niger"]))
+        self.assertTrue(cover_metadata_matches_country(
+            {"file": "File:Port_Louis,_MAURITIUS.jpg"}, ["Mauritius"]))
+        self.assertTrue(cover_metadata_matches_country(
+            {"file": "File:Coast.jpg", "description": "Coast of the Central African Republic"},
+            ["Central African Republic"]))
+        self.assertFalse(cover_metadata_matches_country(
+            {"file": "File:Hausdülmen.jpg", "description": "Germany"}, ["Mauritius"]))
+
+    def test_undrafted_cover_search_filters_before_accepting_metadata(self):
+        candidate = {"file": "File:Paris landscape.jpg", "description": "France",
+                     "commonsPage": "wrong"}
+        right = {"file": "File:Mauritius coast.jpg", "description": "Port Louis",
+                 "commonsPage": "right"}
+        plan = {"shards": 8, "countries": [{"code": "MU", "country": "Mauritius", "shard": 0,
+            "slots": [{"slot": 0, "searchQuery": '"Mauritius" landscape',
+                       "origin": "country_cover_research", "countryNames": ["Mauritius"]}]}]}
+        with patch("country_bulk_research.valid_candidate", side_effect=lambda x: x):
+            result = research_shard(plan, 0, fetch=lambda query: [candidate, right], sleep_seconds=0)
+        self.assertEqual(result["results"][0]["candidates"], [right])
+        self.assertFalse(result["results"][0].get("publicationEligible", False))
