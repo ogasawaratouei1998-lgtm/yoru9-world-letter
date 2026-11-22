@@ -244,6 +244,10 @@ jobs:
           key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
           restore-keys: |
             yoru9-photo-cache-v1-${{ runner.os }}-
+      - name: Restore checksum-pinned reviewed photos before new downloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python seed_reviewed_photos.py
       - name: Preflight full reader and photo bundle before any release commit
         env:
           YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
