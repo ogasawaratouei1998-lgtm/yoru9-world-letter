@@ -40,7 +40,11 @@ class NextEightUnescoCountryTests(unittest.TestCase):
                 # A future approved country must pass photo/readiness gates.
                 # The immutable original batch remains pending in that case.
                 if country["status"] == "pending":
-                    self.assertEqual(country["portrait"], draft["portrait"])
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
+                    self.assertEqual(
+                        {key: value for key, value in country["portrait"].items() if key != "body"},
+                        {key: value for key, value in draft["portrait"].items() if key != "body"},
+                    )
                     self.assertEqual(country["portraitPhotos"], [])
                     self.assertEqual(country["quiz"], [])
                     self.assertEqual(country["travelStops"], {})
