@@ -164,6 +164,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'テオティワカンの巨大な建築群を貫く大通りの名前は？',options:['死者の大通り','王の道','海沿いの大通り'],answer:0,photoLabel:'正解写真｜テオティワカンの遺跡',fact:'テオティワカンには太陽のピラミッドなどを結ぶ『死者の大通り』が広がっています。',quip:'都市計画のスケールが、徒歩の散歩道を超えている。',photoKey:'mx-teotihuacan-postcard'},
   {question:'チチェン・イッツァにある階段状のピラミッドは何と呼ばれる？',options:['エル・カスティージョ','コロッセオ','クトゥブ・ミナール'],answer:0,photoLabel:'正解写真｜チチェン・イッツァ',fact:'エル・カスティージョはチチェン・イッツァを代表する階段状の石造ピラミッドです。',quip:'古代の街の主役級。階段が一段ずつ存在感を出してきます。',photoKey:'mx-chichen-itza-postcard'},
  ],
+ NG:[
+  {question:'オスン・オショグボの聖なる森と深く結び付く文化は？',options:['インカの文化','ヨルバの文化','ヴァイキングの文化'],answer:1,fact:'UNESCOはヨルバの信仰と森、川、彫刻が結び付く文化遺産として評価しています。',quip:'森が文化の記憶を守る。展示室よりもずっと広い、暮らしと信仰の記録です。',photoLabel:'正解写真｜オスン・オショグボの聖なる森',photoKey:'ng-osun-grove-postcard'},
+  {question:'スクルの文化的景観に残る、かつての重要な産業は？',options:['製鉄','製紙','時計製造'],answer:0,fact:'UNESCOは鉄を精錬した炉の遺構を、スクルの社会や交易の歴史を示すものと評価しています。',quip:'石の道をたどると、製鉄の歴史に行き着く。風景そのものが仕事の記録になっています。',photoLabel:'正解写真｜スクルの文化的景観',photoKey:'ng-sukur-postcard'},
+ ],
  NL:[
   {question:'アムステルダムの17世紀運河地区が世界文化遺産に登録された年は？',options:['1997年','2010年','2020年'],answer:1,photoLabel:'正解写真｜アムステルダムの運河',fact:'UNESCOはアムステルダムの17世紀運河地区を2010年に世界文化遺産へ登録しました。',quip:'運河が街の道案内役。水まで都市計画の一員です。',photoKey:'nl-amsterdam-canals-postcard'},
   {question:'キンデルダイクの風車は、主にどのような目的で利用された？',options:['低地の排水','海での漁網の巻き上げ','天体観測'],answer:0,photoLabel:'正解写真｜キンデルダイクの風車',fact:'風車群と水路は、低い土地を排水し守るための水利システムとして整備されました。',quip:'風車は名所になる前から、土地を守る仕事人でした。',photoKey:'nl-kinderdijk-windmills-postcard'},
