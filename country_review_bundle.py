@@ -53,6 +53,13 @@ def candidate_identity(candidate):
 # A rejection is scoped to the country and slot; it does not allege a license
 # problem or prohibit the photograph in other editorial contexts.
 VISUAL_REJECTIONS = {
+    # Exact 2026-11-22 JPEG review from run 45017850362, artifact 14752761810.
+    ("LB", 0): {"The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289029).jpg": "Black-and-white photograph of armed occupants inside a vehicle, not a Lebanese landscape or cedar-country cover."},
+    ("LB", 1): {"Anjar - chapiteau.jpg": "Isolated column-capital detail with no clear view of the Anjar archaeological city."},
+    ("LB", 2): {"Pano Baalbek 1.jpg": "Extreme five-to-one panorama: 960x194 preview below 200px postcard minimum; a regular-height documentary site view is required."},
+    ("NE", 0): {"Aso Rock 51 - landscape in Abuja, Nigeria (2026).jpg": "Aso Rock is in Abuja, Nigeria; this is not a photograph of Niger."},
+    ("RS", 0): {"A landscape painting by Nikola Bešević.jpg": "Framed painting of a landscape, not a real on-location photographic cover."},
+    ("RW", 2): {"Hyperolius castaneus egg clutches Nyungwe National Park, Rwanda.jpg": "Multi-panel close-up of amphibian eggs, not an identifying view of Nyungwe National Park for the virtual-heritage postcard."},
     # Reviewed exact JPEGs in artifact 14735202454 on 2026-11-22.
     ("BW", 0): {"Anhinga rufa -Chobe River front, Botswana-8.jpg": "Portrait-format bird close-up, not a national landscape."},
     ("HN", 0): {"Comayagua Cathedral.jpg": "Tall portrait format with extensive sky; insufficient landscape composition for country cover."},
