@@ -234,7 +234,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         import inspect
         code=inspect.getsource(editorial.main)
         self.assertIn("groups.extend([[item] for item in unpaired])",code)
-        self.assertIn("groups=prioritize_comic_groups(groups,limit=36)",code)
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)",code)
         self.assertIn("'sourcecountry':lead.get('sourcecountry','')",code)
         self.assertIn("trusted_original_domain(urls[0])",code)
         self.assertIn("independent_editorial_quality_passed(audit)",code)
@@ -790,8 +790,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
         self.assertIn('used_urls={url for candidate in draft',recovery)
-        self.assertIn('article["url"] in used_urls',recovery)
-        self.assertIn("min(incident_priority(article)[0]",recovery)
+        self.assertIn("select_untried_source_groups(",recovery)
+        self.assertIn("grouped_evidence, attempted_group_ids, used_urls",recovery)
         self.assertIn("spectacular but non-tragic reversal",recovery)
         self.assertIn("source_bound_batch_drafts(response,batch)",recovery)
         self.assertIn("yield candidate",recovery)
@@ -1112,7 +1112,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_current_comedy_prompt_preserves_one_source_and_seven_days(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("groups=prioritize_comic_groups(groups,limit=36)",code)
+        self.assertIn("groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)",code)
         self.assertIn("unpaired=sorted",code)
         self.assertIn("trusted_original_domain(item['url'])",code)
         self.assertIn("within the preceding seven days",code)
@@ -1122,9 +1122,9 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_second_window_reviews_new_fetched_articles(self):
         from pathlib import Path
         code=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("json.dumps(grouped_evidence[:24],ensure_ascii=False)",code)
-        self.assertIn("enumerate(groups[:36])",code)
-        self.assertIn('0 if g["groupId"]>24 else 1',code)
+        self.assertIn("json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False)",code)
+        self.assertIn("enumerate(groups[:EDITORIAL_SHORTLIST_LIMIT])",code)
+        self.assertIn('0 if g["groupId"]>PRIMARY_EDITORIAL_GROUPS else 1',code)
         self.assertIn("min(len(retry_candidates),20),2",code)
         self.assertIn('"fresh_backup_groups"',code)
         # No shortcut around original source, comedy, independent and publisher gates.
