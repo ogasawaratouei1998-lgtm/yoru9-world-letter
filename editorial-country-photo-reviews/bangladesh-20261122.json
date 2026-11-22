@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "countryCode": "BD",
+  "reviewedOn": "2026-11-22",
+  "status": "visual_and_source_verified_release_checks_pending",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 44986532608,
+    "artifactId": 14739947105,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "file": "BD-0.jpg",
+      "sha256": "fcfda40e83174ce73c5b809f8653a79e62afa152d2ef9b2107f959baf3e570df",
+      "width": 1280,
+      "height": 814,
+      "photoAsset": "assets/travel/bd-jaflong-tea-country-cover.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Jaflong_Sylhet.jpg",
+      "author": "Abdul Momin",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "place": "シレット・ジャフロンの茶畑",
+      "visualReview": "Photograph shows a man carrying a yoke through misty green tea fields, not an assumed UNESCO property."
+    },
+    {
+      "slot": 1,
+      "file": "BD-1.jpg",
+      "sha256": "402f82f3868a20a708ba2aad68135c744128f84cc43716400bdc8ecd899a0cd1",
+      "width": 960,
+      "height": 540,
+      "photoAsset": "assets/travel/bd-nine-dome-mosque-postcard.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Nine_Dome_Mosque,_Bagerhat,_Bangladesh.jpg",
+      "author": "Faisal Photography",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "place": "バゲルハットの九ドーム・モスク",
+      "visualReview": "Wide architectural view clearly shows the Nine Dome Mosque with brick arches."
+    },
+    {
+      "slot": 2,
+      "file": "BD-2.jpg",
+      "sha256": "39170b7fdafad471ea56e89b52369fc53d03f065bd28e4dda6e4976b8b870239",
+      "width": 960,
+      "height": 706,
+      "photoAsset": "assets/travel/bd-somapura-mahavihara-postcard.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Ruins_of_Bhuddist_Bihara_-_Somapura_Mahavihara.jpg",
+      "author": "Khan-Tanvir",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "パハルプールのソーマプラ大僧院跡",
+      "visualReview": "Architectural landscape shows the historic brick ruins of Somapura Mahavihara, Paharpur."
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/statesparties/bd",
+    "https://whc.unesco.org/en/list/321/",
+    "https://whc.unesco.org/en/list/322/",
+    "https://whc.unesco.org/document/216539",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_012.html"
+  ],
+  "safetyNote": "2026-11-22 checked: MOFA level 2 Chittagong Hill Tracts, level 1 elsewhere; this is a desk-based cultural description, not a recommendation to travel.",
+  "requiredBeforeApproval": [
+    "valid_SHA256_photograph_restore",
+    "full_canonical_reader_and_build_regression",
+    "mobile_preflight_320_375_393"
+  ]
+}

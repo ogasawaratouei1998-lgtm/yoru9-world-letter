@@ -5462,5 +5462,93 @@
       }
     ],
     "famousTourist": true
+  },
+  "bd-jaflong-tea-country-cover": {
+    "country": "バングラデシュ",
+    "countryOnly": true,
+    "place": "シレット・ジャフロンの茶畑",
+    "region": "シレット管区ゴワインガート地区",
+    "latitude": 25.1638,
+    "longitude": 92.0157,
+    "note": "ジャフロンの代表地点。写真の厳密な撮影位置ではありません。",
+    "photoCaption": "ジャフロンの茶畑を、肩に天秤棒を担いだ男性が歩く。背景には霞む丘が連なる。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Jaflong_Sylhet.jpg/960px-Jaflong_Sylhet.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Jaflong_Sylhet.jpg",
+    "photoAsset": "assets/travel/bd-jaflong-tea-country-cover.jpg",
+    "author": "Abdul Momin",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "coverOnly": true
+  },
+  "bd-nine-dome-mosque-postcard": {
+    "country": "バングラデシュ",
+    "countryOnly": true,
+    "place": "バゲルハットの九ドーム・モスク",
+    "region": "クルナ管区・バゲルハット",
+    "latitude": 22.658494,
+    "longitude": 89.755408,
+    "note": "遺産の代表地点です。写真の撮影位置を示すものではありません。",
+    "photoCaption": "バゲルハットの九ドーム・モスク。赤みを帯びたレンガ壁と複数のドームを持つ歴史建築。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c7/Nine_Dome_Mosque%2C_Bagerhat%2C_Bangladesh.jpg/960px-Nine_Dome_Mosque%2C_Bagerhat%2C_Bangladesh.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Nine_Dome_Mosque,_Bagerhat,_Bangladesh.jpg",
+    "photoAsset": "assets/travel/bd-nine-dome-mosque-postcard.jpg",
+    "author": "Faisal Photography",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "バゲルハットの歴史地区では、赤いレンガを積み上げた壁とアーチが、木々や草地の中に静かに現れます。九ドーム・モスクを写した写真では、開口部やドームの並びに目を向けると、15世紀の建築家が光や風、礼拝する人々の動きをどう考えたか想像できます。ひとつの建物だけでなく、周辺の水路や道路も都市の成り立ちを物語る手掛かりです。",
+      "UNESCOが登録するバゲルハットの歴史的モスク都市は、15世紀のカーン・ジャハーンに関連する都市遺構として知られています。モスクだけでなく池、道路、住居なども含む街の仕組みが重要です。九ドーム・モスクは登録地区にある歴史的な礼拝建築で、最大の六十ドーム・モスクとは別の建物です。文化を尊重しながら、建築を地域の生活史の中に位置付けて読み解きたい場所です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・バゲルハットの歴史的モスク都市",
+        "url": "https://whc.unesco.org/en/list/321/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・バングラデシュ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_012.html",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "UNESCO Periodic Report: Nine Dome Mosque field coordinates",
+        "url": "https://whc.unesco.org/document/216539",
+        "checkedOn": "2026-11-22"
+      }
+    ]
+  },
+  "bd-somapura-mahavihara-postcard": {
+    "country": "バングラデシュ",
+    "countryOnly": true,
+    "place": "パハルプールのソーマプラ大僧院跡",
+    "region": "ラジシャヒ管区・ナオガオン県",
+    "latitude": 25.033333,
+    "longitude": 88.983333,
+    "note": "遺産の代表地点です。写真の撮影位置を示すものではありません。",
+    "photoCaption": "パハルプールに残るソーマプラ大僧院跡の広大なレンガ造遺構。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4f/Ruins_of_Bhuddist_Bihara_-_Somapura_Mahavihara.jpg/960px-Ruins_of_Bhuddist_Bihara_-_Somapura_Mahavihara.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Ruins_of_Bhuddist_Bihara_-_Somapura_Mahavihara.jpg",
+    "photoAsset": "assets/travel/bd-somapura-mahavihara-postcard.jpg",
+    "author": "Khan-Tanvir",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "パハルプールの遺跡を上から見ると、広い中庭を囲んで僧房が連なり、その中央に大きな寺院の基壇が残っていることが分かります。写真に写るレンガ造の壁は、単なる崩れた建物ではありません。学び、祈り、共同生活を送った人々の活動範囲を地面に描き出しています。通路と建物の配置をたどるように眺めると、当時の僧院の規模が少しずつ実感できます。",
+      "UNESCOによるとソーマプラ大僧院は、8世紀から12世紀ごろに重要な仏教学術拠点として発展し、周辺の仏教文化ともつながっていました。中心寺院とそれを取り囲む僧房群は、南アジアの宗教建築を理解する貴重な資料です。現在の遺構は長い年月の風雨を受けているため、形を推測し過ぎず、保存されている壁の位置と資料に示された復元図を区別して見てみましょう。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・パハルプールの仏教僧院跡",
+        "url": "https://whc.unesco.org/en/list/322/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・バングラデシュ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_012.html",
+        "checkedOn": "2026-11-22"
+      }
+    ]
   }
 }
