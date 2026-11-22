@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "countryCode": "NI",
+  "reviewedOn": "2026-11-22",
+  "status": "visual_and_license_reviewed_release_tests_pending",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 45017850362,
+    "artifactId": 14752761810,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "previewFile": "NI-0.jpg",
+      "sha256": "f510eb25e7754122b377caf81a7782913681e8ef041b8aa7ac337c4d6532e81d",
+      "dimensions": [
+        1280,
+        960
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Landscape_with_Railing_-_Finca_Esperanza_Verde_-_Near_Matagalpa_-_Nicaragua_(31275806990).jpg",
+      "photoAsset": "assets/travel/ni-matagalpa-hills-cover.jpg",
+      "author": "Adam Jones from Kelowna, BC, Canada",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "place": "マタガルパ近郊の緑の丘",
+      "visualReview": "Finca Esperanza Verde near Matagalpa, hills viewed over a visible balcony railing; landscape not UNESCO property",
+      "correctCountryAndSubject": true,
+      "sourceOriginalIdentityVerified": true
+    },
+    {
+      "slot": 1,
+      "previewFile": "NI-1.jpg",
+      "sha256": "8fdc1435c50ef63ef0eba1e5d9028ad7dbe24de0f0e792da9a86c4f1cbe919b1",
+      "dimensions": [
+        960,
+        638
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Maximo_Jerez_Monument_-_Le%C3%B3n,_Nicaragua_2.jpg",
+      "photoAsset": "assets/travel/ni-leon-cathedral-postcard.jpg",
+      "author": "eric molina",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "place": "レオン大聖堂とマキシモ・ヘレス記念碑",
+      "visualReview": "Máximo Jerez monument in front of the Assumption Cathedral of León, visible facade in background",
+      "correctCountryAndSubject": true,
+      "sourceOriginalIdentityVerified": true
+    },
+    {
+      "slot": 2,
+      "previewFile": "NI-2.jpg",
+      "sha256": "a2f51df9172b5ce6d29f6cdb3fd36b2d35b3ed648913f94191b4271663644585",
+      "dimensions": [
+        960,
+        626
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Ruinas_leon_viejo01.jpg",
+      "photoAsset": "assets/travel/ni-leon-viejo-ruins-postcard.jpg",
+      "author": "HHaefner",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "レオン・ビエホ遺跡",
+      "visualReview": "Brick-and-stone León Viejo archaeological foundations under a protective roof; historically separate from present-day cathedral",
+      "correctCountryAndSubject": true,
+      "sourceOriginalIdentityVerified": true
+    }
+  ],
+  "independentHistoricalSources": [
+    "https://whc.unesco.org/en/statesparties/ni",
+    "https://whc.unesco.org/en/list/1236/",
+    "https://whc.unesco.org/en/list/613/"
+  ],
+  "safetySource": {
+    "name": "外務省海外安全ホームページ・ニカラグア",
+    "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_254.html",
+    "checkedOn": "2026-11-22",
+    "currentRisk": "全土危険レベル1（十分注意）"
+  },
+  "requiredBeforeApproval": [
+    "restore_exact_sha256_reviewed_JPEG_cover_and_postcards",
+    "full_canonical_runtime_build_validation",
+    "320_375_393_mobile_preflight"
+  ]
+}
