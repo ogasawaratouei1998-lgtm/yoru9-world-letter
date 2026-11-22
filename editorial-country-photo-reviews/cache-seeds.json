@@ -30,6 +30,36 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "country": "ガーナ",
       "place": "ケープコースト城"
+    },
+    {
+      "runId": 44974749380,
+      "artifactId": 14735202454,
+      "file": "MT-1.jpg",
+      "sha256": "293022439fa4ac8935e94c67d436067fae90d006588e5b1e216ce8481a6f378e",
+      "cover": false,
+      "photoAsset": "assets/travel/mt-valletta-harbour-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Valletta%2C_Malta_%2845400880161%29.jpg/960px-Valletta%2C_Malta_%2845400880161%29.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Valletta,_Malta_(45400880161).jpg",
+      "author": "Mike McBey",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "country": "マルタ",
+      "place": "ヴァレッタ市街"
+    },
+    {
+      "runId": 44974749380,
+      "artifactId": 14735202454,
+      "file": "MT-2.jpg",
+      "sha256": "5ab4cddf3f14e4675074f354ffe9b26495ef7b4bc7a06b5eb3be825a3f73037f",
+      "cover": false,
+      "photoAsset": "assets/travel/mt-hagar-qim-temple-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg/960px-%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:%C4%A6a%C4%A1ar_Qim,_isla_de_Malta,_Malta,_2021-08-25,_DD_67.jpg",
+      "author": "Diego Delso (delso.photo)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "マルタ",
+      "place": "マルタの巨石神殿群（ハジャー・イム）"
     }
   ]
 }
