@@ -39,6 +39,17 @@ class AllCountryResearchTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             combine(plan, reports+[reports[0]])
 
+    def test_mulu_deer_cave_search_excludes_mismatched_skink_and_repair_photos(self):
+        plan = make_plan(ROOT)
+        malaysia = next(row for row in plan["countries"] if row["code"] == "MY")
+        slot = malaysia["slots"][2]
+        self.assertEqual(slot["origin"], "existing_draft")
+        self.assertIn("Deer Cave", slot["searchQuery"])
+        self.assertIn("Sarawak", slot["searchQuery"])
+        self.assertIn("-skink", slot["searchQuery"])
+        self.assertIn("-repairs", slot["searchQuery"])
+        self.assertFalse(malaysia["publicationEligible"])
+
     def test_south_africa_photo_search_targets_distinct_documentary_subjects(self):
         plan = make_plan(ROOT)
         za = next(c for c in plan["countries"] if c["code"] == "ZA")
