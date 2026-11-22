@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "countryCode": "DZ",
+  "reviewedOn": "2026-11-22",
+  "status": "visual_sources_licenses_checked_publication_requires_full_tests",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 44986532608,
+    "artifactId": 14739947105,
+    "name": "editorial-review-bundle"
+  },
+  "coverDimensions": [
+    1280,
+    817
+  ],
+  "coverHash": "6a084ea0d6cf89de78d29a902cd8a5c99a30fd951cdf814163976db33d12e58e",
+  "photos": [
+    {
+      "slot": 0,
+      "file": "DZ-0.jpg",
+      "author": "FETHI BOUHAOUCHINE",
+      "license": "CC BY-SA 4.0",
+      "visual": "Hassania forested mountains, not the actual camera point, Ain Defla Level 3, do not travel",
+      "dimensions": [
+        1280,
+        817
+      ]
+    },
+    {
+      "slot": 1,
+      "file": "DZ-1.jpg",
+      "author": "Yelles",
+      "license": "CC BY-SA 3.0",
+      "visual": "Beni Hammad Great Mosque minaret standing amid site ruins, UNESCO 102",
+      "dimensions": [
+        960,
+        720
+      ]
+    },
+    {
+      "slot": 2,
+      "file": "DZ-2.jpg",
+      "author": "habib kaki",
+      "license": "CC BY 3.0",
+      "visual": "Roman colonnade and ruined urban plan of UNESCO Djémila 191; 2016 camera coordinates",
+      "dimensions": [
+        960,
+        386
+      ]
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/list/102/",
+    "https://whc.unesco.org/en/list/102/maps/",
+    "https://whc.unesco.org/en/list/191/",
+    "https://whc.unesco.org/en/list/191/maps/",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_091.html"
+  ],
+  "safetyNote": "Ain Defla province Level 3 except transit corridors; parts of Algeria Level 4. Virtual visit only and no encouragement to travel.",
+  "requiredBeforeApproval": [
+    "checksum_accepted_photo_cache_restore",
+    "full_public_build_and_mobile_preflight"
+  ]
+}
