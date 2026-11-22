@@ -67,7 +67,8 @@
     "https://whc.unesco.org/en/list/129/",
     "https://whc.unesco.org/en/list/196/",
     "https://whc.unesco.org/en/decisions/?id_decision=9032",
-    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_263.html"
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_263.html",
+    "https://commons.wikimedia.org/wiki/File:Zona_nucleo_de_la_RHBRP,_sitio_Tilopo.jpg"
   ],
   "safetyNote": "MOFA: Comayagua and Gracias a Dios are Level 2 (avoid non-essential travel), Copán Level 1. Río Plátano retained on UNESCO World Heritage in Danger list in 2026; desktop-only cultural trip, no travel encouragement. The Río Patuca candidate is explicitly disqualified as the UNESCO protected-site image pending property-boundary verification.",
   "requiredBeforeApproval": [
@@ -75,5 +76,28 @@
     "review_all_photo_bytes_and_commons_source_attribution",
     "canonical_runtime_sync",
     "full_build_and_mobile_preflight"
-  ]
+  ],
+  "replacementCandidate": {
+    "slot": 2,
+    "commonsPage": "https://commons.wikimedia.org/wiki/File:Zona_nucleo_de_la_RHBRP,_sitio_Tilopo.jpg",
+    "fileIdentity": "Zona nucleo de la RHBRP, sitio Tilopo.jpg",
+    "original": "https://upload.wikimedia.org/wikipedia/commons/6/65/Zona_nucleo_de_la_RHBRP%2C_sitio_Tilopo.jpg",
+    "preview": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Zona_nucleo_de_la_RHBRP%2C_sitio_Tilopo.jpg/960px-Zona_nucleo_de_la_RHBRP%2C_sitio_Tilopo.jpg",
+    "originalDimensions": [
+      1024,
+      683
+    ],
+    "author": "Marcio Martínez",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "describedLocation": "Río Plátano Biosphere Reserve core zone, Tilopo, Honduras (as explicitly described by uploader)",
+    "visualReview": "Actual Commons 960×640 preview inspected: broad forest canopy and low mist, appropriate forest reserve scenery. Not a photograph of the Río Plátano river itself.",
+    "originalCheckedOn": "2026-11-22",
+    "sourceDescriptionVerified": true,
+    "previewVisuallyVerified": true,
+    "localJpegDownloaded": false,
+    "sha256": null,
+    "eligibleForDestinationPhoto": false,
+    "remainingVerification": "Fetch and validate local 960×640 JPEG, establish its SHA-256 and original provenance in release build, then verify Tilopo coordinates against current UNESCO property boundary. Until then do not approve the country or use image in published site."
+  }
 }
