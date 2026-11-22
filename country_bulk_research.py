@@ -46,6 +46,9 @@ DRAFT_SEARCH_ALTERNATIVES = {
 # The latest results for these searches were the wrong subject despite
 # containing the named site in their metadata. Use a more specific subject.
 DRAFT_SEARCH_REFINEMENTS = {
+    ("ZA", 0): 'Cape Town skyline Table Mountain South Africa panorama -penguins -birds',
+    ("ZA", 1): 'Robben Island historic prison courtyard South Africa -road',
+    ("ZA", 2): 'Cape Floral Region fynbos protea botanical landscape South Africa -map',
     ("KZ", 2): 'Tamgaly Chu Ili petroglyphs Kazakhstan -"Tamgaly-Tas" -Buddha',
     ("BW", 0): '"Chobe River" Botswana landscape -Anhinga -bird',
     ("KE", 0): 'Lamu Kenya waterfront old town -pharmacy',
