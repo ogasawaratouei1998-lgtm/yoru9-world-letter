@@ -10,6 +10,16 @@ from country_bulk_research import make_plan, research_shard, combine, SHARDS, co
 ROOT = Path(__file__).resolve().parents[1]
 
 class AllCountryResearchTests(unittest.TestCase):
+    def test_malaysia_deer_cave_search_excludes_skinks_and_non_site_subjects(self):
+        plan = make_plan(ROOT)
+        country = next(row for row in plan["countries"] if row["code"] == "MY")
+        slot = country["slots"][2]
+        self.assertEqual(slot["origin"], "existing_draft")
+        for word in ('"Deer Cave"', "Mulu", "Sarawak", "-skink", "-lizard",
+                     "-planarian", "-repairs"):
+            self.assertIn(word, slot["searchQuery"])
+        self.assertFalse(country["publicationEligible"])
+
     def test_honduras_reserve_search_excludes_different_patuca_river(self):
         plan = make_plan(ROOT)
         honduras = next(row for row in plan["countries"] if row["code"] == "HN")
