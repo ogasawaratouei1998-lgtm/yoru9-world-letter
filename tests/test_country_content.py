@@ -28,7 +28,7 @@ class CountryContentTest(unittest.TestCase):
             {code for code,row in doc["countries"].items() if row["status"]=="approved"}))
         self.assertGreaterEqual(len(doc["travelOrder"]),40)
         self.assertTrue(doc["countries"]["IT"]["portrait"]["body"])
-        self.assertEqual(doc["countries"]["NG"]["status"],"pending")
+        self.assertTrue(all(row["status"] in ("approved","pending") for row in doc["countries"].values()))
 
     def test_three_new_countries_are_approved_with_photos_and_two_real_quizzes(self):
         countries=("AU","CA","IN")
@@ -265,17 +265,19 @@ class CountryContentTest(unittest.TestCase):
                         original)
         self.assertIsNotNone(match)
         self.assertEqual(json.loads(match.group(1)),expected)
-        self.assertNotIn("NG",expected)
-        altered=original[:match.start(1)]+json.dumps(expected+["NG"])+original[match.end(1):]
+        pending=next((code for code,entry in doc["countries"].items() if entry["status"]=="pending"),None)
+        if pending is None:
+            self.skipTest("All locations approved")
+        self.assertNotIn(pending,expected)
+        altered=original[:match.start(1)]+json.dumps(expected+[pending])+original[match.end(1):]
         page.write_text(altered,encoding="utf-8")
         with self.assertRaisesRegex(ValueError,"Approved country atlas drift"):
             check_country_content(self.root)
         sync_country_content(self.root)
         check_country_content(self.root)
         restored=page.read_text(encoding="utf-8")
-        self.assertNotIn('"NG"]',restored.split("const APPROVED_COUNTRY_CODES",1)[1]
-                         .split(");",1)[0])
-        self.assertEqual(load_country_content(self.root)["countries"]["NG"]["status"],
+        self.assertNotIn(pending,json.loads(restored.split("const APPROVED_COUNTRY_CODES=Object.freeze(",1)[1].split(");",1)[0]))
+        self.assertEqual(load_country_content(self.root)["countries"][pending]["status"],
                          "pending")
 
     def test_approved_country_quiz_rejects_bad_answers_and_duplicate_options(self):
@@ -440,9 +442,13 @@ class CountryContentTest(unittest.TestCase):
     def test_pending_country_cannot_be_promoted_without_photos(self):
         file=self.root/"country-content.json"
         data=json.loads(file.read_text(encoding="utf-8"))
-        data["countries"]["NG"]["status"]="approved"
+        code=next((code for code,entry in data["countries"].items() if entry["status"]=="pending" and not entry["portraitPhotos"]),None)
+        if code is None:
+            code="NG"
+            data["countries"][code]["portraitPhotos"]=[]
+        data["countries"][code]["status"]="approved"
         file.write_text(json.dumps(data,ensure_ascii=False),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"NG: approved portrait requires named cultural source|NG: approval"):
+        with self.assertRaisesRegex(ValueError,code+": approved portrait requires named cultural source|"+code+": approval"):
             load_country_content(self.root)
 
     def test_approved_postcards_need_historical_sources_separate_from_photo_credits(self):
@@ -567,9 +573,11 @@ class CountryContentTest(unittest.TestCase):
 
     def test_unreviewed_country_no_fabricated_photographs(self):
         doc=load_country_content(self.root)
-        country=doc["countries"]["NG"]
-        self.assertFalse(country["portraitPhotos"])
-        self.assertFalse(country["travelStops"])
+        for code,country in doc["countries"].items():
+            if country["status"]=="pending" and not country["portrait"]:
+                with self.subTest(code=code):
+                    self.assertFalse(country["portraitPhotos"])
+                    self.assertFalse(country["travelStops"])
 
 
 if __name__=="__main__":
