@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v87';
+const SHELL_CACHE = 'yoru9-shell-v88';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -112,7 +112,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Albania: three reviewed real photographs.
  'assets/travel/al-tirana-skanderbeg-cover.jpg', 'assets/travel/al-berat-mangalem-postcard.jpg', 'assets/travel/al-butrint-theatre-postcard.jpg',
  // Ghana: three reviewed real photographs.
- 'assets/travel/gh-aburi-mampong-cover.jpg', 'assets/travel/gh-besease-shrine-postcard.jpg', 'assets/travel/gh-cape-coast-castle-postcard.jpg'];
+ 'assets/travel/gh-aburi-mampong-cover.jpg', 'assets/travel/gh-besease-shrine-postcard.jpg', 'assets/travel/gh-cape-coast-castle-postcard.jpg',
+ // Malta: three separately source-reviewed CC photographs.
+ 'assets/travel/mt-mdina-cathedral-cover.jpg', 'assets/travel/mt-valletta-harbour-postcard.jpg', 'assets/travel/mt-hagar-qim-temple-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
