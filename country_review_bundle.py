@@ -8,6 +8,7 @@ Never write to country-content.json or the published site.
 from __future__ import annotations
 
 import argparse
+import hashlib
 from collections import defaultdict
 from itertools import product
 import json
@@ -52,7 +53,14 @@ def candidate_identity(candidate):
 # A rejection is scoped to the country and slot; it does not allege a license
 # problem or prohibit the photograph in other editorial contexts.
 VISUAL_REJECTIONS = {
-    ("KE", 0): {"Lamu Pharmacy.jpg": "Shop window and merchandise, not an informative country landscape."},
+    # Reviewed exact JPEGs in artifact 14735202454 on 2026-11-22.
+    ("BW", 0): {"Anhinga rufa -Chobe River front, Botswana-8.jpg": "Portrait-format bird close-up, not a national landscape."},
+    ("HN", 0): {"Comayagua Cathedral.jpg": "Tall portrait format with extensive sky; insufficient landscape composition for country cover."},
+    ("KZ", 2): {"Tamgaly-Tas Petroglyphs.JPG": "Buddhist rock imagery at Tamgaly-Tas on the Ili River, distinct from UNESCO Tanbaly (1145); coordinates 44.059167, 76.996944 do not match the listed property."},
+    ("MY", 2): {"Ongoing Repairs after storm of the previous day (15385239799).jpg": "Storm-damaged walkway rather than the cave or karst landscape described in the destination essay."},
+    ("UZ", 0): {'Memorial complex "Registan" in Samarkand (10).jpg': "Near-duplicate view of the same square as the independently required Samarkand quiz photograph."},
+    ("KE", 0): {"Lamu Pharmacy.jpg": "Shop window and merchandise, not an informative country landscape.",
+                 "Lamu Pharmacy2021.jpg": "Pharmacy interior, not a country landscape."},
     ("BD", 1): {"A view from the Mosque (8540808429).jpg": "View through a dark arch; the mosque complex itself is not shown."},
     ("IQ", 1): {"Assur stuck.jpg": "Isolated decorated object instead of a view of the archaeological site."},
     ("LB", 0): {"The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289561).jpg": "Portrait-oriented archival photograph, unsuitable for the landscape cover."},
@@ -135,6 +143,22 @@ def download_preview(url):
         raise ValueError("Preview size or JPEG markers invalid")
     return data
 
+def review_image_url(candidate, slot):
+    """Prefer release-size covers without requesting a second preview.
+
+    The original Commons file identity is unchanged; this is not approval.
+    Small original files stay at native resolution and remain subject to QA.
+    """
+    preview = candidate["preview"]
+    dimensions = candidate.get("dimensions", [])
+    if slot == 0 and len(dimensions) == 2 and dimensions[0] >= 1280:
+        larger = re.sub(r"/[0-9]+px-(?=[^/?]+(?:\?|$))", "/1280px-", preview)
+        if (valid_preview_url(larger) and
+                _commons_identity(larger) == candidate_identity(candidate)):
+            return larger
+    return preview
+
+
 def write_bundle(queue, output, limit, fetch=download_preview, sleep_seconds=1.0):
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
@@ -149,10 +173,13 @@ def write_bundle(queue, output, limit, fetch=download_preview, sleep_seconds=1.0
                 slot["previewStatus"] = "rate_limited_deferred"
                 continue
             try:
-                data = fetch(candidate["preview"])
+                reviewed_url = review_image_url(candidate, slot["slot"])
+                data = fetch(reviewed_url)
                 dest = row["code"] + "-" + str(slot["slot"]) + ".jpg"
                 (output / dest).write_bytes(data)
-                slot.update(previewFile=dest, previewStatus="downloaded_unreviewed")
+                slot.update(previewFile=dest, previewStatus="downloaded_unreviewed",
+                            downloadedUrl=reviewed_url,
+                            previewSha256=hashlib.sha256(data).hexdigest())
             except HTTPError as exc:
                 slot["previewStatus"] = "http_error_" + str(exc.code)
                 if exc.code in (429, 503):

@@ -36,7 +36,7 @@ DRAFT_SEARCH_ALTERNATIVES = {
     ("HN", 2): "Rio Platano Honduras",
     ("KZ", 0): "Turkestan Kazakhstan",
     ("KZ", 1): "Mausoleum of Khoja Ahmed Yasawi",
-    ("KZ", 2): "Tamgaly petroglyphs",
+    ("KZ", 2): 'Tanbaly petroglyphs Kazakhstan -"Tamgaly-Tas" -Buddha',
     ("MT", 0): "Mdina Malta",
     ("MT", 2): "Hagar Qim temple",
     ("MY", 0): "Penang shophouses",
@@ -46,6 +46,9 @@ DRAFT_SEARCH_ALTERNATIVES = {
 # The latest results for these searches were the wrong subject despite
 # containing the named site in their metadata. Use a more specific subject.
 DRAFT_SEARCH_REFINEMENTS = {
+    ("KZ", 2): 'Tamgaly Chu Ili petroglyphs Kazakhstan -"Tamgaly-Tas" -Buddha',
+    ("BW", 0): '"Chobe River" Botswana landscape -Anhinga -bird',
+    ("KE", 0): 'Lamu Kenya waterfront old town -pharmacy',
     ("MY", 2): '"Deer Cave" Mulu -planarian -Bipalium',
     ("TN", 2): '"Antonine Baths" Carthage -Dougga',
 }

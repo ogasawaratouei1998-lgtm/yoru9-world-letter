@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "countryCode": "MT",
+  "reviewedOn": "2026-11-22",
+  "artifact": {
+    "runId": 44974749380,
+    "artifactId": 14735202454,
+    "name": "editorial-review-bundle"
+  },
+  "status": "visual_and_license_review_completed_not_public",
+  "publicationEligible": false,
+  "photos": [
+    {
+      "slot": 0,
+      "place": "イムディーナ・聖パウロ大聖堂",
+      "file": "MT-0.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Malta_Mdina_BW_2011-10-05_12-41-38.JPG/960px-Malta_Mdina_BW_2011-10-05_12-41-38.JPG",
+      "author": "Berthold Werner",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "caption": "イムディーナの聖パウロ大聖堂と石畳の広場（2011年）",
+      "coordinates": [
+        35.886303,
+        14.403239
+      ],
+      "coordinateBasis": "Commons camera location",
+      "previewDimensions": [
+        960,
+        730
+      ],
+      "sha256": "cc55140df1c8d943fe3ccb74fd911ca5e41d41337784def39440025532441015",
+      "review": "Composition and site verified. Native 960px review copy is insufficient for a new active 1000px minimum country cover; obtain 1280px exact-original copy before release."
+    },
+    {
+      "slot": 1,
+      "place": "ヴァレッタ市街",
+      "file": "MT-1.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Valletta,_Malta_(45400880161).jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/Valletta%2C_Malta_%2845400880161%29.jpg/960px-Valletta%2C_Malta_%2845400880161%29.jpg",
+      "author": "Mike McBey",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "caption": "グランドハーバーから眺めたヴァレッタの城壁と石造建築（2015年）",
+      "coordinates": [
+        35.90056,
+        14.51444
+      ],
+      "coordinateBasis": "UNESCO representative property point, not camera location",
+      "previewDimensions": [
+        960,
+        460
+      ],
+      "sha256": "293022439fa4ac8935e94c67d436067fae90d006588e5b1e216ce8481a6f378e",
+      "review": "Historic urban fabric with balconies and part of fortifications."
+    },
+    {
+      "slot": 2,
+      "place": "マルタの巨石神殿群（ハジャー・イム）",
+      "file": "MT-2.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:%C4%A6a%C4%A1ar_Qim,_isla_de_Malta,_Malta,_2021-08-25,_DD_67.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7a/%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg/960px-%C4%A6a%C4%A1ar_Qim%2C_isla_de_Malta%2C_Malta%2C_2021-08-25%2C_DD_67.jpg",
+      "author": "Diego Delso (delso.photo)",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "caption": "保護用の屋根の下にあるハジャー・イムの巨石壁（2021年）",
+      "coordinates": [
+        35.827828,
+        14.441789
+      ],
+      "coordinateBasis": "UNESCO component 132ter-002 representative point, not camera location",
+      "previewDimensions": [
+        960,
+        640
+      ],
+      "sha256": "5ab4cddf3f14e4675074f354ffe9b26495ef7b4bc7a06b5eb3be825a3f73037f",
+      "review": "Visible megalithic interior, site confirmed independently; required photographer website credit included."
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/list/131/",
+    "https://whc.unesco.org/en/list/132/",
+    "https://whc.unesco.org/en/list/132/maps/",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_195.html"
+  ],
+  "safetyNote": "As of 2026-11-22 MOFA lists no current danger or infectious disease advisory; general safety guidance remains applicable.",
+  "requiredBeforeApproval": [
+    "exact_original_1280px_cover_download_and_resolution_verification",
+    "canonical_runtime_offline_synchronization",
+    "full_build_and_mobile_preflight"
+  ]
+}
