@@ -29,8 +29,14 @@ class CountryReleaseBoundaryTest(unittest.TestCase):
                 if country["status"] == "pending":
                     self.assertEqual([], country.get("portraitPhotos", []),
                                      "unreviewed photos must not be promoted to release metadata")
-                    self.assertEqual([], country.get("quiz", []),
-                                     "pending country must not carry publishable quizzes")
+                    for quiz in country.get("quiz", []):
+                        self.assertNotIn("photoKey", quiz,
+                                         "pending quiz must not reference unreviewed release photos")
+                        self.assertEqual(3, len(quiz.get("options", [])),
+                                         "draft quizzes require three options")
+                        self.assertIn(quiz.get("answer"), (0, 1, 2))
+                    # Draft quizzes are allowed in canonical editorial data;
+                    # pending status must remain the release gate.
                     self.assertFalse(country.get("travelStops"),
                                      "pending country must not carry publishable travel stops")
 
