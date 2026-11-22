@@ -48,6 +48,17 @@ def candidate_identity(candidate):
         return None
     return identities[0] if all(identities) and len(set(identities)) == 1 else None
 
+# Exact Commons originals rejected after inspecting the downloaded JPEG.
+# A rejection is scoped to the country and slot; it does not allege a license
+# problem or prohibit the photograph in other editorial contexts.
+VISUAL_REJECTIONS = {
+    ("CR", 0): {"1999 casona santa rosa Panorama.jpg": "Historical pre-fire house panorama; too narrow for the present-day country cover."},
+    ("CR", 1): {"Santa Rosa guanacaste.jpg": "Very narrow pasture panorama; insufficient visual context for the conservation-area story."},
+    ("KE", 1): {"Lamu Pharmacy.jpg": "Close-up of pharmacy merchandise, not a useful depiction of the historic townscape."},
+    ("ZA", 0): {"Cape Town (ZA), Cape Point Nature Reserve, Ausblick -- 2024 -- 3377.jpg": "Deliberate zoom effect obscures the natural landscape; unsuitable for a documentary country cover."},
+    ("ZA", 2): {"Cape Floral Region Protected Areas map.jpg": "Annotated map, not an actual landscape photograph of the protected region."},
+}
+
 def make_queue(report, canonical):
     grouped = defaultdict(dict)
     pending = {c for c, row in canonical.items() if row["status"] == "pending"}
@@ -63,8 +74,22 @@ def make_queue(report, canonical):
         slots = grouped.get(code, {})
         drafted = bool((canonical[code].get("portrait") or {}).get("body"))
         existing = len(slots) == 3 and all(r.get("origin") == "existing_draft" for r in slots.values())
-        choices = [[c for c in slots.get(i, {}).get("candidates", [])
-                    if candidate_identity(c)][:3] for i in range(3)]
+        choices, rejected = [], []
+        for i in range(3):
+            allowed, omitted = [], []
+            seen = set()
+            for candidate in slots.get(i, {}).get("candidates", []):
+                identity = candidate_identity(candidate)
+                if not identity or identity in seen:
+                    continue
+                seen.add(identity)
+                reason = VISUAL_REJECTIONS.get((code, i), {}).get(identity)
+                if reason:
+                    omitted.append({"originalIdentity": identity, "reason": reason})
+                else:
+                    allowed.append(candidate)
+            choices.append(allowed[:3])
+            rejected.append(omitted)
         selection = next((combo for combo in product(*choices)
                           if len({candidate_identity(c) for c in combo}) == 3), None)
         queued.append({
@@ -75,6 +100,7 @@ def make_queue(report, canonical):
             "slots": [{"slot": i, "place": slots.get(i, {}).get("place"),
                        "searchStatus": slots.get(i, {}).get("status", "not_reported"),
                        "candidate": selection[i] if selection else None,
+                       "visualRejections": rejected[i],
                        "visualVerified": False, "previewStatus": "not_attempted"}
                       for i in range(3)],
             "publicationEligible": False})
