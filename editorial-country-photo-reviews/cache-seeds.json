@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "photos": [
+    {
+      "runId": 44974749380,
+      "artifactId": 14735202454,
+      "file": "GH-1.jpg",
+      "sha256": "03940d20fb859e643bd3bc74e9ece48e21b47221b9e011d7aba885be69b0e48f",
+      "cover": false,
+      "photoAsset": "assets/travel/gh-besease-shrine-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Ejisu_Bebease_Shrine_1.jpg/960px-Ejisu_Bebease_Shrine_1.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Ejisu_Bebease_Shrine_1.jpg",
+      "author": "Joy Agyepong",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "ガーナ",
+      "place": "アサンテの伝統的建造物群（ベセアセの聖所）"
+    },
+    {
+      "runId": 44974749380,
+      "artifactId": 14735202454,
+      "file": "GH-2.jpg",
+      "sha256": "f0cf66697023a4f8a5430fe646050d62f4dc31ab99af6feff027ade72abf9a05",
+      "cover": false,
+      "photoAsset": "assets/travel/gh-cape-coast-castle-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Cape_Coast_Castle%2C_Cape_Coast%2C_Ghana.JPG/960px-Cape_Coast_Castle%2C_Cape_Coast%2C_Ghana.JPG",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Cape_Coast_Castle,_Cape_Coast,_Ghana.JPG",
+      "author": "Rjruiziii",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "ガーナ",
+      "place": "ケープコースト城"
+    }
+  ]
+}
