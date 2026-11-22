@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "UG": {
+      "name": "ウガンダ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/ug",
+      "portrait": {
+        "lead": "山地の緑深い森と王国の記憶、自然と文化を並べて読む",
+        "body": "ウガンダ南西部のブウィンディ原生国立公園では、山地の森が多様な動植物の生息場所となっています。一方、首都カンパラ近郊のカスビのブガンダ王国歴代国王の墓は、王国の文化と建築技術、現在も続く精神的なつながりを伝える世界文化遺産です。生きた森の複雑さと、人々が守ってきた聖なる場所の意味を写真と地図で見比べる誌上旅行。現地訪問を推奨する内容ではなく、公開前には写真の実物確認と権利確認を必須とします。",
+        "facts": [
+          "世界自然遺産：ブウィンディ原生国立公園（1994年登録）",
+          "世界文化遺産：カスビのブガンダ王国歴代国王の墓（2001年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ウガンダの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/ug"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブウィンディ原生国立公園",
+          "travelStory": [
+            "ウガンダ南西部のブウィンディの森を写した写真では、濃い緑の樹冠が丘の起伏を覆っています。手前から奥まで続く森の層を目でたどると、平地の熱帯林と山地の森が出会う場所らしい複雑さが伝わります。地図では周囲の山並みと保護区の位置を確かめ、森を一枚の緑色ではなく、多様な生息環境が重なる場所として眺める小旅行です。",
+            "UNESCOは、この保護区がアフリカでも生物多様性の高い地域の一つであり、マウンテンゴリラをはじめとする多くの種の生息地だと説明しています。動物の姿が写っていない森林写真でも、林冠の広がりや斜面の連続性には意味があります。人の目には見えにくい生き物の暮らしを支える環境そのものに注目することで、森を守る意義がいっそう具体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブウィンディ原生国立公園",
+              "url": "https://whc.unesco.org/en/list/682/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブウィンディ原生国立公園の世界遺産の種類は？",
+            "options": [
+              "文化遺産",
+              "自然遺産",
+              "複合遺産"
+            ],
+            "answer": 1,
+            "fact": "ブウィンディ原生国立公園は1994年登録の世界自然遺産で、多様な動植物の生息域です。",
+            "photoGoal": "ブウィンディの保護区内の森林景観が実際に写っていることを地名・作者・許諾と共に照合する。"
+          },
+          "commonsSearch": "Bwindi Impenetrable National Park Uganda rainforest mountains",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "カスビのブガンダ王国歴代国王の墓",
+          "travelStory": [
+            "カンパラ近郊のカスビでは、大きな茅葺き屋根を持つ伝統的な建物と、その周囲の敷地が王国の歴史を伝えています。写真を見比べる際は屋根の形だけでなく、門や中庭、通路がどのようにつながるかにも注目しましょう。地図で都市の中に位置することを確かめると、ここが過去の遺物ではなく、いまも人々の文化的な記憶に関わる場所だと分かります。",
+            "UNESCOが2001年に世界文化遺産として登録したこの墓所は、ブガンダ王国の王たちに関わる重要な精神的・文化的な空間です。2010年の火災で主要建物が大きな被害を受けましたが、伝統技術や地域の参加を重視して復旧が進められ、2023年には危機遺産リストから外れました。修復された姿だけでなく、守り続ける営みそのものに注目する小旅行です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カスビのブガンダ王国歴代国王の墓",
+              "url": "https://whc.unesco.org/en/list/1022/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "カスビの墓所が伝えるのは、どの王国の歴史？",
+            "options": [
+              "ブガンダ王国",
+              "インカ帝国",
+              "アステカ帝国"
+            ],
+            "answer": 0,
+            "fact": "カスビの墓所はウガンダのブガンダ王国歴代国王に関わる世界文化遺産です。",
+            "photoGoal": "カスビの墓所の敷地または伝統建築を実際に写した写真を選び、火災以前・修復後の時期を取り違えない。"
+          },
+          "commonsSearch": "Kasubi Tombs Uganda traditional thatched building restoration",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Bwindi forest Uganda landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "ZW": {
+      "name": "ジンバブエ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/zw",
+      "portrait": {
+        "lead": "石を積み上げた都市と、奇岩に残る人々の時間",
+        "body": "ジンバブエ南部には、石をモルタルなしで積み上げた巨大な建築群が残るグレート・ジンバブエ遺跡があります。別の場所に広がるマトボの丘群は、花崗岩の独特な岩山や洞窟の岩絵、いまも意味を持つ聖地が重なる文化的景観です。石の城壁に表れた都市の技術と、長い時間を通じて人が岩場と結んできた関係を比べると、同じ国の世界遺産でも異なる歴史の読み方が見えてきます。写真は場所と著作者、許諾を独立確認してから使用します。",
+        "facts": [
+          "世界文化遺産：グレート・ジンバブエ遺跡（1986年登録）",
+          "世界文化遺産：マトボの丘群（2003年登録）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ジンバブエの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/zw"
+      },
+      "travelDrafts": [
+        {
+          "place": "グレート・ジンバブエ遺跡",
+          "travelStory": [
+            "グレート・ジンバブエの写真には、草木の間から長い石垣が曲線を描いて現れます。大囲壁と呼ばれる大きな囲いを見つけたら、石の一つ一つが積まれた線をたどってみましょう。高い壁は飾りとしてだけでなく、かつて大きな都市が営まれたことを感じさせます。丘の遺構、大囲壁、谷の遺構を地図で見比べ、都市全体の配置を想像する小旅行です。",
+            "UNESCOによれば、この遺跡は11～15世紀ごろに栄えたショナ系の人々の都市文明と交易の重要性を伝えています。大囲壁などの構造物は石材を積み重ねる高度な技術を示し、丘と谷に分かれた遺構は単一の建物ではなく都市の広がりを示します。巨大な石壁の写真を見たあとで、誰がどのように暮らし、物資を交換したのかを考えると、遺跡の風景に生活の気配が戻ってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グレート・ジンバブエ遺跡",
+              "url": "https://whc.unesco.org/en/list/364/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "グレート・ジンバブエの大囲壁の特徴は？",
+            "options": [
+              "氷の塊でできている",
+              "石を積み上げた壁である",
+              "すべて近代の鉄筋製である"
+            ],
+            "answer": 1,
+            "fact": "グレート・ジンバブエの大囲壁は、石材を積み上げた歴史的な建築群の一部です。",
+            "photoGoal": "大囲壁または丘の遺構そのものが分かるジンバブエ国内の実景と撮影者・利用条件を照合する。"
+          },
+          "commonsSearch": "Great Zimbabwe National Monument Great Enclosure stone ruins",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "マトボの丘群",
+          "travelStory": [
+            "マトボの丘群では、丸みを帯びた大きな花崗岩が積み重なり、時には不思議な均衡で立っているように見えます。遠くからは彫刻のように見える岩山も、その間には人々が長く使ってきた場所や岩絵が残されています。写真では奇岩の形を楽しみ、別の写真では岩壁の絵に注目し、自然の地形と人間の営みが同じ景観に重なることを確かめましょう。",
+            "UNESCOは、マトボの文化的景観に豊かな岩絵の記録があり、古くから人が暮らしてきた痕跡を示すと説明しています。また地域の人々にとって重要な聖地や儀礼の場所が現在も大切にされています。世界遺産の価値を奇岩の珍しさだけに縮めず、岩山を舞台に継承されてきた信仰や社会的な営みとともに読むと、風景の見え方が変わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マトボの丘群",
+              "url": "https://whc.unesco.org/en/list/306/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "マトボの丘群が世界文化遺産として評価される理由は？",
+            "options": [
+              "近代の超高層建築",
+              "巨大なサンゴ礁",
+              "岩絵や聖地を含む文化的景観"
+            ],
+            "answer": 2,
+            "fact": "マトボの丘群は岩絵や聖なる場所、人々の伝統を含む文化的景観として評価されます。",
+            "photoGoal": "ジンバブエのマトボ丘陵にある実際の花崗岩の奇岩・岩絵と確認できる写真を選ぶ。"
+          },
+          "commonsSearch": "Matobo Hills Zimbabwe granite balancing rocks landscape",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Great Zimbabwe Zimbabwe hill complex landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "MG": {
+      "name": "マダガスカル",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/mg",
+      "portrait": {
+        "lead": "王の丘と石灰岩の森、島に刻まれた二つの歴史",
+        "body": "マダガスカル中央高地のアンブヒマンガの丘には、かつての王家に関わる建築や祭祀の場所が残り、いまも文化的な意味を持っています。西部のアンドレファナ乾燥林には、ベマラハのツィンギと呼ばれる鋭い石灰岩の地形や、地域に特有の生態系が広がります。人間の歴史を伝える聖なる丘と、長い地質の時間が生み出した岩の森を写真で対比する誌上旅行です。後者は2023年に拡張・改称された世界自然遺産であり、旧名称だけで紹介しないようにします。",
+        "facts": [
+          "世界文化遺産：アンブヒマンガの丘の王領地（2001年登録）",
+          "世界自然遺産：アンドレファナ乾燥林（1990年登録、2023年拡張・改称）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：マダガスカルの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/mg"
+      },
+      "travelDrafts": [
+        {
+          "place": "アンブヒマンガの丘の王領地",
+          "travelStory": [
+            "アンブヒマンガの丘の写真では、中央高地の緑の中に王家に関わる建築や石造りの入口、伝統的な空間が見えてきます。ひとつの建物だけを切り取るのではなく、丘の斜面や門、周囲の自然とのつながりにも目を向けましょう。地図では首都アンタナナリボの北に位置することを確かめ、国の記憶が形になった場所を遠くから丁寧に読む小旅行です。",
+            "UNESCOは、アンブヒマンガの丘を15～19世紀の中央高地の文明と文化的・精神的な伝統を示す遺産として評価しています。王の墓や聖なる場所、樹木などが結びつき、人々の記憶や信仰のよりどころとなってきました。見た目の華やかさだけでは伝わらない価値があるため、写真の出典や撮影時期を確認しつつ、場所が現在も尊重されている意味を考えましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンブヒマンガの丘の王領地",
+              "url": "https://whc.unesco.org/en/list/950/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "アンブヒマンガの丘が伝える歴史は？",
+            "options": [
+              "マダガスカルの王権と信仰",
+              "古代ローマの軍港",
+              "近代宇宙基地"
+            ],
+            "answer": 0,
+            "fact": "アンブヒマンガの丘の王領地は、マダガスカルの王権と精神的伝統を伝える世界文化遺産です。",
+            "photoGoal": "アンブヒマンガの実際の門や王家の建築、丘の実景と確認できる写真の出典を照合する。"
+          },
+          "commonsSearch": "Royal Hill of Ambohimanga Madagascar rova gate",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ベマラハのツィンギ（アンドレファナ乾燥林）",
+          "travelStory": [
+            "マダガスカル西部のベマラハでは、石灰岩が細く尖った峰のように連なり、まるで灰色の森が広がっているように見えます。岩の間に緑が入り込む写真を見つめると、硬い岩の地形と生き物が暮らす場所の距離の近さに気づきます。広い景色と岩の細部を見比べ、風化や水の働きが長い時間をかけて生んだ地形を読み解く小旅行です。",
+            "この区域は1990年に「ベマラハのツィンギ厳正自然保護区」として世界自然遺産に登録されました。UNESCOは2023年に保護区域を拡張し、遺産名を「アンドレファナ乾燥林」に改めています。現在の遺産はベマラハだけでなく複数の保護区から構成されます。写真を選ぶ際はベマラハを撮ったものかを確かめ、単に「マダガスカルの岩山」という説明で別の場所を混同しないことも大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンドレファナ乾燥林（ベマラハ区域）",
+              "url": "https://whc.unesco.org/en/list/494/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "アンドレファナ乾燥林の世界遺産は2023年にどう変わった？",
+            "options": [
+              "文化遺産へ変更された",
+              "登録がすべて取り消された",
+              "範囲が拡張され名称も変わった"
+            ],
+            "answer": 2,
+            "fact": "1990年登録のベマラハの保護区は、2023年に拡張されアンドレファナ乾燥林へ改称されました。",
+            "photoGoal": "ベマラハのツィンギの石灰岩地形であることを確認し、他のツィンギと取り違えず撮影者・許諾を確認する。"
+          },
+          "commonsSearch": "Tsingy de Bemaraha Madagascar limestone pinnacles panorama",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Andrefana dry forests Madagascar Tsingy de Bemaraha landscape",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
