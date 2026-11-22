@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "BW": {
+      "name": "ボツワナ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/bw",
+      "portrait": {
+        "lead": "水がつくる内陸の湿地と、岩に刻まれた人の記憶",
+        "body": "ボツワナ北西部のオカバンゴ・デルタでは、海に向かわない川が乾いた大地に広がり、湿地の生き物を支えます。ツォディロの丘には古い岩絵が残り、今も地域の人々にとって大切な信仰の場所です。水の動きが形づくる自然と、人が岩の風景に重ねた文化を、二つの世界遺産から読み解きます。2026年11月22日時点で外務省の危険情報は出ていませんが、野生動物や交通など現地の安全対策は必要です。",
+        "facts": [
+          "世界自然遺産：オカバンゴ・デルタ（2014年）",
+          "世界文化遺産：ツォディロ（2001年）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ボツワナの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/bw"
+      },
+      "travelDrafts": [
+        {
+          "place": "オカバンゴ・デルタ",
+          "travelStory": [
+            "上空から湿地を眺めると、青い水面の間を草地が縫うように伸びています。川幅の決まった一本の流れというより、水が大地の低い場所へ広がっていく様子に注目しましょう。季節によって水の広がりが変わるため、同じ場所でも違う景観が現れます。動植物の暮らしはその変化と密接につながっています。",
+            "オカバンゴ川は海に注がず、ボツワナの内陸で湿地を形成します。流域上流からやって来る洪水が現地の乾季に重なるため、雨が少なくなる時期にも水が広がるのが特徴です。永久的な沼地と季節的に浸水する草地が組み合わさり、希少な大型哺乳類などを支えています。水の到達時期そのものが生態系の仕組みを形づくっています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・オカバンゴ・デルタ",
+              "url": "https://whc.unesco.org/en/list/1432/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "オカバンゴ・デルタの水が広がる時期の特徴は？",
+            "options": [
+              "現地の乾季に洪水が到達する",
+              "冬の雪解けだけで増水する",
+              "海の満潮だけで増水する"
+            ],
+            "answer": 0,
+            "fact": "上流からの水が現地の乾季に届き、湿地の季節的な変化を生みます。",
+            "photoGoal": "オカバンゴ・デルタの実景。登録区域との関係と権利を確認する。"
+          },
+          "commonsSearch": "Okavango Delta aerial Botswana Diego Delso",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ツォディロ",
+          "travelStory": [
+            "平坦な周囲の土地から岩の丘が立ち上がる写真を眺めてみましょう。この丘は景色が目立つだけでなく、人が長い時間をかけて暮らしの拠点としてきた場所です。岩壁の絵や考古資料は丘の各所に残り、現在も地域の人々の信仰と結び付いています。丘の全景を写した写真と個々の岩絵の資料は区別して、文化への理解を深めましょう。",
+            "ユネスコによると、約十平方キロメートルの範囲には四千五百を超える岩絵が残り、考古学的な記録は少なくとも十万年にわたる人間の活動と環境の変化を伝えています。ただし全ての岩絵が同じ時代のものというわけではありません。年代や意味には研究上の不確かさもあり、現在の地域社会の信仰と保存活動を尊重することが大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ツォディロ",
+              "url": "https://whc.unesco.org/en/list/1021/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ツォディロに多数残る文化的な記録は？",
+            "options": [
+              "紙の地図",
+              "岩絵",
+              "青銅製の貨幣"
+            ],
+            "answer": 1,
+            "fact": "岩絵は四千五百点を超え、考古学資料とともに長い人間活動の記録を伝えます。",
+            "photoGoal": "ツォディロの実景。登録区域との関係と権利を確認する。"
+          },
+          "commonsSearch": "Tsodilo Hills Botswana Joachim Huber",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Botswana Chobe river landscape panorama landscape 3:2",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_296.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "GH": {
+      "name": "ガーナ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/gh",
+      "portrait": {
+        "lead": "土と木の装飾建築、海岸の砦が伝える歴史",
+        "body": "ガーナでは、海岸の要塞群と内陸のアサンテの伝統建築が、それぞれ異なる歴史を伝えています。中部のクマシ周辺には地域の信仰や造形を受け継ぐ建物があり、海辺のケープコースト城は大西洋を渡る奴隷貿易の記憶を伝える場所です。華やかな景色だけでなく、文化を支えてきた人々や強制的に連れ去られた人々の歴史も学ぶ誌上旅行です。外務省は2026年11月22日確認時点で国内に危険レベル1・2を発出しており、渡航は最新の安全情報を優先してください。",
+        "facts": [
+          "世界文化遺産：アサンテの伝統的建造物群",
+          "世界文化遺産：沿岸地域の城塞群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ガーナの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/gh"
+      },
+      "travelDrafts": [
+        {
+          "place": "アサンテの伝統的建造物群",
+          "travelStory": [
+            "土壁に施された浮き彫りや、建物を取り囲む空間の形に注目しましょう。クマシ周辺の伝統建築では、装飾は単に壁を美しくするためだけにあるのではありません。地域の人々が受け継いできた考え方や信仰を伝える手段でもあります。聖所として使われてきた建物なので、造形の観察と同時に地域の文化や撮影のルールを尊重することが大切です。",
+            "ユネスコは木材や竹、泥の塗り壁などで造られた十の聖所を、アサンテ王国の建築文化を伝える遺産として評価しています。壁の渦巻きや動植物などの文様は象徴的な意味を持ちます。一方で湿気や雨、虫などによって建物の材料は傷みやすく、保存には伝統的な技法を受け継ぐ人々の知識が欠かせません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アサンテの伝統的建造物群",
+              "url": "https://whc.unesco.org/en/list/35/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "アサンテの建物の伝統的な浮き彫りには何が込められている？",
+            "options": [
+              "工事の契約番号",
+              "宗教や考え方の象徴",
+              "近代の交通標識"
+            ],
+            "answer": 1,
+            "fact": "壁面の装飾文様はアサンテの人々の信仰や考え方を表す象徴です。",
+            "photoGoal": "アサンテの伝統的建造物群の実景。登録区域との関係と権利を確認する。"
+          },
+          "commonsSearch": "Asante traditional buildings Besease shrine Ghana UNESCO",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ケープコースト城",
+          "travelStory": [
+            "海を向いた砲台と白い壁が並ぶケープコースト城。明るい海の景色だけでは、この場所の歴史を理解することはできません。建物は交易や支配の拠点として使われ、奴隷にされた人々が大西洋を渡る船へ送られる過程にも関わりました。景観を鑑賞するだけでなく、どのような人々がここを通ったのかを学ぶ誌上旅行です。",
+            "ガーナ沿岸の城塞群は、ヨーロッパ諸国と西アフリカの交易および奴隷貿易の歴史を伝えています。ユネスコの登録遺産にはケープコースト城のほかエルミナ城などが含まれ、建物の配置や残された空間から歴史を考えることができます。人間の自由が奪われた歴史に敬意を払い、犠牲者を単なる観光の背景として扱わないことが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ケープコースト城",
+              "url": "https://whc.unesco.org/en/list/34/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ケープコースト城が伝える重大な歴史は？",
+            "options": [
+              "南極探検",
+              "大西洋奴隷貿易",
+              "月面着陸"
+            ],
+            "answer": 1,
+            "fact": "城塞群は交易の歴史と、奴隷にされた人々が強制的に移送された歴史を伝えます。",
+            "photoGoal": "ケープコースト城の実景。登録区域との関係と権利を確認する。"
+          },
+          "commonsSearch": "Cape Coast Castle Ghana Rjruiziii",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Aburi Mampong Green landscape Ghana",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_096.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
