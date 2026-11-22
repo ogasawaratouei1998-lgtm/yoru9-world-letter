@@ -77,8 +77,17 @@ VISUAL_REJECTIONS = {
     },
     ("MU", 0): {"Hausdülmen -- 2014 -- 5879.jpg": "Photograph of a German landscape, not Mauritius.",
                  "Landscape near Les Mariannes, Mauritius, 2007-09-09.jpg": "Five-to-one panorama, too narrow for the cover."},
-    ("ZA", 0): {"Cape Town (ZA), Cape Point Nature Reserve, Ausblick -- 2024 -- 3377.jpg": "Deliberate zoom effect obscures the natural landscape; unsuitable for a documentary country cover."},
-    ("ZA", 2): {"Cape Floral Region Protected Areas map.jpg": "Annotated map, not an actual landscape photograph of the protected region."},
+    ("ZA", 0): {
+        "Cape Town (ZA), Cape Point Nature Reserve, Ausblick -- 2024 -- 3377.jpg": "Deliberate zoom effect obscures the natural landscape; unsuitable for a documentary country cover.",
+        "Cape Town (ZA), Table Mountain -- 2024 -- 2821.jpg": "Foreground-dominated close-up of dark shrubs and rocks with no recognisable mountain skyline; inadequate as a South Africa cover.",
+    },
+    ("ZA", 1): {
+        "Robben Island, South Africa (3263091144).jpg": "Open roadside view without the prison complex or historic buildings that support the story; not a suitable heritage photo.",
+    },
+    ("ZA", 2): {
+        "Cape Floral Region Protected Areas map.jpg": "Annotated map, not an actual landscape photograph of the protected region.",
+        "Cape Town (ZA), Table Mountain -- 2024 -- 2822.jpg": "Rocky close-up at the same mountain as the cover candidates, with little visible botanical context for the Cape Floral Region's exceptional plant diversity.",
+    },
 }
 
 def make_queue(report, canonical):
