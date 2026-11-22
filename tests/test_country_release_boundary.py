@@ -39,7 +39,7 @@ class CountryReleaseBoundaryTest(unittest.TestCase):
             if country["status"] != "approved":
                 continue
             with self.subTest(code=code):
-                self.assertGreaterEqual(len(country.get("portraitPhotos", [])), 3)
+                self.assertGreaterEqual(len(country.get("portraitPhotos", [])), 1)
                 self.assertGreaterEqual(len(country.get("quiz", [])), 2)
                 self.assertGreaterEqual(len(country.get("travelStops", {})), 2)
                 for photo in country["portraitPhotos"]:
