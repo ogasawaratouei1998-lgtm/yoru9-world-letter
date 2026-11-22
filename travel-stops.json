@@ -5633,5 +5633,88 @@
         "checkedOn": "2026-11-22"
       }
     ]
+  },
+  "pk-hingol-rock-cover": {
+    "country": "パキスタン",
+    "countryOnly": true,
+    "place": "ヒンゴル国立公園の岩山",
+    "region": "バロチスタン州・ヒンゴル国立公園の代表地点",
+    "latitude": 25.55,
+    "longitude": 65.0833,
+    "note": "対象地の代表地点であり写真の正確な撮影座標ではありません。地域の危険レベル2～4を必ず確認し、渡航は推奨しません。",
+    "photoCaption": "乾いた地形から岩の丘が突き出すヒンゴル国立公園の風景（2008年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Hungol_Landscape.JPG/960px-Hungol_Landscape.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Hungol_Landscape.JPG",
+    "photoAsset": "assets/travel/pk-hingol-rock-cover.jpg",
+    "author": "Bilal Mirza",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "coverOnly": true
+  },
+  "pk-moenjodaro-ruins-postcard": {
+    "country": "パキスタン",
+    "countryOnly": true,
+    "place": "モヘンジョダロの考古遺跡",
+    "region": "シンド州・UNESCO世界遺産代表地点",
+    "latitude": 27.3292,
+    "longitude": 68.1389,
+    "note": "対象地の代表地点であり写真の正確な撮影座標ではありません。地域の危険レベル2～4を必ず確認し、渡航は推奨しません。",
+    "photoCaption": "モヘンジョダロの焼きレンガの建物跡と円筒状の遺構（2014年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e1/Other_side_of_Moenjodaro_by_Usman_Ghani.jpg/960px-Other_side_of_Moenjodaro_by_Usman_Ghani.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Other_side_of_Moenjodaro_by_Usman_Ghani.jpg",
+    "photoAsset": "assets/travel/pk-moenjodaro-ruins-postcard.jpg",
+    "author": "Usman.pg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "広い空の下、焼きレンガの壁や道の跡が幾重にも連なるモヘンジョダロ。写真に写る建物の基礎を目で追うと、ただ古い家々が並んでいるのではなく、都市全体を考えて配置された空間だったことが見えてきます。大きな道と小さな区画を比べながら、人が密集して暮らすために何を工夫したのか想像する誌上散策です。",
+      "UNESCOはモヘンジョダロを、インダス流域における古い計画都市の重要な例と評価しています。紀元前3千年紀の都市には整えられた街路、建物の基礎、排水の仕組みが残ります。遺跡を守るうえでは塩分や水分によるレンガの劣化が課題となり、発掘と保存の両立が求められています。暮らしの痕跡を未来へつなぐ難しさも知りたい場所です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・モヘンジョダロ",
+        "url": "https://whc.unesco.org/en/list/138/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・パキスタン",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_011.html",
+        "checkedOn": "2026-11-22"
+      }
+    ]
+  },
+  "pk-takht-bahi-postcard": {
+    "country": "パキスタン",
+    "countryOnly": true,
+    "place": "タフティ・バヒー仏教僧院遺跡",
+    "region": "ハイバル・パフトゥンハー州・UNESCO世界遺産代表地点",
+    "latitude": 34.2861,
+    "longitude": 71.9458,
+    "note": "対象地の代表地点であり写真の正確な撮影座標ではありません。地域の危険レベル2～4を必ず確認し、渡航は推奨しません。",
+    "photoCaption": "丘に残るタフティ・バヒー仏教僧院の石造遺構（2001年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/06/Takht_Bahi.jpg/960px-Takht_Bahi.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Takht_Bahi.jpg",
+    "photoAsset": "assets/travel/pk-takht-bahi-postcard.jpg",
+    "author": "Bakhtiar Ahmed",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "famousTourist": true,
+    "travelStory": [
+      "険しい丘の上に石積みの壁と中庭が残るタフティ・バヒー。写真の階段や区画を見ると、山の斜面を利用しながら修行や共同生活の場所を設けた僧院の形が浮かび上がります。ストゥーパを囲む空間と僧房の位置関係に注目して、信仰の場としてどんな動線が考えられていたのか、石の配置から読み解いてみましょう。",
+      "UNESCOによると、この仏教僧院群は紀元1世紀初頭に始まり、7世紀頃まで使われました。高い丘に位置したことで後世の侵入や改変を受けにくく、ガンダーラ地方の建築がよく残っています。同じ世界遺産には近隣のサリ・バロールの都市遺跡も含まれますが、写真は主にタフティ・バヒーを写したものです。異なる構成資産を混同せずに見ることが重要です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・タフティ・バヒーとサリ・バロール",
+        "url": "https://whc.unesco.org/en/list/140/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・パキスタン",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_011.html",
+        "checkedOn": "2026-11-22"
+      }
+    ]
   }
 }
