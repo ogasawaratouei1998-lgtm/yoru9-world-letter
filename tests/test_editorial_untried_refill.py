@@ -48,6 +48,27 @@ class NeverRepeatedSourceGroupTests(unittest.TestCase):
         self.assertEqual(selected, drafts)
         self.assertEqual(editorial.MAX_FOCUSED_DRAFT_GROUPS, 3)
 
+    def test_model_catalog_is_fetched_once_per_real_editorial_run(self):
+        import io
+        import json
+        from unittest.mock import patch
+        payload = json.dumps({"candidates": [{"content": {"parts": [
+            {"text": json.dumps({"ok": True})}]}}]}).encode()
+        def response(*args, **kwargs):
+            return io.BytesIO(payload)
+        with patch.object(editorial, "KEY", "dummy-test-key"), \\
+             patch.object(editorial, "AI_QUOTA_BLOCKED", False), \\
+             patch.object(editorial, "RUN_DEADLINE",
+                          editorial.time.monotonic() + 60), \\
+             patch.object(editorial, "RUN_MODEL_CATALOG", None), \\
+             patch.object(editorial, "available_models",
+                          return_value=["models/gemini-3.5-flash-lite"]) as catalog, \\
+             patch.object(editorial, "urlopen", side_effect=response) as api:
+            self.assertEqual(editorial.ai("first"), {"ok": True})
+            self.assertEqual(editorial.ai("second"), {"ok": True})
+            self.assertEqual(catalog.call_count, 1)
+            self.assertEqual(api.call_count, 2)
+
     def test_initial_context_is_focused_and_source_pool_is_large(self):
         self.assertLessEqual(editorial.PRIMARY_EDITORIAL_GROUPS, 8)
         self.assertGreaterEqual(editorial.EDITORIAL_SHORTLIST_LIMIT, 48)
