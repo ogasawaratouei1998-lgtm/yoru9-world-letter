@@ -25,21 +25,12 @@ class NextEightUnescoCountryTests(unittest.TestCase):
                 country = self.doc["countries"][code]
                 self.assertEqual(country["name"], draft["name"])
                 if code == "AM" and country["status"] == "approved":
-                    # The November 21 research snapshot is immutable. A later
-                    # independent release adds current country-specific MOFA
-                    # precautions without deleting sourced historic content.
+                    # The original source-backed draft is immutable; approval
+                    # separately appends verified current regional danger levels.
                     self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
-                    self.assertIn("危険レベル4", country["portrait"]["body"])
-                    self.assertIn("危険レベル2", country["portrait"]["body"])
+                    for level in ("危険レベル4", "危険レベル2", "危険レベル1"):
+                        self.assertIn(level, country["portrait"]["body"])
                     self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
-                else:
-                    if code == "AM" and country["status"] == "approved":
-                    # The original November 21 draft remains immutable; the
-                    # later release appends current MOFA level 1/2/4 warnings.
-                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
-                    self.assertIn("危険レベル4", country["portrait"]["body"])
-                    self.assertIn("危険レベル2", country["portrait"]["body"])
-                    self.assertIn("危険レベル1", country["portrait"]["body"])
                 else:
                     self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
