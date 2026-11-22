@@ -22,8 +22,14 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertNotIn("path: data/approved/*.json",preview)
 
     def test_preview_handoff_never_runs_duplicate_ai_or_premature_pages(self):
+        # Same-day on-demand GitHub push is explicit; ordinary code pushes
+        # must not spend AI quota or duplicate a normal scheduled review.
         self.assertEqual(WORKFLOW.count(
-            "steps.edition.outputs.exists == 'false' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')"),2)
+            "steps.edition.outputs.exists == 'false' &&"),2)
+        self.assertEqual(WORKFLOW.count(
+            "github.event.head_commit.message == 'Editorial retry on demand: 2026-11-22'"),2)
+        self.assertEqual(WORKFLOW.count(
+            "github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'"),2)
         # The four Pages/build steps require a newly published edition.
         # The final notification step may retry an already published edition;
         # the notifier and Supabase backend both guard duplicate delivery.
