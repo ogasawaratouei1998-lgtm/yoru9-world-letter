@@ -4846,5 +4846,88 @@
       }
     ],
     "famousTourist": true
+  },
+  "ng-lagos-victoria-cover": {
+    "country": "ナイジェリア",
+    "countryOnly": true,
+    "place": "ラゴス・ヴィクトリア島",
+    "region": "ラゴス",
+    "latitude": 6.441576,
+    "longitude": 3.432405,
+    "note": "撮影位置の座標。写真は2024年。不要不急の渡航は避けてください。",
+    "photoCaption": "水辺の高層建築と船着き場を上空から眺めたラゴス（2024年）",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/72/Aerial_view_of_victoria_island_in_Lagos%2C_Nigeria_with_habours_for_yatches.jpg/500px-Aerial_view_of_victoria_island_in_Lagos%2C_Nigeria_with_habours_for_yatches.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Aerial_view_of_victoria_island_in_Lagos%2C_Nigeria_with_habours_for_yatches.jpg",
+    "photoAsset": "assets/travel/ng-lagos-victoria-cover.jpg",
+    "author": "Ayorinde Ogundele",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  "ng-osun-grove-postcard": {
+    "country": "ナイジェリア",
+    "countryOnly": true,
+    "place": "オスン・オショグボの聖なる森",
+    "region": "オスン州（遺産代表地点）",
+    "latitude": 7.75556,
+    "longitude": 4.55222,
+    "note": "UNESCOの遺産代表地点。正確な撮影位置ではありません。不要不急の渡航は避けてください。",
+    "photoCaption": "森の中にある曲線的な彫刻と木立（2017年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/18/Osun_Sacred_Grove%2C_Osogbo_Osun_state.jpg/500px-Osun_Sacred_Grove%2C_Osogbo_Osun_state.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Osun_Sacred_Grove%2C_Osogbo_Osun_state.jpg",
+    "photoAsset": "assets/travel/ng-osun-grove-postcard.jpg",
+    "author": "(Jesu-loba)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "木立の間に曲線を描く彫刻が姿を現し、森の緑と造形の柔らかな輪郭が対照をなしています。この写真は、自然環境と人の信仰が離れたものではないことを考える入口です。森を単なる景勝地や屋外美術館として眺めるのではなく、今も続く宗教的な営みを尊重しながら、誌上でその文化を学びましょう。",
+      "UNESCOは、オスン川と周囲の森林がヨルバの信仰の重要な場となっていることを評価しています。かつて各地にあった聖なる森の多くが失われる中、この場所では20世紀の芸術家たちによる作品も加わり、信仰と芸術の関係が受け継がれました。2005年の世界遺産登録は、生きた文化の価値を示しています。外務省は不要不急の渡航中止を求めています。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・オスン・オショグボの聖なる森",
+        "url": "https://whc.unesco.org/en/list/1118/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省・ナイジェリア危険情報",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_115.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ng-sukur-postcard": {
+    "country": "ナイジェリア",
+    "countryOnly": true,
+    "place": "スクルの文化的景観",
+    "region": "アダマワ州（遺産代表地点）",
+    "latitude": 10.74056,
+    "longitude": 13.57194,
+    "note": "UNESCOの遺産代表地点。正確な撮影位置ではありません。危険レベル4：退避・渡航中止。",
+    "photoCaption": "岩や石積みが残るスクルの文化遺産",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Sukur_Adamawa_Nigeria.jpg/500px-Sukur_Adamawa_Nigeria.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sukur_Adamawa_Nigeria.jpg",
+    "photoAsset": "assets/travel/ng-sukur-postcard.jpg",
+    "author": "StefanCramer",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+    "travelStory": [
+      "写真に写る岩や石積みから、地元の材料で空間を築いてきた人々の知恵を想像できます。スクルの世界遺産は一棟の建物ではなく、丘の上の政治と信仰の中心、斜面の耕作地、集落を含む景観です。地形に沿った暮らしが文化をかたちづくる様子を、写真と資料でたどる誌上旅行です。",
+      "UNESCOによると、スクルでは16世紀にさかのぼる製鉄や交易、政治制度の歴史が記録され、石の道や段々畑、かつての製鉄炉の跡が文化を伝えています。ただし、現在のアダマワ州には外務省の危険レベル4が出ています。現地への渡航は止め、滞在中の人は退避してください。ここでは安全な場所から文化史を学ぶことに徹します。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・スクルの文化的景観",
+        "url": "https://whc.unesco.org/en/list/938/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省・ナイジェリア危険情報",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_115.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
