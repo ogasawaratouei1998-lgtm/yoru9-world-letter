@@ -56,13 +56,13 @@ class NeverRepeatedSourceGroupTests(unittest.TestCase):
             {"text": json.dumps({"ok": True})}]}}]}).encode()
         def response(*args, **kwargs):
             return io.BytesIO(payload)
-        with patch.object(editorial, "KEY", "dummy-test-key"), \\
-             patch.object(editorial, "AI_QUOTA_BLOCKED", False), \\
+        with patch.object(editorial, "KEY", "dummy-test-key"), \
+             patch.object(editorial, "AI_QUOTA_BLOCKED", False), \
              patch.object(editorial, "RUN_DEADLINE",
-                          editorial.time.monotonic() + 60), \\
-             patch.object(editorial, "RUN_MODEL_CATALOG", None), \\
+                          editorial.time.monotonic() + 60), \
+             patch.object(editorial, "RUN_MODEL_CATALOG", None), \
              patch.object(editorial, "available_models",
-                          return_value=["models/gemini-3.5-flash-lite"]) as catalog, \\
+                          return_value=["models/gemini-3.5-flash-lite"]) as catalog, \
              patch.object(editorial, "urlopen", side_effect=response) as api:
             self.assertEqual(editorial.ai("first"), {"ok": True})
             self.assertEqual(editorial.ai("second"), {"ok": True})
