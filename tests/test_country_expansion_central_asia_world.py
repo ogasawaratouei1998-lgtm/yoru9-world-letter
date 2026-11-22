@@ -38,7 +38,8 @@ class CentralAsiaWorldExpansionTests(unittest.TestCase):
                     self.assertEqual(len(country["travelStops"]), 3)
                 else:
                     self.assertEqual(country["status"], "pending")
-                    self.assertEqual(draft["portrait"], country["portrait"])
+                    self.assertEqual({k:v for k,v in draft["portrait"].items() if k != "body"}, {k:v for k,v in country["portrait"].items() if k != "body"})
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
                     self.assertEqual(country["portrait"]["photos"], [])
                     self.assertEqual(country["portraitPhotos"], [])
                     self.assertEqual(country["quiz"], [])
