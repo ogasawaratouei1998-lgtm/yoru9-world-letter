@@ -65,6 +65,43 @@ class TravelPhotoCacheTest(unittest.TestCase):
         self.assertEqual(jpeg_dimensions(image),(1300,720))
         self.assertEqual(len(hits),1)
 
+    def test_nonstandard_reviewed_cover_width_upgrades_to_retina_resolution(self):
+        for original in (600, 960, 1024):
+            with self.subTest(original=original):
+                self.record["photo"]=self.record["photo"].replace("/500px-",f"/{original}px-")
+                self.write_manifest()
+                hits=[]
+                def network(req,timeout):
+                    hits.append(req.full_url)
+                    self.assertIn("/1280px-hero.jpg",req.full_url)
+                    return Response(jpeg())
+                with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+                     patch("build_site.urlopen",side_effect=network):
+                    self.assertEqual(bundle_travel_photos(self.root,self.output),1)
+                self.assertEqual(len(hits),1)
+                self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(1300,720))
+                self.record["photo"]=self.record["photo"].replace(f"/{original}px-","/500px-")
+
+    def test_service_unavailable_defers_other_wikimedia_requests(self):
+        from urllib.error import HTTPError
+        second={**self.record,"photoAsset":"assets/travel/second.jpg",
+                "photo":self.record["photo"].replace("hero.jpg","second.jpg"),
+                "photoPage":self.record["photoPage"].replace("hero.jpg","second.jpg")}
+        self.manifest.write_text(json.dumps({"hero":self.record,"second":second}),encoding="utf-8")
+        hits=[]
+        def network(req,timeout):
+            hits.append(req.full_url)
+            if "wikimedia.org" in req.full_url:
+                raise HTTPError(req.full_url,503,"temporarily unavailable",{},None)
+            if req.full_url.endswith("/travel-stops.json"):
+                return Response(b"{}")
+            raise AssertionError(req.full_url)
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            with self.assertRaisesRegex(RuntimeError,"Wikimedia rate limited"):
+                bundle_travel_photos(self.root,self.output)
+        self.assertEqual(sum("wikimedia.org" in u for u in hits),1)
+
     def test_changed_license_or_source_forces_new_fetch(self):
         hits=[]
         def network(req,timeout):
