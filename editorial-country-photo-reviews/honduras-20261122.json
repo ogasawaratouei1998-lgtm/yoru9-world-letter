@@ -2,7 +2,7 @@
   "version": 1,
   "countryCode": "HN",
   "reviewedOn": "2026-11-22",
-  "status": "visual_and_attribution_review_done_not_public",
+  "status": "two_reviewed_candidates_and_one_noncore_image_rejected_not_public",
   "publicationEligible": false,
   "artifact": {
     "runId": 44986532608,
@@ -24,7 +24,8 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "place": "コマヤグア大聖堂",
       "photoCaption": "コマヤグアの無原罪の御宿り大聖堂（2008年）。コマヤグア県は外務省危険レベル2に指定。",
-      "review": "Complete cathedral facade, landscape framing. Cover, not a listed UNESCO heritage property."
+      "review": "Complete cathedral facade, landscape framing. Cover, not a listed UNESCO heritage property.",
+      "eligibleForCoverAfterCI": true
     },
     {
       "slot": 1,
@@ -40,7 +41,8 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "place": "コパンのマヤ遺跡・石彫",
       "photoCaption": "コパン遺跡の石彫の一部（2008年）。写真は神聖文字の階段そのものではない。",
-      "review": "Maya carving within Copán ruins, consistent with UNESCO Copán heritage site 129."
+      "review": "Maya carving within Copán ruins, consistent with UNESCO Copán heritage site 129.",
+      "eligibleForSiteAfterCI": true
     },
     {
       "slot": 2,
@@ -56,7 +58,9 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "place": "ワンプシルピのパトゥカ川",
       "photoCaption": "パトゥカ川の広がり。原作者によるとリオ・プラタノ生物圏保護区の文化圏に位置するワンプシルピ付近。",
-      "review": "Photographer states cultural zone of Río Plátano Biosphere Reserve; NOT evidence that Rio Patuca is Rio Plátano river itself, nor that view is in UNESCO inscribed core; use accurately labeled river imagery only."
+      "review": "Photographer states cultural zone of Río Plátano Biosphere Reserve; NOT evidence that Rio Patuca is Rio Plátano river itself, nor that view is in UNESCO inscribed core; use accurately labeled river imagery only.",
+      "eligibleForDestinationPhoto": false,
+      "rejectionReason": "Río Patuca and its Wampusirpi cultural-zone caption do not verify that the view is inside the inscribed Río Plátano World Heritage property; it cannot represent that UNESCO site."
     }
   ],
   "independentSources": [
@@ -65,11 +69,11 @@
     "https://whc.unesco.org/en/decisions/?id_decision=9032",
     "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_263.html"
   ],
-  "safetyNote": "MOFA: Comayagua and Gracias a Dios are Level 2 (avoid non-essential travel), Copán Level 1. Río Plátano retained on UNESCO World Heritage in Danger list in 2026; desktop-only cultural trip, no travel encouragement.",
+  "safetyNote": "MOFA: Comayagua and Gracias a Dios are Level 2 (avoid non-essential travel), Copán Level 1. Río Plátano retained on UNESCO World Heritage in Danger list in 2026; desktop-only cultural trip, no travel encouragement. The Río Patuca candidate is explicitly disqualified as the UNESCO protected-site image pending property-boundary verification.",
   "requiredBeforeApproval": [
-    "ensure_rio_patuca_is_labeled_cultural_zone_not_rio_platano_river_or_unesco_core",
-    "source_license_consistency",
-    "canonical_runtime_offline_sync",
-    "full_photo_build_and_mobile_preflight"
+    "find_separately_licensed_photo_verifiably_inside_rio_platano_world_heritage_site",
+    "review_all_photo_bytes_and_commons_source_attribution",
+    "canonical_runtime_sync",
+    "full_build_and_mobile_preflight"
   ]
 }
