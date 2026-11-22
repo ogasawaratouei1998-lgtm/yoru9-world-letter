@@ -1,3 +1,4 @@
+import ast
 import json
 import hashlib
 from pathlib import Path
@@ -19,6 +20,21 @@ def row(code, slot, names):
             "candidates": [candidate(n) for n in names]}
 
 class ReviewBundleTests(unittest.TestCase):
+    def test_review_rejection_scope_keys_are_never_silently_overwritten(self):
+        # Python dict literals silently keep only the last duplicate tuple key.
+        # Reject that regression before older manually inspected failures vanish.
+        source = (Path(__file__).resolve().parents[1] / "country_review_bundle.py").read_text(encoding="utf-8")
+        module = ast.parse(source)
+        declarations = [
+            statement for statement in module.body
+            if isinstance(statement, ast.Assign)
+            and any(isinstance(t, ast.Name) and t.id == "VISUAL_REJECTIONS"
+                    for t in statement.targets)
+        ]
+        self.assertEqual(len(declarations), 1)
+        keys = [ast.literal_eval(k) for k in declarations[0].value.keys]
+        self.assertEqual(len(keys), len(set(keys)), "Duplicate country/slot visual rejection key")
+
     def test_distinct_assignment_and_no_approval(self):
         report = {"results": [row("AA", 0, ["A.jpg"]), row("AA", 1, ["A.jpg", "B.jpg"]),
                               row("AA", 2, ["C.jpg"]), row("BB", 0, ["B.jpg"])]}
