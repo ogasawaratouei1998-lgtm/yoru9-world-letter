@@ -224,6 +224,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'サンフランシスコの海峡に架かる橋は？',options:['ロンドン橋','ゴールデンゲートブリッジ','ブルックリン橋'],answer:1,photoKey:'us-golden-gate-postcard',photoLabel:'正解の橋｜ゴールデンゲートブリッジ',fact:'ゴールデンゲートブリッジは、サンフランシスコの海峡を渡る橋です。',quip:'名前はゴールデン、見た目はオレンジ。名乗った瞬間からツッコミ待ち。'},
   {question:'ヨセミテ国立公園の巨大な岩壁で知られる岩石は？',options:['サンゴ','石炭','花崗岩'],answer:2,photoKey:'us-yosemite-color-quiz-image',photoLabel:'正解の地形｜ヨセミテの岩壁と谷',fact:'ヨセミテには花崗岩の大きな岩壁や谷が広がっています。',quip:'地球のプロフィール写真、岩肌の圧が強い。'},
  ],
+ VN:[
+  {question:'ホイアン旧市街が特に栄えた役割は？',options:['国際交易港','内陸の鉱山都市','王宮を中心とする計画都市'],answer:0,fact:'UNESCOはホイアンを15〜19世紀の東南アジア交易港として紹介しています。',photoLabel:'正解写真｜ホイアン旧市街・トゥボン川沿い',quip:'川が物流の通り道だったからこそ、建物の裏側にも仕事があった。港町の歴史は正面玄関だけでは読めない。',photoKey:'vn-hoian-thubon-postcard'},
+  {question:'ハロン湾・カットバ群島で知られる地形は？',options:['火山性の溶岩台地','石灰岩のカルスト地形','氷河が削ったフィヨルド'],answer:1,fact:'UNESCOは石灰岩地形と島の景観を自然遺産の価値として紹介しています。',photoLabel:'正解写真｜ハロン湾',quip:'海から立つ岩の塔。自然の造形には竣工式も設計図もないが、完成までの時間は桁違いだ。',photoKey:'vn-halong-bay-postcard'},
+ ],
 });
 
 let worldPassportActive=null;

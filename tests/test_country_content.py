@@ -395,8 +395,12 @@ class CountryContentTest(unittest.TestCase):
     def test_sync_preserves_readiness_of_published_seven(self):
         sync_country_content(self.root)
         txt=(self.root/"world-passport.js").read_text(encoding="utf-8")
-        section=txt.split(" US:[",1)[1].split("\n});",1)[0]
-        self.assertEqual(section.count("question:"),2,section[:1000])
+        # Each country has its own array; US is no longer the final country.
+        # Check the original seven in isolation so later additions cannot leak in.
+        for code in ("IT","DE","US","FR","AR","JP","GB"):
+            with self.subTest(code=code):
+                section=txt.split(f"\n {code}:[",1)[1].split("\n ],",1)[0]
+                self.assertEqual(section.count("question:"),2,section[:1000])
         result=country_coverage(self.root,[{"id":"a","country":"イタリア"},
                                           {"id":"b","country":"ドイツ"},
                                           {"id":"c","country":"アメリカ合衆国"},
