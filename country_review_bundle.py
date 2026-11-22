@@ -52,13 +52,23 @@ def candidate_identity(candidate):
 # A rejection is scoped to the country and slot; it does not allege a license
 # problem or prohibit the photograph in other editorial contexts.
 VISUAL_REJECTIONS = {
+    ("KE", 0): {"Lamu Pharmacy.jpg": "Shop window and merchandise, not an informative country landscape."},
+    ("BD", 1): {"A view from the Mosque (8540808429).jpg": "View through a dark arch; the mosque complex itself is not shown."},
+    ("IQ", 1): {"Assur stuck.jpg": "Isolated decorated object instead of a view of the archaeological site."},
+    ("LB", 0): {"The landscape of Lebanon with its famous tree cedar of Lebanon (FL63289561).jpg": "Portrait-oriented archival photograph, unsuitable for the landscape cover."},
+    ("LB", 2): {"Lebanon mountains from near Maqial el Qalaa.jpg": "Mountain road without the Baalbek archaeological monuments."},
+    ("LY", 0): {"The Romantic Landscape - geograph.org.uk - 1803291.jpg": "Unrelated geograph UK landscape, not Libya."},
+    ("MM", 2): {"Hanlin - Pyu Ancient City.JPG": "Heritage marker rather than the archaeological remains."},
+    ("MU", 1): {"Aapravasi ghat museum, Port Louis, Mauritius.jpg": "Entrance sign dominates the view; insufficient historical building context."},
+    ("NE", 0): {"Aso Rock 52 - landscape in Abuja, Nigeria (2026).jpg": "Abuja is in Nigeria, not Niger."},
     ("CR", 0): {"1999 casona santa rosa Panorama.jpg": "Historical pre-fire house panorama; too narrow for the present-day country cover."},
     ("CR", 1): {"Santa Rosa guanacaste.jpg": "Very narrow pasture panorama; insufficient visual context for the conservation-area story."},
     ("KE", 1): {
         "Lamu Pharmacy.jpg": "Close-up of pharmacy merchandise, not a useful depiction of the historic townscape.",
         "Lamu Pharmacy2021.jpg": "Second pharmacy interior showing shelves of goods rather than the historic townscape.",
     },
-    ("MU", 0): {"Hausdülmen -- 2014 -- 5879.jpg": "Photograph of a German landscape, not Mauritius."},
+    ("MU", 0): {"Hausdülmen -- 2014 -- 5879.jpg": "Photograph of a German landscape, not Mauritius.",
+                 "Landscape near Les Mariannes, Mauritius, 2007-09-09.jpg": "Five-to-one panorama, too narrow for the cover."},
     ("ZA", 0): {"Cape Town (ZA), Cape Point Nature Reserve, Ausblick -- 2024 -- 3377.jpg": "Deliberate zoom effect obscures the natural landscape; unsuitable for a documentary country cover."},
     ("ZA", 2): {"Cape Floral Region Protected Areas map.jpg": "Annotated map, not an actual landscape photograph of the protected region."},
 }
