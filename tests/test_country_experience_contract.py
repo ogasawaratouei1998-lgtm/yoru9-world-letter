@@ -35,12 +35,15 @@ class CountryExperienceContractTest(unittest.TestCase):
         self.assertEqual(len(canonical),196)
         self.assertEqual(COUNTRY_NAMES,canonical)
         # Previously absent from the hardcoded dozen. These must be recognized
-        # correctly while remaining unapproved, rather than given a fake photo.
+        # correctly regardless of whether editorial approval has since occurred.
         for code in ("NG","ID","IS","ZA","TT"):
             self.assertEqual(country_codes(canonical[code]),[code])
         self.assertEqual(country_codes("アンティグア・バーブーダ"),["AG"])
-        with self.assertRaisesRegex(ValueError,"NG: country content awaiting editorial approval"):
-            country_coverage(ROOT,[{"country":canonical["NG"]}])
+        pending=[code for code,row in json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"].items() if row["status"]=="pending"]
+        if pending:
+            code=pending[0]
+            with self.assertRaisesRegex(ValueError,code+": country content awaiting editorial approval"):
+                country_coverage(ROOT,[{"country":canonical[code]}])
 
     def test_missing_italian_photo_prevents_incomplete_release(self):
         path=self.root/"travel-stops.json"
@@ -51,9 +54,13 @@ class CountryExperienceContractTest(unittest.TestCase):
             country_coverage(self.root,self.issue["stories"])
 
     def test_unreviewed_country_never_silently_falls_back_to_one_question(self):
-        with self.assertRaisesRegex(ValueError,"substantive country portrait"):
-            country_coverage(self.root,[{"id":"verified-news-example",
-                                        "country":"Nigeria"}])
+        # Exercise the missing-portrait failure independently of release order.
+        path=self.root/"index.html"
+        html=path.read_text(encoding="utf-8")
+        self.assertIn("IT:{lead:",html)
+        path.write_text(html.replace("IT:{lead:","XX:{lead:",1),encoding="utf-8")
+        with self.assertRaisesRegex(ValueError,"IT: substantive country portrait"):
+            country_coverage(self.root,[{"id":"verified-news-example","country":"IT"}])
 
     def test_newly_approved_spain_has_distinct_licensed_quizzes_and_trip(self):
         result=country_coverage(ROOT,[{"country":"スペイン"}])

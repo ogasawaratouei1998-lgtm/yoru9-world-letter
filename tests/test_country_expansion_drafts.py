@@ -91,8 +91,10 @@ class CountryExpansionDraftTests(unittest.TestCase):
         self.assertTrue(COUNTRIES.issubset(
             {code for code,country in self.country["countries"].items()
              if country["status"]=="approved"}))
-        self.assertNotIn("NG",atlas)
-        self.assertNotRegex(html,r"(?m)^ NG:\{lead:")
+        pending={code for code,row in self.country["countries"].items() if row["status"]=="pending"}
+        self.assertTrue(pending.isdisjoint(atlas))
+        for code in pending:
+            self.assertNotRegex(html,r"(?m)^ "+code+r":\{lead:")
 
 
 if __name__=="__main__":
