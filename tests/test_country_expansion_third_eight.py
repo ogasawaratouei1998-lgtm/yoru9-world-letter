@@ -25,7 +25,7 @@ class ThirdEightCountryExpansionTests(unittest.TestCase):
                 entry = self.canonical["countries"][code]
                 self.assertEqual(entry["name"], draft["name"])
                 self.assertEqual(draft["status"], "pending")
-                if code in ("DK", "FI", "HU", "SI", "PH"):
+                if code in ("DK", "FI", "HU", "SI", "PH", "GE"):
                     # Immutable draft snapshot; the country later gained reviewed CC photos.
                     self.assertEqual(entry["status"], "approved")
                     self.assertEqual(entry["portrait"]["body"], draft["portrait"]["body"])

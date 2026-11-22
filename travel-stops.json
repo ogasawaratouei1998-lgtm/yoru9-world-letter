@@ -4451,5 +4451,171 @@
       }
     ],
     "famousTourist": true
+  },
+  "ge-mestia-towers-cover": {
+    "country": "ジョージア",
+    "countryOnly": true,
+    "place": "メスティア近郊の塔",
+    "region": "スヴァネティ",
+    "latitude": 43.043,
+    "longitude": 42.729,
+    "note": "地図は代表地点。写真で楽しむ小旅行。2026年11月22日確認：外務省はロシア国境周辺に危険レベル2、南オセチア・アブハジアと周辺にレベル3を発出。国境周辺への不要不急の渡航は避けてください。",
+    "photoCaption": "コーカサス山脈を背に立つ石造塔",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e8/Near_Mestia%2C_Svan_towers_%2835252565354%29.jpg/500px-Near_Mestia%2C_Svan_towers_%2835252565354%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Near_Mestia%2C_Svan_towers_%2835252565354%29.jpg",
+    "photoAsset": "assets/travel/ge-mestia-towers-cover.jpg",
+    "author": "Arian Zwegers from Brussels, Belgium",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/"
+  },
+  "ge-mtskheta-cathedral-postcard": {
+    "country": "ジョージア",
+    "countryOnly": true,
+    "place": "ムツヘタ・スヴェティツホヴェリ大聖堂",
+    "region": "ムツヘタ",
+    "latitude": 41.842,
+    "longitude": 44.722,
+    "note": "地図は代表地点。写真で楽しむ小旅行。2026年11月22日確認：外務省はロシア国境周辺に危険レベル2、南オセチア・アブハジアと周辺にレベル3を発出。国境周辺への不要不急の渡航は避けてください。",
+    "photoCaption": "夕暮れの石造大聖堂",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/44/The_Svetitskhoveli_Cathedral_-_01.jpg/500px-The_Svetitskhoveli_Cathedral_-_01.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:The_Svetitskhoveli_Cathedral_-_01.jpg",
+    "photoAsset": "assets/travel/ge-mtskheta-cathedral-postcard.jpg",
+    "author": "Moahim",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "夕暮れに光を受けるスヴェティツホヴェリ大聖堂は、石の壁や屋根の重なりが印象的です。写真からは中央の高い塔と左右の建物の配置を読み取れます。ムツヘタは川の合流点に近い古都ですから、地図で周囲の山や川にも目を向けると、建物だけでなく街の立地にも歴史が刻まれていることを想像できます。",
+      "UNESCOはムツヘタの教会群を、コーカサスにおける中世の宗教建築の優れた例として評価しています。大聖堂のほか、丘の上にあるジュヴァリ修道院なども登録の対象です。古い王国で育まれた芸術や信仰が、石造建築の輪郭に表れていることに注目しましょう。本稿は写真による文化紹介で、情勢や礼拝の規則を無視した訪問を勧めるものではありません。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ムツヘタの歴史的建造物群",
+        "url": "https://whc.unesco.org/en/list/708/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_200.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "ge-ushguli-tower-postcard": {
+    "country": "ジョージア",
+    "countryOnly": true,
+    "place": "上スヴァネティ・ウシュグリ",
+    "region": "ウシュグリ・チャジャシ周辺",
+    "latitude": 42.916,
+    "longitude": 43.013,
+    "note": "地図は代表地点。写真で楽しむ小旅行。2026年11月22日確認：外務省はロシア国境周辺に危険レベル2、南オセチア・アブハジアと周辺にレベル3を発出。国境周辺への不要不急の渡航は避けてください。",
+    "photoCaption": "緑の谷とタマルの塔",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Ushguli%2C_Tamar%27s_Tower_%2835282897653%29.jpg/500px-Ushguli%2C_Tamar%27s_Tower_%2835282897653%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Ushguli%2C_Tamar%27s_Tower_%2835282897653%29.jpg",
+    "photoAsset": "assets/travel/ge-ushguli-tower-postcard.jpg",
+    "author": "Arian Zwegers from Brussels, Belgium",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "travelStory": [
+      "ウシュグリの写真には、緑の谷を背にタマルの塔が立ち、足元には石造りの建物が見えます。高く細い塔と背の低い住宅の違いを観察すると、山の集落で建築がどのように使い分けられたかを想像できます。谷の斜面や道の方向にも注目して、自然環境と暮らしの結びつきを写真と地図でたどりましょう。",
+      "UNESCOは上スヴァネティの塔状住宅を、生活と防御に関わる特徴的な中世の山岳建築として評価しています。チャジャシにはそのような建物が多く残ります。遠景だけでなく住宅と塔の配置を見ると、共同体の歴史が伝わります。外務省はロシア国境周辺を危険レベル2としています。ここでは写真で文化を学び、国境周辺への不要不急の渡航は勧めません。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・上スヴァネティ",
+        "url": "https://whc.unesco.org/en/list/709/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_200.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "et-lalibela-church-cover": {
+    "country": "エチオピア",
+    "countryOnly": true,
+    "place": "ラリベラ・聖ギオルギス教会",
+    "region": "アムハラ州",
+    "latitude": 12.031,
+    "longitude": 39.041,
+    "note": "地図は代表地点。写真で楽しむ小旅行に限定。2026年11月22日確認：外務省はアムハラ州とティグライ州の対象地域に危険レベル3以上を発出。ラリベラ・アクスムへの渡航は推奨しません。",
+    "photoCaption": "岩盤に掘り下げられた十字形の教会",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/The_Bete_Giyorgis.jpg/500px-The_Bete_Giyorgis.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:The_Bete_Giyorgis.jpg",
+    "photoAsset": "assets/travel/et-lalibela-church-cover.jpg",
+    "author": "Tmanahan344",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "et-lalibela-landscape-postcard": {
+    "country": "エチオピア",
+    "countryOnly": true,
+    "place": "ラリベラの岩窟教会群",
+    "region": "アムハラ州",
+    "latitude": 12.031,
+    "longitude": 39.041,
+    "note": "地図は代表地点。写真で楽しむ小旅行に限定。2026年11月22日確認：外務省はアムハラ州とティグライ州の対象地域に危険レベル3以上を発出。ラリベラ・アクスムへの渡航は推奨しません。",
+    "photoCaption": "丘の岩盤と周囲の地形に溶け込む聖ギオルギス教会",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4d/Landscape_with_Church_of_Bet_Giyorgis_%283282501914%29.jpg/500px-Landscape_with_Church_of_Bet_Giyorgis_%283282501914%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Landscape_with_Church_of_Bet_Giyorgis_%283282501914%29.jpg",
+    "photoAsset": "assets/travel/et-lalibela-landscape-postcard.jpg",
+    "author": "A. Davey from Where I Live Now: Pacific Northwest",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "travelStory": [
+      "ラリベラの風景写真は、一見すると丘と岩の広がりですが、その中に聖ギオルギス教会の姿が溶け込んでいます。表紙写真で見える十字形の屋根と比べれば、石を積むのではなく岩盤を削って建物を造るという発想が伝わります。遠景では教会の周囲の起伏にも目を向けて、地形と宗教建築の一体性を想像してみましょう。",
+      "UNESCOはラリベラの十一の岩窟教会を、中世のエチオピアのキリスト教文化を伝える遺産として評価しています。教会だけでなく岩盤を掘り下げた空間にも造営の工夫が見え、今も信仰の場としての意味を持っています。外務省の危険情報ではアムハラ州にレベル3以上が出ています。現地への渡航は勧めず、写真で文化を知る小旅行に限定します。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ラリベラの岩窟教会群",
+        "url": "https://whc.unesco.org/en/list/18/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_095.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "et-aksum-stelae-postcard": {
+    "country": "エチオピア",
+    "countryOnly": true,
+    "place": "アクスム・北の石柱公園",
+    "region": "ティグライ州",
+    "latitude": 14.132,
+    "longitude": 38.719,
+    "note": "地図は代表地点。写真で楽しむ小旅行に限定。2026年11月22日確認：外務省はアムハラ州とティグライ州の対象地域に危険レベル3以上を発出。ラリベラ・アクスムへの渡航は推奨しません。",
+    "photoCaption": "古代の石柱と倒壊した巨大石碑",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/The_North_Stelae_Park%2C_Axum%2C_Ethiopia_%282812686646%29.jpg/500px-The_North_Stelae_Park%2C_Axum%2C_Ethiopia_%282812686646%29.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:The_North_Stelae_Park%2C_Axum%2C_Ethiopia_%282812686646%29.jpg",
+    "photoAsset": "assets/travel/et-aksum-stelae-postcard.jpg",
+    "author": "A. Davey from Where I Live Now: Pacific Northwest",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+    "travelStory": [
+      "アクスムの北の石柱公園には、まっすぐ立つ石柱と地面に横たわる巨大な石碑の断片が写っています。建物の窓や扉を思わせる彫刻に目を向けると、単なる石の大きさだけではなく、細部に込められた技術にも気づきます。立っている遺構と倒壊した遺構の違いを見比べながら、かつての都市と王国の歴史を写真から読み解きましょう。",
+      "UNESCOはアクスムの石柱や王墓などを、古代王国が栄えた時代を物語る重要な考古遺産として評価しています。紅海方面を含む地域の交流を考えると、巨大な石造物を生み出した社会の背景が見えてきます。外務省はティグライ州の対象地域に危険レベル3以上を発出しており、アクスムへの渡航は勧めません。この紹介は写真と資料で歴史を学ぶためのものです。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・アクスム",
+        "url": "https://whc.unesco.org/en/list/15/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_095.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }

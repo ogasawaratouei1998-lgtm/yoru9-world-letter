@@ -72,6 +72,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'タリンが中世に発展した交易組織は？',options:['ハンザ同盟','国際連合','東インド会社'],answer:0,fact:'バルト海の交易を担ったハンザ同盟の重要な都市でした。',photoLabel:'正解写真｜タリン旧市街・市庁舎広場',quip:'商人の家まで立派なのが、交易都市の強さ。繁栄の証拠は帳簿だけでなく街並みにも残る。',photoKey:'ee-tallinn-square-postcard'},
   {question:'シュトルーヴェの測地弧は何を測るための遺産？',options:['海の塩分','地球の形と大きさ','鉱山の深さ'],answer:1,fact:'複数国の測量地点を結び、地球の形と大きさを精密に調べました。',photoLabel:'正解写真｜タルトゥ旧天文台',quip:'地球のサイズを測るのに衛星はなかった。測量点を国境越しに結ぶ発想が、現代の地図を支えている。',photoKey:'ee-tartu-observatory-postcard'},
  ],
+ ET:[
+  {question:'ラリベラの教会群が特徴的なのはどのような造り方？',options:['氷を積み上げる','珊瑚を編む','岩盤を彫り抜く'],answer:2,fact:'UNESCOは岩盤を彫り出した教会群をラリベラの重要な特徴として紹介しています。',photoLabel:'正解写真｜ラリベラの岩窟教会群',quip:'石を積むのが建築の常識なら、ラリベラは発想を逆転させた。地面を削って祈りの空間を出現させている。',photoKey:'et-lalibela-landscape-postcard'},
+  {question:'アクスムに残る代表的な遺構は？',options:['大きな石柱','海底トンネル','近代の滑走路'],answer:0,fact:'UNESCOは古代アクスム王国にかかわる石柱群などを登録しています。',photoLabel:'正解写真｜アクスム・北の石柱公園',quip:'巨石の表面に建物のような意匠。高さだけでなく、石に何を刻んだかが王国の歴史を物語る。',photoKey:'et-aksum-stelae-postcard'},
+ ],
  FI:[
   {question:'スオメンリンナが築かれた主な目的は？',options:['港の防衛','砂漠の灌漑','山岳農業'],answer:0,fact:'UNESCOはヘルシンキ港の入口に築かれた18世紀の海上要塞として紹介しています。',photoLabel:'正解写真｜スオメンリンナの海上要塞',quip:'海の上で城壁を築く。守備範囲は陸地だけでは足りなかった。',photoKey:'fi-suomenlinna-fortress-postcard'},
   {question:'ラウマ旧市街の伝統的な街並みを特徴づけるのは？',options:['木造家屋','大理石の高層塔','砂漠のテント'],answer:0,fact:'UNESCOは伝統的な木造建築が残る北欧の港町としてラウマを評価しています。',photoLabel:'正解写真｜木造のラウマ旧市街',quip:'古い木の家が並ぶ街。建て替えの速さより、残す技術で勝負した。',photoKey:'fi-old-rauma-postcard'},
@@ -83,6 +87,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
  GB:[
   {question:'ロンドンのタワーブリッジが架かる川は？',options:['セーヌ川','テムズ川','ドナウ川'],answer:1,photoKey:'uk-towerbridge-postcard',photoLabel:'正解の橋｜ロンドンのタワーブリッジとテムズ川',fact:'タワーブリッジはロンドンのテムズ川に架かる橋です。',quip:'名前はタワー、流れるのはテムズ。川にも自己紹介の出番を。'},
   {question:'エディンバラ城があるのはイギリスのどの地域？',options:['ウェールズ','イングランド','スコットランド'],answer:2,photoKey:'uk-country-postcard',photoLabel:'正解の城｜スコットランドのエディンバラ城',fact:'エディンバラはスコットランドの首都で、エディンバラ城は街の象徴です。',quip:'高台の城が街を見守る。写真の撮影枚数までは数えきれない。'},
+ ],
+ GE:[
+  {question:'ムツヘタの世界遺産が特に伝える文化は？',options:['古代マヤのピラミッド','中世ジョージアの宗教建築','日本の城郭'],answer:1,fact:'UNESCOはムツヘタの歴史的建造物を中世ジョージアの芸術文化を伝える遺産としています。',photoLabel:'正解写真｜ムツヘタ・スヴェティツホヴェリ大聖堂',quip:'石の聖堂が残したのは建築の技術だけではない。文字を読めなくても、信仰が街の中心だったことが伝わってくる。',photoKey:'ge-mtskheta-cathedral-postcard'},
+  {question:'上スヴァネティの村落景観に特徴的な建築は？',options:['巨大なガラスドーム','珊瑚でつくった橋','石造の防御塔'],answer:2,fact:'UNESCOは塔状住宅や防御塔を特徴とする山岳集落として上スヴァネティを評価しています。',photoLabel:'正解写真｜上スヴァネティ・ウシュグリ',quip:'塔と住宅が一組になる。山の景色を飾るためではなく、暮らしを守るための建築だった。',photoKey:'ge-ushguli-tower-postcard'},
  ],
  GR:[
   {question:'アテネのアクロポリスが世界文化遺産に登録された年は？',options:['1987年','1995年','2007年'],answer:0,photoLabel:'正解写真｜アクロポリスのパルテノン神殿',fact:'UNESCOによるアテネのアクロポリスの登録年は1987年です。',quip:'何世紀も経ったのに、柱の存在感は現役です。',photoKey:'gr-parthenon-postcard'},
