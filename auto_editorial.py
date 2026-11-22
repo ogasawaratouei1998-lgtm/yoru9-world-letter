@@ -1095,10 +1095,17 @@ def select_untried_source_groups(groups, attempted_ids, used_urls):
     still an attempt. Every recovered draft remains UNVERIFIED and goes through
     the ordinary publisher-text, human-humor and B-editor checks.
     """
+    attempted_urls={
+        article["url"] for group in groups
+        if group["groupId"] in attempted_ids
+        for article in group["articles"]
+    }
+    # Different group IDs may still refer to the same publisher article.
+    excluded_urls=attempted_urls | set(used_urls)
     return sorted(
         (group for group in groups
          if group["groupId"] not in attempted_ids
-         and not any(article["url"] in used_urls for article in group["articles"])),
+         and not any(article["url"] in excluded_urls for article in group["articles"])),
         key=lambda group:(
             min(incident_priority(article)[0] for article in group["articles"]),
             group["groupId"],
@@ -1142,6 +1149,7 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "country_ready_articles","country_ready_count",
     "supplemental_attempts","supplemental_generated",
     "supplemental_groups_examined",
+    "source_groups_attempted","untried_source_groups_remaining",
     "repeated_quip_cadences","recognized_quip_cadences"
 })
 FUNNEL_MAP_FIELDS=frozenset({
@@ -1463,7 +1471,10 @@ def main():
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
-               supplemental_groups_examined=supplemental_groups_examined)
+               supplemental_groups_examined=supplemental_groups_examined,
+               source_groups_attempted=len(attempted_group_ids),
+               untried_source_groups_remaining=len(
+                   select_untried_source_groups(grouped_evidence, attempted_group_ids, set())))
     if AI_QUOTA_BLOCKED:
         checkpoint("model_quota_blocked")
         print("Gemini key has hit a provider limit; refusing any unverified publication.",flush=True)
@@ -1738,6 +1749,9 @@ def main():
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
                supplemental_groups_examined=supplemental_groups_examined,
+               source_groups_attempted=len(attempted_group_ids),
+               untried_source_groups_remaining=len(
+                   select_untried_source_groups(grouped_evidence, attempted_group_ids, set())),
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
     # Publisher trust is checked above. Now reconcile the selected
