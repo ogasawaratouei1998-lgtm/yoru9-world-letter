@@ -216,6 +216,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ピオピオタヒ／ミルフォード・サウンドがある島は？',options:['北島','南島','チャタム諸島'],answer:1,photoKey:'nz-milford-fiord-quiz-image',photoLabel:'正解の景色｜南島のミルフォード・サウンド',fact:'ミルフォード・サウンドはニュージーランド南島、フィヨルドランド国立公園の北西部にあるフィヨルドです。',quip:'山が水面まで迫ってくる。地図の答えは南島。'},
   {question:'ニュージーランドで最も高い山は？',options:['ルアペフ山','タラナキ山','アオラキ／マウント・クック'],answer:2,photoKey:'nz-aoraki-quiz-image',photoLabel:'正解の山｜南島・アオラキ／マウント・クック',fact:'アオラキ／マウント・クックはニュージーランドの最高峰で、同名の国立公園に位置します。',quip:'最高峰の答えは、山の名前からして存在感たっぷり。'},
  ],
+ PK:[
+  {question:'モヘンジョダロが示すインダス文明の特徴は？',options:['古い計画都市と排水の工夫','中世ヨーロッパの騎士の城','20世紀の宇宙開発施設'],answer:0,fact:'古い計画都市として、街路や焼きレンガの建物、排水の仕組みなどが残っています。',quip:'数千年前の都市にもインフラの発想。暮らしの知恵は、時代を超えてつながります。',photoLabel:'正解写真｜モヘンジョダロの考古遺跡',photoKey:'pk-moenjodaro-ruins-postcard'},
+  {question:'タフティ・バヒーの遺跡が伝える文化は？',options:['アステカの神殿祭祀','ガンダーラ地方の仏教僧院','近代の大型鉄道駅'],answer:1,fact:'1世紀初頭に始まったガンダーラ地方の仏教僧院群で、石造の建築配置が残ります。',quip:'高い丘に残った石の壁は、僧院の暮らしを今にも伝える歴史の図面です。',photoLabel:'正解写真｜タフティ・バヒー仏教僧院遺跡',photoKey:'pk-takht-bahi-postcard'},
+ ],
  PE:[
   {question:'マチュ・ピチュと深く結び付く文明は？',options:['インカ文明','古代ギリシャ','フェニキア文明'],answer:0,photoLabel:'正解写真｜マチュ・ピチュ',fact:'UNESCOはマチュ・ピチュをインカ文明の代表的な建築遺産として紹介しています。',quip:'山頂の絶景だけじゃない。石段にも都市を造った人の意志がある。',photoKey:'pe-machu-picchu-postcard'},
   {question:'クスコに重なる二つの歴史的な建築の流れは？',options:['インカ期とスペイン統治期','江戸時代と明治時代','古代ローマとヴァイキング'],answer:0,photoLabel:'正解写真｜クスコの市街',fact:'UNESCOはクスコのインカ期とスペイン統治期の都市遺産を評価しています。',quip:'壁の継ぎ目が、千年単位の都市のリレーを見せてくれる。',photoKey:'pe-cusco-historic-center-postcard'},
