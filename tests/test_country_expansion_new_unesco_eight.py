@@ -33,6 +33,14 @@ class NextEightUnescoCountryTests(unittest.TestCase):
                     self.assertIn("危険レベル2", country["portrait"]["body"])
                     self.assertIn("渡航を推奨するものではありません", country["portrait"]["body"])
                 else:
+                    if code == "AM" and country["status"] == "approved":
+                    # The original November 21 draft remains immutable; the
+                    # later release appends current MOFA level 1/2/4 warnings.
+                    self.assertTrue(country["portrait"]["body"].startswith(draft["portrait"]["body"]))
+                    self.assertIn("危険レベル4", country["portrait"]["body"])
+                    self.assertIn("危険レベル2", country["portrait"]["body"])
+                    self.assertIn("危険レベル1", country["portrait"]["body"])
+                else:
                     self.assertEqual(country["portrait"]["body"], draft["portrait"]["body"])
                 self.assertGreaterEqual(len(country["portrait"]["body"]), 145)
                 self.assertEqual(country["portrait"]["sourceUrl"],
