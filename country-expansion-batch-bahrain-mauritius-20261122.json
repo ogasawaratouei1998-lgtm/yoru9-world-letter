@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "BH": {
+      "name": "バーレーン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/bh",
+      "portrait": {
+        "lead": "海の交易が育てた古代文明と真珠の街",
+        "body": "ペルシア湾に浮かぶバーレーンには、古代ディルムンの墓と、天然真珠の取引で栄えたムハッラクの街が残ります。砂色の墳墓や商人の建物から、海を介した経済の歴史をたどる誌上旅行です。2026年11月22日確認時点で外務省は全土に危険レベル2を発出しており、不要不急の渡航は控えてください。",
+        "facts": [
+          "ディルムンの墳墓群：2019年登録",
+          "真珠採取の文化遺産：2012年登録"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：バーレーンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/bh"
+      },
+      "travelDrafts": [
+        {
+          "place": "ディルムンの墳墓群",
+          "travelStory": [
+            "乾いた地面に大小の丸い盛り上がりが続く風景は、一見すると自然にできた丘のようです。しかし、その一つ一つには古代の人々の暮らしと死者への思いが刻まれています。墳墓の規模や互いの間隔を写真で比べ、どのような社会がこの場所を生み出したのか考えてみましょう。",
+            "紀元前およそ2200年から1750年にかけて築かれた墓は、当時のバーレーンが交易の拠点として発展した時期と重なります。ユネスコは、墓の大きさや構造にさまざまな社会階層の存在が表れていると説明しています。海を越える交易の繁栄が、内陸の墓地にも痕跡を残したのです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ディルムンの墳墓群",
+              "url": "https://whc.unesco.org/en/list/1542/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "この墳墓群から読み取れる古代社会の特徴は？",
+            "options": [
+              "近代の鉄道網",
+              "交易の繁栄と社会階層",
+              "火山噴火の記録"
+            ],
+            "answer": 1,
+            "fact": "墓の規模や構造の違いが、交易で発展した社会の階層を伝えます。",
+            "photoGoal": "ディルムンの墳墓群の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "commonsSearch": "A'ali Dilmun Burial Mounds Bahrain burial field",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ムハッラクの真珠採取文化遺産",
+          "travelStory": [
+            "ムハッラクの旧市街の写真では、石造りの建物や細い街路の向こうに、かつて海で働く人々を支えた商業の世界が見えてきます。宝飾品としての真珠だけでなく、漁師や船乗り、商人がどのように結び付いていたのか、街の構造を手がかりに想像してみましょう。",
+            "この世界遺産は商人の邸宅や商業施設、海岸、沖合の天然真珠の採取地を一つの文化遺産として扱います。天然真珠の産業は十九世紀末から二十世紀初めに最盛期を迎えましたが、その後、養殖真珠の発展に伴って大きく衰退しました。建築と海の両方に経済の歴史が残ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ムハッラクの真珠採取文化遺産",
+              "url": "https://whc.unesco.org/en/list/1364/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "この世界遺産が伝える海の産業は？",
+            "options": [
+              "天然真珠の採取と交易",
+              "海底の石油精製",
+              "近代の造船だけ"
+            ],
+            "answer": 0,
+            "fact": "天然真珠を採取する船と、取引を担った街の両方が文化遺産を構成します。",
+            "photoGoal": "ムハッラクの真珠採取文化遺産の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "commonsSearch": "Siyadi House Muharraq Bahrain Pearling Path UNESCO",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Bahrain Muharraq traditional architecture cityscape",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_053.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "MU": {
+      "name": "モーリシャス",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/mu",
+      "portrait": {
+        "lead": "港と山が語り継ぐ移住と自由の歴史",
+        "body": "インド洋の島国モーリシャスでは、港の移民施設跡と南西部のル・モーンの山が、労働と自由をめぐる歴史を伝えます。海や山の美しい景色の向こうにある、人々の移動や抵抗の記憶を尊重する誌上旅行です。2026年11月22日時点で外務省の危険情報は出ていませんが、安全対策と最新情報の確認は必要です。",
+        "facts": [
+          "アープラヴァシ・ガート：2006年登録",
+          "ル・モーンの文化的景観：2008年登録"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：モーリシャスの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/mu"
+      },
+      "travelDrafts": [
+        {
+          "place": "アープラヴァシ・ガート",
+          "travelStory": [
+            "ポートルイスの港に残る石造りの施設跡を眺めると、海を渡った人々が最初に足を踏み入れた場所の一端が見えてきます。建物の華やかさではなく、入口や壁、海に近い位置に注目してみましょう。ここは島で働くために移動した人々の人生の節目となった場所です。",
+            "十九世紀に奴隷制に代わる契約労働の制度が広がる中、この港は多くの労働者を受け入れました。現在に残る移民施設は1849年に建てられたものです。移住した人々の出身地域やその後の暮らしを思いながら、世界的な労働移動が島の社会を形づくった歴史を考えます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アープラヴァシ・ガート",
+              "url": "https://whc.unesco.org/en/list/1227/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "この施設が主に伝える歴史は？",
+            "options": [
+              "宇宙飛行士の訓練",
+              "中世の王宮",
+              "契約労働者の移住"
+            ],
+            "answer": 2,
+            "fact": "港に残された移民施設は、近代における契約労働者の大規模な移動を伝えます。",
+            "photoGoal": "アープラヴァシ・ガートの登録区域を確認できる権利確認済みの実景写真"
+          },
+          "commonsSearch": "Aapravasi Ghat Port Louis Mauritius stone immigration depot steps ruins",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ル・モーンの文化的景観",
+          "travelStory": [
+            "海岸からそびえる切り立った山は、青い海との対比が印象的です。岩壁や急な斜面を写真からじっくり眺めると、山が人々を隔てる壁であると同時に、身を守る場所にもなり得たことが分かります。風景の美しさとともに、かつてここで暮らした人々を思い浮かべましょう。",
+            "十八世紀から十九世紀初頭にかけて、この山は奴隷状態から逃れた人々が身を寄せた場所でした。険しい地形の中に生活の場を築いた記憶は、口承を通じても受け継がれています。現在のル・モーンは自由を求める抵抗の象徴であり、自然の形と人間の歴史が深く結び付いた文化遺産です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ル・モーンの文化的景観",
+              "url": "https://whc.unesco.org/en/list/1259/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ル・モーンの山が象徴する歴史は？",
+            "options": [
+              "奴隷制への抵抗と自由",
+              "近代の宇宙開発",
+              "大規模な鉄鉱石採掘"
+            ],
+            "answer": 0,
+            "fact": "奴隷状態から逃れた人々の避難場所であり、自由を求める抵抗の記憶を伝えています。",
+            "photoGoal": "ル・モーンの文化的景観の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "commonsSearch": "Le Morne Brabant Mauritius mountain landscape",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Mauritius Port Louis waterfront city landscape",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_279.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
