@@ -4617,5 +4617,78 @@
       }
     ],
     "famousTourist": true
+  },
+  "sk-bratislava-danube-cover": {
+    "country": "スロバキア",
+    "countryOnly": true,
+    "place": "ブラチスラヴァのドナウ川",
+    "region": "ブラチスラヴァ",
+    "latitude": 48.141,
+    "longitude": 17.104,
+    "note": "地図は紹介地点の代表座標。夕暮れのドナウ川と橋、丘の上の城。",
+    "photoCaption": "夕暮れのドナウ川と橋、丘の上の城",
+    "coverOnly": true,
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f3/Danube_in_Bratislava_skyline%2C_New_Bridge%2C_Bratislava_Castle_in_Bratislava%2C_Bratislava_I_District.jpg/500px-Danube_in_Bratislava_skyline%2C_New_Bridge%2C_Bratislava_Castle_in_Bratislava%2C_Bratislava_I_District.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Danube_in_Bratislava_skyline%2C_New_Bridge%2C_Bratislava_Castle_in_Bratislava%2C_Bratislava_I_District.jpg",
+    "photoAsset": "assets/travel/sk-bratislava-danube-cover.jpg",
+    "author": "Frettie",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0/"
+  },
+  "sk-banska-trinity-square-postcard": {
+    "country": "スロバキア",
+    "countryOnly": true,
+    "place": "バンスカー・シュチャヴニツァ・三位一体広場",
+    "region": "バンスカー・シュチャヴニツァ",
+    "latitude": 48.459727,
+    "longitude": 18.892141,
+    "note": "地図は紹介地点の代表座標。石畳の広場と歴史建築、丘の上の塔。",
+    "photoCaption": "石畳の広場と歴史建築、丘の上の塔",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c1/Banska_%C5%A0tiavnica%2C_Central_Square.jpg/500px-Banska_%C5%A0tiavnica%2C_Central_Square.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Banska_%C5%A0tiavnica%2C_Central_Square.jpg",
+    "photoAsset": "assets/travel/sk-banska-trinity-square-postcard.jpg",
+    "author": "Juraj Kubica",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "石畳の三位一体広場では、中央の記念柱を挟んで色合いの異なる歴史建築が並び、遠くの丘には塔の姿も見えます。写真の広場と坂道の高低差を意識すると、山あいの鉱山都市に公共空間がどう整えられたかを想像できます。街を支えた地下の資源と、地上に残る建築を結びつけて読む小旅行です。",
+      "UNESCOは中世の鉱山拠点が発展し、ルネサンス期の建物や教会、城を備えた都市になった経緯に注目しています。周辺にはかつての鉱業と冶金に関係する技術遺産も残ります。豊かな街並みだけではなく、資源を取り出し加工するための知識が都市を支えたことを考えると、歴史建築と技術史を一緒に楽しめます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・バンスカー・シュチャヴニツァ歴史地区",
+        "url": "https://whc.unesco.org/en/list/618/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "sk-spis-castle-postcard": {
+    "country": "スロバキア",
+    "countryOnly": true,
+    "place": "スピシュ城",
+    "region": "スピシュ地方",
+    "latitude": 48.999,
+    "longitude": 20.771,
+    "note": "地図は紹介地点の代表座標。丘の斜面に沿って築かれた石造城壁。",
+    "photoCaption": "丘の斜面に沿って築かれた石造城壁",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b0/Spi%C5%A1sk%C3%BD_hrad%2C_okres_Spi%C5%A1sk%C3%A1_Nov%C3%A1_Ves_-_podhrad%C3%AD_%288%29.JPG/500px-Spi%C5%A1sk%C3%BD_hrad%2C_okres_Spi%C5%A1sk%C3%A1_Nov%C3%A1_Ves_-_podhrad%C3%AD_%288%29.JPG",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Spi%C5%A1sk%C3%BD_hrad%2C_okres_Spi%C5%A1sk%C3%A1_Nov%C3%A1_Ves_-_podhrad%C3%AD_%288%29.JPG",
+    "photoAsset": "assets/travel/sk-spis-castle-postcard.jpg",
+    "author": "Michal Klajban",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "travelStory": [
+      "青空を背にしたスピシュ城は、丘の斜面に沿って石の城壁が幾重にも続いています。手前の草地から高い塔へ目を移すと、防御施設が地形の起伏を利用したことが分かります。城壁の内外の高低差や見通しにも注目しながら、中世の人々がこの地で交通や安全をどう確保したのかを考えてみましょう。",
+      "UNESCOはスピシュ城を中心に、13～14世紀の軍事、政治、宗教に関係する大規模な建築群が残ることを評価しています。ロマネスクとゴシックの建築が、それぞれの時代の技術や価値観を伝えています。城の大きさだけを競う見方では見落とされる、周辺の宗教施設や歴史的な都市との結びつきにも注目しましょう。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・スピシュ城",
+        "url": "https://whc.unesco.org/en/list/620/",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
