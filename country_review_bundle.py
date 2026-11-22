@@ -54,7 +54,11 @@ def candidate_identity(candidate):
 VISUAL_REJECTIONS = {
     ("CR", 0): {"1999 casona santa rosa Panorama.jpg": "Historical pre-fire house panorama; too narrow for the present-day country cover."},
     ("CR", 1): {"Santa Rosa guanacaste.jpg": "Very narrow pasture panorama; insufficient visual context for the conservation-area story."},
-    ("KE", 1): {"Lamu Pharmacy.jpg": "Close-up of pharmacy merchandise, not a useful depiction of the historic townscape."},
+    ("KE", 1): {
+        "Lamu Pharmacy.jpg": "Close-up of pharmacy merchandise, not a useful depiction of the historic townscape.",
+        "Lamu Pharmacy2021.jpg": "Second pharmacy interior showing shelves of goods rather than the historic townscape.",
+    },
+    ("MU", 0): {"Hausdülmen -- 2014 -- 5879.jpg": "Photograph of a German landscape, not Mauritius."},
     ("ZA", 0): {"Cape Town (ZA), Cape Point Nature Reserve, Ausblick -- 2024 -- 3377.jpg": "Deliberate zoom effect obscures the natural landscape; unsuitable for a documentary country cover."},
     ("ZA", 2): {"Cape Floral Region Protected Areas map.jpg": "Annotated map, not an actual landscape photograph of the protected region."},
 }
