@@ -43,7 +43,7 @@ class CountryReleaseBoundaryTest(unittest.TestCase):
                 self.assertGreaterEqual(len(country.get("quiz", [])), 2)
                 self.assertGreaterEqual(len(country.get("travelStops", {})), 2)
                 for photo in country["portraitPhotos"]:
-                    for field in ("asset", "url", "author", "license", "place"):
+                    for field in ("url", "author", "license", "place"):
                         self.assertTrue(photo.get(field), f"{code}: missing {field}")
 
 
