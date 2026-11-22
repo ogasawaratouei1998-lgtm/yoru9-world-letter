@@ -5193,5 +5193,88 @@
       }
     ],
     "famousTourist": true
+  },
+  "bw-chobe-elephant-cover": {
+    "country": "ボツワナ",
+    "countryOnly": true,
+    "place": "チョベ川（ゾウの暮らす水辺）",
+    "region": "チョベ川流域・カサネ付近の代表地点",
+    "latitude": -17.8,
+    "longitude": 25.16,
+    "note": "チョベ川流域の代表地点。写真の正確な撮影座標ではありません。",
+    "photoCaption": "夕暮れのチョベ川の水辺にたたずむゾウ（2014年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/Sunset_and_elephant.jpg/960px-Sunset_and_elephant.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Sunset_and_elephant.jpg",
+    "photoAsset": "assets/travel/bw-chobe-elephant-cover.jpg",
+    "author": "E.A.A.Oliveira",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "coverOnly": true
+  },
+  "bw-okavango-delta-postcard": {
+    "country": "ボツワナ",
+    "countryOnly": true,
+    "place": "オカバンゴ・デルタ",
+    "region": "ボツワナ北西部・UNESCO遺産代表地点",
+    "latitude": -19.283333,
+    "longitude": 22.9,
+    "note": "UNESCO世界遺産の代表地点。写真の正確な撮影座標ではありません。",
+    "photoCaption": "上空から見たオカバンゴ・デルタの水路と湿地（2018年）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/6/65/Vista_a%C3%A9rea_del_delta_del_Okavango%2C_Botsuana%2C_2018-08-01%2C_DD_23.jpg/960px-Vista_a%C3%A9rea_del_delta_del_Okavango%2C_Botsuana%2C_2018-08-01%2C_DD_23.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Vista_a%C3%A9rea_del_delta_del_Okavango,_Botsuana,_2018-08-01,_DD_23.jpg",
+    "photoAsset": "assets/travel/bw-okavango-delta-postcard.jpg",
+    "author": "Diego Delso (delso.photo)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "上空から湿地を眺めると、青い水面の間を草地が縫うように伸びています。川幅の決まった一本の流れというより、水が大地の低い場所へ広がっていく様子に注目しましょう。季節によって水の広がりが変わるため、同じ場所でも違う景観が現れます。動植物の暮らしはその変化と密接につながっています。",
+      "オカバンゴ川は海に注がず、ボツワナの内陸で湿地を形成します。流域上流からやって来る洪水が現地の乾季に重なるため、雨が少なくなる時期にも水が広がるのが特徴です。永久的な沼地と季節的に浸水する草地が組み合わさり、希少な大型哺乳類などを支えています。水の到達時期そのものが生態系の仕組みを形づくっています。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・オカバンゴ・デルタ",
+        "url": "https://whc.unesco.org/en/list/1432/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・ボツワナ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_296.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
+  },
+  "bw-tsodilo-hills-postcard": {
+    "country": "ボツワナ",
+    "countryOnly": true,
+    "place": "ツォディロの岩山",
+    "region": "ボツワナ北西部・UNESCO遺産代表地点",
+    "latitude": -18.75,
+    "longitude": 21.733333,
+    "note": "UNESCO世界遺産の代表地点。写真の正確な撮影座標ではありません。",
+    "photoCaption": "ツォディロの岩山の全景。岩絵そのものは写真には写っていません。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9f/Tsodilo_Hills%2C_Botswana1.jpg/960px-Tsodilo_Hills%2C_Botswana1.jpg",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Tsodilo_Hills,_Botswana1.jpg",
+    "photoAsset": "assets/travel/bw-tsodilo-hills-postcard.jpg",
+    "author": "Joachim Huber",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "平坦な周囲の土地から岩の丘が立ち上がる写真を眺めてみましょう。この丘は景色が目立つだけでなく、人が長い時間をかけて暮らしの拠点としてきた場所です。岩壁の絵や考古資料は丘の各所に残り、現在も地域の人々の信仰と結び付いています。丘の全景を写した写真と個々の岩絵の資料は区別して、文化への理解を深めましょう。",
+      "ユネスコによると、約十平方キロメートルの範囲には四千五百を超える岩絵が残り、考古学的な記録は少なくとも十万年にわたる人間の活動と環境の変化を伝えています。ただし全ての岩絵が同じ時代のものというわけではありません。年代や意味には研究上の不確かさもあり、現在の地域社会の信仰と保存活動を尊重することが大切です。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ツォディロ",
+        "url": "https://whc.unesco.org/en/list/1021/",
+        "checkedOn": "2026-11-22"
+      },
+      {
+        "name": "外務省海外安全ホームページ・ボツワナ",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_296.html",
+        "checkedOn": "2026-11-22"
+      }
+    ],
+    "famousTourist": true
   }
 }
