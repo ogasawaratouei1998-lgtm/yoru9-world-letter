@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "countryCode": "PK",
+  "reviewedOn": "2026-11-22",
+  "status": "visually_inspected_and_sourced_public_release_checks_pending",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 45017850362,
+    "artifactId": 14752761810,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "previewFile": "PK-0.jpg",
+      "sha256": "f82dacad4491295d10224846a9f0f8bb12443a9d6b9bd5546bcdf2e5fc551e27",
+      "dimensions": [
+        1280,
+        960
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Hungol_Landscape.JPG",
+      "photoAsset": "assets/travel/pk-hingol-rock-cover.jpg",
+      "author": "Bilal Mirza",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "ヒンゴル国立公園の岩山",
+      "visualReview": "Hingol National Park rocky outcrop with arid landscape; not a UNESCO site, located within Balochistan's level 3 travel-ban region",
+      "publicationEligible": false,
+      "sourceOriginalIdentityVerified": true
+    },
+    {
+      "slot": 1,
+      "previewFile": "PK-1.jpg",
+      "sha256": "51c9f0a28332036ea67df226d2a861df032c0082d344b311f13ab33e63eee19b",
+      "dimensions": [
+        960,
+        638
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Other_side_of_Moenjodaro_by_Usman_Ghani.jpg",
+      "photoAsset": "assets/travel/pk-moenjodaro-ruins-postcard.jpg",
+      "author": "Usman.pg",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "モヘンジョダロの考古遺跡",
+      "visualReview": "Moenjodaro excavated urban brick remains, authentic World Heritage archaeological site",
+      "publicationEligible": false,
+      "sourceOriginalIdentityVerified": true
+    },
+    {
+      "slot": 2,
+      "previewFile": "PK-2.jpg",
+      "sha256": "7868c67edc4267cc822cf12870c0f7e9d573bd57bea0750062354854cd5b3c6c",
+      "dimensions": [
+        960,
+        640
+      ],
+      "originalCommonsPage": "https://commons.wikimedia.org/wiki/File:Takht_Bahi.jpg",
+      "photoAsset": "assets/travel/pk-takht-bahi-postcard.jpg",
+      "author": "Bakhtiar Ahmed",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "place": "タフティ・バヒー仏教僧院遺跡",
+      "visualReview": "Takht-i-Bahi Buddhist monastic stone ruins; photo depicts this component rather than nearby Sahr-i-Bahlol",
+      "publicationEligible": false,
+      "sourceOriginalIdentityVerified": true
+    }
+  ],
+  "independentHistoricalSources": [
+    "https://whc.unesco.org/en/statesparties/pk",
+    "https://whc.unesco.org/en/list/138/",
+    "https://whc.unesco.org/en/list/140/"
+  ],
+  "safetySource": {
+    "name": "外務省海外安全ホームページ・パキスタン",
+    "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_011.html",
+    "checkedOn": "2026-11-22",
+    "risk": "地域により危険レベル2、3、4。バロチスタン州の広い範囲はレベル3（渡航中止）"
+  },
+  "requiredBeforeApproval": [
+    "SHA-256-pinned_1280px_cover_and_postcards_recovered",
+    "full_public_site_build",
+    "full_automated_tests_and_mobile_preflight"
+  ],
+  "travelAdvice": false
+}

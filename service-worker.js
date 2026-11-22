@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v93';
+const SHELL_CACHE = 'yoru9-shell-v94';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -124,7 +124,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Bangladesh: licensed and reviewed real photos.
  'assets/travel/bd-jaflong-tea-country-cover.jpg', 'assets/travel/bd-nine-dome-mosque-postcard.jpg', 'assets/travel/bd-somapura-mahavihara-postcard.jpg',
  // Nicaragua: reviewed country cover and two heritage photos.
- 'assets/travel/ni-matagalpa-hills-cover.jpg', 'assets/travel/ni-leon-cathedral-postcard.jpg', 'assets/travel/ni-leon-viejo-ruins-postcard.jpg'];
+ 'assets/travel/ni-matagalpa-hills-cover.jpg', 'assets/travel/ni-leon-cathedral-postcard.jpg', 'assets/travel/ni-leon-viejo-ruins-postcard.jpg',
+ // Pakistan: licensed exact-JPEG heritage photos for the 67th country.
+ 'assets/travel/pk-hingol-rock-cover.jpg', 'assets/travel/pk-moenjodaro-ruins-postcard.jpg', 'assets/travel/pk-takht-bahi-postcard.jpg'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
