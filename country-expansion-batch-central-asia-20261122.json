@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "UZ": {
+      "name": "ウズベキスタン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/uz",
+      "portrait": {
+        "lead": "シルクロードの交差点に残る青いタイルと古い街路",
+        "body": "ウズベキスタンには、交易路を行き交う人と文化が築いてきた都市の記憶があります。サマルカンドでは装飾豊かなマドラサや壮大な広場が印象的で、ブハラでは古い街路と宗教建築が緊密に結びついています。ひとつの建築だけを鑑賞するのではなく、門から市場へ、礼拝の空間から生活の路地へと視点を移すと、シルクロードの都市が人々の営みとともに発展したことを感じられます。",
+        "facts": [
+          "世界遺産：サマルカンド歴史地区",
+          "世界遺産：ブハラ歴史地区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ウズベキスタンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/uz"
+      },
+      "travelDrafts": [
+        {
+          "place": "サマルカンド・レギスタン広場",
+          "travelStory": [
+            "正面に向き合うように建つマドラサの大きな門を眺めると、青い装飾の中に細かな幾何学模様が見えてきます。広場の中央から建物全体を見渡す視点と、壁面の小さな模様に目を凝らす視点では、同じ建築でも印象が違います。建物ごとの違いを見つけながら、中央アジアの都市文化を感じる誌上旅行です。",
+            "サマルカンドは14〜15世紀のティムール朝の時代に大きく発展しました。UNESCOはレギスタン広場などの建築群が、その後の広い地域のイスラム建築に重要な影響を与えたと評価しています。広場を単なる記念撮影の背景と考えず、都市空間の構成や、学びの場であるマドラサの存在にも注目してみましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サマルカンド・レギスタン広場",
+              "url": "https://whc.unesco.org/en/list/603/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "サマルカンドが大きく発展した14〜15世紀の王朝は？",
+            "options": [
+              "サーマーン朝",
+              "ティムール朝",
+              "アケメネス朝"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは14〜15世紀のティムール朝期をサマルカンドの重要な発展期としています。",
+            "photoGoal": "サマルカンド・レギスタン広場の実景を確認できる独立した写真。撮影者・原画像・利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Registan square Samarkand Uzbekistan madrasa",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ブハラ・イスマーイール・サーマーニー廟",
+          "travelStory": [
+            "ブハラのサーマーニー廟では、色鮮やかなタイルではなく、積み方を変えた煉瓦そのものが装飾を生み出しています。建物の輪郭を確認したら壁の細かな凹凸に目を向けて、光や影が模様を強調する様子を想像してみましょう。豪華さを材料の多さではなく、一つの素材を使いこなす技術から感じられる建築です。",
+            "UNESCOはこの廟を10世紀のイスラム建築の重要な作品と位置付けています。ブハラはシルクロードの経済・文化の中心地として長く栄え、後の時代の宗教建築や商業施設も残っています。一つの廟を入口に、異なる時代の建物が同じ街に共存していることを考えると、都市全体が歴史資料である理由が伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブハラ・イスマーイール・サーマーニー廟",
+              "url": "https://whc.unesco.org/en/list/602/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "イスマーイール・サーマーニー廟は主に何世紀の建築として評価される？",
+            "options": [
+              "10世紀",
+              "15世紀",
+              "19世紀"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはこの廟を10世紀のイスラム建築の傑作として評価しています。",
+            "photoGoal": "ブハラ・イスマーイール・サーマーニー廟の実景を確認できる独立した写真。撮影者・原画像・利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Ismail Samani mausoleum Bukhara Uzbekistan",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Khiva Itchan Kala city walls Uzbekistan",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "KZ": {
+      "name": "カザフスタン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/kz",
+      "portrait": {
+        "lead": "青いドームの建築と岩に刻まれた記録をたどる",
+        "body": "カザフスタンを旅すると、中央アジアの広がりの中に、異なる時代の人々が残した豊かな文化を感じられます。トルキスタンのホージャ・アフメド・ヤサウィ廟は巨大な建築と装飾で人々を迎え、タンバルィの岩絵群は文字より前から続く営みを伝えています。色鮮やかなタイルと岩肌の線刻という、まったく異なる方法で刻まれた記憶を見比べると、この土地がたどってきた長い時間の幅を実感できます。",
+        "facts": [
+          "世界遺産：ホージャ・アフメド・ヤサウィ廟",
+          "世界遺産：タンバルィの考古学的景観の岩絵群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：カザフスタンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/kz"
+      },
+      "travelDrafts": [
+        {
+          "place": "ホージャ・アフメド・ヤサウィ廟",
+          "travelStory": [
+            "トルキスタンの廟は、巨大な門と丸い屋根がつくる輪郭が特徴です。写真で門の周囲と装飾の残る部分を見比べると、一つの建築の中にも仕上げ方の違いがあることに気づきます。大きさに圧倒されるだけでなく、煉瓦を重ねてこれほど広い空間を覆う技術を想像しながら、中央アジアの建築を読み解いてみましょう。",
+            "ティムールの命令で1389年から建設が進められましたが、1405年の彼の死によって工事が止まりました。UNESCOによると、ここでは後にサマルカンドでも使われる建築技術が試みられています。未完成の部分は当時の工法を伝える手がかりです。完成した美しさだけでなく、工事の途中が残ったことにも歴史的な意味があります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホージャ・アフメド・ヤサウィ廟",
+              "url": "https://whc.unesco.org/en/list/1103/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ヤサウィ廟の建設が1405年に止まった契機は？",
+            "options": [
+              "世界遺産への登録",
+              "鉄道の建設",
+              "ティムールの死"
+            ],
+            "answer": 2,
+            "fact": "UNESCOはティムールが1405年に死去したことで工事が止まり、未完成のまま残ったと説明しています。",
+            "photoGoal": "ホージャ・アフメド・ヤサウィ廟の実景を確認できる独立した写真。撮影者・原画像・利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Khoja Ahmed Yasawi Mausoleum Turkestan Kazakhstan",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "タンバルィの岩絵群",
+          "travelStory": [
+            "タンバルィの峡谷を写した岩絵の写真には、動物や人物などの姿が石の表面に刻まれています。線の重なりや人物と動物の大きさの違いを見ながら、一枚の岩を単独の絵としてだけでなく、周囲の岩場や谷と関係する記録として眺めてみましょう。実物を訪れる際にも岩に触れず、記録を残すことを優先したい文化遺産です。",
+            "UNESCOはこの景観に約5000点の岩絵があり、青銅器時代から20世紀初頭までの牧畜民の暮らしや儀礼を知る資料になると説明しています。集落跡や墓地も一緒に保護されており、絵だけで意味を決めつけず、周囲の遺構と合わせて考えることが大切です。文字による記録とは違う形で受け継がれた時間の長さを感じる場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タンバルィの岩絵群",
+              "url": "https://whc.unesco.org/en/list/1145/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "タンバルィの岩絵はおよそ何点あるとUNESCOは説明している？",
+            "options": [
+              "500点",
+              "5000点",
+              "5万点"
+            ],
+            "answer": 1,
+            "fact": "UNESCOの登録遺産解説では約5000点の岩絵があるとされています。",
+            "photoGoal": "タンバルィの岩絵群の実景を確認できる独立した写真。撮影者・原画像・利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Tanbaly Tamgaly petroglyphs Kazakhstan UNESCO",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Almaty city skyline mountains Kazakhstan",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
