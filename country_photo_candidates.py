@@ -171,10 +171,15 @@ def draft_queries(root=ROOT):
                        "place": label, "searchQuery": query}
 
 
-def generate_report(root=ROOT, limit=3, fetch=fetch_commons, sleep_seconds=0.1):
+def generate_report(root=ROOT, limit=3, fetch=fetch_commons, sleep_seconds=1.0):
     reports = []
+    throttled = False
     for task in draft_queries(root):
         result = dict(task, candidates=[], status="no_matching_metadata", manualVisualReviewRequired=True)
+        if throttled:
+            result["status"] = "rate_limited_deferred"
+            reports.append(result)
+            continue
         try:
             items = fetch(task["searchQuery"])
             seen = set()
@@ -185,7 +190,13 @@ def generate_report(root=ROOT, limit=3, fetch=fetch_commons, sleep_seconds=0.1):
                     seen.add(candidate["commonsPage"])
                     if len(result["candidates"]) >= limit:
                         break
-        except (HTTPError, URLError, TimeoutError, ValueError, OSError) as exc:
+        except HTTPError as exc:
+            result["status"] = "search_failed"
+            result["errorType"] = type(exc).__name__
+            result["httpStatus"] = exc.code
+            if exc.code in (429, 503):
+                throttled = True
+        except (URLError, TimeoutError, ValueError, OSError) as exc:
             result["status"] = "search_failed"
             result["errorType"] = type(exc).__name__
         if result["candidates"]:
@@ -200,6 +211,7 @@ def generate_report(root=ROOT, limit=3, fetch=fetch_commons, sleep_seconds=0.1):
         "countries": sorted(set(r["countryCode"] for r in reports)),
         "withMetadataCandidates": sum(bool(r["candidates"]) for r in reports),
         "failedSearches": sum(r["status"] == "search_failed" for r in reports),
+        "deferredSearches": sum(r["status"] == "rate_limited_deferred" for r in reports),
         "results": reports,
     }
 
@@ -217,7 +229,8 @@ def main():
                " countries / " + str(report["searchCount"]) +
                " searches; " + str(report["withMetadataCandidates"]) +
                " searches with metadata candidates; " +
-               str(report["failedSearches"]) + " search errors.\n" +
+               str(report["failedSearches"]) + " search errors; " +
+               str(report["deferredSearches"]) + " deferred after throttling.\n" +
                "No country approved; no photograph accepted without visual and local-JPEG verification.\n")
     print(summary)
     import os
