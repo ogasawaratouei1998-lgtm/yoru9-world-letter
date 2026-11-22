@@ -1,0 +1,244 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "AZ": {
+      "name": "アゼルバイジャン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/az",
+      "portrait": {
+        "lead": "城壁の内側の古都から、岩に刻まれた遠い人類の記憶へ",
+        "body": "カスピ海に面するバクーの旧市街では、城壁や宮殿、乙女の塔を手掛かりに、長い交易の歴史をたどれます。一方、ゴブスタンの乾いた岩場には、暮らしや動物を描いた先史時代の岩絵が残されています。大きな建物が都市の歴史を語る場所と、小さな線刻が人々の営みを伝える場所。時代も見方も異なる二つの世界遺産を、写真と地図を見比べながら歩く誌上旅行です。現地への渡航を勧めるものではなく、渡航時は最新の外務省安全情報を別途確認する必要があります。",
+        "facts": [
+          "世界文化遺産：城壁都市バクー、シルヴァンシャー宮殿及び乙女の塔",
+          "世界文化遺産：ゴブスタンの岩絵の文化的景観"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：アゼルバイジャンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/az"
+      },
+      "travelDrafts": [
+        {
+          "place": "バクーの城壁都市",
+          "travelStory": [
+            "バクーの城壁の内側では、曲がった路地の先に石造りの建物や塔が現れます。大通りから眺める都市とは違い、狭い道幅や壁の高さが、かつての街の生活感を教えてくれます。宮殿と乙女の塔の写真を見比べ、建築の役割や時代の違いを想像しながら、徒歩で歴史をたどるような誌上旅行を楽しみましょう。",
+            "UNESCOは、バクーの旧市街がゾロアスター教、ペルシア、アラブ、オスマン、ロシアなど多様な文化の影響を受けた建築群を持つことを評価しています。宮殿の装飾、塔の形、城壁の配置は、一つの時代だけでは説明できません。カスピ海に臨む都市が幾度も変化したことを考えると、街並みの細部が遠い交流の歴史を語り始めます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バクーの城壁都市",
+              "url": "https://whc.unesco.org/en/list/958/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "バクー旧市街にある世界遺産の構成要素は？",
+            "options": [
+              "エッフェル塔",
+              "乙女の塔",
+              "ピラミッド"
+            ],
+            "answer": 1,
+            "fact": "乙女の塔とシルヴァンシャー宮殿がバクー旧市街の世界遺産を構成します。",
+            "photoGoal": "バクー旧市街の乙女の塔を実際に写した写真を選び、撮影者と再利用可能なライセンスを照合する。"
+          },
+          "commonsSearch": "Baku Maiden Tower Icherisheher Azerbaijan",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ゴブスタンの岩絵の文化的景観",
+          "travelStory": [
+            "ゴブスタンでは、風化した大きな岩の表面に人や動物の形が刻まれています。遠景だけでは見落としてしまう細い線に目を寄せると、壁画とは異なる表現の力を感じられます。岩の表面と周囲の半乾燥地帯を一緒に見て、なぜこの土地に人が暮らし、何を記録しようとしたのか、自然環境から考える誌上旅行です。",
+            "UNESCOが説明するゴブスタンの岩絵群には、六千点を超える線刻が残り、数万年にわたる人々の営みを伝えています。狩猟や生き物を描いた図像は、当時の食料や環境、人と動物の関わりを読み解く手掛かりです。華やかな王宮とは異なり、石に残る線の一つ一つから暮らしの歴史を考えられる点が、この遺産の大きな魅力です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ゴブスタンの岩絵の文化的景観",
+              "url": "https://whc.unesco.org/en/list/1076/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ゴブスタンの岩に残る文化的遺産は何？",
+            "options": [
+              "先史時代の岩絵",
+              "近代の鉄道標識",
+              "中世ヨーロッパのステンドグラス"
+            ],
+            "answer": 0,
+            "fact": "ゴブスタンは六千点を超える先史時代の岩絵で知られています。",
+            "photoGoal": "ゴブスタンの岩絵の線刻が判別できる実景を選び、撮影者と写真の出典を確認する。"
+          },
+          "commonsSearch": "Gobustan rock engravings petroglyphs Azerbaijan",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Baku old city Azerbaijan skyline",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "TJ": {
+      "name": "タジキスタン",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/tj",
+      "portrait": {
+        "lead": "古代の集落跡とパミール高原、時間の尺度が変わる旅",
+        "body": "タジキスタンのサラズム遺跡には、中央アジアで古くから人々が定住し、交易や文化交流を重ねてきた痕跡が残ります。東部のタジク国立公園に目を移すと、パミールの高峰や氷河、湖が連なる壮大な地形が広がります。土の遺構が語る数千年前の暮らしと、自然が長い時間をかけて形づくった山々。二つの世界遺産を通じて、人間の歴史と地球の歴史を重ねて見る誌上旅行です。高山地帯への実際の渡航を促すものではなく、安全情報と現地の状況は別途確認が必要です。",
+        "facts": [
+          "世界文化遺産：サラズムの原始都市遺跡",
+          "世界自然遺産：タジク国立公園（パミールの山脈群）"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：タジキスタンの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/tj"
+      },
+      "travelDrafts": [
+        {
+          "place": "サラズムの原始都市遺跡",
+          "travelStory": [
+            "サラズムの遺構を上から眺めると、低い壁が区画をつくり、かつて建物や作業場が並んでいたことを想像できます。大きな塔や宮殿がなくても、人が集まり生活の場を整えた痕跡は残ります。写真では壁の並びと土の色に注目し、同時代の遠くの地域とどのようにつながっていたのかを考える考古学の小旅行です。",
+            "UNESCOによればサラズムは紀元前四千年紀から三千年紀末の中央アジアにおける定住社会の発展を示す遺跡です。山地で暮らす牧畜民と、平野の農耕民の交易や文化交流の接点にも位置づけられています。遺構を単なる古い住宅跡と見るのではなく、人々が技術や物資を交換したネットワークの痕跡として読むと、数千年前の世界が近づきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サラズムの原始都市遺跡",
+              "url": "https://whc.unesco.org/en/list/1141/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "サラズムの遺跡が伝える主要な歴史は？",
+            "options": [
+              "宇宙開発の発祥",
+              "古代の定住と交易",
+              "近代自動車産業"
+            ],
+            "answer": 1,
+            "fact": "サラズムは中央アジアの古代定住社会と交易・文化交流を示す遺跡です。",
+            "photoGoal": "サラズムの発掘された区画を確認できる実景を選び、帰属と再利用条件を照合する。"
+          },
+          "commonsSearch": "Sarazm archaeological site Tajikistan ruins",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "タジク国立公園（パミールの山脈群）",
+          "travelStory": [
+            "パミールの山並みを地図で追うと、雪や氷河の白と高地の岩肌が広大な範囲に広がっていることが分かります。山頂ばかりを見ず、谷を流れる氷河と湖の位置関係を見比べると、景観をつくる水の働きが見えてきます。人が容易に近づけない地形も含めて、地球の大きな動きを考える写真と地図の小旅行です。",
+            "UNESCOはタジク国立公園を、ユーラシアの高い山脈が集まるパミール結節点に位置する自然遺産として評価しています。公園には多数の氷河や湖、河川が分布し、山岳地帯の地質学的な歴史と変化を示しています。フェドチェンコ氷河のような大規模な氷河に注目すると、高山の景観を美しい風景としてだけでなく、長い時間をかけて動く自然の仕組みとして理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タジク国立公園（パミールの山脈群）",
+              "url": "https://whc.unesco.org/en/list/1252/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "パミールの自然遺産で重要な景観は？",
+            "options": [
+              "広大なサンゴ礁",
+              "大規模な氷河と高山湖",
+              "熱帯雨林の巨大樹"
+            ],
+            "answer": 1,
+            "fact": "タジク国立公園には大規模な氷河や高山湖が分布します。",
+            "photoGoal": "タジク国立公園内のパミール山脈の氷河または高山湖の実景と撮影地点を照合する。"
+          },
+          "commonsSearch": "Tajik National Park Pamir mountains Fedchenko glacier Tajikistan",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Pamir mountains Tajikistan panorama",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "BZ": {
+      "name": "ベリーズ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/bz",
+      "portrait": {
+        "lead": "海の青い穴と鳥たちの島、サンゴ礁が守る生態系を読む",
+        "body": "カリブ海の沿岸に広がるベリーズのサンゴ礁保護区群には、環礁、海草藻場、海の生き物を支える多様な場所が含まれます。空から見ると円い深い青が印象的なブルーホールと、海鳥が集まるハーフムーン・キーでは、同じ海の世界遺産でも風景が大きく異なります。水の色や島の形を写真で見比べながら、地形と生物多様性が結びつく仕組みを考える誌上旅行です。現地での潜水や移動を推奨する内容ではなく、安全や環境保全への配慮が必要です。",
+        "facts": [
+          "世界自然遺産：ベリーズのバリア・リーフ保護区群",
+          "同遺産の構成区域：ブルーホール自然記念物とハーフムーン・キー自然記念物"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ベリーズの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/bz"
+      },
+      "travelDrafts": [
+        {
+          "place": "ブルーホール自然記念物",
+          "travelStory": [
+            "ブルーホールを上空から写した写真を見ると、明るい青い浅瀬の中に、濃い青の円がはっきり浮かび上がります。その境界の形を追うだけでも、海底の地形が水面の色に現れる面白さを感じられます。周囲のサンゴ礁や環礁との位置関係を地図で確認し、海の色が単なる色彩ではなく、地形を読み解く手掛かりになることを楽しみましょう。",
+            "UNESCOによれば、ベリーズのバリア・リーフ保護区群は七つの保護区域からなる世界自然遺産です。ブルーホール自然記念物もその一つで、石灰岩地形と過去の海面変動が生んだ独特の海中景観を示します。写真を眺めるだけでなく、海の生態系を保護する区域の一部として理解すると、珍しい形を将来に残すための保全の大切さが伝わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルーホール自然記念物",
+              "url": "https://whc.unesco.org/en/list/764/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ブルーホールが属する世界遺産の種類は？",
+            "options": [
+              "文化遺産",
+              "自然遺産",
+              "無形文化遺産"
+            ],
+            "answer": 1,
+            "fact": "ブルーホール自然記念物はベリーズのバリア・リーフ保護区群の構成区域です。",
+            "photoGoal": "ベリーズ沖のグレート・ブルーホールの航空写真を選び、写真が別のブルーホールでないと確認する。"
+          },
+          "commonsSearch": "Great Blue Hole Belize aerial reef",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "ハーフムーン・キー自然記念物",
+          "travelStory": [
+            "ハーフムーン・キーの写真では、白い砂浜や森と、周囲の浅い海の色が重なる様子が見られます。島の輪郭だけでなく、海鳥が休める陸地と、魚やサンゴを育む海が近くにあることに目を向けましょう。同じ海の遺産でも、深い穴のような地形を見た後で小さな島を比べると、生き物の生息場所の多様さが伝わります。",
+            "UNESCOの世界遺産資料では、ハーフムーン・キー自然記念物も七つの保護区域の一つに数えられ、赤足カツオドリをはじめとする海鳥の繁殖地として紹介されています。広い海で暮らす鳥が陸地に戻る場所を守ることは、サンゴや魚だけを保護することとは別の意味を持ちます。島とその周辺海域を一つの生態系として見ると、保護区の役割がより立体的に見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハーフムーン・キー自然記念物",
+              "url": "https://whc.unesco.org/en/list/764/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ハーフムーン・キーで保全の対象となるものは？",
+            "options": [
+              "高山の氷河",
+              "海鳥と島の生態系",
+              "古代の城壁"
+            ],
+            "answer": 1,
+            "fact": "ハーフムーン・キーは海鳥の繁殖地を含むサンゴ礁保護区群の一部です。",
+            "photoGoal": "ハーフムーン・キーの実景であることと海鳥または島の地形が写っていることを確かめる。"
+          },
+          "commonsSearch": "Half Moon Caye Belize island red footed booby",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Belize barrier reef island aerial",
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
