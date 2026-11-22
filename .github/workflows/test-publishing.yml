@@ -19,6 +19,8 @@ on:
       - '.github/workflows/publish-nightly.yml'
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
+      - 'seed_reviewed_photos.py'
+      - 'editorial-country-photo-reviews/cache-seeds.json'
       - 'reader_source.py'
       - 'reader_asset_split.py'
       - 'reader_sources/**'
@@ -50,6 +52,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   validate:
@@ -77,6 +80,10 @@ jobs:
           key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
           restore-keys: |
             yoru9-photo-cache-v1-${{ runner.os }}-
+      - name: Restore checksum-pinned reviewed photos before new downloads
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python seed_reviewed_photos.py
       - name: Check public site build
         env:
           YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
