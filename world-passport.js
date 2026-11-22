@@ -28,6 +28,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'グラン・プラスが示すブリュッセルの歴史的役割は？',options:['商業都市','砂漠の交易隊の宿営地','高山の観測基地'],answer:0,photoLabel:'正解写真｜ブリュッセルのグラン・プラス',fact:'UNESCOはグラン・プラスを商業都市として栄えたブリュッセルの象徴として説明しています。',quip:'商業都市の繁栄は広場に刻まれた。建物の装飾まで、宣伝上手。',photoKey:'be-grand-place-postcard'},
   {question:'ブルッヘの歴史都市景観に特徴的なのは？',options:['運河と歴史的街路','砂丘の連続','火山の溶岩流'],answer:0,photoLabel:'正解写真｜ブルッヘ歴史地区',fact:'UNESCOは中世以来の都市のかたちが残るブルッヘ歴史地区を評価しています。',quip:'運河は観光用の飾りじゃない。昔は荷物も暮らしも、この水路を使っていた。',photoKey:'be-bruges-belfry-postcard'},
  ],
+ BD:[
+  {question:'バゲルハットの世界遺産を特徴付ける歴史的な建造物は？',options:['レンガ造りのモスク群','古代ローマの円形競技場','氷河期の岩壁住居'],answer:0,fact:'15世紀のバゲルハットにはレンガ造りのモスクと都市の施設が残されています。',quip:'ドームの数だけを数えるより、街全体を見れば歴史の厚みが分かります。',photoLabel:'正解写真｜バゲルハットの九ドーム・モスク',photoKey:'bd-nine-dome-mosque-postcard'},
+  {question:'パハルプールのソーマプラ大僧院は、何の学問と信仰を支えていた？',options:['地中海交易の航海学校','仏教の学問と修行','中世ヨーロッパの騎士養成'],answer:1,fact:'ソーマプラ大僧院は仏教の学問と修行の重要な中心地でした。',quip:'レンガの輪郭から、かつての学びの場の広さが浮かび上がってきます。',photoLabel:'正解写真｜パハルプールのソーマプラ大僧院跡',photoKey:'bd-somapura-mahavihara-postcard'},
+ ],
  BG:[
   {question:'リラ修道院の周囲に広がる特徴的な環境は？',options:['山地','珊瑚礁','砂漠のオアシス'],answer:0,fact:'リラ修道院はブルガリアのリラ山地に位置する歴史的な修道院です。',photoLabel:'正解写真｜リラ修道院の回廊',quip:'山奥なのにこの存在感。隠れた修道院とはとても言えない。',photoKey:'bg-rila-monastery-postcard'},
   {question:'ボヤナ教会で評価されている重要な芸術は？',options:['中世の壁画','近代映画のセット','巨大な機械彫刻'],answer:0,fact:'UNESCOはボヤナ教会の中世の壁画を重要な文化的価値として紹介しています。',photoLabel:'正解写真｜ソフィア郊外のボヤナ教会',quip:'建物は小さくても、壁画の歴史は大作。見落とすには惜しい。',photoKey:'bg-boyana-church-postcard'},
