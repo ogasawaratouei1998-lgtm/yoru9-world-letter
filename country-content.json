@@ -203,7 +203,10 @@
     "ng-sukur-postcard",
     "al-tirana-skanderbeg-cover",
     "al-berat-mangalem-postcard",
-    "al-butrint-theatre-postcard"
+    "al-butrint-theatre-postcard",
+    "gh-aburi-mampong-cover",
+    "gh-besease-shrine-postcard",
+    "gh-cape-coast-castle-postcard"
   ],
   "highlightsMetadata": {
     "version": 1,
@@ -4342,7 +4345,7 @@
     },
     "GH": {
       "name": "ガーナ",
-      "status": "pending",
+      "status": "approved",
       "portrait": {
         "lead": "土と木の装飾建築、海岸の砦が伝える歴史",
         "body": "ガーナでは、海岸の要塞群と内陸のアサンテの伝統建築が、それぞれ異なる歴史を伝えています。中部のクマシ周辺には地域の信仰や造形を受け継ぐ建物があり、海辺のケープコースト城は大西洋を渡る奴隷貿易の記憶を伝える場所です。華やかな景色だけでなく、文化を支えてきた人々や強制的に連れ去られた人々の歴史も学ぶ誌上旅行です。外務省は2026年11月22日確認時点で国内に危険レベル1・2を発出しており、渡航は最新の安全情報を優先してください。",
@@ -4350,13 +4353,147 @@
           "世界文化遺産：アサンテの伝統的建造物群",
           "世界文化遺産：沿岸地域の城塞群"
         ],
-        "photos": [],
+        "photos": [
+          "gh-besease-shrine-postcard",
+          "gh-cape-coast-castle-postcard"
+        ],
         "sourceName": "UNESCO世界遺産センター：ガーナの登録遺産",
         "sourceUrl": "https://whc.unesco.org/en/statesparties/gh"
       },
-      "portraitPhotos": [],
-      "quiz": [],
-      "travelStops": {},
+      "portraitPhotos": [
+        {
+          "asset": "assets/travel/gh-aburi-mampong-cover.jpg",
+          "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Aburi_Mampong_Green_landscape.jpg/960px-Aburi_Mampong_Green_landscape.jpg",
+          "caption": "道路の向こうに緑豊かな丘が広がるアブリ・マンポン周辺（2024年）",
+          "author": "Penwills",
+          "license": "CC BY-SA 4.0",
+          "place": "アブリ・マンポン",
+          "sourcePage": "https://commons.wikimedia.org/wiki/File:Aburi_Mampong_Green_landscape.jpg"
+        }
+      ],
+      "quiz": [
+        {
+          "question": "アサンテの建物の伝統的な浮き彫りには何が込められている？",
+          "options": [
+            "工事の契約番号",
+            "宗教や考え方の象徴",
+            "近代の交通標識"
+          ],
+          "answer": 1,
+          "fact": "壁面の装飾文様はアサンテの人々の信仰や考え方を表す象徴です。",
+          "quip": "装飾は壁の飾りで終わらない。文字とは違う方法で、信仰と知恵を次の世代へ伝えます。",
+          "photoLabel": "正解写真｜アサンテの伝統的建造物群（ベセアセの聖所）",
+          "photoKey": "gh-besease-shrine-postcard"
+        },
+        {
+          "question": "ケープコースト城が伝える重大な歴史は？",
+          "options": [
+            "南極探検",
+            "大西洋奴隷貿易",
+            "月面着陸"
+          ],
+          "answer": 1,
+          "fact": "城塞群は交易の歴史と、奴隷にされた人々が強制的に移送された歴史を伝えます。",
+          "quip": "美しい海と白い城壁。その景色の奥に、決して忘れてはならない歴史があります。",
+          "photoLabel": "正解写真｜ケープコースト城",
+          "photoKey": "gh-cape-coast-castle-postcard"
+        }
+      ],
+      "travelStops": {
+        "gh-aburi-mampong-cover": {
+          "country": "ガーナ",
+          "countryOnly": true,
+          "place": "アブリ・マンポン",
+          "region": "イースタン州",
+          "latitude": 5.914528,
+          "longitude": -0.140458,
+          "note": "見どころの代表地点。正確な撮影位置ではありません。外務省の最新安全情報を確認してください。",
+          "photoCaption": "道路の向こうに緑豊かな丘が広がるアブリ・マンポン周辺（2024年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8e/Aburi_Mampong_Green_landscape.jpg/960px-Aburi_Mampong_Green_landscape.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Aburi_Mampong_Green_landscape.jpg",
+          "photoAsset": "assets/travel/gh-aburi-mampong-cover.jpg",
+          "author": "Penwills",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "coverOnly": true
+        },
+        "gh-besease-shrine-postcard": {
+          "country": "ガーナ",
+          "countryOnly": true,
+          "place": "アサンテの伝統的建造物群（ベセアセの聖所）",
+          "region": "アシャンティ州エジス",
+          "latitude": 6.72372,
+          "longitude": -1.44962,
+          "note": "見どころの代表地点。正確な撮影位置ではありません。外務省の最新安全情報を確認してください。",
+          "photoCaption": "白い土壁と草葺きの屋根が残るベセアセの聖所（2016年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0c/Ejisu_Bebease_Shrine_1.jpg/960px-Ejisu_Bebease_Shrine_1.jpg",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Ejisu_Bebease_Shrine_1.jpg",
+          "photoAsset": "assets/travel/gh-besease-shrine-postcard.jpg",
+          "author": "Joy Agyepong",
+          "license": "CC BY-SA 4.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+          "travelStory": [
+            "土壁に施された浮き彫りや、建物を取り囲む空間の形に注目しましょう。クマシ周辺の伝統建築では、装飾は単に壁を美しくするためだけにあるのではありません。地域の人々が受け継いできた考え方や信仰を伝える手段でもあります。聖所として使われてきた建物なので、造形の観察と同時に地域の文化や撮影のルールを尊重することが大切です。",
+            "ユネスコは木材や竹、泥の塗り壁などで造られた十の聖所を、アサンテ王国の建築文化を伝える遺産として評価しています。壁の渦巻きや動植物などの文様は象徴的な意味を持ちます。一方で湿気や雨、虫などによって建物の材料は傷みやすく、保存には伝統的な技法を受け継ぐ人々の知識が欠かせません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アサンテの伝統的建造物群",
+              "url": "https://whc.unesco.org/en/list/35/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・ガーナ",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_096.html",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "ガーナ博物館記念物委員会・アサンテ伝統建築",
+              "url": "https://gmmb.gov.gh/asante-traditional-buildings/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        },
+        "gh-cape-coast-castle-postcard": {
+          "country": "ガーナ",
+          "countryOnly": true,
+          "place": "ケープコースト城",
+          "region": "セントラル州",
+          "latitude": 5.10361,
+          "longitude": -1.24111,
+          "note": "見どころの代表地点。正確な撮影位置ではありません。外務省の最新安全情報を確認してください。",
+          "photoCaption": "海に面したケープコースト城の白い城壁と砲台（2011年）",
+          "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a0/Cape_Coast_Castle%2C_Cape_Coast%2C_Ghana.JPG/960px-Cape_Coast_Castle%2C_Cape_Coast%2C_Ghana.JPG",
+          "photoPage": "https://commons.wikimedia.org/wiki/File:Cape_Coast_Castle,_Cape_Coast,_Ghana.JPG",
+          "photoAsset": "assets/travel/gh-cape-coast-castle-postcard.jpg",
+          "author": "Rjruiziii",
+          "license": "CC BY-SA 3.0",
+          "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+          "travelStory": [
+            "海を向いた砲台と白い壁が並ぶケープコースト城。明るい海の景色だけでは、この場所の歴史を理解することはできません。建物は交易や支配の拠点として使われ、奴隷にされた人々が大西洋を渡る船へ送られる過程にも関わりました。景観を鑑賞するだけでなく、どのような人々がここを通ったのかを学ぶ誌上旅行です。",
+            "ガーナ沿岸の城塞群は、ヨーロッパ諸国と西アフリカの交易および奴隷貿易の歴史を伝えています。ユネスコの登録遺産にはケープコースト城のほかエルミナ城などが含まれ、建物の配置や残された空間から歴史を考えることができます。人間の自由が奪われた歴史に敬意を払い、犠牲者を単なる観光の背景として扱わないことが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ケープコースト城",
+              "url": "https://whc.unesco.org/en/list/34/",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "外務省海外安全ホームページ・ガーナ",
+              "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_096.html",
+              "checkedOn": "2026-11-22"
+            },
+            {
+              "name": "ガーナ中央州調整評議会・ケープコースト城",
+              "url": "https://crcc.gov.gh/cape-coast-castle/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "famousTourist": true
+        }
+      },
       "highlights": []
     },
     "GN": {
