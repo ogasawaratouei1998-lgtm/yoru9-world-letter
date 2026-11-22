@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-22",
+  "status": "pending_photos_not_public",
+  "countries": {
+    "GT": {
+      "name": "グアテマラ",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/gt",
+      "portrait": {
+        "lead": "森に立つマヤの神殿と、震災の記憶を残す古都",
+        "body": "グアテマラの北部では、熱帯林の樹冠からティカルの神殿が姿を現します。古代の都市と多様な生態系が重なる景観です。一方、アンティグアでは直交する街路と植民地時代の建築が残り、地震と都市の移転をめぐる歴史をたどれます。異なる時代の建造物を見比べ、自然と人間の暮らしの関係を考える誌上旅行です。実際の渡航を推奨するものではありません。外務省は2026年11月22日確認時点で国内に危険レベル1・2を発出しており、渡航前には最新情報の確認が必要です。",
+        "facts": [
+          "世界複合遺産：ティカル国立公園",
+          "世界文化遺産：アンティグア・グアテマラ"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：グアテマラの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/gt"
+      },
+      "travelDrafts": [
+        {
+          "place": "ティカル国立公園",
+          "travelStory": [
+            "深い緑の森に石造りの神殿がそびえるティカル。写真の木々と建物の高さを比べると、都市の規模が想像できます。広場を囲む建物の配置や、石の階段が空へ向かうように伸びる姿にも注目しましょう。森の中に遺跡があるというだけではなく、自然と文化の両方が保護されている場所です。",
+            "UNESCOは約5万7600ヘクタールの公園を、マヤ文明の考古学遺産と豊かな生物多様性の両面から評価しています。儀礼の場所や住居などの遺構が残り、都市の営みを知る手がかりになります。1979年の登録が示すのは、石造建築を保存することと、周囲の森を守ることを切り離さない考え方です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ティカル国立公園",
+              "url": "https://whc.unesco.org/en/list/64/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "ティカル国立公園はどの種類の世界遺産？",
+            "options": [
+              "文化遺産のみ",
+              "文化と自然の複合遺産",
+              "自然遺産のみ"
+            ],
+            "answer": 1,
+            "fact": "ティカルは考古学的価値と生物多様性の両方を評価された世界複合遺産です。",
+            "photoGoal": "ティカル国立公園の実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Tikal Temple I Great Plaza Guatemala",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "アンティグア・グアテマラ",
+          "travelStory": [
+            "アンティグアの街並みを写真と地図で見比べると、まっすぐな通りが交差して区画をつくる様子が分かります。残された教会の壁や装飾には、華やかな時代の痕跡と、地震で失われた部分の両方が見えます。建物の正面だけではなく、通りの方向や街の広がりにも目を向けて、古都の姿を読み解きましょう。",
+            "この都市はスペイン植民地時代の政治や宗教の中心でしたが、1773年の大地震で大きな被害を受け、当局は首都の移転を決めました。その後も住み続けた人々がいたため、旧都には歴史的建造物と暮らしの記憶が残ります。UNESCOは16世紀の都市計画や、地震の多い土地で発展した建築にも価値を認めています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンティグア・グアテマラ",
+              "url": "https://whc.unesco.org/en/list/65/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "旧都から首都が移転する契機となった大地震は何年？",
+            "options": [
+              "1543年",
+              "1773年",
+              "1979年"
+            ],
+            "answer": 1,
+            "fact": "1773年の地震による甚大な被害を機に、当局は首都の移転を決めました。",
+            "photoGoal": "アンティグア・グアテマラの実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Antigua Guatemala colonial church ruins street",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Lake Atitlan volcano panorama Guatemala",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_246.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    },
+    "HN": {
+      "name": "ホンジュラス",
+      "status": "pending",
+      "portraitSource": "https://whc.unesco.org/en/statesparties/hn",
+      "portrait": {
+        "lead": "マヤの石碑に刻まれた文字と、カリブ海へ続く熱帯林",
+        "body": "ホンジュラスの西部にあるコパンでは、古代マヤの王朝が残した文字や彫刻を通して都市の歴史を読み解けます。北東部のリオ・プラタノでは、山地からカリブ海まで水系がつながり、森林や水辺が多様な生物を支えています。人の歴史と自然保護の両方に目を向ける誌上旅行です。実際の渡航を推奨しません。外務省は2026年11月22日確認時点でコパン県を危険レベル1、首都や北東部の複数県などをレベル2としています。安全情報は必ず最新のものを確認してください。",
+        "facts": [
+          "世界文化遺産：コパンのマヤ遺跡",
+          "世界自然遺産：リオ・プラタノ生物圏保護区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター：ホンジュラスの登録遺産",
+        "sourceUrl": "https://whc.unesco.org/en/statesparties/hn"
+      },
+      "travelDrafts": [
+        {
+          "place": "コパンのマヤ遺跡",
+          "travelStory": [
+            "コパンの石造建築を写した写真では、広場を取り囲む遺構の形や、人の姿を表した彫刻に注目できます。階段に残る文字は、建物が単なる移動のための構造物ではなかったことを伝えます。石を積む技術だけでなく、文字を刻み、過去の出来事を後世に残そうとした人々の営みを考える誌上旅行です。",
+            "UNESCOによると427年に始まった王朝は16人の統治者を数え、コパンは古典期の重要なマヤ都市へと発展しました。とくに神聖文字の階段には1800を超える個々の文字が刻まれているとされます。文字や彫像を資料として読み解く研究によって、歴史が建物の配置だけでなく、刻まれた記録からも見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コパンのマヤ遺跡",
+              "url": "https://whc.unesco.org/en/list/129/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "コパンの階段に残る特に重要な記録は？",
+            "options": [
+              "神聖文字の碑文",
+              "ローマ数字の暦",
+              "楔形文字の粘土板"
+            ],
+            "answer": 0,
+            "fact": "神聖文字の階段はマヤ文字による長い碑文を伝える重要な構造物です。",
+            "photoGoal": "コパンのマヤ遺跡の実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Copan Maya ruins hieroglyphic stairway Honduras",
+          "photoStatus": "not_selected_or_licensed"
+        },
+        {
+          "place": "リオ・プラタノ生物圏保護区",
+          "travelStory": [
+            "山地から流れる川が森を通り、カリブ海へ向かう風景を地図でたどってみましょう。林の広がりと水の流れは別々の景色ではなく、互いにつながった環境です。この地域には先住民族の暮らしもあり、自然を人のいない場所と考えないことが大切です。現地への訪問ではなく、資料や写真を通して学ぶ誌上旅行です。",
+            "UNESCOは川の源流から海に至る水系を含む約35万ヘクタールの保護区として評価しています。周囲の保護地域ともつながる森林は、生物が暮らす広い環境を形成しています。一方で保全上の課題は続いています。美しい森の写真だけで問題が解決したと考えず、森林を守る取り組みや地域の人々の生活にも目を向けましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リオ・プラタノ生物圏保護区",
+              "url": "https://whc.unesco.org/en/list/196/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "quizDraft": {
+            "question": "リオ・プラタノ保護区が保護する地理的なつながりは？",
+            "options": [
+              "砂漠から塩湖まで",
+              "氷河から火口湖まで",
+              "川の源流からカリブ海まで"
+            ],
+            "answer": 2,
+            "fact": "山間の源流からカリブ海に注ぐ河口まで、川の流域全体が保護の対象です。",
+            "photoGoal": "リオ・プラタノ生物圏保護区の実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "commonsSearch": "Rio Platano Biosphere Reserve Honduras river rainforest",
+          "photoStatus": "not_selected_or_licensed"
+        }
+      ],
+      "coverCommonsSearch": "Comayagua colonial town cathedral Honduras",
+      "safetySource": {
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_263.html",
+        "checkedOn": "2026-11-22"
+      },
+      "requiredBeforeApproval": [
+        "third_party_license_photo_cover",
+        "two_distinct_licensed_quiz_photos",
+        "photo_location_and_creator_match",
+        "canonical_runtime_sync_and_full_regression"
+      ]
+    }
+  }
+}
