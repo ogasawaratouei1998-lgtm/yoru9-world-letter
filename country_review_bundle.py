@@ -56,6 +56,7 @@ VISUAL_REJECTIONS = {
     # Reviewed exact JPEGs in artifact 14735202454 on 2026-11-22.
     ("BW", 0): {"Anhinga rufa -Chobe River front, Botswana-8.jpg": "Portrait-format bird close-up, not a national landscape."},
     ("HN", 0): {"Comayagua Cathedral.jpg": "Tall portrait format with extensive sky; insufficient landscape composition for country cover."},
+    ("HN", 2): {"Río Patuca.jpg": "Wampusirpi cultural-zone photograph does not verify a location inside the UNESCO-inscribed Río Plátano property; cannot depict the claimed heritage site."},
     ("KZ", 2): {"Tamgaly-Tas Petroglyphs.JPG": "Buddhist rock imagery at Tamgaly-Tas on the Ili River, distinct from UNESCO Tanbaly (1145); coordinates 44.059167, 76.996944 do not match the listed property."},
     ("MY", 2): {"Ongoing Repairs after storm of the previous day (15385239799).jpg": "Storm-damaged walkway rather than the cave or karst landscape described in the destination essay.",
                  "Blue-throated Litter Skink (Sphenomorphus cyanolaemus) female (15385530980).jpg": "Close-up of a skink rather than the Deer Cave or Mulu karst landscape."},
