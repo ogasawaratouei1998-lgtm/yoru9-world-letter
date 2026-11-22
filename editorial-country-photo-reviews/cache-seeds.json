@@ -90,6 +90,51 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
       "country": "マルタ",
       "place": "マルタの巨石神殿群（ハジャー・イム）"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "DZ-0.jpg",
+      "sha256": "6a084ea0d6cf89de78d29a902cd8a5c99a30fd951cdf814163976db33d12e58e",
+      "cover": true,
+      "photoAsset": "assets/travel/dz-hassania-mountains-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/14/LAndscape_from_Hassania%2C_Ain_el_defla.jpg/960px-LAndscape_from_Hassania%2C_Ain_el_defla.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:LAndscape_from_Hassania,_Ain_el_defla.jpg",
+      "author": "FETHI BOUHAOUCHINE",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "アルジェリア",
+      "place": "エル・ハッサニアの山並み"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "DZ-1.jpg",
+      "sha256": "dfeedb37f50755f5fdd6b67894252232c398aa19eb6d98fc49ed56ec8306167e",
+      "cover": false,
+      "photoAsset": "assets/travel/dz-beni-hammad-minaret-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c6/Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg/960px-Qal%27at_Bani_Hammad%2C_M%27Sila_Province%2C_Algeria_2010-2.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Qal%27at_Bani_Hammad,_M%27Sila_Province,_Algeria_2010-2.jpg",
+      "author": "Yelles",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "アルジェリア",
+      "place": "ベニ・ハンマードの城塞"
+    },
+    {
+      "runId": 44986532608,
+      "artifactId": 14739947105,
+      "file": "DZ-2.jpg",
+      "sha256": "5f322c985ba0fc7d49cb5fb63b1df33e2676dd6e79a3ee6099982e007f67ad34",
+      "cover": false,
+      "photoAsset": "assets/travel/dz-djemila-roman-ruins-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/15/Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg/960px-Panorama_Djemila_%28Cuicul%29_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Panorama_Djemila_(Cuicul)_%D8%AC%D9%85%D9%8A%D9%84%D8%A9_-_%D8%B3%D8%B7%D9%8A%D9%81_-_panoramio.jpg",
+      "author": "habib kaki",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "country": "アルジェリア",
+      "place": "ジェミラのローマ遺跡"
     }
   ]
 }
