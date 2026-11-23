@@ -169,7 +169,7 @@ def validate_approved(data, expected_date):
     require(isinstance(data.get('approvedBy'), str) and len(data['approvedBy'].strip()) >= 2, '承認者名がありません')
     stories = data.get('stories')
     # The explicitly reviewed second Nov 20 correction uses free illustrations.
-    # The four-story minimum stays in force independently of image providers.
+    # Historical Nov 20 correction was four stories; future editions have no fixed count.
     static_reissue_20 = (expected_date == '2026-11-20' and
                          data.get('fourStoryStaticIllustrationReissue') is True and
                          data.get('approvedBy') == 'editorial-source-checked-correction-2026-11-20')
@@ -177,9 +177,15 @@ def validate_approved(data, expected_date):
             '無料イラストによる追加訂正は2026年11月20日の承認号だけです')
     require(data.get('editionRequiresImages') is not True,
             '有料画像生成は停止中です。既存の無料イラストを使用してください')
-    if edition_type == 'regular' and (issue_day >= date(2026, 11, 21) or static_reissue_20):
-        require(isinstance(stories, list) and 4 <= len(stories) <= 5,
-                '2026年11月21日以降は、検証済みニュース4〜5本がない日は公開しません')
+    if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+        # No daily quota or maximum: publish every independently approved,
+        # country-ready story. Zero verified articles means no new issue.
+        require(isinstance(stories, list) and bool(stories),
+                '承認済みニュースが1本もないため、新しい号は公開しません')
+    elif static_reissue_20:
+        # Preserve the explicitly approved November 20 correction unchanged.
+        require(isinstance(stories, list) and len(stories) == 4,
+                '2026年11月20日の訂正号は承認済みの4本を保持してください')
     elif edition_type == 'regular' and issue_day >= date(2026, 11, 19):
         # Keep the historical Nov 19–20 approved one-to-five issue contract.
         require(isinstance(stories, list) and 1 <= len(stories) <= 5,
@@ -420,8 +426,8 @@ def publish(root: Path, now: datetime, allow_early: bool = False):
         from check_country_experience import country_coverage
         country_coverage(root,public_issue['stories'])
     # No generated-image gate: source-checked stories can publish with the
-    # bundled free SVG illustrations. A 4–5 story hard gate is still enforced
-    # above and will never be bypassed due to missing images.
+    # bundled free SVG illustrations. There is no numeric article quota;
+    # every included story still needs its own complete editorial checks.
     from difflib import SequenceMatcher
     recent = recent_nightly_messages(root, date)
     proposed = public_issue['nightlyMessage']
