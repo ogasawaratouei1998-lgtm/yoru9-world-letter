@@ -86,20 +86,23 @@ class HardSurpriseEditionTest(unittest.TestCase):
         self.assertFalse(independent_editorial_quality_passed({**full,"shockFactorConfirmed":False}))
         self.assertFalse(independent_editorial_quality_passed({**full,"stageTsukkomiConfirmed":False}))
 
-    def test_three_corporate_stories_never_fill_edition(self):
+    def test_company_story_approval_still_requires_individual_comic_review(self):
         from collections import Counter
         from auto_editorial import select_diverse_verified_stories
+        # These are already-audited entries: genre alone may no longer discard
+        # one just to enforce a numerical desk quota.
         pool=[{"id":str(i),"country":country,"category":"company"}
               for i,country in enumerate(("US","FR","DE","BR"))]
         chosen=select_diverse_verified_stories(pool,Counter(),Counter())
-        self.assertEqual(len(chosen),1)
+        self.assertEqual({x["id"] for x in chosen},{x["id"] for x in pool})
         pool.extend([
             {"id":"a","country":"AR","category":"sports"},
             {"id":"b","country":"JP","category":"person"},
         ])
         chosen=select_diverse_verified_stories(pool,Counter(),Counter())
-        self.assertEqual(len(chosen),3)
-        self.assertLessEqual(sum(x["category"]=="company" for x in chosen),1)
+        self.assertEqual({x["id"] for x in chosen},{x["id"] for x in pool})
+        # Merely selecting a field value never grants source or AI approval.
+        self.assertTrue(all("editorVerified" not in item for item in chosen))
 
 
     def test_future_comedy_prompts_do_not_ask_for_soft_comments(self):
