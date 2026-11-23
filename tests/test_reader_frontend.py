@@ -232,28 +232,14 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         cover=page[page.index('<section class="hero" id="atlasHero"'):
                    page.index('<section class="spotlight" id="spotlight"')]
-        # The independently vetted first quip is the invitation to read, and
-        # is sourced from the actual selected edition, never hardcoded copy.
-        self.assertIn('class="quip-teaser" id="quipTeaser"',cover)
-        self.assertNotIn('id="quipTeaserImage"',cover)
-        self.assertNotIn('class="quip-teaser-art"',cover)
-        self.assertIn('class="quip-teaser-heading"',cover)
-        self.assertIn('id="quipTeaserLine"',cover)
-        self.assertIn('role="note" aria-label="AIによる創作の冗談"',cover)
-        self.assertIn('id="quipTeaserRead"',cover)
+        # The editorial intro now leads directly to the visual news gallery.
+        self.assertNotIn('class="reader-first-link"',cover)
+        self.assertNotIn('class="quip-teaser"',cover)
+        self.assertNotIn('id="quipTeaserRead"',page)
+        self.assertNotIn('function updateQuipTeaser()',page)
+        self.assertLess(cover.index('class="atlas-concept"'),cover.index('class="issue-gallery"'))
+        self.assertLess(cover.index('id="issueGallery"'),cover.index('id="articleReader"'))
         self.assertNotIn('data-smile',cover)
-        self.assertLess(cover.index('id="quipTeaser"'),
-                        cover.index('id="issueGallery"'))
-        self.assertLess(cover.index('id="issueGallery"'),
-                        cover.index('id="articleReader"'))
-        self.assertIn("teaser.hidden=!first||!String(first.quip||'').trim()",page)
-        self.assertIn("$('quipTeaserLine').textContent=first.quip",page)
-        self.assertNotIn("$('quipTeaserImage').src",page)
-        self.assertIn("#atlasHero .quip-teaser{\n display:block;",page)
-        self.assertIn("#atlasHero .quip-teaser-actions{display:flex;align-items:stretch;",page)
-        self.assertIn("flex-wrap:nowrap;gap:8px;",page)
-        self.assertIn("updateQuipTeaser();",page)
-        self.assertIn("$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0))",page)
         # Short taglines use explicit vetted incident IDs and fall back to
         # editor-provided labels for future published stories.
         self.assertIn("const NEWS_COMIC_KICKERS=Object.freeze({",page)
@@ -269,6 +255,7 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn(".story .teaserquip::after{content:",page)
         self.assertIn("$('atlasHero').addEventListener('click',handleStoryAction)",page)
         self.assertIn("saveState();update();",page)
+        self.assertNotIn('id="quipTeaser"',page)
         for removed in ("ふっと笑えた", "data-smile", "teaser-smile",
                         "smile-burst", "state.smiles", "tinyLaughStar"):
             self.assertNotIn(removed,page)
@@ -278,10 +265,6 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
 
     def test_smile_feedback_removed_from_every_article_surface(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
-        teaser=page[page.index('<section class="quip-teaser"'):
-                    page.index('<section class="issue-gallery"')]
-        self.assertIn('id="quipTeaserRead"',teaser)
-        self.assertNotIn("ふっと笑えた",teaser)
         for removed in ("ふっと笑えた", "data-smile", "teaser-smile",
                         "smile-burst", "state.smiles", "tinyLaughStar"):
             self.assertNotIn(removed,page)
@@ -290,36 +273,27 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn('class="share" data-share="${i}"',page)
         self.assertIn('state.read.push(i);saveState();update();',page)
 
-    def test_compact_opening_teaser_does_not_duplicate_or_crop_illustrations(self):
+    def test_gallery_follows_intro_without_redundant_teaser(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
-        teaser=page[page.index('<section class="quip-teaser"'):
-                    page.index('<section class="issue-gallery"')]
-        self.assertIn('id="quipTeaserTopic"',teaser)
-        self.assertIn('id="quipTeaserLine"',teaser)
-        self.assertIn('class="quip-teaser-actions"',teaser)
-        self.assertNotIn('<img',teaser)
-        self.assertNotIn('quipTeaserImage',page)
-        self.assertNotIn('quip-teaser-art',page)
-        self.assertIn("id=\"issueGallery\"",page)
+        self.assertNotIn('まずはニュースを選んで読む',page)
+        self.assertNotIn('まずは、ひとツッコミ。',page)
+        self.assertNotIn('quip-teaser',page)
+        self.assertNotIn('quipTeaser',page)
+        self.assertIn('id="issueGallery"',page)
         self.assertIn("img.className='gallery-art';img.src=newsArt(story)",page)
         self.assertIn('id="spotlightImage"',page)
         self.assertIn('class="atlas-brand-copy">創作の冗談</span>',page)
         self.assertIn('#atlasHero .atlas-brand::after{content:none}',page)
-        self.assertIn("#atlasHero .quip-teaser{\n display:block;",page)
-        self.assertIn("flex-wrap:nowrap;gap:8px;",page)
-        self.assertNotIn('teaser-smile',page)
-        self.assertIn('min-height:44px',page)
         # The existing full news story remains intact, with an accessible source.
         self.assertIn("body.innerHTML=",page)
         self.assertIn("safeUrl(first.sourceUrl)",page)
-        self.assertIn("updateQuipTeaser();",page)
 
     def test_gallery_opens_one_independent_story_screen_and_supports_history(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         cover=page[page.index('<section class="hero" id="atlasHero"'):
                    page.index('<section class="article-reader" id="articleReader"')]
         self.assertIn('id="issueGallery"',cover)
-        self.assertIn('id="quipTeaserLine"',cover)
+        self.assertNotIn('id="quipTeaserLine"',cover)
         self.assertIn('class="article-reader" id="articleReader" aria-label="選んだニュースを読む" hidden',page)
         for token in ('id="readerBack"','id="readerSelected"',
                       'id="readerPrev"','id="readerNext"',
