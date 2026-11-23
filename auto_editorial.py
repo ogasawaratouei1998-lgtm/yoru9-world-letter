@@ -1061,7 +1061,7 @@ def source_bound_batch_drafts(response, groups):
     Provenance-only prefilter: it does not verify a fact, a country, or the
     quality of a joke. Independent reviewer B still must approve everything.
     A model must not combine unrelated original articles from separate
-    groups or invent a URL to fill the five-story ceiling.
+    groups or invent a URL to reach any arbitrary edition size.
     """
     proposed=response.get("stories",[]) if isinstance(response,dict) else []
     if not isinstance(proposed,list) or not isinstance(groups,list):
@@ -1522,11 +1522,6 @@ def main():
           },sort_keys=True),flush=True)
     seen=previous_events()
     selected=[]
-    def ready_reviewed_count():
-        # This is applied AFTER independent article-source checks. It cannot
-        # turn an unverified draft into an approved publication.
-        return sum(story_has_prepared_countries(story,ready_for_review)
-                   for story in selected)
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
@@ -1538,8 +1533,8 @@ def main():
 
     def candidates_with_after_review_refill():
         nonlocal supplemental_attempts,supplemental_generated,supplemental_groups_examined
-        # Review initial candidates FIRST. Only then see if the source-fidelity
-        # vetoes left room for useful stories. Refill from untouched,
+        # Review initial candidates FIRST. Refill from untouched sources
+        # while independent audit budget and runtime still allow it.
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
         if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
@@ -1554,7 +1549,7 @@ def main():
         for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
-                print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
+                print("Ending after-review refill: independent audit time or AI quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
             retry_prompt=(
