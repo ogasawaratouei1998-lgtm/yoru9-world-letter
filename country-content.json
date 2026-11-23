@@ -1515,7 +1515,8 @@
             ],
             "answer": 1,
             "fact": "乙女の塔とシルヴァンシャー宮殿がバクー旧市街の世界遺産を構成します。",
-            "photoGoal": "バクー旧市街の乙女の塔を実際に写した写真を選び、撮影者と再利用可能なライセンスを照合する。"
+            "photoGoal": "バクー旧市街の乙女の塔を実際に写した写真を選び、撮影者と再利用可能なライセンスを照合する。",
+            "quip": "城壁の主役をエッフェル塔にしたら、カスピ海もさすがに二度見します。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -1547,7 +1548,8 @@
             ],
             "answer": 0,
             "fact": "ゴブスタンは六千点を超える先史時代の岩絵で知られています。",
-            "photoGoal": "ゴブスタンの岩絵の線刻が判別できる実景を選び、撮影者と写真の出典を確認する。"
+            "photoGoal": "ゴブスタンの岩絵の線刻が判別できる実景を選び、撮影者と写真の出典を確認する。",
+            "quip": "岩に刻まれた記憶です。落書き扱いでは数千年分の歴史が抗議します。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2153,7 +2155,8 @@
             ],
             "answer": 1,
             "fact": "墓の規模や構造の違いが、交易で発展した社会の階層を伝えます。",
-            "photoGoal": "ディルムンの墳墓群の登録区域を確認できる権利確認済みの実景写真"
+            "photoGoal": "ディルムンの墳墓群の登録区域を確認できる権利確認済みの実景写真",
+            "quip": "古代の墳墓をただの土の山と見たら、考古学者の仕事が山積みになります。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2185,7 +2188,8 @@
             ],
             "answer": 0,
             "fact": "天然真珠を採取する船と、取引を担った街の両方が文化遺産を構成します。",
-            "photoGoal": "ムハッラクの真珠採取文化遺産の登録区域を確認できる権利確認済みの実景写真"
+            "photoGoal": "ムハッラクの真珠採取文化遺産の登録区域を確認できる権利確認済みの実景写真",
+            "quip": "真珠の輝きの裏には海で働いた人々の歴史があります。宝石箱だけ見て終わりにはできません。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2372,7 +2376,8 @@
             ],
             "answer": 1,
             "fact": "ミール城には異なる時代の建築様式が重なっています。",
-            "photoGoal": "ミール城郭群の原画像・作者・商用再利用ライセンス・撮影地・被写体の一致を個別確認"
+            "photoGoal": "ミール城郭群の原画像・作者・商用再利用ライセンス・撮影地・被写体の一致を個別確認",
+            "quip": "城は石を積めば完成、ではありません。様式の重なりが歴史の履歴書です。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2396,7 +2401,8 @@
             ],
             "answer": 0,
             "fact": "ネスヴィジにはラジヴィウ家の宮殿などの歴史的建築群があります。",
-            "photoGoal": "ネスヴィジのラジヴィウ家建築・居住・文化複合体の原画像・作者・商用再利用ライセンス・撮影地・被写体の一致を個別確認"
+            "photoGoal": "ネスヴィジのラジヴィウ家建築・居住・文化複合体の原画像・作者・商用再利用ライセンス・撮影地・被写体の一致を個別確認",
+            "quip": "宮殿を一軒の豪邸扱いすると、文化と政治の長い歴史が玄関で立ち往生します。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2449,7 +2455,8 @@
             ],
             "answer": 1,
             "fact": "ブルーホール自然記念物はベリーズのバリア・リーフ保護区群の構成区域です。",
-            "photoGoal": "ベリーズ沖のグレート・ブルーホールの航空写真を選び、写真が別のブルーホールでないと確認する。"
+            "photoGoal": "ベリーズ沖のグレート・ブルーホールの航空写真を選び、写真が別のブルーホールでないと確認する。",
+            "quip": "青い穴の写真は強烈。でも保護するのは穴だけでなく周囲の海の生態系です。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2481,7 +2488,8 @@
             ],
             "answer": 0,
             "fact": "ハーフムーン・キーは海鳥の繁殖地を含むサンゴ礁保護区群の一部です。",
-            "photoGoal": "ハーフムーン・キーの実景であることと海鳥または島の地形が写っていることを確かめる。"
+            "photoGoal": "ハーフムーン・キーの実景であることと海鳥または島の地形が写っていることを確かめる。",
+            "quip": "島を小さな点で済ませると、そこに暮らす生き物の重要さまで小さく見積もってしまいます。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2534,7 +2542,8 @@
             ],
             "answer": 0,
             "fact": "UNESCOはティワナクが西暦400～900年ごろ計画都市として発展したと説明しています。",
-            "photoGoal": "ティワナク遺跡の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+            "photoGoal": "ティワナク遺跡の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真",
+            "quip": "古代都市の遺構は時代を超えた設計図。現代の観光看板が建てたわけではありません。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
@@ -2566,7 +2575,8 @@
             ],
             "answer": 0,
             "fact": "UNESCOはポトシを銀山と精錬施設を含む鉱山都市の遺産として説明しています。",
-            "photoGoal": "ポトシの街の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+            "photoGoal": "ポトシの街の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真",
+            "quip": "銀の輝きだけでは歴史は語れません。採掘に伴う労働の重さも見逃せません。"
           },
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_photo_rights_and_location_review",
