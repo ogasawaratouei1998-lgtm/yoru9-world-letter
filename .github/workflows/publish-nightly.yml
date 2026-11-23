@@ -267,7 +267,7 @@ jobs:
           else
             # Every future issue must pass the complete editorial/visual
             # contract BEFORE it is committed or deployed.
-            # The visual gate validates any positive approved story count, not 4–5 only.
+            # Visual QA follows the approved story count and verified quiz photo keys.
             python check_release_candidate.py
             python build_site.py
             python check_release_candidate.py --site _site
