@@ -354,7 +354,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1511/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "ムバンザ・コンゴはかつて何の中心地だった？",
+            "options": [
+              "ローマ帝国の首都",
+              "古代エジプトの港",
+              "コンゴ王国の政治・文化の中心"
+            ],
+            "answer": 2,
+            "fact": "ムバンザ・コンゴは旧コンゴ王国の首都として知られています。",
+            "quip": "王都を抜きに大西洋交流を語るのは、舞台から主役を退場させて解説を始めるようなものです。",
+            "photoGoal": "ムバンザ・コンゴの王都の記憶：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         },
         {
           "title": "王都から大西洋交流を考える",
@@ -365,7 +379,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1511/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "ムバンザ・コンゴの遺跡から読み解けるのは？",
+            "options": [
+              "極地探検の航路",
+              "地域の政治制度と宗教的交流",
+              "産業革命の鉄道網"
+            ],
+            "answer": 1,
+            "fact": "旧王都の遺構は地域社会の制度と宗教的交流を考える手掛かりです。",
+            "quip": "遺跡は無言でも、政治や信仰の変化まで『石が古い』の一言で済ませるのは説明放棄です。",
+            "photoGoal": "王都から大西洋交流を考える：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         }
       ]
     },
@@ -562,7 +590,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1160/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "マドリウ＝ペラフィタ＝クラロ渓谷が評価される理由は？",
+            "options": [
+              "近代の人工衛星基地",
+              "山岳地帯で続いた牧畜と土地利用",
+              "砂漠の運河網"
+            ],
+            "answer": 1,
+            "fact": "山地での牧畜や土地利用の歴史が文化的景観として評価されています。",
+            "quip": "山を『何もない場所』と呼ぶ前に、何世代もの牧畜民が残した道を見てください。地図の空白は歴史の空白ではありません。",
+            "photoGoal": "マドリウ渓谷の牧畜景観：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         },
         {
           "title": "谷の水路と土地利用",
@@ -573,7 +615,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1160/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "この渓谷の文化的景観に残るものは？",
+            "options": [
+              "石造りの小屋や古い道",
+              "海底都市の壁",
+              "巨大な近代空港"
+            ],
+            "answer": 0,
+            "fact": "石造りの小屋や道などが山岳生活の痕跡を伝えています。",
+            "quip": "石小屋を見落として絶景だけ持ち帰るなら、歴史の証拠を自分でトリミングしています。",
+            "photoGoal": "谷の水路と土地利用：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         }
       ]
     },
@@ -627,7 +683,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1343/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "アル・アインが伝える歴史の中心的なテーマは？",
+            "options": [
+              "オアシスと人々の長期的な暮らし",
+              "氷河上の漁業",
+              "中世ヨーロッパの城郭"
+            ],
+            "answer": 0,
+            "fact": "アル・アインの文化遺産はオアシスをめぐる長い居住と土地利用を伝えます。",
+            "quip": "砂漠の歴史を『砂しかない』で片づけると、オアシスを支えた水利用の知恵が丸ごと消えます。",
+            "photoGoal": "アル・アインのオアシス：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         },
         {
           "title": "アル・アインの先史遺跡",
@@ -638,7 +708,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1343/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "アル・アインの文化的景観を理解する鍵は？",
+            "options": [
+              "海底火山",
+              "水資源と居住の関係",
+              "永久凍土"
+            ],
+            "answer": 1,
+            "fact": "オアシスの水利用と居住のつながりが重要です。",
+            "quip": "緑をただの景観として消費する前に、その緑を可能にした水と暮らしの関係を読みましょう。",
+            "photoGoal": "アル・アインの先史遺跡：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         }
       ]
     },
@@ -1749,7 +1833,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/323/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "アボメーの王宮群が伝えるのはどの王国の歴史？",
+            "options": [
+              "マヤ文明",
+              "ローマ帝国",
+              "ダホメ王国"
+            ],
+            "answer": 2,
+            "fact": "アボメーの王宮群はダホメ王国の歴史を伝えます。",
+            "quip": "王宮を豪華な建物としてだけ紹介したら、王権も地域社会も、奴隷貿易との関係も画面の外です。",
+            "photoGoal": "アボメー王宮群と王権：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         },
         {
           "title": "王宮の保存と歴史の語り",
@@ -1760,7 +1858,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/323/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "アボメーの王宮群を訪ねる際に重要なのは？",
+            "options": [
+              "王権と地域社会の歴史を読む",
+              "近代宇宙開発の歴史を探す",
+              "氷河の地形を調べる"
+            ],
+            "answer": 0,
+            "fact": "王宮群は王権と地域社会の歴史を考える文化遺産です。",
+            "quip": "宮殿の数だけ数えて歴史を知ったつもりになるのは、表紙だけ読んで本を批評するようなものです。",
+            "photoGoal": "王宮の保存と歴史の語り：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         }
       ]
     },
@@ -1814,7 +1926,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1225/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "ロロペニ遺跡の特徴は？",
+            "options": [
+              "海上の灯台群",
+              "石造りの囲壁",
+              "氷の宮殿"
+            ],
+            "answer": 1,
+            "fact": "ロロペニは石造りの囲壁を残す遺跡です。",
+            "quip": "石壁を『ただの古い壁』で終わらせたら、西アフリカの交易を読み解く入口で引き返すことになります。",
+            "photoGoal": "ロロペニの石造囲壁：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         },
         {
           "title": "ロロペニと交易の地理",
@@ -1825,7 +1951,21 @@
           "status": "pending_photo_rights_and_location_review",
           "sourceName": "UNESCO World Heritage Centre",
           "sourceUrl": "https://whc.unesco.org/en/list/1225/",
-          "editorialOnly": true
+          "editorialOnly": true,
+          "quizDraft": {
+            "question": "ロロペニの歴史を考える手掛かりは？",
+            "options": [
+              "南極観測",
+              "宇宙船の発射台",
+              "西アフリカの交易ネットワーク"
+            ],
+            "answer": 2,
+            "fact": "ロロペニの遺構は西アフリカの交易史と関係づけて研究されています。",
+            "quip": "交易路を地図上の線としか見ないなら、その線を歩いた人々の歴史を見失います。",
+            "photoGoal": "ロロペニと交易の地理：原画像の実体・撮影地・作者・商用利用可能なライセンス・帰属条件・被写体の一致を個別に検証",
+            "photoStatus": "not_selected_or_licensed"
+          },
+          "photoStatus": "not_selected_or_licensed"
         }
       ]
     },
