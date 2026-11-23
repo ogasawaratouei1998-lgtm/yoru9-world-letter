@@ -1,4 +1,4 @@
-"""Four-story hard gate, free SVG illustration publishing, safe cache rotation."""
+"""Variable-count verified stories, free SVG illustration publishing and safe cache rotation."""
 import base64
 from datetime import datetime
 import json
@@ -45,11 +45,10 @@ def approved(count=4,date=DAY):
             "stories":stories}
 
 class StrictFourAndImagesTest(unittest.TestCase):
-    def test_new_issues_require_four_to_five_verified_stories(self):
-        for n in (0,1,2,3,6):
-            with self.subTest(stories=n),self.assertRaises(ValueError):
-                validate_approved(approved(n),DAY)
-        for n in (4,5):
+    def test_new_issues_accept_any_positive_number_of_verified_stories(self):
+        with self.assertRaises(ValueError):
+            validate_approved(approved(0),DAY)
+        for n in (1,2,3,4,5,6,9):
             with self.subTest(stories=n):
                 self.assertEqual(len(validate_approved(approved(n),DAY)["stories"]),n)
         # An old two-story issue stays a valid historical archive.
