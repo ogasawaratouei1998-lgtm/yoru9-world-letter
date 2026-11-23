@@ -28,6 +28,9 @@ class EightUNESCOPortraitDraftsTest(unittest.TestCase):
                 for d in drafts:
                     self.assertTrue(d["editorialOnly"])
                     self.assertEqual(d["photoStatus"], "not_selected_or_licensed")
+                    self.assertNotIn("photoAsset", d)
+                    self.assertNotIn("photoKey", d)
+                    self.assertNotIn("photoPage", d)
                     self.assertEqual(d["status"], "pending_photo_rights_and_location_review")
                     self.assertEqual(len(d["paragraphs"]), 2)
                     self.assertTrue(all(110 <= len(p) <= 360 for p in d["paragraphs"]))
