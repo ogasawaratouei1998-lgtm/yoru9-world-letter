@@ -1037,6 +1037,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("spectacular PERSONAL misjudgments",code)
         self.assertIn("Routine typos, small orders",code)
         self.assertNotIn("Small and harmless mistakes are ideal",code)
+        # Historical instructions must never silently regain precedence.
+        self.assertNotIn("Propose incidents from ALL FOUR categories",code)
+        self.assertNotIn("five published slots can represent all four",code)
+        self.assertNotIn("no literal error is required",code)
+        self.assertNotIn("not limited to literal mistakes",code)
+        self.assertIn("The reporter need not literally call it a mistake",code)
         self.assertIn("already_drafted_urls",code)
         self.assertIn("min(incident_priority(article)",code)
 
