@@ -23,26 +23,28 @@ def notice_for(issue,now=None):
         return None
     stories=issue.get("stories")
     kind=issue.get("editionType","regular")
-    # A notification must obey exactly the same minimum as publication:
-    # regular editions from 2026-11-21 require 4–5 verified stories.
-    # Keep older already-published issues under their historic policy.
-    if day >= "2026-11-21":
-        valid_regular=lambda n:4<=n<=5
-    elif day >= "2026-11-19":
-        valid_regular=lambda n:1<=n<=5
-    else:
-        valid_regular=lambda n:1<=n<=3
-    if (not isinstance(stories,list)
-            or (kind=="regular" and not valid_regular(len(stories)))
-            or (kind=="special" and len(stories)!=5)
+    # The notification gate must match the release gate: from 2026-11-21
+    # every nonempty, already published and approved issue can be announced.
+    # Historic editions retain their original count validation.
+    if (not isinstance(stories,list) or not stories
             or kind not in ("regular","special")):
         return None
+    if day < "2026-11-21":
+        count=len(stories)
+        if kind=="special":
+            if count!=5:
+                return None
+        elif day >= "2026-11-19":
+            if not 1<=count<=5:
+                return None
+        elif not 1<=count<=3:
+            return None
     # Same rule as the public nightly publisher: never notify before 21:00 JST.
     if now.hour<21:
         return None
     count=len(stories)
     title="よる9じの世界便り"
-    body=("創刊特集号が届きました。世界の大失敗、実話5本。今夜はちょっと笑って寝よう。"
+    body=(f"今夜の特集号が届きました。世界の「まさか」実話{count}本。ニュースは実話、ツッコミはAIから。"
           if kind=="special"
           else f"今夜の世界の「まさか」{count}本が届きました。ニュースは実話、ツッコミはAIから。")
     return {"editionDate":day,"title":title,"body":body,"url":"./"}
