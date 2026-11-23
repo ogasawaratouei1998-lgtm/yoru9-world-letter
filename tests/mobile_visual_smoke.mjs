@@ -473,8 +473,12 @@ try{
     const pin=pins.nth(i);
     const code=await pin.getAttribute('data-country-code');
     await pin.evaluate(element=>element.scrollIntoView({block:'center'}));
+    const returnScrollY=await page.evaluate(()=>window.scrollY);
     await pin.click();
     const intro=today.locator('#todayMapIntro');
+    assert.equal(await intro.evaluate(el=>getComputedStyle(el).position),'fixed',
+     'country guide is a standalone viewport screen: '+code);
+    assert.equal(await intro.locator('#todayMapIntroClose').textContent(),'閉じる');
     assert.equal(await intro.isVisible(),true,'map pin opens the country guide: '+code);
     assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('country-detail-mode')),true);
     assert.equal(await gallery.first().isVisible(),false,'country guide must not overlap the gallery');
@@ -511,6 +515,7 @@ try{
      }
     }
     await intro.locator('#todayMapIntroClose').click();
+    await page.waitForFunction(y=>Math.abs(window.scrollY-y)<=2,returnScrollY);
     assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('country-detail-mode')),false);
     assert.equal(await gallery.first().isVisible(),true,'closing country restores home gallery');
    }
@@ -722,7 +727,10 @@ try{
      'standalone country browse must not create extra published-issue pins');
    await page.locator('#approvedAtlasChooser summary').click();
    const chosen=viewport.width===320?'AG':viewport.width===375?'DE':'FR';
-   await page.locator('#approvedAtlasList .approved-atlas-country[data-country-code="'+chosen+'"]').click();
+   const selectedCountry=page.locator('#approvedAtlasList .approved-atlas-country[data-country-code="'+chosen+'"]');
+   await selectedCountry.scrollIntoViewIfNeeded();
+   const atlasReturnY=await page.evaluate(()=>window.scrollY);
+   await selectedCountry.click();
    assert.equal(await page.locator('#todayMapIntro').isVisible(),true);
    assert.equal(await page.locator('#todayMapIntroRead').textContent(),
     'この国の写真付き3択クイズに挑戦','standalone destinations have no fabricated news button');
@@ -732,6 +740,11 @@ try{
    const trip=await page.locator('#todayMapIntroTravel').textContent();
    assert.ok(trip.includes('歴史・文化の資料：')&&trip.includes('写真：'),
     'travel experience provides its historical source and exact photo credit');
+   await page.locator('#todayMapIntroCloseBottom').click();
+   await page.waitForFunction(y=>Math.abs(window.scrollY-y)<=2,atlasReturnY);
+   assert.equal(await selectedCountry.isVisible(),true,'bottom close restores the country list');
+   assert.equal(await page.locator('#todayMapIntro').isHidden(),true);
+   await selectedCountry.click();
    await page.locator('#todayMapIntroRead').click();
    assert.equal(await page.locator('#todayCountryQuiz').isVisible(),true);
    assert.ok((await page.locator('#todayQuizQuestion').textContent()).length>=7);

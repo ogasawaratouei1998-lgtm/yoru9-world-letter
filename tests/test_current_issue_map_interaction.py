@@ -38,7 +38,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             "pin.setAttribute('aria-controls','todayMapIntro')",
             "pin.setAttribute('aria-expanded','false')",
             "pin.addEventListener('click',()=>showTodayCountryIntro(item))",
-            'id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden',
+            'id="todayMapIntro" role="dialog" aria-modal="true" aria-labelledby="todayMapIntroName" hidden',
             "function todayCountryIntro(item)",
             "countryRecord(item.code)?.region",
             "$('todayMapIntroBody').textContent=guide",
@@ -46,7 +46,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             ":todayCountryIntro(item)+' 観光名所を案内する",
             "currentCountryHighlight(all,currentCode)",
             "COUNTRY PORTRAIT · 国の魅力",
-            "window.scrollTo(0,0)",
+            "$('todayMapIntro').scrollTop=0",
             "function hideTodayCountryIntro(restoreMap=true)",
             "read.dataset.storyIndex=String(item.indices[0])",
             "openAtlasStory(index)",
@@ -56,6 +56,20 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("AR:'南アメリカ南部", page)
         self.assertIn("FR:'ヨーロッパ西部", page)
         self.assertIn("US:'北アメリカ", page)
+
+    def test_portrait_is_fullscreen_with_two_close_buttons_and_scroll_restoration(self):
+        page = self.page
+        self.assertIn('id="todayMapIntro" role="dialog" aria-modal="true"', page)
+        self.assertIn('id="todayMapIntroClose" type="button" aria-label="国紹介を閉じる">閉じる', page)
+        self.assertIn('id="todayMapIntroCloseBottom" type="button">閉じる', page)
+        self.assertIn("body.country-detail-mode #todayMapIntro{", page)
+        self.assertIn("position:fixed!important;inset:0!important;z-index:1100!important", page)
+        self.assertIn("height:100dvh!important", page)
+        self.assertIn("countryReturnScrollY=window.scrollY", page)
+        self.assertIn("window.scrollTo(0,returnY)", page)
+        self.assertIn("$('todayMapIntro').scrollTop=0", page)
+        self.assertIn("todayMapIntroCloseBottom').addEventListener('click'", page)
+        self.assertNotIn("target.scrollIntoView({block:'center',behavior:'auto'})", page)
 
     def test_iconic_photo_priority_is_consistent_across_countries(self):
         page = self.page
