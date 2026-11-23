@@ -1,0 +1,41 @@
+{
+  "countryCode": "AD",
+  "status": "pending_photo_asset_and_subject_match",
+  "checkedOn": "2026-11-24",
+  "note": "Candidate source metadata only. Not installed, not verified against travel stops, and not approved for publication. Verify original bytes, attribution placement and location before promotion.",
+  "candidates": [
+    {
+      "role": "cover_candidate",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Andorra_la_Vella_-_view.jpg",
+      "author": "Tiia Monto",
+      "location": "Andorra la Vella, hillside west of center looking east",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "attribution": "Tiia Monto / Wikimedia Commons / CC BY-SA 3.0",
+      "dimensions": "4576x2504",
+      "originalBytesVerified": false
+    },
+    {
+      "role": "travel_candidate",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Andorra_la_Vella_-_trail.jpg",
+      "author": "Tiia Monto",
+      "location": "Nature trail on western hillside of Andorra la Vella",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "attribution": "Tiia Monto / Wikimedia Commons / CC BY-SA 3.0",
+      "dimensions": "2820x4032",
+      "originalBytesVerified": false
+    },
+    {
+      "role": "quiz_candidate",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Andorra_la_Vella_-.JPG",
+      "author": "Olybrius",
+      "location": "Andorra la Vella viewed from Cementiri Nou",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "attribution": "Olybrius / Wikimedia Commons / CC BY-SA 4.0",
+      "dimensions": "3648x2736",
+      "originalBytesVerified": false
+    }
+  ]
+}
