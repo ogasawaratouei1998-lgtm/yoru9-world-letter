@@ -786,11 +786,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         end=source.index("for story in candidates_with_after_review_refill():",begin)
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
-        self.assertIn("ready_reviewed_count()>=5",recovery)
+        self.assertNotIn("ready_reviewed_count()>=",recovery)
         self.assertIn("draft=prioritize_ready_drafts(draft,ready_for_review)",source)
         self.assertLess(source.index("draft=prioritize_ready_drafts("),
                         source.index("for story in candidates_with_after_review_refill():"))
-        self.assertIn("if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED",recovery)
+        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
         self.assertIn('used_urls={url for candidate in draft',recovery)
         self.assertIn("select_untried_source_groups(",recovery)
