@@ -21,9 +21,9 @@ ALLOWED_LANGUAGES = {"en", "ja", "ko", "de", "es", "fr", "pt", "ar", "id", "it",
 ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]{3,90}$")
 ISO_RE = re.compile(r"^[A-Z]{2}$")
 
-# Cheap discovery-only hints. They do NOT classify a report as true, comic or
-# geographically verified. Prioritizing them *within each publisher's feed*
-# avoids burying a small local mistake under dozens of general headlines.
+# Cheap discovery-only hints. They NEVER certify real incidents.
+# Within each publisher feed, astonishing person-led mistakes outrank
+# easy but routine typo/delivery headlines.
 SMALL_MISSTEP = re.compile(
     r"\b(?:typo|misspell\w*|misprint\w*|mix[- ]?up|by mistake|"
     r"accidentally|mistook|wrong (?:order|address|delivery|recipient|sign|name)|"
@@ -54,11 +54,21 @@ DISTRESS_HEADLINE = re.compile(
 )
 
 
+MAJOR_PERSON_ACTOR = re.compile(
+    r"\b(?:man|woman|person|tourist|driver|worker|employee|athlete|referee|buyer|seller|bidder|chef|artist|owner|investor)\b|"
+    r"男性|女性|個人|旅行者|選手|審判|従業員|落札者|購入者|所有者|職人",re.I)
+MAJOR_PERSON_OUTCOME = re.compile(
+    r"\b(?:million|billion|six.figure|seven.figure|fortune|costly|expensive|massive|huge|wrong country|wrong house|bankrupt|record)\b|"
+    r"巨額|高額|数千万円|数億|全財産|大損|世界記録|誤落札|全削除",re.I)
+
 def provisional_headline_priority(title):
-    """Order unverified leads, never approve or infer an incident's country."""
+    """Order unverified leads, prioritizing major personal-failure clues."""
     value=str(title or "")
     if DISTRESS_HEADLINE.search(value):
         return 3
+    if (MAJOR_PERSON_ACTOR.search(value) and MAJOR_PERSON_OUTCOME.search(value)
+            and (SMALL_MISSTEP.search(value) or GENERAL_MISSTEP.search(value))):
+        return -1
     if SMALL_MISSTEP.search(value):
         return 0
     if GENERAL_MISSTEP.search(value):
