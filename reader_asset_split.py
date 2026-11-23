@@ -103,6 +103,26 @@ def expected_reader_assets(root: Path) -> dict[str, bytes]:
     return rendered_reader_assets((Path(root) / "index.html").read_text(encoding="utf-8"))
 
 
+def rendered_service_worker(worker: str, html: str) -> str:
+    """Return the release worker with precisely the deployed reader revision.
+
+    Both the site builder and the release safety gate use this function;
+    source and output intentionally differ only by the fingerprinted precache.
+    """
+    match = re.search(r'./assets/reader-core\.js\?v=([0-9a-f]{16})"', html)
+    if not match:
+        raise ValueError("No fingerprinted reader core in release HTML")
+    revision = match.group(1)
+    for path in ASSETS:
+        if html.count(f'./{path}?v={revision}"') != 1:
+            raise ValueError("Reader asset fingerprint mismatch: " + path)
+    anchor = "const SHELL = ['index.html',"
+    if worker.count(anchor) != 1:
+        raise ValueError("Reader offline shell anchor is missing or duplicated")
+    precache = ", ".join(f"'{path}?v={revision}'" for path in ASSETS)
+    return worker.replace(anchor, "const SHELL = [" + precache + ", 'index.html',", 1)
+
+
 def split_reader_assets(site: Path) -> None:
     """Publish the exact externalized browser bundle, fail closed on missing code."""
     site = Path(site)
@@ -112,23 +132,8 @@ def split_reader_assets(site: Path) -> None:
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(payload)
 
-    # Precache the SAME fingerprinted assets used by the public page. Merely
-    # caching unversioned JS permits a stale executable/updated-HTML mismatch
-    # when an installed iOS app is resumed offline or behind a flaky network.
-    html = expected["index.html"].decode("utf-8")
-    match = re.search(r'./assets/reader-core\.js\?v=([0-9a-f]{16})"', html)
-    if not match:
-        raise ValueError("No fingerprinted reader core in release HTML")
-    revision = match.group(1)
-    for path in ASSETS:
-        if html.count(f'./{path}?v={revision}"') != 1:
-            raise ValueError("Reader asset fingerprint mismatch: " + path)
     worker_path = site / "service-worker.js"
     if worker_path.is_file():
         worker = worker_path.read_text(encoding="utf-8")
-        anchor = "const SHELL = ['index.html',"
-        if worker.count(anchor) != 1:
-            raise ValueError("Reader offline shell anchor is missing or duplicated")
-        precache = ", ".join(f"'{path}?v={revision}'" for path in ASSETS)
-        worker = worker.replace(anchor, "const SHELL = [" + precache + ", 'index.html',", 1)
-        worker_path.write_text(worker, encoding="utf-8")
+        html = expected["index.html"].decode("utf-8")
+        worker_path.write_text(rendered_service_worker(worker, html), encoding="utf-8")
