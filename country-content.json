@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-22",
+  "updatedOn": "2026-11-23",
   "editorialPolicy": "approved = explicitly vetted release-country experience; pending = not yet cleared for promotion. References are inherited from existing reviewed assets, not automatically fact-verified by this migration.",
   "travelOrder": [
     "ar-casa-rosada-postcard",
@@ -1427,7 +1427,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "バクーの城壁都市",
+          "paragraphs": [
+            "バクーの城壁の内側では、曲がった路地の先に石造りの建物や塔が現れます。大通りから眺める都市とは違い、狭い道幅や壁の高さが、かつての街の生活感を教えてくれます。宮殿と乙女の塔の写真を見比べ、建築の役割や時代の違いを想像しながら、徒歩で歴史をたどるような誌上旅行を楽しみましょう。",
+            "UNESCOは、バクーの旧市街がゾロアスター教、ペルシア、アラブ、オスマン、ロシアなど多様な文化の影響を受けた建築群を持つことを評価しています。宮殿の装飾、塔の形、城壁の配置は、一つの時代だけでは説明できません。カスピ海に臨む都市が幾度も変化したことを考えると、街並みの細部が遠い交流の歴史を語り始めます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バクーの城壁都市",
+              "url": "https://whc.unesco.org/en/list/958/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・バクーの城壁都市",
+          "sourceUrl": "https://whc.unesco.org/en/list/958/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "バクー旧市街にある世界遺産の構成要素は？",
+            "options": [
+              "エッフェル塔",
+              "乙女の塔",
+              "ピラミッド"
+            ],
+            "answer": 1,
+            "fact": "乙女の塔とシルヴァンシャー宮殿がバクー旧市街の世界遺産を構成します。",
+            "photoGoal": "バクー旧市街の乙女の塔を実際に写した写真を選び、撮影者と再利用可能なライセンスを照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ゴブスタンの岩絵の文化的景観",
+          "paragraphs": [
+            "ゴブスタンでは、風化した大きな岩の表面に人や動物の形が刻まれています。遠景だけでは見落としてしまう細い線に目を寄せると、壁画とは異なる表現の力を感じられます。岩の表面と周囲の半乾燥地帯を一緒に見て、なぜこの土地に人が暮らし、何を記録しようとしたのか、自然環境から考える誌上旅行です。",
+            "UNESCOが説明するゴブスタンの岩絵群には、六千点を超える線刻が残り、数万年にわたる人々の営みを伝えています。狩猟や生き物を描いた図像は、当時の食料や環境、人と動物の関わりを読み解く手掛かりです。華やかな王宮とは異なり、石に残る線の一つ一つから暮らしの歴史を考えられる点が、この遺産の大きな魅力です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ゴブスタンの岩絵の文化的景観",
+              "url": "https://whc.unesco.org/en/list/1076/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ゴブスタンの岩絵の文化的景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/1076/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "ゴブスタンの岩に残る文化的遺産は何？",
+            "options": [
+              "先史時代の岩絵",
+              "近代の鉄道標識",
+              "中世ヨーロッパのステンドグラス"
+            ],
+            "answer": 0,
+            "fact": "ゴブスタンは六千点を超える先史時代の岩絵で知られています。",
+            "photoGoal": "ゴブスタンの岩絵の線刻が判別できる実景を選び、撮影者と写真の出典を確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "BI": {
       "name": "ブルンジ",
@@ -1999,7 +2065,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ディルムンの墳墓群",
+          "paragraphs": [
+            "乾いた地面に大小の丸い盛り上がりが続く風景は、一見すると自然にできた丘のようです。しかし、その一つ一つには古代の人々の暮らしと死者への思いが刻まれています。墳墓の規模や互いの間隔を写真で比べ、どのような社会がこの場所を生み出したのか考えてみましょう。",
+            "紀元前およそ2200年から1750年にかけて築かれた墓は、当時のバーレーンが交易の拠点として発展した時期と重なります。ユネスコは、墓の大きさや構造にさまざまな社会階層の存在が表れていると説明しています。海を越える交易の繁栄が、内陸の墓地にも痕跡を残したのです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ディルムンの墳墓群",
+              "url": "https://whc.unesco.org/en/list/1542/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ディルムンの墳墓群",
+          "sourceUrl": "https://whc.unesco.org/en/list/1542/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-bahrain-mauritius-20261122.json",
+          "quizDraft": {
+            "question": "この墳墓群から読み取れる古代社会の特徴は？",
+            "options": [
+              "近代の鉄道網",
+              "交易の繁栄と社会階層",
+              "火山噴火の記録"
+            ],
+            "answer": 1,
+            "fact": "墓の規模や構造の違いが、交易で発展した社会の階層を伝えます。",
+            "photoGoal": "ディルムンの墳墓群の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ムハッラクの真珠採取文化遺産",
+          "paragraphs": [
+            "ムハッラクの旧市街の写真では、石造りの建物や細い街路の向こうに、かつて海で働く人々を支えた商業の世界が見えてきます。宝飾品としての真珠だけでなく、漁師や船乗り、商人がどのように結び付いていたのか、街の構造を手がかりに想像してみましょう。",
+            "この世界遺産は商人の邸宅や商業施設、海岸、沖合の天然真珠の採取地を一つの文化遺産として扱います。天然真珠の産業は十九世紀末から二十世紀初めに最盛期を迎えましたが、その後、養殖真珠の発展に伴って大きく衰退しました。建築と海の両方に経済の歴史が残ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ムハッラクの真珠採取文化遺産",
+              "url": "https://whc.unesco.org/en/list/1364/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ムハッラクの真珠採取文化遺産",
+          "sourceUrl": "https://whc.unesco.org/en/list/1364/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-bahrain-mauritius-20261122.json",
+          "quizDraft": {
+            "question": "この世界遺産が伝える海の産業は？",
+            "options": [
+              "天然真珠の採取と交易",
+              "海底の石油精製",
+              "近代の造船だけ"
+            ],
+            "answer": 0,
+            "fact": "天然真珠を採取する船と、取引を担った街の両方が文化遺産を構成します。",
+            "photoGoal": "ムハッラクの真珠採取文化遺産の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "BS": {
       "name": "バハマ",
@@ -2169,7 +2301,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ブルーホール自然記念物",
+          "paragraphs": [
+            "ブルーホールを上空から写した写真を見ると、明るい青い浅瀬の中に、濃い青の円がはっきり浮かび上がります。その境界の形を追うだけでも、海底の地形が水面の色に現れる面白さを感じられます。周囲のサンゴ礁や環礁との位置関係を地図で確認し、海の色が単なる色彩ではなく、地形を読み解く手掛かりになることを楽しみましょう。",
+            "UNESCOによれば、ベリーズのバリア・リーフ保護区群は七つの保護区域からなる世界自然遺産です。ブルーホール自然記念物もその一つで、石灰岩地形と過去の海面変動が生んだ独特の海中景観を示します。写真を眺めるだけでなく、海の生態系を保護する区域の一部として理解すると、珍しい形を将来に残すための保全の大切さが伝わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルーホール自然記念物",
+              "url": "https://whc.unesco.org/en/list/764/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ブルーホール自然記念物",
+          "sourceUrl": "https://whc.unesco.org/en/list/764/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "ブルーホールが属する世界遺産の種類は？",
+            "options": [
+              "文化遺産",
+              "自然遺産",
+              "無形文化遺産"
+            ],
+            "answer": 1,
+            "fact": "ブルーホール自然記念物はベリーズのバリア・リーフ保護区群の構成区域です。",
+            "photoGoal": "ベリーズ沖のグレート・ブルーホールの航空写真を選び、写真が別のブルーホールでないと確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ハーフムーン・キー自然記念物",
+          "paragraphs": [
+            "ハーフムーン・キーの写真では、白い砂浜や森と、周囲の浅い海の色が重なる様子が見られます。島の輪郭だけでなく、海鳥が休める陸地と、魚やサンゴを育む海が近くにあることに目を向けましょう。同じ海の遺産でも、深い穴のような地形を見た後で小さな島を比べると、生き物の生息場所の多様さが伝わります。",
+            "UNESCOの世界遺産資料では、ハーフムーン・キー自然記念物も七つの保護区域の一つに数えられ、赤足カツオドリをはじめとする海鳥の繁殖地として紹介されています。広い海で暮らす鳥が陸地に戻る場所を守ることは、サンゴや魚だけを保護することとは別の意味を持ちます。島とその周辺海域を一つの生態系として見ると、保護区の役割がより立体的に見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハーフムーン・キー自然記念物",
+              "url": "https://whc.unesco.org/en/list/764/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ハーフムーン・キー自然記念物",
+          "sourceUrl": "https://whc.unesco.org/en/list/764/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "ハーフムーン・キーで保全の対象となるものは？",
+            "options": [
+              "海鳥と島の生態系",
+              "高山の氷河",
+              "古代の城壁"
+            ],
+            "answer": 0,
+            "fact": "ハーフムーン・キーは海鳥の繁殖地を含むサンゴ礁保護区群の一部です。",
+            "photoGoal": "ハーフムーン・キーの実景であることと海鳥または島の地形が写っていることを確かめる。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "BO": {
       "name": "ボリビア",
@@ -2188,7 +2386,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ティワナク遺跡",
+          "paragraphs": [
+            "標高の高い平原に立つティワナクの石造遺構では、巨大な石を組み合わせた建築が目の前に現れます。彫刻の細部が残る門や石碑を見ながら歩くと、周囲に大きな建物がなくても、古代の都市が持っていた空間の広がりを想像できます。遠くの山並みと遺構を同じ視界に入れ、この場所が高原のどこに築かれたのかも確かめたいところです。",
+            "UNESCOによれば、ティワナクは小さな集落から発展し、西暦400～900年ごろに計画的な都市として繁栄しました。宗教的・政治的な中心地としての役割を持ち、整えられた石材や儀礼空間にその技術が表れています。石の門を単体の写真で見るだけでなく、広場や建物跡の位置関係をたどると、遺跡全体の意味が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ティワナク遺跡",
+              "url": "https://whc.unesco.org/en/list/567",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ティワナク遺跡",
+          "sourceUrl": "https://whc.unesco.org/en/list/567",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ティワナクが特に繁栄した時期は？",
+            "options": [
+              "西暦400～900年ごろ",
+              "西暦1700～1900年",
+              "紀元前5000年以前"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはティワナクが西暦400～900年ごろ計画都市として発展したと説明しています。",
+            "photoGoal": "ティワナク遺跡の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ポトシの街",
+          "paragraphs": [
+            "ポトシでは、植民地時代の街並みの背後にセロ・リコの山がそびえ、街と鉱山の関係が一目で分かります。建物の壁や教会の意匠を眺めながら坂道を歩くと、華やかな都市景観が山から掘り出された銀と結びついていたことを実感します。美観を楽しむだけでなく、鉱山で働いた人々の歴史にも目を向けたい場所です。",
+            "UNESCOはポトシを、銀の生産を軸に鉱山、水利施設、精錬所、都市が結びついた世界遺産として評価しています。鉱山を取り巻く自然環境や建造物は一体となって都市の発展を支えました。ポトシが世界遺産の危機遺産リストにも掲載されていることを踏まえると、残された街並みを守る課題も旅の重要な視点になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ポトシの街",
+              "url": "https://whc.unesco.org/en/list/420",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ポトシの街",
+          "sourceUrl": "https://whc.unesco.org/en/list/420",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ポトシの都市発展を大きく支えた産業は？",
+            "options": [
+              "銀の採掘と精錬",
+              "真珠の養殖",
+              "自動車製造"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはポトシを銀山と精錬施設を含む鉱山都市の遺産として説明しています。",
+            "photoGoal": "ポトシの街の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "BR": {
       "name": "ブラジル",
@@ -2896,7 +3160,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "バルパライソの歴史地区",
+          "paragraphs": [
+            "バルパライソでは、港を囲む丘の斜面に建物が並び、階段や曲がりくねった通りが上下の街を結びます。海の近くから丘を見上げた景色と、高い場所から港を見下ろす景色を比べると、地形に合わせて発展した町の姿が分かります。坂道と建物の関係に注目しながら歩けば、一つの港町の風景に多くの表情があることを発見できます。",
+            "UNESCOはバルパライソの歴史地区を、19世紀の海上交易と都市発展を伝える景観として評価しています。急な地形に応じて作られた街路や建築は、港の活動と密接に結び付いています。美しい色合いだけを見るのでなく、船から届いた人や物が丘の町へどう移動したかを想像すると、坂と港の距離に歴史が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バルパライソの歴史地区",
+              "url": "https://whc.unesco.org/en/list/959/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・バルパライソの歴史地区",
+          "sourceUrl": "https://whc.unesco.org/en/list/959/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "バルパライソの都市景観と特に結び付くのは？",
+            "options": [
+              "太平洋の港と丘陵",
+              "砂漠のオアシスのみ",
+              "氷河湖の湖畔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはバルパライソを太平洋交易に支えられた港湾都市として紹介しています。",
+            "photoGoal": "バルパライソの歴史地区が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ラパ・ヌイ国立公園",
+          "paragraphs": [
+            "ラパ・ヌイでは、広い草地と太平洋を背景に石造のモアイが並ぶ景観に出会えます。像を遠くから眺めると、その形は海や丘の輪郭と重なり、近くで見ると石を彫った手仕事が感じられます。島の歴史を伝える場所として、眺望の良さだけでなく、どの方向に像が配置されているかにも気を配りたい場所です。",
+            "UNESCOはラパ・ヌイ国立公園を、島に根付いた独自の文化が生み出した彫像と儀礼的な景観として評価しています。モアイや祭祀の場は、人々の信仰や社会の歴史を考える重要な手掛かりです。石像を単なる珍しい造形として消費せず、土地の人々が受け継いできた文化遺産であることを意識して眺めると、見方が深まります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラパ・ヌイ国立公園",
+              "url": "https://whc.unesco.org/en/list/715/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ラパ・ヌイ国立公園",
+          "sourceUrl": "https://whc.unesco.org/en/list/715/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "ラパ・ヌイ国立公園で知られる石造彫刻は？",
+            "options": [
+              "モアイ",
+              "スフィンクス",
+              "兵馬俑"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはラパ・ヌイのモアイを独自文化の代表的な遺産として評価しています。",
+            "photoGoal": "ラパ・ヌイ国立公園が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "CN": {
       "name": "中国",
@@ -2915,7 +3245,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "万里の長城",
+          "paragraphs": [
+            "山の上へ伸びる長城を眺めると、城壁が真っ直ぐではなく稜線の起伏に合わせて続いていることに気づきます。階段の傾斜や見張り台の位置に目を向ければ、写真に写る壮大な線が、険しい地形に対応した防衛施設であると実感できます。遠くまで一度に歩くことだけを目的にせず、ひとつの区間から地形と建築の関係を観察するのも魅力です。",
+            "UNESCOは、秦の始皇帝の時代に既存の防御施設がつながれ、その後も明代まで建設が続いたと説明しています。現在目にする壁が一度に同じ時代につくられたわけではない点は重要です。構造が違う区間や周囲の山の形を見比べると、長城が長い年月をかけて変化してきた歴史的な施設であることが伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・万里の長城",
+              "url": "https://whc.unesco.org/en/list/438/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・万里の長城",
+          "sourceUrl": "https://whc.unesco.org/en/list/438/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "万里の長城が主に担ってきた役割は？",
+            "options": [
+              "北方からの侵入に備える防衛",
+              "皇帝の庭園を区切る装飾",
+              "河川の水量を測る観測"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは長城を北方からの侵入に対応する防衛施設として説明しています。",
+            "photoGoal": "万里の長城の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "北京の紫禁城",
+          "paragraphs": [
+            "北京の紫禁城では、巨大な門を抜けた先にも広場と建物が続き、歩くほどに空間の規模が分かってきます。中央の軸線に沿って進みながら屋根の色、階段の高さ、建物の配置を見比べると、単に豪華な宮殿ではないことが見えてきます。外から見える建築の秩序と、建物の間に生まれる静けさをゆっくり味わいたい場所です。",
+            "UNESCOは、北京の宮殿が明清時代の最高権力の中心となり、五世紀以上にわたる中国文明の重要な証言であると記しています。登録資産には北京だけでなく瀋陽の清朝皇宮も含まれるため、二つの宮殿を混同しないことが大切です。北京で目にする中庭と門の連なりを、国家儀礼や統治のための空間として読み解くと印象が変わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・北京の紫禁城",
+              "url": "https://whc.unesco.org/en/list/439/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・北京の紫禁城",
+          "sourceUrl": "https://whc.unesco.org/en/list/439/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "UNESCO登録の明清皇宮に含まれる都市の組み合わせは？",
+            "options": [
+              "北京と瀋陽",
+              "北京と上海",
+              "西安と成都"
+            ],
+            "answer": 0,
+            "fact": "UNESCOの登録名は「北京と瀋陽の明清皇宮」です。",
+            "photoGoal": "北京の紫禁城の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "CI": {
       "name": "コートジボワール",
@@ -2970,7 +3366,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "カルタヘナの港、要塞群と記念建造物群",
+          "paragraphs": [
+            "カルタヘナの歴史地区を歩くと、色彩の豊かな家並みのすぐ近くに分厚い石造の城壁が続いています。高い場所から港の方向へ目を移すと、街が海への出入りを見渡せる位置にあることが分かります。小さな通りを歩く時間と要塞から遠望する時間を組み合わせると、海辺の都市に城壁が築かれた理由を体感できます。日陰の少ない場所では暑さにも配慮して見学したい場所です。",
+            "UNESCOはカルタヘナを、カリブ海での交易と防衛に深くかかわった港湾都市として評価しています。スペイン植民地期につくられた城壁や要塞群は、海上交通を守るための大規模な施設です。住宅街の建物だけでは分からない都市の歴史も、城壁の向きや港との距離を見比べると読み解けます。街が果たしてきた役割の複雑さも忘れずに歩きたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カルタヘナの港、要塞群と記念建造物群",
+              "url": "https://whc.unesco.org/en/list/285/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・カルタヘナの港、要塞群と記念建造物群",
+          "sourceUrl": "https://whc.unesco.org/en/list/285/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-europe-world-eight-20261121.json",
+          "quizDraft": {
+            "question": "カルタヘナの要塞群が守ってきた重要な場所は？",
+            "options": [
+              "港",
+              "高山の氷河",
+              "砂漠の水源"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはカルタヘナの港と防衛施設をカリブ海の歴史に結びつけて評価しています。",
+            "photoGoal": "カルタヘナの港、要塞群と記念建造物群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "コロンビアのコーヒー文化的景観",
+          "paragraphs": [
+            "コロンビアのコーヒー文化的景観では、緑の斜面に農園が連なり、谷や山並みの間に小さな集落が現れます。近くで見る畑の細かな手入れと、丘の上から眺める農地全体の広がりには、違う美しさがあります。単に緑豊かな風景として見るのではなく、人々が斜面をどのように使い、水や道を確保しながら暮らしてきたかを考えると、土地への理解が深まります。",
+            "UNESCOはこの文化的景観を、山地の厳しい地形や気候に適応して発展したコーヒー栽培の歴史として評価しています。農園だけでなく、集落や生産の仕組み、人々の協働も景観を成り立たせる要素です。景色の美しさと仕事の技術は切り離せません。訪問する際は稼働中の農園や住民の生活を尊重し、案内を受けられる場所で学びたいものです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コロンビアのコーヒー文化的景観",
+              "url": "https://whc.unesco.org/en/list/1121/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・コロンビアのコーヒー文化的景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/1121/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-europe-world-eight-20261121.json",
+          "quizDraft": {
+            "question": "コロンビアのコーヒー文化的景観を特徴づけるのは？",
+            "options": [
+              "山地に適応したコーヒー栽培",
+              "北極の氷上漁業",
+              "海底の石油採掘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは山地で発展したコーヒー栽培と農村文化を評価しています。",
+            "photoGoal": "コロンビアのコーヒー文化的景観の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "KM": {
       "name": "コモロ",
@@ -3007,7 +3469,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "グアナカステ保全地域",
+          "paragraphs": [
+            "グアナカステでは、森の濃淡や季節ごとに姿を変える植生を観察すること自体が旅の魅力になります。熱帯林という一つの言葉では表せない乾燥した森林、海岸に近い環境、そこで暮らす動植物の違いに目を向けてみてください。写真を見る際にも、単に緑が多いかどうかではなく、地形と植生の移り変わりを意識することで保全地域の広がりが伝わります。",
+            "UNESCOはグアナカステ保全地域を、中米からメキシコ北部にかけて重要な乾燥林の生息環境を含み、陸域と海岸・海域の双方で生態学的な過程が見られる場所として評価しています。貴重な動植物の生息地であることに加えて、複数の環境が連続している点も価値の一部です。訪問できる場所や規則は保護のため変わるので、現地の管理情報を確かめたい地域です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グアナカステ保全地域",
+              "url": "https://whc.unesco.org/en/list/928/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・グアナカステ保全地域",
+          "sourceUrl": "https://whc.unesco.org/en/list/928/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "グアナカステ保全地域でUNESCOが重視する森林環境は？",
+            "options": [
+              "熱帯の乾燥林",
+              "北極のツンドラ",
+              "高山の永久氷河"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはグアナカステの重要な乾燥林の生息環境を挙げています。",
+            "photoGoal": "グアナカステ保全地域の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ディキス地方の石球遺跡群",
+          "paragraphs": [
+            "コスタリカ南部のディキス地方に残る石球は、整った球形そのものが目を引きます。大きさの違う球がどのような配置で見つかったのか、周囲に集落や墓地の痕跡があるのかを考えると、単なる不思議な石以上の存在になります。写真や展示を見ながら形と場所の関係を確かめることで、かつてこの地に暮らした人々の社会に想像が広がります。",
+            "UNESCOはディキスのデルタ地帯にある四つの考古遺跡を登録し、西暦五百〜千五百年の首長制社会の複雑な構造を示すと説明しています。石球は直径およそ〇・七〜二・五七メートルに及びますが、その意味や用途の多くは今も解明されていません。正体を断定的な伝説で埋めず、何が分かり何が未解明なのかを分けて考えることが、この遺跡を味わう鍵です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ディキス地方の石球遺跡群",
+              "url": "https://whc.unesco.org/en/list/1453/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ディキス地方の石球遺跡群",
+          "sourceUrl": "https://whc.unesco.org/en/list/1453/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ディキス地方の石球についてUNESCOが述べるのは？",
+            "options": [
+              "用途や意味には未解明の点が多い",
+              "すべて近代の道路標識である",
+              "全て同じ大きさで製作された"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは石球の意味や用途、製作方法に未解明の点が多いと記しています。",
+            "photoGoal": "ディキス地方の石球遺跡群の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "CU": {
       "name": "キューバ",
@@ -3026,7 +3554,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ハバナ旧市街と要塞群",
+          "paragraphs": [
+            "ハバナ旧市街では、狭い街路を抜けた先に広場が開き、建物の色と窓の形が一角ごとに違って見えます。街の中心を歩くだけでも楽しいですが、海側へ視線を向けて要塞の位置を確かめると、港町としての構造がはっきりしてきます。広場、街路、港の三つをひと続きの景色としてたどり、都市がどのように外の世界とつながってきたのか考えたい場所です。",
+            "UNESCOによればハバナ旧市街は十六世紀初頭にキューバ北西部に築かれ、古い都市計画の輪郭をよく保っています。登録資産には市街地だけでなく港を守る要塞群も含まれます。華やかな建物の外観に注目するだけではなく、海に接する場所と町の防衛施設をあわせて見ることで、長く交易の拠点だった都市の特徴が立体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ハバナ旧市街と要塞群",
+              "url": "https://whc.unesco.org/en/list/204/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ハバナ旧市街と要塞群",
+          "sourceUrl": "https://whc.unesco.org/en/list/204/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ハバナのUNESCO登録資産に旧市街とともに含まれるのは？",
+            "options": [
+              "要塞群",
+              "雪山の観測所",
+              "巨大な階段状の棚田"
+            ],
+            "answer": 0,
+            "fact": "登録資産名は「ハバナ旧市街とその要塞群」です。",
+            "photoGoal": "ハバナ旧市街と要塞群の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "トリニダーとロス・インヘニオス渓谷",
+          "paragraphs": [
+            "トリニダーの中心部では、石畳の通りと歴史的な建物が近い距離に並び、歩幅を緩めるほど街の細部が見えてきます。広場に面する邸宅の外観を眺めたあと、町の外に広がるロス・インヘニオス渓谷にも意識を向けてみてください。都市と谷を別々の名所として扱うより、建物の繁栄を支えた産業の場と結びつけて考えるほうが、景色に厚みが生まれます。",
+            "UNESCOはトリニダーが十六世紀初頭に成立し、十八〜十九世紀の砂糖産業による繁栄の時代に築かれた建物が残ると説明しています。ブリュネ宮殿やカンテロ宮殿といった具体的な建造物も挙げています。美しい街並みの背後にあった労働や生産の歴史まで視野に入れると、観光写真とは異なる読み方ができる場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トリニダーとロス・インヘニオス渓谷",
+              "url": "https://whc.unesco.org/en/list/460/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・トリニダーとロス・インヘニオス渓谷",
+          "sourceUrl": "https://whc.unesco.org/en/list/460/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "トリニダーの歴史建築の繁栄に深く関係する産業は？",
+            "options": [
+              "砂糖産業",
+              "製鉄による造船",
+              "半導体の製造"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは十八〜十九世紀の砂糖産業の繁栄が歴史建築の成立に関係すると説明しています。",
+            "photoGoal": "トリニダーとロス・インヘニオス渓谷の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "CY": {
       "name": "キプロス",
@@ -3783,7 +4377,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "キトの市街",
+          "paragraphs": [
+            "キトの旧市街では、山に囲まれた高地の空の下に教会の塔や古い建物が連なっています。広場に立って街の起伏を眺めたあと、建物の中庭や外壁の意匠に目を向けると、巨大な宗教建築と比較的簡素な住宅が同じ都市景観を形づくっていることに気づきます。高い標高ならではの街の広がりを確かめながら、ゆっくり歩くのが似合う場所です。",
+            "UNESCOはキトがインカの都市の遺構の上に十六世紀に築かれ、標高約二千八百五十メートルに位置すると説明しています。旧市街には修道院や教会だけでなく、中庭を持つ住宅なども残ります。壮麗な建物だけを拾い集めるのではなく、宗教施設と生活の建物がともに歴史地区を支えてきたことを意識すると、都市全体の価値が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・キトの市街",
+              "url": "https://whc.unesco.org/en/list/2/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・キトの市街",
+          "sourceUrl": "https://whc.unesco.org/en/list/2/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "UNESCOが説明するキト中心部の標高はおよそ？",
+            "options": [
+              "2,850メートル",
+              "85メートル",
+              "8,500メートル"
+            ],
+            "answer": 0,
+            "fact": "UNESCOのキト紹介では標高は約2,850メートルです。",
+            "photoGoal": "キトの市街の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ガラパゴス諸島",
+          "paragraphs": [
+            "ガラパゴス諸島の景色を写真で見ると、溶岩の黒い地面、明るい海、島に適応した動物の姿が同じ画面に現れます。一つの島だけで全体を代表させず、地形や植生の違う島を比較すると、海に隔てられた環境が生き物の暮らし方に影響していることが感じられます。観察する際は動物に近づきすぎず、現地の保護規則に従う視点も欠かせません。",
+            "UNESCOは大陸のエクアドルから約千キロメートル離れたガラパゴス諸島を、多様な島々と周辺海域からなる世界自然遺産として紹介しています。島の生態系と海の生き物は切り離せない関係にあり、希少な自然の保護が重要なテーマです。珍しい動物の名前だけではなく、生き物が暮らす火山地形や海の環境を合わせて理解すると、この諸島の価値がよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ガラパゴス諸島",
+              "url": "https://whc.unesco.org/en/list/1/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ガラパゴス諸島",
+          "sourceUrl": "https://whc.unesco.org/en/list/1/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ガラパゴス諸島が位置する大陸の国は？",
+            "options": [
+              "エクアドル",
+              "エジプト",
+              "ニュージーランド"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはガラパゴス諸島をエクアドル沖にある群島として紹介しています。",
+            "photoGoal": "ガラパゴス諸島の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "EG": {
       "name": "エジプト",
@@ -5696,7 +6356,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "コパンのマヤ遺跡",
+          "paragraphs": [
+            "コパンの石造建築を写した写真では、広場を取り囲む遺構の形や、人の姿を表した彫刻に注目できます。階段に残る文字は、建物が単なる移動のための構造物ではなかったことを伝えます。石を積む技術だけでなく、文字を刻み、過去の出来事を後世に残そうとした人々の営みを考える誌上旅行です。",
+            "UNESCOによると427年に始まった王朝は16人の統治者を数え、コパンは古典期の重要なマヤ都市へと発展しました。とくに神聖文字の階段には1800を超える個々の文字が刻まれているとされます。文字や彫像を資料として読み解く研究によって、歴史が建物の配置だけでなく、刻まれた記録からも見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コパンのマヤ遺跡",
+              "url": "https://whc.unesco.org/en/list/129/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・コパンのマヤ遺跡",
+          "sourceUrl": "https://whc.unesco.org/en/list/129/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-central-america-20261122.json",
+          "quizDraft": {
+            "question": "コパンの階段に残る特に重要な記録は？",
+            "options": [
+              "神聖文字の碑文",
+              "ローマ数字の暦",
+              "楔形文字の粘土板"
+            ],
+            "answer": 0,
+            "fact": "神聖文字の階段はマヤ文字による長い碑文を伝える重要な構造物です。",
+            "photoGoal": "コパンのマヤ遺跡の実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "リオ・プラタノ生物圏保護区",
+          "paragraphs": [
+            "山地から流れる川が森を通り、カリブ海へ向かう風景を地図でたどってみましょう。林の広がりと水の流れは別々の景色ではなく、互いにつながった環境です。この地域には先住民族の暮らしもあり、自然を人のいない場所と考えないことが大切です。現地への訪問ではなく、資料や写真を通して学ぶ誌上旅行です。",
+            "UNESCOは川の源流から海に至る水系を含む約35万ヘクタールの保護区として評価しています。周囲の保護地域ともつながる森林は、生物が暮らす広い環境を形成しています。一方で保全上の課題は続いています。美しい森の写真だけで問題が解決したと考えず、森林を守る取り組みや地域の人々の生活にも目を向けましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・リオ・プラタノ生物圏保護区",
+              "url": "https://whc.unesco.org/en/list/196/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・リオ・プラタノ生物圏保護区",
+          "sourceUrl": "https://whc.unesco.org/en/list/196/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-central-america-20261122.json",
+          "quizDraft": {
+            "question": "リオ・プラタノ保護区が保護する地理的なつながりは？",
+            "options": [
+              "砂漠から塩湖まで",
+              "氷河から火口湖まで",
+              "川の源流からカリブ海まで"
+            ],
+            "answer": 2,
+            "fact": "山間の源流からカリブ海に注ぐ河口まで、川の流域全体が保護の対象です。",
+            "photoGoal": "リオ・プラタノ生物圏保護区の実景。場所・撮影者・原画像・再利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "HR": {
       "name": "クロアチア",
@@ -7039,7 +7765,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ホージャ・アフメド・ヤサウィ廟",
+          "paragraphs": [
+            "トルキスタンの街で廟に近づくと、大きな門構えと青みを帯びたドームの対比が目を引きます。外壁の装飾は遠くから見ると一つの模様に見えますが、近づくにつれ、タイルの線や色が複雑に組み合わさっていることに気づきます。広場から建物全体の姿を見たあと、装飾の細部を落ち着いて観察したい建築です。",
+            "UNESCOはこの廟をティムール朝期の重要な建築として評価しています。未完成の部分を含む巨大な建築は、後世の宗教建築にも影響を与えたとされます。ヤサウィという人物への敬意が建築の規模や場所の意味を形づくっていることを知ると、色や形の美しさだけでなく、人々がこの場所を守り伝えてきた理由にも目が向きます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ホージャ・アフメド・ヤサウィ廟",
+              "url": "https://whc.unesco.org/en/list/1103",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ホージャ・アフメド・ヤサウィ廟",
+          "sourceUrl": "https://whc.unesco.org/en/list/1103",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ホージャ・アフメド・ヤサウィ廟と特に関係する時代は？",
+            "options": [
+              "ティムール朝期",
+              "江戸時代",
+              "古代エジプト中王国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはホージャ・アフメド・ヤサウィ廟をティムール朝の建築の重要な例としています。",
+            "photoGoal": "ホージャ・アフメド・ヤサウィ廟の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "タンバルィの考古学的景観の岩絵群",
+          "paragraphs": [
+            "タンバルィでは、開けた岩場に近づくと、岩肌の上に動物や人の姿が刻まれているのが分かります。遠くからはただの岩に見えても、光の向きや見る角度によって線刻が浮かび上がり、昔の人々がここを特別な場所として使っていたことが伝わります。遺構を傷つけず、指定された見学経路から一つずつ絵柄を探したい場所です。",
+            "UNESCOはタンバルィの景観におよそ5000点の岩絵があり、青銅器時代から近代に至る牧畜社会の儀礼や生活の手掛かりを伝えていると説明しています。岩絵の周辺には墓や集落の遺構もあり、描かれた絵だけを切り離して考えることはできません。どの岩がどの地形に置かれているかに目を向けると、古代の記録が立体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タンバルィの考古学的景観の岩絵群",
+              "url": "https://whc.unesco.org/en/list/1145",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・タンバルィの考古学的景観の岩絵群",
+          "sourceUrl": "https://whc.unesco.org/en/list/1145",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "タンバルィの岩絵が示す文化として最も適切なのは？",
+            "options": [
+              "牧畜社会の営みと儀礼",
+              "大航海時代の造船",
+              "産業革命の鉄道"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはタンバルィの岩絵が牧畜社会の生活や儀礼を伝えると説明しています。",
+            "photoGoal": "タンバルィの考古学的景観の岩絵群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "KE": {
       "name": "ケニア",
@@ -7059,7 +7851,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ラム旧市街",
+          "paragraphs": [
+            "インド洋沿岸のラム旧市街を歩くと、建物が近くに迫る細い路地と、木の扉や壁の装飾が目を引きます。大きな通りだけを急いで通り過ぎるよりも、家々の入口や広場の配置を観察すると、長く続いてきた暮らしの姿が見えてきます。港へ通じる道をたどり、海との距離を感じるのもこの町ならではの楽しみです。",
+            "UNESCOはラム旧市街を、東アフリカで保存状態のよいスワヒリの集落として評価しています。海の交易と結び付いた都市文化が、建築や街路、生活の習慣に受け継がれてきました。石と木の細部を眺めながら歩くと、古い都市の歴史が遺跡の中ではなく、今も人が暮らす町の形に残っていることを感じます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラム旧市街",
+              "url": "https://whc.unesco.org/en/list/1055/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ラム旧市街",
+          "sourceUrl": "https://whc.unesco.org/en/list/1055/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "ラム旧市街と深く関わる文化は？",
+            "options": [
+              "スワヒリ文化",
+              "マヤ文明",
+              "ヴァイキング文化"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはラム旧市街をスワヒリの歴史的集落として紹介しています。",
+            "photoGoal": "ラム旧市街が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "モンバサのフォート・ジーザス",
+          "paragraphs": [
+            "モンバサのフォート・ジーザスでは、厚い石壁と広い中庭、海を見渡す位置関係が印象に残ります。建物の中を歩いてから外へ出ると、防御施設としての姿と港を見張る役割がつながって見えます。石積みの輪郭を近くで確かめたあと、遠くの海を眺めれば、この要塞がなぜこの場所に築かれたかを考える手掛かりになります。",
+            "UNESCOによると、フォート・ジーザスは16世紀末にポルトガル人によって建設された要塞で、インド洋の交易や支配をめぐる歴史を物語ります。設計に表れた軍事建築の考え方を知ると、単に古い石造建物を見るのとは異なる体験になります。港と城壁を一つの風景として眺めることが歴史を理解する近道です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・モンバサのフォート・ジーザス",
+              "url": "https://whc.unesco.org/en/list/1295/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・モンバサのフォート・ジーザス",
+          "sourceUrl": "https://whc.unesco.org/en/list/1295/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "フォート・ジーザスの建設を進めたのは？",
+            "options": [
+              "ポルトガル人",
+              "古代インカ",
+              "モンゴル帝国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはフォート・ジーザスが16世紀末にポルトガル人によって建てられた要塞と説明しています。",
+            "photoGoal": "モンバサのフォート・ジーザスが明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "KG": {
       "name": "キルギス",
@@ -7443,7 +8301,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ルアンパバーンの町",
+          "paragraphs": [
+            "ルアンパバーンを散策すると、寺院の屋根の曲線と通り沿いの建物の表情が少しずつ変わります。立派な宗教建築を一度見て終えるのではなく、門の装飾から隣の街路へと視線を移してみてください。古い寺院と十九〜二十世紀の建築が同じ町並みに溶け込み、歩く場所ごとに異なる歴史の層が見えることが、ここで過ごす時間を豊かにします。",
+            "UNESCOはルアンパバーンの独自性を、伝統的なラオスの建築・都市構造と、十九〜二十世紀の欧州植民地期の建築が融合した景観に見いだしています。どちらか一方だけを切り取ると、登録された町の価値を十分に捉えられません。寺院の境内と周辺の街並みを行き来しながら、異なる文化が同じ空間の中で重なった経緯を考えてみたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ルアンパバーンの町",
+              "url": "https://whc.unesco.org/en/list/479/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ルアンパバーンの町",
+          "sourceUrl": "https://whc.unesco.org/en/list/479/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ルアンパバーンの町並みが評価される特徴は？",
+            "options": [
+              "ラオスの伝統建築と植民地期建築の融合",
+              "高層ビル群の密集",
+              "古代ローマの道路網"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは伝統的なラオスの構造と欧州植民地期の建築が融合した町並みを評価しています。",
+            "photoGoal": "ルアンパバーンの町の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ワット・プーとチャンパーサックの文化的景観",
+          "paragraphs": [
+            "ワット・プーでは、遺跡に向かう道の先に山が見え、寺院の配置そのものが景色の一部になっています。石段や古い基壇に目を向けながら、足元の構造と遠くの斜面を交互に見比べると、建物が単独で置かれたのではないと分かります。寺院だけを撮影して帰るより、山と川の位置関係をゆっくり確かめると、この場所ならではの魅力が深まります。",
+            "UNESCOによれば、チャンパーサックの文化的景観は山頂からメコン川岸へ続く軸線を意識して設計され、寺院や聖所、水利施設が約十キロメートルにわたって配置されました。その構想は自然と人間の関係を示すヒンドゥー教的な世界観に結びつき、主にクメール王国に関連します。遺跡をひとつの建物としてではなく、地形を取り込んだ計画として眺めることが重要です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ワット・プーとチャンパーサックの文化的景観",
+              "url": "https://whc.unesco.org/en/list/481/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ワット・プーとチャンパーサックの文化的景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/481/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ワット・プーの文化的景観で重要な地形のつながりは？",
+            "options": [
+              "山頂から川岸への軸線",
+              "砂漠から海底への水路",
+              "火山の火口を囲む城壁"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは山頂からメコン川岸への軸線を意識した設計を説明しています。",
+            "photoGoal": "ワット・プーとチャンパーサックの文化的景観の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "LB": {
       "name": "レバノン",
@@ -7462,7 +8386,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "アンジャルのウマイヤ朝都市遺跡",
+          "paragraphs": [
+            "アンジャルの遺跡を広くとらえた写真では、低い石積みの壁や列柱がほぼ直線的に並ぶ様子が見えます。ひとつの柱頭だけでは街の大きさが分からないため、道の交差や建物の区画を一緒に見てみましょう。大きな通りに沿って視線を進めると、宮殿や浴場、居住地を配置した計画都市の姿が少しずつ立ち上がってきます。石の高さよりも、規則的な配置に注目する小旅行です。",
+            "UNESCOによると、アンジャルは八世紀初頭にカリフのワリード一世の時代に築かれたウマイヤ朝都市で、東西と南北の幹線が交差して市域を四区画に分けていました。交易路の結節点に位置する一方、その存続期間は長くありませんでした。ローマ風の装飾にも見える石材を単なる古典建築の遺物と決めつけず、初期イスラム期の都市計画と技術の移行を示す遺構として読むと、写真の細部が違って見えます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンジャル",
+              "url": "https://whc.unesco.org/en/list/293/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・アンジャル",
+          "sourceUrl": "https://whc.unesco.org/en/list/293/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "アンジャル遺跡が特に伝えるのは何時代の都市計画？",
+            "options": [
+              "ウマイヤ朝時代",
+              "産業革命期",
+              "先史時代の洞窟生活"
+            ],
+            "answer": 0,
+            "fact": "アンジャルはウマイヤ朝の八世紀の計画都市であり、直交する街路と建築区画の遺構が残ります。",
+            "photoGoal": "単独の柱頭や無関係なアンジャル市街ではなく、世界遺産の遺跡内に続く街路・列柱・城壁を確認できる実写を選ぶ。過去の不適切な柱頭単写候補は使わない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "バールベックの神殿群",
+          "paragraphs": [
+            "バールベックの写真では、高くそびえる柱の列と、その足元を囲む石の広場の比率に注目します。ひとつの柱だけを切り取るより、基壇や隣接する建物まで入った構図のほうが神殿の規模を想像しやすくなります。ジュピター神殿の大きな柱とバッカス神殿の装飾を比べ、遠景から近景へ視線を動かすように、石に刻まれた構造と装飾の役割を写真でたどりましょう。",
+            "UNESCOは、バールベックをフェニキアの信仰とギリシャ・ローマ世界の神々が重なった大規模な聖域として説明しています。ローマ時代には二百年以上にわたって巨大な神殿建築が造られ、ジュピター、バッカス、ヴィーナスなどの神殿が関係しています。壮大な建築を単なる大きさの競争と見るのではなく、古い信仰が別の文化の建築様式と結びついていった歴史として眺める小旅行です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バールベック",
+              "url": "https://whc.unesco.org/en/list/294/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・バールベック",
+          "sourceUrl": "https://whc.unesco.org/en/list/294/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "バールベックの神殿群が特に発展した時代は？",
+            "options": [
+              "石器時代",
+              "ローマ帝国時代",
+              "現代の高層建築時代"
+            ],
+            "answer": 1,
+            "fact": "バールベックの巨大な神殿群は、とりわけローマ時代に整備された宗教建築の遺産です。",
+            "photoGoal": "960×194など極端に横長の既存候補を再利用せず、バールベックの実際の神殿全景・柱群を縦横比と場所まで検証した写真を探す。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "LR": {
       "name": "リベリア",
@@ -7792,7 +8782,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ルクセンブルク旧市街・グルント地区",
+          "paragraphs": [
+            "ルクセンブルク旧市街では、高台の建物から谷底のグルント地区へ向かって視線を移すと、同じ街の中に大きな高低差があることに気づきます。川沿いの建物と岩の上に続く城壁を見比べると、地形が防御と日常の暮らしに関わってきた様子を想像できます。橋によって高さの異なる街が結ばれる景観を楽しむ小旅行です。",
+            "UNESCOはこの街が16世紀から1867年の要塞解体まで、欧州でも重要な防御拠点として発展したことを評価しています。軍事技術の変化に合わせて要塞は改良され、その足元には商業や手工業に従事する人々の地区が形成されました。残された旧市街を見ると、防御のための都市計画と日々の暮らしが重なっていたことが分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ルクセンブルク旧市街・グルント地区",
+              "url": "https://whc.unesco.org/en/list/699/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ルクセンブルク旧市街・グルント地区",
+          "sourceUrl": "https://whc.unesco.org/en/list/699/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-baltic-balkans-eight-20261122.json",
+          "quizDraft": {
+            "question": "ルクセンブルクの要塞都市が利用した自然地形は？",
+            "options": [
+              "平坦な塩湖",
+              "深い谷と岩の高台",
+              "珊瑚礁"
+            ],
+            "answer": 1,
+            "fact": "川が刻んだ谷と岩の高台が自然の防御に利用されました。",
+            "photoGoal": "ルクセンブルク旧市街・グルント地区の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ボックの地下要塞",
+          "paragraphs": [
+            "ボックの地下要塞では、岩の内部を通る回廊と、そこから谷を見渡すための開口部が特徴です。地上から見える城壁だけでは想像しにくい防御施設の広がりを、内部の写真や断面を意識しながらたどってみましょう。暗い空間から外の光が差す窓へ視線を移すと、景色を眺めるためではなく防御のために造られた建築だと実感できます。",
+            "ルクセンブルク市観光局によると、ボックの地下要塞の建設は1745年にオーストリアの技術者によって始められました。岩の内部の砲室や通路は要塞都市の防御を支える役割を担いました。今日の都市では地下空間を歴史の記録として見ることができます。地表の街並みと地下の施設を合わせて知ることで、ルクセンブルクの立地の意味がより鮮明になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "ルクセンブルク市観光局・ボックの地下要塞",
+              "url": "https://www.luxembourg-city.com/en/tours-activities/underground/bock-casemates",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "ルクセンブルク市観光局・ボックの地下要塞",
+          "sourceUrl": "https://www.luxembourg-city.com/en/tours-activities/underground/bock-casemates",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-baltic-balkans-eight-20261122.json",
+          "quizDraft": {
+            "question": "ボックの地下要塞の主な用途は？",
+            "options": [
+              "王宮の庭園",
+              "鉄道駅",
+              "軍事防御"
+            ],
+            "answer": 2,
+            "fact": "岩を掘った通路や砲室は要塞都市の防御施設として使われました。",
+            "photoGoal": "ボックの地下要塞の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "LV": {
       "name": "ラトビア",
@@ -8096,7 +9152,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "アンブヒマンガの丘の王領地",
+          "paragraphs": [
+            "アンブヒマンガの丘の写真では、中央高地の緑の中に王家に関わる建築や石造りの入口、伝統的な空間が見えてきます。ひとつの建物だけを切り取るのではなく、丘の斜面や門、周囲の自然とのつながりにも目を向けましょう。地図では首都アンタナナリボの北に位置することを確かめ、国の記憶が形になった場所を遠くから丁寧に読む小旅行です。",
+            "UNESCOは、アンブヒマンガの丘を15～19世紀の中央高地の文明と文化的・精神的な伝統を示す遺産として評価しています。王の墓や聖なる場所、樹木などが結びつき、人々の記憶や信仰のよりどころとなってきました。見た目の華やかさだけでは伝わらない価値があるため、写真の出典や撮影時期を確認しつつ、場所が現在も尊重されている意味を考えましょう。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンブヒマンガの丘の王領地",
+              "url": "https://whc.unesco.org/en/list/950/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・アンブヒマンガの丘の王領地",
+          "sourceUrl": "https://whc.unesco.org/en/list/950/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "アンブヒマンガの丘が伝える歴史は？",
+            "options": [
+              "マダガスカルの王権と信仰",
+              "古代ローマの軍港",
+              "近代宇宙基地"
+            ],
+            "answer": 0,
+            "fact": "アンブヒマンガの丘の王領地は、マダガスカルの王権と精神的伝統を伝える世界文化遺産です。",
+            "photoGoal": "アンブヒマンガの実際の門や王家の建築、丘の実景と確認できる写真の出典を照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ベマラハのツィンギ（アンドレファナ乾燥林）",
+          "paragraphs": [
+            "マダガスカル西部のベマラハでは、石灰岩が細く尖った峰のように連なり、まるで灰色の森が広がっているように見えます。岩の間に緑が入り込む写真を見つめると、硬い岩の地形と生き物が暮らす場所の距離の近さに気づきます。広い景色と岩の細部を見比べ、風化や水の働きが長い時間をかけて生んだ地形を読み解く小旅行です。",
+            "この区域は1990年に「ベマラハのツィンギ厳正自然保護区」として世界自然遺産に登録されました。UNESCOは2023年に保護区域を拡張し、遺産名を「アンドレファナ乾燥林」に改めています。現在の遺産はベマラハだけでなく複数の保護区から構成されます。写真を選ぶ際はベマラハを撮ったものかを確かめ、単に「マダガスカルの岩山」という説明で別の場所を混同しないことも大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アンドレファナ乾燥林（ベマラハ区域）",
+              "url": "https://whc.unesco.org/en/list/494/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・アンドレファナ乾燥林（ベマラハ区域）",
+          "sourceUrl": "https://whc.unesco.org/en/list/494/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "アンドレファナ乾燥林の世界遺産は2023年にどう変わった？",
+            "options": [
+              "文化遺産へ変更された",
+              "登録がすべて取り消された",
+              "範囲が拡張され名称も変わった"
+            ],
+            "answer": 2,
+            "fact": "1990年登録のベマラハの保護区は、2023年に拡張されアンドレファナ乾燥林へ改称されました。",
+            "photoGoal": "ベマラハのツィンギの石灰岩地形であることを確認し、他のツィンギと取り違えず撮影者・許諾を確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "MV": {
       "name": "モルディブ",
@@ -8442,7 +9564,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "コトル旧市街",
+          "paragraphs": [
+            "コトルでは、湾の水面と背後の険しい山、その間に収まる城壁の街が一つの風景をつくります。海に向かう広がりと、山側へ迫る地形の対照に注目すると、港であり防御拠点でもあった都市の立地が理解できます。石造りの街路や建物の細部を眺めながら、海上交流が育んだ文化の厚みを想像してみましょう。",
+            "UNESCOは中世のコトルがアドリア海に面する商業と芸術の中心だったことを紹介しています。1979年の地震によって教会や城壁などが大きな被害を受けましたが、その後の修復によって歴史的景観が守られてきました。現在の街並みには古い建築だけではなく、遺産を次の世代に残そうとした人々の取り組みも刻まれています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コトル旧市街",
+              "url": "https://whc.unesco.org/en/list/125/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・コトル旧市街",
+          "sourceUrl": "https://whc.unesco.org/en/list/125/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-baltic-balkans-eight-20261122.json",
+          "quizDraft": {
+            "question": "コトルの遺産が大きな被害を受けた1979年の災害は？",
+            "options": [
+              "地震",
+              "隕石落下",
+              "氷河の崩落"
+            ],
+            "answer": 0,
+            "fact": "1979年の地震後、コトルの歴史建築は修復されてきました。",
+            "photoGoal": "コトル旧市街の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ドゥルミトル国立公園",
+          "paragraphs": [
+            "ドゥルミトルでは山々の輪郭が湖面に映り、針葉樹の森と岩の稜線が重なる景色に目を奪われます。湖の近くの緑から遠くの峰へ視線を動かすと、同じ山岳地帯でも標高によって環境が変わることが分かります。写真や地図でタラ川の谷へ視点を移せば、湖だけでなく深い峡谷も含む広大な自然の姿が見えてきます。",
+            "UNESCOはドゥルミトルの地形が氷河によって形成され、その中を地表や地下の水が流れることを評価しています。タラ川の深い峡谷、湖、森林がそれぞれ異なる景観と生物の生息環境をつくります。山の美しさを楽しむことと、植物や動物の環境を保護することは切り離せません。撮影や散策は指定された場所から楽しみたい地域です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドゥルミトル国立公園",
+              "url": "https://whc.unesco.org/en/list/100/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ドゥルミトル国立公園",
+          "sourceUrl": "https://whc.unesco.org/en/list/100/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-baltic-balkans-eight-20261122.json",
+          "quizDraft": {
+            "question": "ドゥルミトルの地形形成に重要だったものは？",
+            "options": [
+              "珊瑚礁",
+              "氷河",
+              "人工の運河"
+            ],
+            "answer": 1,
+            "fact": "氷河が形成した山岳地形と、河川や湖が公園の特徴です。",
+            "photoGoal": "ドゥルミトル国立公園の実景を確認できる独立した写真。撮影者・原画像・商用利用可能なライセンスを確認する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "MN": {
       "name": "モンゴル",
@@ -8461,7 +9649,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "オルホン渓谷の文化的景観",
+          "paragraphs": [
+            "オルホン川の両岸に草地が広がり、その中に古代の遺跡や後世の都の跡が点在しています。見渡す限りの草原は一見変化が少ないようでいて、川の近くを進むと人々がこの土地を選んだ理由が少しずつ見えてきます。遠景と足元の遺構を交互に見ながら、遊牧と都市が交わる風景を味わいたい場所です。",
+            "UNESCOによれば、この文化的景観には6世紀以降の考古学的遺構が残り、13～14世紀のモンゴル帝国の都カラコルムも含まれます。川沿いの牧草地が季節ごとの家畜の移動を支えてきたことを考えると、遺跡を単独の点としてではなく、生活と交通のつながりの中で理解できます。広い景観のどこに人の営みが重なっているか、地図と見比べて歩くのがおすすめです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・オルホン渓谷の文化的景観",
+              "url": "https://whc.unesco.org/en/list/1081",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・オルホン渓谷の文化的景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/1081",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "オルホン渓谷の世界遺産に含まれるモンゴル帝国期の都は？",
+            "options": [
+              "カラコルム",
+              "北京",
+              "サマルカンド"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはオルホン渓谷の登録範囲に13～14世紀の都カラコルムを挙げています。",
+            "photoGoal": "オルホン渓谷の文化的景観の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ブルハン・ハルドゥン山の聖なる景観",
+          "paragraphs": [
+            "北東モンゴルの森と草原が接する山岳地帯では、樹木に覆われた山腹から河川のある谷へと景色が移り変わります。ブルハン・ハルドゥン山は単なる登山の目標ではなく、土地の人々が神聖なものとして敬ってきた山です。訪問可能な区域や地元の決まりを尊重し、山並みを遠くから眺めながら景観と信仰の関係に思いを巡らせたい場所です。",
+            "UNESCOはこの山と周辺景観が、チンギス・ハンの時代から続く山岳信仰に深く関わると説明しています。山の神聖さは建物の規模ではなく、特定の地形や祭礼、伝承に支えられてきました。石積みの祭壇や森林の帯を観察する際も、遺産を観光施設として扱うのではなく、現地の保護規則と信仰を優先する姿勢が大切です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブルハン・ハルドゥン山の聖なる景観",
+              "url": "https://whc.unesco.org/en/list/1440",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ブルハン・ハルドゥン山の聖なる景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/1440",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ブルハン・ハルドゥン山が重要視される理由として適切なのは？",
+            "options": [
+              "山岳信仰との結びつき",
+              "古代ローマの港湾",
+              "サンゴ礁の研究"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはブルハン・ハルドゥン山と周辺を、山岳信仰に関わる文化的景観として登録しています。",
+            "photoGoal": "ブルハン・ハルドゥン山の聖なる景観の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "MZ": {
       "name": "モザンビーク",
@@ -8498,7 +9752,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "アープラヴァシ・ガート",
+          "paragraphs": [
+            "ポートルイスの港に残る石造りの施設跡を眺めると、海を渡った人々が最初に足を踏み入れた場所の一端が見えてきます。建物の華やかさではなく、入口や壁、海に近い位置に注目してみましょう。ここは島で働くために移動した人々の人生の節目となった場所です。",
+            "十九世紀に奴隷制に代わる契約労働の制度が広がる中、この港は多くの労働者を受け入れました。現在に残る移民施設は1849年に建てられたものです。移住した人々の出身地域やその後の暮らしを思いながら、世界的な労働移動が島の社会を形づくった歴史を考えます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・アープラヴァシ・ガート",
+              "url": "https://whc.unesco.org/en/list/1227/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・アープラヴァシ・ガート",
+          "sourceUrl": "https://whc.unesco.org/en/list/1227/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-bahrain-mauritius-20261122.json",
+          "quizDraft": {
+            "question": "この施設が主に伝える歴史は？",
+            "options": [
+              "宇宙飛行士の訓練",
+              "中世の王宮",
+              "契約労働者の移住"
+            ],
+            "answer": 2,
+            "fact": "港に残された移民施設は、近代における契約労働者の大規模な移動を伝えます。",
+            "photoGoal": "アープラヴァシ・ガートの登録区域を確認できる権利確認済みの実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ル・モーンの文化的景観",
+          "paragraphs": [
+            "海岸からそびえる切り立った山は、青い海との対比が印象的です。岩壁や急な斜面を写真からじっくり眺めると、山が人々を隔てる壁であると同時に、身を守る場所にもなり得たことが分かります。風景の美しさとともに、かつてここで暮らした人々を思い浮かべましょう。",
+            "十八世紀から十九世紀初頭にかけて、この山は奴隷状態から逃れた人々が身を寄せた場所でした。険しい地形の中に生活の場を築いた記憶は、口承を通じても受け継がれています。現在のル・モーンは自由を求める抵抗の象徴であり、自然の形と人間の歴史が深く結び付いた文化遺産です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ル・モーンの文化的景観",
+              "url": "https://whc.unesco.org/en/list/1259/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ル・モーンの文化的景観",
+          "sourceUrl": "https://whc.unesco.org/en/list/1259/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-bahrain-mauritius-20261122.json",
+          "quizDraft": {
+            "question": "ル・モーンの山が象徴する歴史は？",
+            "options": [
+              "奴隷制への抵抗と自由",
+              "近代の宇宙開発",
+              "大規模な鉄鉱石採掘"
+            ],
+            "answer": 0,
+            "fact": "奴隷状態から逃れた人々の避難場所であり、自由を求める抵抗の記憶を伝えています。",
+            "photoGoal": "ル・モーンの文化的景観の登録区域を確認できる権利確認済みの実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "MW": {
       "name": "マラウイ",
@@ -8526,7 +9846,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ムラカとジョージタウンの歴史都市",
+          "paragraphs": [
+            "ジョージタウンの旧市街を歩くと、細い商店街の間に異なる色や様式の建物が並び、店先から日々の暮らしの音が聞こえてきます。ムラカでは川沿いの景色や歴史的な建物から、港町に人が集まった時代を想像できます。二つの街を地図で比べながら歩くと、同じ海峡の交易都市でも発展の仕方や景観に違いがあることが見えてきます。",
+            "UNESCOは、ムラカとジョージタウンをマラッカ海峡の東西交易の歴史を伝える都市として評価しています。商業活動や移住を通じて異なる言語・宗教・建築文化が重なり、街並みに独特の多様性が生まれました。建築の正面装飾だけでなく、祈りの場や市場、住宅地の配置にも注目すると、交流が都市全体を形づくってきたことを感じられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ムラカとジョージタウンの歴史都市",
+              "url": "https://whc.unesco.org/en/list/1223/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ムラカとジョージタウンの歴史都市",
+          "sourceUrl": "https://whc.unesco.org/en/list/1223/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-nordic-asia-eight-20261121.json",
+          "quizDraft": {
+            "question": "ムラカとジョージタウンが発展した重要な背景は？",
+            "options": [
+              "マラッカ海峡の交易",
+              "高山の氷河採掘",
+              "北極探検"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはマラッカ海峡の東西交易を背景に発展した都市として評価しています。",
+            "photoGoal": "ムラカとジョージタウンの歴史都市が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "グヌン・ムル国立公園",
+          "paragraphs": [
+            "グヌン・ムルの森林では、緑の木々が密集する地表の下に、驚くほど大きな洞窟の空間が続いています。入口から奥へ進むと岩の模様や暗闇の奥行きが変わり、地上からは想像しにくい規模を実感できます。熱帯の植物に囲まれた遊歩道と洞窟の静けさを比べながら、同じ土地にまったく違う景色が重なっていることを楽しみたい場所です。",
+            "UNESCOはサラワク州のグヌン・ムルを、生物多様性の高さと熱帯カルスト地形の両方で評価しています。数多くの洞窟があり、洞内はコウモリなどの生物のすみかにもなっています。単に巨大な洞窟を見るだけでなく、水が石灰岩を溶かして空間を広げた時間を考えると、景観の意味が深まります。自然保護と安全のため、見学は認められたルートや案内に従う必要があります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グヌン・ムル国立公園",
+              "url": "https://whc.unesco.org/en/list/1013/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・グヌン・ムル国立公園",
+          "sourceUrl": "https://whc.unesco.org/en/list/1013/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-nordic-asia-eight-20261121.json",
+          "quizDraft": {
+            "question": "グヌン・ムル国立公園の特徴的な地形は？",
+            "options": [
+              "熱帯のカルスト洞窟",
+              "氷河の氷床",
+              "砂漠の砂丘"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは熱帯カルスト地形と洞窟群を重要な価値として評価しています。",
+            "photoGoal": "グヌン・ムル国立公園が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "NA": {
       "name": "ナミビア",
@@ -8545,7 +9931,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "トワイフェルフォンテインの岩絵群",
+          "paragraphs": [
+            "赤茶色の岩が重なるトワイフェルフォンテインでは、岩面をよく見ると動物や足跡のような線刻が現れます。近づいて初めて気づく模様も多く、景観を眺める時間と一つひとつの岩を読む時間では、まったく異なる印象を受けます。保存のために岩には触れず、案内されたルートから刻まれた形と周囲の地形を見比べたい場所です。",
+            "UNESCOはここをアフリカでも特に密度の高い岩絵の場所として紹介し、狩猟採集の人々が残した表現と儀礼の痕跡を評価しています。描かれた動物は、現在の乾いた景観を見ているだけでは想像しづらい過去の環境も考えさせます。石の線を美術品としてだけ見るのではなく、人々の生活と信仰が重なった記録として読むことができます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・トワイフェルフォンテインの岩絵群",
+              "url": "https://whc.unesco.org/en/list/1255",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・トワイフェルフォンテインの岩絵群",
+          "sourceUrl": "https://whc.unesco.org/en/list/1255",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "トワイフェルフォンテインで特に知られる遺産は？",
+            "options": [
+              "岩面に刻まれた絵や模様",
+              "水上の木造集落",
+              "鋼鉄製の高層塔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはトワイフェルフォンテインの岩絵とその文化的な意味を評価しています。",
+            "photoGoal": "トワイフェルフォンテインの岩絵群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ナミブ砂海",
+          "paragraphs": [
+            "ナミブ砂海では、巨大な砂丘の稜線がいくつも重なり、光の角度によって斜面の色が大きく変わります。遠くの砂丘は滑らかな曲線に見えますが、近くで見ると風が刻んだ細かな模様が広がっています。暑さと保護区域の制約に十分配慮しながら、砂丘の陰影と地平線の形が変わる様子を静かに観察したい場所です。",
+            "UNESCOはナミブ砂海を、海岸霧の影響を受ける広大な砂丘地帯として世界自然遺産に登録しています。乾燥した風景でありながら、霧が水分の供給源となり、生き物の暮らしを支えている点が特徴です。砂漠を単に水のない場所だと考えず、風と霧と生態系が結びついた景観として見ることで、自然の仕組みを実感できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ナミブ砂海",
+              "url": "https://whc.unesco.org/en/list/1430",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ナミブ砂海",
+          "sourceUrl": "https://whc.unesco.org/en/list/1430",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ナミブ砂海の生態系を支える特徴的な水分源は？",
+            "options": [
+              "海岸から入る霧",
+              "毎日の大雪",
+              "大河の氾濫"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはナミブ砂海に海岸霧が及ぼす影響を重要な特徴として挙げています。",
+            "photoGoal": "ナミブ砂海の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "NE": {
       "name": "ニジェール",
@@ -9454,7 +10906,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "バハラ城塞",
+          "paragraphs": [
+            "バハラのオアシスに近づくと、土色の城壁と塔が周囲の乾いた山地に溶け込むように見えてきます。明るい壁面は空の色によって表情を変え、建物を遠くから眺めるのと近くで見上げるのとでは、印象が大きく違います。城の外郭だけでなく、集落や水と結びついた立地を確認すると、防御の建築が暮らしに近い場所だったことに気づけます。",
+            "UNESCOによれば、バハラの城塞と集落はオアシスを囲む土の建築を特徴とし、バヌ・ナブハーン族がこの地を拠点とした歴史を伝えています。土でつくられた壁は気候への対応を示す一方、保全には繊細な管理が必要です。写真で見る城壁の輪郭だけでなく、素材と水利、住居の関係を考えると、建築の意味がより深く理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・バハラ城塞",
+              "url": "https://whc.unesco.org/en/list/433",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・バハラ城塞",
+          "sourceUrl": "https://whc.unesco.org/en/list/433",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "バハラ城塞の建築で重要な素材は？",
+            "options": [
+              "土・日干しれんが",
+              "透明な氷",
+              "大量の鉄骨"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはバハラ城塞と周囲の集落の土の建築を特徴として挙げています。",
+            "photoGoal": "バハラ城塞の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "乳香の土地",
+          "paragraphs": [
+            "オマーン南部の乳香の土地には、香り高い樹脂を生み出す樹木の生育地と、かつてその交易を支えた遺構が残ります。木立がある場所と、海辺の古い港の跡を同じ地図で追うと、小さな樹脂が遠い地域へ運ばれた道筋を想像できます。ひとつの建物だけを訪ねるのではなく、山の谷と港が結びついていたことを感じたい遺産です。",
+            "UNESCOはワディ・ダウカの乳香樹、シスルの隊商拠点、ホール・ローリとアル・バリードの港を組み合わせて登録しています。乳香交易は古代から中世にかけて地域を広い交易網につなぎました。風景は離れた場所に分散していますが、その距離そのものが産地から消費地までの流通を考える手掛かりになります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・乳香の土地",
+              "url": "https://whc.unesco.org/en/list/1010",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・乳香の土地",
+          "sourceUrl": "https://whc.unesco.org/en/list/1010",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "「乳香の土地」が伝える歴史の中心は？",
+            "options": [
+              "乳香の生産と交易",
+              "金貨鋳造の発明",
+              "北極海の捕鯨"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは乳香樹と隊商拠点、港の遺構を乳香交易の歴史として登録しています。",
+            "photoGoal": "乳香の土地の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "PK": {
       "name": "パキスタン",
@@ -9617,7 +11135,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ポルトベロとサン・ロレンソの要塞群",
+          "paragraphs": [
+            "カリブ海に面するポルトベロでは、海岸沿いの石造の砲台跡が水面の向こうを見張るように残っています。海と建築の距離が近く、要塞がどの方向から来る船を意識して造られたのかを想像しやすい場所です。離れた位置にあるサン・ロレンソとあわせて地図で確認すると、ひとつの港だけではない防衛網の広がりが伝わります。",
+            "UNESCOはこれらを16～18世紀のスペイン軍事建築が熱帯の地形に対応した遺産として評価しています。大西洋を渡る交易を守るために築かれ、海岸や河口と一体で機能しました。保存上の課題がある危機遺産でもあるため、石壁の傷みを含めて現地の保護ルールに従い、歴史と保全の両方に目を向けたい場所です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ポルトベロとサン・ロレンソの要塞群",
+              "url": "https://whc.unesco.org/en/list/135",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ポルトベロとサン・ロレンソの要塞群",
+          "sourceUrl": "https://whc.unesco.org/en/list/135",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ポルトベロとサン・ロレンソの要塞が守った主なものは？",
+            "options": [
+              "海上交易路",
+              "砂漠の隊商路",
+              "アルプスの峠道"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは要塞群を大西洋交易に関わるスペインの防衛施設として説明しています。",
+            "photoGoal": "ポルトベロとサン・ロレンソの要塞群の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "コイバ国立公園と海洋保護特別区域",
+          "paragraphs": [
+            "太平洋側のコイバ国立公園では、深い緑をまとった島々と海が隣り合い、海岸線を追うだけでも豊かな自然が感じられます。海の色の変化に目を向けると、陸と海の生態系が切り離せないことが分かります。訪れる際は自然保護の規則に従い、野生生物を近づいて撮ろうとせず、海と島をつなぐ大きな景観を楽しみたい場所です。",
+            "UNESCOはコイバ国立公園と周辺の海洋保護特別区域を、熱帯東太平洋の重要な生物多様性の拠点として評価しています。島の隔離された環境と広い海域が、多様な生息地を守ってきました。美しい海の眺めに加え、漁業や開発による圧力から生態系を守る必要があることを知ると、景色の見方も変わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・コイバ国立公園と海洋保護特別区域",
+              "url": "https://whc.unesco.org/en/list/1138",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・コイバ国立公園と海洋保護特別区域",
+          "sourceUrl": "https://whc.unesco.org/en/list/1138",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "コイバ国立公園の世界遺産としての重要性は？",
+            "options": [
+              "海洋と島の生物多様性",
+              "砂漠の地下宮殿",
+              "氷河の採掘史"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはコイバと海洋保護特別区域の生物多様性と生態系を評価しています。",
+            "photoGoal": "コイバ国立公園と海洋保護特別区域の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "PE": {
       "name": "ペルー",
@@ -10197,7 +11781,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ラ・サンティシマ・トリニダード・デ・パラナ",
+          "paragraphs": [
+            "トリニダードの伝道施設跡では、広い草地に赤みのある石壁やアーチが立ち並びます。写真を見ながら、教会の遺構だけでなく、かつての広場や暮らしのための建物がどのように配置されていたかを想像してみましょう。壁の影が地面に落ちる場所をたどると、宗教施設でありながら多くの人々が日々の生活を営む集落でもあったことが伝わってきます。",
+            "UNESCOが1993年に世界文化遺産に登録したこの遺構は、ラ・プラタ川流域に展開したイエズス会の伝道集落の歴史を示します。建築の一部にはヨーロッパの宗教美術と先住の文化的要素が重なり、街路や広場の配置には独自の社会組織が表れています。華やかな石の装飾だけを眺めるのではなく、建物を造り、暮らした人々の多様な立場を考えることで、遺跡が語る歴史をより立体的に読み取れます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+              "url": "https://whc.unesco.org/en/list/648/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+          "sourceUrl": "https://whc.unesco.org/en/list/648/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "トリニダードの遺構は何の施設を中心とする集落だった？",
+            "options": [
+              "近代の鉄道工場",
+              "イエズス会の伝道施設",
+              "ローマ帝国の軍港"
+            ],
+            "answer": 1,
+            "fact": "トリニダードはイエズス会の伝道集落に由来し、教会などの建築遺構が残っています。",
+            "photoGoal": "Trinidad del Parana の遺跡・教会壁の全景を確認し、アルゼンチンの Trinidad 遺跡や別の Paraguayan mission と取り違えない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ヘスース・デ・タバランゲ",
+          "paragraphs": [
+            "ヘスース・デ・タバランゲの写真では、大きな石の入口や教会の壁が、空を背景に輪郭を描いています。崩れた部分の向こうに見える風景も含めて眺めると、完成した宗教建築とは異なる遺構の静けさが伝わります。トリニダードの写真と比べながら、門や窓の形、壁の厚さ、広場との位置関係の違いを探してみましょう。二つの伝道施設が別々の場所にあったことが地図からも分かります。",
+            "UNESCOは、ヘスースの伝道施設をトリニダードとともに、十七～十八世紀のイエズス会の活動と、ラ・プラタ川流域の社会・文化の変化を示す遺産として位置づけています。伝道集落の石造建築は、宗教的な目的と、そこで暮らした人々の社会的な営みが重なった場所です。残された壁だけでは当時の生活のすべては分かりませんが、異なる遺構を比較することで、その歴史を一つの物語に単純化せず考えられます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+              "url": "https://whc.unesco.org/en/list/648/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ラ・サンティシマ・トリニダード・デ・パラナとヘスース・デ・タバランゲのイエズス会伝道施設群",
+          "sourceUrl": "https://whc.unesco.org/en/list/648/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "世界遺産に登録された二つの伝道施設の所在地は？",
+            "options": [
+              "スペイン",
+              "フィリピン",
+              "パラグアイ"
+            ],
+            "answer": 2,
+            "fact": "トリニダードとヘスース・デ・タバランゲの伝道施設はパラグアイにあり、同じ世界遺産を構成します。",
+            "photoGoal": "ヘスース・デ・タバランゲの教会遺構を実際に撮影した写真を選び、トリニダード側の写真を使い回さない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "PS": {
       "name": "パレスチナ",
@@ -10234,7 +11884,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ドナウ・デルタ",
+          "paragraphs": [
+            "ドナウ・デルタでは、細い水路の両側に葦が広がり、開けた湖面へ出ると空と水の境界が遠くまで続きます。水鳥が飛び立つ瞬間や、水面に映る草の色の変化を眺めると、同じ湿地でも場所によって表情が違うことが分かります。自然を乱さないよう指定されたルートをたどり、水辺の生き物の存在を静かに感じることが、この景色を楽しむ方法です。",
+            "UNESCOはドナウ・デルタを、河川の堆積作用によってつくられた湿地と多様な鳥類が暮らす重要な自然地域として評価しています。水が運ぶ土砂が地形を変え、島や水路、浅い湖が複雑に入り組んでいます。展望地点での景色を一枚の写真で終わらせず、河口へ向かって水路がどう分かれるかを地図でたどると、この広大な湿地の仕組みがよく分かります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ドナウ・デルタ",
+              "url": "https://whc.unesco.org/en/list/588/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ドナウ・デルタ",
+          "sourceUrl": "https://whc.unesco.org/en/list/588/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-europe-world-eight-20261121.json",
+          "quizDraft": {
+            "question": "ドナウ・デルタで特に豊かな生き物の一つは？",
+            "options": [
+              "水鳥",
+              "ペンギンだけ",
+              "砂漠のラクダ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはドナウ・デルタを多様な水鳥の生息地として評価しています。",
+            "photoGoal": "ドナウ・デルタの正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "モルダヴィアの教会群",
+          "paragraphs": [
+            "モルダヴィアの教会群では、建物の内部だけでなく外壁にまで広がる壁画が目を引きます。近くで見ると色彩と人物の配置が細かく、建物全体を少し離れて眺めると絵画が壁面を包み込むように見えます。屋根の下や壁の角まで視線を動かし、教会の形そのものが物語を伝える場所になっていることを感じながら見学したいところです。",
+            "UNESCOは15世紀末から16世紀末にかけてのモルダヴィアの教会に残る外壁の宗教画を高く評価しています。壁面いっぱいに描かれた聖書の場面などは、当時の宗教文化や絵画技術を伝えています。建物を一周しながら絵がどこに配置されているかを確かめると、一枚の絵を見るのとは違う、建築と絵画の結びつきが分かります。見学時は宗教施設としての規則を守ります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・モルダヴィアの教会群",
+              "url": "https://whc.unesco.org/en/list/598/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・モルダヴィアの教会群",
+          "sourceUrl": "https://whc.unesco.org/en/list/598/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-europe-world-eight-20261121.json",
+          "quizDraft": {
+            "question": "モルダヴィアの教会群を特徴づける装飾は？",
+            "options": [
+              "外壁の壁画",
+              "鉄橋のアーチ",
+              "ガラスの高層塔"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは教会の外壁を覆う宗教画を際立った文化的価値として評価しています。",
+            "photoGoal": "モルダヴィアの教会群の正しい所在地と撮影者・CCライセンスが確認できる異なるCommons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "RU": {
       "name": "ロシア",
@@ -10289,7 +12005,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ゴレ島",
+          "paragraphs": [
+            "ダカール沖のゴレ島では、海に向いた家並みや路地を歩くと、静かな島の風景の中に歴史の重さが潜んでいることを感じます。建物の色彩や港の風景だけでなく、島が果たしてきた役割を伝える展示や案内にも時間を割きたい場所です。穏やかな景色の中でも、奴隷貿易に関わる人々の経験を軽く扱わず、記憶の場所として向き合いたいものです。",
+            "UNESCOはゴレ島を大西洋奴隷貿易の記憶を伝える重要な象徴として登録しています。島には複数の時代の建築が残り、奴隷貿易をめぐる歴史と記憶の継承について考える場所となっています。建物一つの物語だけに頼るのではなく、島全体の展示や歴史的背景を複数の視点から学ぶことで、その重みがよりよく伝わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ゴレ島",
+              "url": "https://whc.unesco.org/en/list/26",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ゴレ島",
+          "sourceUrl": "https://whc.unesco.org/en/list/26",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "ゴレ島が世界遺産として記憶を伝える主な歴史は？",
+            "options": [
+              "大西洋奴隷貿易",
+              "極地探検",
+              "宇宙開発競争"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはゴレ島を大西洋奴隷貿易の歴史を伝える記憶の場所として説明しています。",
+            "photoGoal": "ゴレ島の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "サン・ルイ島",
+          "paragraphs": [
+            "セネガル川の河口にあるサン・ルイ島では、水辺の通りや家々のバルコニーが、歴史ある街並みの輪郭をつくっています。川を横切る橋から島全体を眺めると、建物が密集する区画と岸辺の関係がよく分かります。街角の装飾を探すだけではなく、港や商業の拠点として発展した理由を、川の流れと一緒に考えながら歩きたい場所です。",
+            "UNESCOはサン・ルイ島を、西アフリカの植民地時代の都市計画と建築を伝える優れた例として評価しています。整った街路や河岸の構成には、交易と行政の中心地としての歴史が表れています。建物の保存だけでなく、そこに暮らす人々の生活や都市の変化も大切な視点です。古い街の姿を固定された展示としてではなく、今も続く場所として理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サン・ルイ島",
+              "url": "https://whc.unesco.org/en/list/956",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・サン・ルイ島",
+          "sourceUrl": "https://whc.unesco.org/en/list/956",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-central-asia-americas-africa-eight-20261121.json",
+          "quizDraft": {
+            "question": "サン・ルイ島の街並みで世界遺産として評価されるものは？",
+            "options": [
+              "植民地期の都市計画と建築",
+              "火山の噴火口",
+              "氷河の洞窟"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはサン・ルイ島の都市計画と植民地期の建築を評価しています。",
+            "photoGoal": "サン・ルイ島の場所・撮影者・CC許諾を確認した別個のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "SG": {
       "name": "シンガポール",
@@ -10487,7 +12269,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ストゥデニツァ修道院",
+          "paragraphs": [
+            "ストゥデニツァ修道院の写真を眺めると、緑に囲まれた敷地に白い大理石の教会が立つ姿が印象に残ります。屋根や壁の輪郭を遠景でつかんだら、窓や入口の石彫、教会内部に伝わるフレスコ画へと目を移しましょう。建物の外観だけでは分からない信仰の歴史が、美術の細部から見えてきます。静かな建物の配置を地図で確かめながら、建築と絵画が語る時間を重ねて読む誌上旅行です。",
+            "UNESCOは、この修道院が十二世紀末に中世セルビア国家の創始者ステファン・ネマニャによって創建されたことを説明しています。聖母教会と王の教会には、十三～十四世紀のビザンティン美術の重要な絵画が伝わります。写真を見て白い石の美しさに惹かれたら、建立した人々や修道生活、絵画を描いた職人の営みにも思いを向けてみましょう。建築だけではない文化の層が、この場所の価値を深めています。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ストゥデニツァ修道院",
+              "url": "https://whc.unesco.org/en/list/389/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ストゥデニツァ修道院",
+          "sourceUrl": "https://whc.unesco.org/en/list/389/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "ストゥデニツァ修道院に伝わる重要な美術は？",
+            "options": [
+              "古代エジプトのパピルス",
+              "十三～十四世紀のビザンティン絵画",
+              "現代のネオン看板"
+            ],
+            "answer": 1,
+            "fact": "ストゥデニツァ修道院の教会には十三～十四世紀のビザンティン絵画が伝わっています。",
+            "photoGoal": "セルビア中部のストゥデニツァ修道院と確認できる白い大理石の建物を実写で捉え、別の修道院や絵画を混同しない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ガムジグラード＝ロムリアーナの宮殿跡",
+          "paragraphs": [
+            "ガムジグラード＝ロムリアーナの遺跡では、崩れた石の壁が広い地面を囲い、かつての宮殿の輪郭を示しています。建物そのものが残っていない部分でも、城壁や塔の基礎をつないで想像すると、単なる一つの館ではなく大きな複合施設だったことが分かります。写真では石積みの規模を確認し、地図では宮殿群と近くの記念建造物の位置関係をたどる小旅行です。",
+            "UNESCOによれば、東セルビアのこの遺跡は三世紀末から四世紀初頭に皇帝ガレリウスが建設させた宮殿と記念施設の複合体です。皇帝の母ロムラに由来するフェリクス・ロムリアーナの名でも知られます。防御施設に囲まれた宮殿と、霊廟などの記念建造物が結びつく構成は、古代ローマの政治や儀礼を理解する手掛かりになります。石の跡だけから、そこに込められた権威と追悼の意味を読み解けます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ガムジグラード＝ロムリアーナ、ガレリウスの宮殿",
+              "url": "https://whc.unesco.org/en/list/1253/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ガムジグラード＝ロムリアーナ、ガレリウスの宮殿",
+          "sourceUrl": "https://whc.unesco.org/en/list/1253/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-lb-rs-py-20261122.json",
+          "quizDraft": {
+            "question": "ロムリアーナの宮殿群を造らせた人物は？",
+            "options": [
+              "ローマ皇帝ガレリウス",
+              "ナポレオン一世",
+              "アレクサンドロス大王"
+            ],
+            "answer": 0,
+            "fact": "ガムジグラード＝ロムリアーナはローマ皇帝ガレリウスが建設させた宮殿と記念施設の遺跡です。",
+            "photoGoal": "東セルビアのガムジグラード遺跡内の城壁・宮殿跡を確認し、復元模型や他国のローマ遺跡写真と取り違えない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "SS": {
       "name": "南スーダン",
@@ -11111,7 +12959,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "サラズムの原始都市遺跡",
+          "paragraphs": [
+            "サラズムの遺構を上から眺めると、低い壁が区画をつくり、かつて建物や作業場が並んでいたことを想像できます。大きな塔や宮殿がなくても、人が集まり生活の場を整えた痕跡は残ります。写真では壁の並びと土の色に注目し、同時代の遠くの地域とどのようにつながっていたのかを考える考古学の小旅行です。",
+            "UNESCOによればサラズムは紀元前四千年紀から三千年紀末の中央アジアにおける定住社会の発展を示す遺跡です。山地で暮らす牧畜民と、平野の農耕民の交易や文化交流の接点にも位置づけられています。遺構を単なる古い住宅跡と見るのではなく、人々が技術や物資を交換したネットワークの痕跡として読むと、数千年前の世界が近づきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サラズムの原始都市遺跡",
+              "url": "https://whc.unesco.org/en/list/1141/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・サラズムの原始都市遺跡",
+          "sourceUrl": "https://whc.unesco.org/en/list/1141/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "サラズムの遺跡が伝える主要な歴史は？",
+            "options": [
+              "宇宙開発の発祥",
+              "古代の定住と交易",
+              "近代自動車産業"
+            ],
+            "answer": 1,
+            "fact": "サラズムは中央アジアの古代定住社会と交易・文化交流を示す遺跡です。",
+            "photoGoal": "サラズムの発掘された区画を確認できる実景を選び、帰属と再利用条件を照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "タジク国立公園（パミールの山脈群）",
+          "paragraphs": [
+            "パミールの山並みを地図で追うと、雪や氷河の白と高地の岩肌が広大な範囲に広がっていることが分かります。山頂ばかりを見ず、谷を流れる氷河と湖の位置関係を見比べると、景観をつくる水の働きが見えてきます。人が容易に近づけない地形も含めて、地球の大きな動きを考える写真と地図の小旅行です。",
+            "UNESCOはタジク国立公園を、ユーラシアの高い山脈が集まるパミール結節点に位置する自然遺産として評価しています。公園には多数の氷河や湖、河川が分布し、山岳地帯の地質学的な歴史と変化を示しています。フェドチェンコ氷河のような大規模な氷河に注目すると、高山の景観を美しい風景としてだけでなく、長い時間をかけて動く自然の仕組みとして理解できます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・タジク国立公園（パミールの山脈群）",
+              "url": "https://whc.unesco.org/en/list/1252/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・タジク国立公園（パミールの山脈群）",
+          "sourceUrl": "https://whc.unesco.org/en/list/1252/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-az-tj-bz-20261122.json",
+          "quizDraft": {
+            "question": "パミールの自然遺産で重要な景観は？",
+            "options": [
+              "大規模な氷河と高山湖",
+              "広大なサンゴ礁",
+              "熱帯雨林の巨大樹"
+            ],
+            "answer": 0,
+            "fact": "タジク国立公園には大規模な氷河や高山湖が分布します。",
+            "photoGoal": "タジク国立公園内のパミール山脈の氷河または高山湖の実景と撮影地点を照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "TM": {
       "name": "トルクメニスタン",
@@ -11166,7 +13080,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "チュニスのメディナ",
+          "paragraphs": [
+            "チュニスのメディナへ入ると、細く曲がった路地に商店や住宅の扉が連なり、通りごとに空気が変わります。大通りから少し進むだけで人の声や商品の色が近くなり、歴史的な街が今も生活と商いの中心であることを感じられます。建物の装飾だけを探すのではなく、路地の曲がり角や中庭への入口に目を向けると、町のつくりそのものが興味深く見えてきます。",
+            "UNESCOはチュニスのメディナを、北アフリカの早い時期に成立したアラブ・イスラム都市の一つとして評価しています。長くさまざまな王朝のもとで発展し、宗教施設や住宅、商業空間が密接に結びついてきました。ひとつの名所だけでは分からない都市の歴史が、街路を歩くほど浮かび上がります。市場での撮影や礼拝施設の見学では、現在暮らす人々への配慮を忘れたくありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・チュニスのメディナ",
+              "url": "https://whc.unesco.org/en/list/36/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・チュニスのメディナ",
+          "sourceUrl": "https://whc.unesco.org/en/list/36/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-nordic-asia-eight-20261121.json",
+          "quizDraft": {
+            "question": "チュニスのメディナが発展した歴史的都市文化は？",
+            "options": [
+              "アラブ・イスラム文化",
+              "北欧のヴァイキング文化のみ",
+              "インカ文化"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはチュニスのメディナを北アフリカの歴史的なアラブ・イスラム都市として評価しています。",
+            "photoGoal": "チュニスのメディナが確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "カルタゴの考古遺跡",
+          "paragraphs": [
+            "カルタゴの遺跡を歩くと、石積みの基礎や古い建物の跡が地中海を見渡す地形の中に点在しています。遠くに海が見える場所に立つと、都市と海上交通の関係を想像しやすくなります。ひとつの巨大な建物が残るのではなく、複数の区域に異なる時代の遺構が分かれているため、地図で位置を確かめながら少しずつたどると理解が深まります。",
+            "UNESCOによるとカルタゴは紀元前9世紀にフェニキア人によって建設され、地中海世界で重要な都市へ成長しました。のちにローマ時代の遺構も重なり、同じ場所に異なる歴史の層が残っています。遺跡を海へ向かう道や丘と結びつけて見れば、都市の広がりをより具体的に感じられます。現在の周辺市街地にも配慮しながら、古代の記憶をたどりたいところです。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カルタゴの考古遺跡",
+              "url": "https://whc.unesco.org/en/list/37/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・カルタゴの考古遺跡",
+          "sourceUrl": "https://whc.unesco.org/en/list/37/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-nordic-asia-eight-20261121.json",
+          "quizDraft": {
+            "question": "カルタゴの古代都市を建設した人々は？",
+            "options": [
+              "フェニキア人",
+              "マヤ人",
+              "ヴァイキング"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはカルタゴをフェニキア人が紀元前9世紀に建設した都市として紹介しています。",
+            "photoGoal": "カルタゴの考古遺跡が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "TR": {
       "name": "トルコ",
@@ -11470,7 +13450,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ブウィンディ原生国立公園",
+          "paragraphs": [
+            "ウガンダ南西部のブウィンディの森を写した写真では、濃い緑の樹冠が丘の起伏を覆っています。手前から奥まで続く森の層を目でたどると、平地の熱帯林と山地の森が出会う場所らしい複雑さが伝わります。地図では周囲の山並みと保護区の位置を確かめ、森を一枚の緑色ではなく、多様な生息環境が重なる場所として眺める小旅行です。",
+            "UNESCOは、この保護区がアフリカでも生物多様性の高い地域の一つであり、マウンテンゴリラをはじめとする多くの種の生息地だと説明しています。動物の姿が写っていない森林写真でも、林冠の広がりや斜面の連続性には意味があります。人の目には見えにくい生き物の暮らしを支える環境そのものに注目することで、森を守る意義がいっそう具体的になります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブウィンディ原生国立公園",
+              "url": "https://whc.unesco.org/en/list/682/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ブウィンディ原生国立公園",
+          "sourceUrl": "https://whc.unesco.org/en/list/682/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "ブウィンディ原生国立公園の世界遺産の種類は？",
+            "options": [
+              "文化遺産",
+              "自然遺産",
+              "複合遺産"
+            ],
+            "answer": 1,
+            "fact": "ブウィンディ原生国立公園は1994年登録の世界自然遺産で、多様な動植物の生息域です。",
+            "photoGoal": "ブウィンディの保護区内の森林景観が実際に写っていることを地名・作者・許諾と共に照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "カスビのブガンダ王国歴代国王の墓",
+          "paragraphs": [
+            "カンパラ近郊のカスビでは、大きな茅葺き屋根を持つ伝統的な建物と、その周囲の敷地が王国の歴史を伝えています。写真を見比べる際は屋根の形だけでなく、門や中庭、通路がどのようにつながるかにも注目しましょう。地図で都市の中に位置することを確かめると、ここが過去の遺物ではなく、いまも人々の文化的な記憶に関わる場所だと分かります。",
+            "UNESCOが2001年に世界文化遺産として登録したこの墓所は、ブガンダ王国の王たちに関わる重要な精神的・文化的な空間です。2010年の火災で主要建物が大きな被害を受けましたが、伝統技術や地域の参加を重視して復旧が進められ、2023年には危機遺産リストから外れました。修復された姿だけでなく、守り続ける営みそのものに注目する小旅行です。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・カスビのブガンダ王国歴代国王の墓",
+              "url": "https://whc.unesco.org/en/list/1022/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・カスビのブガンダ王国歴代国王の墓",
+          "sourceUrl": "https://whc.unesco.org/en/list/1022/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "カスビの墓所が伝えるのは、どの王国の歴史？",
+            "options": [
+              "ブガンダ王国",
+              "インカ帝国",
+              "アステカ帝国"
+            ],
+            "answer": 0,
+            "fact": "カスビの墓所はウガンダのブガンダ王国歴代国王に関わる世界文化遺産です。",
+            "photoGoal": "カスビの墓所の敷地または伝統建築を実際に写した写真を選び、火災以前・修復後の時期を取り違えない。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "UA": {
       "name": "ウクライナ",
@@ -11799,7 +13845,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "サマルカンド歴史地区",
+          "paragraphs": [
+            "サマルカンドのレギスタン広場では、向かい合う壮大な建物の正面に青いタイルや幾何学模様が広がっています。遠くから全体の左右のバランスを眺めたあと、近くで小さな模様を追うと、建築の規模と職人の細かな仕事が同時に伝わります。広場だけで旅を終えず、シャーヒ・ズィンダ廟群などへ目を向ければ、都市の表情がさらに豊かになります。",
+            "UNESCOはサマルカンドを世界の文化が交差する都市とし、古代アフラシヤブを起源に十四〜十五世紀のティムール朝期に大きく発展したと説明しています。主要遺産にはレギスタンのマドラサ群だけでなく、ビービー・ハーヌム・モスクやウルグ・ベク天文台も含まれます。一つの広場が町の歴史のすべてではないと知ると、歩く順序も変わってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・サマルカンド歴史地区",
+              "url": "https://whc.unesco.org/en/list/603/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・サマルカンド歴史地区",
+          "sourceUrl": "https://whc.unesco.org/en/list/603/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "サマルカンドが大きく発展した時代としてUNESCOが挙げるのは？",
+            "options": [
+              "ティムール朝期",
+              "産業革命期の英国統治",
+              "古代ローマ帝国期"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはサマルカンドの重要な発展期として十四〜十五世紀のティムール朝期を挙げています。",
+            "photoGoal": "サマルカンド歴史地区の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ブハラ歴史地区",
+          "paragraphs": [
+            "ブハラの旧市街では、日陰をつくる建物の間に広場や宗教施設が現れ、歩く方向によって景色が細かく変化します。高いミナレットを遠くから目印にしつつ、煉瓦の壁面や門の装飾を近くで確かめてみてください。大きな観光名所だけでなく、道と建物がつながる町全体に目を向けると、交易都市らしい落ち着いた魅力を感じられます。",
+            "UNESCOはブハラをシルクロード沿いに立地する二千年以上の歴史を持つ都市として紹介し、中世中央アジアの都市構造がよく残る例と位置付けています。十世紀のイスマーイール・サーマーニー廟や十七世紀のマドラサにも触れています。異なる時代に築かれた建物が一つの市街地に重なる点を意識すると、色鮮やかな装飾の奥にある長い歴史が見えてきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ブハラ歴史地区",
+              "url": "https://whc.unesco.org/en/list/602/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ブハラ歴史地区",
+          "sourceUrl": "https://whc.unesco.org/en/list/602/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-next-eight-20261121.json",
+          "quizDraft": {
+            "question": "ブハラが発展した広域交易路は？",
+            "options": [
+              "シルクロード",
+              "アンデス山脈のインカ道",
+              "北大西洋の航路"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはブハラをシルクロード沿いにある歴史都市として説明しています。",
+            "photoGoal": "ブハラ歴史地区の撮影地・著作者・許諾を確認した他用途と重複しないWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "VA": {
       "name": "バチカン市国",
@@ -12007,7 +14119,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ロベン島",
+          "paragraphs": [
+            "ケープタウン沖のロベン島を訪ねる体験は、海を渡るところから始まります。対岸の街並みを振り返り、島に残る建物や収容施設を見ると、距離の近さとは対照的な隔絶の歴史が迫ってきます。景観だけを写真に収めるのではなく、そこに長く暮らすことを強いられた人々の時間を考え、案内や説明を丁寧に読みたい場所です。",
+            "UNESCOはロベン島を、政治的抑圧を受けた人々の歴史と、自由と民主主義への闘いを伝える遺産として評価しています。ネルソン・マンデラを含む多くの人々が投獄された記録は、施設の建物に重い意味を与えています。旅先の一つとして消費せず、現地の語りに耳を傾けることが、この場所を訪ねる価値につながります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ロベン島",
+              "url": "https://whc.unesco.org/en/list/916/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ロベン島",
+          "sourceUrl": "https://whc.unesco.org/en/list/916/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "ロベン島が世界遺産として重視される理由は？",
+            "options": [
+              "政治的抑圧と自由への闘いの記憶",
+              "古代ローマの円形劇場",
+              "巨大な氷河湖"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはロベン島を抑圧と自由への闘いの歴史を伝える場所として登録しています。",
+            "photoGoal": "ロベン島が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "ケープ植物区保護地域",
+          "paragraphs": [
+            "ケープ地方の自然を歩くと、同じ斜面にも背の低い灌木やさまざまな花が入り混じり、植物の形や色の違いが目に入ります。壮大な山の稜線に目を奪われがちですが、足元にある葉の形や花の配置を比べると、景色が一段と豊かになります。限られた範囲に異なる植物が集中する風景を、歩く速さを落として楽しみたい場所です。",
+            "UNESCOはケープ植物区保護地域を、特に豊かな植物の固有性と多様性で評価しています。この地域に見られる植物群は世界的にも特徴的で、自然環境の保全が重要な課題です。名の知れた動物だけでなく、地味に見える小さな植物にも目を向けると、なぜこの場所が特別なのかを実感しやすくなります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・ケープ植物区保護地域",
+              "url": "https://whc.unesco.org/en/list/1007/",
+              "checkedOn": "2026-11-21"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・ケープ植物区保護地域",
+          "sourceUrl": "https://whc.unesco.org/en/list/1007/",
+          "sourceCheckedOn": "2026-11-21",
+          "sourceBatch": "country-expansion-batch-eight-20261121.json",
+          "quizDraft": {
+            "question": "ケープ植物区保護地域が高く評価されるのは？",
+            "options": [
+              "豊富な固有植物",
+              "大規模な古代宮殿",
+              "火山島の溶岩湖"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはケープ植物区保護地域の固有性と植物多様性を評価しています。",
+            "photoGoal": "ケープ植物区保護地域が明確に確認できる、人物・撮影者・権利表示付きの独立したWikimedia Commons実景写真"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     },
     "ZM": {
       "name": "ザンビア",
@@ -12035,7 +14213,73 @@
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "グレート・ジンバブエ遺跡",
+          "paragraphs": [
+            "グレート・ジンバブエの写真には、草木の間から長い石垣が曲線を描いて現れます。大囲壁と呼ばれる大きな囲いを見つけたら、石の一つ一つが積まれた線をたどってみましょう。高い壁は飾りとしてだけでなく、かつて大きな都市が営まれたことを感じさせます。丘の遺構、大囲壁、谷の遺構を地図で見比べ、都市全体の配置を想像する小旅行です。",
+            "UNESCOによれば、この遺跡は11～15世紀ごろに栄えたショナ系の人々の都市文明と交易の重要性を伝えています。大囲壁などの構造物は石材を積み重ねる高度な技術を示し、丘と谷に分かれた遺構は単一の建物ではなく都市の広がりを示します。巨大な石壁の写真を見たあとで、誰がどのように暮らし、物資を交換したのかを考えると、遺跡の風景に生活の気配が戻ってきます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・グレート・ジンバブエ遺跡",
+              "url": "https://whc.unesco.org/en/list/364/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・グレート・ジンバブエ遺跡",
+          "sourceUrl": "https://whc.unesco.org/en/list/364/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "グレート・ジンバブエの大囲壁の特徴は？",
+            "options": [
+              "氷の塊でできている",
+              "石を積み上げた壁である",
+              "すべて近代の鉄筋製である"
+            ],
+            "answer": 1,
+            "fact": "グレート・ジンバブエの大囲壁は、石材を積み上げた歴史的な建築群の一部です。",
+            "photoGoal": "大囲壁または丘の遺構そのものが分かるジンバブエ国内の実景と撮影者・利用条件を照合する。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        },
+        {
+          "title": "マトボの丘群",
+          "paragraphs": [
+            "マトボの丘群では、丸みを帯びた大きな花崗岩が積み重なり、時には不思議な均衡で立っているように見えます。遠くからは彫刻のように見える岩山も、その間には人々が長く使ってきた場所や岩絵が残されています。写真では奇岩の形を楽しみ、別の写真では岩壁の絵に注目し、自然の地形と人間の営みが同じ景観に重なることを確かめましょう。",
+            "UNESCOは、マトボの文化的景観に豊かな岩絵の記録があり、古くから人が暮らしてきた痕跡を示すと説明しています。また地域の人々にとって重要な聖地や儀礼の場所が現在も大切にされています。世界遺産の価値を奇岩の珍しさだけに縮めず、岩山を舞台に継承されてきた信仰や社会的な営みとともに読むと、風景の見え方が変わります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター・マトボの丘群",
+              "url": "https://whc.unesco.org/en/list/306/",
+              "checkedOn": "2026-11-22"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター・マトボの丘群",
+          "sourceUrl": "https://whc.unesco.org/en/list/306/",
+          "sourceCheckedOn": "2026-11-22",
+          "sourceBatch": "country-expansion-batch-ug-zw-mg-20261122.json",
+          "quizDraft": {
+            "question": "マトボの丘群が世界文化遺産として評価される理由は？",
+            "options": [
+              "近代の超高層建築",
+              "巨大なサンゴ礁",
+              "岩絵や聖地を含む文化的景観"
+            ],
+            "answer": 2,
+            "fact": "マトボの丘群は岩絵や聖なる場所、人々の伝統を含む文化的景観として評価されます。",
+            "photoGoal": "ジンバブエのマトボ丘陵にある実際の花崗岩の奇岩・岩絵と確認できる写真を選ぶ。"
+          },
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_photo_rights_and_location_review",
+          "editorialOnly": true
+        }
+      ]
     }
   }
 }
