@@ -187,6 +187,30 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(desks,{"person","work","sports","company"})
         self.assertLessEqual(len(proposed),12)
 
+    def test_major_personal_blunders_fill_first_editorial_slots(self):
+        # Historical desk and geographic seeding overrode personal-first
+        # priority before editor A saw the top six evidence groups.
+        major=[[{"title":f"Man accidentally sold million dollar artwork {i} by mistake",
+                 "url":f"https://personal{i}.example/story",
+                 "sourcecountry":"US"}] for i in range(8)]
+        filler=[[{"title":f"Company accidentally prints wrong name {i}",
+                  "url":f"https://minor{i}.example/story",
+                  "sourcecountry":"FR"}] for i in range(90)]
+        ranked=editorial.prioritize_comic_groups(filler+major,limit=24)
+        self.assertEqual(len(ranked),24)
+        self.assertTrue(all("personal" in g[0]["url"] for g in ranked[:8]))
+        short=editorial.prioritize_comic_groups(filler+major,limit=6)
+        self.assertTrue(all("personal" in g[0]["url"] for g in short))
+
+    def test_major_personal_sources_get_read_before_routine_ones(self):
+        minor=[{"title":f"Company accidentally sent wrong name {i}",
+                "url":f"https://minor{i}.example/report",
+                "sourcecountry":"US"} for i in range(20)]
+        major={"title":"Woman accidentally bought million dollar property by mistake",
+               "url":"https://original.example/large","sourcecountry":"FR"}
+        selected=editorial.balanced_source_retrieval(minor+[major],limit=12)
+        self.assertEqual(selected[0]["url"],major["url"])
+
     def test_local_language_headlines_are_not_discarded_as_generic(self):
         headlines={
             "it":"Comune pubblica un cartello con errore di stampa",
@@ -418,7 +442,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
 
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
-        self.assertIn("source-supported extraordinary human actions",mission)
+        self.assertIn("overwhelmingly prioritize a concrete INDIVIDUAL",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
         self.assertIn("Never replace a genuine hard-to-believe sourced human episode",mission)
