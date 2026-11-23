@@ -443,6 +443,19 @@ def host(url):
         return p.hostname.lower().removeprefix("www.") if p.scheme=="https" and p.hostname and not p.username else ""
     except ValueError:return ""
 
+def source_reading_stop_reason(readable_count, high_signal_count, remaining_seconds):
+    """Stop generic URL reading while reserving time for full AI source audits.
+
+    These thresholds concern only retrieval resource budgeting, never news
+    approval or a minimum/maximum number of published articles.
+    """
+    if remaining_seconds < 280:
+        return "reserve_time_for_independent_review"
+    if readable_count >= 72 and high_signal_count >= 12:
+        return "enough_promising_original_reports_for_editorial_review"
+    return None
+
+
 def balanced_source_retrieval(leads, limit=240):
     """Fairly sample fetchable publisher sources across discovery markets.
 
@@ -1153,6 +1166,7 @@ def draft_preflight_viable(story,now):
 # article text, individuals' names, URLs, model prompts or unverified events.
 FUNNEL_COUNT_FIELDS=frozenset({
     "collected","fresh","planned_fetches","fetchable_original_bodies",
+    "high_signal_original_bodies","source_fetch_attempts",
     "candidate_review_groups","paired_groups","single_original_groups",
     "first_ai_batch_groups","drafted","preflight_eligible",
     "independent_approved","selected_for_edition",
@@ -1243,7 +1257,16 @@ def main():
                publisher_regions_fetch_plan=dict(retrieval_regions))
     outcomes={}
     failure_reasons={}
+    high_signal_source_count=0
+    fetch_stop_reason=None
     for lead in ordered:
+        fetch_stop_reason=source_reading_stop_reason(
+            len(source_leads),high_signal_source_count,
+            editorial_seconds_remaining())
+        if fetch_stop_reason:
+            print("Original-source fetch budget preserved for AI source audits:",
+                  fetch_stop_reason,flush=True)
+            break
         provider=lead.get('provider','unknown')
         label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('Guardian RSS' if provider.startswith('The Guardian') else ('GDELT' if provider.startswith('GDELT') else 'Other')))
         outcomes.setdefault(label,[0,0])
@@ -1255,16 +1278,21 @@ def main():
             reason=diagnostics[0] if diagnostics else 'unknown'
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
-        if cache[url]:source_leads.append({
-            'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
-            'text':cache[url][:8500],
-            # Publisher *market*, not a report of the incident's location.
-            'sourcecountry':lead.get('sourcecountry',''),
-            'language':lead.get('language',''),
-            'focus':lead.get('focus',''),
-        })
+        if cache[url]:
+            source_leads.append({
+                'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
+                'text':cache[url][:8500],
+                # Publisher *market*, not a report of the incident's location.
+                'sourcecountry':lead.get('sourcecountry',''),
+                'language':lead.get('language',''),
+                'focus':lead.get('focus',''),
+            })
+            if incident_priority(lead)[0]<=1:
+                high_signal_source_count+=1
     fetched_regions=Counter(country_region(x.get("sourcecountry")) or "unattributed" for x in source_leads)
     checkpoint("body_fetch",fetchable_original_bodies=len(source_leads),
+               high_signal_original_bodies=high_signal_source_count,
+               source_fetch_attempts=sum(row[0] for row in outcomes.values()),
                publisher_regions_fetched=dict(fetched_regions))
     print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
