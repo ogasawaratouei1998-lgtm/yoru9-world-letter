@@ -1604,3 +1604,29 @@ body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
  body.country-detail-mode #atlasHero .today-map-intro-photo img{
   aspect-ratio:4/3!important;max-height:none!important}
 }
+
+/* A portrait is a separate scrollable screen, independent of the map and country list. */
+html:has(body.country-detail-mode),body.country-detail-mode{overflow:hidden!important}
+body.country-detail-mode #todayMapIntro{
+ position:fixed!important;inset:0!important;z-index:1100!important;
+ display:block!important;box-sizing:border-box;width:100%!important;
+ height:100vh!important;height:100dvh!important;max-height:100dvh!important;
+ overflow-y:auto!important;overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+ margin:0!important;border:0!important;border-radius:0!important;
+ padding:calc(env(safe-area-inset-top,0px) + 22px) clamp(18px,5vw,42px)
+  calc(env(safe-area-inset-bottom,0px) + 28px)!important;
+ background:linear-gradient(150deg,#1E3C55,#152B41)!important;
+}
+body.country-detail-mode #todayMapIntro > *{max-width:740px;margin-left:auto;margin-right:auto}
+.today-map-intro-footer{display:flex;justify-content:center;
+ margin-top:24px!important;padding-top:20px;border-top:1px solid #6f91a0}
+.today-map-intro-close-bottom{min-width:180px;min-height:48px;
+ padding:10px 25px;border:1px solid #9CCEC8;border-radius:999px;
+ background:#2A5060;color:#E9F6F4;font-size:.95rem;font-weight:800}
+@media(max-width:520px){
+ body.country-detail-mode #todayMapIntro{
+  padding:calc(env(safe-area-inset-top,0px) + 19px) 17px
+   calc(env(safe-area-inset-bottom,0px) + 25px)!important}
+ .today-map-intro-close-bottom{width:100%;max-width:260px}
+}

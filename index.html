@@ -1620,6 +1620,32 @@ body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
   aspect-ratio:4/3!important;max-height:none!important}
 }
 
+/* A portrait is a separate scrollable screen, independent of the map and country list. */
+html:has(body.country-detail-mode),body.country-detail-mode{overflow:hidden!important}
+body.country-detail-mode #todayMapIntro{
+ position:fixed!important;inset:0!important;z-index:1100!important;
+ display:block!important;box-sizing:border-box;width:100%!important;
+ height:100vh!important;height:100dvh!important;max-height:100dvh!important;
+ overflow-y:auto!important;overscroll-behavior:contain;
+ -webkit-overflow-scrolling:touch;
+ margin:0!important;border:0!important;border-radius:0!important;
+ padding:calc(env(safe-area-inset-top,0px) + 22px) clamp(18px,5vw,42px)
+  calc(env(safe-area-inset-bottom,0px) + 28px)!important;
+ background:linear-gradient(150deg,#1E3C55,#152B41)!important;
+}
+body.country-detail-mode #todayMapIntro > *{max-width:740px;margin-left:auto;margin-right:auto}
+.today-map-intro-footer{display:flex;justify-content:center;
+ margin-top:24px!important;padding-top:20px;border-top:1px solid #6f91a0}
+.today-map-intro-close-bottom{min-width:180px;min-height:48px;
+ padding:10px 25px;border:1px solid #9CCEC8;border-radius:999px;
+ background:#2A5060;color:#E9F6F4;font-size:.95rem;font-weight:800}
+@media(max-width:520px){
+ body.country-detail-mode #todayMapIntro{
+  padding:calc(env(safe-area-inset-top,0px) + 19px) 17px
+   calc(env(safe-area-inset-bottom,0px) + 25px)!important}
+ .today-map-intro-close-bottom{width:100%;max-width:260px}
+}
+
 </style>
 <link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
@@ -1661,9 +1687,9 @@ body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
    <img class="today-map-art" src="./assets/world-today-illustrated.svg" alt="" width="960" height="480" decoding="async">
    <div class="today-map-pins" id="todayMapPins" role="group" aria-label="掲載国のピン"></div>
   </div>
-  <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
+  <section class="today-map-intro" id="todayMapIntro" role="dialog" aria-modal="true" aria-labelledby="todayMapIntroName" hidden>
    <p class="country-portrait-kicker">COUNTRY PORTRAIT · 国の魅力</p>
-   <div class="today-map-intro-head"><h4 id="todayMapIntroName" tabindex="-1"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="地図に戻る">‹ 地図へ戻る</button></div>
+   <div class="today-map-intro-head"><h4 id="todayMapIntroName" tabindex="-1"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国紹介を閉じる">閉じる</button></div>
    <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="eager" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
    <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
@@ -1679,6 +1705,7 @@ body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
    </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
    <div id="todayMapIntroTravel" class="prepared-country-travel" aria-label="国紹介からの小旅行" hidden></div>
+   <div class="today-map-intro-footer"><button class="today-map-intro-close-bottom" id="todayMapIntroCloseBottom" type="button">閉じる</button></div>
   </section>
   <p class="today-map-game-lead">地図の下にある国名をタップすると、名所や文化を知る写真付き3択クイズを楽しめます。</p>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>
@@ -1969,6 +1996,7 @@ function todayCountryIntro(item){
   :item.name+'の暮らしや文化について、確認できた情報から紹介を準備しています。';
 }
 let countryReturnTarget=null;
+let countryReturnScrollY=0;
 function hideTodayCountryIntro(restoreMap=true){
  const wasOpen=document.body.classList.contains('country-detail-mode');
  todayCountryIntroRequest++;
@@ -1977,9 +2005,15 @@ function hideTodayCountryIntro(restoreMap=true){
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
  if(wasOpen&&restoreMap===true){
   const target=countryReturnTarget?.isConnected?countryReturnTarget:$('todayMapSection');
+  const returnY=countryReturnScrollY;
   requestAnimationFrame(()=>{
+   if(document.body.classList.contains('country-detail-mode'))return;
    target.focus?.({preventScroll:true});
-   target.scrollIntoView({block:'center',behavior:'auto'});
+   // Do not jump to a map or list: recover the exact position before opening.
+   const root=document.documentElement,oldBehavior=root.style.scrollBehavior;
+   root.style.scrollBehavior='auto';
+   window.scrollTo(0,returnY);
+   requestAnimationFrame(()=>{root.style.scrollBehavior=oldBehavior;});
   });
  }
 }
@@ -2004,6 +2038,7 @@ function countryPhotoIsSharpEnough(image){
 function showTodayCountryIntro(item){
  closeWorldPassport(false);
  countryReturnTarget=document.activeElement;
+ countryReturnScrollY=window.scrollY;
  $('worldExplore').open=true;
  const requestId=++todayCountryIntroRequest,currentCode=item.code;
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
@@ -2121,7 +2156,7 @@ function showTodayCountryIntro(item){
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
- window.scrollTo(0,0);
+ $('todayMapIntro').scrollTop=0;
  $('todayMapIntroName').focus({preventScroll:true});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
@@ -2343,6 +2378,23 @@ $('worldExplore').addEventListener('toggle',()=>{
  }
 });
 $('todayMapIntroClose').addEventListener('click',()=>hideTodayCountryIntro());
+$('todayMapIntroCloseBottom').addEventListener('click',()=>hideTodayCountryIntro());
+$('todayMapIntro').addEventListener('keydown',event=>{
+ if(event.key==='Escape'){
+  event.preventDefault();hideTodayCountryIntro();return;
+ }
+ if(event.key!=='Tab')return;
+ const focusables=[...$('todayMapIntro').querySelectorAll('a[href],button:not([disabled])')]
+  .filter(element=>!element.closest('[hidden]')&&element.getClientRects().length);
+ if(!focusables.length)return;
+ const first=focusables[0],last=focusables[focusables.length-1];
+ if(event.shiftKey&&(document.activeElement===first||
+    !focusables.includes(document.activeElement))){
+  event.preventDefault();last.focus();
+ }else if(!event.shiftKey&&document.activeElement===last){
+  event.preventDefault();first.focus();
+ }
+});
 $('todayMapIntroRead').addEventListener('click',()=>{
  const read=$('todayMapIntroRead');
  if(read.dataset.action==='quiz'){

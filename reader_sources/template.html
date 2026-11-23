@@ -55,9 +55,9 @@
    <img class="today-map-art" src="./assets/world-today-illustrated.svg" alt="" width="960" height="480" decoding="async">
    <div class="today-map-pins" id="todayMapPins" role="group" aria-label="掲載国のピン"></div>
   </div>
-  <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
+  <section class="today-map-intro" id="todayMapIntro" role="dialog" aria-modal="true" aria-labelledby="todayMapIntroName" hidden>
    <p class="country-portrait-kicker">COUNTRY PORTRAIT · 国の魅力</p>
-   <div class="today-map-intro-head"><h4 id="todayMapIntroName" tabindex="-1"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="地図に戻る">‹ 地図へ戻る</button></div>
+   <div class="today-map-intro-head"><h4 id="todayMapIntroName" tabindex="-1"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国紹介を閉じる">閉じる</button></div>
    <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="eager" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
    <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
@@ -73,6 +73,7 @@
    </aside>
    <button class="today-map-intro-read" id="todayMapIntroRead" type="button">この国のニュースを読む</button>
    <div id="todayMapIntroTravel" class="prepared-country-travel" aria-label="国紹介からの小旅行" hidden></div>
+   <div class="today-map-intro-footer"><button class="today-map-intro-close-bottom" id="todayMapIntroCloseBottom" type="button">閉じる</button></div>
   </section>
   <p class="today-map-game-lead">地図の下にある国名をタップすると、名所や文化を知る写真付き3択クイズを楽しめます。</p>
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>

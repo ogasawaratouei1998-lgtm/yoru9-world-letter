@@ -132,6 +132,7 @@ function todayCountryIntro(item){
   :item.name+'の暮らしや文化について、確認できた情報から紹介を準備しています。';
 }
 let countryReturnTarget=null;
+let countryReturnScrollY=0;
 function hideTodayCountryIntro(restoreMap=true){
  const wasOpen=document.body.classList.contains('country-detail-mode');
  todayCountryIntroRequest++;
@@ -140,9 +141,15 @@ function hideTodayCountryIntro(restoreMap=true){
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
  if(wasOpen&&restoreMap===true){
   const target=countryReturnTarget?.isConnected?countryReturnTarget:$('todayMapSection');
+  const returnY=countryReturnScrollY;
   requestAnimationFrame(()=>{
+   if(document.body.classList.contains('country-detail-mode'))return;
    target.focus?.({preventScroll:true});
-   target.scrollIntoView({block:'center',behavior:'auto'});
+   // Do not jump to a map or list: recover the exact position before opening.
+   const root=document.documentElement,oldBehavior=root.style.scrollBehavior;
+   root.style.scrollBehavior='auto';
+   window.scrollTo(0,returnY);
+   requestAnimationFrame(()=>{root.style.scrollBehavior=oldBehavior;});
   });
  }
 }
@@ -167,6 +174,7 @@ function countryPhotoIsSharpEnough(image){
 function showTodayCountryIntro(item){
  closeWorldPassport(false);
  countryReturnTarget=document.activeElement;
+ countryReturnScrollY=window.scrollY;
  $('worldExplore').open=true;
  const requestId=++todayCountryIntroRequest,currentCode=item.code;
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
@@ -284,7 +292,7 @@ function showTodayCountryIntro(item){
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
- window.scrollTo(0,0);
+ $('todayMapIntro').scrollTop=0;
  $('todayMapIntroName').focus({preventScroll:true});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
@@ -506,6 +514,23 @@ $('worldExplore').addEventListener('toggle',()=>{
  }
 });
 $('todayMapIntroClose').addEventListener('click',()=>hideTodayCountryIntro());
+$('todayMapIntroCloseBottom').addEventListener('click',()=>hideTodayCountryIntro());
+$('todayMapIntro').addEventListener('keydown',event=>{
+ if(event.key==='Escape'){
+  event.preventDefault();hideTodayCountryIntro();return;
+ }
+ if(event.key!=='Tab')return;
+ const focusables=[...$('todayMapIntro').querySelectorAll('a[href],button:not([disabled])')]
+  .filter(element=>!element.closest('[hidden]')&&element.getClientRects().length);
+ if(!focusables.length)return;
+ const first=focusables[0],last=focusables[focusables.length-1];
+ if(event.shiftKey&&(document.activeElement===first||
+    !focusables.includes(document.activeElement))){
+  event.preventDefault();last.focus();
+ }else if(!event.shiftKey&&document.activeElement===last){
+  event.preventDefault();first.focus();
+ }
+});
 $('todayMapIntroRead').addEventListener('click',()=>{
  const read=$('todayMapIntroRead');
  if(read.dataset.action==='quiz'){
