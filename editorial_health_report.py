@@ -10,10 +10,10 @@ from pathlib import Path
 
 PHASE_MESSAGES={
     "fresh_filter":"信頼済み媒体からの新着候補を選別中",
-    "publisher_leads_below_four":"7日以内の承認済み報道機関の記事候補が4件未満",
+    "publisher_leads_unavailable":"7日以内の承認済み報道機関の記事候補がゼロ",
     "fetch_plan":"報道機関の記事を読み込む準備中",
     "body_fetch":"報道機関の記事を読み込み済み",
-    "publisher_articles_below_four":"本文を読める記事が4件未満で、AI編集は実行しない",
+    "publisher_articles_unavailable":"本文を読める記事がゼロのため、AI編集を実行しない",
     "shortlist":"記事候補の優先順位を整理済み",
     "budget_blocked":"無料AIの実行時間が不足し、記事生成を停止",
     "model_quota_blocked":"無料AIの利用枠が不足し、記事生成を停止",
