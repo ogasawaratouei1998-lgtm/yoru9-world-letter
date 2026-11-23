@@ -38,7 +38,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             "pin.setAttribute('aria-controls','todayMapIntro')",
             "pin.setAttribute('aria-expanded','false')",
             "pin.addEventListener('click',()=>showTodayCountryIntro(item))",
-            'id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden',
+            'id="todayMapIntro" role="dialog" aria-modal="true" aria-labelledby="todayMapIntroName" hidden',
             "function todayCountryIntro(item)",
             "countryRecord(item.code)?.region",
             "$('todayMapIntroBody').textContent=guide",
