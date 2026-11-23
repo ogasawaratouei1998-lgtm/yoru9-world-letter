@@ -283,7 +283,31 @@
         }
       ],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ムバンザ・コンゴの王都の記憶",
+          "paragraphs": [
+            "アンゴラ北部のムバンザ・コンゴを地図で探すと、旧コンゴ王国の政治的中心が現在の国境を越える広い地域史につながっていたことが見えてきます。王都の遺構や歴史的空間を資料で読み、都市を単なる遺跡の集合ではなく政治と交流の舞台として想像します。",
+            "UNESCOはムバンザ・コンゴを旧コンゴ王国の首都として登録しています。宗教的交流や政治制度の変化を考える際は、ヨーロッパ側の記録だけに依存せず地域社会の視点を重ねる必要があります。現地訪問の安全性は未確認です。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ao",
+          "editorialOnly": true
+        },
+        {
+          "title": "王都から大西洋交流を考える",
+          "paragraphs": [
+            "王都と大西洋岸の距離を地図で見比べ、内陸の政治拠点と沿岸の交易がどのように結びついたかを問い直します。地名と方角を確かめるだけでも、海岸から始まる歴史叙述とは異なる視点が生まれます。",
+            "大西洋を介した交流には文化的接触とともに強制移動や暴力の歴史もあります。王国の歴史を外部勢力との関係だけに還元せず、現地の人々の経験を中心に据えて資料を読みます。個別の交易経路は検証前のため断定しません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ao",
+          "editorialOnly": true
+        }
+      ]
     },
     "AL": {
       "name": "アルバニア",
@@ -467,7 +491,31 @@
         }
       ],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "マドリウ渓谷の牧畜景観",
+          "paragraphs": [
+            "マドリウ＝ペラフィタ＝クラロ渓谷の山道と石造りの小屋を資料上でたどると、ピレネーの険しい地形を使いながら営まれた牧畜の姿が浮かびます。地図の等高線を見比べ、谷底と高地を結ぶ移動が暮らしにどんな意味を持ったか考える小旅行です。",
+            "UNESCOはこの渓谷を人と山地環境の長い関わりを示す文化的景観として記録しています。石造建築を単独の名所として見るより、道・牧草地・居住の痕跡を一体で読むことが重要です。登山の難易度や現地通行状況は未確認のため、現地踏査を勧める内容ではありません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ad",
+          "editorialOnly": true
+        },
+        {
+          "title": "谷の水路と土地利用",
+          "paragraphs": [
+            "山の斜面から谷へ流れる水と、限られた平坦地の使い方に注目します。水の流れ、道、建物の配置を地形図で追うと、見慣れた山岳風景が暮らしの工夫を伝える資料に変わります。",
+            "世界遺産の価値は壮大な自然だけでなく、長期間続いた土地利用にもあります。水路や農牧業の痕跡について個別の年代や機能を断定せず、公式資料と照合しながら読む姿勢を保ちます。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ad",
+          "editorialOnly": true
+        }
+      ]
     },
     "AE": {
       "name": "アラブ首長国連邦",
@@ -508,7 +556,31 @@
         }
       ],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "アル・アインのオアシス",
+          "paragraphs": [
+            "アル・アインのオアシスを地図でたどると、乾燥地帯に緑の空間が保たれてきた背景に水利用の知恵があることに気づきます。近代的な高層建築のイメージから離れ、農地と居住地の配置を手掛かりに地域の長い歴史を見つめます。",
+            "UNESCOに登録されたアル・アインの文化的遺跡群は、オアシスと人々の長期的な居住を伝えています。水路の構造や各遺構の年代は個別資料で照合する必要があります。写真・撮影地点・利用権が未確認のため公開候補ではありません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ae",
+          "editorialOnly": true
+        },
+        {
+          "title": "アル・アインの先史遺跡",
+          "paragraphs": [
+            "オアシス周辺の考古遺跡を地図上で結び、農耕の場と埋葬・居住の痕跡が地域の歴史をどのように語るかを考えます。乾いた大地を空白と見なさず、人々が環境に適応した痕跡を読み取る資料旅行です。",
+            "世界遺産の登録対象には先史時代にさかのぼる文化的遺跡が含まれます。ただし各遺構の用途や年代を一律に説明するのは不正確です。詳細はUNESCOの個別登録資料と現地公的資料の確認後に確定します。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/ae",
+          "editorialOnly": true
+        }
+      ]
     },
     "AR": {
       "name": "アルゼンチン",
@@ -1538,7 +1610,31 @@
         }
       ],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "アボメー王宮群と王権",
+          "paragraphs": [
+            "アボメー王宮群の建物と装飾を資料で見比べると、ダホメ王国の政治と儀礼が空間に刻まれていたことが分かります。宮殿を美しい建築として眺めるだけでなく、誰がどのように権力を行使したのかを問いながら歴史をたどります。",
+            "UNESCOの登録資料は王宮群をダホメ王国の歴史を伝える遺産として位置づけています。その歴史には大西洋奴隷貿易に結びつく痛ましい側面もあります。王権の表現と人々の経験を切り離さずに扱うことが大切です。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bj",
+          "editorialOnly": true
+        },
+        {
+          "title": "王宮の保存と歴史の語り",
+          "paragraphs": [
+            "王宮群を文化財として守ることは、建物の修復だけでは終わりません。展示や解説がどの時代のどの人々の声を伝えているかを考えると、遺産の保存が現在の社会とつながる営みだと分かります。",
+            "歴史の記憶には栄華と苦難の双方が含まれます。保存状況、見学可能区域、展示内容は変化するため、現地公的機関の最新情報を確認するまでは現地での具体的な行程を案内しません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bj",
+          "editorialOnly": true
+        }
+      ]
     },
     "BF": {
       "name": "ブルキナファソ",
@@ -1579,7 +1675,31 @@
         }
       ],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ロロペニの石造囲壁",
+          "paragraphs": [
+            "ブルキナファソ南部のロロペニに残る石造りの囲壁を図面や写真資料から読みます。壁の連なりや空間の区切りに注目すると、建物の用途を簡単に決めつけられない考古学の面白さが伝わってきます。",
+            "UNESCOはロロペニを西アフリカの交易史と関連する遺産として記録しています。ただし遺構の機能や成立過程には研究上の論点があり、確定していない内容を断定しません。現地の安全確認が済むまで訪問は推奨しません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bf",
+          "editorialOnly": true
+        },
+        {
+          "title": "ロロペニと交易の地理",
+          "paragraphs": [
+            "ロロペニの位置を西アフリカの地図に置き、交易と地域社会の関係を考える資料旅行です。遺跡だけでなく周辺の地形や他地域との位置関係に注目すると、石壁がより大きな歴史の一部として見えてきます。",
+            "交易史を語るときは、遺跡と特定の交易品や経路を安易に一対一で結びつけないことが重要です。公式登録資料に記された事実と研究上の推測を分け、最新の安全情報がない段階では現地への移動を案内しません。"
+          ],
+          "status": "pending_photo_rights_and_location_review",
+          "sourceName": "UNESCO World Heritage Centre",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bf",
+          "editorialOnly": true
+        }
+      ]
     },
     "BD": {
       "name": "バングラデシュ",
