@@ -4,7 +4,7 @@ import unittest
 import tempfile
 import re
 
-from reader_asset_split import rendered_reader_assets, expected_reader_assets, split_reader_assets
+from reader_asset_split import rendered_reader_assets, expected_reader_assets, split_reader_assets, rendered_service_worker
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -98,6 +98,7 @@ class ReaderAssetSplitTest(unittest.TestCase):
             split_reader_assets(site)
             html=(site/"index.html").read_text(encoding="utf-8")
             deployed_worker=(site/"service-worker.js").read_text(encoding="utf-8")
+            self.assertEqual(deployed_worker,rendered_service_worker(worker,html))
             for name in ("reader-core.css","reader-core.js",
                          "reader-country-data.js","reader-travel.js"):
                 match=re.search(r'assets/'+re.escape(name)+r'\?v=[0-9a-f]{16}',html)
