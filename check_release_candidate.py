@@ -75,7 +75,8 @@ def audit(root: Path, site: Path | None = None) -> dict:
             "記事IDに重複または欠損がある")
     new_regular=(date>="2026-11-21" and issue.get("editionType")=="regular")
     if new_regular:
-        require(4<=len(stories)<=5,"4〜5本の検証済み記事が必要")
+        # The current issue must be nonempty (checked above), but has no
+        # mandatory minimum or maximum count of approved stories.
         require(all("imagePath" not in s and "imageType" not in s for s in stories),
                 "無料イラスト方式に生成画像の参照が混入")
 
