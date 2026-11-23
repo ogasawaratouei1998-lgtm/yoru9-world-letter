@@ -75,9 +75,9 @@ class CountryReadinessTest(unittest.TestCase):
                              for s in verified),2)
         pipeline=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertEqual(pipeline.count(
-            "if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED"),2)
-        self.assertIn("if len(selected)>=9:break",pipeline,
-                      "Review budget remains bounded by existing quota guard")
+            "if ready_reviewed_count()>=5 or AI_QUOTA_BLOCKED"),2)
+        self.assertNotIn("if len(selected)>=9:break",pipeline,
+                          "No approved story may be dropped solely for its edition number")
 
     def test_bad_license_blocks_that_country_only(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -109,21 +109,21 @@ class CountryReadinessTest(unittest.TestCase):
             self.assertEqual(saved["country_ready_articles"],4)
             self.assertNotIn("privateArticleTitle",output.read_text())
 
-    def test_four_story_failure_diagnostic_stage_is_valid(self):
+    def test_no_eligible_stories_diagnostic_stage_is_valid(self):
         with tempfile.TemporaryDirectory() as temp:
-            saved=save_editorial_funnel("four_story_gate",{
+            saved=save_editorial_funnel("no_publishable_stories",{
                 "independent_approved":6,
-                "country_ready_articles":3,
+                "country_ready_articles":0,
                 "unready_country_codes":{"TW":3},
             },path=Path(temp)/"funnel.json")
-            self.assertEqual(saved["phase"],"four_story_gate")
+            self.assertEqual(saved["phase"],"no_publishable_stories")
             self.assertEqual(saved["unready_country_codes"],{"TW":3})
 
     def test_free_svg_approval_never_assigns_paid_webp_image_path(self):
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         main=code.split("def main():",1)[-1]
         self.assertIn("select_ready_stories(selected,Path.cwd())",main)
-        self.assertIn('checkpoint("four_story_gate"',main)
+        self.assertIn('checkpoint("no_publishable_stories"',main)
         self.assertNotIn("prepare_news_images",main)
         self.assertNotIn("expected_path(day,story)",main)
         self.assertNotIn("story['imagePath']=",main)
