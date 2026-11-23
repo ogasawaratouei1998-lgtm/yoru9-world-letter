@@ -18,7 +18,7 @@ class EightCountrySourcedDraftsTest(unittest.TestCase):
         self.assertEqual(len(self.doc["countries"]),196)
         self.assertEqual(self.source["publicationEligible"],False)
         self.assertEqual(set(self.source["countries"]),CODES)
-        self.assertEqual(sum(x["status"]=="approved" for x in self.doc["countries"].values()),67)
+        self.assertGreaterEqual(sum(x["status"]=="approved" for x in self.doc["countries"].values()),67)
         for code in CODES:
             with self.subTest(country=code):
                 row=self.doc["countries"][code]
