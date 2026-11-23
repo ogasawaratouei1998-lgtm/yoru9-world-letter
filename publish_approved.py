@@ -177,9 +177,13 @@ def validate_approved(data, expected_date):
             '無料イラストによる追加訂正は2026年11月20日の承認号だけです')
     require(data.get('editionRequiresImages') is not True,
             '有料画像生成は停止中です。既存の無料イラストを使用してください')
-    if edition_type == 'regular' and issue_day >= date(2026, 11, 21):
-        # No daily quota or maximum: publish every independently approved,
-        # country-ready story. Zero verified articles means no new issue.
+    if issue_day >= date(2026, 11, 23):
+        # All new regular AND special editions are unlimited in article count.
+        # A zero-story issue still cannot replace the latest real publication.
+        require(isinstance(stories, list) and bool(stories),
+                '承認済みニュースが1本もないため、新しい号は公開しません')
+    elif edition_type == 'regular' and issue_day >= date(2026, 11, 21):
+        # Preserve the Nov 21–22 regular contract, without retroactive edits.
         require(isinstance(stories, list) and bool(stories),
                 '承認済みニュースが1本もないため、新しい号は公開しません')
     elif static_reissue_20:
