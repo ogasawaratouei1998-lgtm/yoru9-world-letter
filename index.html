@@ -1614,6 +1614,12 @@ body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
   padding-top:calc(var(--safe-top) + 9px)}
 }
 
+/* A focused portrait must remain large enough on 320px iPhones. */
+@media(max-width:520px){
+ body.country-detail-mode #atlasHero .today-map-intro-photo img{
+  aspect-ratio:4/3!important;max-height:none!important}
+}
+
 </style>
 <link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
