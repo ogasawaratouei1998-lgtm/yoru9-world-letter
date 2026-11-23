@@ -44,13 +44,28 @@ class PushDispatchTest(unittest.TestCase):
                      "editionType":"regular","stories":[{}]*count},
                     datetime(2026,11,19,21,51,tzinfo=JST)))
 
-    def test_november21_undercount_never_notifies_even_if_published_json_exists(self):
-        for count in (1,2,3,4,5,6):
+    def test_new_regular_issues_have_no_number_quota_for_notification(self):
+        for day in ("2026-11-21","2026-11-23"):
+            for count in (0,1,2,3,4,5,6):
+                with self.subTest(day=day,count=count):
+                    doc={"status":"published","editionDate":day,
+                         "editionType":"regular","stories":[{}]*count}
+                    at=datetime.fromisoformat(day+"T21:45:00").replace(tzinfo=JST)
+                    result=notice_for(doc,at)
+                    self.assertEqual(result is not None,count>=1)
+                    if result:
+                        self.assertIn(str(count)+"本",result["body"])
+
+    def test_new_special_issues_have_no_number_quota_for_notification(self):
+        for count in (0,1,2,5,6):
             with self.subTest(count=count):
-                doc={"status":"published","editionDate":"2026-11-21",
-                     "editionType":"regular","stories":[{}]*count}
-                result=notice_for(doc,datetime(2026,11,21,21,45,tzinfo=JST))
-                self.assertEqual(result is not None,count in (4,5))
+                issue={"status":"published","editionDate":"2026-11-23",
+                       "editionType":"special","stories":[{}]*count}
+                result=notice_for(issue,datetime(2026,11,23,22,0,tzinfo=JST))
+                self.assertEqual(result is not None,count>=1)
+                if result:
+                    self.assertIn("特集",result["body"])
+                    self.assertIn(str(count)+"本",result["body"])
 
     def test_four_story_notice_not_sent_prior_to_nine(self):
         self.assertIsNone(notice_for(
@@ -70,6 +85,16 @@ class PushDispatchTest(unittest.TestCase):
         self.assertIsNone(notice_for(
             {"status":"published","editionDate":"2026-11-17","stories":[{}]*3},
             datetime(2026,11,17,20,59,tzinfo=JST)))
+
+    def test_current_two_story_release_is_notification_eligible(self):
+        import json
+        from pathlib import Path
+        issue=json.loads((Path(__file__).resolve().parents[1]/"data/current.json").read_text(encoding="utf-8"))
+        if issue.get("editionDate")=="2026-11-23":
+            self.assertEqual(len(issue["stories"]),2)
+            payload=notice_for(issue,datetime(2026,11,23,22,15,tzinfo=JST))
+            self.assertIsNotNone(payload)
+            self.assertEqual(payload["editionDate"],"2026-11-23")
 
     def test_missing_backend_does_not_send(self):
         self.assertFalse(dispatch("","",{"editionDate":"2026-11-11"}))
