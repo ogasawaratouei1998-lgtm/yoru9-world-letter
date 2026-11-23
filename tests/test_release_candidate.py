@@ -18,8 +18,13 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         for filename in ("index.html","world-passport.js","service-worker.js",
                          "travel-stops.json"):
             shutil.copy2(ROOT/filename,self.root/filename)
+        current=json.loads((ROOT/"data/current.json").read_text(encoding="utf-8"))
+        self.expected_stories=len(current["stories"])
+        from country_codes import country_codes
+        self.expected_countries=len({code for story in current["stories"]
+                                     for code in country_codes(story["country"])})
         for filename in ("data/current.json","data/archive/index.json",
-                         "data/archive/2026-11-20.json"):
+                         "data/archive/"+current["editionDate"]+".json"):
             path=self.root/filename
             path.parent.mkdir(parents=True,exist_ok=True)
             shutil.copy2(ROOT/filename,path)
@@ -27,8 +32,8 @@ class FullReaderReleaseGateTest(unittest.TestCase):
 
     def test_current_published_issue_and_every_travel_story_pass(self):
         result=audit(self.root)
-        self.assertEqual(result["stories"],4)
-        self.assertEqual(result["countries"],3)
+        self.assertEqual(result["stories"],self.expected_stories)
+        self.assertEqual(result["countries"],self.expected_countries)
         self.assertGreaterEqual(result["touristRecords"],34)
         self.assertFalse(result["buildPhotosChecked"])
 
@@ -42,14 +47,19 @@ class FullReaderReleaseGateTest(unittest.TestCase):
 
     def test_post_nov20_issue_can_publish_three_verified_stories(self):
         doc=json.loads((self.root/"data/current.json").read_text(encoding="utf-8"))
-        doc["editionDate"]="2026-11-21"
+        test_day="2026-11-24"
+        doc["editionDate"]=test_day
         doc["stories"]=doc["stories"][:3]
-        for name in ("data/current.json","data/archive/2026-11-21.json"):
+        while len(doc["stories"])<3:
+            duplicate=dict(doc["stories"][0])
+            duplicate["id"]="synthetic-audit-"+str(len(doc["stories"]))
+            doc["stories"].append(duplicate)
+        for name in ("data/current.json","data/archive/"+test_day+".json"):
             target=self.root/name
             target.write_text(json.dumps(doc,ensure_ascii=False),encoding="utf-8")
         index=self.root/"data/archive/index.json"
         data=json.loads(index.read_text(encoding="utf-8"))
-        data["issues"].append({"date":"2026-11-21","title":"test"})
+        data["issues"].append({"date":test_day,"title":"test"})
         index.write_text(json.dumps(data),encoding="utf-8")
         self.assertEqual(audit(self.root)["stories"],3)
 
