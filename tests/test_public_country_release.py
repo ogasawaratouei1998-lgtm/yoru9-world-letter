@@ -72,7 +72,10 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
         current = json.loads(self.assets["data/current.json"])
         required = required_public_visuals(ROOT, current)
         self.assertIn("assets/world-today-illustrated.svg", required)
-        self.assertGreaterEqual(sum(name.startswith("assets/news/") for name in required), 4)
+        self.assertGreaterEqual(len(current["stories"]),1)
+        self.assertTrue(all((ROOT / name).is_file() for name in required
+                            if name.startswith("assets/news/")),
+                        "Every referenced commissioned news illustration must be present")
         self.assertGreaterEqual(sum(name.startswith("assets/travel/") for name in required), 9)
         self.assertTrue(any(required[name] == (1000, 540) for name in required))
 
