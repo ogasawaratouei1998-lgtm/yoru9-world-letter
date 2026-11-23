@@ -116,7 +116,7 @@ def split_reader_assets(site: Path) -> None:
     # caching unversioned JS permits a stale executable/updated-HTML mismatch
     # when an installed iOS app is resumed offline or behind a flaky network.
     html = expected["index.html"].decode("utf-8")
-    match = re.search(r'./assets/reader-core\\.js\\?v=([0-9a-f]{16})"', html)
+    match = re.search(r'./assets/reader-core\.js\?v=([0-9a-f]{16})"', html)
     if not match:
         raise ValueError("No fingerprinted reader core in release HTML")
     revision = match.group(1)
