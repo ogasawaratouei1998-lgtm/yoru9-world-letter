@@ -187,6 +187,49 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(desks,{"person","work","sports","company"})
         self.assertLessEqual(len(proposed),12)
 
+    def test_major_personal_blunders_fill_first_editorial_slots(self):
+        # Historical desk and geographic seeding overrode personal-first
+        # priority before editor A saw the top six evidence groups.
+        major=[[{"title":f"Man accidentally sold million dollar artwork {i} by mistake",
+                 "url":f"https://personal{i}.example/story",
+                 "sourcecountry":"US"}] for i in range(8)]
+        filler=[[{"title":f"Company accidentally prints wrong name {i}",
+                  "url":f"https://minor{i}.example/story",
+                  "sourcecountry":"FR"}] for i in range(90)]
+        ranked=editorial.prioritize_comic_groups(filler+major,limit=24)
+        self.assertEqual(len(ranked),24)
+        self.assertTrue(all("personal" in g[0]["url"] for g in ranked[:8]))
+        short=editorial.prioritize_comic_groups(filler+major,limit=6)
+        self.assertTrue(all("personal" in g[0]["url"] for g in short))
+
+    def test_major_personal_draft_review_beats_photo_ready_minor(self):
+        major_src={"title":"Man accidentally bought million dollar boat by mistake",
+                   "url":"https://news.example/major"}
+        minor_src={"title":"Shop accidentally sent wrong order",
+                   "url":"https://news.example/minor"}
+        major={"id":"major","country":"FJ",
+               "verificationUrls":[major_src["url"]]}
+        minor={"id":"minor","country":"FR",
+               "verificationUrls":[minor_src["url"]]}
+        ranked=editorial.prioritize_personal_drafts_for_review(
+            [minor,major],{"FR"},[minor_src,major_src])
+        self.assertEqual([x["id"] for x in ranked],["major","minor"])
+        # Within the non-major tier, licensed photo readiness still matters.
+        other={"id":"other","country":"FJ",
+               "verificationUrls":[minor_src["url"]]}
+        ranked=editorial.prioritize_personal_drafts_for_review(
+            [other,minor],{"FR"},[minor_src])
+        self.assertEqual([x["id"] for x in ranked],["minor","other"])
+
+    def test_major_personal_sources_get_read_before_routine_ones(self):
+        minor=[{"title":f"Company accidentally sent wrong name {i}",
+                "url":f"https://minor{i}.example/report",
+                "sourcecountry":"US"} for i in range(20)]
+        major={"title":"Woman accidentally bought million dollar property by mistake",
+               "url":"https://original.example/large","sourcecountry":"FR"}
+        selected=editorial.balanced_source_retrieval(minor+[major],limit=12)
+        self.assertEqual(selected[0]["url"],major["url"])
+
     def test_local_language_headlines_are_not_discarded_as_generic(self):
         headlines={
             "it":"Comune pubblica un cartello con errore di stampa",
@@ -418,7 +461,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
 
     def test_editorial_mission_requires_real_failure_and_reframing(self):
         mission=editorial.EDITORIAL_MISSION
-        self.assertIn("source-supported extraordinary human actions",mission)
+        self.assertIn("overwhelmingly prioritize a concrete INDIVIDUAL",mission)
         self.assertIn("warm, witty AI quip",mission)
         self.assertIn("humane aftertaste is optional",mission)
         self.assertIn("Never replace a genuine hard-to-believe sourced human episode",mission)
@@ -775,7 +818,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("draft_preflight_viable(item,now) for item in draft)<8",auto)
         self.assertIn('offset=(day.toordinal()*max(1,remaining))%9',leads)
         self.assertIn('("million dollar mistake" OR "costly mistake"',leads)
-        self.assertIn('("AI hoax" OR "false alarm"',leads)
+        self.assertIn('("person lost a fortune" OR "personal miscalculation"',leads)
         self.assertIn('country_queries=tuple(extra_searches)[:min(1,max(0,max_queries-3))]',leads)
         self.assertIn('min(incident_priority(article)[0] for article in g["articles"])',auto)
 
@@ -787,8 +830,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
         self.assertNotIn("ready_reviewed_count()>=",recovery)
-        self.assertIn("draft=prioritize_ready_drafts(draft,ready_for_review)",source)
-        self.assertLess(source.index("draft=prioritize_ready_drafts("),
+        self.assertIn("draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)",source)
+        self.assertLess(source.index("draft=prioritize_personal_drafts_for_review("),
                         source.index("for story in candidates_with_after_review_refill():"))
         self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
@@ -1013,6 +1056,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("spectacular PERSONAL misjudgments",code)
         self.assertIn("Routine typos, small orders",code)
         self.assertNotIn("Small and harmless mistakes are ideal",code)
+        # Historical instructions must never silently regain precedence.
+        self.assertNotIn("Propose incidents from ALL FOUR categories",code)
+        self.assertNotIn("five published slots can represent all four",code)
+        self.assertNotIn("no literal error is required",code)
+        self.assertNotIn("not limited to literal mistakes",code)
+        self.assertIn("The reporter need not literally call it a mistake",code)
         self.assertIn("already_drafted_urls",code)
         self.assertIn("min(incident_priority(article)",code)
 
@@ -1148,10 +1197,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('publisher_titles={',source)
         self.assertIn('source_title_is_policy_explainer(publisher_titles.get(urls[0],""))',source)
         self.assertIn('policy_explainer_without_incident_reporting',source)
-    def test_creative_scope_relaxed_but_source_and_safety_guards_retained(self):
+    def test_personal_failure_scope_retains_source_and_safety_guards(self):
         from pathlib import Path
         src=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("no literal error is required",src)
+        self.assertIn("The reporter need not literally call it a mistake",src)
+        self.assertNotIn("no literal error is required",src)
         self.assertIn("trusted_original_domain(urls[0])",src)
         self.assertIn("noncomic_incident_rejection(story,evidence)",src)
         self.assertIn("independent_editorial_quality_passed(audit)",src)

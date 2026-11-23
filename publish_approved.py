@@ -220,6 +220,16 @@ def validate_approved(data, expected_date):
         from editorial_surprise import edition_mixture_rejection
         require(edition_mixture_rejection(stories) is None,
                 '3本は分野を分け、企業ニュースの偏りを避けてください')
+    # Publication order guard: never bury an independently confirmed,
+    # extraordinary individual failure under a smaller comic backup.
+    # This creates NO required count, category share or personal-story quota.
+    if data.get("approvedBy") == "automated-two-stage-review" and issue_day >= date(2026, 11, 23):
+        major_positions = [i for i, item in enumerate(stories)
+                           if isinstance(item, dict)
+                           and item.get("category") in ("person", "work", "sports")
+                           and item.get("majorPersonalFailureVerified") is True]
+        require(not major_positions or major_positions[0] == 0,
+                "重大な個人の失敗より前に補欠の記事が配置されています")
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
