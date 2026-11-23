@@ -68,8 +68,16 @@ def dispatch(config,secret,payload):
 
 def main():
     issue=json.loads((Path(__file__).resolve().parent/"data"/"current.json").read_text(encoding="utf-8"))
-    payload=notice_for(issue)
+    now=datetime.now(JST)
+    print(f"Notification gate: JST={now:%Y-%m-%d %H:%M}, issue={issue.get('editionDate')}, "
+          f"status={issue.get('status')}, count={len(issue.get('stories') or [])}")
+    payload=notice_for(issue,now)
     if payload is None:
+        if (issue.get("status")=="published"
+                and issue.get("editionDate")==now.date().isoformat()
+                and issue.get("stories")):
+            print("ERROR: same-day published issue was unexpectedly rejected.",file=sys.stderr)
+            return 1
         print("No current approved release eligible for a notification.")
         return 0
     # An accepted push is for a verified published edition, never merely a
