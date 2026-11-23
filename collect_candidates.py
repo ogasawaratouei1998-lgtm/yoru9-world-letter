@@ -178,9 +178,12 @@ def get_google(query, lang='en', country='US', ceid='US:en'):
     return [dict(item,sourcecountry=country,language=lang) for item in items]
 
 
-def uncovered_country_searches(day=None, max_countries=9):
-    """Rotate discovery requests across NEVER-featured reporting countries.
+def uncovered_country_searches(day=None, max_countries=9, eligible_codes=None):
+    """Rotate country-keyword discovery, optionally restricted to READY countries.
 
+    An eligible code means the reader assets are release-ready, NOT that a
+    particular article or its incident location is verified. Without the
+    optional filter, historical all-country coverage research is unchanged.
     A GDELT match is merely an UNVERIFIED lead. The article's occurrence
     country is independently checked later against ORIGINAL publisher text.
     Publisher sourcecountry, RSS market and geography keywords are not proof.
@@ -200,10 +203,18 @@ def uncovered_country_searches(day=None, max_countries=9):
                 appeared.update(country_codes(story.get("country")))
         except (ValueError,OSError,TypeError,KeyError):
             continue
-    unseen=sorted((x for x in catalog() if appeared[x["code"]]==0),
+    countries=[x for x in catalog() if
+               eligible_codes is None or x["code"] in eligible_codes]
+    if not countries:
+        return ()
+    unseen=sorted((x for x in countries if appeared[x["code"]]==0),
                   key=lambda x:x["code"])
     if not unseen:
-        return ()
+        # Once every ready country has appeared, continue rotating the ready
+        # pool. Do not attempt publication in a pending country to fill space.
+        if eligible_codes is None:
+            return ()
+        unseen=sorted(countries,key=lambda x:x["code"])
     # 9-country daily windows step through the whole set without sticking
     # permanently to alphabetically early and high-publication countries.
     start=(day.toordinal()*max_countries)%len(unseen)
@@ -368,7 +379,24 @@ def main():
     # No GDELT result is publication-approved by being found here.
     try:
         gdelt_health={}
-        focused=get_gdelt(extra_searches=uncovered_country_searches(),
+        # Prioritize countries with a complete, validated portrait, licensed
+        # photography, illustrated quizzes and travel feature. Publisher
+        # regions and search keywords still never prove an incident location.
+        from country_readiness import ready_country_codes
+        try:
+            ready_codes,_=ready_country_codes(Path.cwd())
+        except (OSError,ValueError,KeyError,TypeError) as exc:
+            # Collection runs independently of the reader build (including
+            # isolated tests). Missing/malformed reader assets must NOT cause
+            # original-source news discovery to disappear. Use generic search;
+            # the final publication gate remains strictly fail-closed.
+            ready_codes=frozenset()
+            print("Country-ready inventory unavailable; continue broad original"
+                  " discovery:",type(exc).__name__,flush=True)
+        print("Country-ready original-source discovery targets:",len(ready_codes),
+              "countries; no incident location inferred from the query.",flush=True)
+        focused=get_gdelt(extra_searches=uncovered_country_searches(
+                              eligible_codes=ready_codes),
                           diagnostics=gdelt_health)
         keep(focused,limit=90)
         print("Focused original-publisher search health (counts only):",

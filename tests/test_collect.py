@@ -56,6 +56,50 @@ class CollectionTest(unittest.TestCase):
             self.assertNotIn("sourcecountry",query)
         self.assertEqual(len(catalog()),196)
 
+    def test_ready_country_filter_never_targets_pending_geography(self):
+        from datetime import date
+        from country_codes import catalog
+        by_code={row["code"]: row for row in catalog()}
+        self.assertEqual(c.uncovered_country_searches(
+            date(2026,11,23),eligible_codes=set()), ())
+        # This is a source-discovery hint, never a claim that an article
+        # occurred in the named country or that it passed editorial review.
+        ready={"DE","IT","US"}
+        queries=c.uncovered_country_searches(
+            date(2026,11,23),eligible_codes=ready)
+        self.assertEqual(len(queries),1)
+        joined=" ".join(queries)
+        for code in ready:
+            english=[a for a in by_code[code]["aliases"]
+                     if len(a)>3 and a.isascii()]
+            self.assertTrue(any('"' + name + '"' in joined
+                                for name in english),code)
+        for not_ready in ("Afghanistan","Nigeria","Fiji"):
+            self.assertNotIn('"' + not_ready + '"',joined)
+        self.assertEqual(len(ready),3)
+
+    def test_ready_country_search_continues_after_every_country_was_featured(self):
+        from datetime import date
+        from pathlib import Path
+        from unittest.mock import patch
+        import json,tempfile
+        day=date(2026,11,23)
+        with tempfile.TemporaryDirectory() as tmp:
+            directory=Path(tmp)/"data"/"archive"
+            directory.mkdir(parents=True)
+            (directory/"2026-11-22.json").write_text(json.dumps({
+                "status":"published","editionDate":"2026-11-22",
+                "stories":[{"country":"Germany"},{"country":"Italy"}]
+            }),encoding="utf-8")
+            # Only redirect the archive-read location. Catalog still loads
+            # from its canonical location via country_codes.
+            with patch.object(c,"Path",side_effect=lambda p: Path(tmp)/p):
+                queries=c.uncovered_country_searches(
+                    day,eligible_codes={"DE","IT"})
+        self.assertEqual(len(queries),1)
+        self.assertIn('"germany"',queries[0])
+        self.assertIn('"italy"',queries[0])
+
     def test_country_targeting_respects_only_published_archive(self):
         from datetime import date
         from unittest.mock import patch
