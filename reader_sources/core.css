@@ -1562,3 +1562,39 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 .prepared-country-travel{margin-top:17px}
 .prepared-country-travel .travel-card{margin-top:9px}
 @media(max-width:520px){.approved-atlas{padding:13px 12px}.approved-atlas-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.approved-atlas-country{font-size:12px;min-height:48px}}
+/* Opening a country portrait or quiz now replaces the home cover visually. */
+html:has(body:is(.news-detail-mode,.country-detail-mode,.quiz-detail-mode)){
+ scroll-behavior:auto!important;scroll-padding-top:0!important}
+body:is(.news-detail-mode,.country-detail-mode,.quiz-detail-mode) .nav{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) main > :not(#atlasHero),
+body:is(.country-detail-mode,.quiz-detail-mode) .wrap > footer,
+body:is(.country-detail-mode,.quiz-detail-mode) .skip-link{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero{
+ display:block!important;overflow:visible!important;margin:0 auto 24px!important;
+ padding:0!important;border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero::before{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero > :not(.world-explore){display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .world-explore{
+ display:block!important;min-width:0;margin:0!important;padding:0!important;
+ border:0!important;background:transparent!important;box-shadow:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .world-explore > summary{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .today-map-card{
+ display:block!important;margin:0!important;padding:0!important;border:0!important;
+ background:transparent!important;box-shadow:none!important}
+body.country-detail-mode #atlasHero .today-map-card > :not(#todayMapIntro),
+body.quiz-detail-mode #atlasHero .today-map-card > :not(#todayCountryQuiz){display:none!important}
+body.country-detail-mode #todayMapIntro,body.quiz-detail-mode #todayCountryQuiz{
+ display:block!important;box-sizing:border-box;width:100%;max-width:100%;
+ margin:0!important;scroll-margin-top:0!important}
+body.country-detail-mode #todayMapIntroName:focus{outline:none}
+body:is(.country-detail-mode,.quiz-detail-mode) .today-map-intro-close,
+body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
+ min-height:44px;min-width:96px;white-space:normal;flex-shrink:0}
+@media(max-width:520px){
+ body:is(.country-detail-mode,.quiz-detail-mode) #todayMapIntro,
+ body:is(.country-detail-mode,.quiz-detail-mode) #todayCountryQuiz{
+  margin:0!important;padding:17px 13px!important;border-radius:16px}
+ body:is(.country-detail-mode,.quiz-detail-mode) .wrap{
+  padding-top:calc(var(--safe-top) + 9px)}
+}
