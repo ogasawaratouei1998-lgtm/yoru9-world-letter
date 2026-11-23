@@ -261,7 +261,8 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
             self.assertNotIn(removed,page)
         # No new story is invented or an unpublished image or source inserted.
         self.assertIn("return './assets/news/'+name",page)
-        self.assertIn("const first=Array.isArray(edition.stories)?edition.stories[0]:null;",page)
+        # The first article is rendered from published data in the actual gallery.
+        self.assertIn("renderIssueGallery();updateSpotlight()",page)
 
     def test_smile_feedback_removed_from_every_article_surface(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
