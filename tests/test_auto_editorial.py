@@ -818,7 +818,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("draft_preflight_viable(item,now) for item in draft)<8",auto)
         self.assertIn('offset=(day.toordinal()*max(1,remaining))%9',leads)
         self.assertIn('("million dollar mistake" OR "costly mistake"',leads)
-        self.assertIn('("AI hoax" OR "false alarm"',leads)
+        self.assertIn('("person lost a fortune" OR "personal miscalculation"',leads)
         self.assertIn('country_queries=tuple(extra_searches)[:min(1,max(0,max_queries-3))]',leads)
         self.assertIn('min(incident_priority(article)[0] for article in g["articles"])',auto)
 
@@ -1197,10 +1197,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('publisher_titles={',source)
         self.assertIn('source_title_is_policy_explainer(publisher_titles.get(urls[0],""))',source)
         self.assertIn('policy_explainer_without_incident_reporting',source)
-    def test_creative_scope_relaxed_but_source_and_safety_guards_retained(self):
+    def test_personal_failure_scope_retains_source_and_safety_guards(self):
         from pathlib import Path
         src=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("no literal error is required",src)
+        self.assertIn("The reporter need not literally call it a mistake",src)
+        self.assertNotIn("no literal error is required",src)
         self.assertIn("trusted_original_domain(urls[0])",src)
         self.assertIn("noncomic_incident_rejection(story,evidence)",src)
         self.assertIn("independent_editorial_quality_passed(audit)",src)
