@@ -1,4 +1,4 @@
-"""Requested November 19 reader simplification and five-item nightly ceiling."""
+"""Reader supports any current article count; Nov 19 history remains immutable."""
 import json
 from datetime import datetime
 from pathlib import Path
@@ -48,9 +48,10 @@ class SimplifiedReaderTest(unittest.TestCase):
         ):
             self.assertIn(required,page,required)
 
-    def test_live_reader_accepts_five_and_gallery_follows_actual_story_count(self):
+    def test_live_reader_accepts_any_nonzero_count_and_gallery_matches(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
-        self.assertIn("x.stories.length<=5",page)
+        self.assertIn("x.stories.length>=1",page)
+        self.assertNotIn("x.stories.length<=5",page)
         self.assertIn("for(const [index,story] of edition.stories.entries())",page)
         self.assertIn("edition.stories.length+'コマ劇場'",page)
         self.assertIn("String(d.length)",page)
