@@ -62,6 +62,20 @@ class NewsPriorityCapacityTests(unittest.TestCase):
         self.assertNotIn("country",new)
         self.assertEqual(sum(item["provider"]=="GDELT DOC API" for item in results),1)
 
+    def test_article_fetch_budget_reserves_time_for_independent_review(self):
+        from auto_editorial import source_reading_stop_reason
+        # 240 blind article fetches can exhaust the whole free-tier run.
+        # The initial source pool is only a research tool, never an issue size.
+        self.assertEqual(
+            source_reading_stop_reason(10,1,279),
+            "reserve_time_for_independent_review")
+        self.assertEqual(
+            source_reading_stop_reason(72,12,400),
+            "enough_promising_original_reports_for_editorial_review")
+        self.assertIsNone(source_reading_stop_reason(71,12,400))
+        self.assertIsNone(source_reading_stop_reason(90,0,400))
+        self.assertIsNone(source_reading_stop_reason(0,0,540))
+
     def test_headline_priority_never_authenticates_an_article(self):
         from auto_editorial import incident_priority
         stronger={"title":"Man accidentally sold million dollar artwork with wrong bid",
