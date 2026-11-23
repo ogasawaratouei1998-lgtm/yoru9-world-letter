@@ -46,8 +46,8 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             ":todayCountryIntro(item)+' 観光名所を案内する",
             "currentCountryHighlight(all,currentCode)",
             "COUNTRY PORTRAIT · 国の魅力",
-            "$('todayMapIntro').scrollIntoView({block:'start'})",
-            "function hideTodayCountryIntro()",
+            "window.scrollTo(0,0)",
+            "function hideTodayCountryIntro(restoreMap=true)",
             "read.dataset.storyIndex=String(item.indices[0])",
             "openAtlasStory(index)",
         ):

@@ -335,6 +335,21 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertIn("storyAttributionHtml(s)",page)
         self.assertIn("storyEvidenceHtml(first)",page)
 
+    def test_focused_country_quiz_and_article_have_no_home_overlay(self):
+        page=(ROOT/"index.html").read_text(encoding="utf-8")
+        passport=(ROOT/"world-passport.js").read_text(encoding="utf-8")
+        self.assertIn("document.body.classList.add('country-detail-mode')",page)
+        self.assertIn("document.body.classList.remove('country-detail-mode')",page)
+        self.assertIn("document.body.classList.add('quiz-detail-mode')",passport)
+        self.assertIn("document.body.classList.remove('quiz-detail-mode')",passport)
+        self.assertIn("body.country-detail-mode #atlasHero .today-map-card > :not(#todayMapIntro)",page)
+        self.assertIn("body.quiz-detail-mode #atlasHero .today-map-card > :not(#todayCountryQuiz)",page)
+        self.assertIn("body:is(.news-detail-mode,.country-detail-mode,.quiz-detail-mode) .nav",page)
+        self.assertIn("body:is(.country-detail-mode,.quiz-detail-mode) main > :not(#atlasHero)",page)
+        self.assertIn("function hideTodayCountryIntro(restoreMap=true)",page)
+        self.assertIn("function closeWorldPassport(restoreMap=true)",passport)
+        self.assertIn("‹ 地図へ戻る",page)
+
     def test_mobile_news_gallery_uses_two_plus_one_without_cropped_tiles(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         self.assertIn('data-layout="mobile-grid-responsive"',page)

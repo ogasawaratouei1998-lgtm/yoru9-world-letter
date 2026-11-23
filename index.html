@@ -1577,6 +1577,49 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
 .prepared-country-travel{margin-top:17px}
 .prepared-country-travel .travel-card{margin-top:9px}
 @media(max-width:520px){.approved-atlas{padding:13px 12px}.approved-atlas-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.approved-atlas-country{font-size:12px;min-height:48px}}
+/* Opening a country portrait or quiz now replaces the home cover visually. */
+html:has(body:is(.news-detail-mode,.country-detail-mode,.quiz-detail-mode)){
+ scroll-behavior:auto!important;scroll-padding-top:0!important}
+body:is(.news-detail-mode,.country-detail-mode,.quiz-detail-mode) .nav{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) main > :not(#atlasHero),
+body:is(.country-detail-mode,.quiz-detail-mode) .wrap > footer,
+body:is(.country-detail-mode,.quiz-detail-mode) .skip-link{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero{
+ display:block!important;overflow:visible!important;margin:0 auto 24px!important;
+ padding:0!important;border:0!important;border-radius:0!important;
+ background:transparent!important;box-shadow:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero::before{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero > :not(.world-explore){display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .world-explore{
+ display:block!important;min-width:0;margin:0!important;padding:0!important;
+ border:0!important;background:transparent!important;box-shadow:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .world-explore > summary{display:none!important}
+body:is(.country-detail-mode,.quiz-detail-mode) #atlasHero .today-map-card{
+ display:block!important;margin:0!important;padding:0!important;border:0!important;
+ background:transparent!important;box-shadow:none!important}
+body.country-detail-mode #atlasHero .today-map-card > :not(#todayMapIntro),
+body.quiz-detail-mode #atlasHero .today-map-card > :not(#todayCountryQuiz){display:none!important}
+body.country-detail-mode #todayMapIntro,body.quiz-detail-mode #todayCountryQuiz{
+ display:block!important;box-sizing:border-box;width:100%;max-width:100%;
+ margin:0!important;scroll-margin-top:0!important}
+body.country-detail-mode #todayMapIntroName:focus{outline:none}
+body:is(.country-detail-mode,.quiz-detail-mode) .today-map-intro-close,
+body:is(.country-detail-mode,.quiz-detail-mode) .today-quiz-close{
+ min-height:44px;min-width:96px;white-space:normal;flex-shrink:0}
+@media(max-width:520px){
+ body:is(.country-detail-mode,.quiz-detail-mode) #todayMapIntro,
+ body:is(.country-detail-mode,.quiz-detail-mode) #todayCountryQuiz{
+  margin:0!important;padding:17px 13px!important;border-radius:16px}
+ body:is(.country-detail-mode,.quiz-detail-mode) .wrap{
+  padding-top:calc(var(--safe-top) + 9px)}
+}
+
+/* A focused portrait must remain large enough on 320px iPhones. */
+@media(max-width:520px){
+ body.country-detail-mode #atlasHero .today-map-intro-photo img{
+  aspect-ratio:4/3!important;max-height:none!important}
+}
+
 </style>
 <link rel="stylesheet" href="./assets/reading-focus.css">
 </head>
@@ -1620,7 +1663,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   </div>
   <section class="today-map-intro" id="todayMapIntro" aria-labelledby="todayMapIntroName" aria-live="polite" hidden>
    <p class="country-portrait-kicker">COUNTRY PORTRAIT · 国の魅力</p>
-   <div class="today-map-intro-head"><h4 id="todayMapIntroName"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="国の紹介を閉じる">閉じる</button></div>
+   <div class="today-map-intro-head"><h4 id="todayMapIntroName" tabindex="-1"></h4><button class="today-map-intro-close" id="todayMapIntroClose" type="button" aria-label="地図に戻る">‹ 地図へ戻る</button></div>
    <figure class="today-map-intro-photo" id="todayMapIntroFigure" hidden><img id="todayMapIntroImage" alt="" loading="eager" decoding="async"><figcaption id="todayMapIntroCaption"></figcaption></figure>
    <p class="today-map-intro-photo-status" id="todayMapIntroPhotoStatus" role="status" hidden></p>
    <p class="today-map-intro-lead" id="todayMapIntroLead"></p>
@@ -1641,7 +1684,7 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   <div class="today-map-legend" id="todayMapLegend" role="group" aria-label="国別の写真付き3択クイズを開く"></div>
   <section class="today-country-quiz" id="todayCountryQuiz" aria-labelledby="todayQuizTitle" hidden>
    <div class="today-quiz-top"><div><p class="today-quiz-kicker">WORLD QUIZ · へぇ！3択</p><h4 id="todayQuizTitle"></h4></div>
-    <button class="today-quiz-close" id="todayQuizClose" type="button">閉じる</button></div>
+    <button class="today-quiz-close" id="todayQuizClose" type="button">‹ 地図へ戻る</button></div>
    <p class="today-quiz-progress" id="todayQuizProgress"></p>
    <div class="today-quiz-steps" id="todayQuizSteps" role="group" aria-label="問題の進み具合"></div>
    <p class="today-quiz-question" id="todayQuizQuestion" tabindex="-1"></p>
@@ -1925,10 +1968,20 @@ function todayCountryIntro(item){
   ?item.name+'は'+region+'に位置しています。文化や日常の魅力について、確かな資料を確認しながら紹介を充実させています。'
   :item.name+'の暮らしや文化について、確認できた情報から紹介を準備しています。';
 }
-function hideTodayCountryIntro(){
+let countryReturnTarget=null;
+function hideTodayCountryIntro(restoreMap=true){
+ const wasOpen=document.body.classList.contains('country-detail-mode');
  todayCountryIntroRequest++;
  $('todayMapIntro').hidden=true;
+ document.body.classList.remove('country-detail-mode');
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
+ if(wasOpen&&restoreMap===true){
+  const target=countryReturnTarget?.isConnected?countryReturnTarget:$('todayMapSection');
+  requestAnimationFrame(()=>{
+   target.focus?.({preventScroll:true});
+   target.scrollIntoView({block:'center',behavior:'auto'});
+  });
+ }
 }
 // Country portraits use the locally bundled, rights-checked photo first.
 // Never replace an available packaged photograph with a remote thumbnail.
@@ -1949,7 +2002,9 @@ function countryPhotoIsSharpEnough(image){
  return image.naturalWidth>=1000&&image.naturalHeight>=540;
 }
 function showTodayCountryIntro(item){
- closeWorldPassport();
+ closeWorldPassport(false);
+ countryReturnTarget=document.activeElement;
+ $('worldExplore').open=true;
  const requestId=++todayCountryIntroRequest,currentCode=item.code;
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
  $('todayMapIntro').dataset.countryCode=currentCode;
@@ -2061,11 +2116,13 @@ function showTodayCountryIntro(item){
  trip.hidden=true;
  trip.replaceChildren();
  $('todayMapIntro').hidden=false;
+ document.body.classList.add('country-detail-mode');
  if(!hasNews)renderApprovedCountryTrip(item,requestId);
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
- $('todayMapIntro').scrollIntoView({block:'start'});
+ window.scrollTo(0,0);
+ $('todayMapIntroName').focus({preventScroll:true});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
 // push only the visible marker aside when two 44px tap targets would overlap,
@@ -2281,11 +2338,11 @@ $('worldExplore').addEventListener('toggle',()=>{
   // Closed details have zero map dimensions; recompute after layout on opening.
   requestAnimationFrame(positionTodayMapPins);
  }else{
-  hideTodayCountryIntro();
-  closeWorldPassport();
+  hideTodayCountryIntro(false);
+  closeWorldPassport(false);
  }
 });
-$('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
+$('todayMapIntroClose').addEventListener('click',()=>hideTodayCountryIntro());
 $('todayMapIntroRead').addEventListener('click',()=>{
  const read=$('todayMapIntroRead');
  if(read.dataset.action==='quiz'){
@@ -2493,6 +2550,8 @@ function articleIndexFromRoute(){
 }
 function openAtlasStory(index,fromRoute=false){
  if(!Number.isInteger(index)||index<0||index>=edition.stories.length)return;
+ if(document.body.classList.contains('country-detail-mode'))hideTodayCountryIntro(false);
+ if(document.body.classList.contains('quiz-detail-mode'))closeWorldPassport(false);
  const stage=$('articleReader');
  selectedArticleIndex=index;
  // A postcard remains optional and never survives navigation to another news story.

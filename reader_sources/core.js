@@ -131,10 +131,20 @@ function todayCountryIntro(item){
   ?item.name+'は'+region+'に位置しています。文化や日常の魅力について、確かな資料を確認しながら紹介を充実させています。'
   :item.name+'の暮らしや文化について、確認できた情報から紹介を準備しています。';
 }
-function hideTodayCountryIntro(){
+let countryReturnTarget=null;
+function hideTodayCountryIntro(restoreMap=true){
+ const wasOpen=document.body.classList.contains('country-detail-mode');
  todayCountryIntroRequest++;
  $('todayMapIntro').hidden=true;
+ document.body.classList.remove('country-detail-mode');
  document.querySelectorAll('.today-map-pin').forEach(pin=>pin.setAttribute('aria-expanded','false'));
+ if(wasOpen&&restoreMap===true){
+  const target=countryReturnTarget?.isConnected?countryReturnTarget:$('todayMapSection');
+  requestAnimationFrame(()=>{
+   target.focus?.({preventScroll:true});
+   target.scrollIntoView({block:'center',behavior:'auto'});
+  });
+ }
 }
 // Country portraits use the locally bundled, rights-checked photo first.
 // Never replace an available packaged photograph with a remote thumbnail.
@@ -155,7 +165,9 @@ function countryPhotoIsSharpEnough(image){
  return image.naturalWidth>=1000&&image.naturalHeight>=540;
 }
 function showTodayCountryIntro(item){
- closeWorldPassport();
+ closeWorldPassport(false);
+ countryReturnTarget=document.activeElement;
+ $('worldExplore').open=true;
  const requestId=++todayCountryIntroRequest,currentCode=item.code;
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
  $('todayMapIntro').dataset.countryCode=currentCode;
@@ -267,11 +279,13 @@ function showTodayCountryIntro(item){
  trip.hidden=true;
  trip.replaceChildren();
  $('todayMapIntro').hidden=false;
+ document.body.classList.add('country-detail-mode');
  if(!hasNews)renderApprovedCountryTrip(item,requestId);
  document.querySelectorAll('.today-map-pin').forEach(pin=>
   pin.setAttribute('aria-expanded',String(pin.dataset.countryCode===currentCode)));
  if(approvedPhotos.length)loadNextCountryPhoto();
- $('todayMapIntro').scrollIntoView({block:'start'});
+ window.scrollTo(0,0);
+ $('todayMapIntroName').focus({preventScroll:true});
 }
 // Country centroid pins stay geographically anchored. On narrow displays,
 // push only the visible marker aside when two 44px tap targets would overlap,
@@ -487,11 +501,11 @@ $('worldExplore').addEventListener('toggle',()=>{
   // Closed details have zero map dimensions; recompute after layout on opening.
   requestAnimationFrame(positionTodayMapPins);
  }else{
-  hideTodayCountryIntro();
-  closeWorldPassport();
+  hideTodayCountryIntro(false);
+  closeWorldPassport(false);
  }
 });
-$('todayMapIntroClose').addEventListener('click',hideTodayCountryIntro);
+$('todayMapIntroClose').addEventListener('click',()=>hideTodayCountryIntro());
 $('todayMapIntroRead').addEventListener('click',()=>{
  const read=$('todayMapIntroRead');
  if(read.dataset.action==='quiz'){
@@ -699,6 +713,8 @@ function articleIndexFromRoute(){
 }
 function openAtlasStory(index,fromRoute=false){
  if(!Number.isInteger(index)||index<0||index>=edition.stories.length)return;
+ if(document.body.classList.contains('country-detail-mode'))hideTodayCountryIntro(false);
+ if(document.body.classList.contains('quiz-detail-mode'))closeWorldPassport(false);
  const stage=$('articleReader');
  selectedArticleIndex=index;
  // A postcard remains optional and never survives navigation to another news story.
