@@ -5,6 +5,7 @@ GitHub Pages receives separate browser assets; their exact bytes are audited.
 Legacy minimal fixtures may still supply a standalone compatibility HTML.
 """
 from pathlib import Path
+import hashlib
 
 
 STYLE_OPEN = "<style>\n"
@@ -23,6 +24,11 @@ TRAVEL_END = "function updateFilters(){"
 ASSETS = ("assets/reader-core.css", "assets/reader-core.js",
           "assets/reader-country-data.js", "assets/reader-travel.js")
 
+def versioned_tag(tag: str, path: str, content: bytes) -> str:
+    """Ensure an installed PWA fetches the matching released JS/CSS."""
+    version = hashlib.sha256(content).hexdigest()[:12]
+    return tag.replace("./" + path, "./" + path + "?v=" + version)
+
 
 def rendered_reader_assets(source: str) -> dict[str, bytes]:
     """Extract the main reader only; never move the embedded demonstration JSON."""
@@ -35,7 +41,8 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
     stylesheet = source[start + len(STYLE_OPEN):end]
     if ":root{" not in stylesheet or "news-detail-mode" not in stylesheet:
         raise ValueError("Reader CSS is incomplete")
-    source = source[:start] + STYLE_TAG + source[end + len(STYLE_CLOSE):]
+    stylesheet_payload = (stylesheet + "\n").encode("utf-8")
+    source = source[:start] + versioned_tag(STYLE_TAG, ASSETS[0], stylesheet_payload) + source[end + len(STYLE_CLOSE):]
 
     start = source.index(RUNTIME_OPEN)
     end = source.index(RUNTIME_CLOSE, start + len(RUNTIME_OPEN))
@@ -72,16 +79,22 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
     runtime = runtime[:travel_start] + runtime[travel_end:]
     # Classic scripts share global lexical declarations, loaded in the
     # order country data, microtravel feature, then primary news reader.
-    source = (source[:start] + COUNTRY_TAG + "\n" + TRAVEL_TAG +
-              "\n" + RUNTIME_TAG + source[end + len(RUNTIME_CLOSE):])
+    runtime_payload = (runtime + "\n").encode("utf-8")
+    country_payload = ("'use strict';\n" + country_script + "\n").encode("utf-8")
+    travel_payload = ("'use strict';\n" + travel_script + "\n").encode("utf-8")
+    source = (source[:start] +
+              versioned_tag(COUNTRY_TAG, ASSETS[2], country_payload) + "\n" +
+              versioned_tag(TRAVEL_TAG, ASSETS[3], travel_payload) + "\n" +
+              versioned_tag(RUNTIME_TAG, ASSETS[1], runtime_payload) +
+              source[end + len(RUNTIME_CLOSE):])
     if "<script>\n'use strict';" in source or "<style>\n" in source:
         raise ValueError("Inline reader assets remain unexpectedly")
     return {
         "index.html": source.encode("utf-8"),
-        ASSETS[0]: (stylesheet + "\n").encode("utf-8"),
-        ASSETS[1]: (runtime + "\n").encode("utf-8"),
-        ASSETS[2]: ("'use strict';\n" + country_script + "\n").encode("utf-8"),
-        ASSETS[3]: ("'use strict';\n" + travel_script + "\n").encode("utf-8"),
+        ASSETS[0]: stylesheet_payload,
+        ASSETS[1]: runtime_payload,
+        ASSETS[2]: country_payload,
+        ASSETS[3]: travel_payload,
     }
 
 
