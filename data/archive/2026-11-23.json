@@ -1,0 +1,46 @@
+{
+  "status": "published",
+  "editionDate": "2026-11-23",
+  "title": "2026-11-23｜世界の大失敗ニュース",
+  "editionType": "regular",
+  "nightlyMessage": "",
+  "stories": [
+    {
+      "id": "aquabounty-ohio-salmon-2026",
+      "country": "United States",
+      "category": "company",
+      "categoryLabel": "ビジネス",
+      "label": "補助金の行方",
+      "title": "名物GMOサーモン計画が頓挫、オハイオ州が100万ドルの返還を要求",
+      "summary": "バイオ企業アクアバウンティ社がオハイオ州ピオニアで進めていた遺伝子組み換えサーモンの養殖事業が暗礁に乗り上げ、州の経済開発機関が100万ドルの補助金返還を求めている。工事は途中で停止され、同社は設備の売却を進めている。",
+      "detail": "バイオ企業のアクアバウンティ・テクノロジーズ社は、オハイオ州ピオニアで遺伝子組み換えアトランティックサーモンの大規模な屋内養殖プラントを建設する計画を2021年に発表した。地元自治体や州の民間経済開発機関「JobsOhio」から巨額の支援金を受け、雇用創出やインフラ整備が期待されていたが、規制上の課題や環境団体からの反発に直面した。建設工事は全体の約30%で停滞し、同社は2024年に工場用の設備や知的財産を売却。9月末時点で従業員は3人のみとなり、JobsOhioは同社に対して100万ドルの返還を要請している。\n\nここからはAIの見方。\n壮大なバイオの未来像を描いたはずが、残ったのは3人の社員と売りに出された水槽という見事な現実逃避劇。",
+      "quip": "未来の食糧危機を救う前に、自社の懐が干からびとるやないか。",
+      "sourceName": "ProPublica",
+      "sourceUrl": "https://www.propublica.org/article/aquabounty-jobsohio-gmo-salmon-grant",
+      "reported": "2026-11-20",
+      "verificationUrls": [
+        "https://www.propublica.org/article/aquabounty-jobsohio-gmo-salmon-grant"
+      ],
+      "quipSecond": "世界を救う遺伝子サーモン、真っ先に釣り上げられたのは支援金やったんか。"
+    },
+    {
+      "id": "motueka-wastewater-filter-2026",
+      "country": "ニュージーランド",
+      "category": "work",
+      "categoryLabel": "インフラ・管理",
+      "label": "発注書迷子事件",
+      "title": "下水ポンプの消臭フィルター交換、部品の注文書がサプライヤー側で消えて6週間放置",
+      "summary": "ニュージーランド・モトゥエカの下水ポンプ場で悪臭対策のフィルター交換部品が注文書の紛失により6週間放置され、住民が強烈な異臭に悩まされました。70年物の老朽インフラを巡る管理の緩さが浮き彫りになりました。",
+      "detail": "ニュージーランドのタスマン地区モトゥエカにある築70年のグッドマン・レジャー・パーク・ポンプ場では、今年1月に悪臭対策のフィルターカートリッジが故障した。しかし、サプライヤー側が交換部品の注文書を紛失してしまったため、新しいフィルターが届くまで6週間もそのまま放置され、周辺に強烈な下水の臭いが立ち込める事態となった。住民らは「トイレのファンが壊れたような臭いだった」と抗議の声を上げている。\n\nここからはAIの見方。\n注文書一枚を失くしただけで街全体が汲み取り式トイレのようになるとは、ペーパーレスより恐ろしいペーパー迷子です。",
+      "quip": "注文書をなくしただけで街を大う○こルームにするな！",
+      "sourceName": "RNZ",
+      "sourceUrl": "https://www.rnz.co.nz/news/environment/2752376/river-of-filth-motueka-residents-want-action-on-wastewater-problems",
+      "reported": "2026-11-23",
+      "verificationUrls": [
+        "https://www.rnz.co.nz/news/environment/2752376/river-of-filth-motueka-residents-want-action-on-wastewater-problems"
+      ]
+    }
+  ],
+  "nightQuote": "うまくいかなかったことも、明日には少し違って見えるかも。",
+  "credits": "Facts based on the cited reporting. AI one-liners are fictional humor, not news facts."
+}
