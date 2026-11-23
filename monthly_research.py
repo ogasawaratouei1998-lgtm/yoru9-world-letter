@@ -451,10 +451,13 @@ def make_story(group, today, old_summaries, ask_ai=editorial.ai,
         MONTHLY_BRIEF +
         " You are monthly editor A. Draft at most ONE Japanese news story "
         "only when the evidence meets this source rule: " + evidence_rule +
-        " The article must describe a real person's or human-run organization's "
-        "documented mistake or wrong assumption, not merely a strange animal "
-        "or an unexpectedly funny event. Include humanActor and humanMistake, "
-        "each supported by the SOURCE TEXT, even for small everyday blunders. "
+        " FIRST look for a documented, astonishing major failure by a "
+        "specific INDIVIDUAL, including an employee, craftsperson or athlete. "
+        "A human-run organization is a rare secondary case, never a replacement "
+        "for an eligible consequential personal mistake. The incident must "
+        "document a real flawed judgment and extraordinary outcome, not merely "
+        "a strange animal, amusing coincidence or minor everyday mix-up. "
+        "Include humanActor and humanMistake grounded in the SOURCE TEXT. "
         "Never fabricate a mistake to repurpose wildlife news. "
         "The title must center the individual decision error and a documented surprisingly large outcome. Prioritize major personally attributable mistakes over trivial misprints; if only small ones qualify, publish fewer rather than inventing consequences. "
         "Reject emergencies, harassment of volunteer responders, serious student or political disciplinary conflicts, fear, harm, unverified personal anecdotes, "
