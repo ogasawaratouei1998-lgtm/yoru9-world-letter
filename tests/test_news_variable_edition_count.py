@@ -50,6 +50,22 @@ class NoDailyStoryQuotaTests(unittest.TestCase):
                 self.assertEqual([s["id"] for s in public["stories"]],
                                  [s["id"] for s in doc["stories"]])
 
+    def test_new_special_editions_also_have_no_story_count_quota(self):
+        for count in (1,2,6):
+            with self.subTest(count=count):
+                doc=approved_current_issue(count)
+                doc["editionType"]="special"
+                doc["title"]="世界の人間の大失敗・編集特集号"
+                doc["specialReason"]="今年の意外な人間の判断をまとめて振り返るための特集です。"
+                result=validate_approved(doc,DAY)
+                self.assertEqual(len(result["stories"]),count)
+        no_content=approved_current_issue(0)
+        no_content["editionType"]="special"
+        no_content["title"]="世界の人間の大失敗・編集特集号"
+        no_content["specialReason"]="今年の意外な人間の判断をまとめて振り返るための特集です。"
+        with self.assertRaises(ValueError):
+            validate_approved(no_content,DAY)
+
     def test_zero_stories_remains_unpublishable(self):
         with self.assertRaisesRegex(ValueError,"1本もない"):
             validate_approved(approved_current_issue(0),DAY)
