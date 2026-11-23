@@ -5,6 +5,8 @@ GitHub Pages receives separate browser assets; their exact bytes are audited.
 Legacy minimal fixtures may still supply a standalone compatibility HTML.
 """
 from pathlib import Path
+import hashlib
+import re
 
 
 STYLE_OPEN = "<style>\n"
@@ -76,13 +78,25 @@ def rendered_reader_assets(source: str) -> dict[str, bytes]:
               "\n" + RUNTIME_TAG + source[end + len(RUNTIME_CLOSE):])
     if "<script>\n'use strict';" in source or "<style>\n" in source:
         raise ValueError("Inline reader assets remain unexpectedly")
-    return {
+    bundled = {
         "index.html": source.encode("utf-8"),
         ASSETS[0]: (stylesheet + "\n").encode("utf-8"),
         ASSETS[1]: (runtime + "\n").encode("utf-8"),
         ASSETS[2]: ("'use strict';\n" + country_script + "\n").encode("utf-8"),
         ASSETS[3]: ("'use strict';\n" + travel_script + "\n").encode("utf-8"),
     }
+    # Every release receives a content-derived revision shared by the four
+    # interdependent scripts/styles. Cached JS from an older HTML layout must
+    # never execute against newer markup on an installed iPhone PWA.
+    revision = hashlib.sha256(b"\x00".join(bundled[path] for path in ASSETS)).hexdigest()[:16]
+    html = bundled["index.html"].decode("utf-8")
+    for path in ASSETS:
+        marker = f'./{path}"'
+        if html.count(marker) != 1:
+            raise ValueError("Reader asset URL missing or duplicated: " + path)
+        html = html.replace(marker, f'./{path}?v={revision}"', 1)
+    bundled["index.html"] = html.encode("utf-8")
+    return bundled
 
 
 def expected_reader_assets(root: Path) -> dict[str, bytes]:
@@ -97,3 +111,24 @@ def split_reader_assets(site: Path) -> None:
         dest = site / relative
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_bytes(payload)
+
+    # Precache the SAME fingerprinted assets used by the public page. Merely
+    # caching unversioned JS permits a stale executable/updated-HTML mismatch
+    # when an installed iOS app is resumed offline or behind a flaky network.
+    html = expected["index.html"].decode("utf-8")
+    match = re.search(r'./assets/reader-core\\.js\\?v=([0-9a-f]{16})"', html)
+    if not match:
+        raise ValueError("No fingerprinted reader core in release HTML")
+    revision = match.group(1)
+    for path in ASSETS:
+        if html.count(f'./{path}?v={revision}"') != 1:
+            raise ValueError("Reader asset fingerprint mismatch: " + path)
+    worker_path = site / "service-worker.js"
+    if worker_path.is_file():
+        worker = worker_path.read_text(encoding="utf-8")
+        anchor = "const SHELL = ['index.html',"
+        if worker.count(anchor) != 1:
+            raise ValueError("Reader offline shell anchor is missing or duplicated")
+        precache = ", ".join(f"'{path}?v={revision}'" for path in ASSETS)
+        worker = worker.replace(anchor, "const SHELL = [" + precache + ", 'index.html',", 1)
+        worker_path.write_text(worker, encoding="utf-8")
