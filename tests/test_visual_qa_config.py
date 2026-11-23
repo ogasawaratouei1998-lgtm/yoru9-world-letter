@@ -23,6 +23,11 @@ class VisualQAConfigTests(unittest.TestCase):
         self.assertIn("the country portrait and story postcard must have different photos",source)
         self.assertIn("every postcard needs a separate historical/cultural source",source)
 
+    def test_qa_uses_current_quiz_photo_keys_not_old_country_exceptions(self):
+        source=(ROOT/"tests/mobile_visual_smoke.mjs").read_text(encoding="utf-8")
+        self.assertIn("worldPassportActive?.questions?.[round]?.photoKey",source)
+        self.assertNotIn("['ES','NZ'].includes(code)&&round===1",source)
+
     def test_github_chrome_has_japanese_fonts_for_real_layout_geometry(self):
         workflow = (ROOT / ".github/workflows/mobile-visual-smoke.yml").read_text(
             encoding="utf-8"
