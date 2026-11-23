@@ -1542,7 +1542,7 @@ def main():
         # vetoes left room for useful stories. Refill from untouched,
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
-        if ready_reviewed_count()>=5 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+        if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
             return
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
@@ -1553,7 +1553,7 @@ def main():
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
         for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
-            if ready_reviewed_count()>=5 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
                 print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
