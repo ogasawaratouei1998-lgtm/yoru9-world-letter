@@ -47,10 +47,19 @@ function element(){
  };
 }
 const $=id=>(nodes[id]??=element());
+const stateClasses=new Set();
 const document={
+ body:{classList:{
+  add(value){stateClasses.add(value)},
+  remove(value){stateClasses.delete(value)},
+  contains(value){return stateClasses.has(value)}
+ }},
+ activeElement:null,
  getElementById:$,createElement:()=>element(),
+ querySelector(){return null},
  querySelectorAll(selector){return selector==='#todayMapLegend .today-map-country'?[]:[]}
 };
+const window={scrollTo(){}};
 const localStorage=new Proxy({}, {get(){throw new Error('Removed stamp storage must not be touched')}});
 const hideTodayCountryIntro=()=>{};
 const countryRecord=()=>({region:'ヨーロッパ'});
@@ -63,6 +72,7 @@ function check(ok,num){if(!ok)throw new Error('quiz assertion '+num)}
 const item={code:'IT',name:'イタリア',indices:[0]};
 check(WORLD_PASSPORT_QUIZZES.IT.length===2,1);
 startWorldPassport(item);
+check(document.body.classList.contains('quiz-detail-mode'),13);
 check(!$('todayCountryQuiz').hidden,2);
 check(worldPassportActive.step===0,3);
 check($('todayQuizChoices').children.length===3,4);
@@ -78,6 +88,7 @@ answerWorldPassport(second);
 check($('todayQuizNext').textContent==='閉じる',9);
 finishWorldPassport();
 check(worldPassportActive===null&&$('todayCountryQuiz').hidden,10);
+check(!document.body.classList.contains('quiz-detail-mode'),14);
 startWorldPassport(item);
 check(worldPassportActive.step===0,11);
 closeWorldPassport();
