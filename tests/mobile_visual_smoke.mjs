@@ -476,6 +476,10 @@ try{
     await pin.click();
     const intro=today.locator('#todayMapIntro');
     assert.equal(await intro.isVisible(),true,'map pin opens the country guide: '+code);
+    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('country-detail-mode')),true);
+    assert.equal(await gallery.isVisible(),false,'country guide must not overlap the gallery');
+    assert.equal(await page.locator('.nav').isVisible(),false,'home header must not cover country');
+    assert.equal(await today.locator('#todayMapPins').isVisible(),false,'map hidden in country guide');
     assert.ok((await intro.locator('#todayMapIntroBody').textContent()).length>35,
      'country guide explains the place, not just the name: '+code);
     if(['AR','FR','US','IT','DE'].includes(code)){
@@ -507,6 +511,8 @@ try{
      }
     }
     await intro.locator('#todayMapIntroClose').click();
+    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('country-detail-mode')),false);
+    assert.equal(await gallery.isVisible(),true,'closing country restores home gallery');
    }
    // Stamps, scores and the album have been retired. Country-specific
    // photographic trivia stays available via the visible map country chips.
@@ -525,6 +531,10 @@ try{
     assert.ok((await chip.textContent()).includes('クイズ'),'button invites trivia, not stamp collection');
     await chip.click();
     assert.equal(await quiz.isVisible(),true,'country chip opens standalone trivia: '+code);
+    assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('quiz-detail-mode')),true);
+    assert.equal(await gallery.isVisible(),false,'quiz must not overlap home gallery');
+    assert.equal(await page.locator('.nav').isVisible(),false,'home header must not cover quiz');
+    assert.equal(await today.locator('#todayMapPins').isVisible(),false,'map hidden while quiz active');
     assert.equal(await quiz.locator('#todayQuizChoices button').count(),3);
     assert.equal(await quiz.locator('#todayQuizPhotoFigure').isHidden(),true,
      'quiz answer photo is hidden until answer choice');
@@ -584,6 +594,8 @@ try{
       assert.equal((await next.textContent()).trim(),'閉じる');
       await next.click();
       assert.equal(await quiz.isHidden(),true,'last answer returns to country map');
+       assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('quiz-detail-mode')),false);
+       assert.equal(await gallery.isVisible(),true,'closing quiz restores home gallery');
      }
     }
    }
