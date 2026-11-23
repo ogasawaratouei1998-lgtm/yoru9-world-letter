@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-23",
+  "updatedOn": "2026-11-24",
   "editorialPolicy": "approved = explicitly vetted release-country experience; pending = not yet cleared for promotion. References are inherited from existing reviewed assets, not automatically fact-verified by this migration.",
   "travelOrder": [
     "ar-casa-rosada-postcard",
@@ -3644,11 +3644,91 @@
     "CD": {
       "name": "コンゴ民主共和国(キンシャサ)",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "赤道の森から火山の山並みへ、二つの自然遺産を読む",
+        "body": "コンゴ民主共和国の世界遺産には、湿地・火山・高山が連なるヴィルンガ国立公園と、熱帯雨林と火山性の山地を含むカフジ＝ビエガ国立公園があります。二つの保護地域は同じ森の風景だけでは説明できず、標高と生態系の違いを比べることで、この国の自然の広がりが分かります。保全と現地の安全上の課題もあるため、現地訪問を勧めず公的資料でめぐる小旅行として扱います。",
+        "facts": [
+          "世界遺産：ヴィルンガ国立公園",
+          "世界遺産：カフジ＝ビエガ国立公園"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/63/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ヴィルンガの火山と高山",
+          "paragraphs": [
+            "ヴィルンガ国立公園の地形図を見ると、火山の斜面と溶岩原の先に湿地や草原が広がり、さらにルウェンゾリの高山地帯までが同じ保護地域につながっています。山頂と水辺の写真を並べて眺めるだけでも、わずかな地図上の距離にいくつもの風景が折り重なることが実感できます。",
+            "UNESCOは湿地、サバンナ、火山地形、高山の雪原といった多様な生息環境を特徴として説明しています。野生動物の姿だけを公園の価値とせず、地質と生態系の関係にも目を向けたい場所です。現在の治安や入域制限はこの歴史資料だけでは判断できないため、実際の行程や立入を案内するものではありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/63/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/63/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Virunga National Park Rwenzori landscape",
+          "quizDraft": {
+            "question": "ヴィルンガ国立公園で見られる地形の組み合わせは？",
+            "options": [
+              "火山・湿地・高山",
+              "サンゴ礁だけ",
+              "砂漠の塩湖だけ"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは火山斜面、湿地、ルウェンゾリの高山帯などの多様さを説明しています。",
+            "quip": "一枚の地図に火山も湿地も高山も。地形の情報量が多すぎます。",
+            "photoGoal": "ヴィルンガの火山と高山の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "カフジ＝ビエガの森と火山",
+          "paragraphs": [
+            "カフジ＝ビエガ国立公園について調べると、二つの休火山カフジとビエガを背景に、広い熱帯林がつながっていることが分かります。高い山の輪郭と森の高さを一緒に捉えると、単なる動物の撮影地ではなく、動植物を支える大きな生息環境が主役であることに気づかされます。",
+            "UNESCOは、この原生熱帯林と東部ローランドゴリラの生息環境を特筆しています。動物の生息数は資料が書かれた時点と現在とで変わり得るため、古い値を最新統計として扱いません。近接観察を勧めるのではなく、広い森と山の位置関係から保全の難しさを理解する資料上の旅にします。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/137/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/137/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Kahuzi Biega National Park forest",
+          "quizDraft": {
+            "question": "カフジ＝ビエガ国立公園が知られる理由の一つは？",
+            "options": [
+              "巨大な氷床",
+              "東部ローランドゴリラの生息環境",
+              "熱帯のサンゴ礁"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは原生熱帯林と東部ローランドゴリラの保全上の重要性を紹介しています。",
+            "quip": "ゴリラの前に、森そのもののスケールに驚く場所です。",
+            "photoGoal": "カフジ＝ビエガの森と火山の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "CG": {
       "name": "コンゴ共和国(ブラザビル)",
@@ -4511,11 +4591,91 @@
     "DO": {
       "name": "ドミニカ共和国",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "サントドミンゴ旧市街の石造建築と格子状の街路",
+        "body": "ドミニカ共和国のサントドミンゴ植民都市は、ヨーロッパによるアメリカ大陸の植民地化初期の歴史を伝える世界遺産です。大聖堂や公共施設が集まり、格子状に引かれた道路が後の都市設計にも影響したとUNESCOは説明しています。建物の美しさだけでなく植民地支配の歴史的文脈も考えながら、建築と街路の配置を資料でたどる小旅行にします。",
+        "facts": [
+          "世界遺産：サントドミンゴ植民都市",
+          "格子状の街路が初期の都市計画を伝える"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/526/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "サントドミンゴの大聖堂と旧市街",
+          "paragraphs": [
+            "サントドミンゴの旧市街では、石造の大聖堂と街路が近い距離で並び、都市の中心に宗教・行政の建物が集まっていたことが地図から分かります。ひとつの建物を切り取るより、周囲の街区と通りを合わせて見ると、後世の都市計画に影響した旧市街の構造がイメージできます。",
+            "UNESCOはこの町にアメリカ大陸初期の大聖堂、病院、税関、大学などが築かれたと紹介しています。建築の価値を語る際は、ヨーロッパによる植民地化の文脈と切り離さないよう注意します。現在の街並みと歴史的な都市機能を混同せず、登録資料を通じて複数の時代を読み解きます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/526/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/526/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Colonial City Santo Domingo cathedral streets",
+          "quizDraft": {
+            "question": "サントドミンゴ植民都市の特徴としてUNESCOが述べるのは？",
+            "options": [
+              "格子状の街路設計",
+              "全面的な水上都市",
+              "氷河のトンネル"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは格子状の街路が後の都市計画のモデルになったと説明しています。",
+            "quip": "通りの形を見るだけで、都市の歴史が見えてきます。",
+            "photoGoal": "サントドミンゴの大聖堂と旧市街の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "旧市街の街区と都市計画",
+          "paragraphs": [
+            "サントドミンゴの古い街区を地図で拡大すると、道が直角に交わり、まとまった区画が繰り返されていることに気づきます。正面の石造建築と街路を別々に考えるのではなく、街全体をひとつの設計として眺めると、都市づくりの考え方が空間に残っていることを実感できます。",
+            "UNESCOはサントドミンゴが一四九八年に形成され、格子状の街路がアメリカ大陸の植民地都市の計画に影響したと説明しています。建築と都市計画の両方に注目することで、景観の背後にある歴史と社会の変化が見えてきます。現在の交通規制など実用的な移動案内を行う内容ではありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/526/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/526/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Colonial City Santo Domingo grid street",
+          "quizDraft": {
+            "question": "サントドミンゴ旧市街の街路配置は？",
+            "options": [
+              "同心円状のみ",
+              "格子状の区画",
+              "海中道路"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは格子状に計画された街路が後の都市計画に影響したと記録しています。",
+            "quip": "まっすぐな道にも、曲がりくねった歴史が詰まっています。",
+            "photoGoal": "旧市街の街区と都市計画の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "DZ": {
       "name": "アルジェリア",
@@ -5503,11 +5663,91 @@
     "FJ": {
       "name": "フィジー",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "南太平洋のレブカに残る港町の文化と建物",
+        "body": "フィジーのオバラウ島にあるレブカ歴史港町は、十九世紀の太平洋地域の交易と文化交流を伝える世界遺産です。海沿いに低い建物が続き、商店や倉庫、宗教・教育施設などに植民地期と地元の建築伝統が重なっています。海辺の景観だけではなく、そこに暮らした先住民社会との関係も含め、公式資料をもとに街の形成を読み解きます。",
+        "facts": [
+          "世界遺産：レブカ歴史港町",
+          "十九世紀の交易と文化交流を示す町並み"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/1399/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "レブカの海沿いの歴史港町",
+          "paragraphs": [
+            "フィジーのレブカでは、海に沿って並ぶ低い建物の背後に緑の斜面が迫り、港と町が近い距離でつながっていることが分かります。商店や倉庫が並ぶ街路を資料でたどると、単なる美しい海辺ではなく、交易と暮らしの場所として発展してきた町の構造が見えてきます。",
+            "UNESCOはレブカが十九世紀の交易拠点として発展し、現地住民の建築伝統と植民地時代の建築の特徴が組み合わさった港町であると評価しています。景色だけを切り取らず、その背後にある地元社会の歴史まで視野に入れて学びます。写真の撮影場所と利用権は公開前に確認します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1399/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1399/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Levuka Fiji historic port buildings",
+          "quizDraft": {
+            "question": "レブカ歴史港町の価値の一つは？",
+            "options": [
+              "港町の歴史的建物と文化交流",
+              "巨大氷河の内部",
+              "古代メソポタミアの神殿"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは十九世紀の港町の景観と多様な建築伝統を評価しています。",
+            "quip": "海の青さだけでは、港町の歴史は読み切れません。",
+            "photoGoal": "レブカの海沿いの歴史港町の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "レブカの交易と公共建築",
+          "paragraphs": [
+            "レブカの古い建物を地図で追うと、商業のための倉庫や店舗に加えて、教会や学校などの公共的な施設も町のなかに残ることが分かります。背後の山と海岸線の間に建物が並ぶ配置を考えると、限られた土地に多くの役割が収まっていることに気づきます。",
+            "UNESCOはレブカの形成に、欧米から来た交易関係者と先住民の地域社会との関係が影響したことを紹介しています。町を単なる植民地建築の展示場のように扱わず、異なる人々の生活と文化が交わった場所として読みたいところです。現在の建物利用や入場条件については断定しません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1399/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1399/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Levuka Fiji school church colonial buildings",
+          "quizDraft": {
+            "question": "レブカの港町に見られる建物は？",
+            "options": [
+              "倉庫・商店・教育施設",
+              "宇宙基地",
+              "砂漠の巨大水門"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは倉庫、商店、宗教・教育施設などの存在を説明しています。",
+            "quip": "港町の建物は、一軒ずつ役割の違う歴史の証人です。",
+            "photoGoal": "レブカの交易と公共建築の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "FR": {
       "name": "フランス",
@@ -12534,11 +12774,91 @@
     "KP": {
       "name": "北朝鮮",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "高句麗の壁画古墳と高麗の都・開城を読み比べる",
+        "body": "北朝鮮の世界遺産には、高句麗古墳群と開城の歴史的建造物・遺跡群があります。前者は墓室に残る壁画から当時の生活や信仰を知る手がかりとなり、後者は高麗王朝の政治・教育・防御を支えた都市の構造を伝えています。現地の撮影や自由な立入りが可能かどうかは確認できないため、世界遺産の記録を読む歴史の小旅行としてまとめます。",
+        "facts": [
+          "世界遺産：高句麗古墳群",
+          "世界遺産：開城の歴史的建造物と遺跡"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/1091/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "高句麗古墳群の壁画",
+          "paragraphs": [
+            "高句麗古墳群の資料を開くと、外からは丘のように見える古墳の内部に、生活や文化を伝える壁画が残されていることに驚かされます。建物の外観だけでは分からない歴史を、石室の構造と描かれた人物や場面から読み取れる点が特徴です。実物の保存に配慮し、公開された図版から意味を考える小旅行にします。",
+            "UNESCOはこの登録資産におよそ三十の古墳が含まれ、壁画が高句麗時代の日常生活を伝える重要な証拠であると説明しています。古墳の数や撮影可否を資料だけで現在の状況と見なさず、保存の必要性を前提に読み解きます。内部の写真が自由に撮れると断定することは避けます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1091/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1091/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Complex of Koguryo Tombs mural",
+          "quizDraft": {
+            "question": "高句麗古墳群が伝える文化資料として重要なのは？",
+            "options": [
+              "墓室の壁画",
+              "宇宙船の設計図",
+              "蒸気機関車"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは壁画を高句麗の暮らしや文化を伝える証拠として紹介しています。",
+            "quip": "土の丘の内側に、歴史の情報がぎっしり。",
+            "photoGoal": "高句麗古墳群の壁画の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "高麗王朝の旧都・開城",
+          "paragraphs": [
+            "開城の文化遺産を地図に置くと、宮殿跡や城門・城壁、学校、墓所が一つの都市の中に並んでいることが分かります。いくつもの建造物を別々の観光名所として見るより、かつての首都を運営するための政治、教育、防衛の役割としてつなげて考えると、都市の仕組みが立体的に見えてきます。",
+            "UNESCOは開城の十二の構成資産を、高麗王朝の十世紀から十四世紀にかけての政治・文化・思想を示すものとして登録しています。仏教と儒教などの思想が都市計画に映る点にも注目したいところです。現地交通や立入の条件を根拠なく書き加えず、図面と記録の比較にとどめます。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1278/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1278/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Kaesong historic monuments palace ruins",
+          "quizDraft": {
+            "question": "開城の世界遺産に含まれる施設は？",
+            "options": [
+              "月面基地",
+              "宮殿跡・学校・城壁",
+              "アステカの神殿"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは宮殿、教育施設、城壁などを含む十二の構成資産を記録しています。",
+            "quip": "王宮だけでなく学校も城壁も、都の歴史の登場人物です。",
+            "photoGoal": "高麗王朝の旧都・開城の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "PT": {
       "name": "ポルトガル",
@@ -12762,11 +13082,91 @@
     "PS": {
       "name": "パレスチナ",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "ベツレヘムの巡礼路とバティールの農業景観をたどる",
+        "body": "パレスチナの世界遺産には、ベツレヘムの聖誕教会と巡礼路、そしてバティールの石積み段々畑と灌漑の文化的景観があります。町を歩む巡礼の道と、斜面に水を届ける農業の道は、目的が違っても人々の暮らしと土地を結び付けてきました。現在の安全や通行状況は変動するため、現地の観光行程ではなく文化資料による紹介に限定します。",
+        "facts": [
+          "世界遺産：ベツレヘムの聖誕教会と巡礼路",
+          "世界遺産：バティールの文化的景観"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/1433/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ベツレヘムの聖誕教会と巡礼路",
+          "paragraphs": [
+            "ベツレヘムの歴史地区を眺めると、聖誕教会という建物だけでなく、町の通りから教会へ向かう巡礼路そのものが世界遺産の一部であることが分かります。広場や通りの位置関係を地図で確かめると、人々が長い時間をかけて訪れてきた場所と町の構造がつながって見えてきます。",
+            "UNESCOはキリスト教の伝統と結び付く教会の建築史に加え、さまざまな教派の宗教施設や巡礼路も登録対象として記述しています。宗教的な意味を単純化することなく、建物と道に刻まれた歴史を読みたい場所です。現在の礼拝状況や立入可否を保証する案内ではありません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1433/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1433/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Church Nativity Bethlehem pilgrimage route",
+          "quizDraft": {
+            "question": "ベツレヘムの世界遺産には教会のほか何が含まれる？",
+            "options": [
+              "海中トンネル",
+              "伝統的な巡礼路",
+              "滑走路"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは聖誕教会とともに巡礼路も世界遺産の構成要素と説明しています。",
+            "quip": "教会の歴史は、そこへ続く道にも残っています。",
+            "photoGoal": "ベツレヘムの聖誕教会と巡礼路の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "バティールの段々畑と水路",
+          "paragraphs": [
+            "バティールの丘陵地には、斜面に沿って石積みの段々畑が続き、地下水源から引かれた水路が農地を支えています。遠くから畑を眺めるだけでなく、水がどこから来て、どの斜面に届けられるかを図面でたどると、農業景観が世代を超えた共同の工夫であることが分かります。",
+            "UNESCOはバティールの灌漑水を村の家族間で分け合う伝統的な仕組みと、オリーブやブドウの栽培を伝える石積みテラスを説明しています。農地の風景と水路の使い方を切り離さずに読むのが重要です。現在の耕作状況や水利用の方法を過去の記述から断定せず、文化史として紹介します。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1492/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1492/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Battir terraces Palestine landscape",
+          "quizDraft": {
+            "question": "バティールの段々畑を支えてきたものは？",
+            "options": [
+              "共同で水を分ける灌漑",
+              "人工雪の製造",
+              "海底油田"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは地下水源の水路と伝統的な分配の仕組みを紹介しています。",
+            "quip": "段々畑の主役は、石と水と協力の工夫です。",
+            "photoGoal": "バティールの段々畑と水路の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "QA": {
       "name": "カタール",
@@ -12865,11 +13265,91 @@
     "RU": {
       "name": "ロシア",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "赤の広場の建築とバイカル湖の水辺、二つの時間を旅する",
+        "body": "ロシアの歴史を資料でたどるなら、モスクワのクレムリンと赤の広場、そしてシベリアのバイカル湖を比べる方法があります。石造の城壁や聖堂が映す都市の歴史と、世界でも特に古く深い湖の自然史は、まったく違う時間の尺度を持っています。写真の撮影年や現在の立入事情を混同せず、世界遺産の登録資料に記された特徴を読み解きます。",
+        "facts": [
+          "世界遺産：モスクワのクレムリンと赤の広場",
+          "世界遺産：バイカル湖"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/545/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "モスクワのクレムリンと赤の広場",
+          "paragraphs": [
+            "モスクワの赤の広場を見ると、広い石畳の周囲に聖ワシリイ大聖堂やクレムリンの城壁が並び、建物の形がそれぞれ異なっていることに気づきます。空から見た街区の配置図を重ねてみると、政治と宗教の中心を担ってきた場所が、現在も都市の中心に大きく残っていることが分かります。",
+            "UNESCOはクレムリンを十四世紀から十七世紀にかけて築かれた政治と宗教の中心と説明し、赤の広場にある聖ワシリイ大聖堂にも言及しています。一枚の観光写真だけで時代を決めつけず、複数の建物の成立時期と役割を分けて見ると歴史が立体的になります。現在の入場可否はここでは保証しません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/545/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/545/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Kremlin Red Square Moscow panorama",
+          "quizDraft": {
+            "question": "赤の広場にある代表的な宗教建築は？",
+            "options": [
+              "コロッセオ",
+              "聖ワシリイ大聖堂",
+              "アンコール・ワット"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは赤の広場にある聖ワシリイ大聖堂を紹介しています。",
+            "quip": "広場だけ見て帰ると、城壁の内側に歴史を置き忘れます。",
+            "photoGoal": "モスクワのクレムリンと赤の広場の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "古く深いバイカル湖",
+          "paragraphs": [
+            "バイカル湖を地図で見ると、シベリア南東部の山地の間に細く長い水面が伸びていることが分かります。湖岸から撮影した写真と衛星画像を比べると、水の透明感だけでは伝わらない面積と地形の大きさが想像できます。自然の価値を知るためには、水面の外側にも目を向けたい場所です。",
+            "UNESCOはバイカル湖を世界で最も古く深い湖と紹介し、長い地質学的歴史と隔離された環境の中で独自の淡水生物相が育まれたことを重視しています。季節の氷や岸辺の風景をいつでも同じものとして扱わず、撮影時期と資料の説明を分けながら、水と生態系の関係をたどります。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/754/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/754/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Lake Baikal shore Siberia",
+          "quizDraft": {
+            "question": "バイカル湖の自然遺産としての特徴は？",
+            "options": [
+              "浅い人工池",
+              "古く深い湖と独自の淡水生態系",
+              "海中の熱帯珊瑚礁"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは湖の古さと深さ、特色ある淡水生物相を評価しています。",
+            "quip": "静かな湖面の下に、地質の歴史が何千万年分。",
+            "photoGoal": "古く深いバイカル湖の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "RW": {
       "name": "ルワンダ",
@@ -13012,11 +13492,91 @@
     "SD": {
       "name": "スーダン",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "ナイル川の流れとクシュ王国の遺跡を資料で巡る",
+        "body": "スーダンの世界遺産には、ゲベル・バルカルとナパタ地域の遺跡群、そしてメロエ島の考古遺跡群があります。山と川の近くに配置された神殿や王墓、砂漠に残るピラミッドと都市の跡から、古代クシュ王国の政治・信仰・交易を読み解けます。紛争の影響と現地の安全を確認できていないため、訪問を前提にせず公式資料上で歴史をたどります。",
+        "facts": [
+          "世界遺産：ゲベル・バルカルとナパタ地域の遺跡群",
+          "世界遺産：メロエ島の考古遺跡群"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/1073/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "ゲベル・バルカルとナパタの遺跡",
+          "paragraphs": [
+            "ゲベル・バルカルの山を地図で探すと、ナイル川に沿った土地に岩山と考古遺跡が集まっている様子が分かります。神殿や墓の写真を一枚ずつ見るだけでは、その位置関係まで理解しにくいかもしれません。川と丘と遺跡をまとめて捉えると、自然の地形が歴史の舞台になった理由を考えられます。",
+            "UNESCOはナパタ文化とメロエ文化を伝える五つの遺跡を登録し、神殿、宮殿、ピラミッドを含む墓所などを説明しています。単なる砂漠の名所ではなく、古代の信仰や王権の営みが残る場所として読むのが大切です。現地の立入や保存状態は最新の安全情報を確認できない限り断定しません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1073/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1073/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Gebel Barkal Napatan Sudan ruins",
+          "quizDraft": {
+            "question": "ゲベル・バルカル周辺の遺跡が伝える文化は？",
+            "options": [
+              "古代ヌビア・クシュの文化",
+              "バイキングの船",
+              "近代の海上空港"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはナパタ・メロエ文化の神殿や墓所、宮殿を記録しています。",
+            "quip": "山を背景に遺跡を読むと、歴史の舞台がぐっと広がります。",
+            "photoGoal": "ゲベル・バルカルとナパタの遺跡の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "メロエの考古遺跡群",
+          "paragraphs": [
+            "メロエの遺跡群を資料で眺めると、砂地に並ぶピラミッドだけでなく、王都の跡や宗教施設の遺構が広い範囲に残ることが分かります。遠くから見たピラミッドの輪郭と遺跡の分布図を重ねてみると、墓だけで成り立つ場所ではなかったことが伝わってきます。",
+            "UNESCOはメロエをクシュ王国の中心地域として説明し、ナカやムサワラート・エス・スフラなどの宗教遺跡も登録資産に含めています。王国の政治や地域間交流を想像する際には、建築だけでなく水利用の施設にも目を向けたいところです。今の交通状況や現場への入域は保証しません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/1336/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1336/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Meroe pyramids Sudan",
+          "quizDraft": {
+            "question": "メロエの考古遺跡群と関係が深い王国は？",
+            "options": [
+              "クシュ王国",
+              "インカ帝国",
+              "アステカ帝国"
+            ],
+            "answer": 0,
+            "fact": "UNESCOはメロエをクシュ王国の中心地として説明しています。",
+            "quip": "ピラミッドを数えるだけでは、王国の大きさは測れません。",
+            "photoGoal": "メロエの考古遺跡群の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "SN": {
       "name": "セネガル",
@@ -14791,11 +15351,91 @@
     "UA": {
       "name": "ウクライナ",
       "status": "pending",
-      "portrait": null,
+      "portrait": {
+        "lead": "聖ソフィア大聖堂とリヴィウ旧市街に残る都市の記憶",
+        "body": "ウクライナの文化遺産には、キエフの聖ソフィア大聖堂と関連修道院建築、そしてリヴィウの歴史地区があります。前者は中世の宗教・文化の中心地としての役割を、後者は交易や多文化の交流を重ねた街路と建物の姿を伝えます。戦争の影響による現在の保存状態や現地安全情報は別途判断が必要なため、訪問案内ではなく歴史資料を読む小旅行とします。",
+        "facts": [
+          "世界遺産：キエフの聖ソフィア大聖堂と関連修道院",
+          "世界遺産：リヴィウ歴史地区"
+        ],
+        "photos": [],
+        "sourceName": "UNESCO世界遺産センター",
+        "sourceUrl": "https://whc.unesco.org/en/list/527/"
+      },
       "portraitPhotos": [],
       "quiz": [],
       "travelStops": {},
-      "highlights": []
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "title": "キエフの聖ソフィア大聖堂",
+          "paragraphs": [
+            "キエフの聖ソフィア大聖堂を写真で見ると、複数の丸屋根が重なり、周囲の修道院建築とともに都市の歴史的な景観を形づくっています。建物の外観だけでなく、内部の装飾とその伝来について調べると、この場所が信仰や学びの中心として長い時間を過ごしてきたことが伝わってきます。",
+            "UNESCOはこの大聖堂を十一世紀のキエフ公国の文化を伝える場所として紹介し、キエフ・ペチェールシク大修道院とともに登録しています。建物の成立した時代と後世の改修・保存を区別しながら資料を読むことが重要です。現時点の損傷や公開状況を過去の紹介文から推測しません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/527/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/527/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Saint Sophia Cathedral Kyiv historic",
+          "quizDraft": {
+            "question": "キエフの聖ソフィア大聖堂に関係する歴史は？",
+            "options": [
+              "十一世紀のキエフ公国",
+              "二十世紀の空港計画のみ",
+              "古代マヤの神殿"
+            ],
+            "answer": 0,
+            "fact": "UNESCOは十一世紀に成立したキエフの宗教・文化的中心として紹介しています。",
+            "quip": "見上げる屋根だけでなく、十一世紀の都市まで想像が広がります。",
+            "photoGoal": "キエフの聖ソフィア大聖堂の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        },
+        {
+          "title": "リヴィウ歴史地区の街路",
+          "paragraphs": [
+            "リヴィウ旧市街の平面図を見ると、中世以来の街路や広場がその後の建築と重なって残っていることに気づきます。市場の周辺から宗教施設の立地をたどると、商業と信仰の場が歩いてつながる都市の構造が見えてきます。石造りの建物の色や装飾も、時代ごとに異なる文化の記憶を残しています。",
+            "UNESCOはリヴィウが長く行政・宗教・商業の中心として繁栄し、中世の都市構造とさまざまな共同体の痕跡を残したことを評価しています。景観を写真の美しさだけで扱わず、そこに暮らした人々の文化を資料で確かめます。古い撮影画像を現在の保存状態の証明には使いません。"
+          ],
+          "historicalSources": [
+            {
+              "name": "UNESCO世界遺産センター",
+              "url": "https://whc.unesco.org/en/list/865/",
+              "checkedOn": "2026-11-24"
+            }
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/865/",
+          "sourceCheckedOn": "2026-11-24",
+          "status": "pending_photo_rights_and_location_review",
+          "photoStatus": "not_selected_or_licensed",
+          "editorialOnly": true,
+          "sourceBatch": "country-expansion-batch-eight-20261124.json",
+          "commonsSearch": "Lviv historic centre streets",
+          "quizDraft": {
+            "question": "リヴィウ歴史地区が保存するものは？",
+            "options": [
+              "サンゴ礁",
+              "中世以来の都市構造と多文化の痕跡",
+              "宇宙基地"
+            ],
+            "answer": 1,
+            "fact": "UNESCOは中世の都市地形と異なる共同体の歴史を重要な価値としています。",
+            "quip": "同じ石畳でも、歩くほど違う時代が現れます。",
+            "photoGoal": "リヴィウ歴史地区の街路の現地実景と撮影地・作者・権利が確認できる独立写真"
+          }
+        }
+      ]
     },
     "UY": {
       "name": "ウルグアイ",
