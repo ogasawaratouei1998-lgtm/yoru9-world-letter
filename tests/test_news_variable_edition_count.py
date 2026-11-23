@@ -66,6 +66,13 @@ class NoDailyStoryQuotaTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_approved(no_content,DAY)
 
+    def test_mobile_preflight_does_not_reintroduce_old_four_to_five_story_quota(self):
+        source=(ROOT/"tests/mobile_visual_smoke.mjs").read_text(encoding="utf-8")
+        self.assertIn("editorialCover.storyCount>=1",source)
+        self.assertNotIn("editorialCover.storyCount>=4",source)
+        self.assertNotIn("editorialCover.storyCount<=5",source)
+        self.assertNotIn("four or five verified stories",source)
+
     def test_zero_stories_remains_unpublishable(self):
         with self.assertRaisesRegex(ValueError,"1本もない"):
             validate_approved(approved_current_issue(0),DAY)
