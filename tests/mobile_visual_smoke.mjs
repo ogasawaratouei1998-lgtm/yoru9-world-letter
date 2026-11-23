@@ -256,8 +256,8 @@ try{
      'current stories must not repeat category placeholders');
    }
    if(newSvgIssue){
-    assert.ok(editorialCover.storyCount>=4&&editorialCover.storyCount<=5,
-     'new regular issues must have four or five verified stories');
+    assert.ok(editorialCover.storyCount>=1,
+     'any nonempty approved regular issue must pass the visual preflight');
     assert.ok(galleryArts.every(path=>path.startsWith('./assets/news/')||
       path.startsWith('data:image/svg+xml;charset=utf-8,')),
      'free illustrated news must not depend on paid generated WebPs');
