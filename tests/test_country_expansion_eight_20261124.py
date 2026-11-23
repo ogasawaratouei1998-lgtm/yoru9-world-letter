@@ -19,7 +19,12 @@ class EightCountryNovember24DraftTests(unittest.TestCase):
         for code in CODES:
             with self.subTest(code=code):
                 row=self.country["countries"][code]
-                self.assertEqual(row,self.batch["countries"][code])
+                research=dict(self.batch["countries"][code])
+                research.pop("coverCommonsSearch")
+                research["travelDrafts"]=[{key:value for key,value in stop.items()
+                                           if key!="place"}
+                                          for stop in research["travelDrafts"]]
+                self.assertEqual(row,research)
                 self.assertEqual(row["status"],"pending")
                 self.assertEqual(row["portraitPhotos"],[])
                 self.assertEqual(row["travelStops"],{})
@@ -51,6 +56,20 @@ class EightCountryNovember24DraftTests(unittest.TestCase):
                     self.assertGreaterEqual(len(quiz["quip"]),10)
                     self.assertNotIn("photoKey",quiz)
         self.assertEqual(count,16)
+    def test_country_specific_photo_research_has_three_distinct_targets(self):
+        from country_photo_candidates import draft_queries
+        rows=[r for r in draft_queries(ROOT) if r["countryCode"] in CODES]
+        self.assertEqual(len(rows),24)
+        for code in CODES:
+            with self.subTest(code=code):
+                selection=[r for r in rows if r["countryCode"]==code]
+                self.assertEqual([r["role"] for r in selection],
+                                 ["cover","quizAndTravel","quizAndTravel"])
+                self.assertEqual(len({r["searchQuery"] for r in selection}),3)
+                self.assertEqual(
+                    [r["place"] for r in selection[1:]],
+                    [r["title"] for r in self.country["countries"][code]["travelDrafts"]])
+
     def test_canonical_approved_runtime_remains_unmodified(self):
         check_country_content(ROOT)
 if __name__=="__main__":
