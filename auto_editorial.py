@@ -830,14 +830,10 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
     topic_history=topic_history or Counter()
     lifetime_country_history=lifetime_country_history or Counter()
     recent_country_cooldown=recent_country_cooldown or Counter()
-    # Include every independently verified non-company story. Select only
-    # ONE corporate story (if available) to prevent an institutional-news
-    # pileup; this is editorial relevance, not a numeric edition quota.
-    non_company=tuple(i for i,story in enumerate(pool)
-                      if story["category"]!="company")
-    corporate=tuple(i for i,story in enumerate(pool)
-                    if story["category"]=="company")
-    choices=[non_company+(index,) for index in corporate] if corporate else [non_company]
+    # ALL already-audited stories survive, including unusual corporate
+    # stories that individually passed the same strict comic editorial audit.
+    # Rotate ordering for diversity; never drop a valid article to hit a
+    # numeric target, desk allotment or regional quota.
     def random_tiebreak(indices):
         if selection_seed is None:
             return -sum(indices)
@@ -881,9 +877,16 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
                 # Prefer a fresh, already verified angle at an otherwise exact tie.
                 -repeated_exact_quip_count(stories),
                 random_tiebreak(indices))
-    best=max(choices,key=diversity_score)
-    # Lead with the largest independently audited personal blunder when present.
-    return sorted((pool[i] for i in best),key=lambda story: -int(audited_major_personal_failure(story)))
+    # Greedy ordering considers the articles already chosen, so repeated
+    # countries/topics/cadences spread through the issue without removing
+    # independently approved articles. This is ordering, not a selection cap.
+    remaining=set(range(len(pool)))
+    ordered=[]
+    while remaining:
+        winner=max(remaining,key=lambda i:diversity_score(tuple(ordered)+(i,)))
+        ordered.append(winner)
+        remaining.remove(winner)
+    return [pool[i] for i in ordered]
 
 
 def archive_summaries():
