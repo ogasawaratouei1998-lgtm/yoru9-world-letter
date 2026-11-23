@@ -94,6 +94,19 @@ class StrictFourAndImagesTest(unittest.TestCase):
             self.assertFalse(old.exists())
             self.assertEqual(rotate_old_generated_images(root,DAY),0)
 
+    def test_one_story_live_edition_also_cleans_obsolete_generated_images(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            old=root/"assets/news-generated/2026-11-20/old.webp"
+            old.parent.mkdir(parents=True)
+            old.write_bytes(fake_webp())
+            current=validate_approved(approved(1),DAY)
+            (root/"data").mkdir()
+            (root/"data/current.json").write_text(
+                json.dumps(current,ensure_ascii=False),encoding="utf-8")
+            self.assertEqual(rotate_old_generated_images(root,DAY),1)
+            self.assertFalse(old.exists())
+
     def test_preparation_never_calls_image_api_in_free_mode(self):
         from unittest.mock import patch
         with tempfile.TemporaryDirectory() as td:
