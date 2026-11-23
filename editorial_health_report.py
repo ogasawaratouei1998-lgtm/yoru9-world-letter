@@ -21,7 +21,7 @@ PHASE_MESSAGES={
     "draft_empty":"承認済み報道機関の記事から採用候補を生成できなかった",
     "audit":"日本語・ツッコミの編集審査を実施済み",
     "country_readiness":"国紹介・写真・クイズの整合性を審査中",
-    "four_story_gate":"国別素材が揃った採用記事が4本に届かず前回号を維持",
+    "no_publishable_stories":"編集・国別素材審査を通過した記事がゼロのため前回号を維持",
     "selected":"公開候補を選定済み（実際の公開は別途確認）",
 }
 COUNTS=("fresh","fetchable_original_bodies","candidate_review_groups",
