@@ -47,7 +47,7 @@ class ReaderAssetSplitTest(unittest.TestCase):
         self.assertIn("window.setTimeout(verify,8000)",html)
         self.assertIn("button.id='retryNewsLoad'",html)
         self.assertIn("url.searchParams.set('reader-retry'",html)
-        self.assertIn("const INSTALL_SHELL = SHELL.filter(",worker)
+        self.assertIn("const INSTALL_SHELL = [",worker)
         self.assertIn("cache.put(canonical, copy)",worker)
         self.assertIn("caches.match(canonical)",worker)
 
