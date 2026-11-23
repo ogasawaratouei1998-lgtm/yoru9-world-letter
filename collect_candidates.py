@@ -365,12 +365,54 @@ def get_gdelt(extra_searches=(), min_interval_seconds=10.5, diagnostics=None,
 
 def main():
     from news_sources import fetch_registry_feeds, source_registry
+    from auto_editorial import incident_priority
+    from trusted_originals import trusted_original_domain
+    from collections import Counter
     leads, errors, seen=[],[],set()
+    replacements=0
+
     def keep(items, limit=75):
+        """Prefer promising ORIGINAL news links before spending the 750-slot budget.
+
+        Headline signals are discovery hints, never proof of an incident.
+        Preserve the initial focused GDELT leads, publisher diversity and
+        ability to collect generic fallback news when nothing stronger exists.
+        """
+        nonlocal replacements
         added=0
-        for item in items:
-            if item['url'] not in seen and len(leads)<750 and added<limit:
-                seen.add(item['url']);leads.append(item);added+=1
+        # Sorting at insertion time matters: ranking after the 750th entry
+        # cannot recover a strong local report excluded by earlier broad RSS.
+        for item in sorted(items,key=incident_priority):
+            if added>=limit:
+                break
+            url=item['url']
+            if url in seen:
+                continue
+            seen.add(url)
+            if len(leads)<750:
+                leads.append(item)
+                added+=1
+                continue
+            # A later, reputable publisher's spectacular mishap must not
+            # disappear just because generic publisher feeds arrived first.
+            # The later editorial process still fetches, checks and may reject
+            # every one of these UNVERIFIED leads.
+            if (incident_priority(item)[0]>0 or
+                    not trusted_original_domain(url)):
+                continue
+            markets=Counter(x.get("sourcecountry","") for x in leads)
+            replaceable=[i for i,old in enumerate(leads)
+                         if old.get("provider")!="GDELT DOC API"
+                         and incident_priority(old)[0]>=2]
+            if not replaceable:
+                continue
+            worst=max(replaceable,key=lambda i:(
+                incident_priority(leads[i])[0],
+                1 if "news.google.com" in leads[i].get("url","") else 0,
+                markets[leads[i].get("sourcecountry","")],i))
+            leads[worst]=item
+            replacements+=1
+            added+=1
     # The dedicated incident discovery must run BEFORE broad publisher feeds
     # fill the global 750-lead cap. A previous production run collected 750
     # general headlines with ZERO Google or GDELT mishap-search leads.
@@ -441,6 +483,11 @@ def main():
     if not leads:
         print('Could not collect unverified leads: '+'; '.join(errors),file=sys.stderr)
         return 1
+    print("Priority lead research (UNVERIFIED only):",json.dumps({
+        "retained_total":len(leads),
+        "headline_signal_strong":sum(incident_priority(x)[0]<=0 for x in leads),
+        "late_strong_replacements":replacements,
+    },sort_keys=True),flush=True)
     data={
         'generatedAt':datetime.now(timezone.utc).isoformat(timespec='seconds'),
         'provider':'GDELT focused original-publisher search first; then reviewed global publisher RSS registry, original publisher RSS, BBC RSS, Google News RSS (where capacity permits)',
