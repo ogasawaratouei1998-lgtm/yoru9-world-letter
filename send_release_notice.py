@@ -81,7 +81,8 @@ def main():
         print("No current approved release eligible for a notification.")
         return 0
     # An accepted push is for a verified published edition, never merely a
-    # queued editorial candidate. The push backend deduplicates per issue date.
+    # queued editorial candidate. No story-count quota is reintroduced here.
+    # The push backend deduplicates per issue date.
     print(f"Retry-safe notice for {payload['editionDate']}: {len(issue['stories'])} published stories.")
     dispatch(os.getenv("PUSH_DISPATCH_URL",""),os.getenv("PUSH_DISPATCH_TOKEN",""),payload)
     return 0
