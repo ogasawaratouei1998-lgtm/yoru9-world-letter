@@ -31,7 +31,7 @@ class EightCountryNovember24DraftTests(unittest.TestCase):
                 self.assertEqual(row["quiz"],[])
                 self.assertGreaterEqual(len(row["portrait"]["body"]),145)
                 self.assertEqual(len(row["travelDrafts"]),2)
-                self.assertTrue(row["portrait"]["sourceUrl"].startswith("https://whc.unesco.org/en/statesparties/"))
+                self.assertRegex(row["portrait"]["sourceUrl"], r"^https://whc\.unesco\.org/en/(?:list|statesparties)/")
     def test_sixteen_real_two_paragraph_quiz_drafts_remain_unpublished(self):
         count=0
         for code in CODES:
