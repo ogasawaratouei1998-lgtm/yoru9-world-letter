@@ -16,11 +16,13 @@ class ApprovedEditionTest(unittest.TestCase):
                 data=json.loads(p.read_text(encoding="utf-8"))
                 public=validate_approved(data,p.stem)
                 self.assertEqual(public["status"],"published")
-                # Mirror the publisher's date-scoped limits: normal editions
-                # from Nov 19 onward permit 1–5 independently checked stories.
+                # Historical issues retain their historical limits; modern
+                # editions have neither a minimum beyond one nor a fixed cap.
                 if data.get("editionType", "regular") == "regular":
-                    ceiling = 3 if "2026-11-17" <= p.stem < "2026-11-19" else 5
-                    self.assertTrue(1 <= len(public["stories"]) <= ceiling)
+                    self.assertGreaterEqual(len(public["stories"]),1)
+                    if p.stem < "2026-11-23":
+                        ceiling = 3 if "2026-11-17" <= p.stem < "2026-11-19" else 5
+                        self.assertLessEqual(len(public["stories"]),ceiling)
                 else:
                     self.assertEqual(len(public["stories"]), 5)
                 self.assertTrue(all("editorVerified" not in story for story in public["stories"]))
@@ -39,6 +41,18 @@ class ApprovedEditionTest(unittest.TestCase):
                 self.assertTrue(all("evidence" not in story and "editorVerified" not in story
                                     and "humorSafe" not in story
                                     for story in public["stories"]))
+
+    def test_major_individual_failure_cannot_follow_minor_story(self):
+        # A model-audited priority flag is consumed by the publisher in
+        # addition to the editor's ranking, without a numeric article quota.
+        source=APPROVED_DIR/"2026-11-23.json"
+        data=json.loads(source.read_text(encoding="utf-8"))
+        self.assertEqual(len(data["stories"]),2)
+        self.assertEqual(data["approvedBy"],"automated-two-stage-review")
+        self.assertFalse(any(s.get("majorPersonalFailureVerified") for s in data["stories"]))
+        data["stories"][1]["majorPersonalFailureVerified"]=True
+        with self.assertRaisesRegex(ValueError,"重大な個人の失敗より前"):
+            validate_approved(data,"2026-11-23")
 
     def test_approved_issue_releases_only_after_jst_nine(self):
         """End-to-end dry-run on a temporary directory (never updates the published site)."""
