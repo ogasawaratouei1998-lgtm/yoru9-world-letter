@@ -128,8 +128,12 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Pakistan: licensed exact-JPEG heritage photos for the 67th country.
  'assets/travel/pk-hingol-rock-cover.jpg', 'assets/travel/pk-moenjodaro-ruins-postcard.jpg', 'assets/travel/pk-takht-bahi-postcard.jpg'];
 
-// Optional licensed destination photos must not block installing a new reader.
-const INSTALL_SHELL = SHELL.filter(path => !path.startsWith('assets/travel/'));
+// Keep worker activation small and reliable: optional photos and artwork cache on first use.
+const INSTALL_SHELL = [
+ 'index.html','manifest.webmanifest','notifications.js','world-passport.js',
+ 'assets/reading-focus.css','assets/reader-core.css','assets/reader-core.js',
+ 'assets/reader-country-data.js','assets/reader-travel.js','assets/icon.svg'
+];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
     cache.addAll(INSTALL_SHELL.map(path => new URL(path, SCOPE).href))
