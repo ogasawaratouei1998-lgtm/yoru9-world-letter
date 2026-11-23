@@ -47,7 +47,8 @@ try{
      await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
      await page.locator('#todayCountryQuiz[hidden]').count()===1&&
      await page.locator('script[src="./world-passport.js"]').count()===1&&
-     await page.locator('#quipTeaserLine').count()===1&&
+     await page.locator('#quipTeaser').count()===0&&
+      await page.locator('.reader-first-link').count()===0&&
      await page.locator('#articleReader[hidden]').count()===1&&
      await page.locator('#readerBack').count()===1&&
      await page.locator('#spotlightImage').count()===1;
@@ -114,56 +115,31 @@ try{
     'lead reporting stays closed until requested');
    assert.equal(await page.locator('#stories').isHidden(),true,
     'supporting full stories stay closed until requested');
-   const teaser=page.locator('#quipTeaser');
-   assert.equal(await teaser.isVisible(),true,
-    'the current approved issue has a real opening punchline');
-   assert.equal(await page.locator('#quipTeaserLine').textContent(),
-    await page.locator('#spotlightQuip').textContent(),
-    'opening joke and actual article use precisely the same approved text');
-   assert.equal(await teaser.locator('img').count(),0,
-    'do not duplicate or tightly crop the gallery picture in the opening joke');
-   assert.equal(await page.locator('#spotlightImage').count(),1,
-    'the full article still has its own properly labeled cover');
-   assert.ok((await page.locator('#quipTeaserTopic').textContent()).length>3,
-    'the opening joke has its news context rather than an unexplained gag');
-   const teaserGeometry=await page.evaluate(()=>{
-    const r=id=>document.querySelector(id)?.getBoundingClientRect();
-    const a=r('#atlasHero .atlas-concept'),t=r('#quipTeaser'),
-          g=r('#issueGallery');
-    const buttons=[...document.querySelectorAll('#quipTeaser .quip-teaser-actions button')]
-      .map(el=>el.getBoundingClientRect());
-    const teaser=t?.toJSON();
-    const hero=r('#atlasHero')?.toJSON();
-    return {conceptBottom:a?.bottom,teaserTop:t?.top,teaserBottom:t?.bottom,
-      teaserHeight:t?.height,teaserLeft:t?.left,teaserRight:t?.right,
-      galleryTop:g?.top,galleryBottom:g?.bottom,windowWidth:window.innerWidth,
-      teaser,hero,buttons:buttons.map(x=>({left:x.left,right:x.right,top:x.top,bottom:x.bottom,height:x.height}))};
+   assert.equal(await page.locator('#quipTeaser').count(),0,
+    'the introductory AI quip card is removed');
+   assert.equal(await page.locator('.reader-first-link').count(),0,
+    'the redundant choose-news button is removed');
+   assert.equal(await page.locator('#spotlightImage').count(),1);
+   const geometry=await page.evaluate(()=>{
+    const a=document.querySelector('#atlasHero .atlas-concept')?.getBoundingClientRect();
+    const g=document.querySelector('#issueGallery')?.getBoundingClientRect();
+    const h=document.querySelector('#atlasHero')?.getBoundingClientRect();
+    return {conceptBottom:a?.bottom,galleryTop:g?.top,galleryBottom:g?.bottom,heroBottom:h?.bottom};
    });
-   assert.ok(teaserGeometry.conceptBottom<=teaserGeometry.teaserTop+2&&
-     teaserGeometry.teaserBottom<=teaserGeometry.galleryTop+2&&
-     teaserGeometry.galleryBottom<=teaserGeometry.hero.bottom+2,
-     'the comedy payoff and gallery are correctly ordered without a map');
-   assert.ok(teaserGeometry.teaserHeight<=225,
-    'opening laugh should be a compact speech bubble, not another full illustration card: '+
-      teaserGeometry.teaserHeight+'px');
-   assert.equal(teaserGeometry.buttons.length,1,
-    'the simplified opening joke has one clearly labeled read action');
-   assert.ok(teaserGeometry.buttons.every(b=>b.height>=44&&
-     b.left>=teaserGeometry.teaserLeft-1&&b.right<=teaserGeometry.teaserRight+1),
-    'the single read action stays inside the teaser and meets minimum touch size');
-   assert.ok(teaserGeometry.teaser.left>=teaserGeometry.hero.left-2&&
-     teaserGeometry.teaser.right<=teaserGeometry.hero.right+2,
-    'opening speech bubble never overflows the phone viewport');
+   assert.ok(geometry.conceptBottom<=geometry.galleryTop+2&&
+    geometry.galleryBottom<=geometry.heroBottom+2,
+    'the visual gallery follows the explanatory concept directly');
    assert.ok(await page.locator('#atlasHero .atlas-brand').evaluate(el=>
-     getComputedStyle(el).display==='flex'),
-    'the explanatory concept uses a compact row, not a second oversized bubble');
-   assert.equal(await page.locator('#quipTeaserRead').evaluate(el=>
-      el.getBoundingClientRect().height>=44),true,'first joke has a real thumb-size read action');
-   await page.locator('#quipTeaserRead').click();
+      getComputedStyle(el).display==='flex'),
+    'the real reporting / AI fiction labels remain visible');
+   const firstTile=page.locator('#issueGallery .gallery-tile').first();
+   assert.ok(await firstTile.evaluate(el=>el.getBoundingClientRect().height>=44),
+    'the first visual news tile is touch-friendly');
+   await firstTile.click();
    assert.equal(await articleReader.isVisible(),true,
-    'tapping a featured joke opens the on-demand article reader');
+    'tapping the news tile opens the on-demand article reader');
    assert.equal(await page.locator('#spotlightRead').getAttribute('aria-expanded'),'true',
-    'first joke opens the real article with source, rather than inventing another page');
+    'the gallery opens the real article with its source');
    assert.equal(await page.locator('#spotlight').isVisible(),true);
    assert.equal(await page.locator('#stories').isHidden(),true,
     'other news is not repeated when reading the first article');
@@ -190,8 +166,8 @@ try{
    await page.locator('#readerBack').click();
    assert.equal(await articleReader.isHidden(),true);
    assert.equal(await page.locator('#atlasHero').isVisible(),true);
-   assert.equal(await page.locator('#quipTeaserRead').isVisible(),true,
-    'the single opening read action remains available after returning to the gallery');
+   assert.equal(await page.locator('#issueGallery .gallery-tile').first().isVisible(),true,
+    'the visual gallery remains available after returning from an article');
    const gallery=page.locator('#issueGallery .gallery-tile');
    assert.equal(await page.locator('#galleryHeading').textContent(),
     '世界の「まさか」'+editorialCover.storyCount+'コマ劇場',
