@@ -737,4 +737,32 @@ try{
    process.stdout.write('Mobile smoke OK: '+viewport.width+'px; '+photoSource+'\n');
   }finally{await context.close();}
  }
+ // Also cover the installed home-screen app update path with service worker
+ // enabled; fresh-browser checks above intentionally bypass cached PWA assets.
+ const pwaContext=await browser.newContext({
+  viewport:{width:393,height:852},deviceScaleFactor:2,isMobile:true,
+  hasTouch:true,serviceWorkers:'allow',
+  locale:'ja-JP',timezoneId:'Asia/Tokyo'
+ });
+ try{
+  const pwaPage=await pwaContext.newPage(),pwaErrors=[];
+  pwaPage.on('pageerror',e=>pwaErrors.push(String(e)));
+  await pwaPage.goto(url,{waitUntil:'domcontentloaded',timeout:35000});
+  await pwaPage.waitForFunction(()=>
+    document.querySelectorAll('#issueGallery .gallery-tile').length>0,
+    null,{timeout:35000});
+  await pwaPage.evaluate(async()=>{
+   const active=await navigator.serviceWorker.ready;
+   if(!active.active)throw new Error('PWA worker was never activated');
+  });
+  await pwaPage.reload({waitUntil:'domcontentloaded',timeout:35000});
+  await pwaPage.waitForFunction(()=>
+   document.querySelectorAll('#issueGallery .gallery-tile').length>0 &&
+   document.querySelector('#atlasStoryCount')?.textContent?.trim()!=='…',
+   null,{timeout:35000});
+  assert.equal(await pwaPage.locator('#retryNewsLoad').count(),0,
+   'installed PWA restart should load real articles without emergency recovery');
+  assert.deepEqual(pwaErrors,[],'installed PWA JavaScript must not fail');
+  process.stdout.write('Installed PWA reload smoke OK: 393px\\n');
+ }finally{await pwaContext.close();}
 }finally{await browser.close();}
