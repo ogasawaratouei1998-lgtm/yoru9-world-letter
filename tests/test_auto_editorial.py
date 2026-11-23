@@ -202,6 +202,25 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         short=editorial.prioritize_comic_groups(filler+major,limit=6)
         self.assertTrue(all("personal" in g[0]["url"] for g in short))
 
+    def test_major_personal_draft_review_beats_photo_ready_minor(self):
+        major_src={"title":"Man accidentally bought million dollar boat by mistake",
+                   "url":"https://news.example/major"}
+        minor_src={"title":"Shop accidentally sent wrong order",
+                   "url":"https://news.example/minor"}
+        major={"id":"major","country":"FJ",
+               "verificationUrls":[major_src["url"]]}
+        minor={"id":"minor","country":"FR",
+               "verificationUrls":[minor_src["url"]]}
+        ranked=editorial.prioritize_personal_drafts_for_review(
+            [minor,major],{"FR"},[minor_src,major_src])
+        self.assertEqual([x["id"] for x in ranked],["major","minor"])
+        # Within the non-major tier, licensed photo readiness still matters.
+        other={"id":"other","country":"FJ",
+               "verificationUrls":[minor_src["url"]]}
+        ranked=editorial.prioritize_personal_drafts_for_review(
+            [other,minor],{"FR"},[minor_src])
+        self.assertEqual([x["id"] for x in ranked],["minor","other"])
+
     def test_major_personal_sources_get_read_before_routine_ones(self):
         minor=[{"title":f"Company accidentally sent wrong name {i}",
                 "url":f"https://minor{i}.example/report",
@@ -811,8 +830,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
         self.assertNotIn("ready_reviewed_count()>=",recovery)
-        self.assertIn("draft=prioritize_ready_drafts(draft,ready_for_review)",source)
-        self.assertLess(source.index("draft=prioritize_ready_drafts("),
+        self.assertIn("draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)",source)
+        self.assertLess(source.index("draft=prioritize_personal_drafts_for_review("),
                         source.index("for story in candidates_with_after_review_refill():"))
         self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
