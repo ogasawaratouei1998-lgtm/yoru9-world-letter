@@ -112,7 +112,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(sum("theguardian.com" in lead["url"] for lead in ordered),5)
         self.assertEqual(len(ordered),35)
 
-    def test_verified_selection_prefers_regions_and_perspectives_in_three_stories(self):
+    def test_every_verified_story_is_kept_and_ordered_for_diversity(self):
         from collections import Counter
         pool=[{"id":f"us{i}","country":"US","category":"company"} for i in range(5)]
         pool.extend([
@@ -123,7 +123,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ])
         chosen=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
         from country_codes import country_region
-        self.assertEqual(len(chosen),5)
+        self.assertEqual(len(chosen),9)
         self.assertEqual(len({country_region(s["country"]) for s in chosen}),5)
         self.assertEqual(len({s["category"] for s in chosen}),4)
 
@@ -148,8 +148,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter({"company":16,"work":2,"person":0,"sports":1}))
-        self.assertLessEqual(sum(s["category"]=="company" for s in chosen),1)
-        self.assertEqual(len(chosen),6)
+        self.assertEqual(sum(s["category"]=="company" for s in chosen),3)
+        self.assertEqual(len(chosen),8)
         self.assertTrue({"work","person","sports"}.issubset({s["category"] for s in chosen}))
 
     def test_published_topic_rotation_avoids_repeating_same_gag(self):
@@ -953,6 +953,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         editorial = (root / "auto_editorial.py").read_text(encoding="utf-8")
         publisher = (root / "publish_approved.py").read_text(encoding="utf-8")
         self.assertNotIn("min(5,len(pool))", editorial)
+        self.assertIn("remaining=set(range(len(pool)))",editorial)
         self.assertIn("and bool(stories)", publisher)
         self.assertNotIn("4 <= len(stories) <= 5",publisher)
         self.assertIn("if not selected:", editorial)
@@ -1064,7 +1065,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)',source)
         self.assertIn("majorPersonalFailureConfirmed:boolean",source)
         self.assertIn("select_diverse_verified_stories(selected,",source)
-        self.assertIn("sorted((pool[i] for i in best)",source)
+        self.assertIn("return [pool[i] for i in ordered]",source)
 
     def test_light_human_blunders_get_retrieval_priority_over_disputes(self):
         ordinary={"title":"Company accidentally sent the wrong order to customers",
