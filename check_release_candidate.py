@@ -141,7 +141,7 @@ def audit(root: Path, site: Path | None = None) -> dict:
     # not merely a path or a successful downloads counter.
     if site is not None:
         site=Path(site)
-        from reader_asset_split import expected_reader_assets
+        from reader_asset_split import expected_reader_assets, rendered_service_worker
         browser_assets=expected_reader_assets(root)
         for relative,expected in browser_assets.items():
             dest=site/relative
@@ -150,6 +150,13 @@ def audit(root: Path, site: Path | None = None) -> dict:
         for relative in ("world-passport.js","service-worker.js",
                          "travel-stops.json","data/current.json"):
             expected=(root/relative).read_bytes()
+            if relative=="service-worker.js":
+                # The built worker must cache the same fingerprinted reader
+                # files as the exact verified release HTML, not stale JS.
+                expected=rendered_service_worker(
+                    expected.decode("utf-8"),
+                    browser_assets["index.html"].decode("utf-8")
+                ).encode("utf-8")
             dest=site/relative
             require(dest.is_file() and dest.read_bytes()==expected,
                     "公開ビルドのファイルが元データと不一致: "+relative)
