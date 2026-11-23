@@ -112,7 +112,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertEqual(sum("theguardian.com" in lead["url"] for lead in ordered),5)
         self.assertEqual(len(ordered),35)
 
-    def test_verified_selection_prefers_regions_and_perspectives_in_three_stories(self):
+    def test_every_verified_story_is_kept_and_ordered_for_diversity(self):
         from collections import Counter
         pool=[{"id":f"us{i}","country":"US","category":"company"} for i in range(5)]
         pool.extend([
@@ -123,16 +123,16 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ])
         chosen=editorial.select_diverse_verified_stories(pool,Counter(),Counter())
         from country_codes import country_region
-        self.assertEqual(len(chosen),5)
+        self.assertEqual(len(chosen),9)
         self.assertEqual(len({country_region(s["country"]) for s in chosen}),5)
         self.assertEqual(len({s["category"] for s in chosen}),4)
 
-    def test_verified_selection_prioritizes_underrepresented_countries_in_tie(self):
+    def test_no_verified_noncompany_story_is_discarded_for_country_quota(self):
         from collections import Counter
         pool=[{"id":v,"country":v,"category":"work"} for v in ("US","CA","MX","FR","JP","BR")]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter({"US":18,"CA":1,"MX":2,"FR":1}),Counter())
-        self.assertEqual({s["country"] for s in chosen},{"CA","MX","FR","JP","BR"})
+        self.assertEqual({s["country"] for s in chosen},{"US","CA","MX","FR","JP","BR"})
 
     def test_final_selection_prioritizes_neglected_categories_not_corporate_volume(self):
         from collections import Counter
@@ -148,8 +148,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter({"company":16,"work":2,"person":0,"sports":1}))
-        self.assertLessEqual(sum(s["category"]=="company" for s in chosen),1)
-        self.assertEqual(len(chosen),5)
+        self.assertEqual(sum(s["category"]=="company" for s in chosen),3)
+        self.assertEqual(len(chosen),8)
         self.assertTrue({"work","person","sports"}.issubset({s["category"] for s in chosen}))
 
     def test_published_topic_rotation_avoids_repeating_same_gag(self):
@@ -165,7 +165,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter(),Counter({"signs":12,"orders":0}))
         self.assertIn("order",{s["id"] for s in chosen})
-        self.assertNotIn("sign",{s["id"] for s in chosen})
+        self.assertIn("sign",{s["id"] for s in chosen},
+                      "A topic-repeat hint must not veto an independently approved story")
         self.assertEqual(editorial.surprise_topic(pool[0]),"signs")
         self.assertEqual(editorial.surprise_topic(pool[1]),"orders")
 
@@ -634,8 +635,10 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("if semantic_matching_needed(len(groups)):",source)
         self.assertIn("groups.extend([[item] for item in unpaired])",source)
         self.assertIn('trusted_original_domain(lead.get("url",""))',source)
-        self.assertIn("if len(recent)<4:",source)
-        self.assertIn("if len(source_leads)<4:",source)
+        self.assertIn("if not recent:",source)
+        self.assertIn("if not source_leads:",source)
+        self.assertNotIn("if len(recent)<4:",source)
+        self.assertNotIn("if len(source_leads)<4:",source)
         self.assertIn('checkpoint("draft_empty",drafted=0)',source)
 
     def test_human_failure_must_be_central_not_animal_novelty(self):
@@ -783,11 +786,11 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         end=source.index("for story in candidates_with_after_review_refill():",begin)
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
-        self.assertIn("ready_reviewed_count()>=4",recovery)
+        self.assertNotIn("ready_reviewed_count()>=",recovery)
         self.assertIn("draft=prioritize_ready_drafts(draft,ready_for_review)",source)
         self.assertLess(source.index("draft=prioritize_ready_drafts("),
                         source.index("for story in candidates_with_after_review_refill():"))
-        self.assertIn("if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED",recovery)
+        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
         self.assertIn('used_urls={url for candidate in draft',recovery)
         self.assertIn("select_untried_source_groups(",recovery)
@@ -813,7 +816,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):",source)
-        self.assertIn("Eight eligible drafts reserved to support up to five verified stories.",source)
+        self.assertIn("Viable drafts reserved for independent editorial review.",source)
 
     def test_draft_recovery_buffers_eight_before_fact_review_and_respects_quota(self):
         import inspect
@@ -826,7 +829,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('supplemental_generated+=len(retry_stories)',code)
         self.assertIn('retry_stories=source_bound_batch_drafts(retry_result,batch)',code)
         self.assertIn('independent_editorial_quality_passed(audit)',code)
-        self.assertIn('if len(selected)>=9:break',code)
+        self.assertNotIn('if len(selected)>=9:break',code)
         self.assertIn('select_diverse_verified_stories(selected,',code)
 
     def test_comedy_draft_batching_preserves_individual_evidence_and_review_budget(self):
@@ -920,7 +923,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(editorial.semantic_corroboration_groups([]),[])
             mock_ai.assert_not_called()
 
-    def test_four_or_more_verified_candidates_are_not_discarded_until_five(self):
+    def test_all_verified_stories_survive_without_five_story_cap(self):
         import auto_editorial
         from collections import Counter
         pool=[
@@ -929,7 +932,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             {'id':'Brazil','country':'ブラジル','category':'company'},
             {'id':'France','country':'フランス','category':'sports'},
         ]
-        # Four independently verified articles are all eligible; five is the cap.
+        # Every independently verified, non-duplicate story remains eligible.
         selected=auto_editorial.select_diverse_verified_stories(pool,Counter(),Counter())
         self.assertEqual(len(selected),4)
         self.assertTrue(all(story in pool for story in selected))
@@ -938,20 +941,21 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             {"id":"India","country":"インド","category":"person"},
             {"id":"UK","country":"イギリス","category":"work"},
         ]
-        self.assertEqual(len(auto_editorial.select_diverse_verified_stories(expanded,Counter(),Counter())),5)
-        # Publishing a short edition must remain possible: neither one nor
-        # two should be discarded merely because the target is three.
+        self.assertEqual(len(auto_editorial.select_diverse_verified_stories(expanded,Counter(),Counter())),6)
+        # One or two verified stories are equally valid; zero is not an edition.
         for count in (1,2):
             self.assertEqual(len(auto_editorial.select_diverse_verified_stories(
                 pool[:count],Counter(),Counter())),count)
 
-    def test_new_editorial_caps_five_and_publisher_supports_five(self):
+    def test_edition_has_no_minimum_or_maximum_story_quota(self):
         from pathlib import Path
         root = Path(__file__).resolve().parents[1]
         editorial = (root / "auto_editorial.py").read_text(encoding="utf-8")
         publisher = (root / "publish_approved.py").read_text(encoding="utf-8")
-        self.assertIn("min(5,len(pool))", editorial)
-        self.assertIn("1 <= len(stories) <= 5", publisher)
+        self.assertNotIn("min(5,len(pool))", editorial)
+        self.assertIn("remaining=set(range(len(pool)))",editorial)
+        self.assertIn("and bool(stories)", publisher)
+        self.assertNotIn("4 <= len(stories) <= 5",publisher)
         self.assertIn("if not selected:", editorial)
 
     def test_one_publisher_report_needs_no_independent_confirmation(self):
@@ -1042,7 +1046,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ]
         chosen=editorial.select_diverse_verified_stories(
             pool,Counter(),Counter(),selection_seed="2026-11-20")
-        self.assertEqual(len(chosen),5)
+        self.assertEqual(len(chosen),6)
         self.assertEqual(chosen[0]["id"],"large-us")
         self.assertEqual({x["country"] for x in chosen if x["id"]=="large-us"},
                          {"US"})
@@ -1061,7 +1065,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)',source)
         self.assertIn("majorPersonalFailureConfirmed:boolean",source)
         self.assertIn("select_diverse_verified_stories(selected,",source)
-        self.assertIn("sorted((pool[i] for i in best)",source)
+        self.assertIn("return [pool[i] for i in ordered]",source)
 
     def test_light_human_blunders_get_retrieval_priority_over_disputes(self):
         ordinary={"title":"Company accidentally sent the wrong order to customers",

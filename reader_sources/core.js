@@ -987,7 +987,7 @@ async function checkPublished(){
   if(!response.ok)return;
   const x=await response.json(),now=new Date();
   const published=x?.status==='published'&&Array.isArray(x.stories)&&
-   x.stories.length>=1&&x.stories.length<=5;
+   x.stories.length>=1;
   const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);
   if(!published||!releaseOk)return;
   const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;

@@ -49,7 +49,9 @@ class CountryRotationTest(unittest.TestCase):
         picks=select_diverse_verified_stories(
             pool,Counter(),Counter(),recent_country_cooldown=Counter({"US":9}),
             selection_seed="2026-11-19")
-        self.assertEqual({p["id"] for p in picks},{"fr","jp","ar","de","in"})
+        self.assertEqual({p["id"] for p in picks},{"us","fr","jp","ar","de","in"},
+                         "A country cooldown can change order, not suppress a verified article")
+        self.assertGreater([p["id"] for p in picks].index("us"),0)
         self.assertEqual(picks,select_diverse_verified_stories(
             pool,Counter(),Counter(),recent_country_cooldown=Counter({"US":9}),
             selection_seed="2026-11-19"))

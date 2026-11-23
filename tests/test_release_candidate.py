@@ -40,7 +40,7 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,"アーカイブ"):
             audit(self.root)
 
-    def test_old_story_count_rule_cannot_return_on_future_issues(self):
+    def test_post_nov20_issue_can_publish_three_verified_stories(self):
         doc=json.loads((self.root/"data/current.json").read_text(encoding="utf-8"))
         doc["editionDate"]="2026-11-21"
         doc["stories"]=doc["stories"][:3]
@@ -51,8 +51,7 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         data=json.loads(index.read_text(encoding="utf-8"))
         data["issues"].append({"date":"2026-11-21","title":"test"})
         index.write_text(json.dumps(data),encoding="utf-8")
-        with self.assertRaisesRegex(ValueError,"4〜5本"):
-            audit(self.root)
+        self.assertEqual(audit(self.root)["stories"],3)
 
     def test_retired_stamp_book_must_not_reappear(self):
         page=self.root/"index.html"

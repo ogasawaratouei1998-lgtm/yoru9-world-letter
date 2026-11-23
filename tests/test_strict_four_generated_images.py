@@ -1,4 +1,4 @@
-"""Four-story hard gate, free SVG illustration publishing, safe cache rotation."""
+"""Variable-count verified stories, free SVG illustration publishing and safe cache rotation."""
 import base64
 from datetime import datetime
 import json
@@ -45,11 +45,10 @@ def approved(count=4,date=DAY):
             "stories":stories}
 
 class StrictFourAndImagesTest(unittest.TestCase):
-    def test_new_issues_require_four_to_five_verified_stories(self):
-        for n in (0,1,2,3,6):
-            with self.subTest(stories=n),self.assertRaises(ValueError):
-                validate_approved(approved(n),DAY)
-        for n in (4,5):
+    def test_new_issues_accept_any_positive_number_of_verified_stories(self):
+        with self.assertRaises(ValueError):
+            validate_approved(approved(0),DAY)
+        for n in (1,2,3,4,5,6,9):
             with self.subTest(stories=n):
                 self.assertEqual(len(validate_approved(approved(n),DAY)["stories"]),n)
         # An old two-story issue stays a valid historical archive.
@@ -94,6 +93,19 @@ class StrictFourAndImagesTest(unittest.TestCase):
             self.assertEqual(rotate_old_generated_images(root,DAY),1)
             self.assertFalse(old.exists())
             self.assertEqual(rotate_old_generated_images(root,DAY),0)
+
+    def test_one_story_live_edition_also_cleans_obsolete_generated_images(self):
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            old=root/"assets/news-generated/2026-11-20/old.webp"
+            old.parent.mkdir(parents=True)
+            old.write_bytes(fake_webp())
+            current=validate_approved(approved(1),DAY)
+            (root/"data").mkdir()
+            (root/"data/current.json").write_text(
+                json.dumps(current,ensure_ascii=False),encoding="utf-8")
+            self.assertEqual(rotate_old_generated_images(root,DAY),1)
+            self.assertFalse(old.exists())
 
     def test_preparation_never_calls_image_api_in_free_mode(self):
         from unittest.mock import patch

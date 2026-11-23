@@ -266,11 +266,10 @@ def prepare(root,day,key=None,render=None):
     # returns before reaching any provider unless explicitly opted in.
     if doc.get("editionRequiresImages") is not True:return 0
     from publish_approved import validate_approved
-    # A public image does NOT compensate for insufficient verified reporting.
-    if not isinstance(doc.get("stories"),list):
-        raise ValueError("Approved stories must be a list")
-    if not (4<=len(doc.get("stories",[]))<=5):
-        raise ValueError("Four source-checked articles required before image generation")
+    # A public image does NOT compensate for missing verified reporting.
+    # The edition quantity is unrestricted; validate every included story.
+    if not isinstance(doc.get("stories"),list) or not doc["stories"]:
+        raise ValueError("At least one independently approved story is required")
     validate_approved(doc,day)
     # Keep explicit render/key injection for isolated tests and past callers.
     # Production provider selection is independent of article-writing Gemini.
@@ -300,7 +299,7 @@ def rotate_old_generated_images(root,day):
     if not current.is_file():return 0
     doc=json.loads(current.read_text(encoding="utf-8"))
     if day<MIN_PUBLISH_DATE or doc.get("editionDate")!=day:return 0
-    if doc.get("editionType")!="regular" or len(doc.get("stories",[]))<4:return 0
+    if doc.get("status")!="published" or doc.get("editionType")!="regular" or not doc.get("stories"):return 0
     # Static-illustration editions have no generated images to keep.
     # Never delete the bundled assets/news SVG illustrations.
     generated=[s for s in doc["stories"] if s.get("imageType")=="ai-generated-photorealistic-impression"]

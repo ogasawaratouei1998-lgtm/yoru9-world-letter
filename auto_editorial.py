@@ -443,6 +443,19 @@ def host(url):
         return p.hostname.lower().removeprefix("www.") if p.scheme=="https" and p.hostname and not p.username else ""
     except ValueError:return ""
 
+def source_reading_stop_reason(readable_count, high_signal_count, remaining_seconds):
+    """Stop generic URL reading while reserving time for full AI source audits.
+
+    These thresholds concern only retrieval resource budgeting, never news
+    approval or a minimum/maximum number of published articles.
+    """
+    if remaining_seconds < 280:
+        return "reserve_time_for_independent_review"
+    if readable_count >= 72 and high_signal_count >= 12:
+        return "enough_promising_original_reports_for_editorial_review"
+    return None
+
+
 def balanced_source_retrieval(leads, limit=240):
     """Fairly sample fetchable publisher sources across discovery markets.
 
@@ -813,13 +826,12 @@ def audited_major_personal_failure(story):
             and story.get("majorPersonalFailureVerified") is True)
 
 def select_diverse_verified_stories(pool, country_history, category_history, topic_history=None, lifetime_country_history=None, recent_country_cooldown=None, selection_seed=None):
-    """Select up to five ALREADY audited stories, with regional fairness.
+    """Select all eligible audited stories without a fixed daily article quota.
 
     Country is the fact-checked event country, not the RSS feed locale.
     Unknown event countries receive no fictitious diversity credit.
     """
     from collections import Counter
-    from itertools import combinations
     from quip_variety import repeated_cadence_count, repeated_exact_quip_count
     if not pool:
         return []
@@ -831,17 +843,10 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
     topic_history=topic_history or Counter()
     lifetime_country_history=lifetime_country_history or Counter()
     recent_country_cooldown=recent_country_cooldown or Counter()
-    # A routine company-news pile is never a complete issue. Fewer superb
-    # verified stories beat forcing five stories by adding corporate filler.
-    choices=[]
-    for size in range(min(5,len(pool)),0,-1):
-        eligible=[
-            indices for indices in combinations(range(len(pool)),size)
-            if sum(pool[i]["category"]=="company" for i in indices) <= 1
-        ]
-        if eligible:
-            choices=eligible
-            break
+    # ALL already-audited stories survive, including unusual corporate
+    # stories that individually passed the same strict comic editorial audit.
+    # Rotate ordering for diversity; never drop a valid article to hit a
+    # numeric target, desk allotment or regional quota.
     def random_tiebreak(indices):
         if selection_seed is None:
             return -sum(indices)
@@ -885,9 +890,16 @@ def select_diverse_verified_stories(pool, country_history, category_history, top
                 # Prefer a fresh, already verified angle at an otherwise exact tie.
                 -repeated_exact_quip_count(stories),
                 random_tiebreak(indices))
-    best=max(choices,key=diversity_score)
-    # Lead with the largest independently audited personal blunder when present.
-    return sorted((pool[i] for i in best),key=lambda story: -int(audited_major_personal_failure(story)))
+    # Greedy ordering considers the articles already chosen, so repeated
+    # countries/topics/cadences spread through the issue without removing
+    # independently approved articles. This is ordering, not a selection cap.
+    remaining=set(range(len(pool)))
+    ordered=[]
+    while remaining:
+        winner=max(remaining,key=lambda i:diversity_score(tuple(ordered)+(i,)))
+        ordered.append(winner)
+        remaining.remove(winner)
+    return [pool[i] for i in ordered]
 
 
 def archive_summaries():
@@ -1062,7 +1074,7 @@ def source_bound_batch_drafts(response, groups):
     Provenance-only prefilter: it does not verify a fact, a country, or the
     quality of a joke. Independent reviewer B still must approve everything.
     A model must not combine unrelated original articles from separate
-    groups or invent a URL to fill the five-story ceiling.
+    groups or invent a URL to reach any arbitrary edition size.
     """
     proposed=response.get("stories",[]) if isinstance(response,dict) else []
     if not isinstance(proposed,list) or not isinstance(groups,list):
@@ -1154,6 +1166,7 @@ def draft_preflight_viable(story,now):
 # article text, individuals' names, URLs, model prompts or unverified events.
 FUNNEL_COUNT_FIELDS=frozenset({
     "collected","fresh","planned_fetches","fetchable_original_bodies",
+    "high_signal_original_bodies","source_fetch_attempts",
     "candidate_review_groups","paired_groups","single_original_groups",
     "first_ai_batch_groups","drafted","preflight_eligible",
     "independent_approved","selected_for_edition",
@@ -1169,11 +1182,11 @@ FUNNEL_MAP_FIELDS=frozenset({
     "unready_country_codes"
 })
 FUNNEL_STAGES=frozenset({
-    "fresh_filter","publisher_leads_below_four",
-    "fetch_plan","body_fetch","publisher_articles_below_four",
+    "fresh_filter","publisher_leads_unavailable",
+    "fetch_plan","body_fetch","publisher_articles_unavailable",
     "shortlist","budget_blocked","model_quota_blocked",
     "draft","draft_empty","audit","country_readiness",
-    "four_story_gate","selected"
+    "no_publishable_stories","selected"
 })
 
 def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
@@ -1225,9 +1238,9 @@ def main():
         except (KeyError,ValueError,TypeError):continue
         if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
     checkpoint("fresh_filter",fresh=len(recent))
-    if len(recent)<4:
-        checkpoint("publisher_leads_below_four",fresh=len(recent))
-        print("Fewer than four recent approved-publisher articles; keep existing edition.")
+    if not recent:
+        checkpoint("publisher_leads_unavailable",fresh=0)
+        print("No recent approved-publisher articles; keep existing edition.")
         return 0
     # Collect actual article bodies before asking the model to draft.
     cache={}
@@ -1244,7 +1257,16 @@ def main():
                publisher_regions_fetch_plan=dict(retrieval_regions))
     outcomes={}
     failure_reasons={}
+    high_signal_source_count=0
+    fetch_stop_reason=None
     for lead in ordered:
+        fetch_stop_reason=source_reading_stop_reason(
+            len(source_leads),high_signal_source_count,
+            editorial_seconds_remaining())
+        if fetch_stop_reason:
+            print("Original-source fetch budget preserved for AI source audits:",
+                  fetch_stop_reason,flush=True)
+            break
         provider=lead.get('provider','unknown')
         label='Google RSS' if provider.startswith('Google') else ('BBC RSS' if provider.startswith('BBC') else ('Guardian RSS' if provider.startswith('The Guardian') else ('GDELT' if provider.startswith('GDELT') else 'Other')))
         outcomes.setdefault(label,[0,0])
@@ -1256,32 +1278,37 @@ def main():
             reason=diagnostics[0] if diagnostics else 'unknown'
             failure_reasons.setdefault(label,{})[reason]=failure_reasons.setdefault(label,{}).get(reason,0)+1
         if cache[url]:outcomes[label][1]+=1
-        if cache[url]:source_leads.append({
-            'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
-            'text':cache[url][:8500],
-            # Publisher *market*, not a report of the incident's location.
-            'sourcecountry':lead.get('sourcecountry',''),
-            'language':lead.get('language',''),
-            'focus':lead.get('focus',''),
-        })
+        if cache[url]:
+            source_leads.append({
+                'title':lead['title'],'url':url,'publisher':lead.get('domain',''),
+                'text':cache[url][:8500],
+                # Publisher *market*, not a report of the incident's location.
+                'sourcecountry':lead.get('sourcecountry',''),
+                'language':lead.get('language',''),
+                'focus':lead.get('focus',''),
+            })
+            if incident_priority(lead)[0]<=1:
+                high_signal_source_count+=1
     fetched_regions=Counter(country_region(x.get("sourcecountry")) or "unattributed" for x in source_leads)
     checkpoint("body_fetch",fetchable_original_bodies=len(source_leads),
+               high_signal_original_bodies=high_signal_source_count,
+               source_fetch_attempts=sum(row[0] for row in outcomes.values()),
                publisher_regions_fetched=dict(fetched_regions))
     print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
-    if len(source_leads)<4:
-        checkpoint("publisher_articles_below_four",fetchable_original_bodies=len(source_leads))
-        print('Fewer than four readable approved-publisher articles; '
+    if not source_leads:
+        checkpoint("publisher_articles_unavailable",fetchable_original_bodies=0)
+        print('No readable approved-publisher articles; '
               'save free AI calls and keep existing edition.')
         return 0
     groups=corroboration_groups(source_leads)
     print('Cross-publisher headline groups:',len(groups),flush=True)
-    # Headline overlap is only a discovery heuristic. Even when it finds five
-    # candidates, semantic matching can find additional consequential incidents
+    # Headline overlap is only a discovery heuristic. Even when it finds
+    # candidate stories, semantic matching can find additional consequential incidents
     # described with different wording by independent publishers.
-    # Keep the bounded candidate budget; final publication still requires
-    # at least one original report verified against its fetched text and an independent adversarial AI audit.
+    # Keep the bounded candidate budget; publication still requires the cited
+    # original publisher text and a separate adversarial AI editing audit.
     print('Trying AI semantic incident matching to supplement headline groups.',flush=True)
     # Overlapping windows allow semantic matching across the full fetched set.
     # Headline groups are still included; AI proposals remain unverified.
@@ -1394,7 +1421,8 @@ def main():
     supplemental_generated=0
     supplemental_groups_examined=0
     if sum(draft_preflight_viable(item,now) for item in draft)<8:
-        # Reserve up to eight viable drafts to survive source/safety vetoes; publish at most five.
+        # Reserve viable drafts to survive safety and source-fidelity vetoes.
+        # Draft budget is NOT a required or maximum published article count.
         # The large first batch can return diagnostics only, with no actual
         # drafts: try additional *individual* incident reports without
         # weakening the original-text evidence or independent B audit gates.
@@ -1477,7 +1505,7 @@ def main():
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
             if sum(draft_preflight_viable(item,now) for item in draft)>=8:
-                print("Eight eligible drafts reserved to support up to five verified stories.",flush=True)
+                print("Viable drafts reserved for independent editorial review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
@@ -1522,11 +1550,6 @@ def main():
           },sort_keys=True),flush=True)
     seen=previous_events()
     selected=[]
-    def ready_reviewed_count():
-        # This is applied AFTER independent article-source checks. It cannot
-        # turn an unverified draft into an approved publication.
-        return sum(story_has_prepared_countries(story,ready_for_review)
-                   for story in selected)
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
@@ -1538,11 +1561,11 @@ def main():
 
     def candidates_with_after_review_refill():
         nonlocal supplemental_attempts,supplemental_generated,supplemental_groups_examined
-        # Review initial candidates FIRST. Only then see if the source-fidelity
-        # vetoes left fewer than four usable stories. Refill from untouched,
+        # Review initial candidates FIRST. Refill from untouched sources
+        # while independent audit budget and runtime still allow it.
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
-        if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+        if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
             return
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
@@ -1553,8 +1576,8 @@ def main():
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
         for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
-            if ready_reviewed_count()>=4 or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
-                print("Ending after-review refill: sufficient stories, time or quota limit.",flush=True)
+            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+                print("Ending after-review refill: independent audit time or AI quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
             retry_prompt=(
@@ -1756,7 +1779,8 @@ def main():
         story.pop("quipCandidates",None)
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
-        if len(selected)>=9:break
+        # No publication-count limit: the time and AI quota guards above
+        # bound how many separate stories can be safely reviewed in one run.
     checkpoint("audit",independent_approved=len(selected),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
@@ -1784,19 +1808,13 @@ def main():
         "countries_needing_curated_assets":unready,
         "incomplete_registered_codes":sorted(incomplete)},
         sort_keys=True),flush=True)
-    if len(selected)<4 and day>='2026-11-21':
-        checkpoint("four_story_gate",independent_approved=reviewed_count,
-                   country_ready_articles=len(selected),
-                   country_ready_count=len(prepared),
-                   unready_country_codes=unready,
-                   rejection_reasons=rejection_counts)
-        print("No new edition: fewer than four publisher-sourced, country-ready stories."
-              " Preserve the previously published issue.",flush=True)
-        return 0
     if not selected:
+        checkpoint("no_publishable_stories",independent_approved=reviewed_count,
+                   country_ready_articles=0,country_ready_count=len(prepared),
+                   unready_country_codes=unready,rejection_reasons=rejection_counts)
         print("No publisher-sourced, country-ready stories; no publication.");return 0
-    # After publisher selection and humor review, choose up to five. Never add fabricated filler.
-    # When too few survive, the counted rejection reasons distinguish real scarcity
+    # Publish all approved, country-ready stories without filling a target count.
+    # The rejection reasons distinguish real scarcity
     # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
     # Personal scale and diversity apply only after editorial safety review.
     country_history,category_history=recent_diversity_counts(now.date())
@@ -1811,8 +1829,8 @@ def main():
     checkpoint("selected",selected_for_edition=len(selected),**cadence_metrics)
     print("Quip cadence diagnostic (aggregate only):",
           json.dumps(cadence_metrics,sort_keys=True),flush=True)
-    print("Nightly verified selection:",len(selected),"vetted-publisher stories;",
-          "minimum 4 verified stories from Nov 21; otherwise keep previous.",flush=True)
+    print("Nightly verified selection:",len(selected),
+          "vetted-publisher stories; no minimum or maximum edition count.",flush=True)
     print("30-day editorial diversity:",json.dumps({
         "historical_countries":len(country_history),
         "selected_countries":len({code for story in selected

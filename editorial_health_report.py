@@ -10,10 +10,10 @@ from pathlib import Path
 
 PHASE_MESSAGES={
     "fresh_filter":"信頼済み媒体からの新着候補を選別中",
-    "publisher_leads_below_four":"7日以内の承認済み報道機関の記事候補が4件未満",
+    "publisher_leads_unavailable":"7日以内の承認済み報道機関の記事候補がゼロ",
     "fetch_plan":"報道機関の記事を読み込む準備中",
     "body_fetch":"報道機関の記事を読み込み済み",
-    "publisher_articles_below_four":"本文を読める記事が4件未満で、AI編集は実行しない",
+    "publisher_articles_unavailable":"本文を読める記事がゼロのため、AI編集を実行しない",
     "shortlist":"記事候補の優先順位を整理済み",
     "budget_blocked":"無料AIの実行時間が不足し、記事生成を停止",
     "model_quota_blocked":"無料AIの利用枠が不足し、記事生成を停止",
@@ -21,7 +21,7 @@ PHASE_MESSAGES={
     "draft_empty":"承認済み報道機関の記事から採用候補を生成できなかった",
     "audit":"日本語・ツッコミの編集審査を実施済み",
     "country_readiness":"国紹介・写真・クイズの整合性を審査中",
-    "four_story_gate":"国別素材が揃った採用記事が4本に届かず前回号を維持",
+    "no_publishable_stories":"編集・国別素材審査を通過した記事がゼロのため前回号を維持",
     "selected":"公開候補を選定済み（実際の公開は別途確認）",
 }
 COUNTS=("fresh","fetchable_original_bodies","candidate_review_groups",

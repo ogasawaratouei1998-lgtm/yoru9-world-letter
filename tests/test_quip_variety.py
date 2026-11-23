@@ -69,9 +69,9 @@ class QuipVarietyTest(unittest.TestCase):
         picked=select_diverse_verified_stories(
             stories,Counter(),Counter(),Counter(),Counter(),
             selection_seed="2026-11-21")
-        self.assertEqual(len(picked),5)
+        self.assertEqual(len(picked),6)
         self.assertEqual({s["id"] for s in picked}&{"E","F"},{"E","F"})
-        self.assertEqual(repeated_cadence_count(picked),2)
+        self.assertEqual(repeated_cadence_count(picked),3)
 
     def test_exact_duplicate_gags_lose_tiebreak_without_recognizable_cadence(self):
         common={"country":"US","category":"work",
@@ -90,9 +90,9 @@ class QuipVarietyTest(unittest.TestCase):
             [{"quip":"同じ 笑い。"},{"quip":"同じ笑い。"}]),1)
         chosen=select_diverse_verified_stories(
             repeated+distinct,Counter(),Counter(),selection_seed="2026-11-21")
-        self.assertEqual(len(chosen),5)
+        self.assertEqual(len(chosen),6)
         self.assertEqual({x["id"] for x in chosen}&{"E","F"},{"E","F"})
-        self.assertEqual(repeated_exact_quip_count(chosen),2)
+        self.assertEqual(repeated_exact_quip_count(chosen),3)
 
     def test_five_verified_similar_quips_remain_eligible(self):
         # Never suppress a sourced article or manufacture an alternative joke

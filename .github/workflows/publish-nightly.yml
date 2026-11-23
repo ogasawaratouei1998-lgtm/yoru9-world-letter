@@ -202,7 +202,7 @@ jobs:
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' && github.event.head_commit.message == 'Editorial retry on demand: 2026-11-22'))
         run: python collect_candidates.py
-      - name: Verify at least four original-source stories (target 4-5)
+      - name: Review source-grounded stories without a publication count quota
         if: >-
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
@@ -220,7 +220,7 @@ jobs:
         if: always()
         run: python editorial_health_report.py
       # Static editorial SVG artwork is bundled; never call paid image APIs.
-      - name: Release today's four-or-five verified stories (skip if fewer)
+      - name: Release every approved story (skip only when none qualify)
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |

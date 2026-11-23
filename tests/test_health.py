@@ -59,10 +59,10 @@ class HealthCheckTest(unittest.TestCase):
                 self.assertTrue(ok,message)
                 self.assertIn(str(count)+"本",message)
 
-    def test_new_four_story_minimum_rejects_old_one_to_three_rule(self):
+    def test_new_regular_monitor_accepts_any_nonzero_story_count(self):
         import json
         day="2026-11-21"
-        for count in (1,2,3,4,5,6):
+        for count in (0,1,2,3,4,5,6):
             with self.subTest(count=count):
                 issue={"status":"published","editionDate":day,"stories":[{}]*count}
                 (self.root/"data/approved"/(day+".json")).write_text(
@@ -73,7 +73,7 @@ class HealthCheckTest(unittest.TestCase):
                     json.dumps({"issues":[{"date":day}]}))
                 ok,_=check_release(self.root,
                          datetime.fromisoformat(day+"T22:27:00+09:00"))
-                self.assertEqual(ok,count in (4,5))
+                self.assertEqual(ok,count>=1)
 
     def test_six_story_edition_is_invalid_and_alerts(self):
         import json

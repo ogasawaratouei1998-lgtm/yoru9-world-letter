@@ -25,12 +25,13 @@ def check_release(root: Path, now: datetime):
     expected_count=len(approved_data.get("stories",[]))
     kind=approved_data.get("editionType","regular")
     if kind=="special":
-        valid_count=expected_count==5
+        valid_count=(expected_count>=1 if issue_date>="2026-11-23"
+                     else expected_count==5)
     elif kind=="regular":
-        # The four-story gate took effect on November 21. Historical
-        # November 19–20 editions keep their original rules.
+        # Current editions have no fixed count; historic editions retain
+        # their original contract for archive consistency.
         if issue_date >= "2026-11-21":
-            valid_count=4<=expected_count<=5
+            valid_count=expected_count>=1
         elif issue_date >= "2026-11-19":
             valid_count=1<=expected_count<=5
         else:

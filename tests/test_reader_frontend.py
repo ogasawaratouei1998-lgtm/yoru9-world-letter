@@ -1091,6 +1091,20 @@ assert(pastQuoteEntries('2026-11-19').length===0,'no quote before launch');
             with self.subTest(token=token):
                 self.assertIn(token, page)
 
+    def test_creator_editor_has_no_stale_five_story_quota(self):
+        page=(ROOT/"editor.html").read_text(encoding="utf-8")
+        for stale in ("selected.length>=5", "selected.length!==5",
+                      "selected=raw.slice(0,5)", "0 / 5 本",
+                      "承認済み5本", "記事5本を確認",
+                      "すでに5本です"):
+            self.assertNotIn(stale,page,stale)
+        for required in ("selected.length===0", "surpriseScore",
+                         "mistakeScore", "outcomeScore", "safetyScore",
+                         "editorialScores:{surprise:",
+                         "story.editorialScores.safety===5"):
+            self.assertIn(required,page,required)
+        self.assertIn("審査に合格した記事が1本以上",page)
+
     def test_opt_in_local_notification_smoke_has_no_dispatch_side_effect(self):
         page=(ROOT / 'index.html').read_text(encoding='utf-8')
         js=(ROOT / 'notifications.js').read_text(encoding='utf-8')
