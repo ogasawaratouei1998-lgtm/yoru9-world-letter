@@ -157,6 +157,15 @@ class NewsSourceRegistryTest(unittest.TestCase):
         self.assertEqual(
             sources.provisional_headline_priority("War report and injured victims"),3)
 
+    def test_extraordinary_personal_failure_outranks_trivial_mixup(self):
+        huge="Woman accidentally sold million dollar painting by mistake"
+        minor="Shop accidentally sends wrong order to customer"
+        self.assertEqual(sources.provisional_headline_priority(huge),-1)
+        self.assertLess(sources.provisional_headline_priority(huge),
+                        sources.provisional_headline_priority(minor))
+        self.assertEqual(sources.provisional_headline_priority(
+            "Company announces huge earnings forecast"),2)
+
     def test_late_local_mistakes_survive_publisher_rss_budget(self):
         # Even if the first eight headlines from each publisher are generic,
         # the article about a documented-sounding human mistake must be
