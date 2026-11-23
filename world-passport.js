@@ -321,11 +321,24 @@ function updateWorldPassportButtons(){
   button.setAttribute('aria-label',button.dataset.countryName+'の3択クイズに挑戦');
  });
 }
-function closeWorldPassport(){
+let passportReturnTarget=null;
+function closeWorldPassport(restoreMap=true){
+ const wasOpen=document.body.classList.contains('quiz-detail-mode');
+ const country=worldPassportActive?.item.code;
  resetWorldPassportPhoto();
  $('todayCountryQuiz').hidden=true;
+ document.body.classList.remove('quiz-detail-mode');
  worldPassportActive=null;
  updateWorldPassportButtons();
+ if(wasOpen&&restoreMap===true){
+  const fallback=document.querySelector('#todayMapLegend .today-map-country[data-country-code="'+country+'"]')||$('todayMapLegend');
+  const target=passportReturnTarget?.isConnected&&passportReturnTarget.getClientRects().length?
+   passportReturnTarget:fallback;
+  requestAnimationFrame(()=>{
+   target.focus?.({preventScroll:true});
+   target.scrollIntoView({block:'center',behavior:'auto'});
+  });
+ }
 }
 function focusWorldPassportQuestion(run){
  const reposition=()=>{
@@ -338,10 +351,14 @@ function focusWorldPassportQuestion(run){
  else reposition();
 }
 function startWorldPassport(item){
- hideTodayCountryIntro();
+ passportReturnTarget=document.activeElement;
+ hideTodayCountryIntro(false);
+ $('worldExplore').open=true;
  const questions=passportQuizQuestions(item);
  worldPassportActive={item,questions,step:0,streak:0,answered:false};
  $('todayCountryQuiz').hidden=false;
+ document.body.classList.add('quiz-detail-mode');
+ window.scrollTo(0,0);
  renderWorldPassportRound();updateWorldPassportButtons();
  focusWorldPassportQuestion(worldPassportActive);
 }
@@ -510,10 +527,7 @@ function finishWorldPassport(){
   focusWorldPassportQuestion(run);
  }else{
   closeWorldPassport();
-  const legend=$('todayMapLegend');
-  if(legend&&typeof legend.scrollIntoView==='function')
-   legend.scrollIntoView({block:'nearest',behavior:'auto'});
  }
 }
-document.getElementById('todayQuizClose').addEventListener('click',closeWorldPassport);
+document.getElementById('todayQuizClose').addEventListener('click',()=>closeWorldPassport());
 document.getElementById('todayQuizNext').addEventListener('click',finishWorldPassport);
