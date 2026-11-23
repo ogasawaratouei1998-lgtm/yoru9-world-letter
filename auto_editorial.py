@@ -461,6 +461,29 @@ def source_reading_stop_reason(readable_count, high_signal_count, remaining_seco
     return None
 
 
+def prioritize_personal_drafts_for_review(drafts, ready, source_leads):
+    """Prioritize major personal evidence BEFORE destination-photo readiness.
+
+    Draft wording and claimed location are unverified at this stage. Use the
+    already-fetched *publisher headline* only as a ranking hint; full source
+    fidelity and the independent audit still decide publication. Location
+    readiness is only a tie-breaker within the same priority tier.
+    """
+    from country_readiness import story_has_prepared_countries
+    by_url={lead.get("url"):lead for lead in source_leads
+            if isinstance(lead,dict) and isinstance(lead.get("url"),str)}
+    def key(draft):
+        urls=draft.get("verificationUrls",[]) if isinstance(draft,dict) else []
+        if not isinstance(urls,list):
+            urls=[]
+        ranks=[incident_priority(by_url[url])[0] for url in urls
+               if isinstance(url,str) and url in by_url]
+        major=bool(ranks) and min(ranks)<0
+        return (0 if major else 1,
+                0 if story_has_prepared_countries(draft,ready) else 1)
+    return sorted(drafts,key=key)
+
+
 def balanced_source_retrieval(leads, limit=240):
     """Fairly sample fetchable publisher sources across discovery markets.
 
@@ -1541,14 +1564,12 @@ def main():
         checkpoint("draft_empty",drafted=0)
         print("No usable drafts from approved-publisher articles; keep previous edition.",flush=True)
         return 0
-    # Existing paid-free quota allows only a handful of independent B audits.
-    # Put drafts whose claimed countries have COMPLETELY curated reader assets
-    # first. This is a scheduling hint, not a source/fact approval: the original
-    # article and independent review still have to prove the event location.
-    from country_readiness import (
-        ready_country_codes, prioritize_ready_drafts, story_has_prepared_countries)
+    # First review extraordinary PERSONAL blunders: old country-photo-first
+    # scheduling could exhaust B-editor quota before reaching a better story.
+    # Country-photo readiness is a secondary preference, never the first tier.
+    from country_readiness import ready_country_codes, story_has_prepared_countries
     ready_for_review,_=ready_country_codes(Path.cwd())
-    draft=prioritize_ready_drafts(draft,ready_for_review)
+    draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)
     print("Review budget priority (unverified draft locations only):",
           json.dumps({
               "drafted":len(draft),
