@@ -20,7 +20,7 @@ SEARCHES = [
     # All hits are unverified leads; no claim of blame or amount is accepted here.
     ('(個人 OR 男性 OR 女性 OR 旅行者) (大失敗 OR 判断ミス OR 勘違い) (巨額 OR 高額 OR 大損 OR 全財産) when:7d', 'ja', 'JP', 'JP:ja'),
     ('("bizarre mistake" OR "major blunder" OR "costly miscalculation") when:7d','en','US','US:en'),
-    ('("false alarm" OR "AI hoax") (police OR firefighters OR search) when:7d','en','GB','GB:en'),
+    ('("individual miscalculation" OR "lost a fortune" OR "spectacular blunder") when:7d','en','GB','GB:en'),
     ('("price is right" OR "game show") (mistake OR blunder) when:7d','en','US','US:en'),
     ('(誤入札 OR 誤購入 OR 売却ミス OR 大損) (個人 OR 旅行者 OR 落札者) when:7d', 'ja', 'JP', 'JP:ja'),
     ('("costly mistake" OR "expensive blunder" OR "huge mistake") (man OR woman OR tourist OR employee) when:7d', 'en', 'US', 'US:en'),
@@ -258,14 +258,14 @@ def get_gdelt(extra_searches=(), min_interval_seconds=10.5, diagnostics=None,
         '("million dollar mistake" OR "costly mistake" OR "expensive blunder")',
         '("accidentally bought" OR "accidentally sold" OR "wrong bid")',
         '("huge mistake" OR "spectacular mistake" OR "major blunder")',
-        '("AI hoax" OR "false alarm" OR "search for days")',
+        '("person lost a fortune" OR "personal miscalculation" OR "wrong auction bid")',
         '("accidental purchase" OR "wrong country" OR "wrong house")',
         '("costly error" OR "wrong price" OR "game show mistake")',
         '("error millonario" OR "compra por error" OR "grave equivocación")',
         '("teurer Fehler" OR "versehentlich verkauft" OR "großer Irrtum")',
         '("失敗で大損" OR "数千万円のミス" OR "誤落札")',
-        # Backups only: small everyday slips do not displace large stories.
-        '("wrong delivery" OR "misprint" OR "mix-up")',
+        # All five focused GDELT requests seek significant personal mistakes.
+        '("accidentally demolished" OR "accidentally deleted" OR "wrong winning bid")',
     )
     articles,seen=[],set()
     # Always devote at least 3/5 queries to the higher-impact themes,
@@ -397,7 +397,7 @@ def main():
             # disappear just because generic publisher feeds arrived first.
             # The later editorial process still fetches, checks and may reject
             # every one of these UNVERIFIED leads.
-            if (incident_priority(item)[0]>0 or
+            if (incident_priority(item)[0]>=0 or
                     not trusted_original_domain(url)):
                 continue
             markets=Counter(x.get("sourcecountry","") for x in leads)
