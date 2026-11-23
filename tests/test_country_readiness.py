@@ -74,8 +74,8 @@ class CountryReadinessTest(unittest.TestCase):
         self.assertEqual(sum(story_has_prepared_countries(s,{"US","DE","IT"})
                              for s in verified),2)
         pipeline=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertEqual(pipeline.count(
-            "if ready_reviewed_count()>=5 or AI_QUOTA_BLOCKED"),2)
+        self.assertNotIn("if ready_reviewed_count()>=",pipeline)
+        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",pipeline)
         self.assertNotIn("if len(selected)>=9:break",pipeline,
                           "No approved story may be dropped solely for its edition number")
 
