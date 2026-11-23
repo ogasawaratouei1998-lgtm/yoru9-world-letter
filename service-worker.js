@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v95';
+const SHELL_CACHE = 'yoru9-shell-v96';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -128,9 +128,11 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  // Pakistan: licensed exact-JPEG heritage photos for the 67th country.
  'assets/travel/pk-hingol-rock-cover.jpg', 'assets/travel/pk-moenjodaro-ruins-postcard.jpg', 'assets/travel/pk-takht-bahi-postcard.jpg'];
 
+// Optional licensed destination photos must not block installing a new reader.
+const INSTALL_SHELL = SHELL.filter(path => !path.startsWith('assets/travel/'));
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache =>
-    cache.addAll(SHELL.map(path => new URL(path, SCOPE).href))
+    cache.addAll(INSTALL_SHELL.map(path => new URL(path, SCOPE).href))
   ).then(() => self.skipWaiting()));
 });
 
@@ -203,14 +205,15 @@ self.addEventListener('fetch', event => {
   }
 
   if (SHELL.some(name => relative === name)) {
-    // Prefer fresh app assets; fall back to offline copies only when disconnected.
+    // Hash-qualified script URLs still resolve to a canonical offline copy.
+    const canonical = new URL(relative, SCOPE).href;
     event.respondWith(fetch(req).then(response => {
       if (response.ok) {
         const copy = response.clone();
-        event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(req, copy)));
+        event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(canonical, copy)));
       }
       return response;
-    }).catch(async () => (await caches.match(req)) || Response.error()));
+    }).catch(async () => (await caches.match(canonical)) || Response.error()));
   }
 });
 
