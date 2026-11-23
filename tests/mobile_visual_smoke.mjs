@@ -561,7 +561,8 @@ try{
      assert.equal(await quiz.locator('#todayQuizResult').isVisible(),true);
      assert.ok((await quiz.locator('#todayQuizExplanation').textContent()).length>14);
      assert.ok((await quiz.locator('#todayQuizJoke').textContent()).includes('創作の冗談'));
-     const hasPhoto=curated&&!(['ES','NZ'].includes(code)&&round===1);
+     const hasPhoto=await page.evaluate(({round})=>
+      Boolean(worldPassportActive?.questions?.[round]?.photoKey),{round});
      if(hasPhoto){
       await page.waitForFunction(()=>{
        const img=document.querySelector('#todayQuizPhotoImage'),frame=document.querySelector('#todayQuizPhotoFigure');
