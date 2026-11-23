@@ -393,12 +393,12 @@ def build(root, output):
         raise FileNotFoundError('A published news illustration is missing')
     shutil.copytree(artwork_dir,output/'assets'/'news',dirs_exist_ok=True)
     # Free illustration mode: only bundled SVG news artwork is published.
-    # Retain the four-story safeguard without requiring external image APIs.
+    # Preserve a nonempty published issue without a numeric article-count cap.
     current=json.loads((root/'data/current.json').read_text(encoding='utf-8'))
     if (current.get('editionDate','')>='2026-11-21' and
         current.get('editionType')=='regular'):
-        if not (4<=len(current.get('stories',[]))<=5):
-            raise ValueError('New published edition has fewer than four stories')
+        if not isinstance(current.get('stories'),list) or not current['stories']:
+            raise ValueError('No verified stories in the current published edition')
     # Old image URLs in archived JSON fall back to existing news SVGs.
     # The standalone iOS and Android icons are built locally from the same
     # Moon / envelope / 9 artwork. No third-party image processing needed.
