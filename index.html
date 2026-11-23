@@ -1001,41 +1001,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  }
 }
 
-/* Playful reading v2: land the first verified joke BEFORE the news list and
-   world map, then reveal the same article (no new fabricated joke/source). */
-/* Compact, text-first opening joke. The only image for a story appears
-   in the clickable three-comic gallery; never crop the same art twice. */
-#atlasHero .quip-teaser[hidden]{display:none!important}
-#atlasHero .quip-teaser{
- display:block;position:relative;min-width:0;max-width:100%;
- margin:2px 0 13px;padding:12px 13px 12px;
- background:linear-gradient(125deg,#305775,#263F60);
- border:1px solid #91C9BF;border-left:4px solid #FBA69C;
- border-radius:14px;box-shadow:0 5px 14px #07152724
-}
-#atlasHero .quip-teaser::after{
- content:"";position:absolute;left:22px;bottom:-8px;width:12px;height:12px;
- transform:rotate(-45deg);border-left:1px solid #91C9BF;
- border-bottom:1px solid #91C9BF;background:#263F60;pointer-events:none
-}
-#atlasHero .quip-teaser-body{display:flex;flex-direction:column;min-width:0}
-#atlasHero .quip-teaser-heading{display:flex;align-items:baseline;
- justify-content:space-between;gap:4px 10px;flex-wrap:wrap;margin:0 0 7px}
-#atlasHero .quip-teaser-kicker{font-size:.78rem;line-height:1.45;
- font-weight:900;color:#FFE1A7;margin:0}
-#atlasHero .quip-teaser-topic{font-size:.71rem;line-height:1.4;
- color:#ACEADB;font-weight:760;margin:0;overflow-wrap:anywhere}
-#atlasHero .quip-teaser-line{font-size:clamp(.99rem,3.55vw,1.17rem);
- line-height:1.58;font-weight:820;color:#FFF8ED;margin:0 0 10px;
- overflow-wrap:anywhere;text-wrap:pretty}
-#atlasHero .quip-teaser-actions{display:flex;align-items:stretch;
- flex-wrap:nowrap;gap:8px;margin-top:0;min-width:0}
-#atlasHero #quipTeaserRead{flex:1 1 0;min-width:0;min-height:44px;
- padding:8px 10px;color:#23354B;background:#FFE0AC;
- border:1px solid #FFF2D1;border-radius:10px;
- font-weight:860;font-size:.78rem;line-height:1.4}
-#atlasHero #quipTeaserRead:hover{background:#FFF0CC}
-#atlasHero #quipTeaserRead:focus-visible{outline:3px solid #FFF3D5;outline-offset:3px}
 /* Keep "real reporting / fictional joke" legible, without another
    explanatory speech bubble before the actual punchline. */
 #atlasHero .atlas-concept{margin:0 0 9px;gap:6px;align-items:center}
@@ -1083,13 +1048,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  background:#304961;border-left:1px solid #7181987A;
  border-bottom:1px solid #7181987A;pointer-events:none}
 @media(max-width:520px){
- #atlasHero .quip-teaser{padding:11px 11px 10px;margin:2px 0 12px}
- #atlasHero .quip-teaser-heading{margin:0 0 6px;gap:2px 8px}
- #atlasHero .quip-teaser-kicker{font-size:.73rem}
- #atlasHero .quip-teaser-topic{font-size:.68rem}
- #atlasHero .quip-teaser-line{font-size:.975rem;line-height:1.53;margin-bottom:8px}
- #atlasHero .quip-teaser-actions{gap:7px}
- #atlasHero #quipTeaserRead{padding:7px 8px;font-size:.72rem;min-height:44px}
  #atlasHero .atlas-concept{margin-bottom:8px}
  #atlasHero .gallery-kicker{font-size:.73rem;margin:1px 3px 2px}
  #atlasHero .gallery-label{font-size:.74rem;line-height:1.47}
@@ -1109,9 +1067,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}
 }
 @media(max-width:355px){
- #atlasHero .quip-teaser{padding:9px}
- #atlasHero .quip-teaser-line{font-size:.92rem;line-height:1.52}
- #atlasHero .quip-teaser-actions{gap:6px}
  #atlasHero .gallery-kicker{font-size:.7rem}
  #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{font-size:.78rem}
 }
@@ -1642,19 +1597,11 @@ body.news-detail-mode #articleReader .spotlight-joke .spotlight-quip{
   <p class="eyebrow">WORLD LETTER · 夜9時の世界便り</p>
   <h2 class="atlas-title">世界の<span class="atlas-oops">「やらかし」</span><span class="atlas-title-second">ニュース、<span id="atlasStoryCount">…</span>本。</span></h2>
   <p class="atlas-lede" id="atlasLede">この号に収録された、世界の失敗・勘違い・珍事件。</p>
-   <a class="reader-first-link" href="#issueGallery">まずはニュースを選んで読む ›</a>
   <div class="atlas-concept" role="group" aria-label="報道された実話にAIがユーモアのあるツッコミを添える">
    <span class="atlas-real-stamp">実話</span><span class="atlas-concept-arrow" aria-hidden="true">→</span>
    <p class="atlas-brand"><span class="atlas-bubble-tag">AIツッコミ</span><span class="atlas-brand-copy">創作の冗談</span></p>
   </div>
  </div>
- <section class="quip-teaser" id="quipTeaser" aria-label="この号の最初のAIツッコミ">
-  <div class="quip-teaser-body">
-   <div class="quip-teaser-heading"><p class="quip-teaser-kicker">まずは、ひとツッコミ。</p><p class="quip-teaser-topic" id="quipTeaserTopic">世界の実話から</p></div>
-   <p class="quip-teaser-line" id="quipTeaserLine" role="note" aria-label="AIによる創作の冗談">記事に付いたツッコミを準備しています。</p>
-   <div class="quip-teaser-actions"><button type="button" id="quipTeaserRead">この話を読む ›</button></div>
-  </div>
- </section>
  <section class="issue-gallery" aria-label="イラストからニュースを選ぶ">
   <div class="gallery-heading"><strong id="galleryHeading">世界の「まさか」劇場</strong><span>気になる絵から読む</span></div>
   <div id="issueGallery" class="gallery-track" role="group" aria-label="この号のビジュアル記事一覧" data-layout="mobile-grid-responsive"></div>
@@ -2427,16 +2374,6 @@ function shortComicKicker(story){
  const line=NEWS_COMIC_KICKERS[story?.id]||story?.label||story?.categoryLabel||'世界の実話';
  return String(line).trim().slice(0,18);
 }
-function updateQuipTeaser(){
- const first=Array.isArray(edition.stories)?edition.stories[0]:null;
- const teaser=$('quipTeaser');
- teaser.hidden=!first||!String(first.quip||'').trim();
- if(teaser.hidden)return;
- $('quipTeaserTopic').textContent=shortComicKicker(first)+' · '+countryLabel(first.country);
- $('quipTeaserLine').textContent=first.quip;
- $('quipTeaserRead').setAttribute('aria-label','1本目：'+String(first.title||'掲載記事')+'を読む');
-}
-
 /* Unmapped nightly stories get a distinct, offline-safe, generated vector.
    This is symbolic editorial artwork, never a supposed scene photograph. */
 function fallbackNewsArt(story){
@@ -2650,7 +2587,6 @@ function updateSpotlight(){
  const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
  $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
  $('spotlightQuip').textContent=first.quip||'人間のやらかしに、AIが鋭くツッコミます。';
- updateQuipTeaser();
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');
@@ -3142,7 +3078,6 @@ async function handleStoryAction(e){const open=e.target.closest('[data-open]');i
 $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
 $('atlasHero').addEventListener('click',handleStoryAction);
-$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();

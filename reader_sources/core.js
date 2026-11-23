@@ -580,16 +580,6 @@ function shortComicKicker(story){
  const line=NEWS_COMIC_KICKERS[story?.id]||story?.label||story?.categoryLabel||'世界の実話';
  return String(line).trim().slice(0,18);
 }
-function updateQuipTeaser(){
- const first=Array.isArray(edition.stories)?edition.stories[0]:null;
- const teaser=$('quipTeaser');
- teaser.hidden=!first||!String(first.quip||'').trim();
- if(teaser.hidden)return;
- $('quipTeaserTopic').textContent=shortComicKicker(first)+' · '+countryLabel(first.country);
- $('quipTeaserLine').textContent=first.quip;
- $('quipTeaserRead').setAttribute('aria-label','1本目：'+String(first.title||'掲載記事')+'を読む');
-}
-
 /* Unmapped nightly stories get a distinct, offline-safe, generated vector.
    This is symbolic editorial artwork, never a supposed scene photograph. */
 function fallbackNewsArt(story){
@@ -803,7 +793,6 @@ function updateSpotlight(){
  const summary=String(first.summary||'').trim(),firstSentence=summary.split('。')[0].trim();
  $('spotlightBrief').textContent=firstSentence?firstSentence+(summary.includes('。')?'。':''):'実際に報じられた出来事を短く紹介します。';
  $('spotlightQuip').textContent=first.quip||'人間のやらかしに、AIが鋭くツッコミます。';
- updateQuipTeaser();
  $('spotlightRead').textContent=edition.status==='demo'?'体験版の話の続きへ ↓':'この話の続きへ ↓';
  $('spotlightRead').setAttribute('aria-expanded','false');
  const body=$('spotlightBody');
@@ -975,7 +964,6 @@ async function handleStoryAction(e){const open=e.target.closest('[data-open]');i
 $('stories').addEventListener('click',handleStoryAction);
 $('spotlightBody').addEventListener('click',handleStoryAction);
 $('atlasHero').addEventListener('click',handleStoryAction);
-$('quipTeaserRead').addEventListener('click',()=>openAtlasStory(0));
 document.querySelector('.filters').addEventListener('click',e=>{const btn=e.target.closest('[data-filter]');if(btn){filter=btn.dataset.filter;applyFilter()}});
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();

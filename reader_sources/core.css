@@ -986,41 +986,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  }
 }
 
-/* Playful reading v2: land the first verified joke BEFORE the news list and
-   world map, then reveal the same article (no new fabricated joke/source). */
-/* Compact, text-first opening joke. The only image for a story appears
-   in the clickable three-comic gallery; never crop the same art twice. */
-#atlasHero .quip-teaser[hidden]{display:none!important}
-#atlasHero .quip-teaser{
- display:block;position:relative;min-width:0;max-width:100%;
- margin:2px 0 13px;padding:12px 13px 12px;
- background:linear-gradient(125deg,#305775,#263F60);
- border:1px solid #91C9BF;border-left:4px solid #FBA69C;
- border-radius:14px;box-shadow:0 5px 14px #07152724
-}
-#atlasHero .quip-teaser::after{
- content:"";position:absolute;left:22px;bottom:-8px;width:12px;height:12px;
- transform:rotate(-45deg);border-left:1px solid #91C9BF;
- border-bottom:1px solid #91C9BF;background:#263F60;pointer-events:none
-}
-#atlasHero .quip-teaser-body{display:flex;flex-direction:column;min-width:0}
-#atlasHero .quip-teaser-heading{display:flex;align-items:baseline;
- justify-content:space-between;gap:4px 10px;flex-wrap:wrap;margin:0 0 7px}
-#atlasHero .quip-teaser-kicker{font-size:.78rem;line-height:1.45;
- font-weight:900;color:#FFE1A7;margin:0}
-#atlasHero .quip-teaser-topic{font-size:.71rem;line-height:1.4;
- color:#ACEADB;font-weight:760;margin:0;overflow-wrap:anywhere}
-#atlasHero .quip-teaser-line{font-size:clamp(.99rem,3.55vw,1.17rem);
- line-height:1.58;font-weight:820;color:#FFF8ED;margin:0 0 10px;
- overflow-wrap:anywhere;text-wrap:pretty}
-#atlasHero .quip-teaser-actions{display:flex;align-items:stretch;
- flex-wrap:nowrap;gap:8px;margin-top:0;min-width:0}
-#atlasHero #quipTeaserRead{flex:1 1 0;min-width:0;min-height:44px;
- padding:8px 10px;color:#23354B;background:#FFE0AC;
- border:1px solid #FFF2D1;border-radius:10px;
- font-weight:860;font-size:.78rem;line-height:1.4}
-#atlasHero #quipTeaserRead:hover{background:#FFF0CC}
-#atlasHero #quipTeaserRead:focus-visible{outline:3px solid #FFF3D5;outline-offset:3px}
 /* Keep "real reporting / fictional joke" legible, without another
    explanatory speech bubble before the actual punchline. */
 #atlasHero .atlas-concept{margin:0 0 9px;gap:6px;align-items:center}
@@ -1068,13 +1033,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  background:#304961;border-left:1px solid #7181987A;
  border-bottom:1px solid #7181987A;pointer-events:none}
 @media(max-width:520px){
- #atlasHero .quip-teaser{padding:11px 11px 10px;margin:2px 0 12px}
- #atlasHero .quip-teaser-heading{margin:0 0 6px;gap:2px 8px}
- #atlasHero .quip-teaser-kicker{font-size:.73rem}
- #atlasHero .quip-teaser-topic{font-size:.68rem}
- #atlasHero .quip-teaser-line{font-size:.975rem;line-height:1.53;margin-bottom:8px}
- #atlasHero .quip-teaser-actions{gap:7px}
- #atlasHero #quipTeaserRead{padding:7px 8px;font-size:.72rem;min-height:44px}
  #atlasHero .atlas-concept{margin-bottom:8px}
  #atlasHero .gallery-kicker{font-size:.73rem;margin:1px 3px 2px}
  #atlasHero .gallery-label{font-size:.74rem;line-height:1.47}
@@ -1094,9 +1052,6 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:var(--safe-top);bac
  #atlasHero .atlas-map{aspect-ratio:2.4/1;min-height:118px}
 }
 @media(max-width:355px){
- #atlasHero .quip-teaser{padding:9px}
- #atlasHero .quip-teaser-line{font-size:.92rem;line-height:1.52}
- #atlasHero .quip-teaser-actions{gap:6px}
  #atlasHero .gallery-kicker{font-size:.7rem}
  #atlasHero .gallery-tile:last-child:nth-child(odd) .gallery-label{font-size:.78rem}
 }
