@@ -10,12 +10,12 @@ from editorial_health_report import summarize_funnel
 
 
 class EditorialHealthReportTests(unittest.TestCase):
-    def test_scarce_sources_and_four_story_gate_have_distinct_messages(self):
+    def test_empty_source_and_no_approved_story_have_distinct_messages(self):
         cases={
-            "publisher_leads_below_four":"記事候補が4件未満",
-            "publisher_articles_below_four":"本文を読める記事が4件未満",
+            "publisher_leads_unavailable":"記事候補がゼロ",
+            "publisher_articles_unavailable":"本文を読める記事がゼロ",
             "draft_empty":"採用候補を生成できなかった",
-            "four_story_gate":"4本に届かず前回号を維持",
+            "no_publishable_stories":"記事がゼロのため前回号を維持",
             "model_quota_blocked":"利用枠が不足",
             "selected":"実際の公開は別途確認",
         }
@@ -28,7 +28,7 @@ class EditorialHealthReportTests(unittest.TestCase):
 
     def test_counts_are_aggregated_and_free_text_is_never_emitted(self):
         fake={
-            "phase":"four_story_gate","fresh":12,
+            "phase":"no_publishable_stories","fresh":12,
             "country_ready_articles":3,
             "rejection_reasons":{"unsupported_country":4,
                                  "https://secret.example/article":3},
