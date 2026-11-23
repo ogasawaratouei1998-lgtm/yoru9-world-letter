@@ -91,15 +91,14 @@ class CollectionTest(unittest.TestCase):
                 "status":"published","editionDate":"2026-11-22",
                 "stories":[{"country":"Germany"},{"country":"Italy"}]
             }),encoding="utf-8")
-            original=c.Path
             # Only redirect the archive-read location. Catalog still loads
             # from its canonical location via country_codes.
             with patch.object(c,"Path",side_effect=lambda p: Path(tmp)/p):
                 queries=c.uncovered_country_searches(
                     day,eligible_codes={"DE","IT"})
         self.assertEqual(len(queries),1)
-        self.assertIn('"Germany"',queries[0])
-        self.assertIn('"Italy"',queries[0])
+        self.assertIn('"germany"',queries[0])
+        self.assertIn('"italy"',queries[0])
 
     def test_country_targeting_respects_only_published_archive(self):
         from datetime import date
