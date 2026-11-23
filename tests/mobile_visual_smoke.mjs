@@ -752,7 +752,11 @@ try{
     document.querySelectorAll('#issueGallery .gallery-tile').length>0,
     null,{timeout:35000});
   await pwaPage.evaluate(async()=>{
-   const active=await navigator.serviceWorker.ready;
+   const active=await Promise.race([
+    navigator.serviceWorker.ready,
+    new Promise((_,reject)=>setTimeout(()=>
+     reject(new Error('PWA worker activation timed out')),20000))
+   ]);
    if(!active.active)throw new Error('PWA worker was never activated');
   });
   await pwaPage.reload({waitUntil:'domcontentloaded',timeout:35000});
