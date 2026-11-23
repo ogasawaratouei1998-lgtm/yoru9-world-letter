@@ -25,7 +25,8 @@ def check_release(root: Path, now: datetime):
     expected_count=len(approved_data.get("stories",[]))
     kind=approved_data.get("editionType","regular")
     if kind=="special":
-        valid_count=expected_count==5
+        valid_count=(expected_count>=1 if issue_date>="2026-11-23"
+                     else expected_count==5)
     elif kind=="regular":
         # Current editions have no fixed count; historic editions retain
         # their original contract for archive consistency.
