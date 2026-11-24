@@ -42,7 +42,7 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 35
     environment: github-pages
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'push')
     steps:
@@ -302,18 +302,16 @@ jobs:
             fi
             echo "Recover committed but not deployed current-day edition."
           fi
-          if true; then
-            # Every future issue must pass the complete editorial/visual
-            # contract BEFORE it is committed or deployed.
-            # Visual QA follows the approved story count and verified quiz photo keys.
-            python check_release_candidate.py
-            python build_site.py
-            python check_release_candidate.py --site _site
-            # Catch UI/navigation/quiz/photo failures before publication,
-            # not only in the later post-deploy smoke.
-            bash run_mobile_preflight.sh
-            echo "deploy=true" >> "$GITHUB_OUTPUT"
-          fi
+          # Every future issue must pass the complete editorial/visual
+          # contract BEFORE it is committed or deployed.
+          # Visual QA follows the approved story count and verified quiz photo keys.
+          python check_release_candidate.py
+          python build_site.py
+          python check_release_candidate.py --site _site
+          # Catch UI/navigation/quiz/photo failures before publication,
+          # not only in the later post-deploy smoke.
+          bash run_mobile_preflight.sh
+          echo "deploy=true" >> "$GITHUB_OUTPUT"
       - name: Preserve failed candidate screenshots for diagnosis
         if: failure()
         uses: actions/upload-artifact@v4
