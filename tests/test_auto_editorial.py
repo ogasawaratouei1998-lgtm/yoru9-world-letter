@@ -601,7 +601,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
         nightly=(root/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
-        self.assertNotIn("\n  push:\n",preview)
+        self.assertIn("startsWith(github.event.head_commit.message, 'Local editorial trial: ')",preview)
         self.assertIn("workflow_dispatch:",preview)
         self.assertIn("schedule:",preview)
         self.assertFalse((root/".github/workflows/monthly-editorial.yml").exists())
@@ -859,7 +859,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)",source)
         self.assertLess(source.index("draft=prioritize_personal_drafts_for_review("),
                         source.index("for story in candidates_with_after_review_refill():"))
-        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",recovery)
+        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130 or LOCAL_BACKEND_FAILED:",recovery)
         self.assertIn("editorial_seconds_remaining()<125",recovery)
         self.assertIn('used_urls={url for candidate in draft',recovery)
         self.assertIn("select_untried_source_groups(",recovery)
