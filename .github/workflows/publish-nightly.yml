@@ -192,20 +192,20 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-      # Same-day on-demand retry after synchronized safety tests; ordinary pushes
+      # Explicit operator retry commits work on any date; ordinary pushes
       # never run news discovery or the paid/free-tier AI API. Existing per-day
       # publication, source, editorial, photo and public-site gates remain intact.
       - name: Collect fresh leads when no approved issue exists
         if: >-
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
-          (github.event_name == 'push' && github.event.head_commit.message == 'Editorial retry on demand: 2026-11-22'))
+          (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')))
         run: python collect_candidates.py
       - name: Review source-grounded stories without a publication count quota
         if: >-
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
-          (github.event_name == 'push' && github.event.head_commit.message == 'Editorial retry on demand: 2026-11-22'))
+          (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')))
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
