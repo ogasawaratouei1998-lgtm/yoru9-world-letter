@@ -205,6 +205,7 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
+      # Audit viable drafts before supplemental generation to protect scarce AI quota.
       # Explicit operator retry commits work on any date; ordinary pushes
       # never run news discovery or the paid/free-tier AI API. Existing per-day
       # publication, source, editorial, photo and public-site gates remain intact.
