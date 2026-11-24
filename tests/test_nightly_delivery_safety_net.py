@@ -22,12 +22,15 @@ class NightlyDeliverySafetyNetTest(unittest.TestCase):
         deploy=workflow.index('- uses: actions/deploy-pages@v4')
         verify=workflow.index('- name: Verify the actual public Pages data before any release notification')
         push=workflow.index('- name: Dispatch optional release notification')
+        retry=workflow.index('id: deployed_reader_retry')
+        self.assertLess(deploy,retry)
+        self.assertLess(retry,verify)
         self.assertLess(deploy,verify)
         self.assertLess(verify,push)
         self.assertIn('python check_public_country_release.py --site "$SITE"',workflow)
         self.assertIn('if [ "$TODAY" = "$RELEASE_DAY" ]; then',workflow)
         self.assertIn('No current-day release eligible for a notification',workflow)
-        self.assertIn('PUBLISHED_SITE: ${{ steps.deployed_reader.outputs.page_url }}',workflow)
+        self.assertIn('PUBLISHED_SITE: ${{ steps.deployed_reader_retry.outputs.page_url || steps.deployed_reader.outputs.page_url }}',workflow)
         self.assertIn('if: success()\n        timeout-minutes: 3',workflow)
 
     def test_watchdog_checks_only_after_gate_and_requests_guarded_retry(self):
