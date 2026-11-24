@@ -27,15 +27,16 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertEqual(WORKFLOW.count(
             "steps.edition.outputs.exists == 'false' &&"),2)
         self.assertEqual(WORKFLOW.count(
-            "github.event.head_commit.message == 'Editorial retry on demand: 2026-11-22'"),2)
+            "startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')"),2)
         self.assertEqual(WORKFLOW.count(
             "github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'"),2)
-        # The four Pages/build steps require a newly published edition.
+        # Pages/build steps require a fresh release or a verified need to recover
+        # a previously committed edition; preflight must succeed in either case.
         # The final notification step may retry an already published edition;
         # the notifier and Supabase backend both guard duplicate delivery.
         self.assertEqual(WORKFLOW.count(
-            "steps.release.outputs.published == 'true' && success()"),4)
-        self.assertIn("- name: Dispatch optional release notification (server must be configured)\n        if: success()",WORKFLOW)
+            "steps.preflight.outputs.deploy == 'true' && success()"),4)
+        self.assertIn("- name: Dispatch optional release notification (server must be configured)\n        id: dispatch_notice\n        if: success()",WORKFLOW)
         self.assertIn('echo "published=true" >> "$GITHUB_OUTPUT"',WORKFLOW)
         self.assertIn('echo "published=false" >> "$GITHUB_OUTPUT"',WORKFLOW)
 
