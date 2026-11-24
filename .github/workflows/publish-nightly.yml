@@ -49,6 +49,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -218,6 +219,14 @@ jobs:
       - name: Explain any editorial shortfall without sending notifications
         if: always()
         run: python editorial_health_report.py
+      - name: Preserve count-only nightly editorial diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-editorial-funnel-diagnostics
+          path: data/editorial-funnel.json
+          if-no-files-found: ignore
+          retention-days: 7
       # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release every approved story (skip only when none qualify)
         env:
@@ -257,14 +266,43 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: python seed_reviewed_photos.py
       - name: Preflight full reader and photo bundle before any release commit
+        id: preflight
         env:
           YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
         shell: bash
         run: |
           set -euo pipefail
           if git diff --quiet -- data/current.json data/archive/index.json; then
-            echo "No new public edition; preserve current site and skip media downloads."
-          else
+            TODAY=$(TZ=Asia/Tokyo date +%F)
+            RELEASE_DAY=$(python -c "import json;print(json.load(open('data/current.json'))['editionDate'])")
+            if [ "$TODAY" != "$RELEASE_DAY" ]; then
+              echo "No current-day edition; preserve current site."
+              echo "deploy=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            # The release may have been committed before a failed Pages deployment.
+            # A retry must rebuild/redeploy that same immutable edition, not just retry push.
+            if python - <<'PY'
+          import json, os, time
+          from pathlib import Path
+          from check_public_country_release import fetch_assets
+          names=("data/current.json","data/archive/index.json")
+          try:
+              public=fetch_assets("https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/",
+                                  os.environ["GITHUB_RUN_ID"]+"-"+str(time.time_ns()),names)
+              assert all(json.loads(public[name])==json.loads(Path(name).read_bytes()) for name in names)
+          except (OSError, ValueError, AssertionError) as exc:
+              print("Live release needs recovery:",type(exc).__name__)
+              raise SystemExit(1)
+          PY
+            then
+              echo "Live edition already matches; skip redundant deployment."
+              echo "deploy=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Recover committed but not deployed current-day edition."
+          fi
+          if true; then
             # Every future issue must pass the complete editorial/visual
             # contract BEFORE it is committed or deployed.
             # Visual QA follows the approved story count and verified quiz photo keys.
@@ -274,6 +312,7 @@ jobs:
             # Catch UI/navigation/quiz/photo failures before publication,
             # not only in the later post-deploy smoke.
             bash run_mobile_preflight.sh
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Preserve failed candidate screenshots for diagnosis
         if: failure()
@@ -329,19 +368,26 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
       - name: Verify preflighted public reader bundle is ready
-        if: steps.release.outputs.published == 'true' && success()
+        if: steps.preflight.outputs.deploy == 'true' && success()
         run: |
           test -f _site/index.html
           python check_release_candidate.py --site _site
       - uses: actions/configure-pages@v5
-        if: steps.release.outputs.published == 'true' && success()
+        if: steps.preflight.outputs.deploy == 'true' && success()
       - uses: actions/upload-pages-artifact@v3
-        if: steps.release.outputs.published == 'true' && success()
+        if: steps.preflight.outputs.deploy == 'true' && success()
         with:
           path: _site
       - uses: actions/deploy-pages@v4
         id: deployed_reader
-        if: steps.release.outputs.published == 'true' && success()
+        if: steps.preflight.outputs.deploy == 'true' && success()
+        continue-on-error: true
+      - name: Wait before retrying a failed Pages deployment
+        if: steps.deployed_reader.outcome == 'failure'
+        run: sleep 20
+      - uses: actions/deploy-pages@v4
+        id: deployed_reader_retry
+        if: steps.deployed_reader.outcome == 'failure'
       - name: Verify the actual public Pages data before any release notification
         # Also verify when retrying a previously released issue. A successful
         # git commit without a successful Pages deployment must NEVER trigger
@@ -349,7 +395,7 @@ jobs:
         if: success()
         timeout-minutes: 4
         env:
-          PUBLISHED_SITE: ${{ steps.deployed_reader.outputs.page_url }}
+          PUBLISHED_SITE: ${{ steps.deployed_reader_retry.outputs.page_url || steps.deployed_reader.outputs.page_url }}
           PUBLISHED_REVISION: ${{ github.sha }}
         run: |
           TODAY=$(TZ=Asia/Tokyo date +%F)
