@@ -815,7 +815,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn("Prefer genuinely funny, low-stakes human mistakes",auto)
         self.assertNotIn("two SMALL candidate groups",auto)
         self.assertIn("Do NOT downgrade to trivial typos",auto)
-        self.assertIn("draft_preflight_viable(item,now) for item in draft)<8",auto)
+        self.assertIn("not any(draft_preflight_viable(item,now) for item in draft)",auto)
         self.assertIn('offset=(day.toordinal()*max(1,remaining))%9',leads)
         self.assertIn('("million dollar mistake" OR "costly mistake"',leads)
         self.assertIn('("person lost a fortune" OR "personal miscalculation"',leads)
@@ -859,12 +859,16 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
         self.assertIn("for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):",source)
-        self.assertIn("Viable drafts reserved for independent editorial review.",source)
+        self.assertIn("Viable draft available: switch immediately to independent editorial review.",source)
 
-    def test_draft_recovery_buffers_eight_before_fact_review_and_respects_quota(self):
+    def test_draft_recovery_prioritizes_first_viable_draft_and_respects_quota(self):
         import inspect
         code=inspect.getsource(editorial.main)
-        self.assertIn('draft_preflight_viable(item,now) for item in draft)<8',code)
+        self.assertIn('not any(draft_preflight_viable(item,now) for item in draft)',code)
+        self.assertIn('if any(draft_preflight_viable(item,now) for item in draft):',code)
+        self.assertNotIn('for item in draft)<8',code)
+        self.assertNotIn('for item in draft)>=8',code)
+        self.assertLess(code.index('yield from draft'),code.index('response=ai(retry_prompt,temperature=0.5)'))
         self.assertIn('for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):',code)
         self.assertIn('editorial_seconds_remaining()<150',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
