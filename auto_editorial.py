@@ -683,6 +683,9 @@ RUN_DEADLINE=None
 # The public model catalog is constant for one 9-minute review session.
 # Avoid an extra authenticated provider GET on every A/B-editor call.
 RUN_MODEL_CATALOG=None
+# A repeatedly unavailable model should not consume the next editorial call.
+# This is run-local only; no account rotation or quota bypass.
+RUN_UNAVAILABLE_MODELS=set()
 
 def editorial_seconds_remaining():
     return float("inf") if RUN_DEADLINE is None else max(0.0,RUN_DEADLINE-time.monotonic())
@@ -704,8 +707,12 @@ def ai(prompt,temperature=0.1):
         if RUN_MODEL_CATALOG is None:
             RUN_MODEL_CATALOG=tuple(available_models())
         models=list(RUN_MODEL_CATALOG)
+    if RUN_DEADLINE is not None:
+        models=[model for model in models if model not in RUN_UNAVAILABLE_MODELS]
     if ACTIVE_MODEL in models:
         models=[ACTIVE_MODEL]+[model for model in models if model!=ACTIVE_MODEL]
+    if not models:
+        raise RuntimeError("Gemini provider unavailable across all attempted models")
     data={"contents":[{"parts":[{"text":prompt}]}],
           "generationConfig":{"responseMimeType":"application/json","temperature":temperature}}
     last_error=None
@@ -751,7 +758,7 @@ def ai(prompt,temperature=0.1):
                     # Bounded exponential backoff for provider overload,
                     # then try another catalog-supported model. Do not
                     # silently approve when all attempts fail.
-                    for delay in (2,6):
+                    for delay in ((2,) if RUN_DEADLINE is not None else (2,6)):
                         if time.monotonic()+delay>=call_deadline:break
                         time.sleep(delay)
                         try:
@@ -773,6 +780,8 @@ def ai(prompt,temperature=0.1):
                             last_error=type(retry_exc).__name__
                             print("Gemini transient retry unavailable:",last_error,flush=True)
                             break
+                    if RUN_DEADLINE is not None:
+                        RUN_UNAVAILABLE_MODELS.add(model)
                     break
                 if exc.code not in (404,400):raise RuntimeError("Gemini API HTTP "+str(exc.code))
             except (URLError, TimeoutError, ConnectionError, OSError) as exc:
@@ -1214,7 +1223,7 @@ FUNNEL_MAP_FIELDS=frozenset({
 FUNNEL_STAGES=frozenset({
     "fresh_filter","publisher_leads_unavailable",
     "fetch_plan","body_fetch","publisher_articles_unavailable",
-    "shortlist","budget_blocked","model_quota_blocked",
+    "shortlist","budget_blocked","model_quota_blocked","model_unavailable",
     "draft","draft_empty","audit","country_readiness",
     "no_publishable_stories","selected"
 })
@@ -1251,6 +1260,7 @@ def main():
     RUN_DEADLINE=time.monotonic()+540
     AI_QUOTA_BLOCKED=False
     RUN_MODEL_CATALOG=None
+    RUN_UNAVAILABLE_MODELS.clear()
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
     funnel={"collected":len(leads)}
     def checkpoint(stage, **fields):
@@ -1422,7 +1432,12 @@ def main():
         checkpoint("budget_blocked")
         print("Editorial budget too low for safe independent review; no new publication.",flush=True)
         return 0
-    draft_response=ai(prompt,temperature=0.65)
+    try:
+        draft_response=ai(prompt,temperature=0.65)
+    except RuntimeError:
+        checkpoint("model_quota_blocked" if AI_QUOTA_BLOCKED else "model_unavailable")
+        print("Initial editorial generation unavailable; no unverified publication.",flush=True)
+        return 0
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
     if not isinstance(draft,list):
         print("Editorial drafting diagnostic: malformed stories response; safe skip.",flush=True)
@@ -1563,7 +1578,8 @@ def main():
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
             "has_model_explanation":any(k in draft_response for k in ("reason","reasons","diagnostics"))
         },sort_keys=True),flush=True)
-        checkpoint("draft_empty",drafted=0)
+        checkpoint("model_unavailable" if RUN_MODEL_CATALOG and all(
+            model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG) else "draft_empty",drafted=0)
         print("No usable drafts from approved-publisher articles; keep previous edition.",flush=True)
         return 0
     # First review extraordinary PERSONAL blunders: old country-photo-first
@@ -1839,7 +1855,11 @@ def main():
         "incomplete_registered_codes":sorted(incomplete)},
         sort_keys=True),flush=True)
     if not selected:
-        checkpoint("no_publishable_stories",independent_approved=reviewed_count,
+        failure_phase=("model_quota_blocked" if AI_QUOTA_BLOCKED else
+                       "model_unavailable" if RUN_MODEL_CATALOG and all(
+                           model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG) else
+                       "no_publishable_stories")
+        checkpoint(failure_phase,independent_approved=reviewed_count,
                    country_ready_articles=0,country_ready_count=len(prepared),
                    unready_country_codes=unready,rejection_reasons=rejection_counts)
         print("No publisher-sourced, country-ready stories; no publication.");return 0
