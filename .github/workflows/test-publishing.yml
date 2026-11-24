@@ -65,6 +65,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Prevent canonical country data exceeding GitHub Contents API
+        run: python country_manifest_format.py --check
       - name: Verify canonical country content has no divergent exports
         run: python country_content.py --check
       - name: Report pending country editorial preparation without promoting any country

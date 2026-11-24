@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v97';
+const SHELL_CACHE = 'yoru9-shell-v98';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -49,6 +49,9 @@ const SHELL = ['index.html', 'manifest.webmanifest', 'notifications.js', 'world-
  'assets/travel/antigua-english-harbour-cover.jpg', 'assets/travel/antigua-bettys-hope-quiz.jpg', 'assets/travel/antigua-devils-bridge-quiz.jpg', 'assets/travel/antigua-devils-bridge-coast.jpg', 'assets/travel/seoul-gyeongbokgung.jpg',
  // Australia: Sydney harbour cover, Opera House and reef quiz postcards.
  'assets/travel/au-sydney-harbour-cover.jpg', 'assets/travel/au-opera-house-postcard.jpg', 'assets/travel/au-great-barrier-reef-postcard.jpg',
+ // Malaysia: source-reviewed and checksum-pinned cover and quiz photos.
+ 'assets/travel/my-georgetown-street-cover.jpg', 'assets/travel/my-georgetown-woodville-postcard.jpg',
+ 'assets/travel/my-mulu-garden-of-eden-postcard.jpg',
  // Canada: Québec old town portrait; Old Québec and Banff quiz postcards.
  'assets/travel/ca-quebec-chateau-cover.jpg', 'assets/travel/ca-old-quebec-postcard.jpg', 'assets/travel/ca-banff-lake-louise-postcard.jpg',
  // India: Jaipur representative photo, Taj Mahal and Qutb Minar quiz postcards.
