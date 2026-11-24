@@ -1578,8 +1578,10 @@ def main():
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
             "has_model_explanation":any(k in draft_response for k in ("reason","reasons","diagnostics"))
         },sort_keys=True),flush=True)
-        checkpoint("model_unavailable" if RUN_MODEL_CATALOG and all(
-            model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG) else "draft_empty",drafted=0)
+        if RUN_MODEL_CATALOG and all(model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG):
+            checkpoint("model_unavailable",drafted=0)
+        else:
+            checkpoint("draft_empty",drafted=0)
         print("No usable drafts from approved-publisher articles; keep previous edition.",flush=True)
         return 0
     # First review extraordinary PERSONAL blunders: old country-photo-first
