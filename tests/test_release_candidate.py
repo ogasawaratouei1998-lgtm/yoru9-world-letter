@@ -109,6 +109,21 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         self.assertLess(deploy.index("python check_release_candidate.py --site _site"),
                         deploy.index("uses: actions/deploy-pages@v4"))
 
+    def test_committed_nightly_issue_can_recover_failed_public_deployment(self):
+        workflow=(ROOT/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
+        preflight=workflow.index("id: preflight")
+        commit=workflow.index("id: release",preflight)
+        recover=workflow[preflight:commit]
+        self.assertIn('names=("data/current.json","data/archive/index.json")',recover)
+        self.assertIn('Recover committed but not deployed current-day edition.',recover)
+        self.assertIn('echo "deploy=true" >> "$GITHUB_OUTPUT"',recover)
+        deploy=workflow[commit:]
+        self.assertIn("steps.preflight.outputs.deploy == 'true'",deploy)
+        self.assertIn("id: deployed_reader_retry",deploy)
+        self.assertLess(deploy.index("python check_public_country_release.py"),
+                        deploy.index("python send_release_notice.py"))
+        self.assertIn("nightly-editorial-funnel-diagnostics",workflow)
+
 
 if __name__=="__main__":
     unittest.main()
