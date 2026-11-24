@@ -2,6 +2,9 @@ name: Free-tier AI editorial double-check (safe preview)
 on:
   workflow_dispatch:
   schedule:
+    # Start editorial work well before the delivery deadline (18:15 JST).
+    - cron: '15 9 * * *'
+    # Second opportunity if the early review did not produce an approved issue.
     - cron: '45 19 * * *'
       timezone: 'Asia/Tokyo'
 permissions:
@@ -18,7 +21,17 @@ jobs:
           python-version: '3.12'
       - name: Run safety tests without API access
         run: python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
+      - name: Check whether today's approved issue already exists
+        id: edition
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          if [ -f "data/approved/$DAY.json" ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
       - name: Verify AI key is present (without exposing it)
+        if: steps.edition.outputs.exists == 'false'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -27,6 +40,7 @@ jobs:
           fi
           echo 'Gemini API key is configured'
       - name: Collect same-day leads
+        if: steps.edition.outputs.exists == 'false'
         run: python collect_candidates.py
       # This workflow runs a real AI review only on schedule/manual dispatch.
       # Code pushes are tested by the separate publishing safety workflow.
@@ -34,6 +48,7 @@ jobs:
       # revalidates it, and publishes only when the release timing rule permits.
       # Provider error details are sanitized in auto_editorial.py.
       - name: Independent AI double-check (no publication)
+        if: steps.edition.outputs.exists == 'false'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
