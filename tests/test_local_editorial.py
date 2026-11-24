@@ -11,7 +11,7 @@ class LocalEditorialTest(unittest.TestCase):
         response=client.getresponse.return_value
         response.status=200
         response.read.return_value=json.dumps({"choices":[{
-            "finish_reason":"stop","message":{"content":"{\\"ready\\": true}"}
+            "finish_reason":"stop","message":{"content":json.dumps({"ready":True})}
         }]}).encode()
         with patch.object(local_editorial.http.client,"HTTPConnection",return_value=client) as connect:
             self.assertEqual(local_editorial.generate_json("test"),{"ready":True})
