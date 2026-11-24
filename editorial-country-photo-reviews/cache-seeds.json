@@ -360,6 +360,51 @@
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
       "country": "パキスタン",
       "place": "タフティ・バヒー仏教僧院遺跡"
+    },
+    {
+      "runId": 45291236614,
+      "artifactId": 14874936176,
+      "file": "MY-0.jpg",
+      "sha256": "f2de8cde67d10d7a0040898b816fdc2fceecdd869ab8f574a8c708e3491c80be",
+      "cover": true,
+      "photoAsset": "assets/travel/my-georgetown-street-cover.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Str_of_George_Town%2C_Penang%2C_Malaysia..JPG/960px-cf",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Str_of_George_Town,_Penang,_Malaysia..JPG",
+      "author": "Milei.vencel",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "country": "マレーシア",
+      "place": "ジョージタウン旧市街の街路"
+    },
+    {
+      "runId": 45291236614,
+      "artifactId": 14874936176,
+      "file": "MY-1.jpg",
+      "sha256": "ba9a7b95eeeaa3a6e74911a8c586918ac013fd84ef927fd472fdff715b43c66c",
+      "cover": false,
+      "photoAsset": "assets/travel/my-georgetown-woodville-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Woodville_Mansion_in_George_Town%2C_Penang.jpg/960px-4e",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Woodville_Mansion_in_George_Town,_Penang.jpg",
+      "author": "HundenvonPenang",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "country": "マレーシア",
+      "place": "ジョージタウンのウッドヴィル邸"
+    },
+    {
+      "runId": 45291236614,
+      "artifactId": 14874936176,
+      "file": "MY-2.jpg",
+      "sha256": "b75c49aa2f60936758c2779ec9d92af6bbef1d3b9b1317d2e0e81a48d3f6bd9a",
+      "cover": false,
+      "photoAsset": "assets/travel/my-mulu-garden-of-eden-postcard.jpg",
+      "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Fishtail_Palm_Trees_%28Caryota_no%29_%288423314273%29.jpg/960px-c5",
+      "photoPage": "https://commons.wikimedia.org/wiki/File:Fishtail_Palm_Trees_(Caryota_no)_(8423314273).jpg",
+      "author": "Bernard DUPONT",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "country": "マレーシア",
+      "place": "グヌン・ムル国立公園のディア・ケーブ入口付近"
     }
   ]
 }

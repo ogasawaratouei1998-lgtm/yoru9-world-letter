@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "countryCode": "MY",
+  "reviewedOn": "2026-11-24",
+  "status": "verified_licensed_images_requires_full_public_quality_checks",
+  "publicationEligible": false,
+  "artifact": {
+    "runId": 45291236614,
+    "artifactId": 14874936176,
+    "name": "editorial-review-bundle"
+  },
+  "photos": [
+    {
+      "slot": 0,
+      "file": "MY-0.jpg",
+      "sha256": "f2de8cde67d10d7a0040898b816fdc2fceecdd869ab8f574a8c708e3491c80be",
+      "dimensions": [
+        1280,
+        960
+      ],
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Str_of_George_Town,_Penang,_Malaysia..JPG",
+      "author": "Milei.vencel",
+      "license": "CC BY-SA 3.0",
+      "visual": "George Town street and heritage shophouses"
+    },
+    {
+      "slot": 1,
+      "file": "MY-1.jpg",
+      "sha256": "ba9a7b95eeeaa3a6e74911a8c586918ac013fd84ef927fd472fdff715b43c66c",
+      "dimensions": [
+        960,
+        720
+      ],
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Woodville_Mansion_in_George_Town,_Penang.jpg",
+      "author": "HundenvonPenang",
+      "license": "CC BY-SA 4.0",
+      "visual": "Woodville mansion; not asserted as World Heritage property itself"
+    },
+    {
+      "slot": 2,
+      "file": "MY-2.jpg",
+      "sha256": "b75c49aa2f60936758c2779ec9d92af6bbef1d3b9b1317d2e0e81a48d3f6bd9a",
+      "dimensions": [
+        960,
+        720
+      ],
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:Fishtail_Palm_Trees_(Caryota_no)_(8423314273).jpg",
+      "author": "Bernard DUPONT",
+      "license": "CC BY-SA 2.0",
+      "visual": "Deer Cave area limestone cliff and palms; not the cave interior"
+    }
+  ],
+  "independentSources": [
+    "https://whc.unesco.org/en/list/1223/",
+    "https://whc.unesco.org/en/list/1013/",
+    "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_017.html"
+  ],
+  "requiredBeforeApproval": [
+    "checksum_pinned_cache_restore",
+    "full_public_build_and_mobile_preflight"
+  ]
+}
