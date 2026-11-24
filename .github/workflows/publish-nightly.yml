@@ -205,6 +205,8 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
+      # ChatGPT prepares approved JSON directly; the publisher needs no AI API.
+      # Gemini collection and editing are legacy fallback, explicitly opt-in only.
       # Audit viable drafts before supplemental generation to protect scarce AI quota.
       # Explicit operator retry commits work on any date; ordinary pushes
       # never run news discovery or the paid/free-tier AI API. Existing per-day
@@ -212,6 +214,7 @@ jobs:
       - name: Collect fresh leads when no approved issue exists
         id: collect
         if: >-
+          vars.YORU9_ENABLE_GEMINI == 'true' &&
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')))
@@ -219,6 +222,7 @@ jobs:
       - name: Review source-grounded stories without a publication count quota
         id: editorial
         if: >-
+          vars.YORU9_ENABLE_GEMINI == 'true' &&
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')))
