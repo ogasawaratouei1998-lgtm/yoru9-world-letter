@@ -21,12 +21,18 @@ class AllCountryResearchTests(unittest.TestCase):
 
     def test_mulu_deer_cave_photo_search_excludes_unrelated_lizards(self):
         plan = make_plan(ROOT)
-        malaysia = next(row for row in plan["countries"] if row["code"] == "MY")
-        query = malaysia["slots"][2]["searchQuery"]
+        from country_bulk_research import DRAFT_SEARCH_REFINEMENTS
+        # Retain the photo-search safety rule after Malaysia's approval.
+        query = DRAFT_SEARCH_REFINEMENTS[("MY", 2)]
         for fragment in ('Deer Cave', 'Sarawak', '-skink', '-lizard', '-repairs'):
             self.assertIn(fragment, query)
-        self.assertEqual(malaysia["slots"][2]["origin"], "existing_draft")
-        self.assertFalse(malaysia["publicationEligible"])
+        malaysia = next((row for row in plan["countries"] if row["code"] == "MY"), None)
+        if malaysia is not None:
+            self.assertEqual(malaysia["slots"][2]["origin"], "existing_draft")
+            self.assertFalse(malaysia["publicationEligible"])
+        else:
+            catalog = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+            self.assertEqual(catalog["countries"]["MY"]["status"], "approved")
 
     def test_every_pending_country_and_three_slots_without_approval(self):
         d = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
