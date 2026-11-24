@@ -33,6 +33,68 @@ jobs:
         id: release_check
         continue-on-error: true
         run: python check_release_health.py
+      - name: Check upstream editorial execution and actual public news
+        id: upstream_check
+        if: steps.release_check.outcome == 'success'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          python - <<'PY'
+          import json, os, subprocess, time
+          from datetime import datetime, time as clock
+          from pathlib import Path
+          from urllib.request import Request, urlopen
+          from zoneinfo import ZoneInfo
+          now=datetime.now(ZoneInfo("Asia/Tokyo"))
+          day=now.date().isoformat()
+          def result(retry, reason):
+              print(reason,flush=True)
+              with open(os.environ["GITHUB_OUTPUT"],"a") as out:
+                  out.write("retry="+("true" if retry else "false")+"\n")
+          if now.time()<clock(21,30):
+              result(False,"Before watchdog gate")
+              raise SystemExit(0)
+          repo=os.environ["GH_REPO"]
+          runs=json.loads(subprocess.check_output(["gh","api",
+              f"repos/{repo}/actions/workflows/publish-nightly.yml/runs?per_page=50"],
+              text=True)).get("workflow_runs",[])
+          active={"queued","in_progress","requested","waiting","pending"}
+          if any(r.get("status") in active for r in runs):
+              result(False,"Nightly run active; do not create a duplicate retry")
+              raise SystemExit(0)
+          approval=Path("data/approved")/(day+".json")
+          if approval.is_file():
+              expected=json.loads(Path("data/current.json").read_text())
+              try:
+                  req=Request("https://ogasawaratouei1998-lgtm.github.io/yoru9-world-letter/data/current.json?health="+str(time.time_ns()),
+                              headers={"Cache-Control":"no-cache","User-Agent":"yoru9-health-check"})
+                  with urlopen(req,timeout=20) as response:
+                      public=json.load(response)
+                  match=public==expected and expected.get("editionDate")==day
+              except (OSError,ValueError):
+                  match=False
+              result(not match,"Live issue matches" if match else "Approved issue not verified on public Pages")
+              raise SystemExit(0)
+          today=[r for r in runs if r.get("status")=="completed" and
+                 r.get("conclusion")!="cancelled" and
+                 datetime.fromisoformat(r["created_at"].replace("Z","+00:00")).astimezone(ZoneInfo("Asia/Tokyo")).date()==now.date() and
+                 r.get("event") in ("schedule","workflow_dispatch","workflow_run","push")]
+          # An actually completed editorial run can validly yield zero approved
+          # stories. Do not treat that as permission to bypass approval.
+          if not today or today[0].get("conclusion")!="success":
+              result(True,"No successful nightly attempt today; upstream retry required")
+          else:
+              result(False,"No approved issue after completed run; inspect editorial diagnostics")
+          PY
+      - name: Request guarded retry for upstream failure or stale public Pages
+        if: steps.upstream_check.outputs.retry == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh workflow run publish-nightly.yml --repo "$GH_REPO" --ref main
+          echo "::warning::Upstream or public-site recovery requested."
       - name: Request safe retry if an approved nightly issue was missed
         if: steps.release_check.outcome == 'failure'
         env:
