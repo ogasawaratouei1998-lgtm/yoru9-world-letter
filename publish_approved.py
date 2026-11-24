@@ -223,7 +223,7 @@ def validate_approved(data, expected_date):
     # Publication order guard: never bury an independently confirmed,
     # extraordinary individual failure under a smaller comic backup.
     # This creates NO required count, category share or personal-story quota.
-    if data.get("approvedBy") == "automated-two-stage-review" and issue_day >= date(2026, 11, 23):
+    if data.get("approvedBy") in ("automated-two-stage-review", "chatgpt-editorial-review") and issue_day >= date(2026, 11, 23):
         major_positions = [i for i, item in enumerate(stories)
                            if isinstance(item, dict)
                            and item.get("category") in ("person", "work", "sports")
@@ -256,7 +256,7 @@ def validate_approved(data, expected_date):
         require(story.get('humorSafe') is True
                 and (issue_day >= date(2026, 11, 21) or story.get('editorVerified') is True),
                 f'{i}本目はツッコミの安全性が未承認です')
-        automated = data.get('approvedBy') == 'automated-two-stage-review'
+        automated = data.get('approvedBy') in ('automated-two-stage-review', 'chatgpt-editorial-review')
         if issue_day >= date(2026, 11, 18) and (automated or hard_reissue or source_checked_correction):
             require(story.get('editorQualityVerified') is True,
                     f'{i}本目の事実・翻訳・漫才審査が未完了です')
