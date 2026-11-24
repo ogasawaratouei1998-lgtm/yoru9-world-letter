@@ -32,6 +32,7 @@ on:
 permissions:
   actions: read
   contents: write
+  statuses: write
   pages: write
   id-token: write
 
@@ -46,6 +47,15 @@ jobs:
     environment: github-pages
     if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'push')
     steps:
+      - name: Record nightly run start and link for diagnosis
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
+            -f state=pending -f context=yoru9/nightly-diagnostic \
+            -f description="$(TZ=Asia/Tokyo date +%F): nightly run started" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
       - uses: actions/checkout@v4
         with:
           persist-credentials: true
@@ -57,6 +67,7 @@ jobs:
         with:
           node-version: '22'
       - name: Check publication safeguards
+        id: safeguards
         run: python -m unittest discover -s tests -v
       - name: Complete the approved November 20 four-story SVG correction
         shell: bash
@@ -113,6 +124,7 @@ jobs:
                   print("A November 16 or newer edition is already published; no rollback.")
           PY
       - name: Recover best reviewed issue from recent successful reviews
+        id: recover_review
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
@@ -197,12 +209,14 @@ jobs:
       # never run news discovery or the paid/free-tier AI API. Existing per-day
       # publication, source, editorial, photo and public-site gates remain intact.
       - name: Collect fresh leads when no approved issue exists
+        id: collect
         if: >-
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
           (github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Editorial retry on demand: ')))
         run: python collect_candidates.py
       - name: Review source-grounded stories without a publication count quota
+        id: editorial
         if: >-
           steps.edition.outputs.exists == 'false' &&
           (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' ||
@@ -213,6 +227,7 @@ jobs:
         run: |
           if [ -z "$GEMINI_API_KEY" ]; then
             echo "No Gemini API key: keep current edition, never invent news."
+            echo "result=missing_key" >> "$GITHUB_OUTPUT"
           else
             python auto_editorial.py
           fi
@@ -229,6 +244,7 @@ jobs:
           retention-days: 7
       # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release every approved story (skip only when none qualify)
+        id: publish_issue
         env:
           ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |
@@ -387,6 +403,7 @@ jobs:
         id: deployed_reader_retry
         if: steps.deployed_reader.outcome == 'failure'
       - name: Verify the actual public Pages data before any release notification
+        id: live_verify
         # Also verify when retrying a previously released issue. A successful
         # git commit without a successful Pages deployment must NEVER trigger
         # a delayed push through the retry path.
@@ -408,6 +425,7 @@ jobs:
       # The notifier gates by TODAY and after 21:00; the backend deduplicates.
       # This recovers a push that failed after a successful Pages deployment.
       - name: Dispatch optional release notification (server must be configured)
+        id: dispatch_notice
         if: success()
         timeout-minutes: 3
         env:
@@ -415,3 +433,72 @@ jobs:
           PUSH_DISPATCH_TOKEN: ${{ secrets.PUSH_DISPATCH_TOKEN }}
           PYTHONUNBUFFERED: '1'
         run: python send_release_notice.py
+
+      # The status API exposes only fixed stage codes, counts, date and a run
+      # link. Never include headlines, article bodies, raw provider errors or keys.
+      - name: Record exact nightly outcome and run link for diagnosis
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB_RESULT: ${{ job.status }}
+          SAFEGUARDS: ${{ steps.safeguards.outcome }}
+          RECOVER_REVIEW: ${{ steps.recover_review.outcome }}
+          COLLECT: ${{ steps.collect.outcome }}
+          EDITORIAL: ${{ steps.editorial.outcome }}
+          EDITORIAL_RESULT: ${{ steps.editorial.outputs.result }}
+          PUBLISH_ISSUE: ${{ steps.publish_issue.outcome }}
+          PREFLIGHT: ${{ steps.preflight.outcome }}
+          COMMIT_RELEASE: ${{ steps.release.outcome }}
+          DEPLOY_FIRST: ${{ steps.deployed_reader.outcome }}
+          DEPLOY_RETRY: ${{ steps.deployed_reader_retry.outcome }}
+          LIVE_VERIFY: ${{ steps.live_verify.outcome }}
+          NOTICE: ${{ steps.dispatch_notice.outcome }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          STATE=success
+          if [ "$JOB_RESULT" != success ]; then STATE=failure; fi
+          REASON=$(python - <<'PY'
+          import json, os
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          def read(path):
+              try:
+                  value=json.loads(Path(path).read_text(encoding="utf-8"))
+                  return value if isinstance(value,dict) else {}
+              except (OSError,ValueError):
+                  return {}
+          funnel=read("data/editorial-funnel.json")
+          phase=funnel.get("phase","")
+          allowed={"fresh_filter","publisher_leads_unavailable","fetch_plan","body_fetch",
+                   "publisher_articles_unavailable","shortlist","budget_blocked",
+                   "model_quota_blocked","draft","draft_empty","audit","country_readiness",
+                   "no_publishable_stories","selected"}
+          if phase not in allowed: phase="no_funnel"
+          for key in ("SAFEGUARDS","RECOVER_REVIEW","COLLECT","EDITORIAL","PUBLISH_ISSUE",
+                      "PREFLIGHT","COMMIT_RELEASE","DEPLOY_RETRY","LIVE_VERIFY","NOTICE"):
+              if os.environ.get(key)=="failure":
+                  print(key.lower()+"_failed; "+phase)
+                  break
+          else:
+              issue=read("data/current.json")
+              approved=read("data/approved/"+day+".json")
+              if os.environ.get("EDITORIAL_RESULT")=="missing_key":
+                  print("missing_ai_key")
+              elif (issue.get("editionDate")==day and issue.get("status")=="published"
+                    and os.environ.get("LIVE_VERIFY")=="success"):
+                  print("live_verified; "+str(len(issue.get("stories",[])))+" stories")
+              elif approved.get("editionDate")==day:
+                  print("approved_not_live; "+phase)
+              elif os.environ.get("JOB_RESULT")!="success":
+                  print("job_incomplete; "+phase)
+              else:
+                  print("no_approved_issue; "+phase)
+          PY
+          )
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
+            -f state="$STATE" -f context=yoru9/nightly-diagnostic \
+            -f description="$DAY: $REASON" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >/dev/null
