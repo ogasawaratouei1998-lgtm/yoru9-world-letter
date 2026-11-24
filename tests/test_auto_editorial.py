@@ -570,6 +570,32 @@ class AutoEditorialSafetyTests(unittest.TestCase):
             self.assertEqual(mocked.call_count,3)
             self.assertEqual([c.args[0] for c in pause.call_args_list],[2,6])
 
+    def test_live_provider_outage_does_not_retry_same_model_on_next_call(self):
+        import io
+        from urllib.error import HTTPError
+        from collections import Counter
+        attempts=Counter()
+        def provider(req,timeout=None):
+            model=req.full_url.split("/models/",1)[1].split(":",1)[0]
+            attempts[model]+=1
+            if model=="gemini-3.5-flash-lite":
+                raise HTTPError(req.full_url,503,"unavailable",{},
+                                io.BytesIO(b'{"error":{"status":"UNAVAILABLE"}}'))
+            return io.BytesIO(b'{"candidates":[{"content":{"parts":[{"text":"{\\\"ok\\\":true}"}]}}]}')
+        with patch.object(editorial,"KEY","test-key"), \
+             patch.object(editorial,"RUN_DEADLINE",editorial.time.monotonic()+300), \
+             patch.object(editorial,"AI_QUOTA_BLOCKED",False), \
+             patch.object(editorial,"ACTIVE_MODEL",None), \
+             patch.object(editorial,"RUN_MODEL_CATALOG",None), \
+             patch.object(editorial,"RUN_UNAVAILABLE_MODELS",set()), \
+             patch.object(editorial,"available_models",return_value=[
+                 "models/gemini-3.5-flash-lite","models/gemini-3.8-flash"]), \
+             patch.object(editorial,"urlopen",side_effect=provider), \
+             patch.object(editorial.time,"sleep"):
+            self.assertEqual(editorial.ai("draft"),{"ok":True})
+            self.assertEqual(editorial.ai("audit"),{"ok":True})
+            self.assertEqual(attempts,{"gemini-3.5-flash-lite":2,"gemini-3.8-flash":2})
+
     def test_live_editorial_workflows_are_not_triggered_by_code_push(self):
         from pathlib import Path
         root=Path(__file__).resolve().parents[1]
