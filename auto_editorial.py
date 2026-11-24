@@ -23,6 +23,8 @@ from zoneinfo import ZoneInfo
 JST=ZoneInfo("Asia/Tokyo")
 MODEL=os.getenv("GEMINI_MODEL","gemini-3.5-flash-lite")
 KEY=os.getenv("GEMINI_API_KEY","")
+LOCAL_EDITORIAL=os.getenv("YORU9_EDITORIAL_BACKEND","gemini")=="local"
+LOCAL_BACKEND_FAILED=False
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
 # An app about humane, verifiable mistakes must not turn personal scandals
@@ -691,7 +693,23 @@ def editorial_seconds_remaining():
     return float("inf") if RUN_DEADLINE is None else max(0.0,RUN_DEADLINE-time.monotonic())
 
 def ai(prompt,temperature=0.1):
-    global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG
+    global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED
+    if LOCAL_EDITORIAL:
+        from local_editorial import generate_json
+        if LOCAL_BACKEND_FAILED:
+            raise RuntimeError("Local editorial circuit open")
+        audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
+        remaining=editorial_seconds_remaining()
+        reserve=0 if audit_prompt else 120
+        if remaining-reserve<30:
+            raise RuntimeError("Local editorial time budget exhausted")
+        try:
+            return generate_json(prompt,temperature,
+                                 min(300,remaining-reserve),
+                                 768 if audit_prompt else 2600)
+        except RuntimeError:
+            LOCAL_BACKEND_FAILED=True
+            raise
     if not KEY:raise RuntimeError("GEMINI_API_KEY not configured; no publication")
     if AI_QUOTA_BLOCKED:raise RuntimeError("Gemini API quota/permission circuit open; no publication")
     if editorial_seconds_remaining()<=5:
@@ -1105,7 +1123,7 @@ def valid_recent_reported(raw, now):
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
 
-MAX_FOCUSED_DRAFT_GROUPS=3
+MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
 
 def source_bound_batch_drafts(response, groups):
     """Keep at most one unverified draft per article-evidence group.
@@ -1146,7 +1164,7 @@ def source_bound_batch_drafts(response, groups):
 # diagnostics and returned two drafts. A smaller initial evidence window
 # leaves model context for actual incident writing; a larger overall queue
 # preserves independent sources for post-audit recovery.
-PRIMARY_EDITORIAL_GROUPS=6
+PRIMARY_EDITORIAL_GROUPS=2 if LOCAL_EDITORIAL else 6
 EDITORIAL_SHORTLIST_LIMIT=64
 
 def select_untried_source_groups(groups, attempted_ids, used_urls):
@@ -1251,13 +1269,14 @@ def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
     return output
 
 def main():
-    global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG
+    global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED
+    LOCAL_BACKEND_FAILED=False
     now=datetime.now(JST)
     day=now.date().isoformat()
-    if not KEY:
+    if not KEY and not LOCAL_EDITORIAL:
         print("No free-tier AI key configured. Safe skip.");return 0
     # Leave headroom before GitHub's 12-minute limit to fail closed, not get cancelled.
-    RUN_DEADLINE=time.monotonic()+540
+    RUN_DEADLINE=time.monotonic()+(1800 if LOCAL_EDITORIAL else 540)
     AI_QUOTA_BLOCKED=False
     RUN_MODEL_CATALOG=None
     RUN_UNAVAILABLE_MODELS.clear()
@@ -1365,7 +1384,7 @@ def main():
             if len(window)<2:continue
             semantic.extend(semantic_corroboration_groups(window))
     else:
-        print("Skipping optional semantic matching: reserving Gemini calls for source-fidelity checks.",flush=True)
+        print("Skipping optional semantic matching: reserving inference for source-fidelity checks.",flush=True)
     existing={tuple(sorted(x['url'] for x in group)) for group in groups}
     for group in semantic:
         key=tuple(sorted(x['url'] for x in group))
@@ -1508,7 +1527,7 @@ def main():
         print("Supplementing insufficient editorial drafts in pairs:",
               len(retry_candidates),flush=True)
         for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):
-            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
+            if LOCAL_BACKEND_FAILED or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
             batch=retry_candidates[start:min(start+MAX_FOCUSED_DRAFT_GROUPS,20,len(retry_candidates))]
@@ -1578,7 +1597,7 @@ def main():
             "response_keys":sorted(k for k in draft_response if k in ("stories","status","reason","reasons","diagnostics")),
             "has_model_explanation":any(k in draft_response for k in ("reason","reasons","diagnostics"))
         },sort_keys=True),flush=True)
-        if RUN_MODEL_CATALOG and all(model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG):
+        if LOCAL_BACKEND_FAILED or (RUN_MODEL_CATALOG and all(model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG)):
             checkpoint("model_unavailable",drafted=0)
         else:
             checkpoint("draft_empty",drafted=0)
@@ -1613,7 +1632,7 @@ def main():
         # while independent audit budget and runtime still allow it.
         # actually fetched publisher articles, never by inventing a news event.
         yield from draft
-        if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:
+        if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130 or LOCAL_BACKEND_FAILED:
             return
         used_urls={url for candidate in draft if isinstance(candidate,dict)
                    for url in (candidate.get("verificationUrls") or [])
@@ -1624,7 +1643,7 @@ def main():
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
         for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
-            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125:
+            if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125 or LOCAL_BACKEND_FAILED:
                 print("Ending after-review refill: independent audit time or AI quota limit.",flush=True)
                 break
             batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
@@ -1858,8 +1877,8 @@ def main():
         sort_keys=True),flush=True)
     if not selected:
         failure_phase=("model_quota_blocked" if AI_QUOTA_BLOCKED else
-                       "model_unavailable" if RUN_MODEL_CATALOG and all(
-                           model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG) else
+                       "model_unavailable" if LOCAL_BACKEND_FAILED or (RUN_MODEL_CATALOG and all(
+                           model in RUN_UNAVAILABLE_MODELS for model in RUN_MODEL_CATALOG)) else
                        "no_publishable_stories")
         checkpoint(failure_phase,independent_approved=reviewed_count,
                    country_ready_articles=0,country_ready_count=len(prepared),
