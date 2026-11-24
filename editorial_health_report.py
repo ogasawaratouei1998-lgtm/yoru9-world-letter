@@ -17,6 +17,7 @@ PHASE_MESSAGES={
     "shortlist":"記事候補の優先順位を整理済み",
     "budget_blocked":"無料AIの実行時間が不足し、記事生成を停止",
     "model_quota_blocked":"無料AIの利用枠が不足し、記事生成を停止",
+    "model_unavailable":"AI提供元の障害により編集を停止（記事不足とは別）",
     "draft":"記事の下書きを作成済み（未承認）",
     "draft_empty":"承認済み報道機関の記事から採用候補を生成できなかった",
     "audit":"日本語・ツッコミの編集審査を実施済み",
