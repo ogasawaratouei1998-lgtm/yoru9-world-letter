@@ -397,11 +397,11 @@ jobs:
         if: steps.preflight.outputs.deploy == 'true' && success()
         continue-on-error: true
       - name: Wait before retrying a failed Pages deployment
-        if: steps.deployed_reader.outcome == 'failure'
+        if: success() && steps.preflight.outputs.deploy == 'true' && steps.deployed_reader.outcome == 'failure'
         run: sleep 20
       - uses: actions/deploy-pages@v4
         id: deployed_reader_retry
-        if: steps.deployed_reader.outcome == 'failure'
+        if: success() && steps.preflight.outputs.deploy == 'true' && steps.deployed_reader.outcome == 'failure'
       - name: Verify the actual public Pages data before any release notification
         id: live_verify
         # Also verify when retrying a previously released issue. A successful
