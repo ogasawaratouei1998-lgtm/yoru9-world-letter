@@ -11,6 +11,8 @@ permissions:
   contents: read
 jobs:
   review:
+    # ChatGPT is primary; Gemini requires explicit operator opt-in.
+    if: vars.YORU9_ENABLE_GEMINI == 'true'
     runs-on: ubuntu-latest
     # The collection step and safety tests precede the bounded 9-minute AI review.
     timeout-minutes: 20
