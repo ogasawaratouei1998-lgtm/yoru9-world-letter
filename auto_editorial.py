@@ -1450,8 +1450,10 @@ def main():
     supplemental_attempts=0
     supplemental_generated=0
     supplemental_groups_examined=0
-    if sum(draft_preflight_viable(item,now) for item in draft)<8:
-        # Reserve viable drafts to survive safety and source-fidelity vetoes.
+    if not any(draft_preflight_viable(item,now) for item in draft):
+        # Only recover drafts when none are viable; audit the first viable
+        # draft before spending more provider calls. The after-review refill
+        # can continue finding additional stories without a publication quota.
         # Draft budget is NOT a required or maximum published article count.
         # The large first batch can return diagnostics only, with no actual
         # drafts: try additional *individual* incident reports without
@@ -1534,8 +1536,8 @@ def main():
                 print("Small-batch source-bound (NOT verified) drafts:",len(retry_stories),flush=True)
             except (RuntimeError,ValueError,KeyError,TypeError) as exc:
                 print("Small-batch draft failed:",type(exc).__name__,flush=True)
-            if sum(draft_preflight_viable(item,now) for item in draft)>=8:
-                print("Viable drafts reserved for independent editorial review.",flush=True)
+            if any(draft_preflight_viable(item,now) for item in draft):
+                print("Viable draft available: switch immediately to independent editorial review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
