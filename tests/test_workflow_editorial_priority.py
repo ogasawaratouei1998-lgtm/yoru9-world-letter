@@ -40,6 +40,21 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn('echo "published=true" >> "$GITHUB_OUTPUT"',WORKFLOW)
         self.assertIn('echo "published=false" >> "$GITHUB_OUTPUT"',WORKFLOW)
 
+    def test_chatgpt_first_and_gemini_is_explicit_opt_in(self):
+        root=Path(__file__).resolve().parents[1]
+        preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        self.assertIn("if: vars.YORU9_ENABLE_GEMINI == 'true'",preview)
+        self.assertEqual(WORKFLOW.count("vars.YORU9_ENABLE_GEMINI == 'true' &&"),2)
+        self.assertIn("python publish_approved.py",WORKFLOW)
+        from publish_approved import validate_approved
+        import json
+        approved=json.loads((root/"data/approved/2026-11-23.json").read_text(encoding="utf-8"))
+        approved["approvedBy"]="chatgpt-editorial-review"
+        validate_approved(approved,"2026-11-23")
+        approved["stories"][0]["editorQualityVerified"]=False
+        with self.assertRaises(ValueError):
+            validate_approved(approved,"2026-11-23")
+
     def test_missing_approved_issue_prefers_latest_valid_review_not_story_count(self):
         self.assertIn('key=lambda p:int(p.parent.name),reverse=True',WORKFLOW)
         self.assertIn('count,source,payload=valid[0]',WORKFLOW)
