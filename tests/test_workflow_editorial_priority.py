@@ -40,10 +40,12 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn('echo "published=true" >> "$GITHUB_OUTPUT"',WORKFLOW)
         self.assertIn('echo "published=false" >> "$GITHUB_OUTPUT"',WORKFLOW)
 
-    def test_chatgpt_first_and_gemini_is_explicit_opt_in(self):
+    def test_internal_ai_first_and_gemini_is_explicit_opt_in(self):
         root=Path(__file__).resolve().parents[1]
         preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
-        self.assertIn("if: vars.YORU9_ENABLE_GEMINI == 'true'",preview)
+        self.assertIn("vars.YORU9_ENABLE_GEMINI != 'true'",preview)
+        self.assertIn("run: bash run_local_editorial.sh",preview)
+        self.assertIn("vars.YORU9_ENABLE_GEMINI == 'true'",preview)
         self.assertEqual(WORKFLOW.count("vars.YORU9_ENABLE_GEMINI == 'true' &&"),2)
         self.assertIn("python publish_approved.py",WORKFLOW)
         from publish_approved import validate_approved
