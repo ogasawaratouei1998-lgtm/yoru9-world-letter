@@ -24,6 +24,7 @@ class MalaysiaReleaseTests(unittest.TestCase):
   self.assertIn("外務省",entry["portrait"]["body"])
   self.assertIn("UNESCO登録資産の構成物と断定しません",entry["travelStops"]["my-georgetown-woodville-postcard"]["note"])
   self.assertIn("洞窟内部は写っていません",entry["travelStops"]["my-mulu-garden-of-eden-postcard"]["photoCaption"])
+  self.assertEqual(entry["travelStops"]["my-mulu-garden-of-eden-postcard"]["author"],"Bernard DUPONT from FRANCE")
   for q in entry["quiz"]:
    stop=entry["travelStops"][q["photoKey"]]
    self.assertTrue(all(110<=len(p)<=360 for p in stop["travelStory"]))
