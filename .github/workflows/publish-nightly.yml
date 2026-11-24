@@ -475,7 +475,7 @@ jobs:
           phase=funnel.get("phase","")
           allowed={"fresh_filter","publisher_leads_unavailable","fetch_plan","body_fetch",
                    "publisher_articles_unavailable","shortlist","budget_blocked",
-                   "model_quota_blocked","draft","draft_empty","audit","country_readiness",
+                   "model_quota_blocked","model_unavailable","draft","draft_empty","audit","country_readiness",
                    "no_publishable_stories","selected"}
           if phase not in allowed: phase="no_funnel"
           for key in ("SAFEGUARDS","RECOVER_REVIEW","COLLECT","EDITORIAL","PUBLISH_ISSUE",
@@ -499,6 +499,9 @@ jobs:
                   print("no_approved_issue; "+phase)
           PY
           )
+          case "$REASON" in
+            missing_ai_key|no_approved_issue\;\ model_quota_blocked|no_approved_issue\;\ model_unavailable|no_approved_issue\;\ budget_blocked) STATE=error ;;
+          esac
           gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
             -f state="$STATE" -f context=yoru9/nightly-diagnostic \
             -f description="$DAY: $REASON" \
