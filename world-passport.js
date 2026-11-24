@@ -212,6 +212,10 @@ const WORLD_PASSPORT_QUIZZES=Object.freeze({
   {question:'ヴァレッタの都市形成に深く関わった組織は？',options:['聖ヨハネ騎士団','東インド会社','ハンザ同盟'],answer:0,fact:'UNESCOはヴァレッタの建設と発展を聖ヨハネ騎士団の歴史に結びつけています。',quip:'港を守るための都市設計。景色の美しさには、守りの合理性も組み込まれています。',photoLabel:'正解写真｜ヴァレッタ市街',photoKey:'mt-valletta-harbour-postcard'},
   {question:'マルタの巨石神殿群が分布する島々は？',options:['マルタ島とゴゾ島','アイスランド島とグリーンランド島','シチリア島とサルデーニャ島'],answer:0,fact:'UNESCOの登録にはマルタ島とゴゾ島にある複数の巨石神殿が含まれます。',quip:'千年単位で歴史をさかのぼると、石積みの技術そのものが主役になります。',photoLabel:'正解写真｜マルタの巨石神殿群（ハジャー・イム）',photoKey:'mt-hagar-qim-temple-postcard'},
  ],
+ MY:[
+  {question:'ムラカとジョージタウンが発展した重要な背景は？',options:['マラッカ海峡の交易','高山の氷河採掘','北極探検'],answer:0,fact:'UNESCOはマラッカ海峡の東西交易を背景に発展した都市として評価しています。',photoGoal:'ムラカとジョージタウンの歴史都市が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真',quip:'世界遺産の答えを当てるなら、街や自然の歴史も写真と一緒に見比べましょう。',photoLabel:'正解写真｜ジョージタウンの歴史建築',photoKey:'my-georgetown-woodville-postcard'},
+  {question:'グヌン・ムル国立公園の特徴的な地形は？',options:['熱帯のカルスト洞窟','氷河の氷床','砂漠の砂丘'],answer:0,fact:'UNESCOは熱帯カルスト地形と洞窟群を重要な価値として評価しています。',photoGoal:'グヌン・ムル国立公園が確認できる撮影者・CCライセンス明記の別々のWikimedia Commons実景写真',quip:'世界遺産の答えを当てるなら、街や自然の歴史も写真と一緒に見比べましょう。',photoLabel:'正解写真｜ムルの石灰岩と熱帯林',photoKey:'my-mulu-garden-of-eden-postcard'},
+ ],
  NG:[
   {question:'オスン・オショグボの聖なる森と深く結び付く文化は？',options:['インカの文化','ヨルバの文化','ヴァイキングの文化'],answer:1,fact:'UNESCOはヨルバの信仰と森、川、彫刻が結び付く文化遺産として評価しています。',quip:'森が文化の記憶を守る。展示室よりもずっと広い、暮らしと信仰の記録です。',photoLabel:'正解写真｜オスン・オショグボの聖なる森',photoKey:'ng-osun-grove-postcard'},
   {question:'スクルの文化的景観に残る、かつての重要な産業は？',options:['製鉄','製紙','時計製造'],answer:0,fact:'UNESCOは鉄を精錬した炉の遺構を、スクルの社会や交易の歴史を示すものと評価しています。',quip:'石の道をたどると、製鉄の歴史に行き着く。風景そのものが仕事の記録になっています。',photoLabel:'正解写真｜スクルの文化的景観',photoKey:'ng-sukur-postcard'},

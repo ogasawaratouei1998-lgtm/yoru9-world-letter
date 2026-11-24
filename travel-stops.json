@@ -5716,5 +5716,88 @@
         "checkedOn": "2026-11-22"
       }
     ]
+  },
+  "my-georgetown-street-cover": {
+    "country": "マレーシア",
+    "countryOnly": true,
+    "place": "ジョージタウン旧市街の街路",
+    "region": "ペナン島・ジョージタウン旧市街（代表地点）",
+    "latitude": 5.4206,
+    "longitude": 100.336,
+    "note": "ジョージタウン旧市街の代表地点。写真の撮影座標を示すものではありません。",
+    "photoCaption": "ジョージタウン旧市街のショップハウスと街路（2013年撮影）",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cf/Str_of_George_Town%2C_Penang%2C_Malaysia..JPG/960px-cf",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Str_of_George_Town,_Penang,_Malaysia..JPG",
+    "photoAsset": "assets/travel/my-georgetown-street-cover.jpg",
+    "author": "Milei.vencel",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+    "coverOnly": true
+  },
+  "my-georgetown-woodville-postcard": {
+    "country": "マレーシア",
+    "countryOnly": true,
+    "place": "ジョージタウンのウッドヴィル邸",
+    "region": "ペナン島・ノーザム通りの歴史建築",
+    "latitude": 5.428011,
+    "longitude": 100.322,
+    "note": "写真原典が示すジョージタウンのウッドヴィル邸。UNESCO登録資産の構成物と断定しません。敷地への立入り可否も未確認です。",
+    "photoCaption": "ジョージタウンのウッドヴィル邸（2024年撮影）。世界遺産の構成建造物と断定しない街の参考写真です。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4e/Woodville_Mansion_in_George_Town%2C_Penang.jpg/960px-4e",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Woodville_Mansion_in_George_Town,_Penang.jpg",
+    "photoAsset": "assets/travel/my-georgetown-woodville-postcard.jpg",
+    "author": "HundenvonPenang",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "travelStory": [
+      "ジョージタウンの旧市街を歩くと、細い商店街の間に異なる色や様式の建物が並び、店先から日々の暮らしの音が聞こえてきます。ムラカでは川沿いの景色や歴史的な建物から、港町に人が集まった時代を想像できます。二つの街を地図で比べながら歩くと、同じ海峡の交易都市でも発展の仕方や景観に違いがあることが見えてきます。",
+      "UNESCOは、ムラカとジョージタウンをマラッカ海峡の東西交易の歴史を伝える都市として評価しています。商業活動や移住を通じて異なる言語・宗教・建築文化が重なり、街並みに独特の多様性が生まれました。建築の正面装飾だけでなく、祈りの場や市場、住宅地の配置にも注目すると、交流が都市全体を形づくってきたことを感じられます。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・ムラカとジョージタウンの歴史都市",
+        "url": "https://whc.unesco.org/en/list/1223/",
+        "checkedOn": "2026-11-24"
+      },
+      {
+        "name": "外務省・マレーシア海外安全情報",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_017.html",
+        "checkedOn": "2026-11-24"
+      }
+    ],
+    "famousTourist": true
+  },
+  "my-mulu-garden-of-eden-postcard": {
+    "country": "マレーシア",
+    "countryOnly": true,
+    "place": "グヌン・ムル国立公園のディア・ケーブ入口付近",
+    "region": "サラワク州・グヌン・ムル国立公園（写真原典記載の撮影地点）",
+    "latitude": 4.047837,
+    "longitude": 114.85176,
+    "note": "Commons原典によるディア・ケーブ入口付近の熱帯植物と石灰岩壁。洞窟内部そのものは写っていません。現地の通行・立入可否を保証しません。",
+    "photoCaption": "ディア・ケーブ入口付近のヤシと石灰岩壁（2007年撮影）。洞窟内部は写っていません。",
+    "photo": "https://thumb.wikimedia.org/wikipedia/commons/thumb/c/c5/Fishtail_Palm_Trees_%28Caryota_no%29_%288423314273%29.jpg/960px-c5",
+    "photoPage": "https://commons.wikimedia.org/wiki/File:Fishtail_Palm_Trees_(Caryota_no)_(8423314273).jpg",
+    "photoAsset": "assets/travel/my-mulu-garden-of-eden-postcard.jpg",
+    "author": "Bernard DUPONT",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+    "travelStory": [
+      "グヌン・ムルの森林では、緑の木々が密集する地表の下に、驚くほど大きな洞窟の空間が続いています。入口から奥へ進むと岩の模様や暗闇の奥行きが変わり、地上からは想像しにくい規模を実感できます。熱帯の植物に囲まれた遊歩道と洞窟の静けさを比べながら、同じ土地にまったく違う景色が重なっていることを楽しみたい場所です。",
+      "UNESCOはサラワク州のグヌン・ムルを、生物多様性の高さと熱帯カルスト地形の両方で評価しています。数多くの洞窟があり、洞内はコウモリなどの生物のすみかにもなっています。単に巨大な洞窟を見るだけでなく、水が石灰岩を溶かして空間を広げた時間を考えると、景観の意味が深まります。自然保護と安全のため、見学は認められたルートや案内に従う必要があります。"
+    ],
+    "historicalSources": [
+      {
+        "name": "UNESCO世界遺産センター・グヌン・ムル国立公園",
+        "url": "https://whc.unesco.org/en/list/1013/",
+        "checkedOn": "2026-11-24"
+      },
+      {
+        "name": "外務省・マレーシア海外安全情報",
+        "url": "https://www.anzen.mofa.go.jp/info/pcinfectionspothazardinfo_017.html",
+        "checkedOn": "2026-11-24"
+      }
+    ],
+    "famousTourist": true
   }
 }
