@@ -18,6 +18,7 @@ on:
       timezone: 'Asia/Tokyo'
     # UTC fallback slots supplement the local-time schedule. Each release is
     # idempotent and immutable; if the JST schedule runs, these are no-ops.
+    - cron: '2 12 * * *'     # first attempt at 21:02 JST
     - cron: '13,43 12 * * *' # 21:13 / 21:43 JST
     - cron: '13 13 * * *'    # 22:13 JST
     - cron: '53 12 * * *'   # backup 21:53 JST

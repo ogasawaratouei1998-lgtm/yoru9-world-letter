@@ -13,6 +13,32 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
                         WORKFLOW.index('mkdir -p /tmp/yoru9-reviewed'))
         self.assertNotIn('max(valid,key=lambda item:item[0])',WORKFLOW)
 
+    def test_preview_job_guard_is_yaml_safe_and_scheduled_in_utc(self):
+        preview=(Path(__file__).resolve().parents[1]/
+                 ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        guard="github.event_name != 'push' || startsWith(github.event.head_commit.message, 'Local editorial trial: ')"
+        # A colon followed by a space cannot appear in a YAML plain scalar.
+        # Keep the complete expression in a folded scalar instead.
+        self.assertIn("    if: >-\n      "+guard,preview)
+        self.assertNotIn("    if: "+guard,preview)
+        self.assertIn("- cron: '15 9 * * *'",preview)  # 18:15 JST
+        self.assertIn("- cron: '45 10 * * *'",preview)  # 19:45 JST
+        self.assertNotIn("timezone:",preview)
+
+    def test_daily_recovery_slots_and_archived_issue_skip(self):
+        root=Path(__file__).resolve().parents[1]
+        preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        for cron in ("15 6 * * *", "15 9 * * *", "45 10 * * *", "15 12 * * *"):
+            self.assertIn("- cron: '"+cron+"'",preview)
+        self.assertIn('if [ -f "data/archive/$DAY.json" ]; then',preview)
+        self.assertIn('ARCHIVED: ${{ steps.edition.outputs.archived }}',preview)
+        self.assertIn('elif [ "$ARCHIVED" = true ]; then',preview)
+        self.assertIn("- cron: '2 12 * * *'",WORKFLOW)
+        health=(root/".github/workflows/publication-health.yml").read_text(encoding="utf-8")
+        self.assertIn("No new public edition for ",health)
+        self.assertIn("Approved '+previous_day+",health)
+        self.assertIn("date<previous_day",health)
+
     def test_verified_review_uploads_exact_date_only(self):
         preview=(Path(__file__).resolve().parents[1]/
                  ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
