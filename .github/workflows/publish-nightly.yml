@@ -9,6 +9,8 @@ on:
       # The backend atomically deduplicates by editionDate.
       - 'send_release_notice.py'
       - '.github/workflows/publish-nightly.yml'
+      - 'build_site.py'
+      - 'seed_reviewed_photos.py'
   schedule:
     - cron: '7,17,37,47 21 * * *'
       timezone: 'Asia/Tokyo'
