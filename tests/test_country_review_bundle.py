@@ -20,6 +20,18 @@ def row(code, slot, names):
             "candidates": [candidate(n) for n in names]}
 
 class ReviewBundleTests(unittest.TestCase):
+    def test_all_196_countries_fit_disjoint_review_shards(self):
+        from country_review_bundle import partition_queue
+        queue = [{"code": str(i)} for i in range(196)]
+        partitions = [partition_queue(queue, i, 10) for i in range(10)]
+        self.assertTrue(all(len(p) <= 20 for p in partitions))
+        codes = [r["code"] for part in partitions for r in part]
+        self.assertEqual(len(codes), 196)
+        self.assertEqual(set(codes), {r["code"] for r in queue})
+        for shard, shards in [(-1, 10), (10, 10), (0, 0)]:
+            with self.assertRaises(ValueError):
+                partition_queue(queue, shard, shards)
+
     def test_review_rejection_scope_keys_are_never_silently_overwritten(self):
         # Python dict literals silently keep only the last duplicate tuple key.
         # Reject that regression before older manually inspected failures vanish.
