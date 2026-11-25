@@ -88,7 +88,8 @@ def bundle_travel_photos(root, output):
     active_covers=set(country_covers)
     active_photos=set(required)
     current_path=root/'data/current.json'
-    if current_path.is_file() and page.is_file() and matches:
+    has_active_issue=current_path.is_file() and page.is_file() and bool(matches)
+    if has_active_issue:
         from country_codes import country_codes
         current_issue=json.loads(current_path.read_text(encoding='utf-8'))
         active_codes={code for story in current_issue.get('stories',[])
@@ -112,7 +113,8 @@ def bundle_travel_photos(root, output):
     cache_files={}
     failures = []
     commons_throttled = False
-    for asset, url in required.items():
+    # Prioritize today's photos before optional historical cache misses.
+    for asset, url in sorted(required.items(), key=lambda item: item[0] not in active_photos):
         target = output / asset
         target.parent.mkdir(parents=True, exist_ok=True)
         # Never mistake a leftover image from an earlier build for one
@@ -156,8 +158,15 @@ def bundle_travel_photos(root, output):
             return re.sub(r'/[0-9]+px-(?=[^/]+$)', f'/{width}px-', address)
         large = thumbnail_width(url, 1280)
         small = thumbnail_width(url, 330)
-        paths = ([large, large.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/')]
-                 if asset in country_covers and large != url else []) + [
+        # Wide panoramic postcards can be 500x153 even at a valid 500px
+        # thumbnail width. Request 960px first for current non-cover images;
+        # preserve the original file, caption and license and never upscale.
+        postcard = thumbnail_width(url, 960)
+        larger = (large if cover else postcard if has_active_issue and asset in active_photos
+                  and re.search(r'/[0-9]+px-', url)
+                  and int(re.search(r'/([0-9]+)px-', url).group(1)) < 960 else url)
+        paths = ([larger, larger.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/')]
+                 if larger != url else []) + [
             url,
             url.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/'),
             small,

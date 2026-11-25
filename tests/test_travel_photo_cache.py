@@ -82,6 +82,27 @@ class TravelPhotoCacheTest(unittest.TestCase):
                 self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(1300,720))
                 self.record["photo"]=self.record["photo"].replace(f"/{original}px-","/500px-")
 
+    def test_active_panoramic_postcard_requests_native_larger_thumbnail_first(self):
+        self.record.pop("coverOnly")
+        self.record["country"]="イギリス"
+        self.write_manifest()
+        (self.root/"index.html").write_text(
+            'const TODAY_COUNTRY_PHOTOS=Object.freeze({"GB":[{"asset":"assets/travel/hero.jpg","avoidCover":true}]});\n',
+            encoding="utf-8")
+        current=self.root/"data/current.json"
+        current.parent.mkdir(parents=True,exist_ok=True)
+        current.write_text(json.dumps({"stories":[{"country":"イギリス"}]}),encoding="utf-8")
+        hits=[]
+        def network(req,timeout):
+            hits.append(req.full_url)
+            self.assertIn("/960px-hero.jpg",req.full_url)
+            return Response(jpeg(960,294))
+        with patch.dict(os.environ,{"YORU9_PHOTO_CACHE_DIR":str(self.cache)}), \
+             patch("build_site.urlopen",side_effect=network):
+            self.assertEqual(bundle_travel_photos(self.root,self.output),1)
+        self.assertEqual(len(hits),1)
+        self.assertEqual(jpeg_dimensions(self.output/"assets/travel/hero.jpg"),(960,294))
+
     def test_service_unavailable_defers_other_wikimedia_requests(self):
         from urllib.error import HTTPError
         second={**self.record,"photoAsset":"assets/travel/second.jpg",
