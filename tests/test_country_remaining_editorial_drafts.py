@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import unittest
+from urllib.parse import urlsplit
 from country_photo_candidates import draft_queries
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -41,7 +42,11 @@ class RemainingEditorialDraftTests(unittest.TestCase):
                     if d["sourceReviewStatus"] == "independent_source_required":
                         self.assertIsNone(d["sourceUrl"])
                     else:
-                        self.assertTrue(d["sourceUrl"].startswith("https://whc.unesco.org/"))
+                        self.assertEqual(urlsplit(d["sourceUrl"]).scheme, "https")
+                        self.assertIn(urlsplit(d["sourceUrl"]).hostname, ["biodiversity.gov.tt","dcdd.moha.gov.bt","ecb.bt","historic.tainan.gov.tw","musee.oceano.org","nationaltrust.tt","stlucia.org","timorleste.tl","tourisme.gov.bi","volcano.si.edu","whc.unesco.org","www.bahamas.com","www.bruneitourism.com","www.ramsar.org","www.taroko.gov.tw","www.unesco.org","www.visitepalaisdemonaco.com","www.zambiatourism.com"])
+                        if "referenceEvidence" in d:
+                            self.assertEqual(d["referenceEvidence"]["observedOn"], "2026-11-25")
+                            self.assertTrue(d["referenceEvidence"]["note"])
                     q = d["quizDraft"]
                     self.assertTrue(q["factReviewRequired"])
                     self.assertEqual(len(set(q["options"])), 3)

@@ -3,7 +3,7 @@
   "createdOn": "2026-11-25",
   "status": "pending_photos_not_public",
   "publicationEligible": false,
-  "description": "First editorial drafts for the remaining 58 locations: unique country introductions, 116 place-specific microtrip drafts and three-choice quiz drafts. Source pages located where available; all factual claims, prose length, photos and license require independent review. Not canonical release content.",
+  "description": "58 country first drafts and 116 microtrip/quiz drafts. Reference evidence is separately recorded where checked; all full editorial and photograph approval gates remain closed.",
   "countries": {
     "BI": {
       "name": "ブルンジ",
@@ -33,8 +33,8 @@
             "タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。川が湖に注ぐ地形を地図で追い、水鳥と水生植物の暮らす環境を見比べたい。",
             "ここではルジジ自然保護区を題材に、地図と資料を照らし合わせながら保護区の主な環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/statesparties/bi/",
+          "sourceName": "ラムサール条約事務局",
+          "sourceUrl": "https://www.ramsar.org/country-profile/burundi",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -52,6 +52,11 @@
             "fact": "タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。",
             "photoGoal": "ルジジ自然保護区の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ルジジ国立公園が条約登録湿地として掲載。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -61,8 +66,8 @@
             "ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。太鼓の形だけでなく、演奏の隊形や儀礼における役割に注目する。",
             "ここではギショラの王宮跡と太鼓を題材に、地図と資料を照らし合わせながらこの場所に関連する伝統はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/statesparties/bi/",
+          "sourceName": "ブルンジ観光当局",
+          "sourceUrl": "https://tourisme.gov.bi/en/cultural-tourism/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -80,6 +85,11 @@
             "fact": "ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。",
             "photoGoal": "ギショラの王宮跡と太鼓の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ギショラの太鼓聖地と文化伝統。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -113,9 +123,9 @@
             "浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。島と島の間を水路が結び、陸地だけでは公園の全体像が見えない。",
             "ここではエグズーマの海洋公園を題材に、地図と資料を照らし合わせながら主に保護される景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "バハマ政府観光局",
+          "sourceUrl": "https://www.bahamas.com/natural-wonders/exuma-cays-land-and-sea-park",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -131,6 +141,12 @@
             "fact": "浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。",
             "photoGoal": "エグズーマの海洋公園の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "海と陸を保護する公園。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -140,9 +156,9 @@
             "ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。石造の壁と港の位置を比較し、海から街を守る視点を考える。",
             "ここではフィンキャッスル砦を題材に、地図と資料を照らし合わせながら砦の立地の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "バハマ政府観光局",
+          "sourceUrl": "https://www.bahamas.com/natural-wonders/fort-fincastle",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -158,6 +174,12 @@
             "fact": "ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。",
             "photoGoal": "フィンキャッスル砦の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "港を守る高台の砦。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -271,9 +293,9 @@
             "バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。礼拝建築の輪郭が水面に映る様子から、都市景観の中での位置づけを考える。",
             "ここではオマール・アリ・サイフディン・モスクを題材に、地図と資料を照らし合わせながら建物の用途はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "ブルネイ政府観光局",
+          "sourceUrl": "https://www.bruneitourism.com/places/omar-ali-saifuddien-mosque/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -289,6 +311,12 @@
             "fact": "バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。",
             "photoGoal": "オマール・アリ・サイフディン・モスクの被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "モスク個別紹介。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -298,9 +326,9 @@
             "ボルネオ島の熱帯雨林を保全する国立公園である。林冠と谷を流れる川を別々の高さから捉え、森の垂直方向の広がりを想像する。",
             "ここではウル・テンブロン国立公園を題材に、地図と資料を照らし合わせながら代表的な植生はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "ブルネイ政府観光局",
+          "sourceUrl": "https://www.bruneitourism.com/places/ulu-temburong-national-park/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -316,6 +344,12 @@
             "fact": "ボルネオ島の熱帯雨林を保全する国立公園である。",
             "photoGoal": "ウル・テンブロン国立公園の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "国立公園の熱帯雨林。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -349,9 +383,9 @@
             "パロの谷を見下ろす崖に建つ仏教僧院である。崖と建物の輪郭をたどり、宗教的な聖地と山岳の地形がどう結びつくかを考える。",
             "ここではタクツァン僧院を題材に、地図と資料を照らし合わせながら僧院の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "ブータン内務省文化部門",
+          "sourceUrl": "https://dcdd.moha.gov.bt/collection/paro-taktshang/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -367,6 +401,12 @@
             "fact": "パロの谷を見下ろす崖に建つ仏教僧院である。",
             "photoGoal": "タクツァン僧院の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "谷を見下ろす崖の宗教施設。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -376,9 +416,9 @@
             "二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。川と城壁、中庭の位置を比較すると、山間の都市で建物が果たした役割を想像できる。",
             "ここではプナカ・ゾンを題材に、地図と資料を照らし合わせながら建築の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "ブータン選挙管理委員会",
+          "sourceUrl": "https://ecb.bt/about-the-dzongkhag-punakha/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -394,6 +434,12 @@
             "fact": "二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。",
             "photoGoal": "プナカ・ゾンの被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ゾンの歴史的・宗教的重要性。河川の詳細は追加照合。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -427,9 +473,9 @@
             "コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。森林内の開けた湿地と周囲の密林を比較して、生息環境の多様性を読む。",
             "ここではオザラ・コクア国立公園を題材に、地図と資料を照らし合わせながら広がる主な生態系はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/692/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -445,6 +491,12 @@
             "fact": "コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。",
             "photoGoal": "オザラ・コクア国立公園の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "オザラ・コクアの森林保護地域。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -505,9 +557,9 @@
             "グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。山頂部と海岸線の高低差に注目し、火山島が海上に立ち上がる姿を読み取る。",
             "ここではカルタラ山を題材に、地図と資料を照らし合わせながらこの山の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "スミソニアン協会 Global Volcanism Program",
+          "sourceUrl": "https://volcano.si.edu/volcano.cfm?vn=233010",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -523,6 +575,12 @@
             "fact": "グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。",
             "photoGoal": "カルタラ山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "グランドコモロ島の盾状火山。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -611,9 +669,9 @@
             "フォゴ島の高い火山は島の輪郭を大きく形づくっている。溶岩地形と集落の位置を比べ、火山性の土地で営まれる暮らしを考える。",
             "ここではフォゴ山を題材に、地図と資料を照らし合わせながら地形の成因はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "スミソニアン協会 Global Volcanism Program",
+          "sourceUrl": "https://volcano.si.edu/volcanolist_countries.cfm?country=Cabo_Verde",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -629,6 +687,12 @@
             "fact": "フォゴ島の高い火山は島の輪郭を大きく形づくっている。",
             "photoGoal": "フォゴ山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "フォゴ島のカルデラと中央火山。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -1004,9 +1068,9 @@
             "ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。山の斜面と低地の植生を比較し、国境と自然環境の範囲が異なることに注目する。",
             "ここではニンバ山を題材に、地図と資料を照らし合わせながら特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/155/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -1022,6 +1086,12 @@
             "fact": "ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。",
             "photoGoal": "ニンバ山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ギニアとコートジボワールの国境にまたがる山地。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -1056,7 +1126,7 @@
             "ここではビジャゴ諸島を題材に、地図と資料を照らし合わせながら景観の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
           "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/sids",
+          "sourceUrl": "https://whc.unesco.org/en/list/1431/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -1074,6 +1144,11 @@
             "fact": "大西洋岸の島々と干潟、マングローブなどの生息環境が広がる。",
             "photoGoal": "ビジャゴ諸島の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ビジャゴ諸島の海岸・海洋生態系。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -1449,7 +1524,7 @@
             "ここではブルー・ジョン・クロウ山地を題材に、地図と資料を照らし合わせながら主な自然環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
           "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/list/1356",
+          "sourceUrl": "https://whc.unesco.org/en/list/1356/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -1467,6 +1542,11 @@
             "fact": "ジャマイカ東部の山地に熱帯山地林が広がり、文化的伝統とも結びついている。",
             "photoGoal": "ブルー・ジョン・クロウ山地の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ジャマイカ東部の熱帯山地林と文化的伝統。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -1495,6 +1575,11 @@
             "fact": "キングストン港の入口近くに位置する十七世紀の港町の考古遺産である。",
             "photoGoal": "ポート・ロイヤルの被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "キングストン港口の歴史的港町。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -1556,7 +1641,7 @@
             "ここではフェニックス諸島保護地域を題材に、地図と資料を照らし合わせながら保護対象に含まれるものはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
           "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/sids",
+          "sourceUrl": "https://whc.unesco.org/en/list/1325/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -1574,6 +1659,11 @@
             "fact": "太平洋に広がる島々と海域の保全を目的とする自然遺産である。",
             "photoGoal": "フェニックス諸島保護地域の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "島々と広い海域を含む自然遺産。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -1950,9 +2040,9 @@
             "セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。海峡を望む高台から、沿岸の監視と防衛が重視された時代を考える。",
             "ここではピジョン・アイランドを題材に、地図と資料を照らし合わせながら残る歴史的施設はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "セントルシア政府観光局",
+          "sourceUrl": "https://stlucia.org/en/travel-style/historic-forts-ruins/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -1968,6 +2058,12 @@
             "fact": "セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。",
             "photoGoal": "ピジョン・アイランドの被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "歴史的軍事施設。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -2157,9 +2253,9 @@
             "モナコの岩山の上に立つ大公家の宮殿である。高台と港の位置を地図で比べ、狭い地形の中で歴史的な中心が形成された過程を考える。",
             "ここではモナコ大公宮殿を題材に、地図と資料を照らし合わせながら宮殿の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "モナコ大公宮殿",
+          "sourceUrl": "https://www.visitepalaisdemonaco.com/en/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2175,6 +2271,12 @@
             "fact": "モナコの岩山の上に立つ大公家の宮殿である。",
             "photoGoal": "モナコ大公宮殿の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "大公宮殿の公式資料。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -2184,9 +2286,9 @@
             "海に面した崖の上の博物館で、海洋科学に関わる展示を行う。建物の足元の岩壁と海を一緒に見て、研究対象と立地の関係を考える。",
             "ここでは海洋博物館を題材に、地図と資料を照らし合わせながら博物館の主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "モナコ海洋博物館",
+          "sourceUrl": "https://musee.oceano.org/en/practical-info/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2202,6 +2304,12 @@
             "fact": "海に面した崖の上の博物館で、海洋科学に関わる展示を行う。",
             "photoGoal": "海洋博物館の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "海洋の研究・保全を扱う博物館。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -2340,9 +2448,9 @@
             "島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。礁湖と外洋の境目を地図でたどり、海の環境が島の暮らしを支えることを考える。",
             "ここではバー環礁を題材に、地図と資料を照らし合わせながら地形の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO人間と生物圏計画",
+          "sourceUrl": "https://www.unesco.org/en/mab/baa-atoll",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2358,6 +2466,12 @@
             "fact": "島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。",
             "photoGoal": "バー環礁の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "バー環礁生物圏保護区。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -2391,9 +2505,9 @@
             "核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。島々の位置を資料で確かめ、景観だけでは分からない移住と環境の問題に目を向ける。",
             "ここではビキニ環礁を題材に、地図と資料を照らし合わせながらこの場所が伝える現代史はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1339/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2409,6 +2523,12 @@
             "fact": "核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。",
             "photoGoal": "ビキニ環礁の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "核実験に関する世界遺産。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -2550,7 +2670,7 @@
             "ここではモザンビーク島を題材に、地図と資料を照らし合わせながら歴史の中心的な主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
           "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/statesparties/mz",
+          "sourceUrl": "https://whc.unesco.org/en/list/599/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -2568,6 +2688,11 @@
             "fact": "インド洋の交易とポルトガル植民地期の歴史を伝える島の町である。",
             "photoGoal": "モザンビーク島の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "モザンビーク島とポルトガルの海上交易史。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -2578,7 +2703,7 @@
             "ここではマプト国立公園を題材に、地図と資料を照らし合わせながら主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
           "sourceName": "UNESCO世界遺産センター",
-          "sourceUrl": "https://whc.unesco.org/en/statesparties/mz",
+          "sourceUrl": "https://whc.unesco.org/en/list/914/",
           "sourceReviewStatus": "reference_page_located_claim_review_required",
           "referenceLocatedOn": "2026-11-25",
           "photoStatus": "not_selected_or_licensed",
@@ -2596,6 +2721,11 @@
             "fact": "海岸近くの湿地、森林などの多様な自然環境を含む保護地域である。",
             "photoGoal": "マプト国立公園の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "マプト国立公園を含む越境自然遺産。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -2629,9 +2759,9 @@
             "サハラの山地と砂漠が広がる自然保護地域である。砂丘と岩山の対比を見て、砂漠にもさまざまな地形と生息環境があることを考える。",
             "ここではアイル・テネレ自然保護区を題材に、地図と資料を照らし合わせながら主な景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/573/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2647,6 +2777,12 @@
             "fact": "サハラの山地と砂漠が広がる自然保護地域である。",
             "photoGoal": "アイル・テネレ自然保護区の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "サハラの山地と砂漠の自然保護区。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -2656,9 +2792,9 @@
             "サハラの交易に関わった都市で、土造りの建築が特徴である。泥を使った建物と街路の形を比較し、乾燥地域の建築と交易史を考える。",
             "ここではアガデス歴史地区を題材に、地図と資料を照らし合わせながら伝統建築の主な材料はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1268/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -2674,6 +2810,12 @@
             "fact": "サハラの交易に関わった都市で、土造りの建築が特徴である。",
             "photoGoal": "アガデス歴史地区の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "サハラ南縁の都市と歴史的街路。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -3181,9 +3323,9 @@
             "火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。住居や生活空間の配置を資料で見て、壮大な神殿以外からも古代の生活が分かることを考える。",
             "ここではホヤ・デ・セレンを題材に、地図と資料を照らし合わせながら保存のきっかけはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/675",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3199,6 +3341,12 @@
             "fact": "火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。",
             "photoGoal": "ホヤ・デ・セレンの被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "火山噴火で埋没した先スペイン期集落。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -3208,9 +3356,9 @@
             "エルサルバドル西部にそびえる火山で、山頂には火口がある。火口の形と周囲の山並みを資料で見比べ、中米の火山地形を考える。",
             "ここではサンタ・アナ火山を題材に、地図と資料を照らし合わせながら山頂に見られる地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "スミソニアン協会 Global Volcanism Program",
+          "sourceUrl": "https://volcano.si.edu/volcano.cfm?vn=343020",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3226,6 +3374,12 @@
             "fact": "エルサルバドル西部にそびえる火山で、山頂には火口がある。",
             "photoGoal": "サンタ・アナ火山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "エルサルバドルの成層火山。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -3259,9 +3413,9 @@
             "ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。切り立った山の縁と石の壁の関係から、防衛施設が地形を利用したことを考える。",
             "ここではグアイタ塔を題材に、地図と資料を照らし合わせながら塔がある山はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1245",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3277,6 +3431,12 @@
             "fact": "ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。",
             "photoGoal": "グアイタ塔の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "ティターノ山と防衛建築。個別塔の名称は追加照合。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -3286,9 +3446,9 @@
             "山の上の歴史的な街区は小国の政治と自治の歴史を伝える。広場と街路の配置をたどり、限られた地形の中で都市が発展した過程を読む。",
             "ここではサンマリノ歴史地区を題材に、地図と資料を照らし合わせながら地区の主な地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1245",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3304,6 +3464,12 @@
             "fact": "山の上の歴史的な街区は小国の政治と自治の歴史を伝える。",
             "photoGoal": "サンマリノ歴史地区の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "サンマリノ歴史地区とティターノ山。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -3729,9 +3895,9 @@
             "バタマリバの土造りの住居と文化的景観を伝える地域である。住居の塔状の形と周囲の土地利用を比較し、建築と生活文化のつながりを考える。",
             "ここではクタマクの伝統集落を題材に、地図と資料を照らし合わせながら住居に特徴的な材料はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1140/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3747,6 +3913,12 @@
             "fact": "バタマリバの土造りの住居と文化的景観を伝える地域である。",
             "photoGoal": "クタマクの伝統集落の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "バタマリバの文化的景観。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -3834,9 +4006,9 @@
             "ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。島の斜面と沿岸の海を見て、陸上と海中の生息環境の関係を考える。",
             "ここではアタウロ島を題材に、地図と資料を照らし合わせながら島の位置はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "東ティモール観光公式サイト",
+          "sourceUrl": "https://timorleste.tl/destinations/atauro-island",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3852,6 +4024,12 @@
             "fact": "ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。",
             "photoGoal": "アタウロ島の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "アタウロ島のサンゴ礁と海洋生物。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -3963,9 +4141,9 @@
             "マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。水路と樹木の境界を地図でたどり、水鳥を支える潮間帯の環境を考える。",
             "ここではカロニ湿地を題材に、地図と資料を照らし合わせながら代表的な鳥はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "トリニダード・トバゴ政府生物多様性情報",
+          "sourceUrl": "https://biodiversity.gov.tt/index.php/protected-areas-and-species/ramsar-sites/caroni-swamp.html",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -3981,6 +4159,12 @@
             "fact": "マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。",
             "photoGoal": "カロニ湿地の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "マングローブと水路の湿地。鳥種は別途照合。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -3990,9 +4174,9 @@
             "トリニダード島にある天然アスファルトの集積地である。表面の色やひび割れを資料で観察し、地下の資源が地表に現れる地質を考える。",
             "ここではピッチ湖を題材に、地図と資料を照らし合わせながら集積する物質はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "トリニダード・トバゴ National Trust",
+          "sourceUrl": "https://nationaltrust.tt/location/pitch-lake/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4008,6 +4192,12 @@
             "fact": "トリニダード島にある天然アスファルトの集積地である。",
             "photoGoal": "ピッチ湖の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "天然アスファルト堆積地。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -4119,9 +4309,9 @@
             "台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。岩壁の層と川の位置を資料で比較し、隆起と侵食がつくる景観を考える。",
             "ここでは太魯閣峡谷を題材に、地図と資料を照らし合わせながら峡谷を形づくる作用はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "太魯閣国家公園管理処",
+          "sourceUrl": "https://www.taroko.gov.tw/en/sglarticle/landform-%26-geology",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4137,6 +4327,12 @@
             "fact": "台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。",
             "photoGoal": "太魯閣峡谷の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "大理石の地質と河川侵食。現在の入域は別確認。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -4146,9 +4342,9 @@
             "台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。古い遺構と後世の建物を分けて見て、同じ場所が時代とともに変化したことを考える。",
             "ここでは台南の赤崁楼を題材に、地図と資料を照らし合わせながら建物がある都市はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "台南市政府文化局",
+          "sourceUrl": "https://historic.tainan.gov.tw/index.php?belongid=188&id=189&index=16&lang=en&option=module&task=pageinfo",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4164,6 +4360,12 @@
             "fact": "台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。",
             "photoGoal": "台南の赤崁楼の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "赤崁楼の個別紹介。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -4277,9 +4479,9 @@
             "セントビンセント島北部にある火山で、島の地形を特徴づける。火口と山腹、海岸への距離を地図で確認し、火山と暮らしの関係を考える。",
             "ここではラ・スフリエール火山を題材に、地図と資料を照らし合わせながら山の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "スミソニアン協会 Global Volcanism Program",
+          "sourceUrl": "https://volcano.si.edu/volcano.cfm?vn=360150",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4295,6 +4497,12 @@
             "fact": "セントビンセント島北部にある火山で、島の地形を特徴づける。",
             "photoGoal": "ラ・スフリエール火山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "セントビンセント島北部の成層火山。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         },
         {
@@ -4383,9 +4591,9 @@
             "タンナ島にある活火山である。山頂の火口と周囲の地形を資料で確かめ、活動する火山と島の地質を考える。",
             "ここではヤスール火山を題材に、地図と資料を照らし合わせながら所在する島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "スミソニアン協会 Global Volcanism Program",
+          "sourceUrl": "https://volcano.si.edu/volcano.cfm?quot=&vn=257100",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4401,6 +4609,12 @@
             "fact": "タンナ島にある活火山である。",
             "photoGoal": "ヤスール火山の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "タンナ島南東端の火山と火口。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
@@ -4540,9 +4754,9 @@
             "ルアングワ川流域の野生動物の生息環境を含む国立公園である。川の曲がり方と周囲の草地や森林を見比べ、水が生態系を支える役割を考える。",
             "ここでは南ルアングワ国立公園を題材に、地図と資料を照らし合わせながら公園と関係する川はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
           ],
-          "sourceName": null,
-          "sourceUrl": null,
-          "sourceReviewStatus": "independent_source_required",
+          "sourceName": "ザンビア観光情報",
+          "sourceUrl": "https://www.zambiatourism.com/destinations/national-parks/south-luangwa-national-park/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
           "photoStatus": "not_selected_or_licensed",
           "status": "pending_source_photo_rights_and_location_review",
           "editorialOnly": true,
@@ -4558,6 +4772,12 @@
             "fact": "ルアングワ川流域の野生動物の生息環境を含む国立公園である。",
             "photoGoal": "南ルアングワ国立公園の被写体・位置・原画像・作者・ライセンス確認",
             "factReviewRequired": true
+          },
+          "referenceLocatedOn": "2026-11-25",
+          "referenceEvidence": {
+            "observedOn": "2026-11-25",
+            "note": "南ルアングワ国立公園の個別紹介。",
+            "scope": "Reference page and selected facts checked; full prose, quiz, site identity and image approval still required."
           }
         }
       ],
