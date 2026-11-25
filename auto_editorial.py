@@ -695,18 +695,23 @@ def editorial_seconds_remaining():
 def ai(prompt,temperature=0.1):
     global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED
     if LOCAL_EDITORIAL:
-        from local_editorial import generate_json
+        from local_editorial import generate_json, LocalRequestTimeout
         if LOCAL_BACKEND_FAILED:
             raise RuntimeError("Local editorial circuit open")
         audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
         remaining=editorial_seconds_remaining()
-        reserve=0 if audit_prompt else 120
+        reserve=0 if audit_prompt else 300
         if remaining-reserve<30:
             raise RuntimeError("Local editorial time budget exhausted")
         try:
             return generate_json(prompt,temperature,
-                                 min(300,remaining-reserve),
-                                 768 if audit_prompt else 2600)
+                                 min(360,remaining-reserve),
+                                 768 if audit_prompt else 1500)
+        except LocalRequestTimeout:
+            # A timed-out request is not evidence that the entire backend is
+            # dead. The next independent candidate may fit the remaining time.
+            print("Local request timeout; discard partial response.",flush=True)
+            raise
         except RuntimeError:
             LOCAL_BACKEND_FAILED=True
             raise
@@ -1164,7 +1169,7 @@ def source_bound_batch_drafts(response, groups):
 # diagnostics and returned two drafts. A smaller initial evidence window
 # leaves model context for actual incident writing; a larger overall queue
 # preserves independent sources for post-audit recovery.
-PRIMARY_EDITORIAL_GROUPS=2 if LOCAL_EDITORIAL else 6
+PRIMARY_EDITORIAL_GROUPS=1 if LOCAL_EDITORIAL else 6
 EDITORIAL_SHORTLIST_LIMIT=64
 
 def select_untried_source_groups(groups, attempted_ids, used_urls):
@@ -1446,6 +1451,19 @@ def main():
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
+    if LOCAL_EDITORIAL:
+        # CPU inference gets one incident, a short output contract and no
+        # long multi-group diagnostic response. All B-editor gates stay intact.
+        prompt=("You are Japanese news editor A. Draft at most ONE story from the supplied original publisher text. "
+                "Prioritize extraordinary, documented personal mistakes with a safe comic reversal. "
+                "Reject ordinary oddities, suffering, crime, humiliation, and unsupported facts; return {\"stories\":[]} if unsuitable. "
+                "Do not confuse publisher market with incident country. Report actual source date within 7 days of JST edition "+day+". "
+                "Write concise Japanese: summary 80-140 characters, detail 130-250, quip 18-45 with an incident-specific punchline. "
+                "No invented intent, quotes, dates or outcomes. category exactly person, work, company, or sports. "
+                "Return JSON with stories array, required fields "+str(REQUIRED)+
+                ", humanActor, humanMistake, expectedPlan, observedOutcome, verificationUrls (exact publisher URL), eventKey, evidence; "
+                "optional quipSecond only if distinctly funny. No diagnostics or commentary. "
+                "Source groups: "+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
     attempted_group_ids={g["groupId"] for g in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]}
     if editorial_seconds_remaining()<100:
         checkpoint("budget_blocked")
@@ -1453,10 +1471,17 @@ def main():
         return 0
     try:
         draft_response=ai(prompt,temperature=0.65)
-    except RuntimeError:
-        checkpoint("model_quota_blocked" if AI_QUOTA_BLOCKED else "model_unavailable")
-        print("Initial editorial generation unavailable; no unverified publication.",flush=True)
-        return 0
+    except RuntimeError as exc:
+        from local_editorial import LocalRequestTimeout
+        if LOCAL_EDITORIAL and isinstance(exc,LocalRequestTimeout):
+            # Continue with the existing focused-draft recovery loop, not the
+            # failed source. No partial model response can become a draft.
+            draft_response={"stories":[]}
+            print("Initial request timed out; trying a different source group.",flush=True)
+        else:
+            checkpoint("model_quota_blocked" if AI_QUOTA_BLOCKED else "model_unavailable")
+            print("Initial editorial generation unavailable; no unverified publication.",flush=True)
+            return 0
     draft=draft_response.get("stories",[]) if isinstance(draft_response,dict) else []
     if not isinstance(draft,list):
         print("Editorial drafting diagnostic: malformed stories response; safe skip.",flush=True)
@@ -1511,7 +1536,8 @@ def main():
             if isinstance(url,str)}
         retry_candidates=sorted((
             group for group in grouped_evidence
-            if not any(article["url"] in already_drafted_urls
+            if (not LOCAL_EDITORIAL or group["groupId"] not in attempted_group_ids)
+            and not any(article["url"] in already_drafted_urls
                        for article in group["articles"])
         ),key=lambda g:(
             min(incident_priority(article)[0] for article in g["articles"]),
@@ -1527,7 +1553,7 @@ def main():
         print("Supplementing insufficient editorial drafts in pairs:",
               len(retry_candidates),flush=True)
         for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):
-            if LOCAL_BACKEND_FAILED or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<150:
+            if LOCAL_BACKEND_FAILED or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<(420 if LOCAL_EDITORIAL else 150):
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
             batch=retry_candidates[start:min(start+MAX_FOCUSED_DRAFT_GROUPS,20,len(retry_candidates))]

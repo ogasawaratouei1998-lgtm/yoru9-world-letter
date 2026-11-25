@@ -6,6 +6,10 @@ HOST = "127.0.0.1"
 PORT = 18089
 MODEL = "yoru9-local-qwen"
 
+class LocalRequestTimeout(RuntimeError):
+    """A single request timed out; never accept its partial output."""
+
+
 def generate_json(prompt, temperature=0.1, timeout=240, max_tokens=2048):
     """No API credentials, remote inference, redirects, or permissive JSON repair."""
     payload = {
@@ -41,6 +45,8 @@ def generate_json(prompt, temperature=0.1, timeout=240, max_tokens=2048):
             raise RuntimeError("Local editorial result must be an object")
         print("Local editorial JSON generated", flush=True)
         return parsed
+    except TimeoutError:
+        raise LocalRequestTimeout("Local editorial request timed out") from None
     except (OSError, http.client.HTTPException, ValueError, KeyError, TypeError, IndexError) as exc:
         raise RuntimeError("Local editorial unavailable: " + type(exc).__name__) from None
     finally:
