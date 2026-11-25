@@ -9,6 +9,10 @@ on:
       - '.github/workflows/research-all-countries.yml'
       - 'country_bulk_research.py'
       - 'country_review_bundle.py'
+      - 'country-content.json'
+      - 'country-catalog.json'
+      - 'country_unesco_source_catalog.py'
+      - 'country_photo_candidates.py'
       - 'country-expansion-batch-*.json'
   schedule:
     - cron: '25 3 * * 1,4'
@@ -94,7 +98,12 @@ jobs:
   review-bundle:
     needs: consolidate
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        review-shard: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -104,11 +113,11 @@ jobs:
         with:
           name: all-country-research
           path: reports
-      - run: python country_review_bundle.py --report reports/all-country-research.json --output reports/review-bundle --limit 12
+      - run: python country_review_bundle.py --report reports/all-country-research.json --output reports/review-bundle --limit 20 --shard ${{ matrix.review-shard }} --shards 10
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: editorial-review-bundle
+          name: editorial-review-bundle-${{ matrix.review-shard }}
           path: reports/review-bundle/
           if-no-files-found: warn
           retention-days: 14
