@@ -44,6 +44,8 @@ try{
      await page.locator('#todayMapSection').count()===1&&
      await page.locator('#monthRetrospective').count()===0&&
      await page.locator('#atlasHero .atlas-oops').count()===1&&
+     // Older Pages HTML may match the DOM but not the current CSS.
+     await page.locator('#atlasHero .atlas-concept[data-layout-revision="fact-humor-inline-v1"]').count()===1&&
      await page.locator('#issueGallery[data-layout="mobile-grid-responsive"]').count()===1&&
      await page.locator('#todayCountryQuiz[hidden]').count()===1&&
      await page.locator('script[src="./world-passport.js"]').count()===1&&
@@ -55,7 +57,7 @@ try{
     if(freshDesign)break;
     await page.waitForTimeout(6000);
    }
-   assert.ok(freshDesign,'GitHub Pages must serve the latest simplified live news reader');
+   assert.ok(freshDesign,'Reader layout revision not ready: expected fact-humor-inline-v1');
    // The embedded historical demo is rendered before the async published
    // issue arrives. A headline is not proof that the real issue has loaded.
    // Wait for the same published record to drive the title and both galleries.
@@ -129,9 +131,22 @@ try{
    assert.ok(geometry.conceptBottom<=geometry.galleryTop+2&&
     geometry.galleryBottom<=geometry.heroBottom+2,
     'the visual gallery follows the explanatory concept directly');
-   assert.ok(await page.locator('#atlasHero .atlas-brand').evaluate(el=>
-      getComputedStyle(el).display==='flex'),
-    'the real reporting / AI fiction labels remain visible');
+   assert.equal(await page.locator('#atlasHero .atlas-brand').evaluate(el=>
+       getComputedStyle(el).display),'flex','current condensed label layout');
+    for(const [selector,expected] of [
+      ['.atlas-real-stamp','実話'],['.atlas-bubble-tag','AIツッコミ'],['.atlas-brand-copy','創作の冗談']
+    ]){
+      const label=page.locator('#atlasHero '+selector);
+      assert.equal(await label.textContent(),expected);
+      assert.equal(await label.isVisible(),true,expected+' must remain visible');
+      const info=await label.evaluate(el=>{
+       const style=getComputedStyle(el),r=el.getBoundingClientRect();
+       return {font:parseFloat(style.fontSize),opacity:parseFloat(style.opacity),
+        width:r.width,height:r.height,left:r.left,right:r.right,viewport:document.documentElement.clientWidth};
+      });
+      assert.ok(info.font>=10&&info.opacity>0&&info.width>0&&info.height>0&&
+       info.left>=-1&&info.right<=info.viewport+1,expected+' must be readable inside the viewport');
+    }
    const firstTile=page.locator('#issueGallery .gallery-tile').first();
    assert.ok(await firstTile.evaluate(el=>el.getBoundingClientRect().height>=44),
     'the first visual news tile is touch-friendly');
