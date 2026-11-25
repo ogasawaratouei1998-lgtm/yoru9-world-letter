@@ -1,0 +1,4567 @@
+{
+  "version": 1,
+  "createdOn": "2026-11-25",
+  "status": "pending_photos_not_public",
+  "publicationEligible": false,
+  "description": "First editorial drafts for the remaining 58 locations: unique country introductions, 116 place-specific microtrip drafts and three-choice quiz drafts. Source pages located where available; all factual claims, prose length, photos and license require independent review. Not canonical release content.",
+  "countries": {
+    "BI": {
+      "name": "ブルンジ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ルジジ自然保護区とギショラの王宮跡と太鼓から読み解くブルンジ",
+        "body": "ブルンジを二つの場所から読み解きます。タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。川が湖に注ぐ地形を地図で追い、水鳥と水生植物の暮らす環境を見比べたい。一方、ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。太鼓の形だけでなく、演奏の隊形や儀礼における役割に注目する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。",
+          "ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ルジジ自然保護区",
+          "title": "ルジジ自然保護区",
+          "paragraphs": [
+            "タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。川が湖に注ぐ地形を地図で追い、水鳥と水生植物の暮らす環境を見比べたい。",
+            "ここではルジジ自然保護区を題材に、地図と資料を照らし合わせながら保護区の主な環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bi/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Rusizi Nature Reserve",
+          "quizDraft": {
+            "question": "保護区の主な環境は？",
+            "options": [
+              "河川と湿地",
+              "氷河",
+              "サンゴ礁"
+            ],
+            "answer": 0,
+            "fact": "タンガニーカ湖の北端に近いルジジ川の湿地は、水辺の生態系を考える入口になる。",
+            "photoGoal": "ルジジ自然保護区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ギショラの王宮跡と太鼓",
+          "title": "ギショラの王宮跡と太鼓",
+          "paragraphs": [
+            "ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。太鼓の形だけでなく、演奏の隊形や儀礼における役割に注目する。",
+            "ここではギショラの王宮跡と太鼓を題材に、地図と資料を照らし合わせながらこの場所に関連する伝統はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/bi/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Gishora Royal Drum Sanctuary Burundi",
+          "quizDraft": {
+            "question": "この場所に関連する伝統は？",
+            "options": [
+              "製紙",
+              "太鼓演奏",
+              "ガラス吹き"
+            ],
+            "answer": 1,
+            "fact": "ギショラはブルンジの王権と太鼓文化を伝える場所として知られる。",
+            "photoGoal": "ギショラの王宮跡と太鼓の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Rusizi Nature Reserve wide landscape"
+    },
+    "BS": {
+      "name": "バハマ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "エグズーマの海洋公園とフィンキャッスル砦から読み解くバハマ",
+        "body": "バハマを二つの場所から読み解きます。浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。島と島の間を水路が結び、陸地だけでは公園の全体像が見えない。一方、ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。石造の壁と港の位置を比較し、海から街を守る視点を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。",
+          "ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "エグズーマの海洋公園",
+          "title": "エグズーマの海洋公園",
+          "paragraphs": [
+            "浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。島と島の間を水路が結び、陸地だけでは公園の全体像が見えない。",
+            "ここではエグズーマの海洋公園を題材に、地図と資料を照らし合わせながら主に保護される景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Exuma Cays Land and Sea Park Bahamas",
+          "quizDraft": {
+            "question": "主に保護される景観は？",
+            "options": [
+              "高山草原",
+              "小島と海",
+              "砂丘のみ"
+            ],
+            "answer": 1,
+            "fact": "浅い海と小島が連なる海洋保護区で、海底の環境も保全対象になる。",
+            "photoGoal": "エグズーマの海洋公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "フィンキャッスル砦",
+          "title": "フィンキャッスル砦",
+          "paragraphs": [
+            "ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。石造の壁と港の位置を比較し、海から街を守る視点を考える。",
+            "ここではフィンキャッスル砦を題材に、地図と資料を照らし合わせながら砦の立地の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Fort Fincastle Nassau Bahamas",
+          "quizDraft": {
+            "question": "砦の立地の特徴は？",
+            "options": [
+              "海底",
+              "密林の谷",
+              "港を見渡す高台"
+            ],
+            "answer": 2,
+            "fact": "ナッソーの高台にある歴史的な砦は港と防衛の関係を伝える。",
+            "photoGoal": "フィンキャッスル砦の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Exuma Cays Land and Sea Park Bahamas wide landscape"
+    },
+    "BB": {
+      "name": "バルバドス",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ブリッジタウン歴史地区とギャリソン地区から読み解くバルバドス",
+        "body": "バルバドスを二つの場所から読み解きます。港町ブリッジタウンには英国植民地期の街路と建築が残る。街路の曲がり方と海への出口に注目すると、交易の都市としての成り立ちが見える。一方、ブリッジタウン近郊のギャリソン地区は軍事施設と植民地社会の歴史を伝える。広い空間を囲む建物の配置を見て、市街地とは異なる空間の使い方を読み取る。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "港町ブリッジタウンには英国植民地期の街路と建築が残る。",
+          "ブリッジタウン近郊のギャリソン地区は軍事施設と植民地社会の歴史を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ブリッジタウン歴史地区",
+          "title": "ブリッジタウン歴史地区",
+          "paragraphs": [
+            "港町ブリッジタウンには英国植民地期の街路と建築が残る。街路の曲がり方と海への出口に注目すると、交易の都市としての成り立ちが見える。",
+            "ここではブリッジタウン歴史地区を題材に、地図と資料を照らし合わせながら歴史地区の性格はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1376/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Historic Bridgetown Barbados",
+          "quizDraft": {
+            "question": "歴史地区の性格は？",
+            "options": [
+              "鉱山都市",
+              "高山集落",
+              "港湾都市"
+            ],
+            "answer": 2,
+            "fact": "港町ブリッジタウンには英国植民地期の街路と建築が残る。",
+            "photoGoal": "ブリッジタウン歴史地区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ギャリソン地区",
+          "title": "ギャリソン地区",
+          "paragraphs": [
+            "ブリッジタウン近郊のギャリソン地区は軍事施設と植民地社会の歴史を伝える。広い空間を囲む建物の配置を見て、市街地とは異なる空間の使い方を読み取る。",
+            "ここではギャリソン地区を題材に、地図と資料を照らし合わせながら地区と関係が深い歴史はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1376/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Garrison Savannah Barbados historic buildings",
+          "quizDraft": {
+            "question": "地区と関係が深い歴史は？",
+            "options": [
+              "軍事施設",
+              "古代製鉄",
+              "稲作"
+            ],
+            "answer": 0,
+            "fact": "ブリッジタウン近郊のギャリソン地区は軍事施設と植民地社会の歴史を伝える。",
+            "photoGoal": "ギャリソン地区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Historic Bridgetown Barbados wide landscape"
+    },
+    "BN": {
+      "name": "ブルネイ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "オマール・アリ・サイフディン・モスクとウル・テンブロン国立公園から読み解くブルネイ",
+        "body": "ブルネイを二つの場所から読み解きます。バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。礼拝建築の輪郭が水面に映る様子から、都市景観の中での位置づけを考える。一方、ボルネオ島の熱帯雨林を保全する国立公園である。林冠と谷を流れる川を別々の高さから捉え、森の垂直方向の広がりを想像する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。",
+          "ボルネオ島の熱帯雨林を保全する国立公園である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "オマール・アリ・サイフディン・モスク",
+          "title": "オマール・アリ・サイフディン・モスク",
+          "paragraphs": [
+            "バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。礼拝建築の輪郭が水面に映る様子から、都市景観の中での位置づけを考える。",
+            "ここではオマール・アリ・サイフディン・モスクを題材に、地図と資料を照らし合わせながら建物の用途はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Omar Ali Saifuddien Mosque Brunei",
+          "quizDraft": {
+            "question": "建物の用途は？",
+            "options": [
+              "モスク",
+              "灯台",
+              "鉄道駅"
+            ],
+            "answer": 0,
+            "fact": "バンダルスリブガワンのモスクは金色のドームと水辺の配置で知られる。",
+            "photoGoal": "オマール・アリ・サイフディン・モスクの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ウル・テンブロン国立公園",
+          "title": "ウル・テンブロン国立公園",
+          "paragraphs": [
+            "ボルネオ島の熱帯雨林を保全する国立公園である。林冠と谷を流れる川を別々の高さから捉え、森の垂直方向の広がりを想像する。",
+            "ここではウル・テンブロン国立公園を題材に、地図と資料を照らし合わせながら代表的な植生はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Ulu Temburong National Park Brunei",
+          "quizDraft": {
+            "question": "代表的な植生は？",
+            "options": [
+              "ツンドラ",
+              "熱帯雨林",
+              "地中海性低木"
+            ],
+            "answer": 1,
+            "fact": "ボルネオ島の熱帯雨林を保全する国立公園である。",
+            "photoGoal": "ウル・テンブロン国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Omar Ali Saifuddien Mosque Brunei wide landscape"
+    },
+    "BT": {
+      "name": "ブータン",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "タクツァン僧院とプナカ・ゾンから読み解くブータン",
+        "body": "ブータンを二つの場所から読み解きます。パロの谷を見下ろす崖に建つ仏教僧院である。崖と建物の輪郭をたどり、宗教的な聖地と山岳の地形がどう結びつくかを考える。一方、二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。川と城壁、中庭の位置を比較すると、山間の都市で建物が果たした役割を想像できる。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "パロの谷を見下ろす崖に建つ仏教僧院である。",
+          "二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "タクツァン僧院",
+          "title": "タクツァン僧院",
+          "paragraphs": [
+            "パロの谷を見下ろす崖に建つ仏教僧院である。崖と建物の輪郭をたどり、宗教的な聖地と山岳の地形がどう結びつくかを考える。",
+            "ここではタクツァン僧院を題材に、地図と資料を照らし合わせながら僧院の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Paro Taktsang Bhutan",
+          "quizDraft": {
+            "question": "僧院の立地は？",
+            "options": [
+              "海岸砂浜",
+              "岩壁の斜面",
+              "地下洞窟のみ"
+            ],
+            "answer": 1,
+            "fact": "パロの谷を見下ろす崖に建つ仏教僧院である。",
+            "photoGoal": "タクツァン僧院の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "プナカ・ゾン",
+          "title": "プナカ・ゾン",
+          "paragraphs": [
+            "二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。川と城壁、中庭の位置を比較すると、山間の都市で建物が果たした役割を想像できる。",
+            "ここではプナカ・ゾンを題材に、地図と資料を照らし合わせながら建築の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Punakha Dzong Bhutan",
+          "quizDraft": {
+            "question": "建築の種類は？",
+            "options": [
+              "ローマ円形劇場",
+              "風車",
+              "ゾン"
+            ],
+            "answer": 2,
+            "fact": "二つの川が合流する場所に立つゾンは宗教と行政に関わる歴史的建築である。",
+            "photoGoal": "プナカ・ゾンの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Paro Taktsang Bhutan wide landscape"
+    },
+    "CG": {
+      "name": "コンゴ共和国(ブラザビル)",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "オザラ・コクア国立公園とブラザビルの聖アンヌ聖堂から読み解くコンゴ共和国(ブラザビル)",
+        "body": "コンゴ共和国(ブラザビル)を二つの場所から読み解きます。コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。森林内の開けた湿地と周囲の密林を比較して、生息環境の多様性を読む。一方、ブラザビルの聖アンヌ聖堂は独特な屋根の形をもつキリスト教建築である。屋根の曲線と街路からの見え方を調べ、宗教建築と都市景観の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。",
+          "ブラザビルの聖アンヌ聖堂は独特な屋根の形をもつキリスト教建築である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "オザラ・コクア国立公園",
+          "title": "オザラ・コクア国立公園",
+          "paragraphs": [
+            "コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。森林内の開けた湿地と周囲の密林を比較して、生息環境の多様性を読む。",
+            "ここではオザラ・コクア国立公園を題材に、地図と資料を照らし合わせながら広がる主な生態系はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Odzala Kokoua National Park Republic of Congo",
+          "quizDraft": {
+            "question": "広がる主な生態系は？",
+            "options": [
+              "高山氷河",
+              "乾燥草原のみ",
+              "熱帯林"
+            ],
+            "answer": 2,
+            "fact": "コンゴ盆地の森林を含む保護地域で、野生動物の生息環境が広がる。",
+            "photoGoal": "オザラ・コクア国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ブラザビルの聖アンヌ聖堂",
+          "title": "ブラザビルの聖アンヌ聖堂",
+          "paragraphs": [
+            "ブラザビルの聖アンヌ聖堂は独特な屋根の形をもつキリスト教建築である。屋根の曲線と街路からの見え方を調べ、宗教建築と都市景観の関係を考える。",
+            "ここではブラザビルの聖アンヌ聖堂を題材に、地図と資料を照らし合わせながら建物の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Basilique Sainte Anne Brazzaville Congo",
+          "quizDraft": {
+            "question": "建物の種類は？",
+            "options": [
+              "聖堂",
+              "宮殿",
+              "水門"
+            ],
+            "answer": 0,
+            "fact": "ブラザビルの聖アンヌ聖堂は独特な屋根の形をもつキリスト教建築である。",
+            "photoGoal": "ブラザビルの聖アンヌ聖堂の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Odzala Kokoua National Park Republic of Congo wide landscape"
+    },
+    "KM": {
+      "name": "コモロ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "カルタラ山とモロニ旧市街の金曜モスクから読み解くコモロ",
+        "body": "コモロを二つの場所から読み解きます。グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。山頂部と海岸線の高低差に注目し、火山島が海上に立ち上がる姿を読み取る。一方、モロニの旧市街には海に近いイスラム建築と歴史的な街路が残る。港とモスクの近さから、インド洋の交易と信仰の接点を探る。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。",
+          "モロニの旧市街には海に近いイスラム建築と歴史的な街路が残る。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "カルタラ山",
+          "title": "カルタラ山",
+          "paragraphs": [
+            "グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。山頂部と海岸線の高低差に注目し、火山島が海上に立ち上がる姿を読み取る。",
+            "ここではカルタラ山を題材に、地図と資料を照らし合わせながらこの山の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mount Karthala Grande Comore",
+          "quizDraft": {
+            "question": "この山の種類は？",
+            "options": [
+              "火山",
+              "氷河",
+              "人工堤防"
+            ],
+            "answer": 0,
+            "fact": "グランドコモロ島にある火山で、島の地形を理解する手掛かりになる。",
+            "photoGoal": "カルタラ山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "モロニ旧市街の金曜モスク",
+          "title": "モロニ旧市街の金曜モスク",
+          "paragraphs": [
+            "モロニの旧市街には海に近いイスラム建築と歴史的な街路が残る。港とモスクの近さから、インド洋の交易と信仰の接点を探る。",
+            "ここではモロニ旧市街の金曜モスクを題材に、地図と資料を照らし合わせながらこの建物は何かという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Old Friday Mosque Moroni Comoros",
+          "quizDraft": {
+            "question": "この建物は何か？",
+            "options": [
+              "鉱山",
+              "モスク",
+              "劇場"
+            ],
+            "answer": 1,
+            "fact": "モロニの旧市街には海に近いイスラム建築と歴史的な街路が残る。",
+            "photoGoal": "モロニ旧市街の金曜モスクの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Mount Karthala Grande Comore wide landscape"
+    },
+    "CV": {
+      "name": "カーボベルデ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "シダーデ・ヴェーリャとフォゴ山から読み解くカーボベルデ",
+        "body": "カーボベルデを二つの場所から読み解きます。サンティアゴ島の歴史地区は大西洋の航海・交易の歴史を伝える。海岸に面した集落と斜面を比較し、島が航海の結節点となった理由を考える。一方、フォゴ島の高い火山は島の輪郭を大きく形づくっている。溶岩地形と集落の位置を比べ、火山性の土地で営まれる暮らしを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "サンティアゴ島の歴史地区は大西洋の航海・交易の歴史を伝える。",
+          "フォゴ島の高い火山は島の輪郭を大きく形づくっている。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "シダーデ・ヴェーリャ",
+          "title": "シダーデ・ヴェーリャ",
+          "paragraphs": [
+            "サンティアゴ島の歴史地区は大西洋の航海・交易の歴史を伝える。海岸に面した集落と斜面を比較し、島が航海の結節点となった理由を考える。",
+            "ここではシダーデ・ヴェーリャを題材に、地図と資料を照らし合わせながら所在する島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1310",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Cidade Velha Santiago Cape Verde",
+          "quizDraft": {
+            "question": "所在する島は？",
+            "options": [
+              "マデイラ島",
+              "サンティアゴ島",
+              "シチリア島"
+            ],
+            "answer": 1,
+            "fact": "サンティアゴ島の歴史地区は大西洋の航海・交易の歴史を伝える。",
+            "photoGoal": "シダーデ・ヴェーリャの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "フォゴ山",
+          "title": "フォゴ山",
+          "paragraphs": [
+            "フォゴ島の高い火山は島の輪郭を大きく形づくっている。溶岩地形と集落の位置を比べ、火山性の土地で営まれる暮らしを考える。",
+            "ここではフォゴ山を題材に、地図と資料を照らし合わせながら地形の成因はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Pico do Fogo Cape Verde",
+          "quizDraft": {
+            "question": "地形の成因は？",
+            "options": [
+              "氷河侵食のみ",
+              "サンゴの堆積のみ",
+              "火山活動"
+            ],
+            "answer": 2,
+            "fact": "フォゴ島の高い火山は島の輪郭を大きく形づくっている。",
+            "photoGoal": "フォゴ山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Cidade Velha Santiago Cape Verde wide landscape"
+    },
+    "DJ": {
+      "name": "ジブチ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "アッサル湖とデイ森林国立公園から読み解くジブチ",
+        "body": "ジブチを二つの場所から読み解きます。海面より低い土地にある塩湖で、乾燥した地形に塩の景観が広がる。湖岸の白い塩と周囲の暗い岩地を比べ、水の蒸発と塩分の関係を考える。一方、ゴダ山地には乾燥地域の中で森林が見られる場所がある。低地と山地の植生を比べ、高度や降水が環境を変えることを読み解く。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "海面より低い土地にある塩湖で、乾燥した地形に塩の景観が広がる。",
+          "ゴダ山地には乾燥地域の中で森林が見られる場所がある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "アッサル湖",
+          "title": "アッサル湖",
+          "paragraphs": [
+            "海面より低い土地にある塩湖で、乾燥した地形に塩の景観が広がる。湖岸の白い塩と周囲の暗い岩地を比べ、水の蒸発と塩分の関係を考える。",
+            "ここではアッサル湖を題材に、地図と資料を照らし合わせながら湖の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Lake Assal Djibouti",
+          "quizDraft": {
+            "question": "湖の特徴は？",
+            "options": [
+              "淡水氷河湖",
+              "人工ダム湖",
+              "塩分が高い"
+            ],
+            "answer": 2,
+            "fact": "海面より低い土地にある塩湖で、乾燥した地形に塩の景観が広がる。",
+            "photoGoal": "アッサル湖の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "デイ森林国立公園",
+          "title": "デイ森林国立公園",
+          "paragraphs": [
+            "ゴダ山地には乾燥地域の中で森林が見られる場所がある。低地と山地の植生を比べ、高度や降水が環境を変えることを読み解く。",
+            "ここではデイ森林国立公園を題材に、地図と資料を照らし合わせながら森林がある環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Day Forest National Park Djibouti",
+          "quizDraft": {
+            "question": "森林がある環境は？",
+            "options": [
+              "山地",
+              "沖合の環礁",
+              "地下河川"
+            ],
+            "answer": 0,
+            "fact": "ゴダ山地には乾燥地域の中で森林が見られる場所がある。",
+            "photoGoal": "デイ森林国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Lake Assal Djibouti wide landscape"
+    },
+    "DM": {
+      "name": "ドミニカ国",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "モルヌ・トロワ・ピトン国立公園とスコッツ・ヘッドから読み解くドミニカ国",
+        "body": "ドミニカ国を二つの場所から読み解きます。熱帯林、火山地形、熱水現象が共存する自然遺産である。谷の深さと噴気・温泉などの分布を資料で照らし、森の下にある地質を考える。一方、ドミニカ国南端の細い地形は海岸景観を特徴づける。地峡の両側の海を地図で見比べ、波や海岸線の違いを意識する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "熱帯林、火山地形、熱水現象が共存する自然遺産である。",
+          "ドミニカ国南端の細い地形は海岸景観を特徴づける。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "モルヌ・トロワ・ピトン国立公園",
+          "title": "モルヌ・トロワ・ピトン国立公園",
+          "paragraphs": [
+            "熱帯林、火山地形、熱水現象が共存する自然遺産である。谷の深さと噴気・温泉などの分布を資料で照らし、森の下にある地質を考える。",
+            "ここではモルヌ・トロワ・ピトン国立公園を題材に、地図と資料を照らし合わせながら公園で見られる自然現象はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/814",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Morne Trois Pitons National Park Dominica",
+          "quizDraft": {
+            "question": "公園で見られる自然現象は？",
+            "options": [
+              "火山性の熱水現象",
+              "極地の氷床",
+              "砂漠の蜃気楼"
+            ],
+            "answer": 0,
+            "fact": "熱帯林、火山地形、熱水現象が共存する自然遺産である。",
+            "photoGoal": "モルヌ・トロワ・ピトン国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "スコッツ・ヘッド",
+          "title": "スコッツ・ヘッド",
+          "paragraphs": [
+            "ドミニカ国南端の細い地形は海岸景観を特徴づける。地峡の両側の海を地図で見比べ、波や海岸線の違いを意識する。",
+            "ここではスコッツ・ヘッドを題材に、地図と資料を照らし合わせながらどのような地形かという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Scotts Head Dominica peninsula",
+          "quizDraft": {
+            "question": "どのような地形か？",
+            "options": [
+              "内陸盆地",
+              "海へ突き出す岬",
+              "山頂火口湖"
+            ],
+            "answer": 1,
+            "fact": "ドミニカ国南端の細い地形は海岸景観を特徴づける。",
+            "photoGoal": "スコッツ・ヘッドの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Morne Trois Pitons National Park Dominica wide landscape"
+    },
+    "ER": {
+      "name": "エリトリア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "アスマラの近代建築とマッサワ旧市街から読み解くエリトリア",
+        "body": "エリトリアを二つの場所から読み解きます。アスマラは二十世紀の近代建築群で知られる都市である。街路に面したファサードと建物の幾何学的な形を読み解く。一方、紅海に面した港町で、海上交流を重ねた建築と街路が見られる。島と本土を結ぶ地形に注目し、海が都市の暮らしに果たした役割を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "アスマラは二十世紀の近代建築群で知られる都市である。",
+          "紅海に面した港町で、海上交流を重ねた建築と街路が見られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "アスマラの近代建築",
+          "title": "アスマラの近代建築",
+          "paragraphs": [
+            "アスマラは二十世紀の近代建築群で知られる都市である。街路に面したファサードと建物の幾何学的な形を読み解く。",
+            "ここではアスマラの近代建築を題材に、地図と資料を照らし合わせながら遺産の中心的な特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1550/documents/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Asmara modernist architecture Eritrea",
+          "quizDraft": {
+            "question": "遺産の中心的な特徴は？",
+            "options": [
+              "先史時代の洞窟壁画",
+              "近代建築",
+              "海底遺跡"
+            ],
+            "answer": 1,
+            "fact": "アスマラは二十世紀の近代建築群で知られる都市である。",
+            "photoGoal": "アスマラの近代建築の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "マッサワ旧市街",
+          "title": "マッサワ旧市街",
+          "paragraphs": [
+            "紅海に面した港町で、海上交流を重ねた建築と街路が見られる。島と本土を結ぶ地形に注目し、海が都市の暮らしに果たした役割を考える。",
+            "ここではマッサワ旧市街を題材に、地図と資料を照らし合わせながら面する海はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Massawa old town Eritrea",
+          "quizDraft": {
+            "question": "面する海は？",
+            "options": [
+              "バルト海",
+              "カスピ海",
+              "紅海"
+            ],
+            "answer": 2,
+            "fact": "紅海に面した港町で、海上交流を重ねた建築と街路が見られる。",
+            "photoGoal": "マッサワ旧市街の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Asmara modernist architecture Eritrea wide landscape"
+    },
+    "FM": {
+      "name": "ミクロネシア連邦",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ナン・マトルとレル遺跡から読み解くミクロネシア連邦",
+        "body": "ミクロネシア連邦を二つの場所から読み解きます。ポンペイ島沖に築かれた人工島群と石造構造物からなる儀礼的中心地である。水路と石積みの配置を資料でたどり、島の社会組織と建設技術を考える。一方、コスラエ島のレルには石造の歴史的遺構が残る。壁や通路の位置を比較して、島の歴史的な居住空間を想像する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ポンペイ島沖に築かれた人工島群と石造構造物からなる儀礼的中心地である。",
+          "コスラエ島のレルには石造の歴史的遺構が残る。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ナン・マトル",
+          "title": "ナン・マトル",
+          "paragraphs": [
+            "ポンペイ島沖に築かれた人工島群と石造構造物からなる儀礼的中心地である。水路と石積みの配置を資料でたどり、島の社会組織と建設技術を考える。",
+            "ここではナン・マトルを題材に、地図と資料を照らし合わせながら遺跡の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1503",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Nan Madol Pohnpei Micronesia",
+          "quizDraft": {
+            "question": "遺跡の特徴は？",
+            "options": [
+              "砂漠のピラミッド",
+              "近代鉄道",
+              "石造構造物と水路"
+            ],
+            "answer": 2,
+            "fact": "ポンペイ島沖に築かれた人工島群と石造構造物からなる儀礼的中心地である。",
+            "photoGoal": "ナン・マトルの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "レル遺跡",
+          "title": "レル遺跡",
+          "paragraphs": [
+            "コスラエ島のレルには石造の歴史的遺構が残る。壁や通路の位置を比較して、島の歴史的な居住空間を想像する。",
+            "ここではレル遺跡を題材に、地図と資料を照らし合わせながら遺跡がある島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Lelu ruins Kosrae Micronesia",
+          "quizDraft": {
+            "question": "遺跡がある島は？",
+            "options": [
+              "コスラエ島",
+              "グアム島",
+              "ハワイ島"
+            ],
+            "answer": 0,
+            "fact": "コスラエ島のレルには石造の歴史的遺構が残る。",
+            "photoGoal": "レル遺跡の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Nan Madol Pohnpei Micronesia wide landscape"
+    },
+    "GN": {
+      "name": "ギニア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "フータ・ジャロン高地とニンバ山から読み解くギニア",
+        "body": "ギニアを二つの場所から読み解きます。西アフリカの河川の水源に関わる高地である。台地と谷の形を見て、降った雨が下流の生活へつながる過程を考える。一方、ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。山の斜面と低地の植生を比較し、国境と自然環境の範囲が異なることに注目する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "西アフリカの河川の水源に関わる高地である。",
+          "ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "フータ・ジャロン高地",
+          "title": "フータ・ジャロン高地",
+          "paragraphs": [
+            "西アフリカの河川の水源に関わる高地である。台地と谷の形を見て、降った雨が下流の生活へつながる過程を考える。",
+            "ここではフータ・ジャロン高地を題材に、地図と資料を照らし合わせながら高地の重要な役割はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Fouta Djallon Guinea",
+          "quizDraft": {
+            "question": "高地の重要な役割は？",
+            "options": [
+              "河川の水源",
+              "海上の航路標識",
+              "氷山の形成"
+            ],
+            "answer": 0,
+            "fact": "西アフリカの河川の水源に関わる高地である。",
+            "photoGoal": "フータ・ジャロン高地の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ニンバ山",
+          "title": "ニンバ山",
+          "paragraphs": [
+            "ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。山の斜面と低地の植生を比較し、国境と自然環境の範囲が異なることに注目する。",
+            "ここではニンバ山を題材に、地図と資料を照らし合わせながら特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mount Nimba Guinea",
+          "quizDraft": {
+            "question": "特徴は？",
+            "options": [
+              "孤立した環礁",
+              "国境をまたぐ山地",
+              "人工貯水池"
+            ],
+            "answer": 1,
+            "fact": "ギニアとコートジボワールにまたがる山地で、多様な生態系が知られる。",
+            "photoGoal": "ニンバ山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Fouta Djallon Guinea wide landscape"
+    },
+    "GW": {
+      "name": "ギニアビサウ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ビジャゴ諸島とボラマ歴史地区から読み解くギニアビサウ",
+        "body": "ギニアビサウを二つの場所から読み解きます。大西洋岸の島々と干潟、マングローブなどの生息環境が広がる。潮の満ち引きで陸と海の境目が変わる様子から、生物と島の暮らしを考える。一方、ボラマはかつて植民地行政の中心であった島の町である。広場と古い行政建築の配置を調べ、都市の役割が変化した歴史をたどる。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "大西洋岸の島々と干潟、マングローブなどの生息環境が広がる。",
+          "ボラマはかつて植民地行政の中心であった島の町である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ビジャゴ諸島",
+          "title": "ビジャゴ諸島",
+          "paragraphs": [
+            "大西洋岸の島々と干潟、マングローブなどの生息環境が広がる。潮の満ち引きで陸と海の境目が変わる様子から、生物と島の暮らしを考える。",
+            "ここではビジャゴ諸島を題材に、地図と資料を照らし合わせながら景観の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/sids",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Bijagos Archipelago Guinea Bissau",
+          "quizDraft": {
+            "question": "景観の特徴は？",
+            "options": [
+              "氷河と雪原",
+              "島々と潮間帯",
+              "砂漠の岩塔"
+            ],
+            "answer": 1,
+            "fact": "大西洋岸の島々と干潟、マングローブなどの生息環境が広がる。",
+            "photoGoal": "ビジャゴ諸島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ボラマ歴史地区",
+          "title": "ボラマ歴史地区",
+          "paragraphs": [
+            "ボラマはかつて植民地行政の中心であった島の町である。広場と古い行政建築の配置を調べ、都市の役割が変化した歴史をたどる。",
+            "ここではボラマ歴史地区を題材に、地図と資料を照らし合わせながらこの町の歴史的役割はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Bolama historic town Guinea Bissau",
+          "quizDraft": {
+            "question": "この町の歴史的役割は？",
+            "options": [
+              "高山観測所",
+              "古代遊牧拠点",
+              "植民地行政の中心"
+            ],
+            "answer": 2,
+            "fact": "ボラマはかつて植民地行政の中心であった島の町である。",
+            "photoGoal": "ボラマ歴史地区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Bijagos Archipelago Guinea Bissau wide landscape"
+    },
+    "GQ": {
+      "name": "赤道ギニア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ピコ・バシレとマラボ大聖堂から読み解く赤道ギニア",
+        "body": "赤道ギニアを二つの場所から読み解きます。ビオコ島の高い火山性の山である。海岸から山頂までの高低差を地図で追い、島の植生の変化を考える。一方、マラボの中心部にあるキリスト教建築で、歴史的都市景観の一部を成す。尖塔や正面の構成と周囲の街路を見比べ、街の歴史を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ビオコ島の高い火山性の山である。",
+          "マラボの中心部にあるキリスト教建築で、歴史的都市景観の一部を成す。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ピコ・バシレ",
+          "title": "ピコ・バシレ",
+          "paragraphs": [
+            "ビオコ島の高い火山性の山である。海岸から山頂までの高低差を地図で追い、島の植生の変化を考える。",
+            "ここではピコ・バシレを題材に、地図と資料を照らし合わせながら山がある島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Pico Basile Bioko Equatorial Guinea",
+          "quizDraft": {
+            "question": "山がある島は？",
+            "options": [
+              "サントメ島",
+              "セイロン島",
+              "ビオコ島"
+            ],
+            "answer": 2,
+            "fact": "ビオコ島の高い火山性の山である。",
+            "photoGoal": "ピコ・バシレの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "マラボ大聖堂",
+          "title": "マラボ大聖堂",
+          "paragraphs": [
+            "マラボの中心部にあるキリスト教建築で、歴史的都市景観の一部を成す。尖塔や正面の構成と周囲の街路を見比べ、街の歴史を読む。",
+            "ここではマラボ大聖堂を題材に、地図と資料を照らし合わせながら建物がある都市はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Malabo Cathedral Equatorial Guinea",
+          "quizDraft": {
+            "question": "建物がある都市は？",
+            "options": [
+              "マラボ",
+              "バンジュール",
+              "キガリ"
+            ],
+            "answer": 0,
+            "fact": "マラボの中心部にあるキリスト教建築で、歴史的都市景観の一部を成す。",
+            "photoGoal": "マラボ大聖堂の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Pico Basile Bioko Equatorial Guinea wide landscape"
+    },
+    "GD": {
+      "name": "グレナダ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "グランド・エタン国立公園とフォート・ジョージから読み解くグレナダ",
+        "body": "グレナダを二つの場所から読み解きます。グレナダ島内陸の森林と火口湖で知られる。海岸から内陸へ地形をたどり、島の水と植生がどのように変わるか考える。一方、セントジョージズの港を見下ろす高台に築かれた歴史的な砦である。港の入口と砦の高さを比較して、海上交通と防衛の関係を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "グレナダ島内陸の森林と火口湖で知られる。",
+          "セントジョージズの港を見下ろす高台に築かれた歴史的な砦である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "グランド・エタン国立公園",
+          "title": "グランド・エタン国立公園",
+          "paragraphs": [
+            "グレナダ島内陸の森林と火口湖で知られる。海岸から内陸へ地形をたどり、島の水と植生がどのように変わるか考える。",
+            "ここではグランド・エタン国立公園を題材に、地図と資料を照らし合わせながら公園にある特徴的な湖はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Grand Etang National Park Grenada",
+          "quizDraft": {
+            "question": "公園にある特徴的な湖は？",
+            "options": [
+              "火口湖",
+              "氷河湖",
+              "塩湖"
+            ],
+            "answer": 0,
+            "fact": "グレナダ島内陸の森林と火口湖で知られる。",
+            "photoGoal": "グランド・エタン国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "フォート・ジョージ",
+          "title": "フォート・ジョージ",
+          "paragraphs": [
+            "セントジョージズの港を見下ろす高台に築かれた歴史的な砦である。港の入口と砦の高さを比較して、海上交通と防衛の関係を読む。",
+            "ここではフォート・ジョージを題材に、地図と資料を照らし合わせながら砦が見下ろす場所はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Fort George St Georges Grenada",
+          "quizDraft": {
+            "question": "砦が見下ろす場所は？",
+            "options": [
+              "氷原",
+              "港",
+              "大砂丘"
+            ],
+            "answer": 1,
+            "fact": "セントジョージズの港を見下ろす高台に築かれた歴史的な砦である。",
+            "photoGoal": "フォート・ジョージの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Grand Etang National Park Grenada wide landscape"
+    },
+    "GY": {
+      "name": "ガイアナ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "カイエトゥール滝とセント・ジョージ大聖堂から読み解くガイアナ",
+        "body": "ガイアナを二つの場所から読み解きます。ポタロ川が高原の縁から大きく落ちる滝である。岩壁と周囲の森を合わせて観察し、河川が高原地形を刻む様子を想像する。一方、ジョージタウンにある木造の大聖堂として知られる。木材で構成された高い建物の形と周囲の市街地を比べる。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ポタロ川が高原の縁から大きく落ちる滝である。",
+          "ジョージタウンにある木造の大聖堂として知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "カイエトゥール滝",
+          "title": "カイエトゥール滝",
+          "paragraphs": [
+            "ポタロ川が高原の縁から大きく落ちる滝である。岩壁と周囲の森を合わせて観察し、河川が高原地形を刻む様子を想像する。",
+            "ここではカイエトゥール滝を題材に、地図と資料を照らし合わせながら滝がある川はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Kaieteur Falls Guyana",
+          "quizDraft": {
+            "question": "滝がある川は？",
+            "options": [
+              "ライン川",
+              "ポタロ川",
+              "ナイル川"
+            ],
+            "answer": 1,
+            "fact": "ポタロ川が高原の縁から大きく落ちる滝である。",
+            "photoGoal": "カイエトゥール滝の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "セント・ジョージ大聖堂",
+          "title": "セント・ジョージ大聖堂",
+          "paragraphs": [
+            "ジョージタウンにある木造の大聖堂として知られる。木材で構成された高い建物の形と周囲の市街地を比べる。",
+            "ここではセント・ジョージ大聖堂を題材に、地図と資料を照らし合わせながら主な建築材料はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "St Georges Cathedral Georgetown Guyana",
+          "quizDraft": {
+            "question": "主な建築材料は？",
+            "options": [
+              "氷",
+              "玄武岩のみ",
+              "木材"
+            ],
+            "answer": 2,
+            "fact": "ジョージタウンにある木造の大聖堂として知られる。",
+            "photoGoal": "セント・ジョージ大聖堂の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Kaieteur Falls Guyana wide landscape"
+    },
+    "HT": {
+      "name": "ハイチ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "シタデル・ラフェリエールとサン・スーシ宮殿から読み解くハイチ",
+        "body": "ハイチを二つの場所から読み解きます。ハイチ独立初期の歴史を伝える山上の要塞である。巨大な壁と山の斜面を資料で見比べ、独立後の国家が築いた防衛施設の意味を考える。一方、独立後のハイチの王権と政治の歴史を物語る宮殿跡である。残存する壁と広場の配置をたどり、要塞とは異なる国家の表現を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ハイチ独立初期の歴史を伝える山上の要塞である。",
+          "独立後のハイチの王権と政治の歴史を物語る宮殿跡である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "シタデル・ラフェリエール",
+          "title": "シタデル・ラフェリエール",
+          "paragraphs": [
+            "ハイチ独立初期の歴史を伝える山上の要塞である。巨大な壁と山の斜面を資料で見比べ、独立後の国家が築いた防衛施設の意味を考える。",
+            "ここではシタデル・ラフェリエールを題材に、地図と資料を照らし合わせながら建造物の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/180",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Citadelle Laferriere Haiti",
+          "quizDraft": {
+            "question": "建造物の種類は？",
+            "options": [
+              "水族館",
+              "製塩場",
+              "要塞"
+            ],
+            "answer": 2,
+            "fact": "ハイチ独立初期の歴史を伝える山上の要塞である。",
+            "photoGoal": "シタデル・ラフェリエールの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サン・スーシ宮殿",
+          "title": "サン・スーシ宮殿",
+          "paragraphs": [
+            "独立後のハイチの王権と政治の歴史を物語る宮殿跡である。残存する壁と広場の配置をたどり、要塞とは異なる国家の表現を読む。",
+            "ここではサン・スーシ宮殿を題材に、地図と資料を照らし合わせながらこの遺構は何かという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/180/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Sans Souci Palace Haiti",
+          "quizDraft": {
+            "question": "この遺構は何か？",
+            "options": [
+              "宮殿",
+              "灯台",
+              "古代水道橋"
+            ],
+            "answer": 0,
+            "fact": "独立後のハイチの王権と政治の歴史を物語る宮殿跡である。",
+            "photoGoal": "サン・スーシ宮殿の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Citadelle Laferriere Haiti wide landscape"
+    },
+    "JM": {
+      "name": "ジャマイカ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ブルー・ジョン・クロウ山地とポート・ロイヤルから読み解くジャマイカ",
+        "body": "ジャマイカを二つの場所から読み解きます。ジャマイカ東部の山地に熱帯山地林が広がり、文化的伝統とも結びついている。山道と尾根の地形を見ながら、自然環境と人々の歴史の双方を考える。一方、キングストン港の入口近くに位置する十七世紀の港町の考古遺産である。海岸線と港の入口をたどり、航海の時代に都市が果たした役割を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ジャマイカ東部の山地に熱帯山地林が広がり、文化的伝統とも結びついている。",
+          "キングストン港の入口近くに位置する十七世紀の港町の考古遺産である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ブルー・ジョン・クロウ山地",
+          "title": "ブルー・ジョン・クロウ山地",
+          "paragraphs": [
+            "ジャマイカ東部の山地に熱帯山地林が広がり、文化的伝統とも結びついている。山道と尾根の地形を見ながら、自然環境と人々の歴史の双方を考える。",
+            "ここではブルー・ジョン・クロウ山地を題材に、地図と資料を照らし合わせながら主な自然環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1356",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Blue and John Crow Mountains Jamaica",
+          "quizDraft": {
+            "question": "主な自然環境は？",
+            "options": [
+              "熱帯山地林",
+              "極地ツンドラ",
+              "砂漠"
+            ],
+            "answer": 0,
+            "fact": "ジャマイカ東部の山地に熱帯山地林が広がり、文化的伝統とも結びついている。",
+            "photoGoal": "ブルー・ジョン・クロウ山地の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ポート・ロイヤル",
+          "title": "ポート・ロイヤル",
+          "paragraphs": [
+            "キングストン港の入口近くに位置する十七世紀の港町の考古遺産である。海岸線と港の入口をたどり、航海の時代に都市が果たした役割を考える。",
+            "ここではポート・ロイヤルを題材に、地図と資料を照らし合わせながら遺産の主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1595/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Port Royal Jamaica archaeology",
+          "quizDraft": {
+            "question": "遺産の主題は？",
+            "options": [
+              "高山の修道院",
+              "歴史的な港町",
+              "農耕湿地"
+            ],
+            "answer": 1,
+            "fact": "キングストン港の入口近くに位置する十七世紀の港町の考古遺産である。",
+            "photoGoal": "ポート・ロイヤルの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Blue and John Crow Mountains Jamaica wide landscape"
+    },
+    "KI": {
+      "name": "キリバス",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "キリスィマスィ島とフェニックス諸島保護地域から読み解くキリバス",
+        "body": "キリバスを二つの場所から読み解きます。キリバスの島の一つで、広い礁湖をもつ環礁である。細い陸地と礁湖の形を地図で見て、環礁の土地がどうできているか考える。一方、太平洋に広がる島々と海域の保全を目的とする自然遺産である。陸地だけでなく広い外洋を含むことに注目し、海の保護の規模を読み取る。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "キリバスの島の一つで、広い礁湖をもつ環礁である。",
+          "太平洋に広がる島々と海域の保全を目的とする自然遺産である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "キリスィマスィ島",
+          "title": "キリスィマスィ島",
+          "paragraphs": [
+            "キリバスの島の一つで、広い礁湖をもつ環礁である。細い陸地と礁湖の形を地図で見て、環礁の土地がどうできているか考える。",
+            "ここではキリスィマスィ島を題材に、地図と資料を照らし合わせながら地形の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Kiritimati atoll Kiribati",
+          "quizDraft": {
+            "question": "地形の種類は？",
+            "options": [
+              "大陸高原",
+              "環礁",
+              "火山性の高山"
+            ],
+            "answer": 1,
+            "fact": "キリバスの島の一つで、広い礁湖をもつ環礁である。",
+            "photoGoal": "キリスィマスィ島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "フェニックス諸島保護地域",
+          "title": "フェニックス諸島保護地域",
+          "paragraphs": [
+            "太平洋に広がる島々と海域の保全を目的とする自然遺産である。陸地だけでなく広い外洋を含むことに注目し、海の保護の規模を読み取る。",
+            "ここではフェニックス諸島保護地域を題材に、地図と資料を照らし合わせながら保護対象に含まれるものはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/sids",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Phoenix Islands Protected Area Kiribati",
+          "quizDraft": {
+            "question": "保護対象に含まれるものは？",
+            "options": [
+              "地下鉱山",
+              "氷床",
+              "広い海域"
+            ],
+            "answer": 2,
+            "fact": "太平洋に広がる島々と海域の保全を目的とする自然遺産である。",
+            "photoGoal": "フェニックス諸島保護地域の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Kiritimati atoll Kiribati wide landscape"
+    },
+    "KN": {
+      "name": "セントクリストファー・ネーヴィス",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ブリムストーン・ヒル要塞とネイビス山から読み解くセントクリストファー・ネーヴィス",
+        "body": "セントクリストファー・ネーヴィスを二つの場所から読み解きます。セントクリストファー島に残る十七・十八世紀の軍事建築である。急な斜面と城壁の配置を見て、カリブ海の植民地防衛の歴史を考える。一方、ネイビス島の中央にそびえる火山性の山である。島の海岸から山頂へ向かう標高の変化を地図でたどる。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "セントクリストファー島に残る十七・十八世紀の軍事建築である。",
+          "ネイビス島の中央にそびえる火山性の山である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ブリムストーン・ヒル要塞",
+          "title": "ブリムストーン・ヒル要塞",
+          "paragraphs": [
+            "セントクリストファー島に残る十七・十八世紀の軍事建築である。急な斜面と城壁の配置を見て、カリブ海の植民地防衛の歴史を考える。",
+            "ここではブリムストーン・ヒル要塞を題材に、地図と資料を照らし合わせながら遺産の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/910",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Brimstone Hill Fortress Saint Kitts",
+          "quizDraft": {
+            "question": "遺産の種類は？",
+            "options": [
+              "火山湖",
+              "鉄道施設",
+              "軍事建築"
+            ],
+            "answer": 2,
+            "fact": "セントクリストファー島に残る十七・十八世紀の軍事建築である。",
+            "photoGoal": "ブリムストーン・ヒル要塞の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ネイビス山",
+          "title": "ネイビス山",
+          "paragraphs": [
+            "ネイビス島の中央にそびえる火山性の山である。島の海岸から山頂へ向かう標高の変化を地図でたどる。",
+            "ここではネイビス山を題材に、地図と資料を照らし合わせながら山がある島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Nevis Peak Saint Kitts Nevis",
+          "quizDraft": {
+            "question": "山がある島は？",
+            "options": [
+              "ネイビス島",
+              "バルバドス島",
+              "マルティニーク島"
+            ],
+            "answer": 0,
+            "fact": "ネイビス島の中央にそびえる火山性の山である。",
+            "photoGoal": "ネイビス山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Brimstone Hill Fortress Saint Kitts wide landscape"
+    },
+    "KW": {
+      "name": "クウェート",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "クウェート・タワーとファイラカ島遺跡から読み解くクウェート",
+        "body": "クウェートを二つの場所から読み解きます。クウェート市の海岸に立つ球状の構造物を備えた塔である。水辺から見た塔のシルエットを比べ、都市の象徴的な建築を読む。一方、ペルシャ湾の島に古代の交易や居住を伝える考古遺跡がある。島と大陸側の距離を地図で確かめ、海上の交流路を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "クウェート市の海岸に立つ球状の構造物を備えた塔である。",
+          "ペルシャ湾の島に古代の交易や居住を伝える考古遺跡がある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "クウェート・タワー",
+          "title": "クウェート・タワー",
+          "paragraphs": [
+            "クウェート市の海岸に立つ球状の構造物を備えた塔である。水辺から見た塔のシルエットを比べ、都市の象徴的な建築を読む。",
+            "ここではクウェート・タワーを題材に、地図と資料を照らし合わせながら特徴的な外観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Kuwait Towers Kuwait City",
+          "quizDraft": {
+            "question": "特徴的な外観は？",
+            "options": [
+              "球状の構造物",
+              "木造五重塔",
+              "古代円形劇場"
+            ],
+            "answer": 0,
+            "fact": "クウェート市の海岸に立つ球状の構造物を備えた塔である。",
+            "photoGoal": "クウェート・タワーの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ファイラカ島遺跡",
+          "title": "ファイラカ島遺跡",
+          "paragraphs": [
+            "ペルシャ湾の島に古代の交易や居住を伝える考古遺跡がある。島と大陸側の距離を地図で確かめ、海上の交流路を考える。",
+            "ここではファイラカ島遺跡を題材に、地図と資料を照らし合わせながら遺跡の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Failaka Island archaeological site Kuwait",
+          "quizDraft": {
+            "question": "遺跡の立地は？",
+            "options": [
+              "高山の尾根",
+              "湾内の島",
+              "砂漠の中央"
+            ],
+            "answer": 1,
+            "fact": "ペルシャ湾の島に古代の交易や居住を伝える考古遺跡がある。",
+            "photoGoal": "ファイラカ島遺跡の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Kuwait Towers Kuwait City wide landscape"
+    },
+    "LR": {
+      "name": "リベリア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "プロビデンス島とサポ国立公園から読み解くリベリア",
+        "body": "リベリアを二つの場所から読み解きます。モンロビアの成立史と関係の深い島である。河口と島の位置を見て、大西洋を越えた人々の移動と都市形成の関係を考える。一方、リベリア南東部に広がる熱帯森林の保護地域である。森林の連続性と川の分布を見て、野生動物の暮らす空間を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "モンロビアの成立史と関係の深い島である。",
+          "リベリア南東部に広がる熱帯森林の保護地域である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "プロビデンス島",
+          "title": "プロビデンス島",
+          "paragraphs": [
+            "モンロビアの成立史と関係の深い島である。河口と島の位置を見て、大西洋を越えた人々の移動と都市形成の関係を考える。",
+            "ここではプロビデンス島を題材に、地図と資料を照らし合わせながら関係の深い都市はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Providence Island Monrovia Liberia",
+          "quizDraft": {
+            "question": "関係の深い都市は？",
+            "options": [
+              "ダカール",
+              "モンロビア",
+              "カンパラ"
+            ],
+            "answer": 1,
+            "fact": "モンロビアの成立史と関係の深い島である。",
+            "photoGoal": "プロビデンス島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サポ国立公園",
+          "title": "サポ国立公園",
+          "paragraphs": [
+            "リベリア南東部に広がる熱帯森林の保護地域である。森林の連続性と川の分布を見て、野生動物の暮らす空間を考える。",
+            "ここではサポ国立公園を題材に、地図と資料を照らし合わせながら主な生息環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Sapo National Park Liberia",
+          "quizDraft": {
+            "question": "主な生息環境は？",
+            "options": [
+              "雪原",
+              "サンゴ礁",
+              "熱帯林"
+            ],
+            "answer": 2,
+            "fact": "リベリア南東部に広がる熱帯森林の保護地域である。",
+            "photoGoal": "サポ国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Providence Island Monrovia Liberia wide landscape"
+    },
+    "LY": {
+      "name": "リビア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "レプティス・マグナとサブラタから読み解くリビア",
+        "body": "リビアを二つの場所から読み解きます。北アフリカの地中海岸に残る大規模な古代ローマ都市遺跡である。柱列や公共建築の配置を地図でたどり、古代都市の広場が果たした役割を考える。一方、フェニキア人の交易拠点として始まった古代都市で、後のローマ期の遺構もある。海岸と劇場の位置に注目し、交易港が公共建築を持つ都市へ発展した歴史を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "北アフリカの地中海岸に残る大規模な古代ローマ都市遺跡である。",
+          "フェニキア人の交易拠点として始まった古代都市で、後のローマ期の遺構もある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "レプティス・マグナ",
+          "title": "レプティス・マグナ",
+          "paragraphs": [
+            "北アフリカの地中海岸に残る大規模な古代ローマ都市遺跡である。柱列や公共建築の配置を地図でたどり、古代都市の広場が果たした役割を考える。",
+            "ここではレプティス・マグナを題材に、地図と資料を照らし合わせながら遺跡の中心となる文明はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/183",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Leptis Magna Libya Roman ruins",
+          "quizDraft": {
+            "question": "遺跡の中心となる文明は？",
+            "options": [
+              "インカ",
+              "江戸時代",
+              "古代ローマ"
+            ],
+            "answer": 2,
+            "fact": "北アフリカの地中海岸に残る大規模な古代ローマ都市遺跡である。",
+            "photoGoal": "レプティス・マグナの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サブラタ",
+          "title": "サブラタ",
+          "paragraphs": [
+            "フェニキア人の交易拠点として始まった古代都市で、後のローマ期の遺構もある。海岸と劇場の位置に注目し、交易港が公共建築を持つ都市へ発展した歴史を考える。",
+            "ここではサブラタを題材に、地図と資料を照らし合わせながら当初の役割はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/184",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Sabratha Libya archaeological theatre",
+          "quizDraft": {
+            "question": "当初の役割は？",
+            "options": [
+              "交易拠点",
+              "高山牧場",
+              "近代炭鉱"
+            ],
+            "answer": 0,
+            "fact": "フェニキア人の交易拠点として始まった古代都市で、後のローマ期の遺構もある。",
+            "photoGoal": "サブラタの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Leptis Magna Libya Roman ruins wide landscape"
+    },
+    "LC": {
+      "name": "セントルシア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ピトン山群とピジョン・アイランドから読み解くセントルシア",
+        "body": "セントルシアを二つの場所から読み解きます。セントルシア南西部の海岸近くに二つの特徴的な火山性の山がそびえる。二つの峰と海岸線を合わせて見ることで、火山地形が島の景観を形づくる様子が分かる。一方、セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。海峡を望む高台から、沿岸の監視と防衛が重視された時代を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "セントルシア南西部の海岸近くに二つの特徴的な火山性の山がそびえる。",
+          "セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ピトン山群",
+          "title": "ピトン山群",
+          "paragraphs": [
+            "セントルシア南西部の海岸近くに二つの特徴的な火山性の山がそびえる。二つの峰と海岸線を合わせて見ることで、火山地形が島の景観を形づくる様子が分かる。",
+            "ここではピトン山群を題材に、地図と資料を照らし合わせながら景観を特徴づけるのはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1161/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Gros Piton Petit Piton Saint Lucia",
+          "quizDraft": {
+            "question": "景観を特徴づけるのは？",
+            "options": [
+              "二つの山峰",
+              "大氷河",
+              "石造ピラミッド"
+            ],
+            "answer": 0,
+            "fact": "セントルシア南西部の海岸近くに二つの特徴的な火山性の山がそびえる。",
+            "photoGoal": "ピトン山群の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ピジョン・アイランド",
+          "title": "ピジョン・アイランド",
+          "paragraphs": [
+            "セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。海峡を望む高台から、沿岸の監視と防衛が重視された時代を考える。",
+            "ここではピジョン・アイランドを題材に、地図と資料を照らし合わせながら残る歴史的施設はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Pigeon Island National Landmark Saint Lucia",
+          "quizDraft": {
+            "question": "残る歴史的施設は？",
+            "options": [
+              "古代地下鉄",
+              "軍事施設",
+              "採石場のみ"
+            ],
+            "answer": 1,
+            "fact": "セントルシア北部に位置し、歴史的な軍事施設の遺構を伝える。",
+            "photoGoal": "ピジョン・アイランドの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Gros Piton Petit Piton Saint Lucia wide landscape"
+    },
+    "LI": {
+      "name": "リヒテンシュタイン",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ファドゥーツ城とグーテンベルク城から読み解くリヒテンシュタイン",
+        "body": "リヒテンシュタインを二つの場所から読み解きます。首都ファドゥーツを見下ろす丘にある城である。谷沿いの市街地と城の高さを比べ、小国の地形と歴史的な建築を読む。一方、バルザースに立つ丘上の城である。周囲の平地と城の小高い丘の対比から、防衛上の立地の意味を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "首都ファドゥーツを見下ろす丘にある城である。",
+          "バルザースに立つ丘上の城である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ファドゥーツ城",
+          "title": "ファドゥーツ城",
+          "paragraphs": [
+            "首都ファドゥーツを見下ろす丘にある城である。谷沿いの市街地と城の高さを比べ、小国の地形と歴史的な建築を読む。",
+            "ここではファドゥーツ城を題材に、地図と資料を照らし合わせながら城の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Vaduz Castle Liechtenstein",
+          "quizDraft": {
+            "question": "城の立地は？",
+            "options": [
+              "沖合の環礁",
+              "町を見下ろす丘",
+              "海底"
+            ],
+            "answer": 1,
+            "fact": "首都ファドゥーツを見下ろす丘にある城である。",
+            "photoGoal": "ファドゥーツ城の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "グーテンベルク城",
+          "title": "グーテンベルク城",
+          "paragraphs": [
+            "バルザースに立つ丘上の城である。周囲の平地と城の小高い丘の対比から、防衛上の立地の意味を考える。",
+            "ここではグーテンベルク城を題材に、地図と資料を照らし合わせながら城がある町はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Gutenberg Castle Balzers Liechtenstein",
+          "quizDraft": {
+            "question": "城がある町は？",
+            "options": [
+              "ルツェルン",
+              "インスブルック",
+              "バルザース"
+            ],
+            "answer": 2,
+            "fact": "バルザースに立つ丘上の城である。",
+            "photoGoal": "グーテンベルク城の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Vaduz Castle Liechtenstein wide landscape"
+    },
+    "LS": {
+      "name": "レソト",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "タバ・ボシウとマレツニャーネ滝から読み解くレソト",
+        "body": "レソトを二つの場所から読み解きます。レソトの国家形成とモショエショエ一世の歴史に関わる台地である。切り立った台地の縁と周囲の平野を見て、自然の地形を防衛に用いた歴史を考える。一方、山地の川が深い峡谷へ落ち込む大きな滝である。川と谷の高低差をたどり、山がちな国の水の流れを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "レソトの国家形成とモショエショエ一世の歴史に関わる台地である。",
+          "山地の川が深い峡谷へ落ち込む大きな滝である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "タバ・ボシウ",
+          "title": "タバ・ボシウ",
+          "paragraphs": [
+            "レソトの国家形成とモショエショエ一世の歴史に関わる台地である。切り立った台地の縁と周囲の平野を見て、自然の地形を防衛に用いた歴史を考える。",
+            "ここではタバ・ボシウを題材に、地図と資料を照らし合わせながら地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Thaba Bosiu Lesotho",
+          "quizDraft": {
+            "question": "地形は？",
+            "options": [
+              "環礁",
+              "海食洞",
+              "台地"
+            ],
+            "answer": 2,
+            "fact": "レソトの国家形成とモショエショエ一世の歴史に関わる台地である。",
+            "photoGoal": "タバ・ボシウの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "マレツニャーネ滝",
+          "title": "マレツニャーネ滝",
+          "paragraphs": [
+            "山地の川が深い峡谷へ落ち込む大きな滝である。川と谷の高低差をたどり、山がちな国の水の流れを考える。",
+            "ここではマレツニャーネ滝を題材に、地図と資料を照らし合わせながら滝の周囲の地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Maletsunyane Falls Lesotho",
+          "quizDraft": {
+            "question": "滝の周囲の地形は？",
+            "options": [
+              "山地の峡谷",
+              "沿岸干潟",
+              "平坦な砂浜"
+            ],
+            "answer": 0,
+            "fact": "山地の川が深い峡谷へ落ち込む大きな滝である。",
+            "photoGoal": "マレツニャーネ滝の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Thaba Bosiu Lesotho wide landscape"
+    },
+    "MC": {
+      "name": "モナコ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "モナコ大公宮殿と海洋博物館から読み解くモナコ",
+        "body": "モナコを二つの場所から読み解きます。モナコの岩山の上に立つ大公家の宮殿である。高台と港の位置を地図で比べ、狭い地形の中で歴史的な中心が形成された過程を考える。一方、海に面した崖の上の博物館で、海洋科学に関わる展示を行う。建物の足元の岩壁と海を一緒に見て、研究対象と立地の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "モナコの岩山の上に立つ大公家の宮殿である。",
+          "海に面した崖の上の博物館で、海洋科学に関わる展示を行う。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "モナコ大公宮殿",
+          "title": "モナコ大公宮殿",
+          "paragraphs": [
+            "モナコの岩山の上に立つ大公家の宮殿である。高台と港の位置を地図で比べ、狭い地形の中で歴史的な中心が形成された過程を考える。",
+            "ここではモナコ大公宮殿を題材に、地図と資料を照らし合わせながら宮殿の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Princes Palace Monaco",
+          "quizDraft": {
+            "question": "宮殿の立地は？",
+            "options": [
+              "岩山の高台",
+              "地下",
+              "大河の中州"
+            ],
+            "answer": 0,
+            "fact": "モナコの岩山の上に立つ大公家の宮殿である。",
+            "photoGoal": "モナコ大公宮殿の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "海洋博物館",
+          "title": "海洋博物館",
+          "paragraphs": [
+            "海に面した崖の上の博物館で、海洋科学に関わる展示を行う。建物の足元の岩壁と海を一緒に見て、研究対象と立地の関係を考える。",
+            "ここでは海洋博物館を題材に、地図と資料を照らし合わせながら博物館の主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Oceanographic Museum Monaco",
+          "quizDraft": {
+            "question": "博物館の主題は？",
+            "options": [
+              "鉄道史",
+              "海洋科学",
+              "極地天文学のみ"
+            ],
+            "answer": 1,
+            "fact": "海に面した崖の上の博物館で、海洋科学に関わる展示を行う。",
+            "photoGoal": "海洋博物館の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Princes Palace Monaco wide landscape"
+    },
+    "MD": {
+      "name": "モルドバ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "オルヘイ・ヴェキとソロカ要塞から読み解くモルドバ",
+        "body": "モルドバを二つの場所から読み解きます。川が曲流する谷と洞窟状の宗教遺構を含む歴史景観である。河川の湾曲と岩壁を見比べ、自然地形の中で人が暮らした痕跡を探す。一方、ドニエストル川沿いにある円形に近い石造要塞である。川と要塞の位置を比べ、渡河や交易の経路を守る意味を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "川が曲流する谷と洞窟状の宗教遺構を含む歴史景観である。",
+          "ドニエストル川沿いにある円形に近い石造要塞である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "オルヘイ・ヴェキ",
+          "title": "オルヘイ・ヴェキ",
+          "paragraphs": [
+            "川が曲流する谷と洞窟状の宗教遺構を含む歴史景観である。河川の湾曲と岩壁を見比べ、自然地形の中で人が暮らした痕跡を探す。",
+            "ここではオルヘイ・ヴェキを題材に、地図と資料を照らし合わせながら特徴的な地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Orheiul Vechi Moldova",
+          "quizDraft": {
+            "question": "特徴的な地形は？",
+            "options": [
+              "海上環礁",
+              "曲流する川の谷",
+              "氷河の平野"
+            ],
+            "answer": 1,
+            "fact": "川が曲流する谷と洞窟状の宗教遺構を含む歴史景観である。",
+            "photoGoal": "オルヘイ・ヴェキの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ソロカ要塞",
+          "title": "ソロカ要塞",
+          "paragraphs": [
+            "ドニエストル川沿いにある円形に近い石造要塞である。川と要塞の位置を比べ、渡河や交易の経路を守る意味を考える。",
+            "ここではソロカ要塞を題材に、地図と資料を照らし合わせながら要塞の外形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Soroca Fortress Moldova",
+          "quizDraft": {
+            "question": "要塞の外形は？",
+            "options": [
+              "細長い吊橋",
+              "木造塔のみ",
+              "円形に近い"
+            ],
+            "answer": 2,
+            "fact": "ドニエストル川沿いにある円形に近い石造要塞である。",
+            "photoGoal": "ソロカ要塞の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Orheiul Vechi Moldova wide landscape"
+    },
+    "MV": {
+      "name": "モルディブ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "マレの金曜モスクとバー環礁から読み解くモルディブ",
+        "body": "モルディブを二つの場所から読み解きます。サンゴ石を用いた伝統的な宗教建築として知られる。外壁や装飾に用いられた素材を調べ、島で手に入る材料と建築文化のつながりを考える。一方、島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。礁湖と外洋の境目を地図でたどり、海の環境が島の暮らしを支えることを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "サンゴ石を用いた伝統的な宗教建築として知られる。",
+          "島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "マレの金曜モスク",
+          "title": "マレの金曜モスク",
+          "paragraphs": [
+            "サンゴ石を用いた伝統的な宗教建築として知られる。外壁や装飾に用いられた素材を調べ、島で手に入る材料と建築文化のつながりを考える。",
+            "ここではマレの金曜モスクを題材に、地図と資料を照らし合わせながら伝統的な建材はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Male Friday Mosque Maldives",
+          "quizDraft": {
+            "question": "伝統的な建材は？",
+            "options": [
+              "氷塊",
+              "鉄筋のみ",
+              "サンゴ石"
+            ],
+            "answer": 2,
+            "fact": "サンゴ石を用いた伝統的な宗教建築として知られる。",
+            "photoGoal": "マレの金曜モスクの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "バー環礁",
+          "title": "バー環礁",
+          "paragraphs": [
+            "島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。礁湖と外洋の境目を地図でたどり、海の環境が島の暮らしを支えることを考える。",
+            "ここではバー環礁を題材に、地図と資料を照らし合わせながら地形の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Baa Atoll Maldives",
+          "quizDraft": {
+            "question": "地形の種類は？",
+            "options": [
+              "環礁",
+              "内陸盆地",
+              "高山峡谷"
+            ],
+            "answer": 0,
+            "fact": "島々とサンゴ礁、海洋生物の生息環境が広がる環礁である。",
+            "photoGoal": "バー環礁の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Male Friday Mosque Maldives wide landscape"
+    },
+    "MH": {
+      "name": "マーシャル諸島",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ビキニ環礁とローラ地区の海岸から読み解くマーシャル諸島",
+        "body": "マーシャル諸島を二つの場所から読み解きます。核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。島々の位置を資料で確かめ、景観だけでは分からない移住と環境の問題に目を向ける。一方、マジュロ環礁の西端近くにある海岸地域である。細長い陸地の両側に海が広がる様子を地図で確認し、環礁での暮らしを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。",
+          "マジュロ環礁の西端近くにある海岸地域である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ビキニ環礁",
+          "title": "ビキニ環礁",
+          "paragraphs": [
+            "核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。島々の位置を資料で確かめ、景観だけでは分からない移住と環境の問題に目を向ける。",
+            "ここではビキニ環礁を題材に、地図と資料を照らし合わせながらこの場所が伝える現代史はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Bikini Atoll Marshall Islands",
+          "quizDraft": {
+            "question": "この場所が伝える現代史は？",
+            "options": [
+              "核実験の歴史",
+              "産業革命の紡績",
+              "中世の城塞"
+            ],
+            "answer": 0,
+            "fact": "核実験の歴史を伝える場所であり、その影響を受けた住民の歴史と切り離せない。",
+            "photoGoal": "ビキニ環礁の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ローラ地区の海岸",
+          "title": "ローラ地区の海岸",
+          "paragraphs": [
+            "マジュロ環礁の西端近くにある海岸地域である。細長い陸地の両側に海が広がる様子を地図で確認し、環礁での暮らしを考える。",
+            "ここではローラ地区の海岸を題材に、地図と資料を照らし合わせながら所在する環礁はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Laura Beach Majuro Marshall Islands",
+          "quizDraft": {
+            "question": "所在する環礁は？",
+            "options": [
+              "ビキニ",
+              "マジュロ",
+              "タラワ"
+            ],
+            "answer": 1,
+            "fact": "マジュロ環礁の西端近くにある海岸地域である。",
+            "photoGoal": "ローラ地区の海岸の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Bikini Atoll Marshall Islands wide landscape"
+    },
+    "MK": {
+      "name": "北マケドニア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "オフリド湖とオフリド旧市街から読み解く北マケドニア",
+        "body": "北マケドニアを二つの場所から読み解きます。北マケドニアとアルバニアにまたがる湖で、自然と文化の遺産として評価される。湖岸と周囲の山々を比較して、湖の自然環境と集落の位置関係を読む。一方、湖岸に発展した都市で、宗教建築を含む歴史景観を持つ。湖へ向かう街路と丘の建物を見比べ、湖と都市の歴史的な関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "北マケドニアとアルバニアにまたがる湖で、自然と文化の遺産として評価される。",
+          "湖岸に発展した都市で、宗教建築を含む歴史景観を持つ。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "オフリド湖",
+          "title": "オフリド湖",
+          "paragraphs": [
+            "北マケドニアとアルバニアにまたがる湖で、自然と文化の遺産として評価される。湖岸と周囲の山々を比較して、湖の自然環境と集落の位置関係を読む。",
+            "ここではオフリド湖を題材に、地図と資料を照らし合わせながら湖を共有する隣国はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/99",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Lake Ohrid North Macedonia",
+          "quizDraft": {
+            "question": "湖を共有する隣国は？",
+            "options": [
+              "ポルトガル",
+              "アルバニア",
+              "デンマーク"
+            ],
+            "answer": 1,
+            "fact": "北マケドニアとアルバニアにまたがる湖で、自然と文化の遺産として評価される。",
+            "photoGoal": "オフリド湖の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "オフリド旧市街",
+          "title": "オフリド旧市街",
+          "paragraphs": [
+            "湖岸に発展した都市で、宗教建築を含む歴史景観を持つ。湖へ向かう街路と丘の建物を見比べ、湖と都市の歴史的な関係を考える。",
+            "ここではオフリド旧市街を題材に、地図と資料を照らし合わせながら街が面するのはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/99",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Ohrid old town North Macedonia",
+          "quizDraft": {
+            "question": "街が面するのは？",
+            "options": [
+              "黒海",
+              "バルト海",
+              "オフリド湖"
+            ],
+            "answer": 2,
+            "fact": "湖岸に発展した都市で、宗教建築を含む歴史景観を持つ。",
+            "photoGoal": "オフリド旧市街の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Lake Ohrid North Macedonia wide landscape"
+    },
+    "MZ": {
+      "name": "モザンビーク",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "モザンビーク島とマプト国立公園から読み解くモザンビーク",
+        "body": "モザンビークを二つの場所から読み解きます。インド洋の交易とポルトガル植民地期の歴史を伝える島の町である。海に囲まれた細長い街区と歴史建築の位置を地図で確認する。一方、海岸近くの湿地、森林などの多様な自然環境を含む保護地域である。湖沼と海岸、内陸の植生を見比べ、国境を越えた保全の意味を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "インド洋の交易とポルトガル植民地期の歴史を伝える島の町である。",
+          "海岸近くの湿地、森林などの多様な自然環境を含む保護地域である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "モザンビーク島",
+          "title": "モザンビーク島",
+          "paragraphs": [
+            "インド洋の交易とポルトガル植民地期の歴史を伝える島の町である。海に囲まれた細長い街区と歴史建築の位置を地図で確認する。",
+            "ここではモザンビーク島を題材に、地図と資料を照らし合わせながら歴史の中心的な主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/mz",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Island of Mozambique historic town",
+          "quizDraft": {
+            "question": "歴史の中心的な主題は？",
+            "options": [
+              "北極探検",
+              "アルプスの牧畜",
+              "インド洋交易"
+            ],
+            "answer": 2,
+            "fact": "インド洋の交易とポルトガル植民地期の歴史を伝える島の町である。",
+            "photoGoal": "モザンビーク島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "マプト国立公園",
+          "title": "マプト国立公園",
+          "paragraphs": [
+            "海岸近くの湿地、森林などの多様な自然環境を含む保護地域である。湖沼と海岸、内陸の植生を見比べ、国境を越えた保全の意味を考える。",
+            "ここではマプト国立公園を題材に、地図と資料を照らし合わせながら主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/mz",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Maputo National Park Mozambique",
+          "quizDraft": {
+            "question": "主題は？",
+            "options": [
+              "自然環境の保全",
+              "古代都市の発掘",
+              "鉄道工場"
+            ],
+            "answer": 0,
+            "fact": "海岸近くの湿地、森林などの多様な自然環境を含む保護地域である。",
+            "photoGoal": "マプト国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Island of Mozambique historic town wide landscape"
+    },
+    "NE": {
+      "name": "ニジェール",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "アイル・テネレ自然保護区とアガデス歴史地区から読み解くニジェール",
+        "body": "ニジェールを二つの場所から読み解きます。サハラの山地と砂漠が広がる自然保護地域である。砂丘と岩山の対比を見て、砂漠にもさまざまな地形と生息環境があることを考える。一方、サハラの交易に関わった都市で、土造りの建築が特徴である。泥を使った建物と街路の形を比較し、乾燥地域の建築と交易史を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "サハラの山地と砂漠が広がる自然保護地域である。",
+          "サハラの交易に関わった都市で、土造りの建築が特徴である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "アイル・テネレ自然保護区",
+          "title": "アイル・テネレ自然保護区",
+          "paragraphs": [
+            "サハラの山地と砂漠が広がる自然保護地域である。砂丘と岩山の対比を見て、砂漠にもさまざまな地形と生息環境があることを考える。",
+            "ここではアイル・テネレ自然保護区を題材に、地図と資料を照らし合わせながら主な景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Air and Tenere Natural Reserves Niger",
+          "quizDraft": {
+            "question": "主な景観は？",
+            "options": [
+              "砂漠と山地",
+              "熱帯の環礁",
+              "温帯雨林"
+            ],
+            "answer": 0,
+            "fact": "サハラの山地と砂漠が広がる自然保護地域である。",
+            "photoGoal": "アイル・テネレ自然保護区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "アガデス歴史地区",
+          "title": "アガデス歴史地区",
+          "paragraphs": [
+            "サハラの交易に関わった都市で、土造りの建築が特徴である。泥を使った建物と街路の形を比較し、乾燥地域の建築と交易史を考える。",
+            "ここではアガデス歴史地区を題材に、地図と資料を照らし合わせながら伝統建築の主な材料はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Historic Centre of Agadez Niger",
+          "quizDraft": {
+            "question": "伝統建築の主な材料は？",
+            "options": [
+              "氷",
+              "土",
+              "サンゴ石"
+            ],
+            "answer": 1,
+            "fact": "サハラの交易に関わった都市で、土造りの建築が特徴である。",
+            "photoGoal": "アガデス歴史地区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Air and Tenere Natural Reserves Niger wide landscape"
+    },
+    "NR": {
+      "name": "ナウル",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ブアダ・ラグーンとアニバレ湾から読み解くナウル",
+        "body": "ナウルを二つの場所から読み解きます。ナウル島の内陸にある湖沼である。海岸と内陸の水面の位置を地図で確認し、小さな島の地形の変化を考える。一方、ナウル東岸の湾で、海岸線の景観を特徴づける。湾の弧と岩礁の位置を比較し、島の海岸地形に注目する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ナウル島の内陸にある湖沼である。",
+          "ナウル東岸の湾で、海岸線の景観を特徴づける。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ブアダ・ラグーン",
+          "title": "ブアダ・ラグーン",
+          "paragraphs": [
+            "ナウル島の内陸にある湖沼である。海岸と内陸の水面の位置を地図で確認し、小さな島の地形の変化を考える。",
+            "ここではブアダ・ラグーンを題材に、地図と資料を照らし合わせながらラグーンの位置はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Buada Lagoon Nauru",
+          "quizDraft": {
+            "question": "ラグーンの位置は？",
+            "options": [
+              "外洋の中央",
+              "島の内陸",
+              "大陸の国境"
+            ],
+            "answer": 1,
+            "fact": "ナウル島の内陸にある湖沼である。",
+            "photoGoal": "ブアダ・ラグーンの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "アニバレ湾",
+          "title": "アニバレ湾",
+          "paragraphs": [
+            "ナウル東岸の湾で、海岸線の景観を特徴づける。湾の弧と岩礁の位置を比較し、島の海岸地形に注目する。",
+            "ここではアニバレ湾を題材に、地図と資料を照らし合わせながら湾の位置はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Anibare Bay Nauru",
+          "quizDraft": {
+            "question": "湾の位置は？",
+            "options": [
+              "高山頂",
+              "内陸砂漠",
+              "東岸"
+            ],
+            "answer": 2,
+            "fact": "ナウル東岸の湾で、海岸線の景観を特徴づける。",
+            "photoGoal": "アニバレ湾の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Buada Lagoon Nauru wide landscape"
+    },
+    "PW": {
+      "name": "パラオ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ロックアイランド群とジェリーフィッシュ・レイクから読み解くパラオ",
+        "body": "パラオを二つの場所から読み解きます。小島と海域からなる自然・文化遺産で、サンゴ礁と海の生態系が広がる。小島の輪郭と海の色の変化を地図や資料写真で読み解く。一方、ロックアイランド群の海水湖は独自のクラゲの生息環境で知られる。外洋と隔てられた水域に注目し、生物の隔離と環境の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "小島と海域からなる自然・文化遺産で、サンゴ礁と海の生態系が広がる。",
+          "ロックアイランド群の海水湖は独自のクラゲの生息環境で知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ロックアイランド群",
+          "title": "ロックアイランド群",
+          "paragraphs": [
+            "小島と海域からなる自然・文化遺産で、サンゴ礁と海の生態系が広がる。小島の輪郭と海の色の変化を地図や資料写真で読み解く。",
+            "ここではロックアイランド群を題材に、地図と資料を照らし合わせながら特徴的な景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1386/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Rock Islands Southern Lagoon Palau",
+          "quizDraft": {
+            "question": "特徴的な景観は？",
+            "options": [
+              "高山氷河",
+              "大砂丘",
+              "多数の島と海"
+            ],
+            "answer": 2,
+            "fact": "小島と海域からなる自然・文化遺産で、サンゴ礁と海の生態系が広がる。",
+            "photoGoal": "ロックアイランド群の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ジェリーフィッシュ・レイク",
+          "title": "ジェリーフィッシュ・レイク",
+          "paragraphs": [
+            "ロックアイランド群の海水湖は独自のクラゲの生息環境で知られる。外洋と隔てられた水域に注目し、生物の隔離と環境の関係を考える。",
+            "ここではジェリーフィッシュ・レイクを題材に、地図と資料を照らし合わせながら代表的な生物はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1386/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Jellyfish Lake Palau marine lake",
+          "quizDraft": {
+            "question": "代表的な生物は？",
+            "options": [
+              "クラゲ",
+              "ホッキョクグマ",
+              "ラクダ"
+            ],
+            "answer": 0,
+            "fact": "ロックアイランド群の海水湖は独自のクラゲの生息環境で知られる。",
+            "photoGoal": "ジェリーフィッシュ・レイクの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Rock Islands Southern Lagoon Palau wide landscape"
+    },
+    "PG": {
+      "name": "パプアニューギニア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "クック初期農耕遺跡とタヴルヴル火山から読み解くパプアニューギニア",
+        "body": "パプアニューギニアを二つの場所から読み解きます。ニューギニア島高地の湿地に残る初期農耕の考古遺産である。古い耕作と排水の痕跡を地図や資料で読み、人が湿地を利用した技術を考える。一方、ニューブリテン島のラバウル周辺にある火山である。湾と火山の位置を地図で比べ、火山地形と都市の歴史の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ニューギニア島高地の湿地に残る初期農耕の考古遺産である。",
+          "ニューブリテン島のラバウル周辺にある火山である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "クック初期農耕遺跡",
+          "title": "クック初期農耕遺跡",
+          "paragraphs": [
+            "ニューギニア島高地の湿地に残る初期農耕の考古遺産である。古い耕作と排水の痕跡を地図や資料で読み、人が湿地を利用した技術を考える。",
+            "ここではクック初期農耕遺跡を題材に、地図と資料を照らし合わせながら遺跡の主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/887",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Kuk Early Agricultural Site Papua New Guinea",
+          "quizDraft": {
+            "question": "遺跡の主題は？",
+            "options": [
+              "初期の農耕",
+              "海上の軍事基地",
+              "中世製鉄"
+            ],
+            "answer": 0,
+            "fact": "ニューギニア島高地の湿地に残る初期農耕の考古遺産である。",
+            "photoGoal": "クック初期農耕遺跡の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "タヴルヴル火山",
+          "title": "タヴルヴル火山",
+          "paragraphs": [
+            "ニューブリテン島のラバウル周辺にある火山である。湾と火山の位置を地図で比べ、火山地形と都市の歴史の関係を考える。",
+            "ここではタヴルヴル火山を題材に、地図と資料を照らし合わせながら所在する島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Tavurvur volcano Rabaul Papua New Guinea",
+          "quizDraft": {
+            "question": "所在する島は？",
+            "options": [
+              "タスマニア島",
+              "ニューブリテン島",
+              "グアム島"
+            ],
+            "answer": 1,
+            "fact": "ニューブリテン島のラバウル周辺にある火山である。",
+            "photoGoal": "タヴルヴル火山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Kuk Early Agricultural Site Papua New Guinea wide landscape"
+    },
+    "QA": {
+      "name": "カタール",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "アル・ズバラ遺跡とホール・アル・アダイドから読み解くカタール",
+        "body": "カタールを二つの場所から読み解きます。カタールの海岸に発展した歴史的な交易都市の遺跡である。城壁と街区、海岸線の関係をたどり、湾岸交易の時代を考える。一方、砂丘が海に近づく景観で知られる自然地域である。砂丘と水面の境界を見比べ、砂漠と海が隣り合う環境を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "カタールの海岸に発展した歴史的な交易都市の遺跡である。",
+          "砂丘が海に近づく景観で知られる自然地域である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "アル・ズバラ遺跡",
+          "title": "アル・ズバラ遺跡",
+          "paragraphs": [
+            "カタールの海岸に発展した歴史的な交易都市の遺跡である。城壁と街区、海岸線の関係をたどり、湾岸交易の時代を考える。",
+            "ここではアル・ズバラ遺跡を題材に、地図と資料を照らし合わせながら都市の主な歴史的役割はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1402",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Al Zubarah Archaeological Site Qatar",
+          "quizDraft": {
+            "question": "都市の主な歴史的役割は？",
+            "options": [
+              "山岳牧畜",
+              "交易",
+              "氷河観測"
+            ],
+            "answer": 1,
+            "fact": "カタールの海岸に発展した歴史的な交易都市の遺跡である。",
+            "photoGoal": "アル・ズバラ遺跡の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ホール・アル・アダイド",
+          "title": "ホール・アル・アダイド",
+          "paragraphs": [
+            "砂丘が海に近づく景観で知られる自然地域である。砂丘と水面の境界を見比べ、砂漠と海が隣り合う環境を読む。",
+            "ここではホール・アル・アダイドを題材に、地図と資料を照らし合わせながら景観の組み合わせはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/statesparties/qa",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Khor Al Adaid Qatar inland sea",
+          "quizDraft": {
+            "question": "景観の組み合わせは？",
+            "options": [
+              "氷河と針葉樹林",
+              "火口湖と雪原",
+              "砂丘と海"
+            ],
+            "answer": 2,
+            "fact": "砂丘が海に近づく景観で知られる自然地域である。",
+            "photoGoal": "ホール・アル・アダイドの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Al Zubarah Archaeological Site Qatar wide landscape"
+    },
+    "SB": {
+      "name": "ソロモン諸島",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "東レンネルとガダルカナル島のホニアラから読み解くソロモン諸島",
+        "body": "ソロモン諸島を二つの場所から読み解きます。ソロモン諸島のレンネル島東部を含む自然遺産である。島の大きな湖と周囲の陸地を地図でたどり、島の生態系の特徴を考える。一方、ホニアラはガダルカナル島に位置する首都である。山地から海岸へ続く地形を地図で確認し、島の都市と港の関係を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ソロモン諸島のレンネル島東部を含む自然遺産である。",
+          "ホニアラはガダルカナル島に位置する首都である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "東レンネル",
+          "title": "東レンネル",
+          "paragraphs": [
+            "ソロモン諸島のレンネル島東部を含む自然遺産である。島の大きな湖と周囲の陸地を地図でたどり、島の生態系の特徴を考える。",
+            "ここでは東レンネルを題材に、地図と資料を照らし合わせながら遺産がある島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/854/",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "East Rennell Solomon Islands",
+          "quizDraft": {
+            "question": "遺産がある島は？",
+            "options": [
+              "サモア島",
+              "フィジーのビチレブ島",
+              "レンネル島"
+            ],
+            "answer": 2,
+            "fact": "ソロモン諸島のレンネル島東部を含む自然遺産である。",
+            "photoGoal": "東レンネルの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ガダルカナル島のホニアラ",
+          "title": "ガダルカナル島のホニアラ",
+          "paragraphs": [
+            "ホニアラはガダルカナル島に位置する首都である。山地から海岸へ続く地形を地図で確認し、島の都市と港の関係を読む。",
+            "ここではガダルカナル島のホニアラを題材に、地図と資料を照らし合わせながら首都がある島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Honiara Guadalcanal Solomon Islands",
+          "quizDraft": {
+            "question": "首都がある島は？",
+            "options": [
+              "ガダルカナル島",
+              "バヌアレブ島",
+              "タヒチ島"
+            ],
+            "answer": 0,
+            "fact": "ホニアラはガダルカナル島に位置する首都である。",
+            "photoGoal": "ガダルカナル島のホニアラの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "East Rennell Solomon Islands wide landscape"
+    },
+    "SL": {
+      "name": "シエラレオネ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "バンス島とタクガマ・チンパンジー保護区から読み解くシエラレオネ",
+        "body": "シエラレオネを二つの場所から読み解きます。シエラレオネ川にある歴史的な島で、大西洋奴隷貿易の歴史と深く関わる。要塞跡と河口の位置をたどり、人々が強制的に移動させられた歴史を記憶する。一方、フリータウン近郊でチンパンジーの保護に取り組む施設である。森林の生息環境と保護施設の役割を分けて理解し、野生動物保全を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "シエラレオネ川にある歴史的な島で、大西洋奴隷貿易の歴史と深く関わる。",
+          "フリータウン近郊でチンパンジーの保護に取り組む施設である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "バンス島",
+          "title": "バンス島",
+          "paragraphs": [
+            "シエラレオネ川にある歴史的な島で、大西洋奴隷貿易の歴史と深く関わる。要塞跡と河口の位置をたどり、人々が強制的に移動させられた歴史を記憶する。",
+            "ここではバンス島を題材に、地図と資料を照らし合わせながら歴史的主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Bunce Island Sierra Leone",
+          "quizDraft": {
+            "question": "歴史的主題は？",
+            "options": [
+              "大西洋奴隷貿易",
+              "宇宙開発",
+              "鉄道の電化"
+            ],
+            "answer": 0,
+            "fact": "シエラレオネ川にある歴史的な島で、大西洋奴隷貿易の歴史と深く関わる。",
+            "photoGoal": "バンス島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "タクガマ・チンパンジー保護区",
+          "title": "タクガマ・チンパンジー保護区",
+          "paragraphs": [
+            "フリータウン近郊でチンパンジーの保護に取り組む施設である。森林の生息環境と保護施設の役割を分けて理解し、野生動物保全を考える。",
+            "ここではタクガマ・チンパンジー保護区を題材に、地図と資料を照らし合わせながら主な保護対象はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Tacugama Chimpanzee Sanctuary Sierra Leone",
+          "quizDraft": {
+            "question": "主な保護対象は？",
+            "options": [
+              "ペンギン",
+              "チンパンジー",
+              "トナカイ"
+            ],
+            "answer": 1,
+            "fact": "フリータウン近郊でチンパンジーの保護に取り組む施設である。",
+            "photoGoal": "タクガマ・チンパンジー保護区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Bunce Island Sierra Leone wide landscape"
+    },
+    "SV": {
+      "name": "エルサルバドル",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ホヤ・デ・セレンとサンタ・アナ火山から読み解くエルサルバドル",
+        "body": "エルサルバドルを二つの場所から読み解きます。火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。住居や生活空間の配置を資料で見て、壮大な神殿以外からも古代の生活が分かることを考える。一方、エルサルバドル西部にそびえる火山で、山頂には火口がある。火口の形と周囲の山並みを資料で見比べ、中米の火山地形を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。",
+          "エルサルバドル西部にそびえる火山で、山頂には火口がある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ホヤ・デ・セレン",
+          "title": "ホヤ・デ・セレン",
+          "paragraphs": [
+            "火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。住居や生活空間の配置を資料で見て、壮大な神殿以外からも古代の生活が分かることを考える。",
+            "ここではホヤ・デ・セレンを題材に、地図と資料を照らし合わせながら保存のきっかけはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Joya de Ceren archaeological site El Salvador",
+          "quizDraft": {
+            "question": "保存のきっかけは？",
+            "options": [
+              "氷河形成",
+              "火山噴火",
+              "海底沈降のみ"
+            ],
+            "answer": 1,
+            "fact": "火山噴火の堆積物に覆われ保存された先スペイン期の集落遺跡である。",
+            "photoGoal": "ホヤ・デ・セレンの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サンタ・アナ火山",
+          "title": "サンタ・アナ火山",
+          "paragraphs": [
+            "エルサルバドル西部にそびえる火山で、山頂には火口がある。火口の形と周囲の山並みを資料で見比べ、中米の火山地形を考える。",
+            "ここではサンタ・アナ火山を題材に、地図と資料を照らし合わせながら山頂に見られる地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Santa Ana volcano El Salvador",
+          "quizDraft": {
+            "question": "山頂に見られる地形は？",
+            "options": [
+              "大運河",
+              "環礁",
+              "火口"
+            ],
+            "answer": 2,
+            "fact": "エルサルバドル西部にそびえる火山で、山頂には火口がある。",
+            "photoGoal": "サンタ・アナ火山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Joya de Ceren archaeological site El Salvador wide landscape"
+    },
+    "SM": {
+      "name": "サンマリノ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "グアイタ塔とサンマリノ歴史地区から読み解くサンマリノ",
+        "body": "サンマリノを二つの場所から読み解きます。ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。切り立った山の縁と石の壁の関係から、防衛施設が地形を利用したことを考える。一方、山の上の歴史的な街区は小国の政治と自治の歴史を伝える。広場と街路の配置をたどり、限られた地形の中で都市が発展した過程を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。",
+          "山の上の歴史的な街区は小国の政治と自治の歴史を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "グアイタ塔",
+          "title": "グアイタ塔",
+          "paragraphs": [
+            "ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。切り立った山の縁と石の壁の関係から、防衛施設が地形を利用したことを考える。",
+            "ここではグアイタ塔を題材に、地図と資料を照らし合わせながら塔がある山はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Guaita Tower San Marino",
+          "quizDraft": {
+            "question": "塔がある山は？",
+            "options": [
+              "エトナ山",
+              "富士山",
+              "ティターノ山"
+            ],
+            "answer": 2,
+            "fact": "ティターノ山に建つサンマリノの歴史的な防衛塔の一つである。",
+            "photoGoal": "グアイタ塔の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サンマリノ歴史地区",
+          "title": "サンマリノ歴史地区",
+          "paragraphs": [
+            "山の上の歴史的な街区は小国の政治と自治の歴史を伝える。広場と街路の配置をたどり、限られた地形の中で都市が発展した過程を読む。",
+            "ここではサンマリノ歴史地区を題材に、地図と資料を照らし合わせながら地区の主な地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "San Marino historic centre Piazza della Liberta",
+          "quizDraft": {
+            "question": "地区の主な地形は？",
+            "options": [
+              "山の上",
+              "海上の環礁",
+              "地下都市"
+            ],
+            "answer": 0,
+            "fact": "山の上の歴史的な街区は小国の政治と自治の歴史を伝える。",
+            "photoGoal": "サンマリノ歴史地区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Guaita Tower San Marino wide landscape"
+    },
+    "SO": {
+      "name": "ソマリア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ラース・ゲール岩絵とモガディシュ旧市街から読み解くソマリア",
+        "body": "ソマリアを二つの場所から読み解きます。ソマリランドのハルゲイサ近郊にある岩絵遺跡で、家畜などの図像が見られる。岩棚と描かれた動物の関係を資料から読み取り、過去の生活と表現を考える。一方、インド洋岸に位置するモガディシュには長い海上交易の歴史がある。海岸と街の位置を比較し、東アフリカの港湾都市が担った交流を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ソマリランドのハルゲイサ近郊にある岩絵遺跡で、家畜などの図像が見られる。",
+          "インド洋岸に位置するモガディシュには長い海上交易の歴史がある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ラース・ゲール岩絵",
+          "title": "ラース・ゲール岩絵",
+          "paragraphs": [
+            "ソマリランドのハルゲイサ近郊にある岩絵遺跡で、家畜などの図像が見られる。岩棚と描かれた動物の関係を資料から読み取り、過去の生活と表現を考える。",
+            "ここではラース・ゲール岩絵を題材に、地図と資料を照らし合わせながら遺跡の特徴はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Laas Geel rock art Somaliland",
+          "quizDraft": {
+            "question": "遺跡の特徴は？",
+            "options": [
+              "岩絵",
+              "ローマ水道橋",
+              "仏塔"
+            ],
+            "answer": 0,
+            "fact": "ソマリランドのハルゲイサ近郊にある岩絵遺跡で、家畜などの図像が見られる。",
+            "photoGoal": "ラース・ゲール岩絵の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "モガディシュ旧市街",
+          "title": "モガディシュ旧市街",
+          "paragraphs": [
+            "インド洋岸に位置するモガディシュには長い海上交易の歴史がある。海岸と街の位置を比較し、東アフリカの港湾都市が担った交流を考える。",
+            "ここではモガディシュ旧市街を題材に、地図と資料を照らし合わせながら面する海はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mogadishu historic old town Somalia",
+          "quizDraft": {
+            "question": "面する海は？",
+            "options": [
+              "北海",
+              "インド洋",
+              "バルト海"
+            ],
+            "answer": 1,
+            "fact": "インド洋岸に位置するモガディシュには長い海上交易の歴史がある。",
+            "photoGoal": "モガディシュ旧市街の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Laas Geel rock art Somaliland wide landscape"
+    },
+    "SS": {
+      "name": "南スーダン",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "バンディンギロ国立公園とスッド湿地から読み解く南スーダン",
+        "body": "南スーダンを二つの場所から読み解きます。南スーダンの草原に広がる野生動物の生息地域である。広い草原と川の分布を確認し、移動する動物が必要とする空間を考える。一方、白ナイル川の流れに関わる巨大な湿地帯である。川が複数の流路や湿地へ広がる様子を地図で見て、水の動きと暮らしを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "南スーダンの草原に広がる野生動物の生息地域である。",
+          "白ナイル川の流れに関わる巨大な湿地帯である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "バンディンギロ国立公園",
+          "title": "バンディンギロ国立公園",
+          "paragraphs": [
+            "南スーダンの草原に広がる野生動物の生息地域である。広い草原と川の分布を確認し、移動する動物が必要とする空間を考える。",
+            "ここではバンディンギロ国立公園を題材に、地図と資料を照らし合わせながら主な景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Badingilo National Park South Sudan",
+          "quizDraft": {
+            "question": "主な景観は？",
+            "options": [
+              "海洋環礁",
+              "草原",
+              "高山氷河"
+            ],
+            "answer": 1,
+            "fact": "南スーダンの草原に広がる野生動物の生息地域である。",
+            "photoGoal": "バンディンギロ国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "スッド湿地",
+          "title": "スッド湿地",
+          "paragraphs": [
+            "白ナイル川の流れに関わる巨大な湿地帯である。川が複数の流路や湿地へ広がる様子を地図で見て、水の動きと暮らしを考える。",
+            "ここではスッド湿地を題材に、地図と資料を照らし合わせながら関係する河川はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Sudd wetlands South Sudan",
+          "quizDraft": {
+            "question": "関係する河川は？",
+            "options": [
+              "メコン川",
+              "セーヌ川",
+              "白ナイル川"
+            ],
+            "answer": 2,
+            "fact": "白ナイル川の流れに関わる巨大な湿地帯である。",
+            "photoGoal": "スッド湿地の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Badingilo National Park South Sudan wide landscape"
+    },
+    "ST": {
+      "name": "サントメ・プリンシペ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ピコ・カン・グランデとロサ・アゴスチーニョ・ネトから読み解くサントメ・プリンシペ",
+        "body": "サントメ・プリンシペを二つの場所から読み解きます。サントメ島にある細長い火山性の岩塔である。密林の中から立ち上がる岩の輪郭に注目し、火山地形と風化を考える。一方、旧農園の建物群は植民地期の農業と労働の歴史を伝える。農園の建物配置を読み、作物の生産と労働の制度を景観の美しさとは分けて考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "サントメ島にある細長い火山性の岩塔である。",
+          "旧農園の建物群は植民地期の農業と労働の歴史を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ピコ・カン・グランデ",
+          "title": "ピコ・カン・グランデ",
+          "paragraphs": [
+            "サントメ島にある細長い火山性の岩塔である。密林の中から立ち上がる岩の輪郭に注目し、火山地形と風化を考える。",
+            "ここではピコ・カン・グランデを題材に、地図と資料を照らし合わせながら特徴的な地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Pico Cao Grande Sao Tome",
+          "quizDraft": {
+            "question": "特徴的な地形は？",
+            "options": [
+              "氷原",
+              "サンゴ礁",
+              "岩塔"
+            ],
+            "answer": 2,
+            "fact": "サントメ島にある細長い火山性の岩塔である。",
+            "photoGoal": "ピコ・カン・グランデの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ロサ・アゴスチーニョ・ネト",
+          "title": "ロサ・アゴスチーニョ・ネト",
+          "paragraphs": [
+            "旧農園の建物群は植民地期の農業と労働の歴史を伝える。農園の建物配置を読み、作物の生産と労働の制度を景観の美しさとは分けて考える。",
+            "ここではロサ・アゴスチーニョ・ネトを題材に、地図と資料を照らし合わせながら歴史的な用途はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Roca Agostinho Neto Sao Tome plantation",
+          "quizDraft": {
+            "question": "歴史的な用途は？",
+            "options": [
+              "農園",
+              "天文台",
+              "造船所"
+            ],
+            "answer": 0,
+            "fact": "旧農園の建物群は植民地期の農業と労働の歴史を伝える。",
+            "photoGoal": "ロサ・アゴスチーニョ・ネトの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Pico Cao Grande Sao Tome wide landscape"
+    },
+    "SZ": {
+      "name": "エスワティニ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ムリルワネ野生動物保護区とシベベ・ロックから読み解くエスワティニ",
+        "body": "エスワティニを二つの場所から読み解きます。エスワティニの自然保護地域で、草地や丘の風景が広がる。草地と樹木の分布を見て、野生動物が利用する環境の違いを考える。一方、ムババーネ近郊の大きな花崗岩の岩体として知られる。周囲の丘と岩の連続した表面を見比べ、長い地質の時間を想像する。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "エスワティニの自然保護地域で、草地や丘の風景が広がる。",
+          "ムババーネ近郊の大きな花崗岩の岩体として知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ムリルワネ野生動物保護区",
+          "title": "ムリルワネ野生動物保護区",
+          "paragraphs": [
+            "エスワティニの自然保護地域で、草地や丘の風景が広がる。草地と樹木の分布を見て、野生動物が利用する環境の違いを考える。",
+            "ここではムリルワネ野生動物保護区を題材に、地図と資料を照らし合わせながら主題はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mlilwane Wildlife Sanctuary Eswatini",
+          "quizDraft": {
+            "question": "主題は？",
+            "options": [
+              "野生動物保全",
+              "古代港湾交易",
+              "海洋考古学"
+            ],
+            "answer": 0,
+            "fact": "エスワティニの自然保護地域で、草地や丘の風景が広がる。",
+            "photoGoal": "ムリルワネ野生動物保護区の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "シベベ・ロック",
+          "title": "シベベ・ロック",
+          "paragraphs": [
+            "ムババーネ近郊の大きな花崗岩の岩体として知られる。周囲の丘と岩の連続した表面を見比べ、長い地質の時間を想像する。",
+            "ここではシベベ・ロックを題材に、地図と資料を照らし合わせながら主な岩石はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Sibebe Rock Eswatini",
+          "quizDraft": {
+            "question": "主な岩石は？",
+            "options": [
+              "氷",
+              "花崗岩",
+              "石炭のみ"
+            ],
+            "answer": 1,
+            "fact": "ムババーネ近郊の大きな花崗岩の岩体として知られる。",
+            "photoGoal": "シベベ・ロックの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Mlilwane Wildlife Sanctuary Eswatini wide landscape"
+    },
+    "SY": {
+      "name": "シリア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ダマスカス旧市街とパルミラ遺跡から読み解くシリア",
+        "body": "シリアを二つの場所から読み解きます。ダマスカス旧市街のウマイヤ・モスクは長い宗教と都市の歴史を伝える。中庭と周囲の街路の関係を資料で読み、都市の中心となる宗教建築を考える。一方、砂漠のオアシスに発展した古代都市の遺跡で、隊商交易の歴史を伝える。列柱の配置と周囲の乾燥地形を資料で比較し、都市が成立した理由を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ダマスカス旧市街のウマイヤ・モスクは長い宗教と都市の歴史を伝える。",
+          "砂漠のオアシスに発展した古代都市の遺跡で、隊商交易の歴史を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ダマスカス旧市街",
+          "title": "ダマスカス旧市街",
+          "paragraphs": [
+            "ダマスカス旧市街のウマイヤ・モスクは長い宗教と都市の歴史を伝える。中庭と周囲の街路の関係を資料で読み、都市の中心となる宗教建築を考える。",
+            "ここではダマスカス旧市街を題材に、地図と資料を照らし合わせながら代表的な建物はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/20",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Ancient City of Damascus Umayyad Mosque Syria",
+          "quizDraft": {
+            "question": "代表的な建物は？",
+            "options": [
+              "タージ・マハル",
+              "ウマイヤ・モスク",
+              "ノートルダム大聖堂"
+            ],
+            "answer": 1,
+            "fact": "ダマスカス旧市街のウマイヤ・モスクは長い宗教と都市の歴史を伝える。",
+            "photoGoal": "ダマスカス旧市街の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "パルミラ遺跡",
+          "title": "パルミラ遺跡",
+          "paragraphs": [
+            "砂漠のオアシスに発展した古代都市の遺跡で、隊商交易の歴史を伝える。列柱の配置と周囲の乾燥地形を資料で比較し、都市が成立した理由を考える。",
+            "ここではパルミラ遺跡を題材に、地図と資料を照らし合わせながら古代都市の立地はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/23",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Palmyra archaeological ruins Syria",
+          "quizDraft": {
+            "question": "古代都市の立地は？",
+            "options": [
+              "高山氷河",
+              "外洋の環礁",
+              "砂漠のオアシス"
+            ],
+            "answer": 2,
+            "fact": "砂漠のオアシスに発展した古代都市の遺跡で、隊商交易の歴史を伝える。",
+            "photoGoal": "パルミラ遺跡の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Ancient City of Damascus Umayyad Mosque Syria wide landscape"
+    },
+    "TG": {
+      "name": "トーゴ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "クタマクの伝統集落とトーゴ湖とトゴヴィルから読み解くトーゴ",
+        "body": "トーゴを二つの場所から読み解きます。バタマリバの土造りの住居と文化的景観を伝える地域である。住居の塔状の形と周囲の土地利用を比較し、建築と生活文化のつながりを考える。一方、トーゴ湖岸の集落は水辺の暮らしと地域の歴史を伝える。湖と海岸の間の地形を地図で確認し、水上移動と集落の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "バタマリバの土造りの住居と文化的景観を伝える地域である。",
+          "トーゴ湖岸の集落は水辺の暮らしと地域の歴史を伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "クタマクの伝統集落",
+          "title": "クタマクの伝統集落",
+          "paragraphs": [
+            "バタマリバの土造りの住居と文化的景観を伝える地域である。住居の塔状の形と周囲の土地利用を比較し、建築と生活文化のつながりを考える。",
+            "ここではクタマクの伝統集落を題材に、地図と資料を照らし合わせながら住居に特徴的な材料はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Koutammakou Togo Takienta",
+          "quizDraft": {
+            "question": "住居に特徴的な材料は？",
+            "options": [
+              "氷",
+              "ガラスのみ",
+              "土"
+            ],
+            "answer": 2,
+            "fact": "バタマリバの土造りの住居と文化的景観を伝える地域である。",
+            "photoGoal": "クタマクの伝統集落の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "トーゴ湖とトゴヴィル",
+          "title": "トーゴ湖とトゴヴィル",
+          "paragraphs": [
+            "トーゴ湖岸の集落は水辺の暮らしと地域の歴史を伝える。湖と海岸の間の地形を地図で確認し、水上移動と集落の関係を考える。",
+            "ここではトーゴ湖とトゴヴィルを題材に、地図と資料を照らし合わせながら集落が面するのはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Lake Togo Togoville Togo",
+          "quizDraft": {
+            "question": "集落が面するのは？",
+            "options": [
+              "トーゴ湖",
+              "バイカル湖",
+              "カスピ海"
+            ],
+            "answer": 0,
+            "fact": "トーゴ湖岸の集落は水辺の暮らしと地域の歴史を伝える。",
+            "photoGoal": "トーゴ湖とトゴヴィルの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Koutammakou Togo Takienta wide landscape"
+    },
+    "TL": {
+      "name": "東ティモール",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "クリスト・レイとアタウロ島から読み解く東ティモール",
+        "body": "東ティモールを二つの場所から読み解きます。ディリの東側の岬に立つキリスト像である。岬と湾の形を比較し、首都の海岸線と象徴的な建造物の位置関係を読む。一方、ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。島の斜面と沿岸の海を見て、陸上と海中の生息環境の関係を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ディリの東側の岬に立つキリスト像である。",
+          "ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "クリスト・レイ",
+          "title": "クリスト・レイ",
+          "paragraphs": [
+            "ディリの東側の岬に立つキリスト像である。岬と湾の形を比較し、首都の海岸線と象徴的な建造物の位置関係を読む。",
+            "ここではクリスト・レイを題材に、地図と資料を照らし合わせながら像がある都市の近郊はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Cristo Rei Dili Timor Leste",
+          "quizDraft": {
+            "question": "像がある都市の近郊は？",
+            "options": [
+              "ディリ",
+              "マニラ",
+              "ハノイ"
+            ],
+            "answer": 0,
+            "fact": "ディリの東側の岬に立つキリスト像である。",
+            "photoGoal": "クリスト・レイの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "アタウロ島",
+          "title": "アタウロ島",
+          "paragraphs": [
+            "ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。島の斜面と沿岸の海を見て、陸上と海中の生息環境の関係を考える。",
+            "ここではアタウロ島を題材に、地図と資料を照らし合わせながら島の位置はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Atauro Island Timor Leste",
+          "quizDraft": {
+            "question": "島の位置は？",
+            "options": [
+              "バルト海",
+              "ディリ沖",
+              "アマゾン川上流"
+            ],
+            "answer": 1,
+            "fact": "ディリの沖合に位置し、海洋生物やサンゴ礁で知られる島である。",
+            "photoGoal": "アタウロ島の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Cristo Rei Dili Timor Leste wide landscape"
+    },
+    "TO": {
+      "name": "トンガ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ハアモンガ・ア・マウイとマプ・ア・バエアから読み解くトンガ",
+        "body": "トンガを二つの場所から読み解きます。トンガタプ島に残る三石からなる巨石建造物である。石材の組み合わせと周囲の地形を見て、歴史的な建設技術を考える。一方、トンガタプ島の海岸に、波が岩の穴から噴き出す地形がある。海岸の岩と波の通り道を資料で見て、波の力が岩の形と結びつくことを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "トンガタプ島に残る三石からなる巨石建造物である。",
+          "トンガタプ島の海岸に、波が岩の穴から噴き出す地形がある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ハアモンガ・ア・マウイ",
+          "title": "ハアモンガ・ア・マウイ",
+          "paragraphs": [
+            "トンガタプ島に残る三石からなる巨石建造物である。石材の組み合わせと周囲の地形を見て、歴史的な建設技術を考える。",
+            "ここではハアモンガ・ア・マウイを題材に、地図と資料を照らし合わせながら建造物の形式はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Haamonga a Maui Tonga",
+          "quizDraft": {
+            "question": "建造物の形式は？",
+            "options": [
+              "木造五重塔",
+              "巨石の門状構造",
+              "ローマ水道橋"
+            ],
+            "answer": 1,
+            "fact": "トンガタプ島に残る三石からなる巨石建造物である。",
+            "photoGoal": "ハアモンガ・ア・マウイの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "マプ・ア・バエア",
+          "title": "マプ・ア・バエア",
+          "paragraphs": [
+            "トンガタプ島の海岸に、波が岩の穴から噴き出す地形がある。海岸の岩と波の通り道を資料で見て、波の力が岩の形と結びつくことを考える。",
+            "ここではマプ・ア・バエアを題材に、地図と資料を照らし合わせながら起こる自然現象はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mapu a Vaea blowholes Tonga",
+          "quizDraft": {
+            "question": "起こる自然現象は？",
+            "options": [
+              "火山噴火のみ",
+              "氷河の崩落",
+              "波による潮吹き"
+            ],
+            "answer": 2,
+            "fact": "トンガタプ島の海岸に、波が岩の穴から噴き出す地形がある。",
+            "photoGoal": "マプ・ア・バエアの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Haamonga a Maui Tonga wide landscape"
+    },
+    "TT": {
+      "name": "トリニダード・トバゴ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "カロニ湿地とピッチ湖から読み解くトリニダード・トバゴ",
+        "body": "トリニダード・トバゴを二つの場所から読み解きます。マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。水路と樹木の境界を地図でたどり、水鳥を支える潮間帯の環境を考える。一方、トリニダード島にある天然アスファルトの集積地である。表面の色やひび割れを資料で観察し、地下の資源が地表に現れる地質を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。",
+          "トリニダード島にある天然アスファルトの集積地である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "カロニ湿地",
+          "title": "カロニ湿地",
+          "paragraphs": [
+            "マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。水路と樹木の境界を地図でたどり、水鳥を支える潮間帯の環境を考える。",
+            "ここではカロニ湿地を題材に、地図と資料を照らし合わせながら代表的な鳥はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Caroni Swamp Trinidad Tobago",
+          "quizDraft": {
+            "question": "代表的な鳥は？",
+            "options": [
+              "ペンギン",
+              "ダチョウ",
+              "ショウジョウトキ"
+            ],
+            "answer": 2,
+            "fact": "マングローブなどが広がる湿地で、ショウジョウトキの生息地として知られる。",
+            "photoGoal": "カロニ湿地の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ピッチ湖",
+          "title": "ピッチ湖",
+          "paragraphs": [
+            "トリニダード島にある天然アスファルトの集積地である。表面の色やひび割れを資料で観察し、地下の資源が地表に現れる地質を考える。",
+            "ここではピッチ湖を題材に、地図と資料を照らし合わせながら集積する物質はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Pitch Lake Trinidad Tobago",
+          "quizDraft": {
+            "question": "集積する物質は？",
+            "options": [
+              "天然アスファルト",
+              "氷",
+              "サンゴ砂"
+            ],
+            "answer": 0,
+            "fact": "トリニダード島にある天然アスファルトの集積地である。",
+            "photoGoal": "ピッチ湖の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Caroni Swamp Trinidad Tobago wide landscape"
+    },
+    "TV": {
+      "name": "ツバル",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "フナフティ環礁とフナフティ保全地域から読み解くツバル",
+        "body": "ツバルを二つの場所から読み解きます。ツバルの中心となる環礁で、細い陸地が礁湖を囲む。衛星画像で陸地の幅と水面の広さを比べ、海と隣り合う生活を考える。一方、フナフティの海洋環境を守る保全地域である。陸地と礁湖、サンゴ礁を一緒に捉え、小さな島国で海が持つ重要性を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ツバルの中心となる環礁で、細い陸地が礁湖を囲む。",
+          "フナフティの海洋環境を守る保全地域である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "フナフティ環礁",
+          "title": "フナフティ環礁",
+          "paragraphs": [
+            "ツバルの中心となる環礁で、細い陸地が礁湖を囲む。衛星画像で陸地の幅と水面の広さを比べ、海と隣り合う生活を考える。",
+            "ここではフナフティ環礁を題材に、地図と資料を照らし合わせながら地形はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Funafuti atoll Tuvalu",
+          "quizDraft": {
+            "question": "地形は？",
+            "options": [
+              "環礁",
+              "火山高原",
+              "内陸盆地"
+            ],
+            "answer": 0,
+            "fact": "ツバルの中心となる環礁で、細い陸地が礁湖を囲む。",
+            "photoGoal": "フナフティ環礁の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "フナフティ保全地域",
+          "title": "フナフティ保全地域",
+          "paragraphs": [
+            "フナフティの海洋環境を守る保全地域である。陸地と礁湖、サンゴ礁を一緒に捉え、小さな島国で海が持つ重要性を考える。",
+            "ここではフナフティ保全地域を題材に、地図と資料を照らし合わせながら主に守る環境はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Funafuti Conservation Area Tuvalu",
+          "quizDraft": {
+            "question": "主に守る環境は？",
+            "options": [
+              "高山氷河",
+              "海洋生態系",
+              "砂漠の洞窟"
+            ],
+            "answer": 1,
+            "fact": "フナフティの海洋環境を守る保全地域である。",
+            "photoGoal": "フナフティ保全地域の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Funafuti atoll Tuvalu wide landscape"
+    },
+    "TW": {
+      "name": "台湾",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "太魯閣峡谷と台南の赤崁楼から読み解く台湾",
+        "body": "台湾を二つの場所から読み解きます。台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。岩壁の層と川の位置を資料で比較し、隆起と侵食がつくる景観を考える。一方、台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。古い遺構と後世の建物を分けて見て、同じ場所が時代とともに変化したことを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。",
+          "台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "太魯閣峡谷",
+          "title": "太魯閣峡谷",
+          "paragraphs": [
+            "台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。岩壁の層と川の位置を資料で比較し、隆起と侵食がつくる景観を考える。",
+            "ここでは太魯閣峡谷を題材に、地図と資料を照らし合わせながら峡谷を形づくる作用はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Taroko Gorge Taiwan",
+          "quizDraft": {
+            "question": "峡谷を形づくる作用は？",
+            "options": [
+              "サンゴの成長",
+              "河川の侵食",
+              "人工的な埋立のみ"
+            ],
+            "answer": 1,
+            "fact": "台湾東部の大理石を含む岩盤を河川が深く刻んだ峡谷である。",
+            "photoGoal": "太魯閣峡谷の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "台南の赤崁楼",
+          "title": "台南の赤崁楼",
+          "paragraphs": [
+            "台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。古い遺構と後世の建物を分けて見て、同じ場所が時代とともに変化したことを考える。",
+            "ここでは台南の赤崁楼を題材に、地図と資料を照らし合わせながら建物がある都市はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Chihkan Tower Tainan Taiwan",
+          "quizDraft": {
+            "question": "建物がある都市は？",
+            "options": [
+              "台中",
+              "基隆",
+              "台南"
+            ],
+            "answer": 2,
+            "fact": "台南の歴史的な建築群で、オランダ統治期の施設の歴史も伝える。",
+            "photoGoal": "台南の赤崁楼の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Taroko Gorge Taiwan wide landscape"
+    },
+    "VA": {
+      "name": "バチカン市国",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "サン・ピエトロ大聖堂とサン・ピエトロ広場から読み解くバチカン市国",
+        "body": "バチカン市国を二つの場所から読み解きます。バチカン市国を代表するカトリックの宗教建築である。広場から大聖堂へ続く空間の構成を見て、宗教建築と都市空間の関係を考える。一方、ベルニーニの列柱で囲まれた広場は、ローマ市とバチカンの接点でもある。楕円形の空間と列柱の配置に注目し、建築が人の集まる場所を作る方法を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "バチカン市国を代表するカトリックの宗教建築である。",
+          "ベルニーニの列柱で囲まれた広場は、ローマ市とバチカンの接点でもある。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "サン・ピエトロ大聖堂",
+          "title": "サン・ピエトロ大聖堂",
+          "paragraphs": [
+            "バチカン市国を代表するカトリックの宗教建築である。広場から大聖堂へ続く空間の構成を見て、宗教建築と都市空間の関係を考える。",
+            "ここではサン・ピエトロ大聖堂を題材に、地図と資料を照らし合わせながら大聖堂がある国はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/286",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Saint Peters Basilica Vatican City",
+          "quizDraft": {
+            "question": "大聖堂がある国は？",
+            "options": [
+              "モナコ",
+              "サンマリノ",
+              "バチカン市国"
+            ],
+            "answer": 2,
+            "fact": "バチカン市国を代表するカトリックの宗教建築である。",
+            "photoGoal": "サン・ピエトロ大聖堂の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "サン・ピエトロ広場",
+          "title": "サン・ピエトロ広場",
+          "paragraphs": [
+            "ベルニーニの列柱で囲まれた広場は、ローマ市とバチカンの接点でもある。楕円形の空間と列柱の配置に注目し、建築が人の集まる場所を作る方法を考える。",
+            "ここではサン・ピエトロ広場を題材に、地図と資料を照らし合わせながら広場を特徴づけるものはという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/286",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Saint Peters Square Bernini colonnade Vatican City",
+          "quizDraft": {
+            "question": "広場を特徴づけるものは？",
+            "options": [
+              "列柱",
+              "石造ピラミッド",
+              "吊橋"
+            ],
+            "answer": 0,
+            "fact": "ベルニーニの列柱で囲まれた広場は、ローマ市とバチカンの接点でもある。",
+            "photoGoal": "サン・ピエトロ広場の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Saint Peters Basilica Vatican City wide landscape"
+    },
+    "VC": {
+      "name": "セントビンセント及びグレナディーン諸島",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ラ・スフリエール火山とトバゴ・ケイズから読み解くセントビンセント及びグレナディーン諸島",
+        "body": "セントビンセント及びグレナディーン諸島を二つの場所から読み解きます。セントビンセント島北部にある火山で、島の地形を特徴づける。火口と山腹、海岸への距離を地図で確認し、火山と暮らしの関係を考える。一方、グレナディーン諸島の小島とサンゴ礁の海洋景観で知られる。島々の位置と礁の形を比較し、海の生息環境が連続する様子を読む。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "セントビンセント島北部にある火山で、島の地形を特徴づける。",
+          "グレナディーン諸島の小島とサンゴ礁の海洋景観で知られる。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ラ・スフリエール火山",
+          "title": "ラ・スフリエール火山",
+          "paragraphs": [
+            "セントビンセント島北部にある火山で、島の地形を特徴づける。火口と山腹、海岸への距離を地図で確認し、火山と暮らしの関係を考える。",
+            "ここではラ・スフリエール火山を題材に、地図と資料を照らし合わせながら山の種類はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "La Soufriere volcano Saint Vincent",
+          "quizDraft": {
+            "question": "山の種類は？",
+            "options": [
+              "火山",
+              "氷河",
+              "砂丘"
+            ],
+            "answer": 0,
+            "fact": "セントビンセント島北部にある火山で、島の地形を特徴づける。",
+            "photoGoal": "ラ・スフリエール火山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "トバゴ・ケイズ",
+          "title": "トバゴ・ケイズ",
+          "paragraphs": [
+            "グレナディーン諸島の小島とサンゴ礁の海洋景観で知られる。島々の位置と礁の形を比較し、海の生息環境が連続する様子を読む。",
+            "ここではトバゴ・ケイズを題材に、地図と資料を照らし合わせながら主な景観はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Tobago Cays Saint Vincent Grenadines",
+          "quizDraft": {
+            "question": "主な景観は？",
+            "options": [
+              "高山と氷河",
+              "島とサンゴ礁",
+              "内陸砂漠"
+            ],
+            "answer": 1,
+            "fact": "グレナディーン諸島の小島とサンゴ礁の海洋景観で知られる。",
+            "photoGoal": "トバゴ・ケイズの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "La Soufriere volcano Saint Vincent wide landscape"
+    },
+    "VU": {
+      "name": "バヌアツ",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ロイ・マタ首長の領域とヤスール火山から読み解くバヌアツ",
+        "body": "バヌアツを二つの場所から読み解きます。エファテ島などの複数の場所からなる文化遺産で、首長ロイ・マタの歴史と結びつく。海を隔てた場所の関係を地図でたどり、口承と歴史的景観のつながりを考える。一方、タンナ島にある活火山である。山頂の火口と周囲の地形を資料で確かめ、活動する火山と島の地質を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "エファテ島などの複数の場所からなる文化遺産で、首長ロイ・マタの歴史と結びつく。",
+          "タンナ島にある活火山である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ロイ・マタ首長の領域",
+          "title": "ロイ・マタ首長の領域",
+          "paragraphs": [
+            "エファテ島などの複数の場所からなる文化遺産で、首長ロイ・マタの歴史と結びつく。海を隔てた場所の関係を地図でたどり、口承と歴史的景観のつながりを考える。",
+            "ここではロイ・マタ首長の領域を題材に、地図と資料を照らし合わせながら遺産の構成はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/1280",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Chief Roi Mata Domain Vanuatu Efate",
+          "quizDraft": {
+            "question": "遺産の構成は？",
+            "options": [
+              "単一の高山氷河",
+              "複数の島の場所",
+              "近代地下鉄"
+            ],
+            "answer": 1,
+            "fact": "エファテ島などの複数の場所からなる文化遺産で、首長ロイ・マタの歴史と結びつく。",
+            "photoGoal": "ロイ・マタ首長の領域の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "ヤスール火山",
+          "title": "ヤスール火山",
+          "paragraphs": [
+            "タンナ島にある活火山である。山頂の火口と周囲の地形を資料で確かめ、活動する火山と島の地質を考える。",
+            "ここではヤスール火山を題材に、地図と資料を照らし合わせながら所在する島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mount Yasur Tanna Vanuatu",
+          "quizDraft": {
+            "question": "所在する島は？",
+            "options": [
+              "エファテ島",
+              "サント島",
+              "タンナ島"
+            ],
+            "answer": 2,
+            "fact": "タンナ島にある活火山である。",
+            "photoGoal": "ヤスール火山の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Chief Roi Mata Domain Vanuatu Efate wide landscape"
+    },
+    "WS": {
+      "name": "サモア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "ロバート・ルイス・スティーヴンソン博物館とトスア・オーシャン・トレンチから読み解くサモア",
+        "body": "サモアを二つの場所から読み解きます。作家スティーヴンソンが晩年を過ごしたヴァイリマの住居に関わる博物館である。住宅の構成と周囲の緑を資料で見て、作家とサモアの歴史的な関係を考える。一方、ウポル島にある海水が入り込む深い地形で、周辺は火山性の土地である。岩の窪みと海の位置関係を資料で読み、島の地形と水のつながりを考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "作家スティーヴンソンが晩年を過ごしたヴァイリマの住居に関わる博物館である。",
+          "ウポル島にある海水が入り込む深い地形で、周辺は火山性の土地である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "ロバート・ルイス・スティーヴンソン博物館",
+          "title": "ロバート・ルイス・スティーヴンソン博物館",
+          "paragraphs": [
+            "作家スティーヴンソンが晩年を過ごしたヴァイリマの住居に関わる博物館である。住宅の構成と周囲の緑を資料で見て、作家とサモアの歴史的な関係を考える。",
+            "ここではロバート・ルイス・スティーヴンソン博物館を題材に、地図と資料を照らし合わせながら博物館が扱う人物はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Robert Louis Stevenson Museum Vailima Samoa",
+          "quizDraft": {
+            "question": "博物館が扱う人物は？",
+            "options": [
+              "画家モネ",
+              "作曲家バッハ",
+              "作家スティーヴンソン"
+            ],
+            "answer": 2,
+            "fact": "作家スティーヴンソンが晩年を過ごしたヴァイリマの住居に関わる博物館である。",
+            "photoGoal": "ロバート・ルイス・スティーヴンソン博物館の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "トスア・オーシャン・トレンチ",
+          "title": "トスア・オーシャン・トレンチ",
+          "paragraphs": [
+            "ウポル島にある海水が入り込む深い地形で、周辺は火山性の土地である。岩の窪みと海の位置関係を資料で読み、島の地形と水のつながりを考える。",
+            "ここではトスア・オーシャン・トレンチを題材に、地図と資料を照らし合わせながら所在する島はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "To Sua Ocean Trench Samoa",
+          "quizDraft": {
+            "question": "所在する島は？",
+            "options": [
+              "ウポル島",
+              "ビオコ島",
+              "ルソン島"
+            ],
+            "answer": 0,
+            "fact": "ウポル島にある海水が入り込む深い地形で、周辺は火山性の土地である。",
+            "photoGoal": "トスア・オーシャン・トレンチの被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Robert Louis Stevenson Museum Vailima Samoa wide landscape"
+    },
+    "ZM": {
+      "name": "ザンビア",
+      "status": "pending",
+      "publicationEligible": false,
+      "portrait": {
+        "lead": "モシ・オ・トゥニャ／ヴィクトリアの滝と南ルアングワ国立公園から読み解くザンビア",
+        "body": "ザンビアを二つの場所から読み解きます。ザンビアとジンバブエにまたがるザンベジ川の大きな滝である。峡谷と落水の位置を地図でたどり、一つの自然景観が国境を越えて保全される意味を考える。一方、ルアングワ川流域の野生動物の生息環境を含む国立公園である。川の曲がり方と周囲の草地や森林を見比べ、水が生態系を支える役割を考える。二つの場所は同じ国でも異なる景観や歴史を伝えます。資料の時点や現在の状況を区別しながら、地図と実景資料を組み合わせた誌上の小旅行として紹介します。",
+        "facts": [
+          "ザンビアとジンバブエにまたがるザンベジ川の大きな滝である。",
+          "ルアングワ川流域の野生動物の生息環境を含む国立公園である。"
+        ],
+        "photos": [],
+        "sourceName": null,
+        "sourceUrl": null,
+        "sourceReviewStatus": "independent_claim_review_required"
+      },
+      "portraitPhotos": [],
+      "quiz": [],
+      "travelStops": {},
+      "highlights": [],
+      "travelDrafts": [
+        {
+          "place": "モシ・オ・トゥニャ／ヴィクトリアの滝",
+          "title": "モシ・オ・トゥニャ／ヴィクトリアの滝",
+          "paragraphs": [
+            "ザンビアとジンバブエにまたがるザンベジ川の大きな滝である。峡谷と落水の位置を地図でたどり、一つの自然景観が国境を越えて保全される意味を考える。",
+            "ここではモシ・オ・トゥニャ／ヴィクトリアの滝を題材に、地図と資料を照らし合わせながら滝がある川はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": "UNESCO世界遺産センター",
+          "sourceUrl": "https://whc.unesco.org/en/list/509",
+          "sourceReviewStatus": "reference_page_located_claim_review_required",
+          "referenceLocatedOn": "2026-11-25",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "Mosi oa Tunya Victoria Falls Zambia side",
+          "quizDraft": {
+            "question": "滝がある川は？",
+            "options": [
+              "ザンベジ川",
+              "アマゾン川",
+              "ドナウ川"
+            ],
+            "answer": 0,
+            "fact": "ザンビアとジンバブエにまたがるザンベジ川の大きな滝である。",
+            "photoGoal": "モシ・オ・トゥニャ／ヴィクトリアの滝の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        },
+        {
+          "place": "南ルアングワ国立公園",
+          "title": "南ルアングワ国立公園",
+          "paragraphs": [
+            "ルアングワ川流域の野生動物の生息環境を含む国立公園である。川の曲がり方と周囲の草地や森林を見比べ、水が生態系を支える役割を考える。",
+            "ここでは南ルアングワ国立公園を題材に、地図と資料を照らし合わせながら公園と関係する川はという問いを考えます。現在の現地状況や立入条件は別途確認が必要であり、訪問を勧めるものではありません。"
+          ],
+          "sourceName": null,
+          "sourceUrl": null,
+          "sourceReviewStatus": "independent_source_required",
+          "photoStatus": "not_selected_or_licensed",
+          "status": "pending_source_photo_rights_and_location_review",
+          "editorialOnly": true,
+          "commonsSearch": "South Luangwa National Park Zambia",
+          "quizDraft": {
+            "question": "公園と関係する川は？",
+            "options": [
+              "エルベ川",
+              "ルアングワ川",
+              "テムズ川"
+            ],
+            "answer": 1,
+            "fact": "ルアングワ川流域の野生動物の生息環境を含む国立公園である。",
+            "photoGoal": "南ルアングワ国立公園の被写体・位置・原画像・作者・ライセンス確認",
+            "factReviewRequired": true
+          }
+        }
+      ],
+      "coverCommonsSearch": "Mosi oa Tunya Victoria Falls Zambia side wide landscape"
+    }
+  }
+}
