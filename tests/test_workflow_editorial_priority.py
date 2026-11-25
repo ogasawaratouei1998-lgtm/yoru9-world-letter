@@ -13,6 +13,18 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
                         WORKFLOW.index('mkdir -p /tmp/yoru9-reviewed'))
         self.assertNotIn('max(valid,key=lambda item:item[0])',WORKFLOW)
 
+    def test_preview_job_guard_is_yaml_safe_and_scheduled_in_utc(self):
+        preview=(Path(__file__).resolve().parents[1]/
+                 ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        guard="github.event_name != 'push' || startsWith(github.event.head_commit.message, 'Local editorial trial: ')"
+        # A colon followed by a space cannot appear in a YAML plain scalar.
+        # Keep the complete expression in a folded scalar instead.
+        self.assertIn("    if: >-\n      "+guard,preview)
+        self.assertNotIn("    if: "+guard,preview)
+        self.assertIn("- cron: '15 9 * * *'",preview)  # 18:15 JST
+        self.assertIn("- cron: '45 10 * * *'",preview)  # 19:45 JST
+        self.assertNotIn("timezone:",preview)
+
     def test_verified_review_uploads_exact_date_only(self):
         preview=(Path(__file__).resolve().parents[1]/
                  ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")

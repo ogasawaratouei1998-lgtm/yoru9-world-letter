@@ -9,8 +9,7 @@ on:
     # Start editorial work well before the delivery deadline (18:15 JST).
     - cron: '15 9 * * *'
     # Second opportunity if the early review did not produce an approved issue.
-    - cron: '45 19 * * *'
-      timezone: 'Asia/Tokyo'
+    - cron: '45 10 * * *' # 19:45 JST (UTC schedule)
 permissions:
   contents: read
   statuses: write
@@ -20,7 +19,8 @@ concurrency:
 jobs:
   review:
     # Ordinary code pushes never launch inference. One explicitly named trial can.
-    if: github.event_name != 'push' || startsWith(github.event.head_commit.message, 'Local editorial trial: ')
+    if: >-
+      github.event_name != 'push' || startsWith(github.event.head_commit.message, 'Local editorial trial: ')
     runs-on: ubuntu-latest
     # Model download, CPU inference and source retrieval all need bounded time.
     timeout-minutes: 55
