@@ -166,9 +166,14 @@ def draft_queries(root=ROOT):
                 raise ValueError("Missing country-specific search vocabulary: " + code)
             labels = ("cover", *(stop["place"] for stop in country["travelDrafts"]))
             for idx, (label, query) in enumerate(zip(labels, terms)):
-                yield {"countryCode": code, "country": country["name"],
+                row = {"countryCode": code, "country": country["name"],
                        "role": "cover" if idx == 0 else "quizAndTravel",
                        "place": label, "searchQuery": query}
+                if (country.get("portrait") or {}).get("sourceReviewStatus") == "independent_claim_review_required":
+                    row["firstDraftSourceReviewRequired"] = True
+                    if idx:
+                        row["referencePageCandidate"] = country["travelDrafts"][idx-1].get("sourceUrl")
+                yield row
 
 
 def generate_report(root=ROOT, limit=3, fetch=fetch_commons, sleep_seconds=1.0):

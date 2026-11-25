@@ -179,6 +179,12 @@ def make_plan(root, inventory=None):
                     raise ValueError("Draft photo roles invalid: " + code)
                 item.update(place=existing[slot]["place"], searchQuery=existing[slot]["searchQuery"],
                             origin="existing_draft")
+                if existing[slot].get("firstDraftSourceReviewRequired"):
+                    item.update(origin="independent_source_required",
+                                independentSourceReviewRequired=True,
+                                referencePageCandidate=existing[slot].get("referencePageCandidate"))
+                    if slot == 0:
+                        item.update(origin="country_cover_research", countryNames=[country["name"], *aliases])
                 key = (code, slot)
                 if key in DRAFT_SEARCH_REFINEMENTS:
                     item["originalSearchQuery"] = item["searchQuery"]
