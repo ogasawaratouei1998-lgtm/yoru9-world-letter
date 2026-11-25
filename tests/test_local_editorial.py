@@ -46,6 +46,28 @@ class LocalEditorialTest(unittest.TestCase):
             local.assert_called_once()
             remote.assert_not_called()
 
+    def test_timeout_is_request_scoped_and_never_calls_remote(self):
+        with patch.object(editorial,"LOCAL_EDITORIAL",True), patch.object(editorial,"KEY",""), \
+             patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \
+             patch.object(editorial,"RUN_DEADLINE",None), \
+             patch.object(local_editorial,"generate_json",side_effect=[
+                 local_editorial.LocalRequestTimeout("timeout"),{"stories":[]}]) as local, \
+             patch.object(editorial,"available_models") as remote:
+            with self.assertRaises(local_editorial.LocalRequestTimeout):
+                editorial.ai("draft")
+            self.assertFalse(editorial.LOCAL_BACKEND_FAILED)
+            self.assertEqual(editorial.ai("different source"),{"stories":[]})
+            self.assertEqual(local.call_count,2)
+            remote.assert_not_called()
+
+    def test_http_timeout_is_sanitized_and_closes_connection(self):
+        client=Mock()
+        client.getresponse.side_effect=TimeoutError("private details")
+        with patch.object(local_editorial.http.client,"HTTPConnection",return_value=client):
+            with self.assertRaisesRegex(local_editorial.LocalRequestTimeout,"request timed out"):
+                local_editorial.generate_json("draft")
+        client.close.assert_called_once()
+
     def test_local_failure_has_no_remote_fallback(self):
         with patch.object(editorial,"LOCAL_EDITORIAL",True), patch.object(editorial,"KEY",""), \
              patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \

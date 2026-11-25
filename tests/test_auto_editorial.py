@@ -880,7 +880,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
     def test_editorial_drafting_keeps_time_for_fact_checking(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
-        self.assertIn("editorial_seconds_remaining()<150",source)
+        self.assertIn("editorial_seconds_remaining()<(420 if LOCAL_EDITORIAL else 150)",source)
         self.assertIn("editorial_seconds_remaining()<45",source)
         self.assertIn('group_reasons.get(g["groupId"])=="same_incident_supported"',source)
         self.assertIn("draft_preflight_viable(item,now) for item in draft",source)
@@ -896,7 +896,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn('for item in draft)>=8',code)
         self.assertLess(code.index('yield from draft'),code.index('response=ai(retry_prompt,temperature=0.5)'))
         self.assertIn('for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):',code)
-        self.assertIn('editorial_seconds_remaining()<150',code)
+        self.assertIn('editorial_seconds_remaining()<(420 if LOCAL_EDITORIAL else 150)',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
         self.assertIn('supplemental_attempts+=1',code)
         self.assertIn('supplemental_generated+=len(retry_stories)',code)
@@ -913,7 +913,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn('supplemental_groups_examined+=len(batch)',code)
         self.assertIn('draft.extend(retry_stories)',code)
         self.assertIn('NEVER merge facts, people, locations, or sources from different groups',code)
-        self.assertIn('editorial_seconds_remaining()<150',code)
+        self.assertIn('editorial_seconds_remaining()<(420 if LOCAL_EDITORIAL else 150)',code)
         self.assertIn('independent_editorial_quality_passed(audit)',code)
         self.assertIn('if AI_QUOTA_BLOCKED:',code)
 
