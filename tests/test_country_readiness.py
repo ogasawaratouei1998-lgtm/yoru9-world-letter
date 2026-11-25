@@ -75,7 +75,7 @@ class CountryReadinessTest(unittest.TestCase):
                              for s in verified),2)
         pipeline=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertNotIn("if ready_reviewed_count()>=",pipeline)
-        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130:",pipeline)
+        self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130 or LOCAL_BACKEND_FAILED:",pipeline)
         self.assertNotIn("if len(selected)>=9:break",pipeline,
                           "No approved story may be dropped solely for its edition number")
 
@@ -123,7 +123,10 @@ class CountryReadinessTest(unittest.TestCase):
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         main=code.split("def main():",1)[-1]
         self.assertIn("select_ready_stories(selected,Path.cwd())",main)
-        self.assertIn('checkpoint("no_publishable_stories"',main)
+        self.assertIn('"no_publishable_stories")',main)
+        self.assertIn("checkpoint(failure_phase,independent_approved=reviewed_count,",main)
+        self.assertIn('"model_unavailable" if LOCAL_BACKEND_FAILED',main)
+        self.assertIn("country_ready_articles=0,country_ready_count=len(prepared)",main)
         self.assertNotIn("prepare_news_images",main)
         self.assertNotIn("expected_path(day,story)",main)
         self.assertNotIn("story['imagePath']=",main)

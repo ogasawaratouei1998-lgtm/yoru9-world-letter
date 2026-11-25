@@ -58,6 +58,69 @@ DRAFT_SEARCH_REFINEMENTS = {
 }
 
 
+# Unverified place-name research leads, not source evidence or editorial copy.
+# These cover the 58 countries without a portrait as of 2026-11-25.
+UNDRAFTED_PLACE_LEADS = {
+    "BI": ("Rusizi National Park", "Gishora Drum Sanctuary"),
+    "BS": ("Exuma Cays Land and Sea Park", "Fort Fincastle Nassau"),
+    "BB": ("Historic Bridgetown and its Garrison", "Harrison's Cave"),
+    "BN": ("Omar Ali Saifuddien Mosque", "Ulu Temburong National Park"),
+    "BT": ("Paro Taktsang", "Punakha Dzong"),
+    "CG": ("Odzala-Kokoua National Park", "Basilique Sainte-Anne Brazzaville"),
+    "KM": ("Mount Karthala", "Old Friday Mosque Moroni"),
+    "CV": ("Cidade Velha Santiago", "Pico do Fogo"),
+    "DJ": ("Lake Assal", "Day Forest National Park"),
+    "DM": ("Morne Trois Pitons National Park", "Scotts Head Dominica"),
+    "ER": ("Asmara modernist architecture", "Massawa old town"),
+    "FM": ("Nan Madol Pohnpei", "Lelu ruins Kosrae"),
+    "GN": ("Fouta Djallon", "Mount Nimba Guinea"),
+    "GW": ("Bijagós Archipelago", "Bolama historic town"),
+    "GQ": ("Pico Basilé", "Malabo Cathedral"),
+    "GD": ("Grand Etang National Park", "Fort George St George's Grenada"),
+    "GY": ("Kaieteur Falls", "St George's Cathedral Georgetown"),
+    "HT": ("Citadelle Laferrière", "Sans-Souci Palace Haiti"),
+    "JM": ("Blue and John Crow Mountains", "Port Royal Jamaica"),
+    "KI": ("Kiritimati atoll", "Phoenix Islands Protected Area"),
+    "KN": ("Brimstone Hill Fortress", "Nevis Peak"),
+    "KW": ("Kuwait Towers", "Failaka Island archaeological site"),
+    "LR": ("Providence Island Monrovia", "Sapo National Park"),
+    "LY": ("Leptis Magna", "Sabratha archaeological site"),
+    "LC": ("Pitons Saint Lucia", "Pigeon Island National Landmark"),
+    "LI": ("Vaduz Castle", "Gutenberg Castle Balzers"),
+    "LS": ("Thaba Bosiu", "Maletsunyane Falls"),
+    "MC": ("Prince's Palace of Monaco", "Oceanographic Museum Monaco"),
+    "MD": ("Orheiul Vechi", "Soroca Fortress"),
+    "MV": ("Malé Friday Mosque", "Baa Atoll"),
+    "MH": ("Bikini Atoll", "Laura Beach Majuro"),
+    "MK": ("Ohrid old town", "Kokino archaeological site"),
+    "MZ": ("Island of Mozambique", "Gorongosa National Park"),
+    "NE": ("Historic Centre of Agadez", "Aïr and Ténéré Natural Reserves"),
+    "NR": ("Buada Lagoon", "Anibare Bay"),
+    "PW": ("Rock Islands Southern Lagoon", "Badrulchau stone monoliths"),
+    "PG": ("Kuk Early Agricultural Site", "Varirata National Park"),
+    "QA": ("Al Zubarah Archaeological Site", "Museum of Islamic Art Doha"),
+    "SB": ("East Rennell", "Vilu War Museum"),
+    "SL": ("Bunce Island", "Tiwai Island Wildlife Sanctuary"),
+    "SV": ("Joya de Cerén", "Santa Ana Volcano"),
+    "SM": ("San Marino historic centre", "Guaita tower"),
+    "SO": ("Laas Geel rock art", "Mogadishu historic lighthouse"),
+    "SS": ("Boma National Park", "Sudd wetland"),
+    "ST": ("Pico Cão Grande", "Roça Agostinho Neto"),
+    "SZ": ("Mlilwane Wildlife Sanctuary", "Ngwenya Mine"),
+    "SY": ("Ancient City of Damascus", "Crac des Chevaliers"),
+    "TG": ("Koutammakou Togo", "Lake Togo"),
+    "TL": ("Cristo Rei of Dili", "Jaco Island"),
+    "TO": ("Haʻamonga ʻa Maui", "Mapu ʻa Vaea blowholes"),
+    "TT": ("Caroni Swamp", "Pitch Lake Trinidad"),
+    "TV": ("Funafuti Conservation Area", "Funafuti lagoon"),
+    "TW": ("Taroko Gorge", "National Palace Museum Taipei"),
+    "VA": ("St Peter's Basilica", "Vatican Museums"),
+    "VC": ("La Soufrière Saint Vincent", "Tobago Cays Marine Park"),
+    "VU": ("Chief Roi Mata's Domain", "Mount Yasur"),
+    "WS": ("To Sua Ocean Trench", "Saleaula lava fields"),
+    "ZM": ("Victoria Falls Zambia", "South Luangwa National Park"),
+}
+
 def _normalized_words(value):
     if not isinstance(value, str):
         return ""
@@ -131,6 +194,14 @@ def make_plan(root, inventory=None):
                 site = official[slot - 1]
                 item.update(place=site["name"], searchQuery=site["name"] + " " + english,
                             officialSourceCandidate=site["sourceUrl"], origin="unesco_inventory_candidate")
+            elif code in UNDRAFTED_PLACE_LEADS:
+                place = UNDRAFTED_PLACE_LEADS[code][slot - 1]
+                # An independent lead is a search hint only. It has no reviewed
+                # source or established site identity and cannot become a draft
+                # or a release record automatically.
+                item.update(place=place, searchQuery=place + " " + english,
+                            origin="independent_source_required",
+                            independentSourceReviewRequired=True)
             else:
                 item["origin"] = "independent_source_required"
             slots.append(item)

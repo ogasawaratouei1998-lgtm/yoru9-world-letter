@@ -78,6 +78,25 @@ class AllCountryResearchTests(unittest.TestCase):
             self.assertIsNone(row["slots"][2]["searchQuery"])
             self.assertEqual(row["slots"][2]["origin"], "independent_source_required")
 
+    def test_every_current_undrafted_country_has_two_independent_research_leads(self):
+        from country_bulk_research import UNDRAFTED_PLACE_LEADS
+        canonical = json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))["countries"]
+        missing = {c for c, r in canonical.items() if r["status"] == "pending"
+                   and not (r.get("portrait") or {}).get("body")}
+        self.assertTrue(missing <= set(UNDRAFTED_PLACE_LEADS))
+        plan = make_plan(ROOT)
+        for row in plan["countries"]:
+            if row["code"] not in missing:
+                continue
+            slots = row["slots"][1:]
+            self.assertEqual(len({s["searchQuery"] for s in slots}), 2)
+            for slot in slots:
+                self.assertTrue(slot["searchQuery"])
+                self.assertEqual(slot["origin"], "independent_source_required")
+                self.assertIsNone(slot["officialSourceCandidate"])
+                self.assertTrue(slot["independentSourceReviewRequired"])
+                self.assertFalse(slot["publicationEligible"])
+
     def test_rate_limit_defers_remaining_searches_without_inventing_results(self):
         plan = make_plan(ROOT)
         calls = []
