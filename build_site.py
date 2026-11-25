@@ -88,7 +88,8 @@ def bundle_travel_photos(root, output):
     active_covers=set(country_covers)
     active_photos=set(required)
     current_path=root/'data/current.json'
-    if current_path.is_file() and page.is_file() and matches:
+    has_active_issue=current_path.is_file() and page.is_file() and bool(matches)
+    if has_active_issue:
         from country_codes import country_codes
         current_issue=json.loads(current_path.read_text(encoding='utf-8'))
         active_codes={code for story in current_issue.get('stories',[])
@@ -161,7 +162,7 @@ def bundle_travel_photos(root, output):
         # thumbnail width. Request 960px first for current non-cover images;
         # preserve the original file, caption and license and never upscale.
         postcard = thumbnail_width(url, 960)
-        larger = (large if cover else postcard if asset in active_photos
+        larger = (large if cover else postcard if has_active_issue and asset in active_photos
                   and re.search(r'/[0-9]+px-', url)
                   and int(re.search(r'/([0-9]+)px-', url).group(1)) < 960 else url)
         paths = ([larger, larger.replace('https://thumb.wikimedia.org/', 'https://upload.wikimedia.org/')]
