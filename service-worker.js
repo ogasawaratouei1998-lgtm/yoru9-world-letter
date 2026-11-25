@@ -1,5 +1,5 @@
 /* Offline reader for public, approved editions only. Never cache editor or approval data. */
-const SHELL_CACHE = 'yoru9-shell-v98';
+const SHELL_CACHE = 'yoru9-shell-v99';
 const ISSUE_CACHE = 'yoru9-released-issues-v3';
 const IMAGE_CACHE = 'yoru9-generated-images-current-v2';
 const GENERATED_IMAGE = /^assets\/news-generated\/(\d{4}-\d{2}-\d{2})\/[a-z0-9-]+\.webp$/;
@@ -156,10 +156,25 @@ self.addEventListener('fetch', event => {
   if (relative === 'data/current.json' || relative === 'data/archive/index.json' ||
       /^data\/archive\/\d{4}-\d{2}-\d{2}\.json$/.test(relative)) {
     const canonical = new URL(relative, SCOPE).href;
-    event.respondWith(fetch(req).then(response => {
+    event.respondWith(fetch(req,{cache:'no-store'}).then(async response => {
       if (response.ok) {
-        const copy = response.clone();
-        event.waitUntil(caches.open(ISSUE_CACHE).then(cache => cache.put(canonical, copy)));
+        const issue=await response.clone().json();
+        const valid=relative==='data/archive/index.json'?
+          Array.isArray(issue?.issues):
+          issue?.status==='published'&&/^\d{4}-\d{2}-\d{2}$/.test(issue.editionDate)&&
+          Array.isArray(issue.stories)&&issue.stories.length>0;
+        if(!valid)throw Error('Invalid published issue');
+        const cache=await caches.open(ISSUE_CACHE);
+        if(relative==='data/current.json'){
+          const previous=await cache.match(canonical);
+          if(previous){
+            try{
+              const old=await previous.clone().json();
+              if(old?.status==='published'&&old.editionDate>issue.editionDate)return previous;
+            }catch(_){}
+          }
+        }
+        await cache.put(canonical,response.clone());
         if(relative==='data/current.json'){
           event.waitUntil(response.clone().json()
             .then(issue=>expirePreviousGeneratedImages(issue.editionDate,(issue.stories||[]).map(s=>s.imagePath).filter(Boolean)))
@@ -167,12 +182,12 @@ self.addEventListener('fetch', event => {
         }
       }
       return response;
-    }).catch(async () => (await caches.match(canonical)) || Response.error()));
+    }).catch(async () => (await (await caches.open(ISSUE_CACHE)).match(canonical)) || Response.error()));
     return;
   }
 
   if (req.mode === 'navigate') {
-    event.respondWith(fetch(req).then(response => {
+    event.respondWith(fetch(req,{cache:'no-store'}).then(response => {
       if (response.ok) {
         const copy = response.clone();
         event.waitUntil(caches.open(SHELL_CACHE).then(cache => cache.put(new URL('index.html', SCOPE).href, copy)));

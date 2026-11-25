@@ -899,6 +899,14 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertRegex(worker,r"yoru9-shell-v(?:[3-9]|[1-9][0-9]+)")
         self.assertIn("yoru9-released-issues-v3", worker)
         self.assertIn("event.respondWith(fetch(req).then(response => {", worker)
+        self.assertIn("event.respondWith(fetch(req,{cache:'no-store'})", worker)
+        self.assertIn("old.editionDate>issue.editionDate", worker)
+        self.assertIn("x.editionDate<newestPublished.editionDate", page)
+        self.assertIn("JSON.stringify(newestPublished)!==JSON.stringify(x)", page)
+        self.assertIn('id="refreshIssue"',page)
+        self.assertIn("updateViaCache:'none'",page)
+        self.assertIn("issueRefreshInFlight",page)
+        self.assertIn("archived.editionDate===today",page)
 
 
 

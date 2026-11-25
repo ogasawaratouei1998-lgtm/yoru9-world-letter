@@ -1630,3 +1630,8 @@ body.country-detail-mode #todayMapIntro > *{max-width:740px;margin-left:auto;mar
    calc(env(safe-area-inset-bottom,0px) + 25px)!important}
  .today-map-intro-close-bottom{width:100%;max-width:260px}
 }
+
+/* Keep the current issue date and a manual refresh visible before the gallery. */
+#atlasHero .issue-refresh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 7px;font-size:.73rem;color:#D8E5F0}
+#atlasHero #refreshIssue{min-height:44px;padding:6px 10px;border:1px solid #7896AA;border-radius:8px;background:transparent;color:#E3F5FF;font:inherit;white-space:nowrap}
+#atlasHero #refreshIssue:disabled{opacity:.65}

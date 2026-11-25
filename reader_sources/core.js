@@ -1009,29 +1009,69 @@ document.querySelector('.filters').addEventListener('click',e=>{const btn=e.targ
 function updateClock(){const now=new Date();$('clock').textContent=`日本時間 ${new Intl.DateTimeFormat('ja-JP',{timeZone:'Asia/Tokyo',hour:'2-digit',minute:'2-digit',hour12:false}).format(now)} / 21:00`;if(lastRenderedLocalDate&&lastRenderedLocalDate!==localDate(now))render()}updateClock();setInterval(updateClock,60000);
 loadState();render();
 let newestPublished=null;
-async function checkPublished(){
- if(location.protocol==='file:')return;
- try{
-  const response=await fetch('./data/current.json?no-cache='+Date.now(),{cache:'no-store'});
-  if(!response.ok)return;
-  const x=await response.json(),now=new Date();
-  const published=x?.status==='published'&&Array.isArray(x.stories)&&
-   x.stories.length>=1;
-  const releaseOk=x?.editionDate&&x.editionDate<=localDate(now);
-  if(!published||!releaseOk)return;
-  const fresh=!newestPublished||newestPublished.editionDate!==x.editionDate;
-  newestPublished=x;
-  if(fresh){edition=x;filter='all';loadState();render()}
-  else displayReleaseStatus();
- }catch(err){console.info('最新の公開号を取得できませんでした',err)}
+let issueRefreshInFlight=null;
+function isPublicEdition(x,today){
+ return x?.status==='published'&&typeof x.editionDate==='string'&&
+  /^\d{4}-\d{2}-\d{2}$/.test(x.editionDate)&&x.editionDate<=today&&
+  Array.isArray(x.stories)&&x.stories.length>=1;
 }
+function applyPublishedEdition(x){
+ if(!isPublicEdition(x,localDate(new Date())))return false;
+ // A late CDN response or cached offline copy cannot roll back a newer issue.
+ if(newestPublished&&x.editionDate<newestPublished.editionDate)return false;
+ const fresh=!newestPublished||JSON.stringify(newestPublished)!==JSON.stringify(x);
+ newestPublished=x;
+ if(fresh){edition=x;filter='all';loadState();render()}
+ else displayReleaseStatus();
+ return true;
+}
+async function fetchPublishedIssue(path){
+ const controller=new AbortController();
+ const timer=setTimeout(()=>controller.abort(),15000);
+ try{
+  const response=await fetch(path+'?no-cache='+Date.now(),{cache:'no-store',signal:controller.signal});
+  if(!response.ok)return null;
+  return await response.json();
+ }finally{clearTimeout(timer)}
+}
+function checkPublished(){
+ if(location.protocol==='file:')return Promise.resolve(false);
+ if(issueRefreshInFlight)return issueRefreshInFlight;
+ const button=$('refreshIssue'),status=$('issueFreshness');
+ button.disabled=true;
+ status.textContent='最新号を確認中…';
+ issueRefreshInFlight=(async()=>{
+  try{
+   const today=localDate(new Date());
+   let x=await fetchPublishedIssue('./data/current.json');
+   if(!isPublicEdition(x,today))throw Error('invalid public issue');
+   // Current may lag briefly behind its immutable published archive.
+   // Only a published archive for the exact date may supersede it.
+   if(x.editionDate<today&&new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Tokyo',hour:'2-digit',hourCycle:'h23'}).format(new Date())>='21'){
+    try{
+     const archived=await fetchPublishedIssue('./data/archive/'+today+'.json');
+     if(isPublicEdition(archived,today)&&archived.editionDate===today)x=archived;
+    }catch(_){}
+   }
+   applyPublishedEdition(x);
+   status.textContent=edition.status==='published'?(edition.editionDate+'号を表示中'):'公開号を確認できません';
+   return true;
+  }catch(err){
+   status.textContent=edition.status==='published'?(edition.editionDate+'号・更新確認に失敗'):'最新号を取得できません';
+   console.info('最新の公開号を取得できませんでした',err);
+   return false;
+  }finally{button.disabled=false;issueRefreshInFlight=null}
+ })();
+ return issueRefreshInFlight;
+}
+$('refreshIssue').addEventListener('click',checkPublished);
 checkPublished();
 function updateOnlineState(){$('offlineNotice').hidden=navigator.onLine!==false}
 window.addEventListener('online',()=>{updateOnlineState();checkPublished()});
 window.addEventListener('offline',updateOnlineState);
 updateOnlineState();
 if('serviceWorker' in navigator&&location.protocol==='https:'){
- navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).then(reg=>{
+ navigator.serviceWorker.register('./service-worker.js',{scope:'./',updateViaCache:'none'}).then(reg=>{
   // iOS standalone apps often resume an existing page rather than navigating.
   // Ask for updated app shell code when returning to the foreground.
   reg.update().catch(()=>{});
