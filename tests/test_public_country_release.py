@@ -30,7 +30,18 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
     def test_stale_live_article_list_fails(self):
         import json
         current=json.loads(self.assets["data/current.json"])
-        current["stories"]=current["stories"][:1]
+        # A stale issue must differ even when the current edition has one story.
+        # Also retain a nonempty variant to prove that matching counts alone
+        # are insufficient for public verification.
+        self.assertTrue(current["stories"])
+        current["stories"]=current["stories"][:-1]
+        self.assets["data/current.json"]=json.dumps(current).encode("utf-8")
+        with self.assertRaisesRegex(AssertionError,"news issue differs"):
+            inspect_public_assets(self.assets, ROOT)
+
+    def test_changed_article_with_same_count_fails(self):
+        current=json.loads(self.assets["data/current.json"])
+        current["stories"][0]["title"]+="（旧版）"
         self.assets["data/current.json"]=json.dumps(current).encode("utf-8")
         with self.assertRaisesRegex(AssertionError,"news issue differs"):
             inspect_public_assets(self.assets, ROOT)
@@ -76,8 +87,24 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
         self.assertTrue(all((ROOT / name).is_file() for name in required
                             if name.startswith("assets/news/")),
                         "Every referenced commissioned news illustration must be present")
-        self.assertGreaterEqual(sum(name.startswith("assets/travel/") for name in required), 9)
-        self.assertTrue(any(required[name] == (1000, 540) for name in required))
+        # Check the exact active-country dependencies, not a historical
+        # two-country edition's incidental total of nine photographs.
+        from country_codes import country_codes
+        codes={code for story in current["stories"] for code in country_codes(story["country"])}
+        travel=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
+        expected={stop["photoAsset"] for stop in travel.values()
+                  if set(country_codes(stop.get("country")))&codes}
+        actual={name for name in required if name.startswith("assets/travel/")}
+        self.assertTrue(expected)
+        self.assertEqual(actual,expected)
+        from check_country_experience import country_coverage
+        for country,record in country_coverage(ROOT,current["stories"]).items():
+            with self.subTest(country=country):
+                self.assertEqual(required[record["cover"]],(1000,540))
+                for key in record["quizPhotoKeys"]:
+                    self.assertEqual(required[travel[key]["photoAsset"]],(330,200))
+                self.assertIn(record["postcard"],actual)
+        self.assertTrue(all(required[name] in ((330,200),(1000,540)) for name in actual))
 
     def test_missing_published_country_photo_blocks_notification(self):
         path = next(name for name in required_public_visuals(

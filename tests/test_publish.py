@@ -482,7 +482,9 @@ class November20EditorialCorrectionTest(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         day="2026-11-20"
         approved=json.loads((root/"data/approved"/(day+".json")).read_text(encoding="utf-8"))
-        current=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
+        # The November 20 correction is historical. Future daily editions
+        # may contain any positive number of independently approved stories.
+        historical=json.loads((root/"data/archive"/(day+".json")).read_text(encoding="utf-8"))
         original=json.loads((root/"data/archive/revisions"/(day+"-before-correction.json")).read_text(encoding="utf-8"))
         self.assertEqual(approved["approvedBy"],"editorial-source-checked-correction-2026-11-20")
         self.assertEqual(len(original["stories"]),1)
@@ -492,12 +494,12 @@ class November20EditorialCorrectionTest(unittest.TestCase):
         self.assertTrue(approved["fourStoryStaticIllustrationReissue"])
         self.assertTrue(all("imagePath" not in s for s in published["stories"]))
         self.assertEqual(len(published["stories"]),4)
-        self.assertIn(len(current["stories"]),(2,4))
-        if len(current["stories"])==4:
-            self.assertEqual(published,current)
+        self.assertIn(len(historical["stories"]),(2,4))
+        if len(historical["stories"])==4:
+            self.assertEqual(published,historical)
         previous_path=root/"data/archive/revisions"/(day+"-before-four-image-reissue.json")
         previous=(json.loads(previous_path.read_text(encoding="utf-8"))
-                  if previous_path.exists() else current)
+                  if previous_path.exists() else historical)
         self.assertEqual(len(previous["stories"]),2)
         self.assertTrue(approved["stories"][0]["majorPersonalFailureVerified"])
         self.assertFalse(approved["stories"][1]["majorPersonalFailureVerified"])
