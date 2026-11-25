@@ -242,15 +242,28 @@ def write_bundle(queue, output, limit, fetch=download_preview, sleep_seconds=1.0
     (output / "review-index.json").write_text(json.dumps({"summary": summary, "queue": queue}, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return summary
 
+def partition_queue(queue, shard, shards):
+    """Disjoint, deterministic review partitions; preserve editorial priority."""
+    if shards < 1 or not 0 <= shard < shards:
+        raise ValueError("Invalid review shard")
+    return queue[shard::shards]
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--report", type=Path, required=True)
     p.add_argument("--output", type=Path, required=True)
     p.add_argument("--limit", type=int, choices=range(1, 21), default=12)
+    p.add_argument("--shard", type=int, default=0)
+    p.add_argument("--shards", type=int, default=1)
     args = p.parse_args()
     report = json.loads(args.report.read_text(encoding="utf-8"))
     canonical = json.loads((ROOT / "country-content.json").read_text(encoding="utf-8"))["countries"]
-    summary = write_bundle(make_queue(report, canonical), args.output, args.limit)
+    queue = partition_queue(make_queue(report, canonical), args.shard, args.shards)
+    if args.shards > 1 and len(queue) > args.limit:
+        raise ValueError("Review shard exceeds limit; increase shard count rather than omit countries")
+    summary = write_bundle(queue, args.output, args.limit)
+    summary.update(reviewShard=args.shard, reviewShards=args.shards)
     print(json.dumps(summary, ensure_ascii=False))
     import os
     if os.getenv("GITHUB_STEP_SUMMARY"):
