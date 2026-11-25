@@ -1,0 +1,46 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-25",
+  "editionType": "regular",
+  "title": "2026-11-25｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "humorReviewed": true,
+  "approvedBy": "chatgpt-editorial-review",
+  "stories": [
+    {
+      "id": "uk-wife-passport-spain-stag-trip-2026",
+      "country": "イギリス",
+      "category": "person",
+      "categoryLabel": "個人の大失敗",
+      "label": "旅券だけ夫婦交代",
+      "title": "妻のパスポートを持ってスペインへ、到着して間違いに気づき帰国",
+      "summary": "英国の男性が友人たちとの旅行に出発した際、誤って妻のパスポートを持参。マンチェスターからスペインのアリカンテまで飛んだ後、入国審査の列で写真が妻のものだと気づき、英国へ引き返すことになった。",
+      "detail": "英紙インディペンデントが11月24日に報じた。友人たちと出かけた男性は、アリカンテの空港で自分の旅券がないと分かり、荷物を繰り返し探したとBBCの番組で説明している。旅行仲間はそのまま滞在したが、男性は帰国した。航空会社ライアンエアーは経緯を調べている。実際の搭乗日や帰国便の費用は報道で明示されていない。",
+      "quip": "友達との旅行やのに、パスポートだけ奥さんが参加しとるやないか！",
+      "sourceName": "The Independent",
+      "sourceUrl": "https://www.independent.co.uk/travel/news-and-advice/ben-moore-ryanair-passport-mistake-manchester-airport-alicante-b3090489.html",
+      "reported": "2026-11-24",
+      "humanActor": "英国の旅行者",
+      "humanMistake": "自分のパスポートと妻のパスポートを取り違えたまま海外旅行に出発した。",
+      "expectedPlan": "友人たちとスペインで休暇を過ごす予定だった。",
+      "observedOutcome": "到着後に別人の旅券と判明し、友人たちと別れて英国へ帰国した。",
+      "verificationUrls": [
+        "https://www.independent.co.uk/travel/news-and-advice/ben-moore-ryanair-passport-mistake-manchester-airport-alicante-b3090489.html"
+      ],
+      "eventKey": "uk-manchester-alicante-wife-passport-2026",
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": true,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 5,
+        "safety": 5
+      }
+    }
+  ]
+}
