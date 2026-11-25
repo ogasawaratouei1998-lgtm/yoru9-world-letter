@@ -25,6 +25,20 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn("- cron: '45 10 * * *'",preview)  # 19:45 JST
         self.assertNotIn("timezone:",preview)
 
+    def test_daily_recovery_slots_and_archived_issue_skip(self):
+        root=Path(__file__).resolve().parents[1]
+        preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        for cron in ("15 6 * * *", "15 9 * * *", "45 10 * * *", "15 12 * * *"):
+            self.assertIn("- cron: '"+cron+"'",preview)
+        self.assertIn('if [ -f "data/archive/$DAY.json" ]; then',preview)
+        self.assertIn('ARCHIVED: ${{ steps.edition.outputs.archived }}',preview)
+        self.assertIn('elif [ "$ARCHIVED" = true ]; then',preview)
+        self.assertIn("- cron: '2 12 * * *'",WORKFLOW)
+        health=(root/".github/workflows/publication-health.yml").read_text(encoding="utf-8")
+        self.assertIn("No new public edition for ",health)
+        self.assertIn("Approved '+previous_day+",health)
+        self.assertIn("date<previous_day",health)
+
     def test_verified_review_uploads_exact_date_only(self):
         preview=(Path(__file__).resolve().parents[1]/
                  ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")

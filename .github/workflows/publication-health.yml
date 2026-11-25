@@ -76,6 +76,10 @@ jobs:
                   # had no approved issue.
                   previous_day=(jst.date()-timedelta(days=1)).isoformat()
                   if date<previous_day:
+                      # Daily delivery is an operational goal, even when no story
+                      # qualifies. Record the first missed day, not just 3-day age.
+                      warnings.append('No new public edition for '+previous_day+
+                                      '; inspect editorial attempts and rejection counts')
                       try:
                           approvals=gh([f'repos/{repo}/contents/data/approved'])
                           approved_names={item.get('name') for item in approvals}

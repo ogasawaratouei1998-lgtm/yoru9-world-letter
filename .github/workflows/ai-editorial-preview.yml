@@ -6,10 +6,13 @@ on:
     paths:
       - '.github/workflows/ai-editorial-preview.yml'
   schedule:
-    # Start editorial work well before the delivery deadline (18:15 JST).
-    - cron: '15 9 * * *'
-    # Second opportunity if the early review did not produce an approved issue.
-    - cron: '45 10 * * *' # 19:45 JST (UTC schedule)
+    # Four independent daily opportunities (UTC cron, Japan has no DST).
+    # Start early so a slow model download or failed attempt cannot consume
+    # the entire evening; later attempts skip a previously approved issue.
+    - cron: '15 6 * * *'  # 15:15 JST
+    - cron: '15 9 * * *'  # 18:15 JST
+    - cron: '45 10 * * *' # 19:45 JST
+    - cron: '15 12 * * *' # 21:15 JST, same-day recovery
 permissions:
   contents: read
   statuses: write
@@ -47,10 +50,17 @@ jobs:
         id: edition
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
-          if [ -f "data/approved/$DAY.json" ]; then
+          if [ -f "data/archive/$DAY.json" ]; then
+            echo "archived=true" >> "$GITHUB_OUTPUT"
             echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Today's edition is archived; do not spend another AI run."
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "archived=false" >> "$GITHUB_OUTPUT"
+            if [ -f "data/approved/$DAY.json" ]; then
+              echo "exists=true" >> "$GITHUB_OUTPUT"
+            else
+              echo "exists=false" >> "$GITHUB_OUTPUT"
+            fi
           fi
       - name: Verify optional Gemini key is present (without exposing it)
         if: steps.edition.outputs.exists == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
@@ -113,12 +123,16 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           JOB_RESULT: ${{ job.status }}
           READY: ${{ steps.staged.outputs.ready }}
+          ARCHIVED: ${{ steps.edition.outputs.archived }}
         run: |
           STATE=error
           REASON="No validated issue; check editorial logs"
           if [ "$JOB_RESULT" != success ]; then
             STATE=failure
             REASON="Editorial execution failed"
+          elif [ "$ARCHIVED" = true ]; then
+            STATE=success
+            REASON="Edition already archived; no new preview needed"
           elif [ "$READY" = true ]; then
             STATE=success
             REASON="Validated issue artifact uploaded"
