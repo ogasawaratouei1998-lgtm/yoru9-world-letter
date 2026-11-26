@@ -139,15 +139,26 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         from build_site import validate_country_highlights
         data=validate_country_highlights(ROOT)
         self.assertEqual(data["version"],1)
-        self.assertEqual(set(data["highlights"]),{"GB","ES","JP","NZ","IT","DE","US"})
-        self.assertEqual(data["updatedOn"],"2026-11-21")
+        # Keep historical coverage checks without making the original
+        # country list or registry revision a ceiling on future additions.
+        baseline={"GB","ES","JP","NZ","IT","DE","US","FR"}
+        self.assertTrue(baseline.issubset(data["highlights"]))
+        self.assertGreaterEqual(date.fromisoformat(data["updatedOn"]),date(2026,11,26))
+        canonical=json.loads((ROOT/"country-content.json").read_text(encoding="utf-8"))
+        self.assertEqual(data["updatedOn"],canonical["highlightsMetadata"]["updatedOn"])
+        self.assertEqual(data["highlights"],
+                         {code:entry["highlights"] for code,entry in canonical["countries"].items()
+                          if entry["highlights"]})
+        starts={code:date(2026,11,19) for code in ("GB","ES","JP","NZ")}
+        starts.update({code:date(2026,11,21) for code in ("IT","DE","US")})
+        starts["FR"]=date(2026,11,26)
         for calendar_day in (date(2026,11,19), date(2026,11,24), date(2026,11,27)):
-            for country, rows in data["highlights"].items():
-                # The new Italy/Germany/US records start Nov 21 and cannot
-                # be retroactively treated as verified on Nov 19.
-                if country in ("IT","DE","US") and calendar_day<date(2026,11,21):
+            for country, start in starts.items():
+                if calendar_day<start:
                     continue
-                self.assertTrue(any(date.fromisoformat(row["validFrom"])<=calendar_day<=
+                rows=data["highlights"][country]
+                self.assertTrue(any(date.fromisoformat(row["checkedOn"])<=calendar_day
+                                    and date.fromisoformat(row["validFrom"])<=calendar_day<=
                                     date.fromisoformat(row["validThrough"]) for row in rows),
                                 f"{country}: no checked cultural topic for {calendar_day}")
         build=(ROOT/"build_site.py").read_text(encoding="utf-8")

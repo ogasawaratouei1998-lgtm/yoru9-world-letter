@@ -17,6 +17,37 @@ from country_codes import country_codes
 JST = timezone(timedelta(hours=9))
 
 
+def missing_topic_dates(registry, code, today: date, horizon: int = 7):
+    """Use the edition day, verified publication windows and 30-day freshness."""
+    if not 1 <= horizon <= 31:
+        raise ValueError("invalid audit horizon")
+    rows=registry.get(code,[])
+    return [(today+timedelta(days=offset)).isoformat()
+            for offset in range(horizon)
+            if not any(entry["checkedOn"] <= today.isoformat()
+                       and entry["validFrom"] <= (today+timedelta(days=offset)).isoformat() <= entry["validThrough"]
+                       and (today-date.fromisoformat(entry["checkedOn"])).days <= 30
+                       for entry in rows)]
+
+
+def require_country_topics(root: Path, stories, day):
+    """Enforce the same two-day urgent coverage rule as the live-topic audit.
+    Seven-day coverage remains visible as advance replenishment work.
+    """
+    today=date.fromisoformat(day) if isinstance(day,str) else day
+    registry=validate_country_highlights(root)["highlights"]
+    codes=set()
+    for story in stories:
+        found=country_codes(story.get("country",""))
+        if not found:raise ValueError("Unrecognized country for topic coverage")
+        codes.update(found)
+    missing={code:missing_topic_dates(registry,code,today,2) for code in sorted(codes)}
+    missing={code:days for code,days in missing.items() if days}
+    if missing:
+        raise ValueError("Missing verified country topics: "+json.dumps(missing,sort_keys=True))
+    return True
+
+
 def audit(root: Path, today: date, horizon: int = 7, urgent_days: int = 2) -> dict:
     if not 1 <= horizon <= 31 or not 1 <= urgent_days <= horizon:
         raise ValueError("invalid audit horizon")
@@ -37,17 +68,7 @@ def audit(root: Path, today: date, horizon: int = 7, urgent_days: int = 2) -> di
     coverage, urgent, upcoming = [], [], []
     for code in sorted(countries):
         rows = registry.get(code, [])
-        missing = []
-        for offset in range(horizon):
-            day = (today + timedelta(days=offset)).isoformat()
-            active = any(
-                entry["checkedOn"] <= today.isoformat()
-                and entry["validFrom"] <= day <= entry["validThrough"]
-                and (today - date.fromisoformat(entry["checkedOn"])).days <= 30
-                for entry in rows
-            )
-            if not active:
-                missing.append(day)
+        missing = missing_topic_dates(registry,code,today,horizon)
         item = {"country": code, "missingDates": missing, "reviewedTopicCount": len(rows)}
         coverage.append(item)
         if missing:
@@ -78,7 +99,8 @@ def main() -> int:
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
         args.json_out.write_text(result, encoding="utf-8")
-    # Editorial gaps should never prevent publishing verified nightly articles.
+    # This audit only reports gaps. The shared release contract separately
+    # enforces urgent topic readiness on the proposed edition before release.
     return 0
 
 
