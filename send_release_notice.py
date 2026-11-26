@@ -66,6 +66,15 @@ def dispatch(config,secret,payload):
     print("Release notification accepted by backend. Device delivery is not guaranteed.")
     return True
 
+def record_notice_result(result):
+    """Expose only fixed operational codes, never credentials or payloads."""
+    if result not in ("accepted","not_configured","not_eligible","failed"):
+        raise ValueError("Unknown notice result")
+    output=os.getenv("GITHUB_OUTPUT")
+    if output:
+        with open(output,"a",encoding="utf-8") as sink:
+            sink.write("result="+result+"\n")
+
 def main():
     issue=json.loads((Path(__file__).resolve().parent/"data"/"current.json").read_text(encoding="utf-8"))
     now=datetime.now(JST)
@@ -77,14 +86,21 @@ def main():
                 and issue.get("editionDate")==now.date().isoformat()
                 and issue.get("stories")):
             print("ERROR: same-day published issue was unexpectedly rejected.",file=sys.stderr)
+            record_notice_result("failed")
             return 1
         print("No current approved release eligible for a notification.")
+        record_notice_result("not_eligible")
         return 0
     # An accepted push is for a verified published edition, never merely a
     # queued editorial candidate. No story-count quota is reintroduced here.
     # The push backend deduplicates per issue date.
     print(f"Retry-safe notice for {payload['editionDate']}: {len(issue['stories'])} published stories.")
-    dispatch(os.getenv("PUSH_DISPATCH_URL",""),os.getenv("PUSH_DISPATCH_TOKEN",""),payload)
+    try:
+        accepted=dispatch(os.getenv("PUSH_DISPATCH_URL",""),os.getenv("PUSH_DISPATCH_TOKEN",""),payload)
+    except Exception:
+        record_notice_result("failed")
+        raise
+    record_notice_result("accepted" if accepted else "not_configured")
     return 0
 
 if __name__=="__main__":

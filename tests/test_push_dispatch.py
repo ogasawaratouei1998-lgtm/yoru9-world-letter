@@ -96,6 +96,21 @@ class PushDispatchTest(unittest.TestCase):
             self.assertIsNotNone(payload)
             self.assertEqual(payload["editionDate"],"2026-11-23")
 
+    def test_workflow_reports_distinct_safe_dispatch_outcomes(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from send_release_notice import record_notice_result
+        with tempfile.TemporaryDirectory() as folder:
+            output=Path(folder)/"output"
+            with patch.dict("os.environ",{"GITHUB_OUTPUT":str(output)}):
+                for result in ("accepted","not_configured","not_eligible","failed"):
+                    record_notice_result(result)
+                with self.assertRaises(ValueError):
+                    record_notice_result("unknown")
+            self.assertEqual(output.read_text().splitlines(),
+                             ["result=accepted","result=not_configured","result=not_eligible","result=failed"])
+
     def test_missing_backend_does_not_send(self):
         self.assertFalse(dispatch("","",{"editionDate":"2026-11-11"}))
     def test_insecure_dispatch_endpoint_is_rejected(self):

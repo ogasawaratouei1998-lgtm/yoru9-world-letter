@@ -83,6 +83,23 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             validate_approved(approved,"2026-11-23")
 
+    def test_explicit_cpu_trial_hands_off_only_via_guarded_main_publisher(self):
+        guard=WORKFLOW[WORKFLOW.index("    if: >-"):WORKFLOW.index("    steps:")]
+        self.assertIn("github.event.workflow_run.conclusion == 'success'",guard)
+        self.assertIn("github.event.workflow_run.head_branch == 'main'",guard)
+        self.assertIn("startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')",guard)
+        self.assertIn("validate_approved(payload,day)",WORKFLOW)
+        self.assertIn("python check_public_country_release.py",WORKFLOW)
+        self.assertLess(WORKFLOW.index("Verify the actual public Pages data"),
+                        WORKFLOW.index("Dispatch optional release notification"))
+
+    def test_nightly_status_distinguishes_live_site_from_notification(self):
+        self.assertIn("NOTICE_RESULT: ${{ steps.dispatch_notice.outputs.result }}",WORKFLOW)
+        for result in ("notice_accepted","notice_not_configured","notice_unconfirmed"):
+            self.assertIn("live_verified; "+result,WORKFLOW)
+        self.assertIn('if result=="accepted":',WORKFLOW)
+        self.assertIn('elif result=="not_configured":',WORKFLOW)
+
     def test_missing_approved_issue_prefers_latest_valid_review_not_story_count(self):
         self.assertIn('key=lambda p:int(p.parent.name),reverse=True',WORKFLOW)
         self.assertIn('count,source,payload=valid[0]',WORKFLOW)

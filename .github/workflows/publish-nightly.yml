@@ -48,7 +48,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 35
     environment: github-pages
-    if: github.event_name != 'workflow_run' || (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' && github.event.workflow_run.event != 'push')
+    # Ordinary code pushes still never launch a release via preview. An explicit
+    # CPU-only acceptance trial may hand off its reviewed artifact to the same
+    # guarded publisher; this never bypasses the 21:00 or validation rules.
+    if: >-
+      github.event_name != 'workflow_run' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main' &&
+      (github.event.workflow_run.event != 'push' ||
+      startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')))
     steps:
       - name: Record nightly run start and link for diagnosis
         continue-on-error: true
@@ -462,6 +470,7 @@ jobs:
           DEPLOY_RETRY: ${{ steps.deployed_reader_retry.outcome }}
           LIVE_VERIFY: ${{ steps.live_verify.outcome }}
           NOTICE: ${{ steps.dispatch_notice.outcome }}
+          NOTICE_RESULT: ${{ steps.dispatch_notice.outputs.result }}
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
           STATE=success
@@ -497,7 +506,14 @@ jobs:
                   print("missing_ai_key")
               elif (issue.get("editionDate")==day and issue.get("status")=="published"
                     and os.environ.get("LIVE_VERIFY")=="success"):
-                  print("live_verified; "+str(len(issue.get("stories",[])))+" stories")
+                  result=os.environ.get("NOTICE_RESULT","")
+                  count=str(len(issue.get("stories",[])))
+                  if result=="accepted":
+                      print("live_verified; notice_accepted; "+count+" stories")
+                  elif result=="not_configured":
+                      print("live_verified; notice_not_configured; "+count+" stories")
+                  else:
+                      print("live_verified; notice_unconfirmed; "+count+" stories")
               elif approved.get("editionDate")==day:
                   print("approved_not_live; "+phase)
               elif os.environ.get("JOB_RESULT")!="success":
@@ -507,7 +523,7 @@ jobs:
           PY
           )
           case "$REASON" in
-            missing_ai_key|no_approved_issue\;\ model_quota_blocked|no_approved_issue\;\ model_unavailable|no_approved_issue\;\ budget_blocked) STATE=error ;;
+            missing_ai_key|no_approved_issue\;\ model_quota_blocked|no_approved_issue\;\ model_unavailable|no_approved_issue\;\ budget_blocked|approved_not_live\;*|live_verified\;\ notice_not_configured\;*|live_verified\;\ notice_unconfirmed\;*) STATE=error ;;
           esac
           gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
             -f state="$STATE" -f context=yoru9/nightly-diagnostic \
