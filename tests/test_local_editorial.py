@@ -151,6 +151,19 @@ class LocalEditorialTest(unittest.TestCase):
                          {"stories":[],"reasonCode":"unanchored_extraction"})
         self.assertEqual(infer.call_count,1)
 
+    def test_stale_or_future_fact_stops_before_copy_and_humor(self):
+        group={"groupId":1,"articles":[{"title":"test fixture",
+               "url":"https://example.org/test","text":"Booked wrong airport. Arrived far away."}]}
+        facts={k:"記載された事実" for k in local_editorial.FACT_KEYS}
+        facts.update(sourceIndex=1,category="person",decisionQuote="Booked wrong airport",
+                     outcomeQuote="Arrived far away")
+        for reported in ("2026-11-18","2026-11-27","invalid"):
+            with self.subTest(reported=reported):
+                infer=Mock(return_value=dict(facts,reported=reported))
+                self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer),
+                                 {"stories":[],"reasonCode":"missing_date"})
+                infer.assert_called_once()
+
     def test_staged_rejection_uses_only_bounded_codes(self):
         group={"groupId":1,"articles":[{"title":"one","text":"body","url":"https://example.org/one"}]}
         for reason,expected in (("no_human_mistake","no_human_mistake"),("private article text","other")):
