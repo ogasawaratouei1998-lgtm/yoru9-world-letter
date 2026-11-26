@@ -68,6 +68,52 @@ class LocalEditorialTest(unittest.TestCase):
                 local_editorial.generate_json("draft")
         client.close.assert_called_once()
 
+    def test_incomplete_json_is_candidate_scoped(self):
+        with patch.object(editorial,"LOCAL_EDITORIAL",True), patch.object(editorial,"KEY",""), \
+             patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \
+             patch.object(editorial,"RUN_DEADLINE",None), \
+             patch.object(local_editorial,"generate_json",side_effect=[
+                 local_editorial.LocalResponseError("incomplete"),{"stories":[]}]) as local, \
+             patch.object(editorial,"available_models") as remote:
+            with self.assertRaises(local_editorial.LocalResponseError):
+                editorial.ai("draft")
+            self.assertFalse(editorial.LOCAL_BACKEND_FAILED)
+            self.assertEqual(editorial.ai("next draft"),{"stories":[]})
+            self.assertEqual(local.call_count,2)
+            remote.assert_not_called()
+
+    def test_screening_reorders_without_discarding_any_group(self):
+        groups=[{"groupId":i,"articles":[{"title":"News "+str(i),
+                 "text":"A report","url":"https://example.com/"+str(i)}]}
+                for i in range(1,12)]
+        with patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \
+             patch.object(editorial,"RUN_DEADLINE",None), \
+             patch.object(editorial,"ai",side_effect=[{"preferred":[5,5,True,999]},
+                                                    {"preferred":[10]}]):
+            ordered,screened,preferred=editorial.screen_local_groups(groups)
+        self.assertEqual(screened,11)
+        self.assertEqual(preferred,2)
+        self.assertEqual([g["groupId"] for g in ordered[:2]],[5,10])
+        self.assertEqual(sorted(g["groupId"] for g in ordered),list(range(1,12)))
+
+    def test_draft_metadata_is_bound_to_selected_source_and_unverified(self):
+        group={"groupId":1,"articles":[{"title":"one","text":"body",
+                                       "url":"https://example.com/one"}]}
+        story={k:"reported text" for k in local_editorial.DRAFT_FIELDS}
+        story.update(category="person",sourceIndex=1,sourceUrl="https://invented.example/",
+                     editorVerified=True,editorialScores={"safety":5},imagePath="paid.webp")
+        result=local_editorial.bind_draft({"stories":[story]},group)["stories"][0]
+        self.assertEqual(result["sourceUrl"],group["articles"][0]["url"])
+        self.assertEqual(result["verificationUrls"],[result["sourceUrl"]])
+        self.assertEqual(result["sourceName"],"example.com")
+        self.assertNotIn("editorVerified",result)
+        self.assertNotIn("editorialScores",result)
+        self.assertNotIn("imagePath",result)
+        self.assertEqual(result["id"],local_editorial.bind_draft({"stories":[story]},group)["stories"][0]["id"])
+        for invalid in (0,2,True,"1",None):
+            story["sourceIndex"]=invalid
+            self.assertEqual(local_editorial.bind_draft({"stories":[story]},group),{"stories":[]})
+
     def test_local_failure_has_no_remote_fallback(self):
         with patch.object(editorial,"LOCAL_EDITORIAL",True), patch.object(editorial,"KEY",""), \
              patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \
