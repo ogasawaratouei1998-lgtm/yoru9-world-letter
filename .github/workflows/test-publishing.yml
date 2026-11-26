@@ -12,6 +12,7 @@ on:
       - 'editorial_discovery.py'
       - 'local_editorial.py'
       - 'release_contract.py'
+      - 'prepared_release.py'
       - 'research_article_countries.py'
       - '.github/workflows/research-article-countries.yml'
       - '.github/workflows/prepare-nightly.yml'

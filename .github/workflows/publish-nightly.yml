@@ -213,6 +213,7 @@ jobs:
         id: preflight
         env:
           YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -250,11 +251,28 @@ jobs:
           # contract BEFORE it is committed or deployed.
           # Visual QA follows the approved story count and verified quiz photo keys.
           python check_release_candidate.py
-          python build_site.py
-          python check_release_candidate.py --site _site
-          # Catch UI/navigation/quiz/photo failures before publication,
-          # not only in the later post-deploy smoke.
-          bash run_mobile_preflight.sh
+          # Reuse an already browser-tested bundle only if every release
+          # input and every bundled file match. Otherwise do the full QA here.
+          TODAY=$(TZ=Asia/Tokyo date +%F)
+          CUTOFF="$(date -u -d "$TODAY - 1 day" +%F)T15:00:00Z"
+          IDS=$(gh run list --workflow "Prepare verified nightly reader before release" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+          REUSED=false
+          for RUN_ID in $IDS; do
+            DEST="$RUNNER_TEMP/prepared-$RUN_ID"
+            if gh run download "$RUN_ID" --name prepared-nightly-reader --dir "$DEST" >/dev/null 2>&1 &&
+               python prepared_release.py verify --site "$DEST/site" --manifest "$DEST/manifest.json"; then
+              rm -rf _site
+              mv "$DEST/site" _site
+              REUSED=true
+              echo "Reused exact preflighted bundle from run $RUN_ID"
+              break
+            fi
+          done
+          if [ "$REUSED" != true ]; then
+            python build_site.py
+            python check_release_candidate.py --site _site
+            bash run_mobile_preflight.sh
+          fi
           echo "deploy=true" >> "$GITHUB_OUTPUT"
       - name: Preserve failed candidate screenshots for diagnosis
         if: failure()
