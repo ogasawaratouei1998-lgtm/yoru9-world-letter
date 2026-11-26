@@ -173,26 +173,10 @@ jobs:
       # Static editorial SVG artwork is bundled; never call paid image APIs.
       - name: Release every approved story (skip only when none qualify)
         id: publish_issue
-        env:
-          ONE_TIME_IMMEDIATE_RELEASE: ${{ github.event_name == 'workflow_run' || (github.event_name == 'push' && github.event.head_commit.message == 'Publish approved November 16 edition now') }}
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
           if [ -f "data/archive/$DAY.json" ]; then
-            # One user-requested, source-reviewed correction is explicitly gated
-            # to the original November 20 issue. Ordinary releases stay immutable.
-            if [ "$DAY" = "2026-11-20" ] && python - <<'PY'
-          import json
-          from pathlib import Path
-          doc=json.loads(Path("data/approved/2026-11-20.json").read_text(encoding="utf-8"))
-          assert doc.get("approvedBy")=="editorial-source-checked-correction-2026-11-20"
-          PY
-            then
-              python publish_approved.py
-            else
-              echo "Today's edition is already published; preserve its immutable archive and skip replacement."
-            fi
-          elif [ "$ONE_TIME_IMMEDIATE_RELEASE" = 'true' ] && [ "$DAY" = '2026-11-16' ]; then
-            python publish_approved.py --publish-now
+            echo "Today's edition is already published; preserve its immutable archive and skip replacement."
           else
             python publish_approved.py
           fi
@@ -205,10 +189,6 @@ jobs:
           key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
           restore-keys: |
             yoru9-photo-cache-v1-${{ runner.os }}-
-      - name: Restore checksum-pinned reviewed photos before new downloads
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python seed_reviewed_photos.py
       - name: Preflight full reader and photo bundle before any release commit
         id: preflight
         env:
@@ -269,6 +249,8 @@ jobs:
             fi
           done
           if [ "$REUSED" != true ]; then
+            # Network-dependent restoration is only needed for a fresh build.
+            python seed_reviewed_photos.py
             python build_site.py
             python check_release_candidate.py --site _site
             bash run_mobile_preflight.sh

@@ -98,6 +98,17 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn('if result=="accepted":',WORKFLOW)
         self.assertIn('elif result=="not_configured":',WORKFLOW)
 
+    def test_daily_publisher_has_no_expired_early_release_override(self):
+        self.assertNotIn("ONE_TIME_IMMEDIATE_RELEASE",WORKFLOW)
+        self.assertNotIn("python publish_approved.py --publish-now",WORKFLOW)
+        self.assertNotIn('data/approved/2026-11-20.json',WORKFLOW)
+
+    def test_prior_review_api_failure_does_not_stop_editorial(self):
+        preview=(Path(__file__).resolve().parents[1]/
+                 ".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
+        self.assertIn("Prior review lookup unavailable; continue with normal editorial validation.",preview)
+        self.assertIn('IDS=""',preview)
+
     def test_missing_approved_issue_prefers_latest_valid_review_not_story_count(self):
         contract=(Path(__file__).resolve().parents[1]/"release_contract.py").read_text(encoding="utf-8")
         self.assertIn('key=lambda p:int(p.parent.name),reverse=True',contract)

@@ -109,6 +109,17 @@ class FullReaderReleaseGateTest(unittest.TestCase):
         self.assertLess(deploy.index("python check_release_candidate.py --site _site"),
                         deploy.index("uses: actions/deploy-pages@v4"))
 
+    def test_prepared_bundle_reuse_does_not_download_photo_seeds(self):
+        workflow=(ROOT/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
+        reuse=workflow.index("python prepared_release.py verify")
+        fallback=workflow.index('if [ "$REUSED" != true ]; then',reuse)
+        seed=workflow.index("python seed_reviewed_photos.py",fallback)
+        build=workflow.index("python build_site.py",seed)
+        self.assertLess(reuse,fallback)
+        self.assertLess(fallback,seed)
+        self.assertLess(seed,build)
+        self.assertEqual(workflow.count("python seed_reviewed_photos.py"),1)
+
     def test_committed_nightly_issue_can_recover_failed_public_deployment(self):
         workflow=(ROOT/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
         preflight=workflow.index("id: preflight")
