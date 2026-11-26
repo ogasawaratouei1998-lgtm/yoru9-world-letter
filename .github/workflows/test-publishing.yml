@@ -25,6 +25,7 @@ on:
       - 'stage_review.py'
       - '.github/workflows/ai-editorial-preview.yml'
       - '.github/workflows/publish-nightly.yml'
+      - '.github/workflows/publication-health.yml'
       - '.github/workflows/deploy-site.yml'
       - 'build_site.py'
       - 'seed_reviewed_photos.py'
