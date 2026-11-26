@@ -118,7 +118,7 @@ jobs:
         timeout-minutes: 18
         run: bash run_local_editorial.sh --probe-only
       - name: Optional Gemini double-check (no publication)
-        if: steps.edition.outputs.exists == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
+        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite

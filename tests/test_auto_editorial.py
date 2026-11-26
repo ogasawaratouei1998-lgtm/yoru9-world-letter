@@ -1123,6 +1123,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         # The headline rank is discovery only, never factual endorsement.
         source=(__import__("pathlib").Path(__file__).resolve().parents[1]/
                 "auto_editorial.py").read_text(encoding="utf-8")
+        from editorial_discovery import incident_priority
+        self.assertIs(editorial.incident_priority,incident_priority)
         self.assertIn("Headline text NEVER proves blame",source)
 
     def test_verified_major_personal_mistake_is_chosen_and_leads(self):

@@ -8,6 +8,13 @@ on:
     paths:
       - 'publish_approved.py'
       - 'auto_editorial.py'
+      - 'editorial_dates.py'
+      - 'editorial_discovery.py'
+      - 'local_editorial.py'
+      - 'release_contract.py'
+      - 'research_article_countries.py'
+      - '.github/workflows/research-article-countries.yml'
+      - '.github/workflows/prepare-nightly.yml'
       - 'editorial_identity.py'
       - 'editorial_quality.py'
       - 'quip_variety.py'

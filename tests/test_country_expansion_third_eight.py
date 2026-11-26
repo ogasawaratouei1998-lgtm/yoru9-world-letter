@@ -91,17 +91,16 @@ class ThirdEightCountryExpansionTests(unittest.TestCase):
             self.assertEqual(sorted(row["role"] for row in matching),
                              ["cover", "quizAndTravel", "quizAndTravel"])
             self.assertTrue(all(len(row["searchQuery"]) >= 8 for row in matching))
-        # New batches must trigger the unified all-country research workflow,
-        # while the standalone metadata workflow remains scheduled/manual only.
+        # Bulk research remains an explicit manual tool, never a daily dependency.
         workflow = (ROOT / ".github/workflows/research-all-countries.yml").read_text(encoding="utf-8")
         standalone = (ROOT / ".github/workflows/research-country-photos.yml").read_text(encoding="utf-8")
-        self.assertIn("country-expansion-batch-*.json", workflow)
-        self.assertRegex(workflow, r"(?m)^  push:")
+        self.assertIn("workflow_dispatch:", workflow)
+        self.assertNotRegex(workflow, r"(?m)^  push:|^  schedule:")
         self.assertNotRegex(standalone, r"(?m)^  push:")
         self.assertIn("group: country-commons-research", workflow)
         self.assertIn("group: country-commons-research", standalone)
         self.assertIn("workflow_dispatch:", standalone)
-        self.assertIn("schedule:", standalone)
+        self.assertNotRegex(standalone, r"(?m)^  schedule:")
 
 if __name__ == "__main__":
     unittest.main()
