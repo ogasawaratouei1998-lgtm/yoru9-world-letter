@@ -320,9 +320,10 @@ function passportQuizQuestions(item){
 
 function updateWorldPassportButtons(){
  document.querySelectorAll('#todayMapLegend .today-map-country').forEach(button=>{
-  button.textContent=button.dataset.countryLabel+' · クイズ';
+  const prepared=typeof APPROVED_COUNTRY_CODES==='undefined'||APPROVED_COUNTRY_CODES.includes(button.dataset.countryCode);
+  button.textContent=button.dataset.countryLabel+(prepared?' · クイズ':' · 国紹介準備中');
   button.setAttribute('aria-expanded',String(worldPassportActive?.item.code===button.dataset.countryCode));
-  button.setAttribute('aria-label',button.dataset.countryName+'の3択クイズに挑戦');
+  button.setAttribute('aria-label',button.dataset.countryName+(prepared?'の3択クイズに挑戦':'のニュースと国紹介の準備状況'));
  });
 }
 let passportReturnTarget=null;
@@ -355,6 +356,9 @@ function focusWorldPassportQuestion(run){
  else reposition();
 }
 function startWorldPassport(item){
+ if(typeof APPROVED_COUNTRY_CODES!=='undefined'&&!APPROVED_COUNTRY_CODES.includes(item.code)){
+  showTodayCountryIntro(item);return;
+ }
  passportReturnTarget=document.activeElement;
  hideTodayCountryIntro(false);
  $('worldExplore').open=true;
