@@ -1,0 +1,47 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-26",
+  "editionType": "regular",
+  "title": "2026-11-26｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "humorReviewed": true,
+  "approvedBy": "chatgpt-editorial-review",
+  "stories": [
+    {
+      "id": "fr-lille-bayern-pavlovic-own-goal-20261125",
+      "country": "フランス",
+      "category": "sports",
+      "categoryLabel": "スポーツの大失敗",
+      "label": "ポストからの痛恨の逆転弾",
+      "title": "相手のシュートはポストに外れたのに、自分でゴールへ。バイエルン今季初黒星",
+      "summary": "フランスで行われた欧州チャンピオンズリーグで、バイエルンのパブロビッチが相手のシュートの跳ね返りをクリアしようとしてオウンゴール。リールが2対1で逆転勝利し、バイエルンは今季初の敗戦となった。",
+      "detail": "11月25日の試合で、バイエルンは前半に先制したが、後半にリールの上田綺世が同点ゴール。直後、エタン・エムバペのシュートがポストに当たり、こぼれ球をパブロビッチがかき出そうとしたところ、自陣のゴールに入ってしまった。この1点が決勝点となり、リールは今大会のリーグフェーズで初勝利を挙げた。",
+      "quip": "ポストがせっかく守ってくれたのに、味方がシュートの続きをやってどうすんねん！",
+      "sourceName": "The Guardian（Reuters）",
+      "sourceUrl": "https://www.theguardian.com/football/2026/nov/25/champions-league-barcelona-psg-roma-lille-bayern-munich-villarreal",
+      "reported": "2026-11-25",
+      "humanActor": "バイエルンのアレクサンダル・パブロビッチ選手",
+      "humanMistake": "相手のシュートがポストから跳ね返った球をクリアしようとして自陣のゴールに入れてしまった。",
+      "expectedPlan": "こぼれ球をクリアして失点を防ぐ。",
+      "observedOutcome": "オウンゴールが決勝点になり、バイエルンは2対1で敗れ、今季無敗が途切れた。",
+      "verificationUrls": [
+        "https://www.theguardian.com/football/2026/nov/25/champions-league-barcelona-psg-roma-lille-bayern-munich-villarreal",
+        "https://www.reuters.com/sports/soccer/davide-ancelotti-comes-age-lille-stun-former-club-bayern-2026-11-25/"
+      ],
+      "eventKey": "fr-lille-bayern-own-goal-pavlovic-20261125",
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 4,
+        "mistakeClarity": 5,
+        "outcomeIrony": 5,
+        "safety": 5
+      }
+    }
+  ]
+}
