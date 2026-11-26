@@ -1,4 +1,5 @@
 name: Free-tier AI editorial double-check (safe preview)
+# 2026-11-26: explicit CPU-only acceptance trial after PR 249.
 on:
   workflow_dispatch:
   push:
