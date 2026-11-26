@@ -43,7 +43,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
             "countryRecord(item.code)?.region",
             "$('todayMapIntroBody').textContent=guide",
             "  ?guide.body",
-            ":todayCountryIntro(item)+' 観光名所を案内する",
+            "国別コンテンツは準備中です",
             "currentCountryHighlight(all,currentCode)",
             "COUNTRY PORTRAIT · 国の魅力",
             "$('todayMapIntro').scrollTop=0",
@@ -79,7 +79,7 @@ class CurrentIssueMapInteractionTest(unittest.TestCase):
         self.assertIn("function countryPhotoPriority(code,photo)", page)
         self.assertIn("['ゴールデンゲートブリッジ',90]", page)
         self.assertIn(".sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a))", page)
-        self.assertIn(".filter(p=>(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
+        self.assertIn(".filter(p=>APPROVED_COUNTRY_CODES.includes(currentCode)&&(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption", page)
 
     def test_country_hero_and_travel_postcard_use_distinct_assets(self):
         import json

@@ -7,15 +7,18 @@ on:
     paths:
       - '.github/workflows/ai-editorial-preview.yml'
   schedule:
-    # Four independent daily opportunities (UTC cron, Japan has no DST).
-    # Start early so a slow model download or failed attempt cannot consume
-    # the entire evening; later attempts skip a previously approved issue.
+    # Prepare today's edition from the morning (UTC cron, Japan has no DST).
+    # Later slots are recovery opportunities; a staged/committed issue is reused.
+    - cron: '15 21 * * *' # 06:15 JST next calendar day
+    - cron: '15 0 * * *'  # 09:15 JST
+    - cron: '15 3 * * *'  # 12:15 JST
     - cron: '15 6 * * *'  # 15:15 JST
     - cron: '15 9 * * *'  # 18:15 JST
     - cron: '45 10 * * *' # 19:45 JST
     - cron: '15 12 * * *' # 21:15 JST, same-day recovery
 permissions:
   contents: read
+  actions: read
   statuses: write
 concurrency:
   group: yoru9-editorial-preview
@@ -63,8 +66,34 @@ jobs:
               echo "exists=false" >> "$GITHUB_OUTPUT"
             fi
           fi
+      - name: Recover already validated same-day preview before spending more CPU
+        if: steps.edition.outputs.exists == 'false'
+        id: prior
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
+          mkdir -p "$RUNNER_TEMP/prior-reviews"
+          IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId')
+          for RUN_ID in $IDS; do
+            mkdir -p "$RUNNER_TEMP/prior-reviews/$RUN_ID"
+            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/prior-reviews/$RUN_ID" >/dev/null 2>&1 || true
+          done
+          python - <<'PY'
+          import os
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          from release_contract import recover_review
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"prior-reviews")
+          with open(os.environ["GITHUB_OUTPUT"],"a") as f:
+              f.write("ready="+("true" if count else "false")+"\n")
+          PY
       - name: Verify optional Gemini key is present (without exposing it)
-        if: steps.edition.outputs.exists == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
+        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -73,7 +102,7 @@ jobs:
           fi
           echo 'Gemini API key is configured'
       - name: Collect same-day leads
-        if: steps.edition.outputs.exists == 'false'
+        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true'
         run: python collect_candidates.py
       # Scheduled/manual editorial review uses CPU inference by default.
       # The explicit trial push never invokes Gemini or publishes directly.
@@ -81,7 +110,7 @@ jobs:
       # revalidates it, and publishes only when the release timing rule permits.
       # Provider error details are sanitized in auto_editorial.py.
       - name: Internal CPU editorial double-check (no publication)
-        if: steps.edition.outputs.exists == 'false' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
+        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
         timeout-minutes: 47
         run: bash run_local_editorial.sh
       - name: Explicit archived-day model capability trial (no publication)

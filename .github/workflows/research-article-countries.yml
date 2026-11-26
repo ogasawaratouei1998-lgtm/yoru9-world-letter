@@ -1,0 +1,51 @@
+name: Prepare country materials after article approval
+on:
+  workflow_run:
+    workflows: ['Free-tier AI editorial double-check (safe preview)']
+    types: [completed]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: yoru9-article-country-research
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.workflow_run.conclusion == 'success' &&
+       github.event.workflow_run.head_branch == 'main')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Locate validated same-day article
+        id: issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          mkdir -p "$RUNNER_TEMP/approved"
+          if [ -f "data/approved/$DAY.json" ]; then
+            cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"
+          elif [ -n "$RUN_ID" ]; then
+            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/approved" || true
+          fi
+          echo "path=$RUNNER_TEMP/approved/$DAY.json" >> "$GITHUB_OUTPUT"
+      - name: Research only countries from validated articles
+        env:
+          APPROVED_PATH: ${{ steps.issue.outputs.path }}
+        run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries
+      - uses: actions/upload-artifact@v4
+        with:
+          name: article-country-research
+          path: reports/article-countries/
+          if-no-files-found: ignore
+          retention-days: 7

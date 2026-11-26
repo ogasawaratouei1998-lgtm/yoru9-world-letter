@@ -26,7 +26,7 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
     def test_daily_recovery_slots_and_archived_issue_skip(self):
         root=Path(__file__).resolve().parents[1]
         preview=(root/".github/workflows/ai-editorial-preview.yml").read_text(encoding="utf-8")
-        for cron in ("15 6 * * *", "15 9 * * *", "45 10 * * *", "15 12 * * *"):
+        for cron in ("15 21 * * *", "15 0 * * *", "15 3 * * *", "15 6 * * *", "15 9 * * *", "45 10 * * *", "15 12 * * *"):
             self.assertIn("- cron: '"+cron+"'",preview)
         self.assertIn('if [ -f "data/archive/$DAY.json" ]; then',preview)
         self.assertIn('ARCHIVED: ${{ steps.edition.outputs.archived }}',preview)

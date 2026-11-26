@@ -1,21 +1,8 @@
-name: Research all pending countries in parallel
+name: Research all pending countries in parallel (manual only)
 
 on:
   workflow_dispatch:
-  # PR safety tests run offline in test-publishing; network research runs after merge.
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/research-all-countries.yml'
-      - 'country_bulk_research.py'
-      - 'country_review_bundle.py'
-      - 'country-content.json'
-      - 'country-catalog.json'
-      - 'country_unesco_source_catalog.py'
-      - 'country_photo_candidates.py'
-      - 'country-expansion-batch-*.json'
-  schedule:
-    - cron: '25 3 * * 1,4'
+  # Legacy bulk research is manual only. Daily operation follows approved news.
 
 permissions:
   contents: read

@@ -2,10 +2,7 @@ name: Research licensed country photographs
 
 on:
   workflow_dispatch:
-  schedule:
-    # 11:20 JST on Monday and Thursday; no paid services or push notifications
-    - cron: '20 2 * * 1,4'
-  # Batch merges already trigger the all-country research workflow.
+  # Manual bulk research only; routine work starts from approved articles.
 
 permissions:
   contents: read
