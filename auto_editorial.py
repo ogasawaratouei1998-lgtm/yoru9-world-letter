@@ -1729,7 +1729,7 @@ def main():
     # scheduling could exhaust B-editor quota before reaching a better story.
     # Country-photo readiness is a secondary preference, never the first tier.
     from country_readiness import ready_country_codes, story_has_prepared_countries
-    ready_for_review,_=ready_country_codes(Path.cwd())
+    ready_for_review,_=ready_country_codes(Path.cwd(),day)
     draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)
     print("Review budget priority (unverified draft locations only):",
           json.dumps({
@@ -2000,7 +2000,7 @@ def main():
     # generic quiz. Preserve verified articles' order and original countries.
     from country_readiness import select_ready_stories
     reviewed_count=len(selected)
-    selected,unready,prepared,incomplete=select_ready_stories(selected,Path.cwd())
+    selected,unready,prepared,incomplete=select_ready_stories(selected,Path.cwd(),day)
     checkpoint("country_readiness",independent_approved=reviewed_count,
                country_ready_articles=len(selected),
                country_ready_count=len(prepared),

@@ -113,6 +113,9 @@ def audit(root: Path, site: Path | None = None) -> dict:
     # An unfinished future country must not produce a one-line guide,
     # generic quiz, missing cover or incorrectly attributed tourist photo.
     countries=country_coverage(root,stories)
+    if date>='2026-11-21' and (root/'country-content.json').is_file():
+        from audit_country_highlights import require_country_topics
+        require_country_topics(root,stories,date)
     codes={code for story in stories for code in country_codes(story.get("country",""))}
     require(set(countries)==codes,"ニュースの国と紹介・クイズの国が不一致")
 

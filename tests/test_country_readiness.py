@@ -122,7 +122,7 @@ class CountryReadinessTest(unittest.TestCase):
     def test_free_svg_approval_never_assigns_paid_webp_image_path(self):
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         main=code.split("def main():",1)[-1]
-        self.assertIn("select_ready_stories(selected,Path.cwd())",main)
+        self.assertIn("select_ready_stories(selected,Path.cwd(),day)",main)
         self.assertIn('"no_publishable_stories")',main)
         self.assertIn("checkpoint(failure_phase,independent_approved=reviewed_count,",main)
         self.assertIn('"model_unavailable" if LOCAL_BACKEND_FAILED',main)

@@ -12,7 +12,7 @@ from check_country_experience import country_coverage
 from country_codes import country_codes
 
 
-def ready_country_codes(root: Path):
+def ready_country_codes(root: Path, day=None):
     """Discover candidates from the runtime photo registry, then fully vet them.
 
     Do not maintain a parallel hardcoded whitelist: only countries whose
@@ -30,6 +30,13 @@ def ready_country_codes(root: Path):
         raise ValueError("Country photo registry must be a mapping")
     ready=set()
     incomplete={}
+    topics=None
+    if day is not None:
+        from datetime import date
+        from audit_country_highlights import missing_topic_dates
+        from build_site import validate_country_highlights
+        day=date.fromisoformat(day) if isinstance(day,str) else day
+        topics=validate_country_highlights(root)['highlights']
     for code in sorted(registry):
         if not isinstance(code,str) or len(code)!=2 or not code.isupper():
             raise ValueError("Invalid country identifier in photo registry")
@@ -39,7 +46,10 @@ def ready_country_codes(root: Path):
             # Keep only a code, never article text or source details in logs.
             incomplete[code]="incomplete_reader_assets"
         else:
-            ready.add(code)
+            if topics is not None and missing_topic_dates(topics,code,day,2):
+                incomplete[code]='missing_current_country_topics'
+            else:
+                ready.add(code)
     return frozenset(ready),incomplete
 
 
@@ -64,13 +74,13 @@ def prioritize_ready_drafts(drafts, ready):
     return sorted(drafts,key=lambda row:not story_has_prepared_countries(row,ready))
 
 
-def select_ready_stories(stories, root: Path):
+def select_ready_stories(stories, root: Path, day=None):
     """Keep source-reviewed stories in their existing order; don't fabricate.
 
     A cross-border article is usable only if *all* countries are prepared.
     Return country codes/counts for a separate editorial coverage queue.
     """
-    ready,incomplete=ready_country_codes(root)
+    ready,incomplete=ready_country_codes(root,day)
     accepted=[]
     blocked=Counter()
     for story in stories:

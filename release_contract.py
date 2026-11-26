@@ -15,6 +15,9 @@ def validate_release_input(root, payload, day, *, require_assets=False):
         if assets:
             from check_country_experience import country_coverage
             country_coverage(root,public["stories"])
+            if require_assets or (root/'country-content.json').is_file():
+                from audit_country_highlights import require_country_topics
+                require_country_topics(root,public['stories'],day)
     return public
 
 def recover_review(root, day, incoming, *, require_assets=True):

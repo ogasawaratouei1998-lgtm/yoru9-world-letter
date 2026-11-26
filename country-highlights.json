@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-21",
+  "updatedOn": "2026-11-26",
   "description": "Editorially verified cultural and current-affairs notes for country introductions. Never derive these from unverified news leads or tourist postcard records.",
   "highlights": {
     "GB": [
@@ -114,6 +114,26 @@
         "checkedOn": "2026-11-21",
         "sourceName": "米国人事管理局（OPM）連邦祝日一覧",
         "sourceUrl": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
+      }
+    ],
+    "FR": [
+      {
+        "title": "ランスのクリスマス市場、シャンパーニュ地方の冬の楽しみ",
+        "body": "フランス観光局によると、ランスでは11月25日から12月27日までクリスマス市場が開かれる予定です。街の遊歩道には工芸品や地元の菓子を扱う小屋が並び、大聖堂の光と音の演出も紹介されています。",
+        "validFrom": "2026-11-26",
+        "validThrough": "2026-12-26",
+        "checkedOn": "2026-11-26",
+        "sourceName": "フランス政府観光局 Explore France",
+        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
+      },
+      {
+        "title": "ミュルーズを彩る、アルザス伝統のクリスマス生地",
+        "body": "ミュルーズのクリスマス市場は11月20日から12月27日までの予定です。繊維産業の伝統を生かし、2026年は花や葉を描いたアール・ヌーヴォー風の生地で街や市場を飾るとフランス観光局が紹介しています。",
+        "validFrom": "2026-11-26",
+        "validThrough": "2026-12-26",
+        "checkedOn": "2026-11-26",
+        "sourceName": "フランス政府観光局 Explore France",
+        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
       }
     ]
   }
