@@ -72,8 +72,8 @@ def inspect_public_assets(assets: dict[str, bytes], root: Path) -> None:
             raise AssertionError("Retired stamp album has reappeared on public reader")
     if 'stop.travelStory.map(paragraph=>' not in travel_module:
         raise AssertionError("Detailed destination essays are missing from public reader")
-    from check_country_experience import country_coverage
-    checked=country_coverage(root,current["stories"])
+    from check_country_experience import published_country_coverage
+    checked=published_country_coverage(root,current["stories"])
     for record in checked.values():
         if record.get("quizRounds",0)<2 or not record.get("postcard"):
             raise AssertionError("Public country guide lacks its full curated quiz/travel data")
@@ -87,10 +87,10 @@ def required_public_visuals(root: Path, current: dict) -> dict[str, tuple[int, i
     one representative cover. A fresh nightly story without commissioned
     artwork uses its deterministic inline SVG and needs no external image.
     """
-    from check_country_experience import country_coverage
+    from check_country_experience import published_country_coverage
     from country_codes import country_codes
 
-    countries = country_coverage(root, current["stories"])
+    countries = published_country_coverage(root, current["stories"])
     codes = set(countries)
     travel = json.loads((root / "travel-stops.json").read_text(encoding="utf-8"))
     visuals: dict[str, tuple[int, int] | None] = {

@@ -21,8 +21,8 @@ PHASE_MESSAGES={
     "draft":"記事の下書きを作成済み（未承認）",
     "draft_empty":"承認済み報道機関の記事から採用候補を生成できなかった",
     "audit":"日本語・ツッコミの編集審査を実施済み",
-    "country_readiness":"国紹介・写真・クイズの整合性を審査中",
-    "no_publishable_stories":"編集・国別素材審査を通過した記事がゼロのため前回号を維持",
+    "country_readiness":"審査済み記事から国別素材の補充対象を記録（配信条件ではない）",
+    "no_publishable_stories":"記事の編集審査を通過した記事がゼロのため前回号を維持",
     "selected":"公開候補を選定済み（実際の公開は別途確認）",
 }
 COUNTS=("fresh","fetchable_original_bodies","candidate_review_groups",

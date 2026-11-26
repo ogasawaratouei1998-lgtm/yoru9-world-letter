@@ -467,14 +467,13 @@ def source_reading_stop_reason(readable_count, high_signal_count, remaining_seco
 
 
 def prioritize_personal_drafts_for_review(drafts, ready, source_leads):
-    """Prioritize major personal evidence BEFORE destination-photo readiness.
+    """Prioritize major personal evidence independently of destination-photo readiness.
 
     Draft wording and claimed location are unverified at this stage. Use the
     already-fetched *publisher headline* only as a ranking hint; full source
-    fidelity and the independent audit still decide publication. Location
-    readiness is only a tie-breaker within the same priority tier.
+    fidelity and the independent audit still decide publication. The legacy
+    ready argument is ignored; country enrichment is separate.
     """
-    from country_readiness import story_has_prepared_countries
     by_url={lead.get("url"):lead for lead in source_leads
             if isinstance(lead,dict) and isinstance(lead.get("url"),str)}
     def key(draft):
@@ -484,8 +483,7 @@ def prioritize_personal_drafts_for_review(drafts, ready, source_leads):
         ranks=[incident_priority(by_url[url])[0] for url in urls
                if isinstance(url,str) and url in by_url]
         major=bool(ranks) and min(ranks)<0
-        return (0 if major else 1,
-                0 if story_has_prepared_countries(draft,ready) else 1)
+        return 0 if major else 1
     return sorted(drafts,key=key)
 
 
@@ -1725,18 +1723,9 @@ def main():
             checkpoint("draft_empty",drafted=0)
         print("No usable drafts from approved-publisher articles; keep previous edition.",flush=True)
         return 0
-    # First review extraordinary PERSONAL blunders: old country-photo-first
-    # scheduling could exhaust B-editor quota before reaching a better story.
-    # Country-photo readiness is a secondary preference, never the first tier.
-    from country_readiness import ready_country_codes, story_has_prepared_countries
-    ready_for_review,_=ready_country_codes(Path.cwd(),day)
-    draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)
-    print("Review budget priority (unverified draft locations only):",
-          json.dumps({
-              "drafted":len(draft),
-              "country_ready_draft_hints":sum(
-                  story_has_prepared_countries(s,ready_for_review) for s in draft)
-          },sort_keys=True),flush=True)
+    # Rank candidates by editorial evidence alone.
+    draft=prioritize_personal_drafts_for_review(draft,set(),source_leads)
+    print("Review budget priority: editorial evidence only",flush=True)
     seen=previous_events()
     selected=[]
     # Only aggregate rejection categories, never article text or model free-form reasons.
@@ -1994,23 +1983,19 @@ def main():
                    select_untried_source_groups(grouped_evidence, attempted_group_ids, set())),
                rejection_reasons=rejection_counts)
     print("Editorial decision counts:",json.dumps({"drafted":len(draft),"approved":len(selected),"rejected":rejection_counts},sort_keys=True),flush=True)
-    # Publisher trust is checked above. Now reconcile the selected
-    # article countries with the ACTUAL curated reader assets. A new country
-    # cannot silently fall back to another country's photo or a one-question
-    # generic quiz. Preserve verified articles' order and original countries.
-    from country_readiness import select_ready_stories
+    # Country enrichment needs are diagnostic, not an article selection gate.
+    from country_readiness import article_country_backlog
     reviewed_count=len(selected)
-    selected,unready,prepared,incomplete=select_ready_stories(selected,Path.cwd(),day)
+    unready,prepared=article_country_backlog(selected,Path.cwd(),day)
+    country_ready_articles=sum(set(country_codes(s.get("country","")))<=prepared
+                               for s in selected)
     checkpoint("country_readiness",independent_approved=reviewed_count,
-               country_ready_articles=len(selected),
+               country_ready_articles=country_ready_articles,
                country_ready_count=len(prepared),
                unready_country_codes=unready,
                rejection_reasons=rejection_counts)
-    print("Country reader readiness:",json.dumps({
-        "reviewed":reviewed_count,"ready":len(selected),
-        "prepared_country_codes":sorted(prepared),
-        "countries_needing_curated_assets":unready,
-        "incomplete_registered_codes":sorted(incomplete)},
+    print("Article-driven country enrichment queue:",json.dumps({
+        "reviewed":reviewed_count,"countries_needing_curated_assets":unready},
         sort_keys=True),flush=True)
     if not selected:
         failure_phase=("model_quota_blocked" if AI_QUOTA_BLOCKED else
@@ -2020,8 +2005,8 @@ def main():
         checkpoint(failure_phase,independent_approved=reviewed_count,
                    country_ready_articles=0,country_ready_count=len(prepared),
                    unready_country_codes=unready,rejection_reasons=rejection_counts)
-        print("No publisher-sourced, country-ready stories; no publication.");return 0
-    # Publish all approved, country-ready stories without filling a target count.
+        print("No publisher-sourced, independently approved stories; no publication.");return 0
+    # Publish all approved stories without filling a target count.
     # The rejection reasons distinguish real scarcity
     # from blocked retrieval, model quota, timing and overly narrow editorial drafting.
     # Personal scale and diversity apply only after editorial safety review.

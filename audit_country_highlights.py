@@ -99,8 +99,7 @@ def main() -> int:
     if args.json_out:
         args.json_out.parent.mkdir(parents=True, exist_ok=True)
         args.json_out.write_text(result, encoding="utf-8")
-    # This audit only reports gaps. The shared release contract separately
-    # enforces urgent topic readiness on the proposed edition before release.
+    # This audit reports independent enrichment gaps; it never gates news release.
     return 0
 
 

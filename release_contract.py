@@ -3,21 +3,14 @@ import json
 from pathlib import Path
 
 def validate_release_input(root, payload, day, *, require_assets=False):
-    """Use the SAME editorial and country readiness checks at every handoff."""
+    """Validate the news and required reader shell, not optional tourism assets."""
     from publish_approved import validate_approved
     public=validate_approved(payload,day)
     root=Path(root)
-    if day >= "2026-11-21":
-        assets=all((root/name).is_file() for name in
-                   ("index.html","world-passport.js","travel-stops.json"))
-        if require_assets and not assets:
-            raise ValueError("Missing release reader assets")
-        if assets:
-            from check_country_experience import country_coverage
-            country_coverage(root,public["stories"])
-            if require_assets or (root/'country-content.json').is_file():
-                from audit_country_highlights import require_country_topics
-                require_country_topics(root,public['stories'],day)
+    if require_assets and not all((root/name).is_file() for name in
+                   ("index.html","world-passport.js","travel-stops.json")):
+        raise ValueError("Missing release reader assets")
+    # Country identity is still validated by validate_approved.
     return public
 
 def recover_review(root, day, incoming, *, require_assets=True):

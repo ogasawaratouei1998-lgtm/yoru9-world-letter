@@ -110,16 +110,23 @@ def country_editorial_queue(root: Path) -> dict:
         result.append({"code":code,"name":names[code],"missing":missing,
                        "requiredRemaining":sum(not x.startswith("optional_")
                                                for x in missing)})
-    result.sort(key=lambda r:(r["requiredRemaining"],len(r["missing"]),r["code"]))
+    from country_codes import country_codes
+    issue_path=Path(root)/"data/current.json"
+    issue=json.loads(issue_path.read_text(encoding="utf-8")) if issue_path.is_file() else {}
+    article_codes={code for story in issue.get("stories",[])
+                   for code in country_codes(story.get("country",""))}
+    result.sort(key=lambda r:(r["code"] not in article_codes,
+                              r["requiredRemaining"],len(r["missing"]),r["code"]))
     return {
         "reportingLocations":len(dataset["countries"]),
         "approvedCountries":sorted(approved),
         "pendingCountries":len(result),
         "nearReadyPending":[row for row in result if row["requiredRemaining"]<=2],
         "prioritizedPending":result,
+        "articleDrivenPending":[row for row in result if row["code"] in article_codes],
         "missingRequirements":dict(sorted(Counter(
             missing for row in result for missing in row["missing"]).items())),
-        "rule":"No pending country is publishable without separate editorial approval and a release readiness check."
+        "rule":"News approval is independent. Pending country extras require separate approval before display."
     }
 
 
@@ -133,7 +140,7 @@ def main():
     report=country_editorial_queue(args.root)
     print(json.dumps({
         key:value for key,value in report.items() if key!="prioritizedPending"
-    }|{"nextToPrepare":report["prioritizedPending"][:args.top]},
+    }|{"nextToPrepare":report["articleDrivenPending"][:args.top]},
     ensure_ascii=False,indent=2))
 
 
