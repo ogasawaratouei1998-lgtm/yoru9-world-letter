@@ -166,9 +166,13 @@ class EditorialQuipQualityTest(unittest.TestCase):
         self.assertIn("unproven causes",WRITING_CRAFT)
         code=(ROOT/"auto_editorial.py").read_text(encoding="utf-8")
         self.assertIn('def ai(prompt,temperature=0.1):',code)
-        self.assertIn('draft_response=ai(prompt,temperature=0.65)',code)
+        self.assertIn('else ai(prompt,temperature=0.65)',code)
         self.assertIn('retry_result=ai(retry_prompt,temperature=0.65)',code)
+        self.assertIn('draft_local_group(grouped_evidence[0],day,0.55)',code)
+        self.assertIn('retry_result=draft_local_group(batch[0],day,0.55)',code)
+        self.assertIn('response=draft_local_group(batch[0],day,0.5)',code)
         self.assertIn('audit=ai(',code)
+        self.assertIn('temperature=0.1)',code[code.index('audit=ai('):])
 
 if __name__=="__main__":
     unittest.main()

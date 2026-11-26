@@ -25,6 +25,8 @@ MODEL=os.getenv("GEMINI_MODEL","gemini-3.5-flash-lite")
 KEY=os.getenv("GEMINI_API_KEY","")
 LOCAL_EDITORIAL=os.getenv("YORU9_EDITORIAL_BACKEND","gemini")=="local"
 LOCAL_BACKEND_FAILED=False
+LOCAL_CANDIDATE_ERRORS=0
+LOCAL_DRAFT_OUTCOMES={"empty":0,"invalid":0}
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
 # An app about humane, verifiable mistakes must not turn personal scandals
@@ -579,6 +581,45 @@ class ArticleText(HTMLParser):
         self.parts.append(value)
         if self.article_depth:self.article_parts.append(value)
 
+class PublicationMetadata(HTMLParser):
+    """Read explicit publication metadata, never feed discovery or modified dates."""
+    def __init__(self):
+        super().__init__()
+        self.values=[]
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag=="meta" and (a.get("property")=="article:published_time"
+                            or a.get("itemprop")=="datePublished"):
+            self.values.append(a.get("content"))
+
+def publisher_publication_date(html):
+    parser=PublicationMetadata()
+    parser.feed(html)
+    values=list(parser.values)
+    def walk(node):
+        if isinstance(node,list):
+            for item in node:walk(item)
+        elif isinstance(node,dict):
+            kind=node.get("@type",[])
+            kinds=kind if isinstance(kind,list) else [kind]
+            if any(isinstance(k,str) and k.lower() in
+                   ("article","newsarticle","reportagearticle","blogposting") for k in kinds):
+                values.append(node.get("datePublished"))
+            for key in ("@graph","mainEntity"):
+                if key in node:walk(node[key])
+    scripts=re.findall(r'<script\b[^>]*type=["\x27]application/ld\+json["\x27][^>]*>(.*?)</script\s*>',html,re.I|re.S)
+    for script in scripts[:12]:
+        try:walk(json.loads(script))
+        except (ValueError,TypeError,RecursionError):continue
+    dates=set()
+    for value in values:
+        if not isinstance(value,str) or not re.match(r"^\d{4}-\d{2}-\d{2}(?:$|T|\s)",value):
+            continue
+        try:dates.add(datetime.strptime(value[:10],"%Y-%m-%d").date().isoformat())
+        except ValueError:continue
+    # Conflicting dates must not be resolved by guessing.
+    return next(iter(dates)) if len(dates)==1 else None
+
 def extracted_article_text(html, min_chars=600):
     parser=ArticleText()
     parser.feed(html)
@@ -638,11 +679,15 @@ def source_text(url, diagnostics=None, min_chars=600):
                 if diagnostics is not None:diagnostics.append("non_html")
                 return ""
             raw=response.read(180000)
-        text=extracted_article_text(raw.decode("utf-8",errors="replace"),min_chars=min_chars)
+        html=raw.decode("utf-8",errors="replace")
+        text=extracted_article_text(html,min_chars=min_chars)
         if len(text)<min_chars:
             if diagnostics is not None:diagnostics.append("short_html")
             return ""
         if diagnostics is not None:diagnostics.append("fetched")
+        published=publisher_publication_date(html)
+        if published:
+            text="Publisher datePublished: "+published+"\n"+text
         return text[:13000]
     except HTTPError as exc:
         if diagnostics is not None:diagnostics.append("http_"+str(exc.code))
@@ -693,24 +738,26 @@ def editorial_seconds_remaining():
     return float("inf") if RUN_DEADLINE is None else max(0.0,RUN_DEADLINE-time.monotonic())
 
 def ai(prompt,temperature=0.1):
-    global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED
+    global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     if LOCAL_EDITORIAL:
-        from local_editorial import generate_json, LocalRequestTimeout
+        from local_editorial import generate_json, LocalCandidateError, SCREEN_PREFIX
         if LOCAL_BACKEND_FAILED:
             raise RuntimeError("Local editorial circuit open")
         audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
+        screen=prompt.startswith(SCREEN_PREFIX)
         remaining=editorial_seconds_remaining()
-        reserve=0 if audit_prompt else 300
+        reserve=0 if audit_prompt else 420 if screen else 300
         if remaining-reserve<30:
-            raise RuntimeError("Local editorial time budget exhausted")
+            raise LocalCandidateError("Local editorial time budget exhausted")
         try:
             return generate_json(prompt,temperature,
-                                 min(360,remaining-reserve),
-                                 768 if audit_prompt else 1500)
-        except LocalRequestTimeout:
-            # A timed-out request is not evidence that the entire backend is
-            # dead. The next independent candidate may fit the remaining time.
-            print("Local request timeout; discard partial response.",flush=True)
+                                 min(45 if screen else 240,remaining-reserve),
+                                 160 if screen else 768 if audit_prompt else 1300)
+        except LocalCandidateError as exc:
+            # A bad JSON response or token limit is local to this request.
+            # A connection/HTTP failure still opens the backend circuit below.
+            LOCAL_CANDIDATE_ERRORS+=1
+            print("Local candidate request rejected:",type(exc).__name__,str(exc),flush=True)
             raise
         except RuntimeError:
             LOCAL_BACKEND_FAILED=True
@@ -1128,6 +1175,41 @@ def valid_recent_reported(raw, now):
     except ValueError:return False
     return now.date()-timedelta(days=7)<=reported<=now.date()
 
+def screen_local_groups(groups, budget=240):
+    """Cheap bounded ranking pass; preserve all unselected/unseen candidates."""
+    from local_editorial import screen_prompt, preferred_ids
+    end=time.monotonic()+budget
+    preferred=[]
+    screened=0
+    for start in range(0,len(groups),8):
+        if LOCAL_BACKEND_FAILED or time.monotonic()>=end or editorial_seconds_remaining()<500:
+            break
+        batch=groups[start:start+8]
+        try:
+            result=ai(screen_prompt(batch),temperature=0.0)
+            preferred.extend(preferred_ids(result,batch))
+            screened+=len(batch)
+        except RuntimeError:
+            if LOCAL_BACKEND_FAILED:break
+    positions={group_id:i for i,group_id in enumerate(preferred)}
+    ranked=sorted(groups,key=lambda g:(
+        # Retain highest-signal major-personal discovery evidence ahead of
+        # less substantial guesses. Triage is only a tie-break/order hint.
+        min(incident_priority(a)[0] for a in g["articles"])!=-1,
+        g["groupId"] not in positions,positions.get(g["groupId"],len(groups)),
+        min(incident_priority(a)[0] for a in g["articles"]),g["groupId"]))
+    return ranked,screened,len(positions)
+
+def draft_local_group(group, day, temperature):
+    from local_editorial import draft_prompt, bind_draft
+    response=ai(draft_prompt(group,day),temperature=temperature)
+    bound=bind_draft(response,group)
+    if not bound["stories"]:
+        key="empty" if response.get("stories")==[] else "invalid"
+        LOCAL_DRAFT_OUTCOMES[key]+=1
+        print("Local draft outcome:",key,flush=True)
+    return bound
+
 MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
 
 def source_bound_batch_drafts(response, groups):
@@ -1236,7 +1318,9 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "supplemental_attempts","supplemental_generated",
     "supplemental_groups_examined",
     "source_groups_attempted","untried_source_groups_remaining",
-    "repeated_quip_cadences","recognized_quip_cadences"
+    "repeated_quip_cadences","recognized_quip_cadences",
+    "local_screened","local_screen_preferred","local_candidate_errors","explicit_publisher_dates",
+    "local_empty_draft_responses","local_invalid_draft_responses"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
@@ -1274,8 +1358,10 @@ def save_editorial_funnel(stage, counts, path="data/editorial-funnel.json"):
     return output
 
 def main():
-    global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED
+    global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     LOCAL_BACKEND_FAILED=False
+    LOCAL_CANDIDATE_ERRORS=0
+    LOCAL_DRAFT_OUTCOMES.update(empty=0,invalid=0)
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY and not LOCAL_EDITORIAL:
@@ -1358,6 +1444,8 @@ def main():
                high_signal_original_bodies=high_signal_source_count,
                source_fetch_attempts=sum(row[0] for row in outcomes.values()),
                publisher_regions_fetched=dict(fetched_regions))
+    checkpoint("body_fetch",explicit_publisher_dates=sum(
+        item["text"].startswith("Publisher datePublished: ") for item in source_leads))
     print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
@@ -1428,6 +1516,11 @@ def main():
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
         "url":item["url"],"text":item["text"][:4800]} for item in group]}
         for i,group in enumerate(groups[:EDITORIAL_SHORTLIST_LIMIT])]
+    if LOCAL_EDITORIAL:
+        grouped_evidence,screened,preferred=screen_local_groups(grouped_evidence)
+        checkpoint("shortlist",local_screened=screened,local_screen_preferred=preferred,
+                   local_candidate_errors=LOCAL_CANDIDATE_ERRORS)
+    local_rank={g["groupId"]:i for i,g in enumerate(grouped_evidence)}
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
     allowed_pairs=set()
     for group in groups[:EDITORIAL_SHORTLIST_LIMIT]:
@@ -1451,33 +1544,21 @@ def main():
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
       'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
-    if LOCAL_EDITORIAL:
-        # CPU inference gets one incident, a short output contract and no
-        # long multi-group diagnostic response. All B-editor gates stay intact.
-        prompt=("You are Japanese news editor A. Draft at most ONE story from the supplied original publisher text. "
-                "Prioritize extraordinary, documented personal mistakes with a safe comic reversal. "
-                "Reject ordinary oddities, suffering, crime, humiliation, and unsupported facts; return {\"stories\":[]} if unsuitable. "
-                "Do not confuse publisher market with incident country. Report actual source date within 7 days of JST edition "+day+". "
-                "Write concise Japanese: summary 80-140 characters, detail 130-250, quip 18-45 with an incident-specific punchline. "
-                "No invented intent, quotes, dates or outcomes. category exactly person, work, company, or sports. "
-                "Return JSON with stories array, required fields "+str(REQUIRED)+
-                ", humanActor, humanMistake, expectedPlan, observedOutcome, verificationUrls (exact publisher URL), eventKey, evidence; "
-                "optional quipSecond only if distinctly funny. No diagnostics or commentary. "
-                "Source groups: "+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
     attempted_group_ids={g["groupId"] for g in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]}
     if editorial_seconds_remaining()<100:
         checkpoint("budget_blocked")
         print("Editorial budget too low for safe independent review; no new publication.",flush=True)
         return 0
     try:
-        draft_response=ai(prompt,temperature=0.65)
+        draft_response=(draft_local_group(grouped_evidence[0],day,0.55)
+                        if LOCAL_EDITORIAL else ai(prompt,temperature=0.65))
     except RuntimeError as exc:
-        from local_editorial import LocalRequestTimeout
-        if LOCAL_EDITORIAL and isinstance(exc,LocalRequestTimeout):
+        from local_editorial import LocalCandidateError
+        if LOCAL_EDITORIAL and isinstance(exc,LocalCandidateError):
             # Continue with the existing focused-draft recovery loop, not the
             # failed source. No partial model response can become a draft.
             draft_response={"stories":[]}
-            print("Initial request timed out; trying a different source group.",flush=True)
+            print("Initial candidate failed; trying a different source group.",flush=True)
         else:
             checkpoint("model_quota_blocked" if AI_QUOTA_BLOCKED else "model_unavailable")
             print("Initial editorial generation unavailable; no unverified publication.",flush=True)
@@ -1540,6 +1621,7 @@ def main():
             and not any(article["url"] in already_drafted_urls
                        for article in group["articles"])
         ),key=lambda g:(
+            local_rank[g["groupId"]] if LOCAL_EDITORIAL else 0,
             min(incident_priority(article)[0] for article in g["articles"]),
             0 if g["groupId"]>PRIMARY_EDITORIAL_GROUPS else 1,
             0 if group_reasons.get(g["groupId"])=="same_incident_supported" else 1,
@@ -1589,7 +1671,10 @@ def main():
             try:
                 supplemental_attempts+=1
                 supplemental_groups_examined+=len(batch)
-                retry_result=ai(retry_prompt,temperature=0.65)
+                if LOCAL_EDITORIAL:
+                    retry_result=draft_local_group(batch[0],day,0.55)
+                else:
+                    retry_result=ai(retry_prompt,temperature=0.65)
                 retry_stories=source_bound_batch_drafts(retry_result,batch)
                 supplemental_generated+=len(retry_stories)
                 draft.extend(retry_stories)
@@ -1599,7 +1684,9 @@ def main():
             if any(draft_preflight_viable(item,now) for item in draft):
                 print("Viable draft available: switch immediately to independent editorial review.",flush=True)
                 break
-    checkpoint("draft",drafted=len(draft),
+    checkpoint("draft",drafted=len(draft),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
+               local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
+               local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
@@ -1665,12 +1752,16 @@ def main():
                    if isinstance(url,str)}
         remaining=select_untried_source_groups(
             grouped_evidence, attempted_group_ids, used_urls)
+        if LOCAL_EDITORIAL:
+            remaining.sort(key=lambda g:local_rank[g["groupId"]])
         print("After-review never-prompted source groups:",len(remaining),
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
         for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125 or LOCAL_BACKEND_FAILED:
                 print("Ending after-review refill: independent audit time or AI quota limit.",flush=True)
+                break
+            if LOCAL_EDITORIAL and editorial_seconds_remaining()<420:
                 break
             batch=remaining[offset:offset+MAX_FOCUSED_DRAFT_GROUPS]
             retry_prompt=(
@@ -1697,7 +1788,10 @@ def main():
             try:
                 supplemental_attempts+=1
                 supplemental_groups_examined+=len(batch)
-                response=ai(retry_prompt,temperature=0.5)
+                if LOCAL_EDITORIAL:
+                    response=draft_local_group(batch[0],day,0.5)
+                else:
+                    response=ai(retry_prompt,temperature=0.5)
                 new_drafts=source_bound_batch_drafts(response,batch)
                 supplemental_generated+=len(new_drafts)
                 print("After-review additional SOURCE-BOUND drafts:",len(new_drafts),flush=True)
@@ -1826,6 +1920,10 @@ def main():
         except RuntimeError as exc:
             print("Editorial copy review paused safely:",type(exc).__name__,flush=True)
             # Previously audited stories remain eligible, but never accept the interrupted draft.
+            from local_editorial import LocalCandidateError
+            if LOCAL_EDITORIAL and isinstance(exc,LocalCandidateError):
+                reject("local_candidate_review_failed")
+                continue
             break
         if audit.get("approved") is not True:
             # Free-form AI reasons are not logged; only bounded, diagnostic labels.
@@ -1874,7 +1972,9 @@ def main():
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         # No publication-count limit: the time and AI quota guards above
         # bound how many separate stories can be safely reviewed in one run.
-    checkpoint("audit",independent_approved=len(selected),
+    checkpoint("audit",independent_approved=len(selected),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
+               local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
+               local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
                supplemental_groups_examined=supplemental_groups_examined,
