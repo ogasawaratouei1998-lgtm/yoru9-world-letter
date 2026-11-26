@@ -54,6 +54,13 @@ def summarize_funnel(source):
               and type(value) is int and 0<=value<=100000]
         for key,value in sorted(safe,key=lambda item:(-item[1],item[0]))[:5]:
             output.append("- rejection "+key+": "+str(value))
+    local_reasons=source.get("local_draft_reasons")
+    if isinstance(local_reasons,dict):
+        from local_editorial import SKIP_CODES
+        for key in sorted(SKIP_CODES):
+            value=local_reasons.get(key)
+            if type(value) is int and 0<value<=100000:
+                output.append("- local draft "+key+": "+str(value))
     output.append("編集診断は公開成功・失敗の確定通知ではありません。")
     return "\n".join(output)
 

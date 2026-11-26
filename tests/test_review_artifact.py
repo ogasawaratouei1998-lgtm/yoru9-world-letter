@@ -75,6 +75,27 @@ class ReviewStageTest(unittest.TestCase):
         self.assertEqual(json.loads(staged.read_text(encoding="utf-8"))["stories"][0]["verificationUrls"],
                          [item["stories"][0]["sourceUrl"]])
 
+    def test_release_handoff_skips_invalid_latest_and_preserves_existing(self):
+        from release_contract import recover_review
+        incoming=self.root/"incoming"
+        original=self.source.read_bytes()
+        self.source.unlink()
+        for i in ("100","200"):
+            folder=incoming/i
+            folder.mkdir(parents=True)
+            (folder/(DAY+".json")).write_bytes(original if i=="100" else b'{"status":"bad"}')
+        self.assertEqual(recover_review(self.root,DAY,incoming,require_assets=False)[0],"recovered")
+        self.assertEqual(json.loads(self.source.read_bytes()),json.loads(original))
+        self.assertEqual(recover_review(self.root,DAY,incoming,require_assets=False)[0],"existing")
+        (self.root/"data"/"archive"/(DAY+".json")).write_text("{}")
+        self.assertEqual(recover_review(self.root,DAY,incoming,require_assets=False)[0],"archived")
+
+    def test_modern_handoff_missing_reader_assets_fails_closed(self):
+        from release_contract import validate_release_input
+        data=json.loads((ROOT/"data"/"approved"/"2026-11-25.json").read_text())
+        with self.assertRaisesRegex(ValueError,"Missing release reader assets"):
+            validate_release_input(self.root,data,"2026-11-25",require_assets=True)
+
     def test_no_sources_is_not_stageable(self):
         item=json.loads(self.source.read_text(encoding="utf-8"))
         item["stories"][0]["verificationUrls"]=[]

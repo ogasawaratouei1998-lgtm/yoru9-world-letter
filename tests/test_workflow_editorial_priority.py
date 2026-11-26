@@ -7,10 +7,8 @@ WORKFLOW=(Path(__file__).resolve().parents[1]/".github/workflows/publish-nightly
 class WorkflowEditorialPriorityTest(unittest.TestCase):
     def test_committed_approved_issue_wins_even_with_fewer_stories(self):
         self.assertIn('if [ -f "data/approved/$DAY.json" ]; then',WORKFLOW)
-        self.assertIn('print("Preserving previously approved editorial issue:"',WORKFLOW)
-        self.assertIn('validate_approved(data,day)',WORKFLOW)
-        self.assertLess(WORKFLOW.index('if [ -f "data/approved/$DAY.json" ]; then'),
-                        WORKFLOW.index('mkdir -p /tmp/yoru9-reviewed'))
+        self.assertIn('recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"))',WORKFLOW)
+        self.assertIn('if [ ! -f "data/archive/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then',WORKFLOW)
         self.assertNotIn('max(valid,key=lambda item:item[0])',WORKFLOW)
 
     def test_preview_job_guard_is_yaml_safe_and_scheduled_in_utc(self):
@@ -88,7 +86,7 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn("github.event.workflow_run.conclusion == 'success'",guard)
         self.assertIn("github.event.workflow_run.head_branch == 'main'",guard)
         self.assertIn("startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')",guard)
-        self.assertIn("validate_approved(payload,day)",WORKFLOW)
+        self.assertIn("recover_review(Path.cwd(),day",WORKFLOW)
         self.assertIn("python check_public_country_release.py",WORKFLOW)
         self.assertLess(WORKFLOW.index("Verify the actual public Pages data"),
                         WORKFLOW.index("Dispatch optional release notification"))
@@ -101,8 +99,9 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertIn('elif result=="not_configured":',WORKFLOW)
 
     def test_missing_approved_issue_prefers_latest_valid_review_not_story_count(self):
-        self.assertIn('key=lambda p:int(p.parent.name),reverse=True',WORKFLOW)
-        self.assertIn('count,source,payload=valid[0]',WORKFLOW)
+        contract=(Path(__file__).resolve().parents[1]/"release_contract.py").read_text(encoding="utf-8")
+        self.assertIn('key=lambda p:int(p.parent.name),reverse=True',contract)
+        self.assertIn('validate_release_input(root,payload,day,require_assets=require_assets)',contract)
         self.assertIn('if [ -f "data/archive/$DAY.json" ]; then',WORKFLOW)
 
 if __name__=="__main__":

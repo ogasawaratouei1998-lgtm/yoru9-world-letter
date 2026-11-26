@@ -33,5 +33,10 @@ for attempt in $(seq 1 60); do
   sleep 2
 done
 if [ "$READY" != true ]; then echo "::error::Local inference server failed readiness check"; exit 1; fi
-python local_editorial.py
-YORU9_EDITORIAL_BACKEND=local GEMINI_API_KEY= python auto_editorial.py
+if [ "${1:-}" = "--probe-only" ]; then
+  # Explicit non-publishing test; never consume the daily editorial time budget.
+  timeout 240 python local_editorial.py --probe
+else
+  python local_editorial.py
+  YORU9_EDITORIAL_BACKEND=local GEMINI_API_KEY= python auto_editorial.py
+fi

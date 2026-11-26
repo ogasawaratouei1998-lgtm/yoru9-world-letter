@@ -84,6 +84,10 @@ jobs:
         if: steps.edition.outputs.exists == 'false' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
         timeout-minutes: 47
         run: bash run_local_editorial.sh
+      - name: Explicit archived-day model capability trial (no publication)
+        if: steps.edition.outputs.archived == 'true' && github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Local editorial trial:')
+        timeout-minutes: 18
+        run: bash run_local_editorial.sh --probe-only
       - name: Optional Gemini double-check (no publication)
         if: steps.edition.outputs.exists == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
         env:
@@ -125,6 +129,7 @@ jobs:
           JOB_RESULT: ${{ job.status }}
           READY: ${{ steps.staged.outputs.ready }}
           ARCHIVED: ${{ steps.edition.outputs.archived }}
+          ORIGIN: ${{ steps.staged.outputs.origin }}
         run: |
           STATE=error
           REASON="No validated issue; check editorial logs"
@@ -134,9 +139,11 @@ jobs:
           elif [ "$ARCHIVED" = true ]; then
             STATE=success
             REASON="Edition already archived; no new preview needed"
-          elif [ "$READY" = true ]; then
+          elif [ "$READY" = true ] && [ "$ORIGIN" = automated ]; then
             STATE=success
-            REASON="Validated issue artifact uploaded"
+            REASON="Validated automatic issue artifact uploaded"
+          elif [ "$READY" = true ]; then
+            REASON="Validated manual issue; automation not demonstrated"
           fi
           gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$GITHUB_SHA" \
             -f state="$STATE" -f context=yoru9/internal-editorial \
