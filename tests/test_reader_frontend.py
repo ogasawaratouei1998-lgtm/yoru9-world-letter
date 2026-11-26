@@ -220,6 +220,41 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
         self.assertLess(page.index('id="issueGallery"'),page.index('id="articleReader"'))
         self.assertLess(page.index('id="spotlightImage"'),page.index('id="spotlightTitle"'))
 
+    @unittest.skipUnless(shutil.which("node"), "Node.js required")
+    def test_news_illustrations_use_reporting_objects_not_random_or_jokes(self):
+        import json
+        from xml.etree import ElementTree as ET
+        from urllib.parse import unquote
+        core=(ROOT/"reader_sources/core.js").read_text(encoding="utf-8")
+        logic=core[core.index("function newsArtSubject("):core.index("function hasDailyGeneratedImage(")]
+        cases=[
+            ({"title":"妻のパスポートを持ってスペインへ","summary":"飛行機で空港に到着","category":"person"},"passport"),
+            ({"title":"書類を紛失","summary":"発注書を探した","quip":"鍋やないか"},"document"),
+            ({"title":"飛行機の予約を間違えた","summary":"航空便を予約"},"plane"),
+            ({"title":"列車を乗り間違えた"},"train"),
+            ({"title":"タクシーの行き先を間違えた"},"car"),
+            ({"title":"注文を間違えた","summary":"スーツケースを注文"},"luggage"),
+            ({"title":"予想外の結果に","quip":"パスポートとフライパン","category":"sports"},"neutral"),
+            ({"title":"知らない話題","summary":"説明なし","id":"different-id"},"neutral"),
+            ({"title":"パスポート","country":"<script>","label":"&<"},"passport"),
+        ]
+        script="const escapeHtml=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');\n"+logic+"""
+const cases=JSON.parse(process.argv[1]);
+console.log(JSON.stringify(cases.map(([s])=>[newsArtSubject(s),fallbackNewsArt(s)])));
+"""
+        proc=subprocess.run(["node","-e",script,json.dumps(cases,ensure_ascii=False)],
+                            capture_output=True,text=True,check=True)
+        for (story,expected),(subject,url) in zip(cases,json.loads(proc.stdout)):
+            with self.subTest(story=story):
+                self.assertEqual(subject,expected)
+                svg=unquote(url.split(",",1)[1])
+                tree=ET.fromstring(svg)
+                self.assertEqual(tree.find("{http://www.w3.org/2000/svg}g[@data-subject]").get("data-subject"),expected)
+                self.assertNotIn("<script",svg)
+                if expected=="passport":
+                    self.assertIn("PASSPORT",svg)
+                self.assertNotIn("href=",svg)
+
     def test_world_exploration_is_optional_and_remains_after_news(self):
         page=(ROOT/"index.html").read_text(encoding="utf-8")
         opening='<details class="world-explore" id="worldExplore">'

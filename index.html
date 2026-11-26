@@ -2492,6 +2492,33 @@ function shortComicKicker(story){
 }
 /* Unmapped nightly stories get a distinct, offline-safe, generated vector.
    This is symbolic editorial artwork, never a supposed scene photograph. */
+// Choose an object actually named in the checked reporting, never a gag or ID.
+// Specific objects take precedence over broader locations (passport > airplane).
+// An unrecognized story uses a neutral question-card, not a random scene.
+function newsArtSubject(story){
+ const headline=String(story?.title||'');
+ const summary=String(story?.summary||'');
+ const rules=[
+  ['passport',/パスポート|旅券|\bpassport\b/i],
+  ['key',/鍵|カギ|キーを(?:なく|紛失)|\bkeys?\b/i],
+  ['phone',/スマートフォン|スマホ|携帯電話|iphone|\bsmartphone\b/i],
+  ['money',/紙幣|現金|硬貨|札束|\bbanknotes?\b|\bcash\b/i],
+  ['sign',/看板|標識|道路標示|道路表示|\bsignboard\b/i],
+  ['document',/注文書|発注書|書類|請求書|契約書|\binvoice\b/i],
+  ['luggage',/スーツケース|旅行かばん|\bsuitcase\b/i],
+  ['plane',/飛行機|航空機|航空便|搭乗|空港|\bairplane\b|\bflight\b/i],
+  ['train',/列車|電車|鉄道|新幹線|\btrain\b/i],
+  ['car',/自動車|乗用車|車両|トラック|タクシー|\bcar\b|\btruck\b/i],
+  ['cooking',/鍋|フライパン|調理|料理|レシピ|\bfrying pan\b/i],
+  ['water',/川|湖|水質|遊泳|水浴|\briver\b/i],
+  ['ball',/サッカー|野球|得点|ゴール|クリケット|\bfootball\b|\bbaseball\b/i],
+  ['video',/動画|YouTube|SNS|広報/i]
+ ];
+ for(const text of [headline,summary]){
+  for(const [subject,pattern] of rules)if(pattern.test(text))return subject;
+ }
+ return 'neutral';
+}
 function fallbackNewsArt(story){
  const key=String(story?.id||story?.title||'world-letter');
  let hash=2166136261;
@@ -2503,7 +2530,7 @@ function fallbackNewsArt(story){
   ['#CCE5F4','#F6D7A3','#36566B'],['#A4DFCC','#F5AF99','#375E6B']
  ];
  const [a,b,ink]=themes[hash%themes.length];
- const detail=String(story?.title||'')+' '+String(story?.summary||'');
+ const subject=newsArtSubject(story);
  const motifs=[
   // Bubbles and waves.
   '<path d="M130 312q62-31 124 0t125 0t125 0" fill="none" stroke="#7DC7C8" stroke-width="25" stroke-linecap="round"/><circle cx="340" cy="150" r="63" fill="#C3F2E9" stroke="#31536D" stroke-width="11"/><circle cx="580" cy="200" r="36" fill="#fff" opacity=".7"/>',
@@ -2518,12 +2545,20 @@ function fallbackNewsArt(story){
   // Office document and notification.
   '<rect x="205" y="86" width="289" height="290" rx="24" fill="#FFF8EC" stroke="#31536D" stroke-width="13"/><path d="M250 156h190m-190 57h155m-155 55h174" stroke="#7CB7B6" stroke-width="17" stroke-linecap="round"/><circle cx="553" cy="320" r="80" fill="#F4C18D" stroke="#31536D" stroke-width="11"/><path d="M553 270v66" stroke="#31536D" stroke-width="18" stroke-linecap="round"/><circle cx="553" cy="366" r="10" fill="#31536D"/>'
  ];
- let motif=hash%motifs.length;
- if(/川|水質|遊泳|泳|洪水|水浴/.test(detail))motif=0;
- else if(/料理|調理|魚|食|レシピ|鍋|フライパン/.test(detail))motif=1;
- else if(/動画|YouTub|SNS|広報|都市伝説/.test(detail))motif=2;
- else if(story?.category==='sports'||/試合|得点|選手|大会/.test(detail))motif=3;
- else if(/列車|鉄道|飛行機|車|道路|トンネル/.test(detail))motif=4;
+ const objects={
+  // Two anonymous passport covers and a portrait-page symbol; no real identity.
+  passport:'<g transform="rotate(-11 254 232)"><rect x="141" y="99" width="226" height="286" rx="15" fill="#274B73" stroke="#FFF8E8" stroke-width="9"/><circle cx="254" cy="211" r="44" fill="none" stroke="#EBC477" stroke-width="7"/><path d="M210 211h88m-44-44v88m-32-70q32 25 64 0m-64 52q32-25 64 0" fill="none" stroke="#EBC477" stroke-width="4"/><text x="254" y="310" text-anchor="middle" font-family="system-ui" font-size="27" font-weight="700" fill="#EBC477">PASSPORT</text></g><g transform="rotate(10 510 239)"><rect x="365" y="102" width="276" height="276" rx="15" fill="#FFF8E8" stroke="#31536D" stroke-width="10"/><path d="M503 110v260" stroke="#C4B69C" stroke-width="5"/><circle cx="435" cy="190" r="29" fill="#91B8CC"/><path d="M389 264q6-50 46-50t46 50z" fill="#91B8CC"/><path d="M526 176h87m-87 40h73m-73 40h87" stroke="#9CB5B9" stroke-width="10" stroke-linecap="round"/><path d="m531 308 66 52m0-52-66 52" stroke="#D76378" stroke-width="15" stroke-linecap="round"/></g>',
+  key:'<circle cx="270" cy="209" r="88" fill="none" stroke="#31536D" stroke-width="37"/><path d="M335 267l160 99 34-52 49 31 26-42-190-125" fill="#EBC477" stroke="#31536D" stroke-width="13" stroke-linejoin="round"/>',
+  phone:'<rect x="278" y="80" width="247" height="308" rx="36" fill="#31536D"/><rect x="299" y="103" width="205" height="239" rx="15" fill="#E5F6F7"/><path d="M333 166h137m-137 51h110m-110 51h137" stroke="#7CB7B6" stroke-width="13" stroke-linecap="round"/><circle cx="401" cy="364" r="10" fill="#fff"/>',
+  money:'<g transform="rotate(-12 360 230)"><rect x="157" y="132" width="417" height="203" rx="15" fill="#D2E7B4" stroke="#31536D" stroke-width="12"/><rect x="184" y="160" width="363" height="147" rx="11" fill="none" stroke="#749D72" stroke-width="7"/><circle cx="365" cy="233" r="54" fill="#A4C48C"/></g><circle cx="584" cy="305" r="54" fill="#F5D58A" stroke="#31536D" stroke-width="10"/>',
+  sign:'<path d="M400 230v147" stroke="#31536D" stroke-width="25" stroke-linecap="round"/><rect x="160" y="107" width="480" height="153" rx="22" fill="#E7F5ED" stroke="#31536D" stroke-width="12"/><path d="M234 182h300m-63-49 64 49-64 49" fill="none" stroke="#31536D" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>',
+  luggage:'<rect x="213" y="159" width="375" height="197" rx="34" fill="#82BAC9" stroke="#31536D" stroke-width="13"/><path d="M335 160v-44q0-26 28-26h74q28 0 28 26v44M285 172v173m230-173v173" fill="none" stroke="#31536D" stroke-width="13"/><circle cx="277" cy="365" r="16" fill="#31536D"/><circle cx="523" cy="365" r="16" fill="#31536D"/>',
+  plane:'<path d="M396 75q27 0 27 51l4 70 205 112v40l-205-61-3 61 51 36v20l-75-18-75 18v-20l51-36-3-61-205 61v-40l205-112 4-70q0-51 19-51z" fill="#FFF8E8" stroke="#31536D" stroke-width="10" stroke-linejoin="round"/>',
+  train:'<rect x="258" y="89" width="284" height="260" rx="48" fill="#FFF8E8" stroke="#31536D" stroke-width="13"/><rect x="290" y="126" width="220" height="108" rx="15" fill="#91C9DF"/><circle cx="317" cy="288" r="19" fill="#E9B976"/><circle cx="483" cy="288" r="19" fill="#E9B976"/><path d="m320 349-60 40m220-40 60 40M286 376h228" stroke="#31536D" stroke-width="13" stroke-linecap="round"/>',
+  car:'<path d="M172 268l52-30 55-92h242l57 92 54 30v64H172z" fill="#FFF4DD" stroke="#31536D" stroke-width="13" stroke-linejoin="round"/><path d="m287 165-34 70h288l-35-70z" fill="#91C9DF"/><circle cx="271" cy="328" r="37" fill="#31536D"/><circle cx="533" cy="328" r="37" fill="#31536D"/>',
+  document:motifs[5],cooking:motifs[1],water:motifs[0],
+  ball:motifs[3],video:motifs[2],neutral:motifs[2]
+ };
  const label=escapeHtml(String(story?.label||'世界のまさか').slice(0,14));
  const country=escapeHtml(String(story?.country||'世界').slice(0,14));
  const svg=[
@@ -2532,7 +2567,7 @@ function fallbackNewsArt(story){
   '<rect width="800" height="480" rx="28" fill="url(#bg)"/>',
   '<circle cx="690" cy="70" r="141" fill="#fff" opacity=".22"/>',
   '<path d="M0 426Q200 381 407 428T800 394V480H0Z" fill="',ink,'" opacity=".12"/>',
-  motifs[motif],
+  '<g data-subject="'+subject+'">',objects[subject],'</g>',
   '<rect x="33" y="397" width="734" height="67" rx="20" fill="',ink,'" opacity=".95"/>',
   '<text x="59" y="438" font-family="system-ui,sans-serif" font-size="29" font-weight="800" fill="#fff">',
   country,' · ',label,'</text>',
