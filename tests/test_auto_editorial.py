@@ -214,12 +214,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         ranked=editorial.prioritize_personal_drafts_for_review(
             [minor,major],{"FR"},[minor_src,major_src])
         self.assertEqual([x["id"] for x in ranked],["major","minor"])
-        # Within the non-major tier, licensed photo readiness still matters.
+        # Country readiness cannot change editorial priority.
         other={"id":"other","country":"FJ",
                "verificationUrls":[minor_src["url"]]}
         ranked=editorial.prioritize_personal_drafts_for_review(
             [other,minor],{"FR"},[minor_src])
-        self.assertEqual([x["id"] for x in ranked],["minor","other"])
+        self.assertEqual([x["id"] for x in ranked],["other","minor"])
 
     def test_major_personal_sources_get_read_before_routine_ones(self):
         minor=[{"title":f"Company accidentally sent wrong name {i}",
@@ -869,7 +869,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         recovery=source[begin:end]
         self.assertIn("yield from draft",recovery)
         self.assertNotIn("ready_reviewed_count()>=",recovery)
-        self.assertIn("draft=prioritize_personal_drafts_for_review(draft,ready_for_review,source_leads)",source)
+        self.assertIn("draft=prioritize_personal_drafts_for_review(draft,set(),source_leads)",source)
         self.assertLess(source.index("draft=prioritize_personal_drafts_for_review("),
                         source.index("for story in candidates_with_after_review_refill():"))
         self.assertIn("if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<130 or LOCAL_BACKEND_FAILED:",recovery)
@@ -1123,6 +1123,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         # The headline rank is discovery only, never factual endorsement.
         source=(__import__("pathlib").Path(__file__).resolve().parents[1]/
                 "auto_editorial.py").read_text(encoding="utf-8")
+        from editorial_discovery import incident_priority
+        self.assertIs(editorial.incident_priority,incident_priority)
         self.assertIn("Headline text NEVER proves blame",source)
 
     def test_verified_major_personal_mistake_is_chosen_and_leads(self):

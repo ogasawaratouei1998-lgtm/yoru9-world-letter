@@ -166,7 +166,8 @@ function chooseTravelPhoto(story,stops){
  const available=travelPhotoOptions(stops).filter(s=>!travelFailedPhotos.has(s.photoAsset)&&approvedTravelCover(s)&&!conflictsWithCountryCover(s));
  if(!available.length)return null;
  const countries=travelCountryNames(story.country);
- const sameCountry=available.filter(s=>countries.includes(s.country));
+ const sameCountry=available.filter(s=>countries.includes(s.country)&&
+   (typeof APPROVED_COUNTRY_CODES==='undefined'||countryKeys(s.country).some(code=>APPROVED_COUNTRY_CODES.includes(code))));
  // Always retain authentic article-country alignment; no fake foreign photo.
  if(!sameCountry.length)return null;
  // Avoid two copies in one session, unless it is the ONLY available photograph.

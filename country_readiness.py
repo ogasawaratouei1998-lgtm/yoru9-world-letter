@@ -94,6 +94,28 @@ def select_ready_stories(stories, root: Path, day=None):
     return accepted,dict(sorted(blocked.items())),ready,incomplete
 
 
+def article_country_backlog(stories, root: Path, day):
+    """Report enrichment needs after news review; never filter stories."""
+    from datetime import date
+    from audit_country_highlights import missing_topic_dates
+    from build_site import validate_country_highlights
+    root=Path(root)
+    day=date.fromisoformat(day) if isinstance(day,str) else day
+    counts=Counter(code for story in stories
+                   for code in set(country_codes(story.get("country",""))))
+    try:
+        rows=json.loads((root/"country-content.json").read_text(encoding="utf-8"))["countries"]
+    except (OSError,ValueError,KeyError,TypeError):
+        rows={}
+    try:
+        topics=validate_country_highlights(root)["highlights"]
+    except (OSError,ValueError,KeyError,TypeError):
+        topics={}
+    ready={code for code in counts if rows.get(code,{}).get("status")=="approved"
+           and not missing_topic_dates(topics,code,day,2)}
+    return {code:count for code,count in sorted(counts.items()) if code not in ready},ready
+
+
 if __name__=="__main__":
     root=Path(__file__).resolve().parent
     ready,incomplete=ready_country_codes(root)

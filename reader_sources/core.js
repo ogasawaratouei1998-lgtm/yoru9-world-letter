@@ -180,10 +180,10 @@ function showTodayCountryIntro(item){
  const guide=TODAY_COUNTRY_GUIDES[currentCode];
  $('todayMapIntro').dataset.countryCode=currentCode;
  $('todayMapIntroName').textContent=item.name;
- $('todayMapIntroLead').textContent=guide?guide.lead:item.name+'の魅力を、文化と暮らしから';
+ $('todayMapIntroLead').textContent=guide?guide.lead:'国別コンテンツは準備中です';
  $('todayMapIntroBody').textContent=guide
   ?guide.body
-  :todayCountryIntro(item)+' 観光名所を案内する「30秒の小旅行」とは別に、この国の特色を紹介します。';
+  :'この国のニュースはご覧いただけます。国紹介・写真・クイズ・小旅行は、出典と写真の権利を確認してから追加します。';
  const facts=$('todayMapIntroFacts');
  facts.replaceChildren();
  const guideSource=$('todayMapIntroGuideSource');
@@ -203,7 +203,7 @@ function showTodayCountryIntro(item){
  loadCountryHighlights().then(all=>{
   if(requestId!==todayCountryIntroRequest||$('todayMapIntro').hidden||
      $('todayMapIntro').dataset.countryCode!==currentCode)return;
-  const topic=currentCountryHighlight(all,currentCode);
+  const topic=APPROVED_COUNTRY_CODES.includes(currentCode)?currentCountryHighlight(all,currentCode):null;
   if(!topic)return;
   $('todayMapIntroCurrentTitle').textContent=topic.title;
   $('todayMapIntroCurrentBody').textContent=topic.body;
@@ -220,7 +220,7 @@ function showTodayCountryIntro(item){
  photo.onload=null;photo.onerror=null;
  photo.removeAttribute('src');
  const approvedPhotos=(TODAY_COUNTRY_PHOTOS[currentCode]||[])
-  .filter(p=>(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption
+  .filter(p=>APPROVED_COUNTRY_CODES.includes(currentCode)&&(p.asset||p.remoteOnly)&&p.url&&p.author&&p.license&&p.place&&p.caption
     &&!p.avoidCover&&countryPhotoPriority(currentCode,p)>=80)
   .slice().sort((a,b)=>countryPhotoPriority(currentCode,b)-countryPhotoPriority(currentCode,a));
  displayedCountryCoverAssets.delete(currentCode);
@@ -488,7 +488,7 @@ function renderTodayMap(){
   button.dataset.countryCode=item.code;
   button.dataset.countryName=item.name;
   button.dataset.countryLabel=(i+1)+' · '+item.name;
-  button.setAttribute('aria-controls','todayCountryQuiz');
+  button.setAttribute('aria-controls',APPROVED_COUNTRY_CODES.includes(item.code)?'todayCountryQuiz':'todayMapIntro');
   button.setAttribute('aria-expanded','false');
   button.addEventListener('click',()=>startWorldPassport(item));
   legend.append(button);

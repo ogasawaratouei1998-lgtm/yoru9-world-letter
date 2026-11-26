@@ -90,15 +90,14 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
         # Check the exact active-country dependencies, not a historical
         # two-country edition's incidental total of nine photographs.
         from country_codes import country_codes
-        codes={code for story in current["stories"] for code in country_codes(story["country"])}
+        from check_country_experience import published_country_coverage
+        codes=set(published_country_coverage(ROOT,current["stories"]))
         travel=json.loads((ROOT/"travel-stops.json").read_text(encoding="utf-8"))
         expected={stop["photoAsset"] for stop in travel.values()
                   if set(country_codes(stop.get("country")))&codes}
         actual={name for name in required if name.startswith("assets/travel/")}
-        self.assertTrue(expected)
         self.assertEqual(actual,expected)
-        from check_country_experience import country_coverage
-        for country,record in country_coverage(ROOT,current["stories"]).items():
+        for country,record in published_country_coverage(ROOT,current["stories"]).items():
             with self.subTest(country=country):
                 self.assertEqual(required[record["cover"]],(1000,540))
                 for key in record["quizPhotoKeys"]:
@@ -107,9 +106,9 @@ class PublicCountryReleaseSmokeTest(unittest.TestCase):
         self.assertTrue(all(required[name] in ((330,200),(1000,540)) for name in actual))
 
     def test_missing_published_country_photo_blocks_notification(self):
-        path = next(name for name in required_public_visuals(
+        path = next((name for name in required_public_visuals(
             ROOT, json.loads(self.assets["data/current.json"])
-        ) if name.startswith("assets/travel/"))
+        ) if name.startswith("assets/travel/")),"assets/travel/test-missing.jpg")
         with self.assertRaisesRegex(AssertionError, "visual asset missing"):
             inspect_public_visuals({}, ROOT, {path: (330, 200)})
 

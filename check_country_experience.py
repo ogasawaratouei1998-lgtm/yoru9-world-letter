@@ -125,6 +125,30 @@ def country_coverage(root: Path, stories):
     return report
 
 
+def published_country_coverage(root: Path, stories):
+    """Check approved extras strictly; pending countries retain news access."""
+    root=Path(root)
+    codes=set()
+    for story in stories:
+        found=country_codes(story.get("country",""))
+        if not found:
+            raise ValueError("Country not verified for story: "+str(story.get("id","")))
+        codes.update(found)
+    if (root/"country-content.json").is_file():
+        from country_content import load_country_content
+        manifest=load_country_content(root)
+        codes={code for code in codes if manifest["countries"][code]["status"]=="approved"}
+    else:
+        page=(root/"index.html").read_text(encoding="utf-8")
+        prefix="const APPROVED_COUNTRY_CODES=Object.freeze("
+        lines=[line for line in page.splitlines() if line.startswith(prefix)]
+        if lines:
+            if len(lines)!=1 or not lines[0].endswith(");"):
+                raise ValueError("Malformed country approval registry")
+            codes.intersection_update(json.loads(lines[0][len(prefix):-2]))
+    return country_coverage(root,[{"country":code} for code in sorted(codes)]) if codes else {}
+
+
 def _licensed_photo(photo):
     return (isinstance(photo,dict)
             and bool(re.fullmatch(r"assets/travel/[a-z0-9-]+\.jpg",
@@ -159,7 +183,7 @@ def verified_country_cover(cover, stop):
 def main():
     root=Path(__file__).resolve().parent
     issue=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
-    result=country_coverage(root,issue["stories"])
+    result=published_country_coverage(root,issue["stories"])
     print("Checked complete country portraits, two photo quizzes and independent destinations:",
           ", ".join(result))
 

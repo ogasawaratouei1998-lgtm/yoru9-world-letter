@@ -4,6 +4,8 @@ import json
 import hashlib
 import re
 from urllib.parse import urlsplit
+from datetime import datetime
+from editorial_dates import valid_recent_reported
 
 HOST = "127.0.0.1"
 PORT = 18089
@@ -214,6 +216,9 @@ def staged_draft(group, day, infer, temperature=0.55, viable_joke=None):
     """Use separately bounded inference calls; never self-approve or publish."""
     facts,reason=extract_bound_facts(infer(facts_prompt(group,day),0.0),group)
     if reason:return {"stories":[],"reasonCode":reason}
+    # Reject out-of-window evidence before spending CPU on Japanese copy or humor.
+    if not valid_recent_reported(facts["reported"],datetime.fromisoformat(day)):
+        return {"stories":[],"reasonCode":"missing_date"}
     article=group["articles"][facts["sourceIndex"]-1]
     raw=infer(copy_prompt(facts,article),0.25)
     if not isinstance(raw,dict) or any(not isinstance(raw.get(k),str) or

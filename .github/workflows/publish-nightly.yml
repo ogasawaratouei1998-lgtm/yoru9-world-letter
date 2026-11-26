@@ -81,60 +81,8 @@ jobs:
       - name: Check publication safeguards
         id: safeguards
         run: python -m unittest discover -s tests -v
-      - name: Complete the approved November 20 four-story SVG correction
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          from datetime import datetime
-          from pathlib import Path
-          from publish_approved import publish
-
-          root=Path.cwd()
-          approved=root/"data/approved/2026-11-20.json"
-          current=root/"data/current.json"
-          if approved.is_file() and current.is_file():
-              draft=json.loads(approved.read_text(encoding="utf-8"))
-              live=json.loads(current.read_text(encoding="utf-8"))
-              if (live.get("editionDate")=="2026-11-20"
-                      and len(live.get("stories",[]))==2
-                      and draft.get("fourStoryStaticIllustrationReissue") is True
-                      and draft.get("approvedBy")=="editorial-source-checked-correction-2026-11-20"
-                      and len(draft.get("stories",[]))==4):
-                  # Explicitly approved correction to the dated Nov 20 issue;
-                  # do not mislabel it as Nov 21, create any AI image, or
-                  # replace a newer (Nov 21+) public edition.
-                  publish(root,datetime.fromisoformat("2026-11-20T23:59:00+09:00"))
-                  print("Completed the verified Nov 20 SVG correction.")
-              else:
-                  print("Nov 20 correction not eligible/already completed; preserve live edition.")
-          PY
-      - name: Immediately publish explicitly requested approved November 16 edition
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          from datetime import datetime
-          from pathlib import Path
-          from zoneinfo import ZoneInfo
-          from publish_approved import publish, validate_approved
-
-          root = Path.cwd()
-          approved = root / "data/approved/2026-11-16.json"
-          current = root / "data/current.json"
-          now = datetime.now(ZoneInfo("Asia/Tokyo"))
-          if not approved.is_file():
-              print("Previously approved November 16 issue is absent.")
-          else:
-              data = json.loads(approved.read_text(encoding="utf-8"))
-              validate_approved(data, "2026-11-16")
-              previous = json.loads(current.read_text(encoding="utf-8")) if current.exists() else {}
-              if (previous.get("editionDate") or "") < "2026-11-16":
-                  publish(root, datetime.fromisoformat("2026-11-16T21:07:00+09:00"))
-                  print("Released previously approved November 16 issue; retained its original date.")
-              else:
-                  print("A November 16 or newer edition is already published; no rollback.")
-          PY
+      # One-time Nov 16 and Nov 20 corrections are already in the immutable archive.
+      # Daily publishing must never attempt a historical backfill.
       - name: Recover best reviewed issue from recent successful reviews
         id: recover_review
         env:
@@ -265,6 +213,7 @@ jobs:
         id: preflight
         env:
           YORU9_PHOTO_CACHE_DIR: .cache/yoru9-photos
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
@@ -302,11 +251,28 @@ jobs:
           # contract BEFORE it is committed or deployed.
           # Visual QA follows the approved story count and verified quiz photo keys.
           python check_release_candidate.py
-          python build_site.py
-          python check_release_candidate.py --site _site
-          # Catch UI/navigation/quiz/photo failures before publication,
-          # not only in the later post-deploy smoke.
-          bash run_mobile_preflight.sh
+          # Reuse an already browser-tested bundle only if every release
+          # input and every bundled file match. Otherwise do the full QA here.
+          TODAY=$(TZ=Asia/Tokyo date +%F)
+          CUTOFF="$(date -u -d "$TODAY - 1 day" +%F)T15:00:00Z"
+          IDS=$(gh run list --workflow "Prepare verified nightly reader before release" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+          REUSED=false
+          for RUN_ID in $IDS; do
+            DEST="$RUNNER_TEMP/prepared-$RUN_ID"
+            if gh run download "$RUN_ID" --name prepared-nightly-reader --dir "$DEST" >/dev/null 2>&1 &&
+               python prepared_release.py verify --site "$DEST/site" --manifest "$DEST/manifest.json"; then
+              rm -rf _site
+              mv "$DEST/site" _site
+              REUSED=true
+              echo "Reused exact preflighted bundle from run $RUN_ID"
+              break
+            fi
+          done
+          if [ "$REUSED" != true ]; then
+            python build_site.py
+            python check_release_candidate.py --site _site
+            bash run_mobile_preflight.sh
+          fi
           echo "deploy=true" >> "$GITHUB_OUTPUT"
       - name: Preserve failed candidate screenshots for diagnosis
         if: failure()

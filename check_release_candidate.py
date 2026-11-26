@@ -13,7 +13,7 @@ from pathlib import Path
 import re
 import xml.etree.ElementTree as ET
 
-from check_country_experience import country_coverage
+from check_country_experience import published_country_coverage
 from country_codes import country_codes
 
 SVG_NS="{http://www.w3.org/2000/svg}svg"
@@ -110,14 +110,10 @@ def audit(root: Path, site: Path | None = None) -> dict:
             "caches.delete" in worker,
             "PWAの更新・古いキャッシュの削除がない")
 
-    # An unfinished future country must not produce a one-line guide,
-    # generic quiz, missing cover or incorrectly attributed tourist photo.
-    countries=country_coverage(root,stories)
-    if date>='2026-11-21' and (root/'country-content.json').is_file():
-        from audit_country_highlights import require_country_topics
-        require_country_topics(root,stories,date)
+    # Pending country extras do not suppress independently verified news.
+    countries=published_country_coverage(root,stories)
     codes={code for story in stories for code in country_codes(story.get("country",""))}
-    require(set(countries)==codes,"ニュースの国と紹介・クイズの国が不一致")
+    require(set(countries)<=codes,"ニュースの国と紹介・クイズの国が不一致")
 
     for key,stop in stops.items():
         if stop.get("coverOnly") or stop.get("quizOnly"):continue
@@ -170,7 +166,6 @@ def audit(root: Path, site: Path | None = None) -> dict:
         targets.update(stops[key]["photoAsset"] for row in countries.values()
                        for key in row["quizPhotoKeys"])
         targets.update(row["postcard"] for row in countries.values())
-        require(targets,"表示する写真がない")
         covers={row["cover"] for row in countries.values()}
         for relative in sorted(targets):
             file=site/relative
@@ -186,7 +181,8 @@ def audit(root: Path, site: Path | None = None) -> dict:
             else:
                 require(width>=330 and height>=200,
                         "小旅行・クイズ写真が低解像度: "+relative)
-    return {"date":date,"stories":len(stories),"countries":len(countries),
+    return {"date":date,"stories":len(stories),"countries":len(codes),"countryContentReady":len(countries),
+            "countryContentPending":sorted(codes-set(countries)),
             "touristRecords":sum(not(s.get("coverOnly") or s.get("quizOnly"))
                                  for s in stops.values()),
             "buildPhotosChecked":site is not None}

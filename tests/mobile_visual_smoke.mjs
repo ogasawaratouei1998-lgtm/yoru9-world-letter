@@ -501,7 +501,13 @@ try{
     assert.equal(await today.locator('#todayMapPins').isVisible(),false,'map hidden in country guide');
     assert.ok((await intro.locator('#todayMapIntroBody').textContent()).length>35,
      'country guide explains the place, not just the name: '+code);
-    if(['AR','FR','US','IT','DE'].includes(code)){
+    const prepared=await page.evaluate(code=>APPROVED_COUNTRY_CODES.includes(code),code);
+    if(!prepared){
+     assert.ok((await intro.locator('#todayMapIntroLead').textContent()).includes('準備中'));
+     assert.equal(await intro.locator('#todayMapIntroFigure').isHidden(),true);
+     assert.ok((await intro.locator('#todayMapIntroRead').textContent()).includes('ニュースを読む'));
+    }
+    if(prepared&&['AR','FR','US','IT','DE'].includes(code)){
      await page.waitForFunction(expected=>{
       const intro=document.querySelector('#todayMapIntro');
       const img=document.querySelector('#todayMapIntroImage');
@@ -548,6 +554,14 @@ try{
     const chip=countryButtons.nth(index);
     const code=await chip.getAttribute('data-country-code');
     assert.equal(await chip.isVisible(),true,'country quiz launcher visible: '+code);
+    const prepared=await page.evaluate(code=>APPROVED_COUNTRY_CODES.includes(code),code);
+    if(!prepared){
+     assert.ok((await chip.textContent()).includes('準備中'));
+     await chip.click();
+     assert.equal(await today.locator('#todayMapIntro').isVisible(),true);
+     await today.locator('#todayMapIntroClose').click();
+     continue;
+    }
     assert.ok((await chip.textContent()).includes('クイズ'),'button invites trivia, not stamp collection');
     await chip.click();
     assert.equal(await quiz.isVisible(),true,'country chip opens standalone trivia: '+code);
@@ -560,7 +574,7 @@ try{
      'quiz answer photo is hidden until answer choice');
     assert.equal(await page.locator('#readerSelected').textContent(),previouslySelected,
      'quiz never opens a different news article');
-    const curated=['AR','FR','US','GB','ES','JP','NZ','IT','DE'].includes(code);
+    const curated=prepared;
     const totalRounds=await quiz.locator('#todayQuizSteps .today-quiz-step').count();
     assert.equal(totalRounds,curated?2:1,'curated country has two real quizzes: '+code);
     for(let round=0;round<totalRounds;round++){
@@ -697,6 +711,11 @@ try{
     assert.ok((await card.locator('.travel-context-story').textContent()).includes(expected.country),
      'article-country label must remain attached to its own article: '+expected.id);
     const photo=card.locator('.travel-photo');
+    const prepared=await page.evaluate(code=>APPROVED_COUNTRY_CODES.includes(code),expected.code);
+    if(!prepared&&await photo.count()===0){
+     assert.equal(await card.locator('.travel-empty').count(),1);
+     continue;
+    }
     assert.equal(await photo.count(),1,
      'a fully curated country must not silently lose its tourist photo: '+expected.id);
     const src=await photo.getAttribute('src');
