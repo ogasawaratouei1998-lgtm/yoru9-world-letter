@@ -27,6 +27,7 @@ LOCAL_EDITORIAL=os.getenv("YORU9_EDITORIAL_BACKEND","gemini")=="local"
 LOCAL_BACKEND_FAILED=False
 LOCAL_CANDIDATE_ERRORS=0
 LOCAL_DRAFT_OUTCOMES={"empty":0,"invalid":0}
+LOCAL_DRAFT_REASONS={}
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
 # An app about humane, verifiable mistakes must not turn personal scandals
@@ -740,7 +741,8 @@ def editorial_seconds_remaining():
 def ai(prompt,temperature=0.1):
     global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     if LOCAL_EDITORIAL:
-        from local_editorial import generate_json, LocalCandidateError, SCREEN_PREFIX
+        from local_editorial import (generate_json, LocalCandidateError, SCREEN_PREFIX,
+                                     FACT_PREFIX,COPY_PREFIX,JOKE_PREFIX)
         if LOCAL_BACKEND_FAILED:
             raise RuntimeError("Local editorial circuit open")
         audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
@@ -749,10 +751,11 @@ def ai(prompt,temperature=0.1):
         reserve=0 if audit_prompt else 420 if screen else 300
         if remaining-reserve<30:
             raise LocalCandidateError("Local editorial time budget exhausted")
+        stage_limit=420 if prompt.startswith(FACT_PREFIX) else 620 if prompt.startswith(COPY_PREFIX) else 300 if prompt.startswith(JOKE_PREFIX) else 1300
         try:
             return generate_json(prompt,temperature,
                                  min(45 if screen else 240,remaining-reserve),
-                                 160 if screen else 768 if audit_prompt else 1300)
+                                 160 if screen else 768 if audit_prompt else stage_limit)
         except LocalCandidateError as exc:
             # A bad JSON response or token limit is local to this request.
             # A connection/HTTP failure still opens the backend circuit below.
@@ -1201,13 +1204,16 @@ def screen_local_groups(groups, budget=240):
     return ranked,screened,len(positions)
 
 def draft_local_group(group, day, temperature):
-    from local_editorial import draft_prompt, bind_draft
-    response=ai(draft_prompt(group,day),temperature=temperature)
-    bound=bind_draft(response,group)
+    from local_editorial import staged_draft,SKIP_CODES
+    bound=staged_draft(group,day,ai,temperature,
+                       viable_joke=lambda story:choose_pre_review_quip(story) is not None)
     if not bound["stories"]:
-        key="empty" if response.get("stories")==[] else "invalid"
+        reason=bound.get("reasonCode","other")
+        if reason not in SKIP_CODES:reason="other"
+        key="invalid" if reason.startswith("invalid_") or reason=="unanchored_extraction" else "empty"
         LOCAL_DRAFT_OUTCOMES[key]+=1
-        print("Local draft outcome:",key,flush=True)
+        LOCAL_DRAFT_REASONS[reason]=LOCAL_DRAFT_REASONS.get(reason,0)+1
+        print("Local draft outcome:",key,reason,flush=True)
     return bound
 
 MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
@@ -1325,7 +1331,7 @@ FUNNEL_COUNT_FIELDS=frozenset({
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
     "publisher_regions_shortlist","rejection_reasons",
-    "unready_country_codes"
+    "unready_country_codes","local_draft_reasons"
 })
 FUNNEL_STAGES=frozenset({
     "fresh_filter","publisher_leads_unavailable",
@@ -1362,6 +1368,7 @@ def main():
     LOCAL_BACKEND_FAILED=False
     LOCAL_CANDIDATE_ERRORS=0
     LOCAL_DRAFT_OUTCOMES.update(empty=0,invalid=0)
+    LOCAL_DRAFT_REASONS.clear()
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY and not LOCAL_EDITORIAL:
@@ -1634,11 +1641,12 @@ def main():
         # cross-group invented corroboration is rejected downstream.
         print("Supplementing insufficient editorial drafts in pairs:",
               len(retry_candidates),flush=True)
-        for start in range(0,min(len(retry_candidates),20),MAX_FOCUSED_DRAFT_GROUPS):
+        retry_limit=len(retry_candidates) if LOCAL_EDITORIAL else min(len(retry_candidates),20)
+        for start in range(0,retry_limit,MAX_FOCUSED_DRAFT_GROUPS):
             if LOCAL_BACKEND_FAILED or AI_QUOTA_BLOCKED or editorial_seconds_remaining()<(420 if LOCAL_EDITORIAL else 150):
                 print("Ending supplemental drafts: preserving time and quota for verification.",flush=True)
                 break
-            batch=retry_candidates[start:min(start+MAX_FOCUSED_DRAFT_GROUPS,20,len(retry_candidates))]
+            batch=retry_candidates[start:min(start+MAX_FOCUSED_DRAFT_GROUPS,retry_limit)]
             retry_prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+QUIP_ALTERNATIVE_REQUIREMENT+
                 " You are editor A. Review each incident candidate SEPARATELY. "
                 "FIRST seek a verifiable, significant PERSONAL miscalculation or "
@@ -1687,6 +1695,7 @@ def main():
     checkpoint("draft",drafted=len(draft),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
                local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
                local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
+               local_draft_reasons=dict(LOCAL_DRAFT_REASONS),
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
@@ -1756,7 +1765,8 @@ def main():
             remaining.sort(key=lambda g:local_rank[g["groupId"]])
         print("After-review never-prompted source groups:",len(remaining),
               "earlier groups attempted:",len(attempted_group_ids),flush=True)
-        for offset in range(0,min(len(remaining),20),MAX_FOCUSED_DRAFT_GROUPS):
+        refill_limit=len(remaining) if LOCAL_EDITORIAL else min(len(remaining),20)
+        for offset in range(0,refill_limit,MAX_FOCUSED_DRAFT_GROUPS):
             # Scarce free-tier quota belongs to factual fidelity before extra jokes.
             if AI_QUOTA_BLOCKED or editorial_seconds_remaining()<125 or LOCAL_BACKEND_FAILED:
                 print("Ending after-review refill: independent audit time or AI quota limit.",flush=True)
@@ -1975,6 +1985,7 @@ def main():
     checkpoint("audit",independent_approved=len(selected),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
                local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
                local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
+               local_draft_reasons=dict(LOCAL_DRAFT_REASONS),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
                supplemental_groups_examined=supplemental_groups_examined,
