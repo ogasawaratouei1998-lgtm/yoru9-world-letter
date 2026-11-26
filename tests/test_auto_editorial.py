@@ -482,6 +482,19 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         body=editorial.extracted_article_text(html)
         self.assertIn('Verified article sentence.',body)
 
+    def test_explicit_publisher_date_survives_article_extraction(self):
+        html=('<meta property="article:published_time" content="2026-11-25T23:50:00-05:00">'
+              '<meta property="article:modified_time" content="2026-11-26T10:00:00Z">'
+              '<article>'+'Verified article sentence. '*40+'</article>')
+        self.assertEqual(editorial.publisher_publication_date(html),"2026-11-25")
+        schema='<script type="application/ld+json">{"@type":"NewsArticle","datePublished":"2026-11-25","dateModified":"2026-11-26"}</script>'
+        self.assertEqual(editorial.publisher_publication_date(schema),"2026-11-25")
+        self.assertEqual(editorial.publisher_publication_date(html+schema),"2026-11-25")
+        conflicting=schema.replace("2026-11-25","2026-11-24")
+        self.assertIsNone(editorial.publisher_publication_date(html+conflicting))
+        self.assertIsNone(editorial.publisher_publication_date('<meta property="article:modified_time" content="2026-11-26">'))
+        self.assertIsNone(editorial.publisher_publication_date('<meta property="article:published_time" content="2026-02-30">'))
+
     def test_guardian_article_body_excludes_site_navigation(self):
         html=('<nav>'+'Menu '*300+'</nav>'
               '<div data-gu-name="body"><p>'+'Verified article sentence. '*40+'</p></div>'

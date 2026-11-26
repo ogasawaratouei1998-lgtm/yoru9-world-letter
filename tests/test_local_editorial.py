@@ -114,6 +114,16 @@ class LocalEditorialTest(unittest.TestCase):
             story["sourceIndex"]=invalid
             self.assertEqual(local_editorial.bind_draft({"stories":[story]},group),{"stories":[]})
 
+    def test_bound_draft_cannot_replace_explicit_publisher_date(self):
+        group={"groupId":1,"articles":[{"title":"one",
+                 "text":"Publisher datePublished: 2026-11-25\nActual reporting",
+                 "url":"https://example.com/one"}]}
+        story={k:"text" for k in local_editorial.DRAFT_FIELDS}
+        story.update(category="person",sourceIndex=1,reported="2026-11-26")
+        self.assertEqual(local_editorial.bind_draft({"stories":[story]},group),{"stories":[]})
+        story["reported"]="2026-11-25"
+        self.assertEqual(local_editorial.bind_draft({"stories":[story]},group)["stories"][0]["reported"],"2026-11-25")
+
     def test_local_failure_has_no_remote_fallback(self):
         with patch.object(editorial,"LOCAL_EDITORIAL",True), patch.object(editorial,"KEY",""), \
              patch.object(editorial,"LOCAL_BACKEND_FAILED",False), \

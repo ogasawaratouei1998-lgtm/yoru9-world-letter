@@ -26,6 +26,7 @@ KEY=os.getenv("GEMINI_API_KEY","")
 LOCAL_EDITORIAL=os.getenv("YORU9_EDITORIAL_BACKEND","gemini")=="local"
 LOCAL_BACKEND_FAILED=False
 LOCAL_CANDIDATE_ERRORS=0
+LOCAL_DRAFT_OUTCOMES={"empty":0,"invalid":0}
 REQUIRED=("id","country","category","categoryLabel","label","title","summary","detail","quip","sourceName","sourceUrl","reported")
 BLOCK=re.compile(r"死亡|殺害|負傷|災害|差別|自殺|銃撃|戦争|死者|犠牲者|killed|murder|fatal|death|died|suicide|rape|shooting|injured|hospitalized|war|bombing|disaster",re.I)
 # An app about humane, verifiable mistakes must not turn personal scandals
@@ -580,6 +581,45 @@ class ArticleText(HTMLParser):
         self.parts.append(value)
         if self.article_depth:self.article_parts.append(value)
 
+class PublicationMetadata(HTMLParser):
+    """Read explicit publication metadata, never feed discovery or modified dates."""
+    def __init__(self):
+        super().__init__()
+        self.values=[]
+    def handle_starttag(self,tag,attrs):
+        a=dict(attrs)
+        if tag=="meta" and (a.get("property")=="article:published_time"
+                            or a.get("itemprop")=="datePublished"):
+            self.values.append(a.get("content"))
+
+def publisher_publication_date(html):
+    parser=PublicationMetadata()
+    parser.feed(html)
+    values=list(parser.values)
+    def walk(node):
+        if isinstance(node,list):
+            for item in node:walk(item)
+        elif isinstance(node,dict):
+            kind=node.get("@type",[])
+            kinds=kind if isinstance(kind,list) else [kind]
+            if any(isinstance(k,str) and k.lower() in
+                   ("article","newsarticle","reportagearticle","blogposting") for k in kinds):
+                values.append(node.get("datePublished"))
+            for key in ("@graph","mainEntity"):
+                if key in node:walk(node[key])
+    scripts=re.findall(r'<script\b[^>]*type=["\x27]application/ld\+json["\x27][^>]*>(.*?)</script\s*>',html,re.I|re.S)
+    for script in scripts[:12]:
+        try:walk(json.loads(script))
+        except (ValueError,TypeError,RecursionError):continue
+    dates=set()
+    for value in values:
+        if not isinstance(value,str) or not re.match(r"^\d{4}-\d{2}-\d{2}(?:$|T|\s)",value):
+            continue
+        try:dates.add(datetime.strptime(value[:10],"%Y-%m-%d").date().isoformat())
+        except ValueError:continue
+    # Conflicting dates must not be resolved by guessing.
+    return next(iter(dates)) if len(dates)==1 else None
+
 def extracted_article_text(html, min_chars=600):
     parser=ArticleText()
     parser.feed(html)
@@ -639,11 +679,15 @@ def source_text(url, diagnostics=None, min_chars=600):
                 if diagnostics is not None:diagnostics.append("non_html")
                 return ""
             raw=response.read(180000)
-        text=extracted_article_text(raw.decode("utf-8",errors="replace"),min_chars=min_chars)
+        html=raw.decode("utf-8",errors="replace")
+        text=extracted_article_text(html,min_chars=min_chars)
         if len(text)<min_chars:
             if diagnostics is not None:diagnostics.append("short_html")
             return ""
         if diagnostics is not None:diagnostics.append("fetched")
+        published=publisher_publication_date(html)
+        if published:
+            text="Publisher datePublished: "+published+"\n"+text
         return text[:13000]
     except HTTPError as exc:
         if diagnostics is not None:diagnostics.append("http_"+str(exc.code))
@@ -1158,7 +1202,13 @@ def screen_local_groups(groups, budget=240):
 
 def draft_local_group(group, day, temperature):
     from local_editorial import draft_prompt, bind_draft
-    return bind_draft(ai(draft_prompt(group,day),temperature=temperature),group)
+    response=ai(draft_prompt(group,day),temperature=temperature)
+    bound=bind_draft(response,group)
+    if not bound["stories"]:
+        key="empty" if response.get("stories")==[] else "invalid"
+        LOCAL_DRAFT_OUTCOMES[key]+=1
+        print("Local draft outcome:",key,flush=True)
+    return bound
 
 MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
 
@@ -1269,7 +1319,8 @@ FUNNEL_COUNT_FIELDS=frozenset({
     "supplemental_groups_examined",
     "source_groups_attempted","untried_source_groups_remaining",
     "repeated_quip_cadences","recognized_quip_cadences",
-    "local_screened","local_screen_preferred","local_candidate_errors"
+    "local_screened","local_screen_preferred","local_candidate_errors","explicit_publisher_dates",
+    "local_empty_draft_responses","local_invalid_draft_responses"
 })
 FUNNEL_MAP_FIELDS=frozenset({
     "publisher_regions_fetch_plan","publisher_regions_fetched",
@@ -1310,6 +1361,7 @@ def main():
     global RUN_DEADLINE, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     LOCAL_BACKEND_FAILED=False
     LOCAL_CANDIDATE_ERRORS=0
+    LOCAL_DRAFT_OUTCOMES.update(empty=0,invalid=0)
     now=datetime.now(JST)
     day=now.date().isoformat()
     if not KEY and not LOCAL_EDITORIAL:
@@ -1392,6 +1444,8 @@ def main():
                high_signal_original_bodies=high_signal_source_count,
                source_fetch_attempts=sum(row[0] for row in outcomes.values()),
                publisher_regions_fetched=dict(fetched_regions))
+    checkpoint("body_fetch",explicit_publisher_dates=sum(
+        item["text"].startswith("Publisher datePublished: ") for item in source_leads))
     print('Approved-publisher article reading:',len(recent),'recent seven-day leads,',len(source_leads),'readable articles',flush=True)
     print('Article retrieval by provider (attempted, fetched):',json.dumps(outcomes,sort_keys=True),flush=True)
     print('Article retrieval diagnostic counts (no URLs or article text):',json.dumps(failure_reasons,sort_keys=True),flush=True)
@@ -1631,6 +1685,8 @@ def main():
                 print("Viable draft available: switch immediately to independent editorial review.",flush=True)
                 break
     checkpoint("draft",drafted=len(draft),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
+               local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
+               local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
                preflight_eligible=sum(draft_preflight_viable(x,now) for x in draft),
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
@@ -1917,6 +1973,8 @@ def main():
         # No publication-count limit: the time and AI quota guards above
         # bound how many separate stories can be safely reviewed in one run.
     checkpoint("audit",independent_approved=len(selected),local_candidate_errors=LOCAL_CANDIDATE_ERRORS,
+               local_empty_draft_responses=LOCAL_DRAFT_OUTCOMES["empty"],
+               local_invalid_draft_responses=LOCAL_DRAFT_OUTCOMES["invalid"],
                supplemental_attempts=supplemental_attempts,
                supplemental_generated=supplemental_generated,
                supplemental_groups_examined=supplemental_groups_examined,

@@ -27,7 +27,10 @@ PHASE_MESSAGES={
 }
 COUNTS=("fresh","fetchable_original_bodies","candidate_review_groups",
         "drafted","preflight_eligible","independent_approved",
-        "country_ready_articles","selected_for_edition")
+        "country_ready_articles","selected_for_edition",
+        "explicit_publisher_dates","local_screened","local_screen_preferred",
+        "local_candidate_errors","local_empty_draft_responses","local_invalid_draft_responses",
+        "source_groups_attempted","untried_source_groups_remaining")
 
 
 def summarize_funnel(source):

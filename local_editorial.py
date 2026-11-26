@@ -2,6 +2,7 @@
 import http.client
 import json
 import hashlib
+import re
 from urllib.parse import urlsplit
 
 HOST = "127.0.0.1"
@@ -98,6 +99,8 @@ def draft_prompt(group, day):
             "or surprising outcome is unclear, or no sharp respectful joke is possible, return "
             "{\"stories\":[]}. No invented facts or inferred country. Edition JST "+day+
             "; reported is actual source date YYYY-MM-DD within 7 days. "
+            "When the supplied body starts with Publisher datePublished, use that exact date; "
+            "never use a search feed date or the date of the event. "
             "Write summary 70-120 Japanese chars, detail 120-200, quip 18-45. "
             "Joke targets the decision, not a victim; use a new angle, not a recap or advice. "
             "Return only {\"stories\":[{\"sourceIndex\":1,...}]} with these string keys: "
@@ -119,6 +122,9 @@ def bind_draft(response, group):
     category=proposed["category"]
     if category not in CATEGORY_LABELS:return {"stories":[]}
     article=group["articles"][index-1]
+    explicit=re.match(r"^Publisher datePublished: (\d{4}-\d{2}-\d{2})\n",article["text"])
+    if explicit and proposed["reported"].strip()!=explicit.group(1):
+        return {"stories":[]}
     url=article["url"]
     host=urlsplit(url).hostname
     if not host:return {"stories":[]}
