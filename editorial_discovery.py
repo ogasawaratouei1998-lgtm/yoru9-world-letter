@@ -236,6 +236,6 @@ def balanced_source_retrieval(leads, limit=240):
             break
     # Source-fetch budget serves the most significant person-led failures
     # first; within each tier retain host and region-balanced ordering.
-    return sorted(ordered,key=lambda lead:(incident_priority(lead)[0]>=0,))
+    return sorted(ordered,key=lambda lead:incident_priority(lead)[0])
 
 

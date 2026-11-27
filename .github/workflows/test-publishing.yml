@@ -10,6 +10,7 @@ on:
       - 'auto_editorial.py'
       - 'editorial_dates.py'
       - 'editorial_discovery.py'
+      - 'editorial_resume.py'
       - 'local_editorial.py'
       - 'release_contract.py'
       - 'prepared_release.py'

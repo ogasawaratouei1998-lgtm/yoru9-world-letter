@@ -107,6 +107,20 @@ jobs:
       - name: Collect same-day leads
         if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true'
         run: python collect_candidates.py
+      - name: Restore same-day unfinished publisher queue
+        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
+          IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status completed --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+          mkdir -p "$RUNNER_TEMP/yoru9-resume"
+          for RUN_ID in $IDS; do
+            if gh run download "$RUN_ID" --name editorial-continuation --dir "$RUNNER_TEMP/yoru9-resume" >/dev/null 2>&1; then
+              break
+            fi
+          done
       # Scheduled/manual editorial review uses CPU inference by default.
       # The explicit trial push never invokes Gemini or publishes directly.
       # This job never publishes directly. A separate release workflow retrieves its verified artifact,
@@ -115,6 +129,8 @@ jobs:
       - name: Internal CPU editorial double-check (no publication)
         if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
         timeout-minutes: 47
+        env:
+          YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
         run: bash run_local_editorial.sh
       - name: Explicit archived-day model capability trial (no publication)
         if: steps.edition.outputs.archived == 'true' && github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Local editorial trial:')
@@ -142,7 +158,17 @@ jobs:
           path: ${{ steps.staged.outputs.path }}
           if-no-files-found: error
           retention-days: 3
-      # Private audit artifact: counts and publisher-market regions ONLY.
+      # Public-repository Actions artifact: pending public publisher URLs and
+      # attempted URL digests only. No article bodies, titles or rejected drafts.
+      - name: Preserve same-day unfinished publisher queue (never deploy)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: editorial-continuation
+          path: ${{ runner.temp }}/yoru9-resume/queue.json
+          if-no-files-found: ignore
+          retention-days: 1
+      # Diagnostic artifact: counts and publisher-market regions ONLY.
       # No article bodies, headlines, URLs, draft text, or candidate identities.
       - name: Store editorial funnel diagnostics (never publish)
         if: always()
