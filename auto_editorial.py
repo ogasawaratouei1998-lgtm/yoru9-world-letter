@@ -1169,7 +1169,7 @@ def main():
         for story in refill_seed["stories"]:
             previously_seen.update((story["sourceUrl"],story["id"],story.get("eventKey","")))
             previously_seen.update(story.get("verificationUrls",[]))
-        print("Continuing automatic single-story preview with unused sources.",flush=True)
+        print("Continuing automatic preview with unused sources, irrespective of approved article count.",flush=True)
     recent=[]
     for lead in leads:
         try:
