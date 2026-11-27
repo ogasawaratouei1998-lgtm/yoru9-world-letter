@@ -1,7 +1,7 @@
 name: Prepare verified nightly reader before release
 on:
   workflow_run:
-    workflows: ['Free-tier AI editorial double-check (safe preview)']
+    workflows: ['Prepare country materials after article approval']
     types: [completed]
   workflow_dispatch:
   # A narrowly scoped maintenance push can recover today's preparation
@@ -92,7 +92,12 @@ jobs:
         run: python seed_reviewed_photos.py
       - name: Apply independently reviewed country materials in disposable checkout
         if: steps.stage.outputs.ready == 'true'
-        run: python country_review_apply.py --day "$(TZ=Asia/Tokyo date +%F)" --photo-cache .cache/yoru9-photos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          bash fetch_reviewed_country_topics.sh "$DAY" "$RUNNER_TEMP/country-topic-reviews"
+          python country_review_apply.py --day "$DAY" --photo-cache .cache/yoru9-photos --auto-directory "$RUNNER_TEMP/country-topic-reviews"
       - name: Verify reviewed country source and report remaining enrichment gaps
         if: steps.stage.outputs.ready == 'true'
         run: |

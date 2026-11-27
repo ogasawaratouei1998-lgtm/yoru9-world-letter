@@ -190,10 +190,13 @@ jobs:
           restore-keys: |
             yoru9-photo-cache-v1-${{ runner.os }}-
       - name: Apply independently reviewed country materials to a new edition only
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
           if ! git diff --quiet -- data/current.json data/archive/index.json; then
-            python country_review_apply.py --day "$DAY" --photo-cache .cache/yoru9-photos
+            bash fetch_reviewed_country_topics.sh "$DAY" "$RUNNER_TEMP/country-topic-reviews"
+            python country_review_apply.py --day "$DAY" --photo-cache .cache/yoru9-photos --auto-directory "$RUNNER_TEMP/country-topic-reviews"
           fi
       - name: Preflight full reader and photo bundle before any release commit
         id: preflight

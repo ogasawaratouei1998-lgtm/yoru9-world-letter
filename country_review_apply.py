@@ -71,7 +71,7 @@ def check_reviewed_photos(old,new,packet,cache):
         if (w<1000 or h<540) if cover else (w<330 or h<200):
             raise ValueError("Reviewed photo resolution inadequate")
 
-def apply(root,day,cache=None):
+def apply(root,day,cache=None,auto_directory=None):
     root=Path(root)
     date.fromisoformat(day)
     issue=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
@@ -80,17 +80,45 @@ def apply(root,day,cache=None):
     codes=sorted({code for s in issue["stories"] for code in country_codes(s["country"])})
     doc=json.loads((root/"country-content.json").read_text(encoding="utf-8"))
     changed=[]
+    from country_topic_review import validated_topic, MAX_REPORT_BYTES
+    auto_reports=[]
+    if auto_directory:
+        for path in sorted(Path(auto_directory).glob("*/reviewed-topics.json"),
+                           key=lambda p:int(p.parent.name) if p.parent.name.isdecimal() else -1,
+                           reverse=True)[:4]:
+            try:
+                if path.is_symlink() or not path.parent.name.isdecimal() or path.stat().st_size>MAX_REPORT_BYTES:
+                    continue
+                report=json.loads(path.read_text(encoding="utf-8"))
+                if (report.get("version")==1 and report.get("editionDate")==day
+                    and report.get("method")=="official-cultural-event-second-read-v1"
+                    and isinstance(report.get("records"),dict)):
+                    auto_reports.append(report["records"])
+            except (OSError,ValueError,TypeError,AttributeError):
+                continue
+    registered=json.loads((root/"country-highlight-sources.json").read_text(encoding="utf-8"))["sources"]
     for code in codes:
         path=root/"country-material-reviews"/(day+"-"+code+".json")
-        if not path.is_file() or path.is_symlink():
-            continue
         try:
-            packet=json.loads(path.read_text(encoding="utf-8"))
             old=doc["countries"][code]
-            new=reviewed_record(old,packet,day,code)
-            if new==old:
-                continue
-            check_reviewed_photos(old,new,packet,cache)
+            if path.is_file() and not path.is_symlink():
+                packet=json.loads(path.read_text(encoding="utf-8"))
+                new=reviewed_record(old,packet,day,code)
+                if new==old:
+                    continue
+                check_reviewed_photos(old,new,packet,cache)
+            else:
+                new=old
+                # Newest valid report wins; a stale or malformed report never
+                # prevents a different valid same-day report from being used.
+                for report in auto_reports:
+                    if code not in report:continue
+                    try:
+                        new=validated_topic(old,report[code],code,day,registered.get(code,[]))
+                        break
+                    except (ValueError,TypeError,KeyError,AttributeError):
+                        continue
+                if new==old:continue
             # Validate each update in isolation; a bad optional record must
             # not suppress independently approved news or unrelated reviews.
             proposed=json.loads(json.dumps(doc))
@@ -125,9 +153,10 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--day",required=True)
     p.add_argument("--photo-cache",type=Path)
+    p.add_argument("--auto-directory",type=Path)
     p.add_argument("--root",type=Path,default=Path(__file__).resolve().parent)
     args=p.parse_args()
-    print("Applied independently reviewed country records:",apply(args.root,args.day,args.photo_cache))
+    print("Applied independently reviewed country records:",apply(args.root,args.day,args.photo_cache,args.auto_directory))
 
 if __name__=="__main__":
     main()

@@ -77,6 +77,16 @@ jobs:
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
         run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries --prefetched "$RUNNER_TEMP/country-prefetch/yoru9-country-prefetch.json"
+      - name: Recheck official cultural notices independently of the draft pass
+        timeout-minutes: 3
+        continue-on-error: true
+        run: python country_topic_review.py --day "$(TZ=Asia/Tokyo date +%F)" --directory reports/article-countries --output "$RUNNER_TEMP/reviewed-topics.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reviewed-country-topics
+          path: ${{ runner.temp }}/reviewed-topics.json
+          if-no-files-found: ignore
+          retention-days: 1
       - uses: actions/upload-artifact@v4
         with:
           name: article-country-research
