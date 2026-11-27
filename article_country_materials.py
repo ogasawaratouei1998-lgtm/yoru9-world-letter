@@ -13,6 +13,7 @@ from country_content import load_country_content
 from country_editorial_queue import country_editorial_queue
 from country_review_bundle import make_queue, write_bundle
 from country_bulk_research import save
+from country_source_drafts import generate_heritage_drafts
 
 
 def material_tasks(root, stories, day, *, heritage_sites=None):
@@ -38,6 +39,8 @@ def material_tasks(root, stories, day, *, heritage_sites=None):
         if not missing:
             continue
         sites = (heritage_sites or {}).get(code,[])
+        generated=(generate_heritage_drafts(entry["name"],sites,day)
+                   if entry["status"]=="pending" else None)
         tasks.append({
             "countryCode":code,"country":entry["name"],
             "status":entry["status"],"missing":missing,
@@ -45,6 +48,7 @@ def material_tasks(root, stories, day, *, heritage_sites=None):
             "portraitDraft":entry.get("portrait") if entry["status"]=="pending" else None,
             "travelDrafts":entry.get("travelDrafts",[]) if entry["status"]=="pending" else [],
             "quizDrafts":entry.get("quiz",[]) if entry["status"]=="pending" else [],
+            "generatedSourceDrafts":generated,
             "officialHeritageSources":sites[:5],
             "officialTopicSources":authorities.get(code,[]),
             "topicSourceDiscoveryRequired":bool(topic_days and not authorities.get(code)),
