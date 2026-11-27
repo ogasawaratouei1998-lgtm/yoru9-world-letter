@@ -50,6 +50,9 @@ jobs:
           python -m unittest discover -s tests -p 'test_auto_editorial.py' -v
           python -m unittest discover -s tests -p 'test_local_editorial.py' -v
           python -m unittest discover -s tests -p 'test_workflow_editorial_priority.py' -v
+          python -m unittest discover -s tests -p 'test_editorial_resume.py' -v
+          python -m unittest discover -s tests -p 'test_editorial_untried_refill.py' -v
+          python -m unittest discover -s tests -p 'test_same_day_preview_refill.py' -v
       - name: Check whether today's approved issue already exists
         id: edition
         run: |
@@ -66,7 +69,7 @@ jobs:
               echo "exists=false" >> "$GITHUB_OUTPUT"
             fi
           fi
-      - name: Recover already validated same-day preview before spending more CPU
+      - name: Recover validated same-day preview and decide whether to extend it
         if: steps.edition.outputs.exists == 'false'
         id: prior
         env:
@@ -89,11 +92,15 @@ jobs:
           from datetime import datetime
           from pathlib import Path
           from zoneinfo import ZoneInfo
-          from release_contract import recover_review
-          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          from release_contract import recover_review, should_refill_recovered
+          now=datetime.now(ZoneInfo("Asia/Tokyo"))
+          day=now.date().isoformat()
           state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"prior-reviews")
+          refill=should_refill_recovered(Path.cwd(),day,state,count,now)
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
-              f.write("ready="+("true" if count else "false")+"\n")
+              f.write("ready="+("true" if count and not refill else "false")+"\n")
+              f.write("refill="+("true" if refill else "false")+"\n")
+          print("Recovered preview stories:",count,"continue unused candidates:",refill)
           PY
       - name: Verify optional Gemini key is present (without exposing it)
         if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
@@ -131,6 +138,7 @@ jobs:
         timeout-minutes: 47
         env:
           YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
+          YORU9_REFILL_APPROVED: ${{ steps.prior.outputs.refill }}
         run: bash run_local_editorial.sh
       - name: Explicit archived-day model capability trial (no publication)
         if: steps.edition.outputs.archived == 'true' && github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Local editorial trial:')
@@ -141,6 +149,8 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite
+          YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
+          YORU9_REFILL_APPROVED: ${{ steps.prior.outputs.refill }}
         run: python auto_editorial.py
       - name: Summarize editorial funnel without exposing source material
         if: always()

@@ -1153,15 +1153,23 @@ def main():
     AI_QUOTA_BLOCKED=False
     RUN_MODEL_CATALOG=None
     RUN_UNAVAILABLE_MODELS.clear()
+    from release_contract import load_refill_seed, save_refilled_preview
+    refill_seed=(load_refill_seed(Path.cwd(),day)
+                 if os.getenv("YORU9_REFILL_APPROVED")=="true" else None)
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
     funnel={"collected":len(leads)}
     def checkpoint(stage, **fields):
         funnel.update(fields)
         save_editorial_funnel(stage,funnel)
     from editorial_resume import EditorialResume
-    resume=EditorialResume.from_environment(day) if LOCAL_EDITORIAL else EditorialResume(day)
+    resume=EditorialResume.from_environment(day)
     leads=resume.restore_pending(leads)
     previously_seen=previous_events()
+    if refill_seed:
+        for story in refill_seed["stories"]:
+            previously_seen.update((story["sourceUrl"],story["id"],story.get("eventKey","")))
+            previously_seen.update(story.get("verificationUrls",[]))
+        print("Continuing automatic preview with unused sources, irrespective of approved article count.",flush=True)
     recent=[]
     for lead in leads:
         try:
@@ -1173,6 +1181,10 @@ def main():
             if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
         if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")) and lead["url"] not in previously_seen:recent.append(lead)
+    if refill_seed:
+        # Exclude completed earlier A-editor requests BEFORE the retrieval cap;
+        # unfinished and newly discovered sources get the available budget.
+        recent=[lead for lead in recent if resume.rank(lead["url"])!=2]
     checkpoint("fresh_filter",fresh=len(recent))
     if not recent:
         checkpoint("publisher_leads_unavailable",fresh=0)
@@ -1286,8 +1298,7 @@ def main():
     groups.extend([[item] for item in unpaired])
     all_groups=groups
     groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)
-    if LOCAL_EDITORIAL:
-        groups=resume.merge_shortlist(groups,all_groups,EDITORIAL_SHORTLIST_LIMIT)
+    groups=resume.merge_shortlist(groups,all_groups,EDITORIAL_SHORTLIST_LIMIT)
     shortlisted_regions=Counter()
     for group in groups:
         for region in {country_region(x.get("sourcecountry")) for x in group}:
@@ -1310,7 +1321,7 @@ def main():
     if LOCAL_EDITORIAL:
         checkpoint("shortlist",local_screened=0,local_screen_preferred=0,
                    local_candidate_errors=LOCAL_CANDIDATE_ERRORS)
-    if LOCAL_EDITORIAL:
+    if resume.path:
         grouped_evidence=resume.order_groups(grouped_evidence)
         resume.checkpoint_queue(grouped_evidence,recent)
         print("Same-day continuation: pending",len(resume.pending),"previous attempts",len(resume.attempted),flush=True)
@@ -1346,6 +1357,9 @@ def main():
     try:
         draft_response=(draft_local_group(grouped_evidence[0],day,0.55)
                         if LOCAL_EDITORIAL else ai(prompt,temperature=0.65))
+        if not LOCAL_EDITORIAL:
+            for group in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]:
+                resume.record_attempt(group)
     except RuntimeError as exc:
         from local_editorial import LocalCandidateError
         if LOCAL_EDITORIAL and isinstance(exc,LocalCandidateError):
@@ -1470,6 +1484,8 @@ def main():
                     retry_result=draft_local_group(batch[0],day,0.55)
                 else:
                     retry_result=ai(retry_prompt,temperature=0.65)
+                    for group in batch:
+                        resume.record_attempt(group)
                 retry_stories=source_bound_batch_drafts(retry_result,batch)
                 supplemental_generated+=len(retry_stories)
                 draft.extend(retry_stories)
@@ -1515,15 +1531,17 @@ def main():
     # Rank candidates by editorial evidence alone.
     draft=prioritize_personal_drafts_for_review(draft,set(),source_leads)
     print("Review budget priority: editorial evidence only",flush=True)
-    seen=previous_events()
-    selected=[]
+    seen=set(previously_seen)
+    # Already approved articles retain their full original review and copy.
+    selected=list(refill_seed["stories"]) if refill_seed else []
     from publish_approved import prepare_reviewed_story,release_failure_message
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
         rejection_counts[reason]=rejection_counts.get(reason,0)+1
     past=archive_summaries()
-    accepted_summaries=[]
+    accepted_summaries=[{"title":story["title"],"summary":story["summary"],
+                         "country":story["country"]} for story in selected]
     lead_urls={x['url'] for x in source_leads}
     publisher_titles={x['url']:x['title'] for x in source_leads}
 
@@ -1581,6 +1599,8 @@ def main():
                     response=draft_local_group(batch[0],day,0.5)
                 else:
                     response=ai(retry_prompt,temperature=0.5)
+                    for group in batch:
+                        resume.record_attempt(group)
                 new_drafts=source_bound_batch_drafts(response,batch)
                 supplemental_generated+=len(new_drafts)
                 print("After-review additional SOURCE-BOUND drafts:",len(new_drafts),flush=True)
@@ -1870,6 +1890,13 @@ def main():
                    rejection_reasons={**rejection_counts,"release_issue_validation_failed":1})
         return 0
     target=Path("data/approved")/(day+".json")
+    if refill_seed:
+        payload={**refill_seed,"stories":selected}
+        if save_refilled_preview(Path.cwd(),day,refill_seed,payload):
+            print("Extended verified preview to",len(selected),"stories",flush=True)
+        else:
+            print("No additional qualifying stories; preserved original preview.",flush=True)
+        return 0
     if target.exists():return 0
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")

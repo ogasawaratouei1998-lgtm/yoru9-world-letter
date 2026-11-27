@@ -110,8 +110,9 @@ class EditorialResume:
 
     def record_attempt(self,group):
         if not self.path or not group.get("articles"):return
-        url=group["articles"][0]["url"]
-        if not trusted_original_domain(url):return
-        self.pending.pop(url,None)
-        self.attempted.add(fingerprint(url))
+        for article in group["articles"]:
+            url=article["url"]
+            if not trusted_original_domain(url):continue
+            self.pending.pop(url,None)
+            self.attempted.add(fingerprint(url))
         self.save()
