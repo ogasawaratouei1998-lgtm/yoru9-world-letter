@@ -1162,7 +1162,7 @@ def main():
         funnel.update(fields)
         save_editorial_funnel(stage,funnel)
     from editorial_resume import EditorialResume
-    resume=EditorialResume.from_environment(day) if LOCAL_EDITORIAL else EditorialResume(day)
+    resume=EditorialResume.from_environment(day)
     leads=resume.restore_pending(leads)
     previously_seen=previous_events()
     if refill_seed:
@@ -1298,8 +1298,7 @@ def main():
     groups.extend([[item] for item in unpaired])
     all_groups=groups
     groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)
-    if LOCAL_EDITORIAL:
-        groups=resume.merge_shortlist(groups,all_groups,EDITORIAL_SHORTLIST_LIMIT)
+    groups=resume.merge_shortlist(groups,all_groups,EDITORIAL_SHORTLIST_LIMIT)
     shortlisted_regions=Counter()
     for group in groups:
         for region in {country_region(x.get("sourcecountry")) for x in group}:
@@ -1322,7 +1321,7 @@ def main():
     if LOCAL_EDITORIAL:
         checkpoint("shortlist",local_screened=0,local_screen_preferred=0,
                    local_candidate_errors=LOCAL_CANDIDATE_ERRORS)
-    if LOCAL_EDITORIAL:
+    if resume.path:
         grouped_evidence=resume.order_groups(grouped_evidence)
         resume.checkpoint_queue(grouped_evidence,recent)
         print("Same-day continuation: pending",len(resume.pending),"previous attempts",len(resume.attempted),flush=True)
@@ -1358,6 +1357,9 @@ def main():
     try:
         draft_response=(draft_local_group(grouped_evidence[0],day,0.55)
                         if LOCAL_EDITORIAL else ai(prompt,temperature=0.65))
+        if not LOCAL_EDITORIAL:
+            for group in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]:
+                resume.record_attempt(group)
     except RuntimeError as exc:
         from local_editorial import LocalCandidateError
         if LOCAL_EDITORIAL and isinstance(exc,LocalCandidateError):
@@ -1482,6 +1484,8 @@ def main():
                     retry_result=draft_local_group(batch[0],day,0.55)
                 else:
                     retry_result=ai(retry_prompt,temperature=0.65)
+                    for group in batch:
+                        resume.record_attempt(group)
                 retry_stories=source_bound_batch_drafts(retry_result,batch)
                 supplemental_generated+=len(retry_stories)
                 draft.extend(retry_stories)
@@ -1595,6 +1599,8 @@ def main():
                     response=draft_local_group(batch[0],day,0.5)
                 else:
                     response=ai(retry_prompt,temperature=0.5)
+                    for group in batch:
+                        resume.record_attempt(group)
                 new_drafts=source_bound_batch_drafts(response,batch)
                 supplemental_generated+=len(new_drafts)
                 print("After-review additional SOURCE-BOUND drafts:",len(new_drafts),flush=True)
