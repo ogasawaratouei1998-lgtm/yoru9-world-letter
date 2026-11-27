@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Free-tier AI editorial pipeline. Fail closed: no key or no verified story means no publication."""
 import json, os, re, sys, ipaddress, socket, time
-from country_codes import catalog, country_code, country_codes, country_region
+from country_codes import catalog, country_code, country_codes, country_region, normalize_reporting_country
 from trusted_originals import trusted_original_domain, SINGLE_SOURCE_NOTE
 from editorial_quality import (headline_fidelity_risk, independent_editorial_quality_passed,
+    editorial_review_reasons,
     independently_approved_secondary_quip, editorial_rubric,
     editorial_rubric_rejection, verified_rubric_for_edition,
     choose_pre_review_quip)
@@ -512,7 +513,7 @@ def ai(prompt,temperature=0.1):
     global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     if LOCAL_EDITORIAL:
         from local_editorial import (generate_json, LocalCandidateError, SCREEN_PREFIX,
-                                     COPY_PREFIX,JOKE_PREFIX)
+                                     COPY_PREFIX,COUNTRY_PREFIX,JOKE_PREFIX)
         if LOCAL_BACKEND_FAILED:
             raise RuntimeError("Local editorial circuit open")
         audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
@@ -521,11 +522,11 @@ def ai(prompt,temperature=0.1):
         reserve=0 if audit_prompt else 420 if screen else 300
         if remaining-reserve<30:
             raise LocalCandidateError("Local editorial time budget exhausted")
-        stage_limit=1000 if prompt.startswith(COPY_PREFIX) else 300 if prompt.startswith(JOKE_PREFIX) else 1300
+        stage_limit=1000 if prompt.startswith(COPY_PREFIX) else 80 if prompt.startswith(COUNTRY_PREFIX) else 300 if prompt.startswith(JOKE_PREFIX) else 1300
         try:
             return generate_json(prompt,temperature,
                                  min(45 if screen else 240,remaining-reserve),
-                                 160 if screen else 768 if audit_prompt else stage_limit)
+                                 160 if screen else 512 if audit_prompt else stage_limit)
         except LocalCandidateError as exc:
             # A bad JSON response or token limit is local to this request.
             # A connection/HTTP failure still opens the backend circuit below.
@@ -980,6 +981,11 @@ def draft_local_group(group, day, temperature):
         LOCAL_DRAFT_OUTCOMES[key]+=1
         LOCAL_DRAFT_REASONS[reason]=LOCAL_DRAFT_REASONS.get(reason,0)+1
         print("Local draft outcome:",key,reason,flush=True)
+        from local_editorial import COPY_KEYS
+        for field in bound.get("invalidFields",[]):
+            if field in COPY_KEYS:
+                code="invalid_copy_field_"+field
+                LOCAL_DRAFT_REASONS[code]=LOCAL_DRAFT_REASONS.get(code,0)+1
     return bound
 
 MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
@@ -1576,8 +1582,10 @@ def main():
             reject("invalid_reporting_date");continue
         if story["category"] not in ("person","work","company","sports"):
             reject("invalid_category");continue
-        if not country_codes(story["country"]):
+        normalized_country=normalize_reporting_country(story["country"])
+        if not normalized_country:
             reject("unrecognized_event_country");continue
+        story["country"]=normalized_country
         # Never substitute an animal sighting or odd fact for a human error.
         fit_issue=editorial_fit_rejection(story)
         if fit_issue:
@@ -1669,18 +1677,18 @@ def main():
                 "Score FOUR app-owned editorial dimensions 1-5: surprise, "
                 "mistakeClarity, outcomeIrony and humane safety. Safety must "
                 "be 5; the other three must be at least 4. No evidence score. "
-                "If unsure about the joke, reject it; never question the "
-                "publisher's responsibility for fact verification. "
-                "Return JSON {approved:boolean,headlineGrounded:boolean,"
-                "translationAccurate:boolean,legalStatusAccurate:boolean,"
-                "humanFailureConfirmed:boolean,humorRespectful:boolean,"
-                "jokeClear:boolean,comicPunchlineWorks:boolean,"
-                "shockFactorConfirmed:boolean,stageTsukkomiConfirmed:boolean,"
+                "copyAccurate means our Japanese headline, summary and detail accurately "
+                "represent the reporting, including any legal status when applicable; "
+                "no independent proof is required. comicPunchlineWorks means the first "
+                "joke is readable, fresh and sharp without adding reporting claims. "
+                "Use the scores for theme and safety; do not repeat them as boolean checks. "
+                "Return JSON {copyAccurate:boolean,comicPunchlineWorks:boolean,"
                 "majorPersonalFailureConfirmed:boolean,"
-                "secondQuipFactsVerified:boolean,secondQuipHasNewAngle:boolean,"
-                "secondQuipPunchlineWorks:boolean,"
                 "editorialScores:{surprise:number,mistakeClarity:number,"
-                "outcomeIrony:number,safety:number},reason:string}. "
+                "outcomeIrony:number,safety:number}}. "
+                "Only if a second joke is present, also return secondQuipFactsVerified, "
+                "secondQuipHasNewAngle and secondQuipPunchlineWorks (booleans); "
+                "a missing or weak second joke never blocks the first. "
                 "Draft: "+json.dumps(story,ensure_ascii=False)+
                 " Already chosen: "+json.dumps(accepted_summaries,ensure_ascii=False)+
                 " Publisher's article as WRITING context: "+json.dumps(evidence,ensure_ascii=False),
@@ -1693,17 +1701,10 @@ def main():
                 reject("local_candidate_review_failed")
                 continue
             break
-        if audit.get("approved") is not True:
-            # Free-form AI reasons are not logged; only bounded, diagnostic labels.
-            reason=str(audit.get("reason","")).lower()[:500]
-            if any(w in reason for w in ("date","time","old","recent")):category="audit_date"
-            elif any(w in reason for w in ("same incident","duplicate","repeat","previous","syndicat")):category="audit_duplicate_or_syndication"
-            elif any(w in reason for w in ("joke","humor","harm","unsafe","sensitive","victim")):category="audit_safety"
-            elif any(w in reason for w in ("source","evidence","corroborat","unsupported","fact","verify","claim")):category="audit_evidence"
-            else:category="audit_other_or_unspecified"
-            reject(category);continue
         if not independent_editorial_quality_passed(audit):
-            reject("editorial_headline_or_humor_quality_not_confirmed");continue
+            for code in editorial_review_reasons(audit):
+                reject(code)
+            continue
         score_issue=editorial_rubric_rejection(audit)
         if not verified_rubric_for_edition(audit,day):
             reject(score_issue or "mandatory_four_factor_editorial_review_missing");continue
@@ -1717,8 +1718,8 @@ def main():
         # Human error and comic impact are reviewed as presentation choices.
         story["humanFailureVerified"]=True
         story["majorPersonalFailureVerified"]=(audit.get("majorPersonalFailureConfirmed") is True)
-        story["surpriseVerified"]=audit.get("shockFactorConfirmed") is True
-        story["stageTsukkomiVerified"]=audit.get("stageTsukkomiConfirmed") is True
+        story["surpriseVerified"]=editorial_rubric(audit)["surprise"]>=4
+        story["stageTsukkomiVerified"]=audit.get("comicPunchlineWorks") is True
         # Private proof; public JSON never exposes model review fields.
         story["editorQualityVerified"]=True
         verified_scores=editorial_rubric(audit)
