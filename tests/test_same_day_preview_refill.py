@@ -29,12 +29,19 @@ class SameDayPreviewRefillTests(unittest.TestCase):
     def now(self, hour, day=DAY):
         return datetime.fromisoformat(day+f"T{hour:02d}:00:00").replace(tzinfo=ZoneInfo("Asia/Tokyo"))
 
-    def test_only_automatic_recovered_one_story_before_final_window(self):
+    def test_automatic_recovered_preview_at_any_count_before_final_window(self):
         check = lambda state,count,hour: should_refill_recovered(
             self.root, DAY, state, count, self.now(hour))
         self.assertTrue(check("recovered",1,18))
         self.assertFalse(check("recovered",1,19))
-        self.assertFalse(check("recovered",2,18))
+        self.assertFalse(check("recovered",0,18))
+        self.assertFalse(check("recovered",2,18))  # mismatched count, not a count limit
+        for count in (2,3,5,6,12):
+            with self.subTest(count=count):
+                self.target.write_text(json.dumps(approved_current_issue(count)),encoding="utf-8")
+                self.assertTrue(check("recovered",count,18))
+                self.assertEqual(len(load_refill_seed(self.root,DAY)["stories"]),count)
+        self.target.write_text(json.dumps(self.seed),encoding="utf-8")
         self.assertFalse(check("existing",1,18))
         self.assertFalse(should_refill_recovered(self.root, DAY, "recovered",1,
                                                self.now(18,"2026-11-24")))
@@ -51,6 +58,19 @@ class SameDayPreviewRefillTests(unittest.TestCase):
         saved=json.loads(self.target.read_text())
         self.assertEqual(saved["stories"][0],seed["stories"][0])
         self.assertEqual(len(saved["stories"]),3)
+
+    def test_repeated_refill_never_stops_because_of_article_count(self):
+        for count in (2,5,9,12):
+            with self.subTest(count=count):
+                seed=load_refill_seed(self.root,DAY)
+                old_count=len(seed["stories"])
+                self.assertTrue(should_refill_recovered(
+                    self.root,DAY,"recovered",old_count,self.now(18)))
+                additions=approved_current_issue(count)["stories"][old_count:]
+                expanded={**seed,"stories":seed["stories"]+additions}
+                self.assertTrue(save_refilled_preview(self.root,DAY,seed,expanded))
+                self.assertEqual(load_refill_seed(self.root,DAY)["stories"],expanded["stories"])
+                self.assertTrue(all(story in expanded["stories"] for story in seed["stories"]))
 
     def test_no_addition_keeps_bytes_and_invalid_addition_does_not_replace(self):
         seed=load_refill_seed(self.root,DAY)
