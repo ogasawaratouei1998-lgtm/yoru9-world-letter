@@ -1153,6 +1153,9 @@ def main():
     AI_QUOTA_BLOCKED=False
     RUN_MODEL_CATALOG=None
     RUN_UNAVAILABLE_MODELS.clear()
+    from release_contract import load_refill_seed, save_refilled_preview
+    refill_seed=(load_refill_seed(Path.cwd(),day)
+                 if os.getenv("YORU9_REFILL_APPROVED")=="true" else None)
     leads=json.loads(Path("data/candidates.json").read_text()).get("candidates",[])
     funnel={"collected":len(leads)}
     def checkpoint(stage, **fields):
@@ -1162,6 +1165,11 @@ def main():
     resume=EditorialResume.from_environment(day) if LOCAL_EDITORIAL else EditorialResume(day)
     leads=resume.restore_pending(leads)
     previously_seen=previous_events()
+    if refill_seed:
+        for story in refill_seed["stories"]:
+            previously_seen.update((story["sourceUrl"],story["id"],story.get("eventKey","")))
+            previously_seen.update(story.get("verificationUrls",[]))
+        print("Continuing automatic single-story preview with unused sources.",flush=True)
     recent=[]
     for lead in leads:
         try:
@@ -1173,6 +1181,10 @@ def main():
             if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
         if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")) and lead["url"] not in previously_seen:recent.append(lead)
+    if refill_seed:
+        # Exclude completed earlier A-editor requests BEFORE the retrieval cap;
+        # unfinished and newly discovered sources get the available budget.
+        recent=[lead for lead in recent if resume.rank(lead["url"])!=2]
     checkpoint("fresh_filter",fresh=len(recent))
     if not recent:
         checkpoint("publisher_leads_unavailable",fresh=0)
@@ -1515,15 +1527,17 @@ def main():
     # Rank candidates by editorial evidence alone.
     draft=prioritize_personal_drafts_for_review(draft,set(),source_leads)
     print("Review budget priority: editorial evidence only",flush=True)
-    seen=previous_events()
-    selected=[]
+    seen=set(previously_seen)
+    # Already approved articles retain their full original review and copy.
+    selected=list(refill_seed["stories"]) if refill_seed else []
     from publish_approved import prepare_reviewed_story,release_failure_message
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
         rejection_counts[reason]=rejection_counts.get(reason,0)+1
     past=archive_summaries()
-    accepted_summaries=[]
+    accepted_summaries=[{"title":story["title"],"summary":story["summary"],
+                         "country":story["country"]} for story in selected]
     lead_urls={x['url'] for x in source_leads}
     publisher_titles={x['url']:x['title'] for x in source_leads}
 
@@ -1870,6 +1884,13 @@ def main():
                    rejection_reasons={**rejection_counts,"release_issue_validation_failed":1})
         return 0
     target=Path("data/approved")/(day+".json")
+    if refill_seed:
+        payload={**refill_seed,"stories":selected}
+        if save_refilled_preview(Path.cwd(),day,refill_seed,payload):
+            print("Extended verified preview to",len(selected),"stories",flush=True)
+        else:
+            print("No additional qualifying stories; preserved original preview.",flush=True)
+        return 0
     if target.exists():return 0
     target.parent.mkdir(parents=True,exist_ok=True)
     target.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
