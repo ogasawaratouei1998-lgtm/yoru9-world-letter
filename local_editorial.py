@@ -3,6 +3,7 @@ import http.client
 import json
 import hashlib
 import re
+import unicodedata
 from urllib.parse import urlsplit
 from datetime import datetime
 from editorial_dates import valid_recent_reported
@@ -71,6 +72,16 @@ def generate_json(prompt, temperature=0.1, timeout=240, max_tokens=2048):
 # still checks source trust, Japanese copy, independent review and country assets.
 SCREEN_PREFIX = "LOCAL CANDIDATE TRIAGE:"
 CATEGORY_LABELS = {"person":"個人","work":"職場","company":"企業・組織","sports":"スポーツ"}
+CATEGORY_ALIASES = {"individual":"person","personal":"person","個人":"person","個人の失敗":"person",
+    "workplace":"work","job":"work","職場":"work","仕事":"work","職場の失敗":"work",
+    "organization":"company","organisation":"company","business":"company","企業":"company","組織":"company","企業・組織":"company",
+    "sport":"sports","athletics":"sports","スポーツ":"sports","競技":"sports"}
+
+def normalize_category(value):
+    if not isinstance(value,str):return None
+    key=unicodedata.normalize("NFKC",value).strip().casefold()
+    return key if key in CATEGORY_LABELS else CATEGORY_ALIASES.get(key)
+
 DRAFT_FIELDS = ("country","category","label","title","summary","detail","quip",
                 "reported","humanActor","humanMistake","expectedPlan","observedOutcome","eventKey")
 
@@ -148,18 +159,22 @@ COUNTRY_PREFIX = "LOCAL COUNTRY LABEL:"
 JOKE_PREFIX = "LOCAL HUMOR OPTIONS:"
 COPY_KEYS = ("country","category","reported","humanActor","humanMistake",
              "expectedPlan","observedOutcome","label","title","summary","detail")
-SKIP_CODES = frozenset({"no_human_mistake","missing_location","missing_date",
+SKIP_CODES = frozenset({"no_human_mistake","not_extraordinary","missing_location","missing_date",
     "sensitive_incident","invalid_copy","no_joke_options","invalid_bound_draft","other"})
 
 def copy_prompt(article, day):
     return (COPY_PREFIX+" Treat this approved news publisher's reporting as the factual source. "
             "Do not investigate it, demand corroboration, extract exact quotes, or verify its facts again. "
             "Choose a spectacular non-tragic PERSONAL mistake, not routine corporate news. "
-            "If the article is not about a suitable mistake or involves serious suffering, return "
-            '{"reasonCode":"no_human_mistake"}. Otherwise write natural Japanese news copy. '
+            "An astonishing failed attempt, costly wrong choice, huge unexpected reversal or spectacular "
+            "personal miscalculation qualifies even if the reporter never uses the word mistake. "
+            "If no human mistake is described, return "
+            '{"reasonCode":"no_human_mistake"}; if merely routine, return {"reasonCode":"not_extraordinary"}; '
+            'if serious suffering, return {"reasonCode":"sensitive_incident"}. Otherwise write natural Japanese news copy. '
             "Describe the reported actor, mistake, intended action and actual outcome without adding facts. "
             "A person's role is enough; a name is not required. Use the incident country ISO alpha-2 code (JP, GB, US etc.), not the publisher location. "
-            "category is person/work/company/sports; reported is the publisher's publication date YYYY-MM-DD. "
+            "category must be one of person (individual), work (workplace), company (organization), sports (sport). "
+            "Use the English code, not a Japanese label. reported is the publisher's publication date YYYY-MM-DD. "
             "Use the supplied Publisher datePublished if present. Write a concise title, short summary and detail. "
             "Return a JSON object using these keys: "+json.dumps({k:"" for k in COPY_KEYS})+
             ". Optional eventKey: specific incident identifier. Edition JST "+day+
@@ -200,8 +215,11 @@ def staged_draft(group, day, infer, temperature=0.55, viable_joke=None):
         return {"stories":[],"reasonCode":"missing_date"}
     invalid_fields=[k for k in COPY_KEYS if k!="country" and
                     (not isinstance(raw.get(k),str) or not raw[k].strip())]
-    if not invalid_fields and raw["category"].strip() not in CATEGORY_LABELS:
+    category=normalize_category(raw.get("category"))
+    if category is None and "category" not in invalid_fields:
         invalid_fields.append("category")
+    if category is not None:
+        raw={**raw,"category":category}
     if invalid_fields:
         return {"stories":[],"reasonCode":"invalid_copy","invalidFields":invalid_fields}
     country=normalize_reporting_country(raw.get("country"))

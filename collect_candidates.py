@@ -421,24 +421,8 @@ def main():
     # No GDELT result is publication-approved by being found here.
     try:
         gdelt_health={}
-        # Prioritize countries with a complete, validated portrait, licensed
-        # photography, illustrated quizzes and travel feature. Publisher
-        # regions and search keywords still never prove an incident location.
-        from country_readiness import ready_country_codes
-        try:
-            ready_codes,_=ready_country_codes(Path.cwd())
-        except (OSError,ValueError,KeyError,TypeError) as exc:
-            # Collection runs independently of the reader build (including
-            # isolated tests). Missing/malformed reader assets must NOT cause
-            # original-source news discovery to disappear. Use generic search;
-            # the final publication gate remains strictly fail-closed.
-            ready_codes=frozenset()
-            print("Country-ready inventory unavailable; continue broad original"
-                  " discovery:",type(exc).__name__,flush=True)
-        print("Country-ready original-source discovery targets:",len(ready_codes),
-              "countries; no incident location inferred from the query.",flush=True)
-        focused=get_gdelt(extra_searches=uncovered_country_searches(
-                              eligible_codes=ready_codes),
+        # Country assets must never constrain news discovery.
+        focused=get_gdelt(extra_searches=uncovered_country_searches(),
                           diagnostics=gdelt_health)
         keep(focused,limit=90)
         print("Focused original-publisher search health (counts only):",

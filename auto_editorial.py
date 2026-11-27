@@ -986,6 +986,9 @@ def draft_local_group(group, day, temperature):
             if field in COPY_KEYS:
                 code="invalid_copy_field_"+field
                 LOCAL_DRAFT_REASONS[code]=LOCAL_DRAFT_REASONS.get(code,0)+1
+    # Save progress only after a complete model response. A timeout remains pending.
+    from editorial_resume import EditorialResume
+    EditorialResume.from_environment(day).record_attempt(group)
     return bound
 
 MAX_FOCUSED_DRAFT_GROUPS=1 if LOCAL_EDITORIAL else 3
@@ -1155,6 +1158,10 @@ def main():
     def checkpoint(stage, **fields):
         funnel.update(fields)
         save_editorial_funnel(stage,funnel)
+    from editorial_resume import EditorialResume
+    resume=EditorialResume.from_environment(day) if LOCAL_EDITORIAL else EditorialResume(day)
+    leads=resume.restore_pending(leads)
+    previously_seen=previous_events()
     recent=[]
     for lead in leads:
         try:
@@ -1165,7 +1172,7 @@ def main():
                 stamp=datetime.fromisoformat(raw.replace("Z","+00:00")).astimezone(JST)
             if not (now - timedelta(days=7) <= stamp <= now + timedelta(minutes=10)):continue
         except (KeyError,ValueError,TypeError):continue
-        if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")):recent.append(lead)
+        if trusted_original_domain(lead.get("url","")) and not BLOCK.search(lead.get("title","")) and lead["url"] not in previously_seen:recent.append(lead)
     checkpoint("fresh_filter",fresh=len(recent))
     if not recent:
         checkpoint("publisher_leads_unavailable",fresh=0)
@@ -1176,7 +1183,7 @@ def main():
     source_leads=[]
     # Share scarce article-fetch slots across source markets, not just hosts.
     # Publisher country is only a retrieval hint, NEVER proof of event country.
-    ordered=balanced_source_retrieval(recent,limit=240)
+    ordered=resume.order_leads(balanced_source_retrieval(recent,limit=240),recent,limit=240)
     from collections import Counter
     retrieval_regions=Counter(country_region(lead.get("sourcecountry")) or "unattributed"
                               for lead in ordered)
@@ -1300,6 +1307,10 @@ def main():
     if LOCAL_EDITORIAL:
         checkpoint("shortlist",local_screened=0,local_screen_preferred=0,
                    local_candidate_errors=LOCAL_CANDIDATE_ERRORS)
+    if LOCAL_EDITORIAL:
+        grouped_evidence=resume.order_groups(grouped_evidence)
+        resume.checkpoint_queue(grouped_evidence,recent)
+        print("Same-day continuation: pending",len(resume.pending),"previous attempts",len(resume.attempted),flush=True)
     local_rank={g["groupId"]:i for i,g in enumerate(grouped_evidence)}
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
     allowed_pairs=set()

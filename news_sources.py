@@ -144,7 +144,8 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
                         language=item["language"],
                         sourcecountry=item["market"])
             leads=[]
-            for lead in items[:per_feed]:
+            # Rank all usable entries BEFORE applying the per-feed cap.
+            for lead in items:
                 href=lead.get("url", "")
                 parts=urlsplit(href)
                 if (parts.scheme!="https" or not parts.hostname or parts.username or
@@ -154,7 +155,8 @@ def fetch_registry_feeds(*, sources=None, fetch, parse, max_workers=10, per_feed
                 leads.append({**lead,"focus":item["focus"],
                               "registeredSource":item["id"],
                               "sourcecountry":item["market"]})
-            return leads, "ok" if leads else "empty_or_unusable"
+            leads.sort(key=lambda lead:(provisional_headline_priority(lead.get("title")),not bool(lead.get("seendate"))))
+            return leads[:per_feed], "ok" if leads else "empty_or_unusable"
         except Exception as exc:
             # Invalid feeds, redirects, XML and network errors are isolated.
             # We log the error type only, not untrusted RSS payloads.
