@@ -49,3 +49,54 @@ def approval_origin(payload):
     if not isinstance(payload,dict):return "unknown"
     return ("automated" if payload.get("approvedBy")=="automated-two-stage-review"
             else "manual" if payload.get("approvedBy") else "unknown")
+
+
+def should_refill_recovered(root, day, state, count, now):
+    """Only a recovered automatic single-story preview may be extended.
+    
+    This is a search trigger, not a minimum publication count. Preserve the
+    last preparation window for the 21:00 release and never edit curated files.
+    """
+    from zoneinfo import ZoneInfo
+    if state != "recovered" or count != 1 or now.tzinfo is None:
+        return False
+    local = now.astimezone(ZoneInfo("Asia/Tokyo"))
+    if local.date().isoformat() != day or local.hour >= 19:
+        return False
+    root = Path(root)
+    if (root/"data"/"archive"/(day+".json")).exists():
+        return False
+    payload = json.loads((root/"data"/"approved"/(day+".json")).read_text(encoding="utf-8"))
+    return (approval_origin(payload) == "automated" and
+            payload.get("editionType") == "regular")
+
+
+def load_refill_seed(root, day):
+    """Read and revalidate the private recovered preview, never trust a count."""
+    root = Path(root)
+    target = root/"data"/"approved"/(day+".json")
+    if (root/"data"/"archive"/(day+".json")).exists():
+        raise ValueError("Cannot extend an archived issue")
+    payload = json.loads(target.read_text(encoding="utf-8"))
+    validate_release_input(root, payload, day, require_assets=True)
+    if (approval_origin(payload) != "automated" or
+            payload.get("editionType") != "regular" or len(payload["stories"]) != 1):
+        raise ValueError("Only a recovered single-story automatic preview can be extended")
+    return payload
+
+
+def save_refilled_preview(root, day, seed, payload):
+    """Replace only the unchanged recovered preview, preserving every old story."""
+    root = Path(root)
+    target = root/"data"/"approved"/(day+".json")
+    if load_refill_seed(root, day) != seed:
+        raise ValueError("Recovered preview changed during refill")
+    if len(payload["stories"]) <= len(seed["stories"]):
+        return False
+    if not all(story in payload["stories"] for story in seed["stories"]):
+        raise ValueError("Refill cannot remove or rewrite approved stories")
+    validate_release_input(root, payload, day, require_assets=True)
+    tmp = target.with_suffix(".refill.tmp")
+    tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+    tmp.replace(target)
+    return True
