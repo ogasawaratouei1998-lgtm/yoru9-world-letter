@@ -4,6 +4,11 @@ on:
     workflows: ['Free-tier AI editorial double-check (safe preview)']
     types: [completed]
   workflow_dispatch:
+  # A narrowly scoped maintenance push can recover today's preparation
+  # without launching another editorial model or granting publish access.
+  push:
+    branches: [main]
+    paths: ['.github/workflows/prepare-nightly.yml']
 permissions:
   contents: read
   actions: read
@@ -14,9 +19,11 @@ jobs:
   prepare:
     if: >-
       github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'push' ||
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.head_branch == 'main' &&
-       github.event.workflow_run.event != 'push')
+       (github.event.workflow_run.event != 'push' ||
+        startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')))
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -43,9 +50,15 @@ jobs:
             exit 0
           fi
           mkdir -p "$RUNNER_TEMP/reviews"
-          if [ -n "$RUN_ID" ]; then
-            mkdir -p "$RUNNER_TEMP/reviews/$RUN_ID"
-            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$RUN_ID" || true
+          if [ ! -f "data/approved/$DAY.json" ]; then
+            # Recover the triggering review, or the latest valid same-day
+            # artifact when a manual/maintenance run has no triggering ID.
+            CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
+            IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+            for ID in $(printf '%s\n' "$RUN_ID" $IDS | awk 'NF && !seen[$0]++'); do
+              mkdir -p "$RUNNER_TEMP/reviews/$ID"
+              gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
+            done
           fi
           python - <<'PY'
           import os
@@ -59,6 +72,7 @@ jobs:
               f.write("ready="+("true" if count else "false")+"\n")
           PY
           if [ -f "data/approved/$DAY.json" ]; then
+            echo "Validated today's approved issue; preparing reader bundle."
             # Local simulation only; no contents write, Pages or notification permission.
             python publish_approved.py --now "${DAY}T21:00:00+09:00"
             python prepare_news_images.py --rotate

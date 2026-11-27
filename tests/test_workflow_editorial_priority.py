@@ -91,6 +91,24 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertLess(WORKFLOW.index("Verify the actual public Pages data"),
                         WORKFLOW.index("Dispatch optional release notification"))
 
+    def test_preparation_accepts_explicit_cpu_trial_and_read_only_recovery(self):
+        root=Path(__file__).resolve().parents[1]
+        prepare=(root/".github/workflows/prepare-nightly.yml").read_text(encoding="utf-8")
+        self.assertIn("github.event.workflow_run.conclusion == 'success'",prepare)
+        self.assertIn("github.event.workflow_run.head_branch == 'main'",prepare)
+        self.assertIn("startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')",prepare)
+        self.assertIn("paths: ['.github/workflows/prepare-nightly.yml']",prepare)
+        self.assertIn("github.event_name == 'push' ||",prepare)
+        self.assertIn('if [ ! -f "data/approved/$DAY.json" ]; then',prepare)
+        self.assertIn('gh run list --workflow "Free-tier AI editorial double-check (safe preview)"',prepare)
+        self.assertIn('recover_review(Path.cwd(),day',prepare)
+        self.assertIn('contents: read',prepare)
+        self.assertNotIn('contents: write',prepare)
+        self.assertNotIn('pages: write',prepare)
+        self.assertNotIn('run_local_editorial.sh',prepare)
+        self.assertNotIn('actions/deploy-pages',prepare)
+        self.assertIn('prepared-nightly-reader',prepare)
+
     def test_nightly_status_distinguishes_live_site_from_notification(self):
         self.assertIn("NOTICE_RESULT: ${{ steps.dispatch_notice.outputs.result }}",WORKFLOW)
         for result in ("notice_accepted","notice_not_configured","notice_unconfirmed"):
