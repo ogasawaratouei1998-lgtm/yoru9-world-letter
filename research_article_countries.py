@@ -9,7 +9,10 @@ from country_codes import country_codes
 from country_readiness import article_country_backlog
 from release_contract import validate_release_input
 from country_bulk_research import make_plan, research_shard, combine, save
-from country_unesco_source_catalog import build_inventory, download_feed
+from country_unesco_source_catalog import build_inventory, download_feed, collect_sites
+from article_country_materials import prepare_material_bundle
+from country_topic_drafts import discover_topics
+from xml.etree import ElementTree as ET
 from urllib.error import URLError
 
 ROOT=Path(__file__).resolve().parent
@@ -40,18 +43,29 @@ def main():
         return
     payload=json.loads(args.approved.read_text(encoding="utf-8"))
     plan=article_plan(ROOT,payload,day)
-    if plan["countries"]:
+    sites={}
+    # Include already approved countries that lack a current topic, not just
+    # pending countries requiring three photographs.
+    if plan["articleCountryNeeds"]:
         try:
-            inventory=build_inventory(ROOT,download_feed())
+            feed=download_feed()
+            sites=collect_sites(feed)
+            inventory=build_inventory(ROOT,feed)
             plan=article_plan(ROOT,payload,day,inventory)
-        except (URLError,TimeoutError,ValueError,OSError) as exc:
+        except (URLError,TimeoutError,ValueError,OSError,ET.ParseError) as exc:
             print("Official inventory unavailable:",type(exc).__name__)
     save(args.output/"plan.json",plan)
     report=combine(plan,[research_shard(plan,0)])
     report["articleCountryNeeds"]=plan["articleCountryNeeds"]
     save(args.output/"research.json",report)
+    public=validate_release_input(ROOT,payload,day,require_assets=True)
+    tasks=prepare_material_bundle(ROOT,public["stories"],day,report,args.output,
+                                  heritage_sites=sites)
+    topics=discover_topics(tasks)
+    save(args.output/"topic-drafts.json",topics)
     print("Article countries needing enrichment:",sorted(plan["articleCountryNeeds"]))
-    print("Research candidates only; no automatic country approval.")
+    print("Material preparation tasks:",tasks["countriesNeedingMaterials"],
+          "; source and visual approval required before publication.")
 
 if __name__=="__main__":
     main()

@@ -4,6 +4,13 @@ on:
     workflows: ['Free-tier AI editorial double-check (safe preview)']
     types: [completed]
   workflow_dispatch:
+  # Cover curated editions and late article additions, not just AI artifacts.
+  push:
+    branches: [main]
+    paths:
+      - 'data/approved/*.json'
+  schedule:
+    - cron: '30 12 * * *' # 21:30 JST recovery
 permissions:
   contents: read
   actions: read
@@ -13,11 +20,11 @@ concurrency:
 jobs:
   prepare:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      github.event_name != 'workflow_run' ||
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,9 +44,30 @@ jobs:
             cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"
           elif [ -n "$RUN_ID" ]; then
             gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/approved" || true
+          else
+            CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
+            IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+            mkdir -p "$RUNNER_TEMP/reviews"
+            for ID in $IDS; do
+              mkdir -p "$RUNNER_TEMP/reviews/$ID"
+              gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
+            done
+            python - <<'PY'
+          import os
+          from datetime import datetime
+          from pathlib import Path
+          from zoneinfo import ZoneInfo
+          from release_contract import recover_review
+          day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
+          # A local-only checkout: the workflow has no repository write permission.
+          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"reviews")
+          PY
+            if [ -f "data/approved/$DAY.json" ]; then
+              cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"
+            fi
           fi
           echo "path=$RUNNER_TEMP/approved/$DAY.json" >> "$GITHUB_OUTPUT"
-      - name: Research only countries from validated articles
+      - name: Prepare drafts, official source leads and photo review files for all article countries
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
         run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries

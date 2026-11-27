@@ -40,6 +40,9 @@ def collect_sites(xml_data):
         if not number.isdigit() or not name or not code_field:
             continue
         record = {"name": name, "sourceUrl": "https://whc.unesco.org/en/list/" + str(int(number)) + "/"}
+        year=fields.get("date_inscribed","")
+        if re.fullmatch(r"(?:19|20)[0-9]{2}",year):
+            record["inscribedYear"]=int(year)
         for iso in re.findall(r"(?<![A-Za-z])[A-Za-z]{2}(?![A-Za-z])", code_field):
             code = iso.upper()
             by_country = found.setdefault(code, {})
