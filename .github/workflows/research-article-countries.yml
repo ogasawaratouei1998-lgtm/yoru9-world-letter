@@ -10,7 +10,7 @@ on:
     paths:
       - 'data/approved/*.json'
   schedule:
-    - cron: '30 12 * * *' # 21:30 JST recovery
+    - cron: '30 10 * * *' # 19:30 JST recovery, before the 21:00 release
 permissions:
   contents: read
   actions: read
@@ -42,13 +42,11 @@ jobs:
           mkdir -p "$RUNNER_TEMP/approved"
           if [ -f "data/approved/$DAY.json" ]; then
             cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"
-          elif [ -n "$RUN_ID" ]; then
-            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/approved" || true
-          else
+          elif [ ! -f "data/archive/$DAY.json" ]; then
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
             IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
             mkdir -p "$RUNNER_TEMP/reviews"
-            for ID in $IDS; do
+            for ID in $(printf '%s\n%s\n' "$RUN_ID" "$IDS" | awk 'NF && !seen[$0]++'); do
               mkdir -p "$RUNNER_TEMP/reviews/$ID"
               gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
             done

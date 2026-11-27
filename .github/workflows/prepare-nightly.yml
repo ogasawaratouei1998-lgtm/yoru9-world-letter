@@ -90,6 +90,18 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python seed_reviewed_photos.py
+      - name: Verify reviewed country source and report remaining enrichment gaps
+        if: steps.stage.outputs.ready == 'true'
+        run: |
+          python country_content.py --check
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from country_readiness import article_country_backlog
+          issue=json.loads(Path("data/current.json").read_text(encoding="utf-8"))
+          missing,_=article_country_backlog(issue["stories"],Path.cwd(),issue["editionDate"])
+          print("Country enrichment pending (does not block verified news):",json.dumps(missing,sort_keys=True))
+          PY
       - name: Build and test the exact candidate before 21:00
         if: steps.stage.outputs.ready == 'true'
         env:
