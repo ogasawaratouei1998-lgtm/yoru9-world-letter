@@ -22,10 +22,27 @@ REVIEW_FIELDS=(
 )
 
 
+# Current review has two independent editorial decisions; the existing
+# four scores measure theme and safety. Historical responses remain readable.
+COMPACT_REVIEW_FIELDS=("copyAccurate","comicPunchlineWorks")
+
+
+def editorial_review_reasons(review):
+    """Return bounded failure categories, never article text or model prose."""
+    if not isinstance(review,dict):
+        return ["review_not_object"]
+    if "copyAccurate" in review or "approved" not in review:
+        return ["review_"+key+("_failed" if review.get(key) is False else "_missing_or_invalid")
+                for key in COMPACT_REVIEW_FIELDS if review.get(key) is not True]
+    reasons=[] if review.get("approved") is True else ["review_legacy_not_approved"]
+    reasons.extend("review_"+key+("_failed" if review.get(key) is False else "_missing_or_invalid")
+                   for key in REVIEW_FIELDS if review.get(key) is not True)
+    return reasons
+
+
 def independent_editorial_quality_passed(review):
-    """Require explicit source fidelity, human error, safe joke and real surprise."""
-    return (isinstance(review,dict) and review.get("approved") is True
-            and all(review.get(key) is True for key in REVIEW_FIELDS))
+    """Check copy fidelity and comic payoff; rubric is checked separately."""
+    return not editorial_review_reasons(review)
 
 
 def headline_fidelity_risk(story, fetched_articles):

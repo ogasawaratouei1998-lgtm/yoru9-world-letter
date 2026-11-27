@@ -655,8 +655,8 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("headline_fidelity_risk(story,evidence)",code)
         self.assertIn("independent_editorial_quality_passed(audit)",code)
         self.assertIn('story["editorQualityVerified"]=True',code)
-        self.assertIn("legalStatusAccurate",code)
-        self.assertIn("translationAccurate",code)
+        self.assertIn("including any legal status when applicable",code)
+        self.assertIn("copyAccurate",code)
 
     def test_streamlined_check_fails_closed_without_source_fidelity(self):
         from editorial_quality import REVIEW_FIELDS, independent_editorial_quality_passed
@@ -677,6 +677,26 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertNotIn("firstQuipFinalBeat",REVIEW_FIELDS)
         self.assertNotIn("firstQuipAngleEarned",REVIEW_FIELDS)
 
+    def test_compact_editorial_review_uses_no_duplicate_approval_flags(self):
+        from editorial_quality import independent_editorial_quality_passed, editorial_review_reasons, verified_rubric_for_edition
+        good={"copyAccurate":True,"comicPunchlineWorks":True,
+              "editorialScores":{"surprise":4,"mistakeClarity":4,"outcomeIrony":4,"safety":5}}
+        self.assertTrue(independent_editorial_quality_passed(good))
+        self.assertTrue(verified_rubric_for_edition(good,"2026-11-27"))
+        self.assertEqual(editorial_review_reasons({**good,"copyAccurate":False}),["review_copyAccurate_failed"])
+        self.assertEqual(editorial_review_reasons({"copyAccurate":True}),["review_comicPunchlineWorks_missing_or_invalid"])
+        self.assertFalse(independent_editorial_quality_passed({"comicPunchlineWorks":True}))
+        self.assertFalse(verified_rubric_for_edition({**good,"editorialScores":{**good["editorialScores"],"safety":4}},"2026-11-27"))
+
+    def test_country_label_normalization_never_guesses_city_or_publisher(self):
+        from country_codes import normalize_reporting_country
+        for value in ("JP","ＪＰ","Japan","日本 (JP)"):
+            self.assertEqual(normalize_reporting_country(value),"日本")
+        self.assertEqual(normalize_reporting_country("United Kingdom (GB)"),"イギリス")
+        self.assertEqual(normalize_reporting_country("U.S.A."),"アメリカ合衆国")
+        for value in ("Tokyo","日本 (US)","unknown","",None):
+            self.assertIsNone(normalize_reporting_country(value))
+
     def test_editorial_review_avoids_fact_checking_the_publisher(self):
         from pathlib import Path
         source=(Path(__file__).resolve().parents[1]/"auto_editorial.py").read_text(encoding="utf-8")
@@ -687,11 +707,12 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("JAPANESE EDITORIAL AND HUMOR REVIEW",check)
         self.assertIn("Trust the reporting company",check)
         self.assertIn("NEVER",check)
-        self.assertIn("translationAccurate:boolean",check)
-        self.assertIn("legalStatusAccurate:boolean",check)
+        self.assertIn("copyAccurate:boolean",check)
+        self.assertIn("including any legal status when applicable",check)
         self.assertNotIn("factsVerified:boolean",check)
-        self.assertIn("humanFailureConfirmed:boolean",check)
-        self.assertIn("stageTsukkomiConfirmed:boolean",check)
+        self.assertNotIn("humanFailureConfirmed:boolean",check)
+        self.assertNotIn("stageTsukkomiConfirmed:boolean",check)
+        self.assertIn("comicPunchlineWorks:boolean",check)
         self.assertNotIn("EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_REVIEW",check)
         self.assertIn("headline_fidelity_risk(story,evidence)",source)
         self.assertIn("noncomic_incident_rejection(story,evidence)",source)
@@ -795,7 +816,7 @@ class AutoEditorialSafetyTests(unittest.TestCase):
         self.assertIn("human_failure_rejection(story)",code)
         self.assertIn("comic_line_rejection(story",code)
         self.assertIn('story["humanFailureVerified"]=True',code)
-        self.assertIn("humanFailureConfirmed:boolean",code)
+        self.assertIn("copyAccurate:boolean",code)
         self.assertIn("comicPunchlineWorks:boolean",code)
         self.assertIn("quipSecond (OPTIONAL",code)
         self.assertIn("HUMAN_FAILURE_MISSION",code)

@@ -5,6 +5,8 @@ This is a reporting-geography convention, not a claim of state recognition.
 Source/publisher markets never count as an event's country.
 """
 import json
+import re
+import unicodedata
 from functools import lru_cache
 from pathlib import Path
 
@@ -64,3 +66,22 @@ def country_region(name):
     if code is None:
         return None
     return next((item["region"] for item in catalog() if item["code"]==code),None)
+
+def normalize_reporting_country(value):
+    """Normalize a reported country label without guessing the location."""
+    if not isinstance(value,str):
+        return None
+    value=unicodedata.normalize("NFKC",value).strip()
+    value={"u.s.a.":"US","u.k.":"GB","u.s.":"US"}.get(value.casefold(),value)
+    codes=country_codes(value)
+    if not codes:
+        pair=re.fullmatch(r"(.+?)\s*\(([^()]+)\)",value)
+        if pair:
+            first=country_code(pair[1])
+            second=country_code(pair[2])
+            if first and first==second:
+                codes=[first]
+    if not codes:
+        return None
+    names={item["code"]:item["name"] for item in catalog()}
+    return "／".join(names[code] for code in codes)

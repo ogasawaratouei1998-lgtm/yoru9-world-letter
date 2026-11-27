@@ -129,7 +129,7 @@ class LocalEditorialTest(unittest.TestCase):
           "url":"https://example.org/test",
           "text":"Publisher datePublished: 2026-11-25\nBooked wrong airport. Arrived 1000 kilometers away."}]}
         copy={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
-        copy.update(category="person",reported="2026-11-26",editorVerified=True)
+        copy.update(category="person",country="JP",reported="2026-11-26",editorVerified=True)
         joke="目的地より先に予約のほうが千キロも遠回りしてるやないか！"
         infer=Mock(side_effect=[copy,{"candidates":[]},{"candidates":[joke]}])
         result=local_editorial.staged_draft(group,"2026-11-26",infer)
@@ -137,6 +137,7 @@ class LocalEditorialTest(unittest.TestCase):
         self.assertEqual(story["quip"],joke)
         self.assertEqual(story["sourceUrl"],group["articles"][0]["url"])
         self.assertEqual(story["reported"],"2026-11-25")
+        self.assertEqual(story["country"],"日本")
         self.assertNotIn("editorVerified",story)
         self.assertNotIn("decisionQuote",story)
         for call,prefix in zip(infer.call_args_list,(local_editorial.COPY_PREFIX,
@@ -159,6 +160,31 @@ class LocalEditorialTest(unittest.TestCase):
                 self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer),
                                  {"stories":[],"reasonCode":"missing_date"})
                 infer.assert_called_once()
+
+    def test_country_repair_is_bounded_and_does_not_use_publisher_location(self):
+        group={"groupId":1,"articles":[{"title":"Fictional fixture",
+                 "text":"Publisher datePublished: 2026-11-25\nIn Japan, a traveler made a mistake.",
+                 "url":"https://example.org/test"}]}
+        copy={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
+        copy.update(category="person",country="Tokyo",reported="2026-11-25")
+        joke="目的地より先に予約のほうが千キロも遠回りしてるやないか！"
+        infer=Mock(side_effect=[copy,{"country":"JP"},{"candidates":[joke]}])
+        self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer)["stories"][0]["country"],"日本")
+        self.assertTrue(infer.call_args_list[1].args[0].startswith(local_editorial.COUNTRY_PREFIX))
+        self.assertEqual(infer.call_count,3)
+        infer=Mock(side_effect=[copy,{"country":""}])
+        self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer),
+                         {"stories":[],"reasonCode":"missing_location"})
+        self.assertEqual(infer.call_count,2)
+
+    def test_invalid_copy_diagnostics_identify_only_schema_fields(self):
+        group={"groupId":1,"articles":[{"title":"fixture",
+                 "text":"Publisher datePublished: 2026-11-25\nArticle.",
+                 "url":"https://example.org/test"}]}
+        copy={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
+        copy.update(category="person",country="JP",title="",summary=None)
+        result=local_editorial.staged_draft(group,"2026-11-26",Mock(return_value=copy))
+        self.assertEqual(result,{"stories":[],"reasonCode":"invalid_copy","invalidFields":["title","summary"]})
 
     def test_staged_rejection_uses_only_bounded_codes(self):
         group={"groupId":1,"articles":[{"title":"one","text":"body","url":"https://example.org/one"}]}
