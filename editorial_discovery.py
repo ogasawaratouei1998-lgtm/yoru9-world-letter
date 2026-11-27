@@ -39,7 +39,10 @@ POLICY_EXPLAINER_TITLE=re.compile(
 
 def source_title_is_policy_explainer(title):
     """A general policy guide is not itself a documented human blunder."""
-    return isinstance(title,str) and bool(POLICY_EXPLAINER_TITLE.search(title))
+    if not isinstance(title,str):
+        return False
+    from local_editorial import source_context_rejection
+    return bool(POLICY_EXPLAINER_TITLE.search(title) or source_context_rejection(title))
 # Retrieval signal only: two distinct clues are needed to rank personal
 # LARGE mistakes above harmless typos. Headline text NEVER proves blame.
 PERSONAL_ACTOR_TERMS=re.compile(

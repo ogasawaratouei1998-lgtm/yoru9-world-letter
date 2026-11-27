@@ -243,6 +243,8 @@ if(!countryPhotoIsSharpEnough({naturalWidth:1280,naturalHeight:720}))process.exi
             ({"title":"書類を紛失","summary":"発注書を探した","quip":"鍋やないか"},"document"),
             ({"title":"飛行機の予約を間違えた","summary":"航空便を予約"},"plane"),
             ({"title":"列車を乗り間違えた"},"train"),
+            ({"title":"首相がスタジアム名を言い間違えSNSで批判"},"stadium"),
+            ({"title":"実験室で化学実験を間違えた"},"laboratory"),
             ({"title":"タクシーの行き先を間違えた"},"car"),
             ({"title":"注文を間違えた","summary":"スーツケースを注文"},"luggage"),
             ({"title":"予想外の結果に","quip":"パスポートとフライパン","category":"sports"},"neutral"),

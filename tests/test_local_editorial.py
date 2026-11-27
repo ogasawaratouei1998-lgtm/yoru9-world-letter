@@ -186,6 +186,28 @@ class LocalEditorialTest(unittest.TestCase):
         result=local_editorial.staged_draft(group,"2026-11-26",Mock(return_value=copy))
         self.assertEqual(result,{"stories":[],"reasonCode":"invalid_copy","invalidFields":["title","summary"]})
 
+    def test_untranslated_prose_is_repaired_once_or_dropped_before_humor(self):
+        group={"groupId":1,"articles":[{"title":"Fictional incident","text":"Publisher datePublished: 2026-11-27\nA traveler in Japan arrived at the wrong airport.","url":"https://example.org/test"}]}
+        good={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
+        good.update(category="person",country="JP",reported="2026-11-27")
+        bad={**good,"title":"A traveler made an error","summary":"English summary","detail":"English detail"}
+        infer=Mock(side_effect=[bad,bad])
+        result=local_editorial.staged_draft(group,"2026-11-27",infer)
+        self.assertEqual(result["reasonCode"],"invalid_copy_language")
+        self.assertEqual(infer.call_count,2)
+        infer=Mock(side_effect=[bad,{**good,"label":"personal mistake"},{"candidates":["目的地より先に予約のほうが千キロも遠回りしてるやないか！"]}])
+        result=local_editorial.staged_draft(group,"2026-11-27",infer)
+        self.assertEqual(result["stories"][0]["label"],"個人の失敗")
+        self.assertEqual(infer.call_count,3)
+
+    def test_book_feature_and_policy_analysis_never_enter_composition(self):
+        for title in ("New Scientist Book Club: How urine changed the course of human history",
+                      "The test ahead for new model that overhauls social services system"):
+            infer=Mock()
+            group={"groupId":1,"articles":[{"title":title,"text":"article","url":"https://example.org/test"}]}
+            self.assertFalse(local_editorial.staged_draft(group,"2026-11-27",infer)["stories"])
+            infer.assert_not_called()
+
     def test_staged_rejection_uses_only_bounded_codes(self):
         group={"groupId":1,"articles":[{"title":"one","text":"body","url":"https://example.org/one"}]}
         for reason,expected in (("no_human_mistake","no_human_mistake"),("private article text","other")):

@@ -1593,6 +1593,9 @@ def main():
     for story in candidates_with_after_review_refill():
         if not isinstance(story,dict) or any(not isinstance(story.get(k),str) or not story[k].strip() for k in REQUIRED):
             reject("missing_required_fields");continue
+        from local_editorial import japanese_copy_fields,source_context_rejection,CATEGORY_LABELS
+        if japanese_copy_fields(story,("title","summary","detail","quip")):
+            reject("untranslated_reader_copy");continue
         if not valid_recent_reported(story["reported"],now):
             reject("invalid_reporting_date");continue
         if story["category"] not in ("person","work","company","sports"):
@@ -1601,6 +1604,8 @@ def main():
         if not normalized_country:
             reject("unrecognized_event_country");continue
         story["country"]=normalized_country
+        if japanese_copy_fields(story,("label",)):
+            story["label"]=CATEGORY_LABELS[story["category"]]+"の失敗"
         # Never substitute an animal sighting or odd fact for a human error.
         fit_issue=editorial_fit_rejection(story)
         if fit_issue:
@@ -1635,6 +1640,9 @@ def main():
             # summary; this is not an independent investigation of journalism.
             reject("publisher_article_not_readable_for_summary");continue
         story["verificationUrls"]=urls
+        context_issue=source_context_rejection(publisher_titles.get(urls[0],""),cache[urls[0]])
+        if context_issue:
+            reject(context_issue);continue
         if source_title_is_policy_explainer(publisher_titles.get(urls[0],"")):
             reject("policy_explainer_without_incident_reporting");continue
         if story["sourceUrl"] in seen or story["id"] in seen:
@@ -1672,6 +1680,13 @@ def main():
                 "does not introduce invented people, motives, numbers, locations "
                 "or conclusions that the publisher did not say. Review the "
                 "headline's clarity and translation, including legal-status words. "
+                "Read the actual Japanese text, not just its schema or approval claims. "
+                "If any reader-facing prose remains English, a person/place/substance is mistranslated, "
+                "the event country is wrong, publication and incident dates are confused, or the first joke "
+                "introduces an unrelated object or changes a fact, copyAccurate or comicPunchlineWorks MUST be false. "
+                "Historical book features and policy analysis are not current mishaps. "
+                "A former stadium name, ordinary typo, routine institutional reversal or social-media criticism alone "
+                "is not an extraordinary mistake. Do not award 4 or 5 for such a trivial consequence. "
                 "Respect victims and private individuals. "
                 "Reject if the writing shames a person, mocks a victim, "
                 "or compares reader pain with other people. "
@@ -1680,6 +1695,9 @@ def main():
                 "generic platitudes or an unclear mistake/outcome contrast. "
                 "Reject location claims inferred from the feed's language "
                 "or the publisher's market rather than the article's incident. "
+                "Score 1-3 when the mismatch is ordinary, the consequence is small, the decision is institutional "
+                "rather than identifiable, or the joke is generic; 4 requires a concrete remarkable reversal and "
+                "5 requires a truly exceptional non-tragic consequence. No inflated scores to fill an edition. "
                 "The first joke must be accurate, understandable on first read, "
                 "and end with a fresh incident-specific punchline. "
                 "Set majorPersonalFailureConfirmed true ONLY for a "

@@ -96,7 +96,13 @@ if(generated1===generated2)process.exit(14);
 if(!generated1.startsWith('data:image/svg+xml;charset=utf-8,'))process.exit(15);
 if(!decodeURIComponent(generated1.split(',')[1]).includes('<svg'))process.exit(16);
 const unsafe=fallbackNewsArt({id:'future-unsafe',label:'<script>alert(1)</script>',country:'日本'});
-if(!decodeURIComponent(unsafe.split(',')[1]).includes('&lt;script&gt;'))process.exit(17);
+// English/non-Japanese labels are replaced by a Japanese fallback. Both
+// the fallback and the actual Japanese label path must resist injection.
+const unsafeSvg=decodeURIComponent(unsafe.split(',')[1]);
+if(unsafeSvg.includes('<script')||unsafeSvg.includes('alert(1)')||!unsafeSvg.includes('世界のまさか'))process.exit(17);
+const mixed=fallbackNewsArt({id:'future-mixed',label:'失敗<script>',country:'日本'});
+const mixedSvg=decodeURIComponent(mixed.split(',')[1]);
+if(mixedSvg.includes('<script')||!mixedSvg.includes('失敗&lt;script&gt;'))process.exit(18);
 """
         result = subprocess.run(["node", "-e", js], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stderr or result.stdout)

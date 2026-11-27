@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="スタジアムの旧名称と選挙討論会を象徴する創作イラスト">
+<defs><linearGradient id="bg" x2="1" y2="1"><stop stop-color="#f7dfb1"/><stop offset="1" stop-color="#d0e9e5"/></linearGradient></defs>
+<rect width="800" height="480" rx="24" fill="url(#bg)"/>
+<ellipse cx="510" cy="275" rx="250" ry="127" fill="#faf5e8" stroke="#31485d" stroke-width="10"/>
+<ellipse cx="510" cy="275" rx="192" ry="86" fill="#8bbf89" stroke="#31485d" stroke-width="7"/>
+<path d="M326 275h368M510 191v168" stroke="#fff" stroke-width="5"/><circle cx="510" cy="275" r="33" fill="none" stroke="#fff" stroke-width="5"/>
+<path d="M318 187l35 21m70-50 17 33m136-33-17 33m73-4-36 21" stroke="#d9636c" stroke-width="12" stroke-linecap="round"/>
+<rect x="62" y="278" width="160" height="124" rx="12" fill="#324b61"/><rect x="50" y="260" width="184" height="30" rx="8" fill="#20394e"/>
+<path d="M137 260v-56l45-25" stroke="#324b61" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="186" cy="177" r="12" fill="#324b61"/>
+<path d="M116 66h305q25 0 25 25v67q0 24-25 24H199l-43 46 6-46h-46q-24 0-24-24V91q0-25 24-25z" fill="#fffdf3" stroke="#324b61" stroke-width="7"/>
+<text x="269" y="141" text-anchor="middle" font-size="38" font-weight="800" font-family="sans-serif" fill="#324b61">「ワンダ」</text>
+<rect x="486" y="60" width="225" height="81" rx="17" fill="#d9636c"/><text x="598" y="110" text-anchor="middle" font-size="31" font-weight="bold" font-family="sans-serif" fill="white">旧名称 · 2022</text>
+<rect x="25" y="413" width="750" height="48" rx="12" fill="#324b61"/><text x="48" y="445" font-size="23" font-weight="700" font-family="sans-serif" fill="#fff">スペイン · スタジアムの名称を言い間違え</text>
+</svg>
