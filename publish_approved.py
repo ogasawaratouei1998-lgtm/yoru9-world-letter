@@ -160,7 +160,7 @@ def compact_automatic_contract(data,day):
     return (day >= "2026-11-27"
             and data.get("approvedBy")=="automated-two-stage-review")
 
-def reviewed_story_public(story,day,edition_type="regular",index=1):
+def reviewed_story_public(story,day,edition_type="regular",index=1,*,manual_correction=False):
     """Publication data/proof checks only: no second editorial judgment."""
     from country_codes import country_codes
     from editorial_quality import verified_rubric_for_edition
@@ -183,7 +183,15 @@ def reviewed_story_public(story,day,edition_type="regular",index=1):
     # judgments about the article. No redundant surprise/stage/human flags.
     require(story.get("editorQualityVerified") is True and story.get("humorSafe") is True,
             f"{index}本目の編集・安全性審査が未完了です")
-    require(verified_rubric_for_edition(story,day),f"{index}本目の編集品質4項目の承認記録が不足または基準未満です")
+    # The dated correction preserves one already-published minor event and
+    # explicitly withdraws the other two. It is not an automated quality pass.
+    if manual_correction:
+        require(day=="2026-11-27" and story.get("id")=="local-ab705d2ee058d4e77392f18d"
+                and story.get("sourceUrl","").startswith("https://www.20minutos.es/deportes/futbol/pedro-sanchez-se-confunde-")
+                and isinstance(story.get("correctionNote"),str) and len(story["correctionNote"])>=15,
+                "訂正対象が承認された11月27日号と一致しません")
+    else:
+        require(verified_rubric_for_edition(story,day),f"{index}本目の編集品質4項目の承認記録が不足または基準未満です")
     public={key:story[key].strip() for key in REQUIRED_STORY}
     public["verificationUrls"]=[public["sourceUrl"]]
     if isinstance(story.get("flag"),str):
@@ -235,6 +243,12 @@ def validate_approved(data, expected_date):
     require(bool(DATE.fullmatch(expected_date)), '配信日が正しくありません')
     issue_day = date.fromisoformat(expected_date)
     compact=compact_automatic_contract(data,expected_date)
+    correction=data.get("approvedBy")=="editorial-correction-2026-11-27"
+    if correction:
+        require(expected_date=="2026-11-27" and data.get("editionType")=="regular"
+                and isinstance(data.get("stories"),list) and len(data["stories"])==1
+                and data.get("editorialCorrection")=="withdraw-two-correct-one",
+                "11月27日号の依頼済み訂正以外に使用できません")
     edition_type = data.get('editionType', 'regular')
     require(edition_type in ('regular', 'special'), '配信号の種類が不正です')
     if edition_type == 'special':
@@ -321,8 +335,8 @@ def validate_approved(data, expected_date):
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
-        if compact:
-            public=reviewed_story_public(story,expected_date,edition_type,i)
+        if compact or correction:
+            public=reviewed_story_public(story,expected_date,edition_type,i,manual_correction=correction)
             require(public["id"] not in ids and public["sourceUrl"] not in sources,
                     "記事IDまたは出典URLが重複しています")
             ids.add(public["id"])
@@ -463,7 +477,9 @@ def validate_approved(data, expected_date):
             **({'specialReason': data['specialReason'].strip()} if edition_type == 'special' else {}),
             'stories': public_stories,
             'nightQuote': nightly_line(expected_date, public_stories),
-            'credits': 'Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.'}
+            'credits': ('報道機関の記事を出典とし、AIツッコミは創作の冗談です。'
+                        if correction or expected_date>="2026-11-28" else
+                        'Facts based on the cited reporting. AI one-liners are fictional humor, not news facts.')}
 
 
 

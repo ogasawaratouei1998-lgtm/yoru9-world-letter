@@ -596,7 +596,8 @@ const NEWS_ARTWORK=Object.freeze({
  'italy-toilet-ai-python-48-hour-search-2026':'ai-python-toilet.svg',
  'drew-carey-price-right-early-reveal-2026':'game-show-price-board.svg',
  'mainz-sewer-search-lost-drone-2026':'drone-sewer-search.svg',
- 'kusel-lost-handcuff-key-police-help-2026':'lost-handcuff-key.svg'
+ 'kusel-lost-handcuff-key-police-help-2026':'lost-handcuff-key.svg',
+ 'local-ab705d2ee058d4e77392f18d':'spain-stadium-name-correction.svg'
 });
 const NEWS_ART_FALLBACK=Object.freeze({
  work:'category-work.svg',company:'category-company.svg',
@@ -628,6 +629,10 @@ function newsArtSubject(story){
  const headline=String(story?.title||'');
  const summary=String(story?.summary||'');
  const rules=[
+  ['stadium',/スタジアム|競技場|メトロポリターノ|\bstadium\b/i],
+  ['laboratory',/錬金術|実験室|試験管|化学実験|\balchemist\b|\blaboratory\b/i],
+  ['meeting',/会議|議論|討論会|記者会見|\bdebate\b|\bmeeting\b/i],
+  ['computer',/パソコン|コンピューター|システム障害|データ削除|\bcomputer\b/i],
   ['passport',/パスポート|旅券|\bpassport\b/i],
   ['key',/鍵|カギ|キーを(?:なく|紛失)|\bkeys?\b/i],
   ['phone',/スマートフォン|スマホ|携帯電話|iphone|\bsmartphone\b/i],
@@ -643,7 +648,7 @@ function newsArtSubject(story){
   ['ball',/サッカー|野球|得点|ゴール|クリケット|\bfootball\b|\bbaseball\b/i],
   ['video',/動画|YouTube|SNS|広報/i]
  ];
- for(const text of [headline,summary]){
+ for(const text of [headline,summary,String(story?.detail||'')]){
   for(const [subject,pattern] of rules)if(pattern.test(text))return subject;
  }
  return 'neutral';
@@ -685,10 +690,15 @@ function fallbackNewsArt(story){
   plane:'<path d="M396 75q27 0 27 51l4 70 205 112v40l-205-61-3 61 51 36v20l-75-18-75 18v-20l51-36-3-61-205 61v-40l205-112 4-70q0-51 19-51z" fill="#FFF8E8" stroke="#31536D" stroke-width="10" stroke-linejoin="round"/>',
   train:'<rect x="258" y="89" width="284" height="260" rx="48" fill="#FFF8E8" stroke="#31536D" stroke-width="13"/><rect x="290" y="126" width="220" height="108" rx="15" fill="#91C9DF"/><circle cx="317" cy="288" r="19" fill="#E9B976"/><circle cx="483" cy="288" r="19" fill="#E9B976"/><path d="m320 349-60 40m220-40 60 40M286 376h228" stroke="#31536D" stroke-width="13" stroke-linecap="round"/>',
   car:'<path d="M172 268l52-30 55-92h242l57 92 54 30v64H172z" fill="#FFF4DD" stroke="#31536D" stroke-width="13" stroke-linejoin="round"/><path d="m287 165-34 70h288l-35-70z" fill="#91C9DF"/><circle cx="271" cy="328" r="37" fill="#31536D"/><circle cx="533" cy="328" r="37" fill="#31536D"/>',
+  stadium:'<ellipse cx="400" cy="237" rx="285" ry="139" fill="#FFF7DE" stroke="#31536D" stroke-width="12"/><ellipse cx="400" cy="237" rx="216" ry="98" fill="#79B993" stroke="#31536D" stroke-width="8"/><path d="M225 237h350M400 145v182" stroke="#FFF" stroke-width="6"/><circle cx="400" cy="237" r="36" fill="none" stroke="#fff" stroke-width="6"/><path d="M180 140l38 24m105-52 12 37m130-37-12 37m104-9-38 24" stroke="#D76D79" stroke-width="12" stroke-linecap="round"/>',
+  laboratory:'<path d="M316 93h167v19h-44v94l108 135q19 30-19 38H272q-38-8-19-38l108-135v-94h-45z" fill="#FFF7E0" stroke="#31536D" stroke-width="13"/><path d="M302 289h196l47 60H255z" fill="#97D6BC"/><circle cx="389" cy="310" r="21" fill="#fff"/><circle cx="462" cy="260" r="17" fill="#F5CE7A"/>',
+  meeting:'<rect x="155" y="246" width="490" height="80" rx="24" fill="#31536D"/><circle cx="245" cy="174" r="47" fill="#F1C997"/><circle cx="400" cy="150" r="47" fill="#92BED0"/><circle cx="555" cy="174" r="47" fill="#E6A7B5"/><path d="M245 223v27m155-53v53m155-27v27" stroke="#31536D" stroke-width="19"/><rect x="330" y="264" width="138" height="40" rx="8" fill="#FFF8E8"/>',
+  computer:'<rect x="156" y="100" width="488" height="258" rx="22" fill="#31536D"/><rect x="178" y="122" width="444" height="192" rx="10" fill="#E3F3EB"/><path d="M224 180h160m-160 49h94m-94 49h135" stroke="#82B9B4" stroke-width="13" stroke-linecap="round"/><path d="m472 170 85 85m0-85-85 85" stroke="#D46D7B" stroke-width="18" stroke-linecap="round"/><path d="M360 358v27m80-27v27M310 385h180" stroke="#31536D" stroke-width="16" stroke-linecap="round"/>',
   document:motifs[5],cooking:motifs[1],water:motifs[0],
   ball:motifs[3],video:motifs[2],neutral:motifs[2]
  };
- const label=escapeHtml(String(story?.label||'世界のまさか').slice(0,14));
+ const rawLabel=String(story?.label||'');
+ const label=escapeHtml((/[ぁ-んァ-ヶ一-龯々]/.test(rawLabel)?rawLabel:String(story?.categoryLabel||'世界のまさか')).slice(0,14));
  const country=escapeHtml(String(story?.country||'世界').slice(0,14));
  const svg=[
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" role="img" aria-label="記事内容を象徴する創作イラスト">',
@@ -986,7 +996,7 @@ function render(){const d=edition.stories;
  const currentIssue=!archive&&edition.editionDate===localDate(now);
  const special=!archive&&(edition.editionType==='special'||/創刊|特集/.test(edition.title||''));
  const datedPrevious=!archive&&!currentIssue;
- $('atlasLede').textContent=archive?'体験版に収録された、世界の失敗・勘違い・珍事件。':currentIssue?'世界で報じられた、思わず「まさか」な失敗と珍事件。':'この号に収録された、世界の失敗・勘違い・珍事件。';
+ $('atlasLede').textContent=edition.editionDate==='2026-11-27'&&/訂正版/.test(edition.title||'')?'編集訂正：初版の2記事を撤回し、残る記事の人名・発言日・内容を訂正しました。お詫びします。':archive?'体験版に収録された、世界の失敗・勘違い・珍事件。':currentIssue?'世界で報じられた、思わず「まさか」な失敗と珍事件。':'この号に収録された、世界の失敗・勘違い・珍事件。';
  lastRenderedLocalDate=localDate(now);
  displayReleaseStatus();
  $('editionTag').textContent=archive?`保存済みの体験版 · 実話${d.length}本`:datedPrevious?`前回の配信号 · 実話${d.length}本`:special?`創刊特集号 · 実話${d.length}本`:`今夜の配信号 · 実話${d.length}本`;
