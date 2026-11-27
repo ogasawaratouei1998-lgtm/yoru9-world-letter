@@ -1,0 +1,116 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-27",
+  "editionType": "regular",
+  "title": "2026-11-27｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "country": "日本",
+      "category": "person",
+      "label": "scientific miscalculation",
+      "title": "Alchemist's Failed Quest for Gold Unearthed the First Chemical Element",
+      "summary": "A 17th-century alchemist in Hamburg, while attempting to create the Philosopher's Stone using 1500 gallons of fermented urine, made a pivotal scientific error by expecting to transmute metals into gold. Instead, the glowing substance he isolated was phosphorus, the first element discovered in modern chemistry.",
+      "detail": "In 1669, Hennig Brand, an alchemist in Hamburg, collected vast quantities of fermented urine in his basement in a desperate attempt to find the Philosopher's Stone—a mythical substance believed to turn base metals into gold. His experiment, driven by centuries-old alchemical traditions, was based on the assumption that urine contained a mystical essence capable of transmutation. After years of distillation and refinement, the concentrated urine began to emit a faint glow. Rather than achieving gold, Brand discovered a new substance—phosphorus—that glowed when exposed to air. Though he failed to produce gold, the discovery marked a turning point in modern chemistry. He kept the finding secret for years before eventually sharing it with the scientific community. The substance, phosphorus, became foundational in chemical science, influencing everything from fire safety to early industrial chemistry. Brand’s mistake—believing he had achieved transmutation—was not a failure of effort, but a profound misdirection in scientific expectation. His work laid the groundwork for modern chemical experimentation, proving that breakthroughs often emerge not from success, but from unexpected outcomes.",
+      "quip": "尿を蒸発させた結果、光り始めたのはホウ素だった。",
+      "reported": "2026-11-27",
+      "humanActor": "an alchemist in Hamburg",
+      "humanMistake": "incorrectly assuming that concentrated urine could transmute metals into gold when it actually produced phosphorus, a chemical element",
+      "expectedPlan": "to discover the Philosopher's Stone by distilling and refining fermented urine to achieve transmutation of base metals into gold",
+      "observedOutcome": "the concentrated urine began to glow, revealing the isolation of phosphorus—the first chemical element discovered in modern science—instead of producing gold",
+      "eventKey": "alchemist-urine-phosphorus-1669",
+      "id": "local-0a492669bd80a842a0c9ba52",
+      "categoryLabel": "個人",
+      "sourceName": "newscientist.com",
+      "sourceUrl": "https://www.newscientist.com/article/2601034-new-scientist-book-club-how-urine-changed-the-course-of-human-history/?utm_campaign=RSS|NSNS&utm_content=home&utm_medium=RSS&utm_source=NSNS",
+      "verificationUrls": [
+        "https://www.newscientist.com/article/2601034-new-scientist-book-club-how-urine-changed-the-course-of-human-history/?utm_campaign=RSS|NSNS&utm_content=home&utm_medium=RSS&utm_source=NSNS"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 5,
+        "safety": 5
+      }
+    },
+    {
+      "country": "シンガポール",
+      "category": "work",
+      "label": "failed institutional compromise",
+      "title": "Singapore social service reform faces reversal after lead agency proposal sparks backlash",
+      "summary": "A proposed centralised leadership model for regional social services in Singapore was scrapped after triggering resistance from independent agencies concerned about losing their autonomy.",
+      "detail": "During a review of family support systems, a proposal emerged to designate a lead social service agency in each of Singapore’s seven regions to coordinate services across agencies. However, this idea was met with strong pushback from agency leaders who argued that such a structure would undermine their independence and existing operational frameworks. The concern was particularly acute among non-profit organisations that have long operated autonomously. As a result, the government ultimately dropped the plan, opting instead for a collaborative, co-ordinated model where agencies share responsibilities and jointly pursue shared outcomes. The reversal highlights a significant personal and institutional miscalculation in assuming that centralised leadership would improve service delivery without addressing agency-level concerns.",
+      "quip": "領収書を出すのが苦手な会社が、領収書を出すべき場所を間違えてしまった",
+      "reported": "2026-11-27",
+      "humanActor": "a social service agency representative",
+      "humanMistake": "proposed the creation of a lead agency in each region to coordinate regional social services, which sparked resistance from other agencies that feared losing autonomy and authority",
+      "expectedPlan": "to establish a lead agency in each region to oversee and coordinate the activities of multiple social service agencies, improving efficiency and accountability",
+      "observedOutcome": "the proposal was abandoned after facing strong opposition from non-profit social service agencies that viewed it as a threat to their independence and operational autonomy",
+      "eventKey": "OFS_lead_agency_reversal",
+      "id": "local-fc6394de5fb028a20d24e291",
+      "categoryLabel": "職場",
+      "sourceName": "straitstimes.com",
+      "sourceUrl": "https://www.straitstimes.com/singapore/community/the-test-ahead-for-new-model-that-overhauls-social-services-system",
+      "verificationUrls": [
+        "https://www.straitstimes.com/singapore/community/the-test-ahead-for-new-model-that-overhauls-social-services-system"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 4,
+        "safety": 5
+      }
+    },
+    {
+      "country": "スペイン",
+      "category": "person",
+      "label": "personal_mistake",
+      "title": "ペドロ・サルチャン、誤ってアトレティコのスタジオを「Wanda」と呼び、SNSで強い批判を受ける",
+      "summary": "スペイン首相ペドロ・サルチャンが、2026年11月27日に開催された議論で、アトレティコ・マドリードのスタジオを「Wanda」と誤って呼び、ファンからの強い批判を受けた。",
+      "detail": "2026年11月27日に開催された議論で、スペイン首相ペドロ・サルチャンは、2030年ワールドカップの最終戦がアトレティコ・マドリードのメトロポリタンスタジアムで開催されるべきだと述べた。しかし、彼がそのスタジオを「Wanda」と呼び、かつて使用されていた古い商標名を誤って使用したことにより、アトレティコ・マドリードのファンたちから強い批判を受けた。SNS上では、「偽物」「Wandaはもう使われていない」「4年前から名前は変わっている」といったコメントが相次ぎ、彼の発言が誤りであると指摘された。この誤りは、単なる誤解ではなく、歴史的名称の誤用として、多くの人々に驚きをもたらした。",
+      "quip": "メトロポリタンスタジアムってWanda？　歴史が逆転した。",
+      "reported": "2026-11-27",
+      "humanActor": "Pedro Sánchez",
+      "humanMistake": "誤ってアトレティコ・マドリードのスタジオを「Wanda」と呼び、かつての商標名を誤って使用した",
+      "expectedPlan": "スペインが2030年ワールドカップの最終戦をアトレティコ・マドリードのメトロポリタンスタジアムで開催することを支持する意図を表明した",
+      "observedOutcome": "ファンやSNSユーザーから強い批判を受け、特にアトレティコ・マドリードの支持者たちが「Wanda」という名前を誤って使用したことに怒りを示し、「偽物」といった批判が広がった",
+      "eventKey": "SANCHEZ_WANDA_ERROR_20261127",
+      "id": "local-ab705d2ee058d4e77392f18d",
+      "categoryLabel": "個人",
+      "sourceName": "20minutos.es",
+      "sourceUrl": "https://www.20minutos.es/deportes/futbol/pedro-sanchez-se-confunde-llama-wanda-estadio-atleti-le-llueven-las-criticas-redes-impostor-cierra-puerta-salir_7066511_0.html",
+      "verificationUrls": [
+        "https://www.20minutos.es/deportes/futbol/pedro-sanchez-se-confunde-llama-wanda-estadio-atleti-le-llueven-las-criticas-redes-impostor-cierra-puerta-salir_7066511_0.html"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 4,
+        "safety": 5
+      }
+    }
+  ]
+}
