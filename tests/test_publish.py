@@ -323,6 +323,30 @@ class PublishingTest(unittest.TestCase):
                "stories":surviving}
         self.assertEqual(len(validate_approved(issue,"2026-11-27")["stories"]),1)
 
+    def test_current_automatic_release_does_not_repeat_editorial_judgments(self):
+        from unittest.mock import patch
+        data=fixture("2026-11-27")
+        data["approvedBy"]="automated-two-stage-review"
+        for i,story in enumerate(data["stories"]):
+            story.update(reported="2026-11-27",
+                         sourceUrl=f"https://www.bbc.com/news/articles/fixture-{i}",
+                         editorQualityVerified=True,humorSafe=True,
+                         editorialScores={"surprise":4,"mistakeClarity":4,"outcomeIrony":4,"safety":5})
+        # Redundant flags and arbitrary old prose caps are not release vetoes.
+        data["stories"][0]["summary"]="長い説明"*151
+        data["stories"][1]["majorPersonalFailureVerified"]=True
+        data["stories"][2]["quipSecond"]="未承認の追加ツッコミは公開しない。"
+        with patch("editorial_identity.human_failure_rejection",side_effect=AssertionError("second judgment")), \
+             patch("editorial_identity.comic_line_rejection",side_effect=AssertionError("second judgment")), \
+             patch("editorial_identity.noncomic_incident_rejection",side_effect=AssertionError("second judgment")):
+            public=validate_approved(data,"2026-11-27")
+        self.assertEqual(len(public["stories"]),3)
+        self.assertEqual(public["stories"][0]["id"],data["stories"][1]["id"])
+        self.assertNotIn("quipSecond",public["stories"][2])
+        data["stories"][0]["editorialScores"]["safety"]=4
+        with self.assertRaisesRegex(ValueError,"編集品質4項目"):
+            validate_approved(data,"2026-11-27")
+
     def test_final_validation_uses_one_issue_check_and_separate_asset_check(self):
         import inspect
         import auto_editorial
