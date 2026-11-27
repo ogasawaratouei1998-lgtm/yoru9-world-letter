@@ -17,9 +17,15 @@ CATEGORIES = {'person', 'work', 'company', 'sports'}
 REQUIRED_STORY = ('id', 'country', 'category', 'categoryLabel', 'label', 'title', 'summary', 'detail', 'quip', 'sourceName', 'sourceUrl', 'reported')
 
 
+class ReleaseValidationError(ValueError):
+    """A controlled validator message, safe to log without revealing drafts."""
+
 def require(condition, message):
     if not condition:
-        raise ValueError(message)
+        raise ReleaseValidationError(message)
+
+def release_failure_message(exc):
+    return str(exc) if isinstance(exc,ReleaseValidationError) else type(exc).__name__
 
 
 def valid_url(url):
@@ -148,19 +154,95 @@ def recent_nightly_messages(root, edition_date, days=60):
             continue
     return messages
 
+def compact_automatic_contract(data,day):
+    # Only new automatic editions use the simplified contract. Historic
+    # approvals and manual editions retain their original requirements.
+    return (day >= "2026-11-27"
+            and data.get("approvedBy")=="automated-two-stage-review")
+
+def reviewed_story_public(story,day,edition_type="regular",index=1):
+    """Publication data/proof checks only: no second editorial judgment."""
+    from country_codes import country_codes
+    from editorial_quality import verified_rubric_for_edition
+    require(isinstance(story,dict),f"{index}本目の記事形式が不正です")
+    for key in REQUIRED_STORY:
+        value=story.get(key)
+        require(isinstance(value,str) and bool(value.strip()),f"{index}本目の {key} が空です")
+    require(story["category"] in CATEGORIES,f"{index}本目のcategoryが不正です")
+    require(bool(country_codes(story["country"])),f"{index}本目の国・地域が不正です")
+    reported=story["reported"]
+    require(bool(re.fullmatch(r"\d{4}[-.]\d{2}[-.]\d{2}",reported)),f"{index}本目の報道日の形式が不正です")
+    try:
+        delta=(date.fromisoformat(day)-date.fromisoformat(reported.replace(".","-"))).days
+    except ValueError:
+        raise ReleaseValidationError(f"{index}本目の報道日が不正です") from None
+    require(delta>=0 and (edition_type!="regular" or delta<=7),f"{index}本目の報道日が掲載期間外です")
+    require(valid_url(story["sourceUrl"]) and trusted_original_domain(story["sourceUrl"]),
+            f"{index}本目の出典は安全な承認済みの報道機関URLではありません")
+    # These are records of the single completed editorial review, not new
+    # judgments about the article. No redundant surprise/stage/human flags.
+    require(story.get("editorQualityVerified") is True and story.get("humorSafe") is True,
+            f"{index}本目の編集・安全性審査が未完了です")
+    require(verified_rubric_for_edition(story,day),f"{index}本目の編集品質4項目の承認記録が不足または基準未満です")
+    public={key:story[key].strip() for key in REQUIRED_STORY}
+    public["verificationUrls"]=[public["sourceUrl"]]
+    if isinstance(story.get("flag"),str):
+        public["flag"]=story["flag"]
+    note=story.get("correctionNote")
+    if isinstance(note,str) and 15<=len(note.strip())<=250 and not any(ch in note for ch in "<>\r\n"):
+        public["correctionNote"]=note.strip()
+    second=story.get("quipSecond")
+    if (story.get("secondQuipVerified") is True and isinstance(second,str)
+            and 15<=len(second.strip())<=160 and second.strip()!=public["quip"]
+            and not any(ch in second for ch in "<>\r\n")):
+        public["quipSecond"]=second.strip()
+    return public
+
+def prepare_reviewed_story(story, day):
+    """Repair only metadata; isolate invalid reviewed stories before handoff.
+
+    No AI call, invented reporting, or approval flags added. Historical
+    and curated editions keep the original strict publication contract.
+    """
+    from country_codes import normalize_reporting_country
+    from local_editorial import normalize_category, CATEGORY_LABELS
+    require(isinstance(story,dict),"記事形式が不正です")
+    item=dict(story)
+    for key in REQUIRED_STORY:
+        if isinstance(item.get(key),str):
+            item[key]=item[key].strip()
+    country=normalize_reporting_country(item.get("country"))
+    if country:
+        item["country"]=country
+    category=normalize_category(item.get("category"))
+    if category:
+        item["category"]=category
+        item["categoryLabel"]=CATEGORY_LABELS[category]
+    second=item.get("quipSecond")
+    if (not isinstance(second,str) or item.get("secondQuipVerified") is not True
+            or not 15<=len(second.strip())<=160 or second.strip()==item.get("quip")
+            or any(ch in second for ch in "<>\r\n")):
+        item.pop("quipSecond",None)
+        item.pop("secondQuipVerified",None)
+    # No synthetic whole-issue validation for each article.
+    reviewed_story_public(item,day)
+    return item
+
 def validate_approved(data, expected_date):
     require(isinstance(data, dict), '配信号がJSONオブジェクトではありません')
     require(data.get('status') == 'approved', 'status が approved ではありません')
     require(data.get('editionDate') == expected_date, '配信日が承認ファイル名と一致しません')
     require(bool(DATE.fullmatch(expected_date)), '配信日が正しくありません')
     issue_day = date.fromisoformat(expected_date)
+    compact=compact_automatic_contract(data,expected_date)
     edition_type = data.get('editionType', 'regular')
     require(edition_type in ('regular', 'special'), '配信号の種類が不正です')
     if edition_type == 'special':
         require('特集' in data.get('title', ''), '特集号のタイトルを明示してください')
         require(isinstance(data.get('specialReason'), str) and len(data['specialReason'].strip()) >= 15,
                 '特集号には過去の報道を掲載する理由と説明が必要です')
-    require(isinstance(data.get('title'), str) and 5 <= len(data['title'].strip()) <= 100, '配信号タイトルが必要です')
+    require(isinstance(data.get('title'),str) and bool(data['title'].strip())
+            and (compact or 5<=len(data['title'].strip())<=100),'配信号タイトルが必要です')
     # A vetted publisher is responsible for checking the reported facts.
     # Starting 21 November, this app reviews editorial tone, not the reporting.
     require(data.get('editorApproved') is True and data.get('humorReviewed') is True
@@ -228,11 +310,25 @@ def validate_approved(data, expected_date):
                            if isinstance(item, dict)
                            and item.get("category") in ("person", "work", "sports")
                            and item.get("majorPersonalFailureVerified") is True]
-        require(not major_positions or major_positions[0] == 0,
-                "重大な個人の失敗より前に補欠の記事が配置されています")
+        if compact:
+            # Ordering is presentation, not eligibility. Stable priority sort.
+            stories=sorted(stories,key=lambda item:not (isinstance(item,dict)
+                and item.get("category") in ("person","work","sports")
+                and item.get("majorPersonalFailureVerified") is True))
+        else:
+            require(not major_positions or major_positions[0] == 0,
+                    "重大な個人の失敗より前に補欠の記事が配置されています")
     ids, sources = set(), set()
     public_stories = []
     for i, story in enumerate(stories, 1):
+        if compact:
+            public=reviewed_story_public(story,expected_date,edition_type,i)
+            require(public["id"] not in ids and public["sourceUrl"] not in sources,
+                    "記事IDまたは出典URLが重複しています")
+            ids.add(public["id"])
+            sources.add(public["sourceUrl"])
+            public_stories.append(public)
+            continue
         require(isinstance(story, dict), f'{i}本目の記事形式が不正です')
         for key in REQUIRED_STORY:
             value = story.get(key)

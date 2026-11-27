@@ -1517,6 +1517,7 @@ def main():
     print("Review budget priority: editorial evidence only",flush=True)
     seen=previous_events()
     selected=[]
+    from publish_approved import prepare_reviewed_story,release_failure_message
     # Only aggregate rejection categories, never article text or model free-form reasons.
     rejection_counts={}
     def reject(reason):
@@ -1739,7 +1740,6 @@ def main():
         verified_scores=editorial_rubric(audit)
         if verified_scores is not None:
             story["editorialScores"]=verified_scores
-        seen.update((story["sourceUrl"],story["id"],event))
         # The editorial safety review also vets any optional second joke. A good
         # first joke and verified news article must survive a rejected extra.
         second=independently_approved_secondary_quip(story,audit)
@@ -1751,6 +1751,14 @@ def main():
             story["secondQuipVerified"]=True
         # Draft alternatives are not published or retained in approved data.
         story.pop("quipCandidates",None)
+        # Isolate malformed or unsafe release inputs before issue assembly.
+        try:
+            story=prepare_reviewed_story(story,day)
+        except (ValueError,TypeError,KeyError) as exc:
+            reject("release_story_validation_failed")
+            print("Article release validation rejected:",release_failure_message(exc),flush=True)
+            continue
+        seen.update((story["sourceUrl"],story["id"],event))
         selected.append(story)
         accepted_summaries.append({"title":story["title"],"summary":story["summary"],"country":story["country"]})
         # No publication-count limit: the time and AI quota guards above
@@ -1834,12 +1842,14 @@ def main():
     # Never write paid-image WebP plans or imagePath into the approval artifact.
     # The publisher's identity and editorial-humor rules are the release gate.
     from publish_approved import validate_approved
-    from release_contract import validate_release_input
+    from release_contract import require_release_assets
     try:
         validate_approved(payload,day)
-        validate_release_input(Path.cwd(),payload,day,require_assets=True)
+        require_release_assets(Path.cwd())
     except (ValueError,TypeError,KeyError) as exc:
-        print("No publisher-valid AI edition:",type(exc).__name__,flush=True)
+        print("No publisher-valid AI edition:",release_failure_message(exc),flush=True)
+        checkpoint("no_publishable_stories",selected_for_edition=0,
+                   rejection_reasons={**rejection_counts,"release_issue_validation_failed":1})
         return 0
     target=Path("data/approved")/(day+".json")
     if target.exists():return 0
