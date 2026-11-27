@@ -52,13 +52,13 @@ def approval_origin(payload):
 
 
 def should_refill_recovered(root, day, state, count, now):
-    """Only a recovered automatic single-story preview may be extended.
+    """Extend a recovered automatic preview regardless of its article count.
     
     This is a search trigger, not a minimum publication count. Preserve the
     last preparation window for the 21:00 release and never edit curated files.
     """
     from zoneinfo import ZoneInfo
-    if state != "recovered" or count != 1 or now.tzinfo is None:
+    if state != "recovered" or count < 1 or now.tzinfo is None:
         return False
     local = now.astimezone(ZoneInfo("Asia/Tokyo"))
     if local.date().isoformat() != day or local.hour >= 19:
@@ -68,7 +68,8 @@ def should_refill_recovered(root, day, state, count, now):
         return False
     payload = json.loads((root/"data"/"approved"/(day+".json")).read_text(encoding="utf-8"))
     return (approval_origin(payload) == "automated" and
-            payload.get("editionType") == "regular")
+            payload.get("editionType") == "regular" and
+            len(payload["stories"]) == count)
 
 
 def load_refill_seed(root, day):
@@ -80,8 +81,8 @@ def load_refill_seed(root, day):
     payload = json.loads(target.read_text(encoding="utf-8"))
     validate_release_input(root, payload, day, require_assets=True)
     if (approval_origin(payload) != "automated" or
-            payload.get("editionType") != "regular" or len(payload["stories"]) != 1):
-        raise ValueError("Only a recovered single-story automatic preview can be extended")
+            payload.get("editionType") != "regular" or not payload["stories"]):
+        raise ValueError("Only a nonempty recovered automatic regular preview can be extended")
     return payload
 
 
