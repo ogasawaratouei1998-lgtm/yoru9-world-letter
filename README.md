@@ -17,7 +17,7 @@
 ## 構成
 
 - collect_candidates.py / editorial_discovery.py：未確認ニュース発掘と優先順位。
-- auto_editorial.py / local_editorial.py / editorial_dates.py：内部CPU編集、原文照合、独立審査、報道日の共通検証。
+- auto_editorial.py / local_editorial.py / editorial_dates.py：承認済み報道機関の本文から直接日本語原稿とツッコミを作成し、当サイトの編集品質のみ審査。報道の再検証は行わない。
 - release_contract.py / stage_review.py / publish_approved.py：当日号の安全な引き継ぎと21時ゲート。
 - country-content.json / country-catalog.json：国別編集原本と地理索引。python country_content.py --sync で生成する。
 - research_article_countries.py / country_editorial_queue.py：記事起点の補充対象と調査候補。自動承認ではない。

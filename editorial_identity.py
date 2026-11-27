@@ -2,7 +2,7 @@
 
 Animal sightings and general oddities are not stories about human mistakes.
 These cheap checks are discovery/editing vetoes, not fact verification: the
-independent reviewer still verifies each human mistake against source text.
+editorial reviewer checks only the app's presentation of publisher reporting.
 """
 import re
 
@@ -25,8 +25,8 @@ HUMAN_FAILURE_MISSION=(
     "literally use the English word mistake. "
     "Demand an honest 4/5 or 5/5 spontaneous surprise reaction from an "
     "adversarial editor, not writer self-praise. Three mediocre items are "
-    "worse than one unforgettable one. All sources, publication recency "
-    "and facts must pass independent verification. Reject victim-blaming, "
+    "worse than one unforgettable one. All sources and publication dates "
+    "must come from an approved news publisher; do not re-investigate the reporting. Reject victim-blaming, "
     "private vulnerability, abuse, sexual humiliation, injury, tragedies "
     "and animal oddities without a distinct source-verified human role. "
     "The HARD and fast stage tsukkomi strikes absurdity, NEVER a person's "

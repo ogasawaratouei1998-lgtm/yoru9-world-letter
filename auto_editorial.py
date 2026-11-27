@@ -74,14 +74,14 @@ EDITORIAL_MISSION=("Publish only source-supported HUMAN FAILURES with extraordin
     "and a warm, witty AI quip aimed at the decision, contradiction or overconfidence rather than a victim. "
     "A humane aftertaste is optional, not a compulsory lesson or an instruction for the reader to feel better. "
     "The quip MUST deliver a hard spoken manzai-stage punch with a new angle, never a mild observation or rewording; aim for a vivid, quotable contrast between plan and reality without exaggerating evidence. "
-    "The primary editorial target is a BIG, source-verified failure caused by a SPECIFIC PERSON: an extraordinary wrong judgment, ambitious bet, spectacular miscalculation, preventable personal oversight, or overconfident plan with a striking, documented non-tragic outcome. Big means the scale of the mismatch or practical consequences for the actor, not their fame or the size of a company. Prefer real consequential personal blunders over ordinary typos, trivial customer mix-ups and routine harmless slips. Small mistakes are backups only when independently exceptional and genuinely funny; never manufacture seriousness. "
-    "Before choosing ANY story, demand a source-proven 4/5 or 5/5 spontaneous EH?! from the personally made mistake and its unusually large, ironic or lasting result. When multiple safe, verified incidents qualify, first select a substantial personal failure with a concrete chain of cause and consequence; do NOT prefer a mundane small mix-up just because it seems gentler. Avoid crises, loss of life and victims used as entertainment. "
+    "The primary editorial target is a BIG, reported failure caused by a SPECIFIC PERSON: an extraordinary wrong judgment, ambitious bet, spectacular miscalculation, preventable personal oversight, or overconfident plan with a striking, documented non-tragic outcome. Big means the scale of the mismatch or practical consequences for the actor, not their fame or the size of a company. Prefer real consequential personal blunders over ordinary typos, trivial customer mix-ups and routine harmless slips. Small mistakes are backups only when exceptional and genuinely funny; never manufacture seriousness. "
+    "Choose a 4/5 or 5/5 spontaneous EH?! from the personally made mistake and its unusually large, ironic or lasting result. When multiple safe, reported incidents qualify, first select a substantial personal failure with a concrete chain of cause and consequence; do NOT prefer a mundane small mix-up just because it seems gentler. Avoid crises, loss of life and victims used as entertainment. "
     "Never replace a genuine hard-to-believe sourced human episode with boring council votes, corporate plans, animal filler or generic news to fill a quota. "
-    "A CEO resignation, appointment, product launch, earnings report or sensational headline is NOT itself a verified mistake. Publish it only if the supplied reporting independently establishes a concrete original expectation and a documented failure to meet it. "
+    "A CEO resignation, appointment, product launch, earnings report or sensational headline is NOT itself a verified mistake. Publish it only if the supplied reporting describes a concrete original expectation and a documented failure to meet it. "
     "Give priority to unbelievable but documented personal, sports, cultural, street and work episodes; corporate stories are a rare exception, not the default. "
     "Exclude salacious private-life allegations and romantic rumors even about public figures, whether reported elsewhere or not. "
-    "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when independently verified stories are available; never lower evidence standards or fabricate coverage for geographic quotas. "
-    "Never use geography as a substitute for a real failure, independent verification, or humane humor. "
+    "Search across continents and languages; seek balanced country and regional coverage across successive editions, not just US/UK or a few major powers. Prefer distinct countries in each issue when suitable reported stories are available; never invent coverage for geographic quotas. "
+    "Never use geography as a substitute for a real failure or humane humor. "
     "A reader's everyday view can narrow to the same job, home and obligations. Let specific verified incidents in real places reveal that the world beyond that view is wider, with unexpected human turns and mistakes in many countries. Show rather than preach: the experience comes from facts and a surprising joke, not therapeutic advice. "
     "The reader's burdens are not smaller because somebody else made a mistake. Never compare pain or promise relief. "
     "Treat geographic variety as a doorway to different vantage points, never a quota or substitute for evidence. "
@@ -98,7 +98,7 @@ WRITING_CRAFT=(
     "Structure each story as (1) a concrete verified plan or expectation, "
     "(2) the documented mistake and surprising contrast, (3) optionally a small humane aftertaste, never a compulsory lesson. "
     "Write a factual, curiosity-provoking Japanese headline: put the concrete plan and unexpected outcome in sharp contrast; favor vivid specifics over abstract labels. Never invent numbers, quotes, consequences or a stronger failure than sources establish. Legal accusations must retain exact procedural status (charged, to be charged, detained, arrested, convicted are DIFFERENT). Do not translate plant nursery as 植物園 or 産院, and do not turn colorful metaphors into reportable locations. Avoid imputing cunning or intent to anyone without specific source evidence. "
-    "The first selected story is the nightly lead and should be the largest independently verified, directly attributable and humane-to-laugh-at INDIVIDUAL failure, if one qualifies. Rank by a striking documented decision-versus-result contrast, not human suffering, infamy, rumors or raw financial losses. "
+    "The first selected story is the nightly lead and should be the largest reported, directly attributable and humane-to-laugh-at INDIVIDUAL failure, if one qualifies. Rank by a striking documented decision-versus-result contrast, not human suffering, infamy, rumors or raw financial losses. "
     "A great lead is a genuine, remarkable INDIVIDUAL miscalculation with enough real-world scale to surprise even before the joke: what the person planned, the decision they botched, and the costly or astonishing result. Prefer striking but safe personal failures over tiny typos and routine signage errors. Avoid emergency alerts, financial suffering of victims, unproven blame and empty executive-transition headlines. Never overstate amounts or consequences. "
     "The title should show the specific mismatch, not generic outrage or a vague 'big failure'. "
     "When source-supported, make the actual incident country and, if relevant, its city concrete in the Japanese summary or detail. The publication's market is never evidence of where the event happened. Never invent local customs, exoticize a place, or stereotype its people. "
@@ -434,6 +434,8 @@ def source_text(url, diagnostics=None, min_chars=600):
     class SafeRedirect(__import__("urllib.request",fromlist=["HTTPRedirectHandler"]).HTTPRedirectHandler):
         def redirect_request(self,req,fp,code,msg,headers,newurl):
             if not public_host(newurl):raise ValueError("unsafe_redirect")
+            if trusted_original_domain(url) and not trusted_original_domain(newurl):
+                raise ValueError("unapproved_publisher_redirect")
             return super().redirect_request(req,fp,code,msg,headers,newurl)
     from urllib.request import build_opener
     opener=build_opener(SafeRedirect)
@@ -510,7 +512,7 @@ def ai(prompt,temperature=0.1):
     global ACTIVE_MODEL, AI_QUOTA_BLOCKED, RUN_MODEL_CATALOG, LOCAL_BACKEND_FAILED, LOCAL_CANDIDATE_ERRORS
     if LOCAL_EDITORIAL:
         from local_editorial import (generate_json, LocalCandidateError, SCREEN_PREFIX,
-                                     FACT_PREFIX,COPY_PREFIX,JOKE_PREFIX)
+                                     COPY_PREFIX,JOKE_PREFIX)
         if LOCAL_BACKEND_FAILED:
             raise RuntimeError("Local editorial circuit open")
         audit_prompt=prompt.startswith("JAPANESE EDITORIAL AND HUMOR REVIEW")
@@ -519,7 +521,7 @@ def ai(prompt,temperature=0.1):
         reserve=0 if audit_prompt else 420 if screen else 300
         if remaining-reserve<30:
             raise LocalCandidateError("Local editorial time budget exhausted")
-        stage_limit=420 if prompt.startswith(FACT_PREFIX) else 620 if prompt.startswith(COPY_PREFIX) else 300 if prompt.startswith(JOKE_PREFIX) else 1300
+        stage_limit=1000 if prompt.startswith(COPY_PREFIX) else 300 if prompt.startswith(JOKE_PREFIX) else 1300
         try:
             return generate_json(prompt,temperature,
                                  min(45 if screen else 240,remaining-reserve),
@@ -974,7 +976,7 @@ def draft_local_group(group, day, temperature):
     if not bound["stories"]:
         reason=bound.get("reasonCode","other")
         if reason not in SKIP_CODES:reason="other"
-        key="invalid" if reason.startswith("invalid_") or reason=="unanchored_extraction" else "empty"
+        key="invalid" if reason.startswith("invalid_") else "empty"
         LOCAL_DRAFT_OUTCOMES[key]+=1
         LOCAL_DRAFT_REASONS[reason]=LOCAL_DRAFT_REASONS.get(reason,0)+1
         print("Local draft outcome:",key,reason,flush=True)
@@ -1287,9 +1289,10 @@ def main():
     grouped_evidence=[{"groupId":i+1,"articles":[{"title":item["title"],
         "url":item["url"],"text":item["text"][:4800]} for item in group]}
         for i,group in enumerate(groups[:EDITORIAL_SHORTLIST_LIMIT])]
+    # Existing discovery ranking already prioritizes major personal mistakes.
+    # No extra AI ranking call before writing; conserve CPU for the actual articles.
     if LOCAL_EDITORIAL:
-        grouped_evidence,screened,preferred=screen_local_groups(grouped_evidence)
-        checkpoint("shortlist",local_screened=screened,local_screen_preferred=preferred,
+        checkpoint("shortlist",local_screened=0,local_screen_preferred=0,
                    local_candidate_errors=LOCAL_CANDIDATE_ERRORS)
     local_rank={g["groupId"]:i for i,g in enumerate(grouped_evidence)}
     # Preserve allowed corroboration pairs: a model must not combine unrelated sources.
@@ -1302,18 +1305,18 @@ def main():
     grouped_urls={item["url"] for group in groups for item in group}
     grouped_sources=[item for item in source_leads if item["url"] in grouped_urls]
     prompt=(EDITORIAL_MISSION+WRITING_CRAFT+MANZAI_CRAFT+' You are a Japanese comedy show writer working as news editor A. Discover up to 12 REAL, jaw-dropping, comic PERSONAL FAILURES from these fetched original articles. The reporter need not literally call it a mistake, but the actual flawed judgment by an individual and extraordinary consequence must be supported by the article text. FIRST seek spectacular PERSONAL misjudgments: costly but non-tragic wrong purchases or sales, major individual miscalculations, failed ambitious plans, huge self-caused reversals and dramatic sports or workplace blunders with concrete consequences. Routine typos, small orders, minor signs and trivial harmless mix-ups are lower-priority backups, NEVER the first choice when verified substantial individual failures qualify. Do not favor corporate headlines, high-profile resignations, serious disciplinary conflict, emergency harassment, criminal cases, politics, or outcomes that primarily harm victims. A huge loss is not funny by itself; require a clear source-proven decision and safe unexpected reversal. The specific human action, mistake or unexpected decision and its comic consequence must actually be in the fetched source; the reporter need not literally call it a mistake. A dispute or apology alone is not comedy. For EACH incident first identify humanActor, humanMistake (the documented misstep or ironic choice), expectedPlan and observedOutcome; only then privately draft FOUR radically different Japanese punchlines and pick the strongest short unexpected payoff, not a recap or lesson. Give a genuine, substantial individual mistake priority over minor errors and routine corporate stories; require directly documented stakes and a safe comic target, not personal humiliation. Return zero stories if no supported comedic mistake exists. '
-      'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; when two independent articles cover the same incident, use both. '
+      'Use ONLY supplied fetched article texts, never external knowledge. Draft stories supported by at least ONE retrieved publisher article; one vetted publisher is sufficient. '
       'Choose at least one article published by a vetted news company; ONE article is enough, with no requirement to prove original reporting or locate a second source. verificationUrls should contain the cited article URL; no further evidence verification is needed. Use its text to draft the summary but do not invent people, quotes, numbers or consequences. The catalog supports 196 reporting locations; never confuse a publisher market with an incident country. '
-      'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (1-3 original publisher URLs; prefer independent corroboration when available), eventKey (normalized incident identifier), evidence (facts explicitly supported by the supplied article text). '
+      'For each include required fields '+str(REQUIRED)+', humanActor (which actual PERSON or human-run organization made the mistake), humanMistake (specific human decision or mix-up proved by the source), expectedPlan (the original purpose or expectation, in Japanese, at least 6 characters), observedOutcome (the documented surprising actual outcome, in Japanese, at least 6 characters), quipSecond (OPTIONAL, only when a second genuinely funny 15-55-character angle exists), verificationUrls (the cited publisher URL), eventKey (normalized incident identifier). '
       'CRITICAL OUTPUT SCHEMA: category MUST be exactly one of person, work, company, sports (lowercase English), NEVER government, politics, institution, business, organization or any Japanese category value. Use company for corporate and institutional failures INCLUDING government agencies, public institutions and large organizations; use work for workplace or operational mistakes; use person for individual decision-maker mistakes; use sports for incidents primarily occurring in competitive sport, including athletes, referees, clubs and event operations. categoryLabel is the human-readable Japanese label, not category. No category balance, category quota, or five-slot target is permitted. When several verified and safe stories qualify, prioritize an astonishing INDIVIDUAL failure (including employees, artisans and athletes) before ordinary work and company stories; company is a rare exception with a documented human error, not a default. A small typo cannot displace a major personal failure. Make work about employees and operators, person about individual choices, sports about sporting decisions, and company only about exceptional organization-level failures. Avoid labeling every interesting workplace incident as company. Do not alter these enum values even when the subject is consequential or political. '
       'For each story, make the quip an affectionate, pointed observation about the verified mistake; prioritize a crisp, unexpected punchline grounded in the plan-versus-reality contrast; avoid flat paraphrases and forced comedy. quip should land immediately in 18-45 characters; quipSecond should add a NEW comic angle in 18-55 characters. Provide three distinct first-quips as quipCandidates (a JSON array, 18-55 Japanese characters per option) and put your strongest first choice in quip. The pipeline compares candidates before independent source review. Never include a mere headline recap. No explanatory second sentence and no unproven allegations as joke premises. An optional gentle reflection can add warmth, but never require a life lesson or tell the reader how to feel. Do not make empty motivational claims, imply an unreported recovery, or treat the mistake as harmless when it was not. Reject generic routine news without a 4/5 startling documented contrast; an intentionally unusual choice alone is NOT an eligible failure unless the article demonstrates what the person actually misjudged and how it went wrong. Before rejecting an otherwise well-sourced failure for no_respectful_comic_angle, explore at least two different safe comic targets (the plan versus reality, the mistaken assumption versus the outcome); if neither works, reject it. ' 
       'Do not select a merely verifiable incident when its actual human mistake lacks a clear, safe, incident-specific comic reversal. Rewrite weak jokes with a new angle; do not replace comedy with vague encouragement or a lesson. Source-proven significant PERSONAL stakes or exceptionally large plan-versus-reality contrast are a selection advantage when humane comedy is possible. Serious harm to victims is NEVER a selection advantage. NEVER mock victims, casualties, poverty, illness or vulnerable people. For individuals, humor should target a relatable miscalculation, ironic outcome or overconfidence rather than their identity, appearance, hardship or vulnerability; avoid invasive private-life details and public shaming. For institutions, target flawed plans, contradictions and decisions, not those harmed. Exclude incidents where a respectful comic angle cannot be supported. No death, injuries, abuse or humiliation in the chosen story or quip. Edition date JST: '+day+'. Stories must have an original source-supported publication date within the preceding seven days including the edition day in Japan; keep that ACTUAL date intact and never relabel old reporting as new. Prioritize same-day reporting when otherwise comparable. '
-      'Each group is only a hypothesis: check that its articles actually describe the same specific event, and that the reported date is explicit in the supplied article text. '
+      'Use one article per story and retain its actual publication date. '
       'Return JSON with stories array AND diagnostics array containing one object for every input group: '
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
-      'A group marked eligible still needs all story fields and source-text verification; do not fill gaps by inference. '
+      'A group marked eligible still needs the story fields; do not add facts beyond the published report. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
     attempted_group_ids={g["groupId"] for g in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]}
     if editorial_seconds_remaining()<100:
@@ -1425,9 +1428,9 @@ def main():
                 "If the verifiable major mistake has no respectful, genuinely funny punchline, return no story. Do not downgrade to a vague gentle observation or fabricate a laugh. Do not invent any event or outcome. "
                 "If evidence is insufficient or the incident cannot be treated respectfully, return an empty stories array. "
                 "Each story must contain fields "+str(REQUIRED)+", humanActor (person/team who erred), humanMistake (documented human mistake, in Japanese), expectedPlan (verifiable expectation), observedOutcome (what demonstrably went wrong), optional quipSecond (only a genuinely different and funny second punchline), "
-                "verificationUrls (1-3 exact retrieved ORIGINAL publisher URLs from that group; prefer independently reported pairs when available), "
+                "verificationUrls (the cited publisher URL from that group), "
                 "eventKey (specific incident identifier at least 12 characters), "
-                "and evidence (facts supported by the supplied source text). "
+                "Use the publisher text as writing context, not for a second fact check. "
                 "category must be exactly person, work, company, or sports. "
                 "reported must be a source-supported actual publication date within "
                 "the last seven days including edition day (JST), formatted YYYY-MM-DD. "
@@ -1537,7 +1540,7 @@ def main():
                 "individual mistake, spectacular but non-tragic reversal, or "
                 "extraordinary personal misjudgment. Do not select trivial "
                 "typos, everyday deliveries or generic corporate headlines "
-                "merely to fill slots. A real, verified mistake and its "
+                "merely to fill slots. A reported mistake and its "
                 "documented consequence must BOTH be in that same article. "
                 "Produce at most one short Japanese story PER GROUP, with "
                 "the strongest fact-based punchline and no fabricated details. "
