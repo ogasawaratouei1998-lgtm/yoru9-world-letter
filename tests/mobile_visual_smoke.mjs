@@ -83,6 +83,8 @@ try{
       storyNumber:hero?.querySelector('#atlasStoryCount')?.textContent?.trim(),
       storyCount:document.querySelectorAll('#stories .story').length+1,
       lede:lede?.textContent?.trim(),
+      corrected:edition.editionDate==='2026-11-27'&&/訂正版/.test(edition.title||''),
+      ledeVisible:!!lede&&getComputedStyle(lede).display!=='none'&&box(lede).height>0,
       real:hero?.querySelector('.atlas-real-stamp')?.textContent?.trim(),
       joke:hero?.querySelector('.atlas-bubble-tag')?.textContent?.trim(),
       bubble:bubble?.textContent?.trim(),
@@ -98,8 +100,14 @@ try{
     'headline dynamically matches the number of published stories');
    assert.ok(editorialCover.headline.includes('世界の「やらかし」ニュース、')&&
     editorialCover.headline.endsWith('本。'),'first glance defines the humorous news category');
-   assert.ok(editorialCover.lede?.includes('失敗')&&
-    editorialCover.lede?.includes('珍事件'),'cover explains its reported-incident premise');
+   if(editorialCover.corrected){
+    assert.ok(editorialCover.ledeVisible&&editorialCover.lede?.includes('編集訂正')&&
+      editorialCover.lede?.includes('2記事を撤回')&&editorialCover.lede?.includes('お詫び'),
+      'corrected edition visibly discloses withdrawn articles and correction');
+   }else{
+    assert.ok(editorialCover.lede?.includes('失敗')&&
+      editorialCover.lede?.includes('珍事件'),'cover explains its reported-incident premise');
+   }
    assert.equal(editorialCover.real,'実話','reported facts are called real');
    assert.equal(editorialCover.joke,'AIツッコミ','AI humor is prominently labeled');
    assert.ok(editorialCover.bubbleVisible&&editorialCover.bubbleFont>=12,
