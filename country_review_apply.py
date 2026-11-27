@@ -48,7 +48,30 @@ def reviewed_record(old, packet, day, code):
             raise ValueError("Exact photo identity and license review required")
     return new
 
-def apply(root,day):
+def check_reviewed_photos(old,new,packet,cache):
+    """Optional enrichment cannot add a network-dependent photo to tonight's issue."""
+    if old.get("status")=="approved" and all(old.get(k)==new.get(k) for k in
+            ("portraitPhotos","travelStops","quiz")):
+        return
+    from build_site import photo_cache_path
+    from check_release_candidate import jpeg_dimensions
+    if not cache:
+        raise ValueError("Reviewed photo cache not available")
+    covers={p.get("asset") for p in new["portraitPhotos"] if not p.get("avoidCover")}
+    proof=packet.get("reviewedPhotoSha256",{})
+    for stop in new["travelStops"].values():
+        asset=stop["photoAsset"]
+        cover=asset in covers or stop.get("coverOnly") is True
+        path=photo_cache_path(cache,stop,cover)
+        if not path.is_file() or not 3000<=path.stat().st_size<=2_000_000:
+            raise ValueError("Reviewed photo bytes not ready")
+        if hashlib.sha256(path.read_bytes()).hexdigest()!=proof.get(asset):
+            raise ValueError("Exact photo bytes differ from independent review")
+        w,h=jpeg_dimensions(path)
+        if (w<1000 or h<540) if cover else (w<330 or h<200):
+            raise ValueError("Reviewed photo resolution inadequate")
+
+def apply(root,day,cache=None):
     root=Path(root)
     date.fromisoformat(day)
     issue=json.loads((root/"data/current.json").read_text(encoding="utf-8"))
@@ -67,6 +90,7 @@ def apply(root,day):
             new=reviewed_record(old,packet,day,code)
             if new==old:
                 continue
+            check_reviewed_photos(old,new,packet,cache)
             # Validate each update in isolation; a bad optional record must
             # not suppress independently approved news or unrelated reviews.
             proposed=json.loads(json.dumps(doc))
@@ -100,9 +124,10 @@ def apply(root,day):
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--day",required=True)
+    p.add_argument("--photo-cache",type=Path)
     p.add_argument("--root",type=Path,default=Path(__file__).resolve().parent)
     args=p.parse_args()
-    print("Applied independently reviewed country records:",apply(args.root,args.day))
+    print("Applied independently reviewed country records:",apply(args.root,args.day,args.photo_cache))
 
 if __name__=="__main__":
     main()

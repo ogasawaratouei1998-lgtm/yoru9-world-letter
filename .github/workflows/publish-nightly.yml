@@ -180,12 +180,6 @@ jobs:
           else
             python publish_approved.py
           fi
-      - name: Apply independently reviewed country materials to a new edition only
-        run: |
-          DAY=$(TZ=Asia/Tokyo date +%F)
-          if ! git diff --quiet -- data/current.json data/archive/index.json; then
-            python country_review_apply.py --day "$DAY"
-          fi
       - name: Remove stale generated images after verified SVG-illustrated release
         run: python prepare_news_images.py --rotate
       - name: Restore validated, correctly licensed Wikimedia photos
@@ -195,6 +189,12 @@ jobs:
           key: yoru9-photo-cache-v1-${{ runner.os }}-${{ hashFiles('travel-stops.json', 'index.html') }}
           restore-keys: |
             yoru9-photo-cache-v1-${{ runner.os }}-
+      - name: Apply independently reviewed country materials to a new edition only
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          if ! git diff --quiet -- data/current.json data/archive/index.json; then
+            python country_review_apply.py --day "$DAY" --photo-cache .cache/yoru9-photos
+          fi
       - name: Preflight full reader and photo bundle before any release commit
         id: preflight
         env:

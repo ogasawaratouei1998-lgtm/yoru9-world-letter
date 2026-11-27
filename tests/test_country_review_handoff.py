@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from country_review_apply import digest, reviewed_record
+from country_review_apply import digest, reviewed_record, check_reviewed_photos
 from country_material_prefetch import merge_prefetch, prefetch
 
 class CountryReviewHandoffTest(unittest.TestCase):
@@ -33,6 +33,11 @@ class CountryReviewHandoffTest(unittest.TestCase):
             reviewed_record(self.old,packet,"2026-11-28","BE")
         self.assertEqual(reviewed_record(self.old,{**packet,"visualReviewed":True,"licenseReviewed":True},
                          "2026-11-28","BE"),new)
+    def test_photo_change_defers_without_verified_cache(self):
+        new={**self.new,"quiz":[{"photoKey":"example"}]}
+        with self.assertRaises(ValueError):
+            check_reviewed_photos(self.old,new,self.packet,None)
+        check_reviewed_photos(self.old,self.new,self.packet,None)
     def test_prefetch_has_bounded_scope_and_never_approves(self):
         root=Path(__file__).resolve().parents[1]
         seen=[]
