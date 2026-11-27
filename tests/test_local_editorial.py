@@ -124,42 +124,38 @@ class LocalEditorialTest(unittest.TestCase):
         story["reported"]="2026-11-25"
         self.assertEqual(local_editorial.bind_draft({"stories":[story]},group)["stories"][0]["reported"],"2026-11-25")
 
-    def test_staged_draft_separates_facts_copy_and_humor_without_self_approval(self):
+    def test_direct_publisher_copy_and_humor_without_fact_extraction(self):
         group={"groupId":1,"articles":[{"title":"fictional test",
           "url":"https://example.org/test",
           "text":"Publisher datePublished: 2026-11-25\nBooked wrong airport. Arrived 1000 kilometers away."}]}
-        facts={k:"記載された事実" for k in local_editorial.FACT_KEYS}
-        facts.update(sourceIndex=1,category="person",reported="2026-11-25",
-                     decisionQuote="Booked wrong airport",outcomeQuote="Arrived 1000 kilometers away")
         copy={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
-        copy["editorVerified"]=True
+        copy.update(category="person",reported="2026-11-26",editorVerified=True)
         joke="目的地より先に予約のほうが千キロも遠回りしてるやないか！"
-        infer=Mock(side_effect=[facts,copy,{"candidates":[]},{"candidates":[joke]}])
+        infer=Mock(side_effect=[copy,{"candidates":[]},{"candidates":[joke]}])
         result=local_editorial.staged_draft(group,"2026-11-26",infer)
         story=result["stories"][0]
         self.assertEqual(story["quip"],joke)
         self.assertEqual(story["sourceUrl"],group["articles"][0]["url"])
+        self.assertEqual(story["reported"],"2026-11-25")
         self.assertNotIn("editorVerified",story)
         self.assertNotIn("decisionQuote",story)
-        for call,prefix in zip(infer.call_args_list,(local_editorial.FACT_PREFIX,
-                   local_editorial.COPY_PREFIX,local_editorial.JOKE_PREFIX,local_editorial.JOKE_PREFIX)):
+        for call,prefix in zip(infer.call_args_list,(local_editorial.COPY_PREFIX,
+                   local_editorial.JOKE_PREFIX,local_editorial.JOKE_PREFIX)):
             self.assertTrue(call.args[0].startswith(prefix))
-        self.assertEqual(infer.call_count,4)
-        facts["decisionQuote"]="Invented decision"
-        infer=Mock(return_value=facts)
-        self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer),
-                         {"stories":[],"reasonCode":"unanchored_extraction"})
-        self.assertEqual(infer.call_count,1)
+        self.assertEqual(infer.call_count,3)
+        self.assertNotIn("LOCAL FACT EXTRACTION",infer.call_args_list[0].args[0])
+        infer=Mock(side_effect=[copy,{"candidates":[joke]}])
+        self.assertEqual(len(local_editorial.staged_draft(group,"2026-11-26",infer)["stories"]),1)
+        self.assertEqual(infer.call_count,2)
 
-    def test_stale_or_future_fact_stops_before_copy_and_humor(self):
+    def test_stale_or_future_publisher_date_stops_before_humor(self):
         group={"groupId":1,"articles":[{"title":"test fixture",
                "url":"https://example.org/test","text":"Booked wrong airport. Arrived far away."}]}
-        facts={k:"記載された事実" for k in local_editorial.FACT_KEYS}
-        facts.update(sourceIndex=1,category="person",decisionQuote="Booked wrong airport",
-                     outcomeQuote="Arrived far away")
+        copy={k:"日本語の原稿" for k in local_editorial.COPY_KEYS}
+        copy.update(category="person")
         for reported in ("2026-11-18","2026-11-27","invalid"):
             with self.subTest(reported=reported):
-                infer=Mock(return_value=dict(facts,reported=reported))
+                infer=Mock(return_value=dict(copy,reported=reported))
                 self.assertEqual(local_editorial.staged_draft(group,"2026-11-26",infer),
                                  {"stories":[],"reasonCode":"missing_date"})
                 infer.assert_called_once()

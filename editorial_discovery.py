@@ -107,7 +107,6 @@ def prioritize_comic_groups(groups, limit=24):
         (group for group in groups if group),
         key=lambda group: (
             min(incident_priority(item)[0] for item in group),
-            0 if len(group) >= 2 else 1,
             min(incident_priority(item)[1] for item in group),
         ),
     )
