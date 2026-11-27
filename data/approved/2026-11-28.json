@@ -1,0 +1,46 @@
+{
+  "status": "approved",
+  "editionDate": "2026-11-28",
+  "editionType": "regular",
+  "title": "2026-11-28｜世界の大失敗ニュース",
+  "editorApproved": true,
+  "humorReviewed": true,
+  "approvedBy": "automated-two-stage-review",
+  "stories": [
+    {
+      "country": "ベルギー",
+      "category": "person",
+      "label": "誤った通知による個人的ショック",
+      "title": "ベルギーのロトナショナルが誤ってメールで当選者を表示、7000人に心臓に衝撃",
+      "summary": "ベルギーのロトナショナルが発行した欧州ロト・ユーロミルロンの結果メールに表示誤りがあり、約7000人のプレイヤーが当選者として誤って表示された。実際には当選者はいないが、誤った情報により多くの人が心臓に衝撃を受けた。",
+      "detail": "ベルギーのロトナショナルは2026年11月27日、欧州ロト・ユーロミルロンの結果を発表するメールで、誤った表示により350,188人のプレイヤー（そのうちベルギー6,718人）を当選者として表示したと発表した。このメールは、すべてのプレイヤーに送信された一般通知であり、個人に宛てた通知は一切存在しない。ベルギーのプレイヤーたちは、4600万ユーロの当選を誤って知り、驚きや不安、心臓に衝撃を受ける状況に陥った。ロトナショナルは、この誤りについて「誤解があった」と説明し、影響を受けたすべてのプレイヤーに正確な情報を送るよう通知した。また、マーケティング部門が問題の解決に取り組んでいると発表した。",
+      "quip": "350,188人を当選者として表示したが、全員が当選していない",
+      "reported": "2026-11-27",
+      "humanActor": "ベルギーのロトナショナル",
+      "humanMistake": "メールの表示に誤りがあり、350,188人のプレイヤー（ベルギー6,718人を含む）が当選者として表示された",
+      "expectedPlan": "当選者に正確な結果を通知し、誤った情報を訂正する",
+      "observedOutcome": "ベルギーの約7,000人のプレイヤーが、4600万ユーロの当選を誤って通知されたことで、心臓に衝撃を受けた",
+      "eventKey": "euromillions_be_mistake_20261127",
+      "id": "local-460cd219012eb9005c8262ef",
+      "categoryLabel": "個人",
+      "sourceName": "20minutos.es",
+      "sourceUrl": "https://www.20minutos.es/internacional/personas-informadas-error-habian-ganado-bote-millones-euromillones-malentendido_7066868_0.html",
+      "verificationUrls": [
+        "https://www.20minutos.es/internacional/personas-informadas-error-habian-ganado-bote-millones-euromillones-malentendido_7066868_0.html"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 4,
+        "safety": 5
+      }
+    }
+  ]
+}
