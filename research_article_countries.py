@@ -11,6 +11,7 @@ from release_contract import validate_release_input
 from country_bulk_research import make_plan, research_shard, combine, save
 from country_unesco_source_catalog import build_inventory, download_feed, collect_sites
 from article_country_materials import prepare_material_bundle
+from country_topic_drafts import discover_topics
 from xml.etree import ElementTree as ET
 from urllib.error import URLError
 
@@ -60,6 +61,8 @@ def main():
     public=validate_release_input(ROOT,payload,day,require_assets=True)
     tasks=prepare_material_bundle(ROOT,public["stories"],day,report,args.output,
                                   heritage_sites=sites)
+    topics=discover_topics(tasks)
+    save(args.output/"topic-drafts.json",topics)
     print("Article countries needing enrichment:",sorted(plan["articleCountryNeeds"]))
     print("Material preparation tasks:",tasks["countriesNeedingMaterials"],
           "; source and visual approval required before publication.")
