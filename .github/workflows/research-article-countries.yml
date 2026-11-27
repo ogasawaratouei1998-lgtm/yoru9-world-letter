@@ -65,10 +65,18 @@ jobs:
             fi
           fi
           echo "path=$RUNNER_TEMP/approved/$DAY.json" >> "$GITHUB_OUTPUT"
+      - name: Retrieve speculative draft leads from the triggering editorial run
+        if: github.event_name == 'workflow_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/country-prefetch"
+          gh run download "$RUN_ID" --name country-prefetch --dir "$RUNNER_TEMP/country-prefetch" || true
       - name: Prepare drafts, official source leads and photo review files for all article countries
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
-        run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries
+        run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries --prefetched "$RUNNER_TEMP/country-prefetch/yoru9-country-prefetch.json"
       - uses: actions/upload-artifact@v4
         with:
           name: article-country-research

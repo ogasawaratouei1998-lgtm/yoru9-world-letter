@@ -180,6 +180,12 @@ jobs:
           else
             python publish_approved.py
           fi
+      - name: Apply independently reviewed country materials to a new edition only
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          if ! git diff --quiet -- data/current.json data/archive/index.json; then
+            python country_review_apply.py --day "$DAY"
+          fi
       - name: Remove stale generated images after verified SVG-illustrated release
         run: python prepare_news_images.py --rotate
       - name: Restore validated, correctly licensed Wikimedia photos
@@ -269,6 +275,9 @@ jobs:
         shell: bash
         run: |
           git add data/current.json data/archive/ data/approved/
+          if ! git diff --quiet -- country-content.json; then
+            git add country-content.json country-highlights.json index.html world-passport.js travel-stops.json reader_sources/country-data.js
+          fi
           if [ -d assets/news-generated ]; then
             git add -A assets/news-generated/
           fi

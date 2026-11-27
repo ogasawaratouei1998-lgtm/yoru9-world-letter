@@ -75,6 +75,7 @@ jobs:
             echo "Validated today's approved issue; preparing reader bundle."
             # Local simulation only; no contents write, Pages or notification permission.
             python publish_approved.py --now "${DAY}T21:00:00+09:00"
+            python country_review_apply.py --day "$DAY"
             python prepare_news_images.py --rotate
           fi
       - name: Restore licensed photo cache

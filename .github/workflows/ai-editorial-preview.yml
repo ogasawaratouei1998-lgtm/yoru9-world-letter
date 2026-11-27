@@ -139,6 +139,7 @@ jobs:
         env:
           YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
           YORU9_REFILL_APPROVED: ${{ steps.prior.outputs.refill }}
+          YORU9_COUNTRY_PREFETCH_PATH: ${{ runner.temp }}/yoru9-country-prefetch.json
         run: bash run_local_editorial.sh
       - name: Explicit archived-day model capability trial (no publication)
         if: steps.edition.outputs.archived == 'true' && github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Local editorial trial:')
@@ -151,7 +152,16 @@ jobs:
           GEMINI_MODEL: gemini-3.5-flash-lite
           YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
           YORU9_REFILL_APPROVED: ${{ steps.prior.outputs.refill }}
+          YORU9_COUNTRY_PREFETCH_PATH: ${{ runner.temp }}/yoru9-country-prefetch.json
         run: python auto_editorial.py
+      - name: Retain bounded speculative country research (not approval)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: country-prefetch
+          path: ${{ runner.temp }}/yoru9-country-prefetch.json
+          if-no-files-found: ignore
+          retention-days: 1
       - name: Summarize editorial funnel without exposing source material
         if: always()
         run: python editorial_health_report.py
