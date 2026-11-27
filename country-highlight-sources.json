@@ -2,32 +2,42 @@
   "version": 1,
   "purpose": "Editorial allowlist of official cultural and travel authorities for Country Portrait topics. Candidate sources do not authorize automatic publication.",
   "sources": {
+    "AG": [
+      {
+        "name": "Antigua and Barbuda Tourism Authority",
+        "url": "https://www.visitantiguabarbuda.com/"
+      }
+    ],
     "AR": [
       {
         "name": "Visit Argentina",
         "url": "https://www.argentina.travel/en"
       }
     ],
-    "FR": [
+    "BE": [
       {
-        "name": "Explore France",
-        "url": "https://www.france.fr/en/"
-      }
-    ],
-    "US": [
-      {
-        "name": "Brand USA / Visit The USA",
-        "url": "https://www.visittheusa.com/"
+        "name": "ブリュッセル観光局 visit.brussels",
+        "url": "https://www.visit.brussels/en/visitors/event-details.Winter-Wonders.5700028296"
       },
       {
-        "name": "U.S. Office of Personnel Management (federal holidays)",
-        "url": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
+        "name": "ブリュッセル観光局 visit.brussels",
+        "url": "https://www.visit.brussels/en/visitors/agenda"
       }
     ],
-    "GB": [
+    "BR": [
       {
-        "name": "VisitBritain official events",
-        "url": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+        "name": "Visit Brasil / Embratur",
+        "url": "https://www.visitbrasil.com/"
+      }
+    ],
+    "DE": [
+      {
+        "name": "Germany Travel / German National Tourist Board",
+        "url": "https://www.germany.travel/en/"
+      },
+      {
+        "name": "visitBerlin / Berlin Tourism",
+        "url": "https://www.visitberlin.de/en/"
       }
     ],
     "ES": [
@@ -40,42 +50,16 @@
         "url": "https://www.spain.info/en/"
       }
     ],
-    "JP": [
+    "FR": [
       {
-        "name": "Visit Fukuoka official events",
-        "url": "https://www.crossroadfukuoka.jp/en/articles/november"
-      },
-      {
-        "name": "Japan National Tourism Organization",
-        "url": "https://www.japan.travel/en/"
+        "name": "Explore France",
+        "url": "https://www.france.fr/en/"
       }
     ],
-    "NZ": [
+    "GB": [
       {
-        "name": "Dunedin official events",
-        "url": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
-      },
-      {
-        "name": "Tourism New Zealand",
-        "url": "https://www.newzealand.com/int/"
-      }
-    ],
-    "KR": [
-      {
-        "name": "Korea Tourism Organization",
-        "url": "https://english.visitkorea.or.kr/svc/main/index.do"
-      }
-    ],
-    "BR": [
-      {
-        "name": "Visit Brasil / Embratur",
-        "url": "https://www.visitbrasil.com/"
-      }
-    ],
-    "AG": [
-      {
-        "name": "Antigua and Barbuda Tourism Authority",
-        "url": "https://www.visitantiguabarbuda.com/"
+        "name": "VisitBritain official events",
+        "url": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
       }
     ],
     "IT": [
@@ -88,14 +72,40 @@
         "url": "https://www.veneziaunica.it/en/"
       }
     ],
-    "DE": [
+    "JP": [
       {
-        "name": "Germany Travel / German National Tourist Board",
-        "url": "https://www.germany.travel/en/"
+        "name": "Visit Fukuoka official events",
+        "url": "https://www.crossroadfukuoka.jp/en/articles/november"
       },
       {
-        "name": "visitBerlin / Berlin Tourism",
-        "url": "https://www.visitberlin.de/en/"
+        "name": "Japan National Tourism Organization",
+        "url": "https://www.japan.travel/en/"
+      }
+    ],
+    "KR": [
+      {
+        "name": "Korea Tourism Organization",
+        "url": "https://english.visitkorea.or.kr/svc/main/index.do"
+      }
+    ],
+    "NZ": [
+      {
+        "name": "Dunedin official events",
+        "url": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      },
+      {
+        "name": "Tourism New Zealand",
+        "url": "https://www.newzealand.com/int/"
+      }
+    ],
+    "US": [
+      {
+        "name": "Brand USA / Visit The USA",
+        "url": "https://www.visittheusa.com/"
+      },
+      {
+        "name": "U.S. Office of Personnel Management (federal holidays)",
+        "url": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
       }
     ]
   }
