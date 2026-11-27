@@ -25,6 +25,9 @@ class EditorialResumeTests(unittest.TestCase):
             combined=restored.restore_pending(leads[:1])
             self.assertEqual([x["url"] for x in restored.order_leads(combined,combined,2)],[second,first])
             self.assertEqual(restored.order_groups(groups),[groups[1],groups[0]])
+            old=[[leads[0]]]
+            all_groups=[[lead] for lead in leads]
+            self.assertEqual(restored.merge_shortlist(old,all_groups,1),[[leads[1]]])
             self.assertFalse(EditorialResume("2026-11-28",path).pending)
 
     def test_untrusted_or_wrong_day_cannot_restore(self):

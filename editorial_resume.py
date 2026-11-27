@@ -75,6 +75,20 @@ class EditorialResume:
         combined=pending+[lead for lead in ordered if lead["url"] not in seen]
         return sorted(combined,key=lambda lead:self.rank(lead["url"]))[:limit]
 
+    def merge_shortlist(self,ranked,all_groups,limit):
+        if not self.path:return ranked
+        # An unfinished source must not be lost at the 64-group shortlist cap.
+        pending=[group for group in all_groups if group[0]["url"] in self.pending]
+        new=[group for group in all_groups if self.rank(group[0]["url"])==1]
+        seen=set()
+        combined=[]
+        for group in pending+ranked+new:
+            url=group[0]["url"]
+            if url not in seen:
+                combined.append(group)
+                seen.add(url)
+        return sorted(combined,key=lambda group:self.rank(group[0]["url"]))[:limit]
+
     def order_groups(self,groups):
         if not self.path:return groups
         return sorted(groups,key=lambda group:self.rank(group["articles"][0]["url"]))

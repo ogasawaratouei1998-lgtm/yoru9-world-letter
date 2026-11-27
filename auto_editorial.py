@@ -1284,7 +1284,10 @@ def main():
     # multi-region shortlist. Doing that selected only the first English
     # keyword matches and made newly registered local publishers invisible.
     groups.extend([[item] for item in unpaired])
+    all_groups=groups
     groups=prioritize_comic_groups(groups,limit=EDITORIAL_SHORTLIST_LIMIT)
+    if LOCAL_EDITORIAL:
+        groups=resume.merge_shortlist(groups,all_groups,EDITORIAL_SHORTLIST_LIMIT)
     shortlisted_regions=Counter()
     for group in groups:
         for region in {country_region(x.get("sourcecountry")) for x in group}:
