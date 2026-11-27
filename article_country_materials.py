@@ -33,6 +33,8 @@ def material_tasks(root, stories, day, *, heritage_sites=None):
         missing = [item for item in missing if item != "optional_current_topic"]
         if topic_days:
             missing.append("current_country_topics")
+        if entry["status"]=="pending":
+            missing.append("country_publication_review")
         if not missing:
             continue
         sites = (heritage_sites or {}).get(code,[])
