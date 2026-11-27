@@ -1316,7 +1316,7 @@ def main():
       '{groupId:integer,eligible:boolean,reasonCode:string}. Use ONLY these reasonCode values: '
       'same_incident_supported, unrelated_articles, syndicated_or_not_independent, no_explicit_recent_report_date, '
       'insufficient_facts, sensitive_incident, no_respectful_comic_angle, other. Do not reject an incident merely for being consequential or financially serious; reject only if there is no respectful, constructive comic angle. '
-      'A group marked eligible still needs the story fields; do not add facts beyond the publisher's reporting. '
+      'A group marked eligible still needs the story fields; do not add facts beyond the published report. '
       'Candidate groups with their own article bodies (NOT proof): '+json.dumps(grouped_evidence[:PRIMARY_EDITORIAL_GROUPS],ensure_ascii=False))
     attempted_group_ids={g["groupId"] for g in grouped_evidence[:PRIMARY_EDITORIAL_GROUPS]}
     if editorial_seconds_remaining()<100:
