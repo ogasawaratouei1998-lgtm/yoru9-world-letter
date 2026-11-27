@@ -2,15 +2,19 @@
 import json
 from pathlib import Path
 
+def require_release_assets(root):
+    from publish_approved import require
+    root=Path(root)
+    require(all((root/name).is_file() for name in
+                ("index.html","world-passport.js","travel-stops.json")),
+            "Missing release reader assets")
+
 def validate_release_input(root, payload, day, *, require_assets=False):
     """Validate the news and required reader shell, not optional tourism assets."""
     from publish_approved import validate_approved
     public=validate_approved(payload,day)
-    root=Path(root)
-    if require_assets and not all((root/name).is_file() for name in
-                   ("index.html","world-passport.js","travel-stops.json")):
-        raise ValueError("Missing release reader assets")
-    # Country identity is still validated by validate_approved.
+    if require_assets:
+        require_release_assets(root)
     return public
 
 def recover_review(root, day, incoming, *, require_assets=True):

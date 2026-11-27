@@ -290,6 +290,47 @@ class PublishingTest(unittest.TestCase):
         historical=json.loads(source.read_text(encoding="utf-8"))
         self.assertEqual(len(validate_approved(historical,"2026-11-20")["stories"]),4)
 
+    def test_reviewed_story_preflight_preserves_good_articles_and_reports_safe_reason(self):
+        from publish_approved import prepare_reviewed_story, release_failure_message
+        good={**fixture()["stories"][0],"reported":"2026-11-27",
+              "sourceUrl":"https://www.bbc.com/news/articles/synthetic-fixture",
+              "country":"JP","category":"個人","editorQualityVerified":True,
+              "humanFailureVerified":True,"humanActor":"旅行者",
+              "humanMistake":"飛行機の行き先を間違えて予約してしまった",
+              "surpriseVerified":True,"stageTsukkomiVerified":True,
+              "quip":"旅の目的地より先に予約が遠回りしてしまった。",
+              "editorialScores":{"surprise":4,"mistakeClarity":4,"outcomeIrony":4,"safety":5}}
+        good["quipSecond"]="不備"
+        normalized=prepare_reviewed_story(good,"2026-11-27")
+        self.assertEqual(normalized["country"],"日本")
+        self.assertEqual(normalized["category"],"person")
+        self.assertNotIn("quipSecond",normalized)
+        self.assertIn("quipSecond",good)
+        candidates=[good,{**good,"id":"bad","sourceUrl":"https://example.org/article"},
+                    {**good,"id":"unapproved","editorQualityVerified":False}]
+        surviving=[]
+        reasons=[]
+        for item in candidates:
+            try:
+                surviving.append(prepare_reviewed_story(item,"2026-11-27"))
+            except ValueError as exc:
+                reasons.append(release_failure_message(exc))
+        self.assertEqual(len(surviving),1)
+        self.assertTrue(any("承認済みの報道機関" in x for x in reasons))
+        self.assertTrue(any("審査が未完了" in x for x in reasons))
+        self.assertEqual(release_failure_message(ValueError("private draft")),"ValueError")
+        issue={**fixture("2026-11-27"),"approvedBy":"automated-two-stage-review",
+               "stories":surviving}
+        self.assertEqual(len(validate_approved(issue,"2026-11-27")["stories"]),1)
+
+    def test_final_validation_uses_one_issue_check_and_separate_asset_check(self):
+        import inspect
+        import auto_editorial
+        source=inspect.getsource(auto_editorial.main)
+        self.assertEqual(source.count("validate_approved(payload,day)"),1)
+        self.assertIn("require_release_assets(Path.cwd())",source)
+        self.assertLess(source.index("prepare_reviewed_story(story,day)"),source.index("selected.append(story)"))
+
     def test_automated_second_joke_requires_its_own_review_proof(self):
         data=fixture("2026-11-18")
         data["approvedBy"]="automated-two-stage-review"

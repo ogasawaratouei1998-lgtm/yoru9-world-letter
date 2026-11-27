@@ -17,9 +17,15 @@ CATEGORIES = {'person', 'work', 'company', 'sports'}
 REQUIRED_STORY = ('id', 'country', 'category', 'categoryLabel', 'label', 'title', 'summary', 'detail', 'quip', 'sourceName', 'sourceUrl', 'reported')
 
 
+class ReleaseValidationError(ValueError):
+    """A controlled validator message, safe to log without revealing drafts."""
+
 def require(condition, message):
     if not condition:
-        raise ValueError(message)
+        raise ReleaseValidationError(message)
+
+def release_failure_message(exc):
+    return str(exc) if isinstance(exc,ReleaseValidationError) else type(exc).__name__
 
 
 def valid_url(url):
@@ -147,6 +153,38 @@ def recent_nightly_messages(root, edition_date, days=60):
         except (OSError,ValueError,TypeError):
             continue
     return messages
+
+def prepare_reviewed_story(story, day):
+    """Repair only metadata; isolate invalid reviewed stories before handoff.
+
+    No AI call, invented reporting, or approval flags added. Historical
+    and curated editions keep the original strict publication contract.
+    """
+    from country_codes import normalize_reporting_country
+    from local_editorial import normalize_category, CATEGORY_LABELS
+    require(isinstance(story,dict),"記事形式が不正です")
+    item=dict(story)
+    for key in REQUIRED_STORY:
+        if isinstance(item.get(key),str):
+            item[key]=item[key].strip()
+    country=normalize_reporting_country(item.get("country"))
+    if country:
+        item["country"]=country
+    category=normalize_category(item.get("category"))
+    if category:
+        item["category"]=category
+        item["categoryLabel"]=CATEGORY_LABELS[category]
+    second=item.get("quipSecond")
+    if (not isinstance(second,str) or item.get("secondQuipVerified") is not True
+            or not 15<=len(second.strip())<=160 or second.strip()==item.get("quip")
+            or any(ch in second for ch in "<>\r\n")):
+        item.pop("quipSecond",None)
+        item.pop("secondQuipVerified",None)
+    validate_approved({"status":"approved","editionDate":day,"editionType":"regular",
+                       "title":day+"｜世界の大失敗ニュース","editorApproved":True,
+                       "humorReviewed":True,"approvedBy":"automated-two-stage-review",
+                       "stories":[item]},day)
+    return item
 
 def validate_approved(data, expected_date):
     require(isinstance(data, dict), '配信号がJSONオブジェクトではありません')
