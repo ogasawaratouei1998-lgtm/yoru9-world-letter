@@ -16,6 +16,8 @@ on:
       - 'prepared_release.py'
       - 'research_article_countries.py'
       - 'article_country_materials.py'
+      - 'country_source_drafts.py'
+      - 'country_topic_drafts.py'
       - '.github/workflows/research-article-countries.yml'
       - '.github/workflows/prepare-nightly.yml'
       - 'editorial_identity.py'
