@@ -74,6 +74,24 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/country-prefetch"
           gh run download "$RUN_ID" --name country-prefetch --dir "$RUNNER_TEMP/country-prefetch" || true
+      - name: Restore same-day material progress and speculative photo leads
+        timeout-minutes: 2
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
+          mkdir -p "$RUNNER_TEMP/prior-materials" "$RUNNER_TEMP/early-photos"
+          IDS=$(timeout 15s gh run list --workflow "Prepare country materials after article approval" --branch main --status completed --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId' | head -3) || IDS=""
+          for ID in $IDS; do
+            mkdir -p "$RUNNER_TEMP/prior-materials/$ID"
+            timeout 15s gh run download "$ID" --name article-country-research --dir "$RUNNER_TEMP/prior-materials/$ID" || true
+          done
+          if [ -n "$RUN_ID" ]; then
+            timeout 15s gh run download "$RUN_ID" --name country-prefetch-photos --dir "$RUNNER_TEMP/early-photos" || true
+          fi
       - name: Prioritize current cultural topic drafts before optional photo research
         timeout-minutes: 3
         continue-on-error: true
@@ -90,13 +108,18 @@ jobs:
           path: ${{ runner.temp }}/reviewed-topics.json
           if-no-files-found: ignore
           retention-days: 1
-      - name: Prepare optional photo and heritage materials within remaining time
-        timeout-minutes: 6
+      - name: Prepare missing photo and heritage materials within remaining time
+        timeout-minutes: 7
         continue-on-error: true
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
-        run: python research_article_countries.py --skip-topics --approved "$APPROVED_PATH" --output reports/article-countries
+        run: python research_article_countries.py --skip-topics --approved "$APPROVED_PATH" --output reports/article-countries --prior-materials "$RUNNER_TEMP/prior-materials" --prefetched-photos "$RUNNER_TEMP/early-photos"
+      - name: Report material completion separately from news readiness
+        if: always()
+        continue-on-error: true
+        run: python country_article_recovery.py --approved "${{ steps.issue.outputs.path }}" --directory reports/article-countries
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: article-country-research
           path: reports/article-countries/

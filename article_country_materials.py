@@ -60,15 +60,21 @@ def material_tasks(root, stories, day, *, heritage_sites=None):
 
 
 def prepare_material_bundle(root, stories, day, report, output, *, heritage_sites=None,
-                            write_previews=write_bundle):
+                            write_previews=write_bundle, article_recovery=False,
+                            prior=None):
     output=Path(output)
     tasks=material_tasks(root,stories,day,heritage_sites=heritage_sites)
     save(output/"material-tasks.json",tasks)
     canonical=load_country_content(root)["countries"]
     pending={row["countryCode"] for row in tasks["tasks"] if row["status"]=="pending"}
     # Do not enqueue other pending countries or cap article countries at 20.
-    queue=[row for row in make_queue(report,canonical) if row["code"] in pending]
-    preview_summary=write_previews(queue,output/"photo-review",len(queue))
+    queue=[row for row in make_queue(report,canonical,allow_partial=article_recovery)
+           if row["code"] in pending]
+    if article_recovery:
+        from country_article_recovery import write_article_previews
+        preview_summary=write_article_previews(queue,output/"photo-review",tasks["editionDate"],prior=prior)
+    else:
+        preview_summary=write_previews(queue,output/"photo-review",len(queue))
     save(output/"material-summary.json",{
         "editionDate":tasks["editionDate"],
         "articleCountries":tasks["articleCountries"],

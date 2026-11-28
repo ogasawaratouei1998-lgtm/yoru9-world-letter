@@ -223,7 +223,8 @@ def make_plan(root, inventory=None):
             "officialInventoryAvailable": inventory is not None, "countries": countries,
             "rule": "Research only. Source evidence, visual identity, exact license and full editorial review required. No automatic approval."}
 
-def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0):
+def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0, *,
+                   resume=None, retry_transient=False, on_progress=None):
     if not 0 <= shard < plan["shards"]:
         raise ValueError("Invalid shard")
     rows = []
@@ -235,7 +236,11 @@ def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0):
             row = dict(slot, countryCode=country["code"], country=country["country"],
                        candidates=[], manualVisualReviewRequired=True)
             query = slot["searchQuery"]
-            if not query:
+            saved=(resume or {}).get((country["code"],slot["slot"]))
+            if saved:
+                row.update(candidates=saved, status="metadata_candidates_only",
+                           reusedCandidateMetadata=True)
+            elif not query:
                 row["status"] = "independent_source_required"
             elif throttled:
                 row["status"] = "rate_limited_deferred"
@@ -275,9 +280,12 @@ def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0):
                     finally:
                         if sleep_seconds:
                             time.sleep(sleep_seconds)
-                    if seen or row["status"] == "search_failed":
+                    if seen or (row["status"] == "search_failed" and
+                                (not retry_transient or throttled)):
                         break
             rows.append(row)
+            if on_progress:
+                on_progress(rows)
     return {"shard": shard, "results": rows, "statusCounts": dict(Counter(r["status"] for r in rows))}
 
 def combine(plan, reports):
