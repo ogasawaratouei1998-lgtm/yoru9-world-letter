@@ -131,10 +131,13 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertNotIn("steps.edition.outputs.exists == 'false'",preview)
         self.assertEqual(preview.count("steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false'"),5)
         self.assertIn("allow_extension=True",preview)
+        self.assertIn('|| RECENT=""',WORKFLOW)
         for name in ("publish-nightly.yml","prepare-nightly.yml","research-article-countries.yml"):
             workflow=(root/".github/workflows"/name).read_text()
             self.assertIn("allow_extension=True",workflow)
             self.assertIn('if [ ! -f "data/archive/$DAY.json" ]; then',workflow)
+            self.assertIn("timeout 15s gh run list",workflow)
+            self.assertIn("timeout 10s gh run download",workflow)
 
     def test_prior_review_api_failure_does_not_stop_editorial(self):
         preview=(Path(__file__).resolve().parents[1]/

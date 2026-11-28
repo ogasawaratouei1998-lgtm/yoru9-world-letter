@@ -79,13 +79,13 @@ jobs:
           DAY=$(TZ=Asia/Tokyo date +%F)
           CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
           mkdir -p "$RUNNER_TEMP/prior-reviews"
-          IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || {
+          IDS=$(timeout 15s gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || {
             echo "::warning::Prior review lookup unavailable; continue with normal editorial validation."
             IDS=""
           }
           for RUN_ID in $IDS; do
             mkdir -p "$RUNNER_TEMP/prior-reviews/$RUN_ID"
-            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/prior-reviews/$RUN_ID" >/dev/null 2>&1 || true
+            timeout 10s gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/prior-reviews/$RUN_ID" >/dev/null 2>&1 || true
           done
           python - <<'PY'
           import os

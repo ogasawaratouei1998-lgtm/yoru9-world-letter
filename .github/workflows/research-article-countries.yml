@@ -43,11 +43,11 @@ jobs:
           mkdir -p "$RUNNER_TEMP/approved"
           if [ ! -f "data/archive/$DAY.json" ]; then
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
-            IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+            IDS=$(timeout 15s gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
             mkdir -p "$RUNNER_TEMP/reviews"
             for ID in $(printf '%s\n%s\n' "$RUN_ID" "$IDS" | awk 'NF && !seen[$0]++'); do
               mkdir -p "$RUNNER_TEMP/reviews/$ID"
-              gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
+              timeout 10s gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
             done
             python - <<'PY'
           import os
