@@ -92,9 +92,11 @@ def second_read(html, code, source, day, dates, candidate):
                         "end":row["sourceEndDate"],"country":code,"sourceUrl":source["url"]}
     return None
 
-def review(root,day,tasks,drafts,fetch=fetch_official):
+def review(root,day,tasks,drafts,fetch=fetch_official,*,include_pending=False):
     root=Path(root)
     result={"version":1,"editionDate":day,"method":"official-cultural-event-second-read-v1","records":{}}
+    if include_pending:
+        result["pendingEvidence"]={}
     if tasks.get("editionDate")!=day or drafts.get("editionDate")!=day:
         return result
     canonical=json.loads((root/"country-content.json").read_text(encoding="utf-8"))["countries"]
@@ -105,7 +107,8 @@ def review(root,day,tasks,drafts,fetch=fetch_official):
     for report in drafts.get("countries",[]):
         code=report.get("countryCode")
         old=canonical.get(code,{})
-        if code not in allowed or old.get("status")!="approved":
+        if code not in allowed or (old.get("status")!="approved" and
+                not (include_pending and old.get("status")=="pending")):
             continue
         dates=missing_topic_dates({code:old["highlights"]},code,date.fromisoformat(day),2)
         if not dates:continue
@@ -124,7 +127,8 @@ def review(root,day,tasks,drafts,fetch=fetch_official):
                 verified=second_read(pages[url],code,registered[url],day,dates,candidate)
                 if verified:
                     row,evidence=verified
-                    result["records"][code]={"baseDigest":record_digest(old),
+                    key="records" if old["status"]=="approved" else "pendingEvidence"
+                    result[key][code]={"baseDigest":record_digest(old),
                          "topic":row,"event":evidence,
                          "sourceSha256":hashlib.sha256(pages[url].encode("utf-8")).hexdigest()}
                     break
@@ -168,7 +172,7 @@ def main():
     if not (args.directory/"material-tasks.json").is_file():return
     tasks=json.loads((args.directory/"material-tasks.json").read_text())
     drafts=json.loads((args.directory/"topic-drafts.json").read_text())
-    report=review(Path(__file__).resolve().parent,args.day,tasks,drafts)
+    report=review(Path(__file__).resolve().parent,args.day,tasks,drafts,include_pending=True)
     args.output.parent.mkdir(parents=True,exist_ok=True)
     args.output.write_text(json.dumps(report,ensure_ascii=False)+"\n",encoding="utf-8")
     print("Official cultural events revalidated:",sorted(report["records"]))

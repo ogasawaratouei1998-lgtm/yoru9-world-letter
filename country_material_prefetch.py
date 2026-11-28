@@ -44,6 +44,15 @@ def start_prefetch(root,drafts,day):
         except Exception as exc:
             print("Optional country prefetch deferred:",type(exc).__name__,flush=True)
     threading.Thread(target=worker,daemon=True,name="country-prefetch").start()
+    photo_target=os.environ.get("YORU9_COUNTRY_PHOTO_PREFETCH_PATH")
+    if photo_target:
+        def photo_worker():
+            try:
+                from country_article_recovery import prefetch_photos
+                prefetch_photos(root,drafts,day,photo_target)
+            except Exception as exc:
+                print("Optional photo lead prefetch deferred:",type(exc).__name__,flush=True)
+        threading.Thread(target=photo_worker,daemon=True,name="country-photo-prefetch").start()
 
 def merge_prefetch(tasks, fresh, path):
     """Only preserve same-day, same-country, allowlisted unapproved draft leads."""

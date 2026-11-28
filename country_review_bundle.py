@@ -121,7 +121,7 @@ def cover_native_resolution_problem(candidate):
     return None
 
 
-def make_queue(report, canonical):
+def make_queue(report, canonical, *, allow_partial=False):
     grouped = defaultdict(dict)
     pending = {c for c, row in canonical.items() if row["status"] == "pending"}
     for row in report["results"]:
@@ -156,11 +156,17 @@ def make_queue(report, canonical):
             rejected.append(omitted)
         selection = next((combo for combo in product(*choices)
                           if len({candidate_identity(c) for c in combo}) == 3), None)
+        complete = selection is not None
+        if allow_partial and selection is None:
+            combinations = (combo for combo in product(*[opts+[None] for opts in choices])
+                            if len({candidate_identity(c) for c in combo if c}) ==
+                               sum(c is not None for c in combo))
+            selection = max(combinations, key=lambda combo: sum(c is not None for c in combo))
         queued.append({
             "code": code, "name": canonical[code]["name"],
             "portraitDraftExists": drafted, "twoTravelDraftsInResearch": existing,
             "candidateCounts": [len(c) for c in choices],
-            "threeDistinctCandidates": selection is not None,
+            "threeDistinctCandidates": complete,
             "slots": [{"slot": i, "place": slots.get(i, {}).get("place"),
                        "searchStatus": slots.get(i, {}).get("status", "not_reported"),
                        "candidate": selection[i] if selection else None,

@@ -37,6 +37,8 @@ def main():
     p.add_argument("--approved",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
     p.add_argument("--prefetched",type=Path)
+    p.add_argument("--prior-materials",type=Path)
+    p.add_argument("--prefetched-photos",type=Path)
     mode=p.add_mutually_exclusive_group()
     mode.add_argument("--topics-only",action="store_true")
     mode.add_argument("--skip-topics",action="store_true")
@@ -67,18 +69,37 @@ def main():
         except (URLError,TimeoutError,ValueError,OSError,ET.ParseError) as exc:
             print("Official inventory unavailable:",type(exc).__name__)
     save(args.output/"plan.json",plan)
-    report=combine(plan,[research_shard(plan,0)])
+    # Save tasks before network calls, and persist partial results after each slot.
+    # Only the same edition and exact plan slot can reuse candidate evidence.
+    from country_article_recovery import (
+        candidate_resume, read_prefetched_candidates, add_named_photo_leads,
+        checkpoint_research, write_completion_report, discover_authority_leads,
+    )
+    prior=getattr(args,"prior_materials",None)
+    early=getattr(args,"prefetched_photos",None)
+    resume=candidate_resume(plan,day,prior,early)
+    def checkpoint(rows):
+        checkpoint_research(args.output,plan,day,rows)
+    report=combine(plan,[research_shard(plan,0,resume=resume,retry_transient=True,
+                                      on_progress=checkpoint)])
+    add_named_photo_leads(ROOT,report,plan)
+    if report.get("results"):
+        checkpoint_research(args.output,plan,day,report["results"])
+    report["editionDate"]=day
     report["articleCountryNeeds"]=plan["articleCountryNeeds"]
     save(args.output/"research.json",report)
     public=validate_release_input(ROOT,payload,day,require_assets=True)
     tasks=prepare_material_bundle(ROOT,public["stories"],day,report,args.output,
-                                  heritage_sites=sites)
+                                  heritage_sites=sites,article_recovery=True,prior=prior)
     if not getattr(args,"skip_topics",False):
         topics=discover_topics(tasks)
         # Earlier research remains unapproved until the separate second read.
         from country_material_prefetch import merge_prefetch
         topics=merge_prefetch(tasks,topics,getattr(args,"prefetched",None))
         save(args.output/"topic-drafts.json",topics)
+    if "tasks" in tasks:
+        discover_authority_leads(ROOT,tasks,args.output)
+        write_completion_report(ROOT,payload,day,args.output)
     print("Article countries needing enrichment:",sorted(plan["articleCountryNeeds"]))
     print("Material preparation tasks:",tasks["countriesNeedingMaterials"],
           "; source and visual approval required before publication.")

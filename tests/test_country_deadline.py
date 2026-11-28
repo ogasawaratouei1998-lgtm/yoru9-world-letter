@@ -8,11 +8,24 @@ ROOT=Path(__file__).resolve().parents[1]
 class CountryDeadlineTest(unittest.TestCase):
     def test_optional_photo_work_is_after_review_artifact_and_bounded(self):
         w=(ROOT/".github/workflows/research-article-countries.yml").read_text()
-        self.assertIn("timeout-minutes: 20",w)
+        import re
+        job_budget=int(re.search(r"^    timeout-minutes: (\d+)$",w,re.M).group(1))
+        self.assertLessEqual(job_budget,24)
+        steps_budget=sum(int(v) for v in re.findall(r"^        timeout-minutes: (\d+)$",w,re.M))
+        # Leave headroom for checkout/setup; bound both artifact uploads.
+        self.assertLessEqual(steps_budget,job_budget-2)
         self.assertLess(w.index("--topics-only"),w.index("python country_topic_review.py"))
         self.assertLess(w.index("name: reviewed-country-topics"),w.index("--skip-topics"))
-        self.assertIn("timeout-minutes: 6",w)
-        self.assertIn("continue-on-error: true",w)
+        photo_step=w.split("name: Prepare missing photo and heritage materials within remaining time",1)[1].split("      - name:",1)[0]
+        self.assertIn("timeout-minutes: 7",photo_step)
+        self.assertIn("continue-on-error: true",photo_step)
+        self.assertIn("30 10 * * *",w)  # 19:30 JST recovery
+        prepare=(ROOT/".github/workflows/prepare-nightly.yml").read_text()
+        prepare_budget=int(re.search(r"^    timeout-minutes: (\d+)$",prepare,re.M).group(1))
+        # 90 minutes from recovery schedule to release; reserve >=30 minutes
+        # against queue delays and publication checks.
+        self.assertLessEqual(job_budget+prepare_budget,60)
+        self.assertIn("if: always()",w.split("name: Report material completion separately from news readiness",1)[1])
     def test_topic_only_does_not_start_photo_inventory(self):
         from research_article_countries import main
         with tempfile.TemporaryDirectory() as td:
