@@ -96,15 +96,15 @@ jobs:
           # Only same-day runs can carry a current-day approval. Never download
           # dozens of unrelated historic artifacts while holding the Pages lock.
           mkdir -p /tmp/yoru9-reviewed
-          if [ ! -f "data/archive/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then
+          if [ ! -f "data/archive/$DAY.json" ]; then
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
             IDS=""
             if [ -n "$TRIGGER_RUN_ID" ]; then IDS="$TRIGGER_RUN_ID"; fi
-            RECENT=$(gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 50 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId')
+            RECENT=$(timeout 15s gh run list --repo "$GH_REPO" --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || RECENT=""
             IDS=$(printf '%s\n%s\n' "$IDS" "$RECENT" | awk 'NF && !seen[$0]++')
             for RUN_ID in $IDS; do
               mkdir -p "/tmp/yoru9-reviewed/$RUN_ID"
-              if gh run download "$RUN_ID" --repo "$GH_REPO" --name ai-reviewed-preview --dir "/tmp/yoru9-reviewed/$RUN_ID" >/dev/null 2>&1; then
+              if timeout 10s gh run download "$RUN_ID" --repo "$GH_REPO" --name ai-reviewed-preview --dir "/tmp/yoru9-reviewed/$RUN_ID" >/dev/null 2>&1; then
                 echo "Recovered reviewed artifact from run $RUN_ID"
               fi
             done
@@ -115,7 +115,7 @@ jobs:
           from zoneinfo import ZoneInfo
           from release_contract import recover_review
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
-          state,count=recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"))
+          state,count=recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"),allow_extension=True)
           print("Review handoff:",state,count,"stories")
           PY
       - name: Check whether today's approved issue already exists

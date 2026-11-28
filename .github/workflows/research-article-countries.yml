@@ -41,15 +41,13 @@ jobs:
         run: |
           DAY=$(TZ=Asia/Tokyo date +%F)
           mkdir -p "$RUNNER_TEMP/approved"
-          if [ -f "data/approved/$DAY.json" ]; then
-            cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"
-          elif [ ! -f "data/archive/$DAY.json" ]; then
+          if [ ! -f "data/archive/$DAY.json" ]; then
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
-            IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+            IDS=$(timeout 15s gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
             mkdir -p "$RUNNER_TEMP/reviews"
             for ID in $(printf '%s\n%s\n' "$RUN_ID" "$IDS" | awk 'NF && !seen[$0]++'); do
               mkdir -p "$RUNNER_TEMP/reviews/$ID"
-              gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
+              timeout 10s gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
             done
             python - <<'PY'
           import os
@@ -59,7 +57,7 @@ jobs:
           from release_contract import recover_review
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
           # A local-only checkout: the workflow has no repository write permission.
-          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"reviews")
+          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"reviews",allow_extension=True)
           PY
             if [ -f "data/approved/$DAY.json" ]; then
               cp "data/approved/$DAY.json" "$RUNNER_TEMP/approved/$DAY.json"

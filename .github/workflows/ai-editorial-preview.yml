@@ -8,7 +8,7 @@ on:
       - '.github/workflows/ai-editorial-preview.yml'
   schedule:
     # Prepare today's edition from the morning (UTC cron, Japan has no DST).
-    # Later slots are recovery opportunities; a staged/committed issue is reused.
+    # Before 19:00 JST, extend automatic issues even after a committed approval.
     - cron: '15 21 * * *' # 06:15 JST next calendar day
     - cron: '15 0 * * *'  # 09:15 JST
     - cron: '15 3 * * *'  # 12:15 JST
@@ -70,7 +70,7 @@ jobs:
             fi
           fi
       - name: Recover validated same-day preview and decide whether to extend it
-        if: steps.edition.outputs.exists == 'false'
+        if: steps.edition.outputs.archived == 'false'
         id: prior
         env:
           GH_TOKEN: ${{ github.token }}
@@ -79,13 +79,13 @@ jobs:
           DAY=$(TZ=Asia/Tokyo date +%F)
           CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
           mkdir -p "$RUNNER_TEMP/prior-reviews"
-          IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || {
+          IDS=$(timeout 15s gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || {
             echo "::warning::Prior review lookup unavailable; continue with normal editorial validation."
             IDS=""
           }
           for RUN_ID in $IDS; do
             mkdir -p "$RUNNER_TEMP/prior-reviews/$RUN_ID"
-            gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/prior-reviews/$RUN_ID" >/dev/null 2>&1 || true
+            timeout 10s gh run download "$RUN_ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/prior-reviews/$RUN_ID" >/dev/null 2>&1 || true
           done
           python - <<'PY'
           import os
@@ -95,7 +95,7 @@ jobs:
           from release_contract import recover_review, should_refill_recovered
           now=datetime.now(ZoneInfo("Asia/Tokyo"))
           day=now.date().isoformat()
-          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"prior-reviews")
+          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"prior-reviews",allow_extension=True)
           refill=should_refill_recovered(Path.cwd(),day,state,count,now)
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write("ready="+("true" if count and not refill else "false")+"\n")
@@ -103,7 +103,7 @@ jobs:
           print("Recovered preview stories:",count,"continue unused candidates:",refill)
           PY
       - name: Verify optional Gemini key is present (without exposing it)
-        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
+        if: steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
@@ -112,10 +112,10 @@ jobs:
           fi
           echo 'Gemini API key is configured'
       - name: Collect same-day leads
-        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true'
+        if: steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false'
         run: python collect_candidates.py
       - name: Restore same-day unfinished publisher queue
-        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true'
+        if: steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -134,7 +134,7 @@ jobs:
       # revalidates it, and publishes only when the release timing rule permits.
       # Provider error details are sanitized in auto_editorial.py.
       - name: Internal CPU editorial double-check (no publication)
-        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
+        if: steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false' && (vars.YORU9_ENABLE_GEMINI != 'true' || github.event_name == 'push')
         timeout-minutes: 47
         env:
           YORU9_RESUME_PATH: ${{ runner.temp }}/yoru9-resume/queue.json
@@ -146,7 +146,7 @@ jobs:
         timeout-minutes: 18
         run: bash run_local_editorial.sh --probe-only
       - name: Optional Gemini double-check (no publication)
-        if: steps.edition.outputs.exists == 'false' && steps.prior.outputs.ready != 'true' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
+        if: steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false' && vars.YORU9_ENABLE_GEMINI == 'true' && github.event_name != 'push'
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_MODEL: gemini-3.5-flash-lite

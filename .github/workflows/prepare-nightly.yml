@@ -50,14 +50,14 @@ jobs:
             exit 0
           fi
           mkdir -p "$RUNNER_TEMP/reviews"
-          if [ ! -f "data/approved/$DAY.json" ]; then
+          if [ ! -f "data/archive/$DAY.json" ]; then
             # Recover the triggering review, or the latest valid same-day
             # artifact when a manual/maintenance run has no triggering ID.
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
-            IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
+            IDS=$(timeout 15s gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 12 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
             for ID in $(printf '%s\n' $IDS | awk 'NF && !seen[$0]++'); do
               mkdir -p "$RUNNER_TEMP/reviews/$ID"
-              gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
+              timeout 10s gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
             done
           fi
           python - <<'PY'
@@ -67,7 +67,7 @@ jobs:
           from zoneinfo import ZoneInfo
           from release_contract import recover_review
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
-          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"reviews")
+          state,count=recover_review(Path.cwd(),day,Path(os.environ["RUNNER_TEMP"])/"reviews",allow_extension=True)
           with open(os.environ["GITHUB_OUTPUT"],"a") as f:
               f.write("ready="+("true" if count else "false")+"\n")
           PY

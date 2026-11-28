@@ -8,7 +8,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 from release_contract import (
-    should_refill_recovered, load_refill_seed, save_refilled_preview,
+    should_refill_recovered, load_refill_seed, save_refilled_preview, recover_review,
 )
 from test_news_variable_edition_count import approved_current_issue, DAY
 from editorial_resume import EditorialResume
@@ -42,12 +42,15 @@ class SameDayPreviewRefillTests(unittest.TestCase):
                 self.assertTrue(check("recovered",count,18))
                 self.assertEqual(len(load_refill_seed(self.root,DAY)["stories"]),count)
         self.target.write_text(json.dumps(self.seed),encoding="utf-8")
-        self.assertFalse(check("existing",1,18))
+        self.assertTrue(check("existing",1,18))
+        self.assertTrue(check("extended",1,18))
+        self.assertFalse(check("existing",1,19))
         self.assertFalse(should_refill_recovered(self.root, DAY, "recovered",1,
                                                self.now(18,"2026-11-24")))
         manual = {**self.seed,"approvedBy":"chatgpt-editorial-review"}
         self.target.write_text(json.dumps(manual), encoding="utf-8")
         self.assertFalse(check("recovered",1,18))
+        self.assertFalse(check("existing",1,18))
         with self.assertRaises(ValueError):
             load_refill_seed(self.root,DAY)
 
@@ -97,6 +100,56 @@ class SameDayPreviewRefillTests(unittest.TestCase):
         self.assertFalse(should_refill_recovered(self.root,DAY,"recovered",1,self.now(18)))
         with self.assertRaises(ValueError):
             load_refill_seed(self.root,DAY)
+
+    def put_artifact(self,run,payload):
+        p=self.root/"incoming"/str(run)/(DAY+".json")
+        p.parent.mkdir(parents=True,exist_ok=True)
+        p.write_text(json.dumps(payload),encoding="utf-8")
+
+    def test_committed_automatic_issue_extends_across_all_handoffs(self):
+        incoming=self.root/"incoming"
+        self.assertEqual(recover_review(self.root,DAY,incoming,allow_extension=True),("existing",1))
+        self.assertTrue(should_refill_recovered(self.root,DAY,"existing",1,self.now(18)))
+        expanded={**self.seed,"stories":approved_current_issue(3)["stories"]}
+        self.put_artifact(100,expanded)
+        self.assertEqual(recover_review(self.root,DAY,incoming,allow_extension=True),("extended",3))
+        self.assertTrue(should_refill_recovered(self.root,DAY,"extended",3,self.now(18)))
+        bigger={**self.seed,"stories":approved_current_issue(5)["stories"]}
+        self.put_artifact(200,bigger)
+        self.put_artifact(300,self.seed)  # newest artifact is stale
+        self.assertEqual(recover_review(self.root,DAY,incoming,allow_extension=True),("extended",5))
+        self.assertEqual(json.loads(self.target.read_text()),bigger)
+        self.assertEqual(recover_review(self.root,DAY,incoming,allow_extension=True),("existing",5))
+
+    def test_artifact_cannot_replace_curated_special_or_archived_issue(self):
+        expanded={**self.seed,"stories":approved_current_issue(3)["stories"]}
+        self.put_artifact(100,expanded)
+        for seed in ({**self.seed,"approvedBy":"chatgpt-editorial-review"},
+                     {**self.seed,"editionType":"special","title":"世界の大失敗ニュース・編集特集号","specialReason":"今年の意外な判断を振り返るための編集特集です。"}):
+            self.target.write_text(json.dumps(seed))
+            before=self.target.read_bytes()
+            self.assertEqual(recover_review(self.root,DAY,self.root/"incoming",allow_extension=True),("existing",1))
+            self.assertEqual(self.target.read_bytes(),before)
+        self.target.write_text(json.dumps(self.seed))
+        archive=self.root/"data"/"archive"/(DAY+".json")
+        archive.parent.mkdir()
+        archive.write_text("{}")
+        self.assertEqual(recover_review(self.root,DAY,self.root/"incoming",allow_extension=True),("archived",0))
+        self.assertEqual(json.loads(self.target.read_text()),self.seed)
+
+    def test_invalid_or_forked_expansion_does_not_erase_approved_material(self):
+        good={**self.seed,"stories":approved_current_issue(2)["stories"]}
+        self.put_artifact(100,good)
+        fork={**self.seed,"stories":[self.seed["stories"][0],*approved_current_issue(5)["stories"][2:]]}
+        self.put_artifact(200,fork)
+        invalid={**self.seed,"stories":approved_current_issue(4)["stories"]}
+        invalid["stories"][-1]["humorSafe"]=False
+        self.put_artifact(300,invalid)
+        altered=copy.deepcopy({**self.seed,"stories":approved_current_issue(5)["stories"]})
+        altered["stories"][0]["title"]+="変更"
+        self.put_artifact(400,altered)
+        self.assertEqual(recover_review(self.root,DAY,self.root/"incoming",allow_extension=True),("extended",2))
+        self.assertEqual(json.loads(self.target.read_text()),good)
 
     def test_all_completed_group_urls_are_remembered(self):
         path=self.root/"queue.json"
