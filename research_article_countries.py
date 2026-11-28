@@ -17,6 +17,48 @@ from urllib.error import URLError
 
 ROOT=Path(__file__).resolve().parent
 
+def align_article_photo_plan(root, plan):
+    """Keep photo slot order bound to the actual editorial draft, not the
+    alphabetical order of the UNESCO inventory. Research hints are not approval.
+    """
+    from urllib.parse import urlsplit
+    canonical=json.loads((Path(root)/"country-content.json").read_text(encoding="utf-8"))["countries"]
+    for row in plan["countries"]:
+        code=row["code"]
+        drafts=canonical[code].get("travelDrafts",[])
+        if len(drafts)!=2:continue
+        def property_id(url):
+            if not isinstance(url,str):return None
+            u=urlsplit(url)
+            if u.scheme!="https" or u.netloc!="whc.unesco.org" or u.query or u.fragment:return None
+            parts=u.path.strip("/").split("/")
+            return parts[2] if len(parts)==3 and parts[:2]==["en","list"] and parts[2].isdigit() else None
+        index={property_id(site.get("sourceUrl")):site for site in row.get("officialSourceCandidates",[])}
+        ids=[property_id(d.get("sourceUrl")) for d in drafts]
+        if all(ids) and all(i in index for i in ids):
+            ordered=[index[i] for i in ids]
+            cover=row["slots"][0]
+            if cover.get("origin")!="existing_draft":
+                cover.update(searchQuery=ordered[0]["name"],alternateSearchQuery=ordered[0]["name"]+" landscape",
+                             origin="article_draft_property",officialSourceCandidate=ordered[0]["sourceUrl"])
+            for i,(draft,site) in enumerate(zip(drafts,ordered),1):
+                slot=row["slots"][i]
+                if slot.get("origin")!="existing_draft":
+                    slot.update(place=draft["title"],searchQuery=site["name"],
+                                alternateSearchQuery='incategory:"'+site["name"]+'"',
+                                origin="article_draft_property")
+                slot["officialSourceCandidate"]=site["sourceUrl"]
+        # Specific, source-identified vocabulary for the observed gaps.
+        # These are search strings, not automatic acceptance of a file.
+        hints={"FJ":{0:"BeachStreetLevuka",1:"ChurchLevuka",2:"General Store Levuka"},
+               "MW":{0:"Lake Malawi National Park",1:"Otter Point Cape Maclear",2:'incategory:"Chongoni Rock-Art Area"'}}
+        for slot in row["slots"]:
+            hint=hints.get(code,{}).get(slot["slot"])
+            if hint and hint!=slot.get("searchQuery"):
+                slot["alternateSearchQuery"]=hint
+    return plan
+
+
 def article_plan(root, payload, day, inventory=None):
     public=validate_release_input(root,payload,day,require_assets=True)
     missing,ready=article_country_backlog(public["stories"],root,day)
@@ -30,7 +72,7 @@ def article_plan(root, payload, day, inventory=None):
     plan["slotCount"]=sum(len(row["slots"]) for row in plan["countries"])
     plan["pendingCount"]=len(plan["countries"])
     plan["articleCountryNeeds"]=missing
-    return plan
+    return align_article_photo_plan(root,plan)
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)

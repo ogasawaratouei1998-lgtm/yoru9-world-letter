@@ -22,7 +22,7 @@ from zoneinfo import ZoneInfo
 
 from country_article_recovery import atomic_json, read_json, prior_dirs, usable_photo, photo_urls
 from country_review_bundle import candidate_identity
-from country_photo_candidates import LICENSES
+from country_photo_candidates import canonical_license_url
 from country_topic_drafts import fetch_official
 from country_topic_review import VisibleText, normalized
 from country_unesco_source_catalog import download_feed
@@ -73,13 +73,10 @@ def heritage_positions(xml,code):
     return result
 
 def strict_license(candidate):
-    license=candidate.get("license","")
-    if license not in LICENSES or not candidate.get("author"):return False
-    if license=="CC0 1.0":expected="https://creativecommons.org/publicdomain/zero/1.0/"
-    else:
-        kind,version=license[3:].lower().split()
-        expected="https://creativecommons.org/licenses/"+kind+"/"+version+"/"
-    return candidate.get("licenseUrl","").rstrip("/")+"/"==expected
+    url=candidate.get("licenseUrl","")
+    return (bool(candidate.get("author")) and isinstance(url,str)
+            and url.startswith("https://creativecommons.org/")
+            and bool(canonical_license_url(candidate.get("license"),url)))
 
 def text(value,minlen,maxlen):
     if (not isinstance(value,str) or not minlen<=len(value.strip())<=maxlen

@@ -96,3 +96,13 @@ class GeminiCountryReviewTest(unittest.TestCase):
             call.assert_called_once()
             self.assertTrue((work/"gemini-review"/"FJ"/"packet.json").is_file())
             self.assertTrue((work/"gemini-review"/"MW"/"attempt.json").is_file())
+
+    def test_older_and_igo_license_is_explicit_not_inferred(self):
+        from country_photo_candidates import canonical_license_url,valid_candidate
+        self.assertEqual(canonical_license_url("CC BY-SA 3.0","http://creativecommons.org/licenses/by-sa/3.0/"),
+                         "https://creativecommons.org/licenses/by-sa/3.0/")
+        self.assertTrue(strict_license({**candidate("x.jpg"),"license":"CC BY-SA 3.0 IGO",
+                                       "licenseUrl":"https://creativecommons.org/licenses/by-sa/3.0/igo/deed.en"}))
+        self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org/licenses/by-nc-sa/3.0/"))
+        self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org.evil.test/licenses/by-sa/3.0/"))
+        self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org/licenses/by-sa/3.0/igo/"))

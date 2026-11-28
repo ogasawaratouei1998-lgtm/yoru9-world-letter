@@ -47,6 +47,26 @@ class ArticleCountryMaterialsTests(unittest.TestCase):
         self.assertEqual(sorted(row["code"] for row in queue),codes)
         self.assertEqual(limit,len(codes))
 
+    def test_article_photo_plan_matches_original_draft_order(self):
+        from research_article_countries import align_article_photo_plan
+        import json
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td)
+            (root/"country-content.json").write_text(json.dumps({"countries":{"MW":{"travelDrafts":[
+                {"title":"Lake Malawi","sourceUrl":"https://whc.unesco.org/en/list/289"},
+                {"title":"Chongoni","sourceUrl":"https://whc.unesco.org/en/list/476"}]}}}))
+            plan={"countries":[{"code":"MW","officialSourceCandidates":[
+                {"name":"Chongoni Rock-Art Area","sourceUrl":"https://whc.unesco.org/en/list/476/"},
+                {"name":"Lake Malawi National Park","sourceUrl":"https://whc.unesco.org/en/list/289/"}],
+                "slots":[{"slot":i,"origin":"unesco_inventory_candidate","searchQuery":"wrong"} for i in range(3)]}]}
+            slots=align_article_photo_plan(root,plan)["countries"][0]["slots"]
+            self.assertIn("/289/",slots[0]["officialSourceCandidate"])
+            self.assertIn("/289/",slots[1]["officialSourceCandidate"])
+            self.assertIn("/476/",slots[2]["officialSourceCandidate"])
+            self.assertEqual(slots[1]["place"],"Lake Malawi")
+            self.assertEqual(slots[2]["place"],"Chongoni")
+            self.assertIn("Chongoni",slots[2]["alternateSearchQuery"])
+
     def test_duplicate_country_does_not_duplicate_work(self):
         result=material_tasks(ROOT,[{"country":"ES"},{"country":"ES"}],"2027-01-01")
         self.assertEqual(result["articleCountries"],["ES"])
