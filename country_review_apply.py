@@ -109,9 +109,16 @@ def apply(root,day,cache=None,auto_directory=None):
                 check_reviewed_photos(old,new,packet,cache)
             else:
                 new=old
+                if old.get("status")=="pending" and auto_directory and cache:
+                    from country_gemini_review import restore_reviewed_country
+                    auto=restore_reviewed_country(root,old,code,day,auto_directory,cache)
+                    if auto:
+                        new,packet=auto
+                        check_reviewed_photos(old,new,packet,cache)
                 # Newest valid report wins; a stale or malformed report never
                 # prevents a different valid same-day report from being used.
                 for report in auto_reports:
+                    if new!=old:break
                     if code not in report:continue
                     try:
                         new=validated_topic(old,report[code],code,day,registered.get(code,[]))

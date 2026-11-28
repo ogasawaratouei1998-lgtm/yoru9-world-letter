@@ -18,6 +18,7 @@ on:
       - 'article_country_materials.py'
       - 'country_material_prefetch.py'
       - 'country_article_recovery.py'
+      - 'country_gemini_review.py'
       - 'country_review_bundle.py'
       - 'country_review_apply.py'
       - 'country_topic_review.py'
