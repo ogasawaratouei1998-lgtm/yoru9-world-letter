@@ -125,7 +125,7 @@ class SameDayPreviewRefillTests(unittest.TestCase):
         expanded={**self.seed,"stories":approved_current_issue(3)["stories"]}
         self.put_artifact(100,expanded)
         for seed in ({**self.seed,"approvedBy":"chatgpt-editorial-review"},
-                     {**self.seed,"editionType":"special","specialReason":"今年の意外な判断を振り返るための編集特集です。"}):
+                     {**self.seed,"editionType":"special","title":"世界の大失敗ニュース・編集特集号","specialReason":"今年の意外な判断を振り返るための編集特集です。"}):
             self.target.write_text(json.dumps(seed))
             before=self.target.read_bytes()
             self.assertEqual(recover_review(self.root,DAY,self.root/"incoming",allow_extension=True),("existing",1))
