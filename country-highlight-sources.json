@@ -14,6 +14,18 @@
         "url": "https://www.argentina.travel/en"
       }
     ],
+    "AT": [
+      {
+        "name": "オーストリア政府観光局",
+        "url": "https://www.austria.info/en-us/events/"
+      }
+    ],
+    "AU": [
+      {
+        "name": "オーストラリア政府観光局",
+        "url": "https://www.australia.com/en/events/australias-events-calendar.html"
+      }
+    ],
     "BE": [
       {
         "name": "ブリュッセル観光局 visit.brussels",
@@ -30,6 +42,18 @@
         "url": "https://www.visitbrasil.com/"
       }
     ],
+    "CH": [
+      {
+        "name": "スイス政府観光局",
+        "url": "https://www.myswitzerland.com/en-ch/experiences/events/events-search/"
+      }
+    ],
+    "CZ": [
+      {
+        "name": "チェコ政府観光局",
+        "url": "https://www.visitczechia.com/en-us/things-to-do/events/all-events"
+      }
+    ],
     "DE": [
       {
         "name": "Germany Travel / German National Tourist Board",
@@ -38,6 +62,18 @@
       {
         "name": "visitBerlin / Berlin Tourism",
         "url": "https://www.visitberlin.de/en/"
+      }
+    ],
+    "DK": [
+      {
+        "name": "デンマーク政府観光局",
+        "url": "https://www.visitdenmark.com/denmark/events/event-calendar/events-october-november-december"
+      }
+    ],
+    "EE": [
+      {
+        "name": "Visit Estonia",
+        "url": "https://visitestonia.com/en/events"
       }
     ],
     "ES": [
@@ -60,6 +96,18 @@
       {
         "name": "VisitBritain official events",
         "url": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      }
+    ],
+    "GR": [
+      {
+        "name": "ギリシャ政府観光局",
+        "url": "https://www.visitgreece.gr/en/events"
+      }
+    ],
+    "IE": [
+      {
+        "name": "アイルランド観光開発庁 Discover Ireland",
+        "url": "https://www.discoverireland.ie/events"
       }
     ],
     "IT": [
@@ -88,6 +136,24 @@
         "url": "https://english.visitkorea.or.kr/svc/main/index.do"
       }
     ],
+    "LT": [
+      {
+        "name": "Lithuania Travel",
+        "url": "https://lithuania.travel/en/why-lithuania/key-facts/news/experience-lithuania-the-must-see-events-in-2026"
+      }
+    ],
+    "LV": [
+      {
+        "name": "Latvia Travel",
+        "url": "https://www.latvia.travel/en/events-latvia-riga"
+      }
+    ],
+    "NO": [
+      {
+        "name": "ノルウェー政府観光局",
+        "url": "https://www.visitnorway.com/things-to-do/whats-on/festivals/"
+      }
+    ],
     "NZ": [
       {
         "name": "Dunedin official events",
@@ -96,6 +162,30 @@
       {
         "name": "Tourism New Zealand",
         "url": "https://www.newzealand.com/int/"
+      }
+    ],
+    "SE": [
+      {
+        "name": "ストックホルム市観光局",
+        "url": "https://www.visitstockholm.com/events/"
+      }
+    ],
+    "SG": [
+      {
+        "name": "シンガポール政府観光局",
+        "url": "https://www.visitsingapore.com/whats-happening/all-happenings/"
+      }
+    ],
+    "SI": [
+      {
+        "name": "スロベニア政府観光局",
+        "url": "https://www.slovenia.info/en/things-to-do/events"
+      }
+    ],
+    "TH": [
+      {
+        "name": "タイ政府広報局",
+        "url": "https://www.thailand.go.th/public/home"
       }
     ],
     "US": [

@@ -24,7 +24,7 @@ jobs:
       (github.event.workflow_run.conclusion == 'success' &&
        github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
@@ -33,6 +33,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Locate validated same-day article
+        timeout-minutes: 3
         id: issue
         env:
           GH_TOKEN: ${{ github.token }}
@@ -66,6 +67,8 @@ jobs:
           fi
           echo "path=$RUNNER_TEMP/approved/$DAY.json" >> "$GITHUB_OUTPUT"
       - name: Retrieve speculative draft leads from the triggering editorial run
+        timeout-minutes: 1
+        continue-on-error: true
         if: github.event_name == 'workflow_run'
         env:
           GH_TOKEN: ${{ github.token }}
@@ -73,10 +76,12 @@ jobs:
         run: |
           mkdir -p "$RUNNER_TEMP/country-prefetch"
           gh run download "$RUN_ID" --name country-prefetch --dir "$RUNNER_TEMP/country-prefetch" || true
-      - name: Prepare drafts, official source leads and photo review files for all article countries
+      - name: Prioritize current cultural topic drafts before optional photo research
+        timeout-minutes: 3
+        continue-on-error: true
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
-        run: python research_article_countries.py --approved "$APPROVED_PATH" --output reports/article-countries --prefetched "$RUNNER_TEMP/country-prefetch/yoru9-country-prefetch.json"
+        run: python research_article_countries.py --topics-only --approved "$APPROVED_PATH" --output reports/article-countries --prefetched "$RUNNER_TEMP/country-prefetch/yoru9-country-prefetch.json"
       - name: Recheck official cultural notices independently of the draft pass
         timeout-minutes: 3
         continue-on-error: true
@@ -87,6 +92,12 @@ jobs:
           path: ${{ runner.temp }}/reviewed-topics.json
           if-no-files-found: ignore
           retention-days: 1
+      - name: Prepare optional photo and heritage materials within remaining time
+        timeout-minutes: 6
+        continue-on-error: true
+        env:
+          APPROVED_PATH: ${{ steps.issue.outputs.path }}
+        run: python research_article_countries.py --skip-topics --approved "$APPROVED_PATH" --output reports/article-countries
       - uses: actions/upload-artifact@v4
         with:
           name: article-country-research

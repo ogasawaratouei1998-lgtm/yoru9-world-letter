@@ -30,7 +30,12 @@ def expansion_progress(root):
                     and (row.get("portrait") or {}).get("sourceReviewStatus") == "independent_claim_review_required"):
                 first_drafts[code] = row
     draft_stops = [stop for row in first_drafts.values() for stop in row.get("travelDrafts", [])]
+    sources=json.loads((root/"country-highlight-sources.json").read_text(encoding="utf-8"))["sources"]
+    missing_sources=sorted(set(doc["countries"])-set(sources))
     return {
+        "registeredTopicSourceCountries":len(sources),
+        "missingTopicSourceCountries":missing_sources,
+        "approvedCountriesMissingTopicSources":sorted(set(queue["approvedCountries"])-set(sources)),
         "firstDraftsAwaitingSourceReview":sorted(first_drafts),
         "firstDraftTravelStops":len(draft_stops),
         "firstDraftReferencePagesLocated":sum(bool(stop.get("sourceUrl")) for stop in draft_stops),
@@ -50,6 +55,9 @@ def main():
              f"- Catalog: {progress['catalogCount']}\n"
              f"- Fully approved: {progress['approvedCount']}\n"
              f"- Pending: {progress['pendingCount']}\n"
+             f"- Registered official topic sources: {progress['registeredTopicSourceCountries']} / {progress['catalogCount']}\n"
+             f"- Approved countries still missing topic sources: {', '.join(progress['approvedCountriesMissingTopicSources']) or 'none'}\n"
+             f"- All countries still missing topic sources: {', '.join(progress['missingTopicSourceCountries']) or 'none'}\n"
              f"- Portraits prepared, photos/quiz still unverified: "
              f"{', '.join(progress['pendingPortraitsPrepared']) or 'none'}\n"
              f"- First drafts awaiting independent source review: {len(progress['firstDraftsAwaitingSourceReview'])}\n"
