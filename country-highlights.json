@@ -1,26 +1,28 @@
 {
   "version": 1,
-  "updatedOn": "2026-11-26",
+  "updatedOn": "2026-11-28",
   "description": "Editorially verified cultural and current-affairs notes for country introductions. Never derive these from unverified news leads or tourist postcard records.",
   "highlights": {
-    "GB": [
+    "BE": [
       {
-        "title": "ロンドンはジャズが街に広がる11月",
-        "body": "11月13〜22日のロンドン・ジャズ・フェスティバルでは、世界的な演奏家や新進アーティストによるコンサート、トーク、ワークショップなどが街の会場で開催されます。",
-        "validFrom": "2026-11-13",
-        "validThrough": "2026-11-22",
-        "checkedOn": "2026-11-19",
-        "sourceName": "英国政府観光局 VisitBritain",
-        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
-      },
+        "title": "ブリュッセルの冬を彩るウィンター・ワンダーズ",
+        "body": "ブリュッセルでは2026年11月27日から2027年1月3日まで、冬の祭典「Winter Wonders」が開催される予定です。25周年を迎える今回は、市中心部のクリスマス市やイルミネーションなどを楽しめます。市と観光局の公式案内で日程を確認しました。",
+        "validFrom": "2026-11-28",
+        "validThrough": "2026-12-28",
+        "checkedOn": "2026-11-28",
+        "sourceName": "ブリュッセル観光局 visit.brussels",
+        "sourceUrl": "https://www.visit.brussels/en/visitors/event-details.Winter-Wonders.5700028296"
+      }
+    ],
+    "DE": [
       {
-        "title": "ロンドンの冬、ハイドパークが光の広場に",
-        "body": "11月19日から2027年1月3日まで、ロンドンのハイドパークで冬のイベント「Winter Wonderland」が予定されています。市場や観覧車など、冬の街の楽しみが集まります。",
-        "validFrom": "2026-11-23",
-        "validThrough": "2026-12-15",
-        "checkedOn": "2026-11-19",
-        "sourceName": "英国政府観光局 VisitBritain",
-        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+        "title": "ベルリン、11月23日から伝統の冬市",
+        "body": "ベルリンの公式観光案内によると、ジャンダルメンマルクトのクリスマスマーケットは2026年11月23日から12月31日までの日程です。歴史的な広場を舞台に、工芸品や食の屋台などが紹介されています。",
+        "validFrom": "2026-11-21",
+        "validThrough": "2026-12-05",
+        "checkedOn": "2026-11-21",
+        "sourceName": "ベルリン公式観光案内 visitBerlin",
+        "sourceUrl": "https://www.visitberlin.de/en/christmas-market-weihnachtszauber-gendarmenmarkt-berlin"
       }
     ],
     "ES": [
@@ -41,6 +43,57 @@
         "checkedOn": "2026-11-19",
         "sourceName": "マドリード市公式観光案内",
         "sourceUrl": "https://www.esmadrid.com/en/whats-on/feriarte-ifema-madrid"
+      }
+    ],
+    "FR": [
+      {
+        "title": "ランスのクリスマス市場、シャンパーニュ地方の冬の楽しみ",
+        "body": "フランス観光局によると、ランスでは11月25日から12月27日までクリスマス市場が開かれる予定です。街の遊歩道には工芸品や地元の菓子を扱う小屋が並び、大聖堂の光と音の演出も紹介されています。",
+        "validFrom": "2026-11-26",
+        "validThrough": "2026-12-26",
+        "checkedOn": "2026-11-26",
+        "sourceName": "フランス政府観光局 Explore France",
+        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
+      },
+      {
+        "title": "ミュルーズを彩る、アルザス伝統のクリスマス生地",
+        "body": "ミュルーズのクリスマス市場は11月20日から12月27日までの予定です。繊維産業の伝統を生かし、2026年は花や葉を描いたアール・ヌーヴォー風の生地で街や市場を飾るとフランス観光局が紹介しています。",
+        "validFrom": "2026-11-26",
+        "validThrough": "2026-12-26",
+        "checkedOn": "2026-11-26",
+        "sourceName": "フランス政府観光局 Explore France",
+        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
+      }
+    ],
+    "GB": [
+      {
+        "title": "ロンドンはジャズが街に広がる11月",
+        "body": "11月13〜22日のロンドン・ジャズ・フェスティバルでは、世界的な演奏家や新進アーティストによるコンサート、トーク、ワークショップなどが街の会場で開催されます。",
+        "validFrom": "2026-11-13",
+        "validThrough": "2026-11-22",
+        "checkedOn": "2026-11-19",
+        "sourceName": "英国政府観光局 VisitBritain",
+        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      },
+      {
+        "title": "ロンドンの冬、ハイドパークが光の広場に",
+        "body": "11月19日から2027年1月3日まで、ロンドンのハイドパークで冬のイベント「Winter Wonderland」が予定されています。市場や観覧車など、冬の街の楽しみが集まります。",
+        "validFrom": "2026-11-23",
+        "validThrough": "2026-12-15",
+        "checkedOn": "2026-11-19",
+        "sourceName": "英国政府観光局 VisitBritain",
+        "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      }
+    ],
+    "IT": [
+      {
+        "title": "ヴェネツィア、街を彩る冬の催し",
+        "body": "ヴェネツィア市の公式観光案内は、2026年11月20日から2027年1月6日までの「Natale Venezia 2026」を掲載。街の広場や周辺地域で冬の催しが案内され、歴史的な水の都にも季節の風景が広がります。",
+        "validFrom": "2026-11-21",
+        "validThrough": "2026-12-05",
+        "checkedOn": "2026-11-21",
+        "sourceName": "ヴェネツィア市公式観光案内 Venezia Unica",
+        "sourceUrl": "https://www.veneziaunica.it/en/things-to-do-in-venice/events/natale-venezia-2026"
       }
     ],
     "JP": [
@@ -83,28 +136,6 @@
         "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
       }
     ],
-    "IT": [
-      {
-        "title": "ヴェネツィア、街を彩る冬の催し",
-        "body": "ヴェネツィア市の公式観光案内は、2026年11月20日から2027年1月6日までの「Natale Venezia 2026」を掲載。街の広場や周辺地域で冬の催しが案内され、歴史的な水の都にも季節の風景が広がります。",
-        "validFrom": "2026-11-21",
-        "validThrough": "2026-12-05",
-        "checkedOn": "2026-11-21",
-        "sourceName": "ヴェネツィア市公式観光案内 Venezia Unica",
-        "sourceUrl": "https://www.veneziaunica.it/en/things-to-do-in-venice/events/natale-venezia-2026"
-      }
-    ],
-    "DE": [
-      {
-        "title": "ベルリン、11月23日から伝統の冬市",
-        "body": "ベルリンの公式観光案内によると、ジャンダルメンマルクトのクリスマスマーケットは2026年11月23日から12月31日までの日程です。歴史的な広場を舞台に、工芸品や食の屋台などが紹介されています。",
-        "validFrom": "2026-11-21",
-        "validThrough": "2026-12-05",
-        "checkedOn": "2026-11-21",
-        "sourceName": "ベルリン公式観光案内 visitBerlin",
-        "sourceUrl": "https://www.visitberlin.de/en/christmas-market-weihnachtszauber-gendarmenmarkt-berlin"
-      }
-    ],
     "US": [
       {
         "title": "2026年の感謝祭は11月26日",
@@ -114,26 +145,6 @@
         "checkedOn": "2026-11-21",
         "sourceName": "米国人事管理局（OPM）連邦祝日一覧",
         "sourceUrl": "https://www.opm.gov/policy-data-oversight/pay-leave/federal-holidays/"
-      }
-    ],
-    "FR": [
-      {
-        "title": "ランスのクリスマス市場、シャンパーニュ地方の冬の楽しみ",
-        "body": "フランス観光局によると、ランスでは11月25日から12月27日までクリスマス市場が開かれる予定です。街の遊歩道には工芸品や地元の菓子を扱う小屋が並び、大聖堂の光と音の演出も紹介されています。",
-        "validFrom": "2026-11-26",
-        "validThrough": "2026-12-26",
-        "checkedOn": "2026-11-26",
-        "sourceName": "フランス政府観光局 Explore France",
-        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
-      },
-      {
-        "title": "ミュルーズを彩る、アルザス伝統のクリスマス生地",
-        "body": "ミュルーズのクリスマス市場は11月20日から12月27日までの予定です。繊維産業の伝統を生かし、2026年は花や葉を描いたアール・ヌーヴォー風の生地で街や市場を飾るとフランス観光局が紹介しています。",
-        "validFrom": "2026-11-26",
-        "validThrough": "2026-12-26",
-        "checkedOn": "2026-11-26",
-        "sourceName": "フランス政府観光局 Explore France",
-        "sourceUrl": "https://www.france.fr/fr/article/marches-de-noel-france-nos-7-coups-de-coeur/"
       }
     ]
   }
