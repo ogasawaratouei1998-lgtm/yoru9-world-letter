@@ -104,6 +104,8 @@ jobs:
         continue-on-error: true
         run: python country_topic_review.py --day "$(TZ=Asia/Tokyo date +%F)" --directory reports/article-countries --output "$RUNNER_TEMP/reviewed-topics.json"
       - uses: actions/upload-artifact@v4
+        timeout-minutes: 1
+        continue-on-error: true
         with:
           name: reviewed-country-topics
           path: ${{ runner.temp }}/reviewed-topics.json
@@ -117,10 +119,12 @@ jobs:
         run: python research_article_countries.py --skip-topics --approved "$APPROVED_PATH" --output reports/article-countries --prior-materials "$RUNNER_TEMP/prior-materials" --prefetched-photos "$RUNNER_TEMP/early-photos"
       - name: Report material completion separately from news readiness
         if: always()
+        timeout-minutes: 1
         continue-on-error: true
         run: python country_article_recovery.py --approved "${{ steps.issue.outputs.path }}" --directory reports/article-countries
       - uses: actions/upload-artifact@v4
         if: always()
+        timeout-minutes: 1
         with:
           name: article-country-research
           path: reports/article-countries/
