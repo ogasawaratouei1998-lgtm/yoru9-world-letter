@@ -128,12 +128,18 @@ def event_candidates(html,code,source,day,missing_dates):
 
 def discover_topics(tasks,fetch=fetch_official):
     output=[]
+    # Cache successful pages only within this edition run; country and dates
+    # are still validated separately, and failed requests remain retryable.
+    pages={}
     for task in tasks["tasks"]:
         if not task["missingTopicDates"]:continue
         candidates=[];errors=[]
         for source in task["officialTopicSources"]:
             try:
-                candidates.extend(event_candidates(fetch(source["url"]),
+                url=source["url"]
+                if url not in pages:
+                    pages[url]=fetch(url)
+                candidates.extend(event_candidates(pages[url],
                     task["countryCode"],source,tasks["editionDate"],task["missingTopicDates"]))
             except (URLError,OSError,ValueError,TypeError,RecursionError) as exc:
                 errors.append(type(exc).__name__)

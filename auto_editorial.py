@@ -1531,6 +1531,10 @@ def main():
     # Rank candidates by editorial evidence alone.
     draft=prioritize_personal_drafts_for_review(draft,set(),source_leads)
     print("Review budget priority: editorial evidence only",flush=True)
+    # Speculative enrichment is isolated from article ranking and approval.
+    # The worker is bounded and never awaited by the editorial process.
+    from country_material_prefetch import start_prefetch
+    start_prefetch(Path.cwd(), draft, day)
     seen=set(previously_seen)
     # Already approved articles retain their full original review and copy.
     selected=list(refill_seed["stories"]) if refill_seed else []

@@ -1,7 +1,7 @@
 name: Prepare verified nightly reader before release
 on:
   workflow_run:
-    workflows: ['Free-tier AI editorial double-check (safe preview)']
+    workflows: ['Prepare country materials after article approval']
     types: [completed]
   workflow_dispatch:
   # A narrowly scoped maintenance push can recover today's preparation
@@ -20,10 +20,10 @@ jobs:
     if: >-
       github.event_name == 'workflow_dispatch' ||
       github.event_name == 'push' ||
-      (github.event.workflow_run.conclusion == 'success' &&
-       github.event.workflow_run.head_branch == 'main' &&
-       (github.event.workflow_run.event != 'push' ||
-        startsWith(github.event.workflow_run.head_commit.message, 'Local editorial trial: ')))
+      ((github.event.workflow_run.conclusion == 'success' ||
+        github.event.workflow_run.conclusion == 'failure' ||
+        github.event.workflow_run.conclusion == 'timed_out') &&
+       github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -41,7 +41,6 @@ jobs:
         id: stage
         env:
           GH_TOKEN: ${{ github.token }}
-          RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
           DAY=$(TZ=Asia/Tokyo date +%F)
@@ -55,7 +54,7 @@ jobs:
             # artifact when a manual/maintenance run has no triggering ID.
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
             IDS=$(gh run list --workflow "Free-tier AI editorial double-check (safe preview)" --branch main --status success --limit 30 --json databaseId,createdAt | jq -r --arg cutoff "$CUTOFF" '.[] | select(.createdAt >= $cutoff) | .databaseId') || IDS=""
-            for ID in $(printf '%s\n' "$RUN_ID" $IDS | awk 'NF && !seen[$0]++'); do
+            for ID in $(printf '%s\n' $IDS | awk 'NF && !seen[$0]++'); do
               mkdir -p "$RUNNER_TEMP/reviews/$ID"
               gh run download "$ID" --name ai-reviewed-preview --dir "$RUNNER_TEMP/reviews/$ID" || true
             done
@@ -90,6 +89,26 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: python seed_reviewed_photos.py
+      - name: Apply independently reviewed country materials in disposable checkout
+        if: steps.stage.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          DAY=$(TZ=Asia/Tokyo date +%F)
+          bash fetch_reviewed_country_topics.sh "$DAY" "$RUNNER_TEMP/country-topic-reviews"
+          python country_review_apply.py --day "$DAY" --photo-cache .cache/yoru9-photos --auto-directory "$RUNNER_TEMP/country-topic-reviews"
+      - name: Verify reviewed country source and report remaining enrichment gaps
+        if: steps.stage.outputs.ready == 'true'
+        run: |
+          python country_content.py --check
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from country_readiness import article_country_backlog
+          issue=json.loads(Path("data/current.json").read_text(encoding="utf-8"))
+          missing,_=article_country_backlog(issue["stories"],Path.cwd(),issue["editionDate"])
+          print("Country enrichment pending (does not block verified news):",json.dumps(missing,sort_keys=True))
+          PY
       - name: Build and test the exact candidate before 21:00
         if: steps.stage.outputs.ready == 'true'
         env:

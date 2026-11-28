@@ -36,6 +36,7 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument("--approved",type=Path,required=True)
     p.add_argument("--output",type=Path,required=True)
+    p.add_argument("--prefetched",type=Path)
     args=p.parse_args()
     day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
     if not args.approved.is_file():
@@ -44,9 +45,9 @@ def main():
     payload=json.loads(args.approved.read_text(encoding="utf-8"))
     plan=article_plan(ROOT,payload,day)
     sites={}
-    # Include already approved countries that lack a current topic, not just
-    # pending countries requiring three photographs.
-    if plan["articleCountryNeeds"]:
+    # Approved countries missing only dated topics need official event sources,
+    # not another full UNESCO inventory or photo search.
+    if plan["countries"]:
         try:
             feed=download_feed()
             sites=collect_sites(feed)
@@ -62,6 +63,10 @@ def main():
     tasks=prepare_material_bundle(ROOT,public["stories"],day,report,args.output,
                                   heritage_sites=sites)
     topics=discover_topics(tasks)
+    # The earlier report is untrusted draft research, never approval.
+    # Preserve relevant leads for independent review even if a fresh fetch fails.
+    from country_material_prefetch import merge_prefetch
+    topics=merge_prefetch(tasks,topics,getattr(args,"prefetched",None))
     save(args.output/"topic-drafts.json",topics)
     print("Article countries needing enrichment:",sorted(plan["articleCountryNeeds"]))
     print("Material preparation tasks:",tasks["countriesNeedingMaterials"],
