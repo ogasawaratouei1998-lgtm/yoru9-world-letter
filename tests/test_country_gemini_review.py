@@ -71,3 +71,28 @@ class GeminiCountryReviewTest(unittest.TestCase):
         self.assertIn("secrets.GEMINI_API_KEY",w)
         self.assertIn("python country_gemini_review.py",w)
         self.assertIn("contents: read",w)
+
+    def test_previous_accepted_country_does_not_starve_next_or_repeat_api(self):
+        import json
+        from country_article_recovery import atomic_json
+        old,e,r=fixture()
+        mw={**old,"name":"マラウイ"}
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);prior=root/"prior";work=root/"work"
+            atomic_json(root/"country-content.json",{"countries":{"FJ":old,"MW":mw}})
+            atomic_json(work/"photo-review"/"article-preview-checkpoint.json",{"editionDate":DAY})
+            previous=prior/"123"/"gemini-review"/"FJ"
+            previous.mkdir(parents=True)
+            atomic_json(previous/"packet.json",{"countryCode":"FJ"})
+            for i in range(3):(previous/("FJ-"+str(i)+".jpg")).write_bytes(b"fixture")
+            call=Mock(return_value={"verdict":"DEFER"})
+            evidence=Mock(return_value={"fixture":True})
+            def validate(old,packet,code,day,folder):
+                if code!="FJ" or packet.get("countryCode")!="FJ":raise ValueError("no packet")
+                return {},{}
+            with patch("country_gemini_review.validate_packet",side_effect=validate),patch("country_gemini_review.image_inputs",return_value=[]):
+                status=review_once(root,{"stories":[{"country":"FJ"},{"country":"MW"}]},DAY,work,prior,"key",call=call,make_evidence=evidence)
+            self.assertEqual(status,"EVIDENCE_OR_REVIEW_DEFERRED")
+            call.assert_called_once()
+            self.assertTrue((work/"gemini-review"/"FJ"/"packet.json").is_file())
+            self.assertTrue((work/"gemini-review"/"MW"/"attempt.json").is_file())

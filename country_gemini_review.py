@@ -265,7 +265,7 @@ def validate_packet(old,packet,code,day,folder):
 
 def restore_reviewed_country(root,old,code,day,auto_directory,cache):
     for directory in prior_dirs(auto_directory):
-        folder=directory/"materials"/"gemini-review"
+        folder=directory/"materials"/"gemini-review"/code
         packet=read_json(folder/"packet.json")
         try:
             new,proof=validate_packet(old,packet,code,day,folder)
@@ -280,55 +280,74 @@ def restore_reviewed_country(root,old,code,day,auto_directory,cache):
     return None
 
 def review_once(root,payload,day,directory,prior,key,call=gemini_call,make_evidence=evidence_for):
-    directory=Path(directory);folder=directory/"gemini-review"
+    directory=Path(directory);review_root=directory/"gemini-review"
     canonical=json.loads((Path(root)/"country-content.json").read_text())["countries"]
     targets=list(dict.fromkeys(code for s in payload["stories"] for code in country_codes(s["country"])))
     checkpoint=read_json(directory/"photo-review"/"article-preview-checkpoint.json")
-    if checkpoint.get("editionDate")!=day:return "NO_CURRENT_PHOTOS"
+    previous_dirs=prior_dirs(prior)
+    accepted=set();attempts={};quota=False
+    # Carry successful reviews AND attempts forward, even if this run's photo
+    # search timed out. A country that is done must not starve the next country.
     for code in targets:
         old=canonical[code]
+        folder=review_root/code
+        for previous in previous_dirs:
+            previous=previous/"gemini-review"/code
+            attempt=read_json(previous/"attempt.json")
+            if attempt.get("editionDate")==day and attempt.get("countryCode")==code:
+                if code not in attempts:
+                    attempts[code]=attempt
+                    atomic_json(folder/"attempt.json",attempt)
+                if attempt.get("status")=="QUOTA_DEFERRED":quota=True
+            if code in accepted:continue
+            packet=read_json(previous/"packet.json")
+            try:
+                validate_packet(old,packet,code,day,previous)
+                folder.mkdir(parents=True,exist_ok=True)
+                for i in range(3):shutil.copyfile(previous/(code+"-"+str(i)+".jpg"),folder/(code+"-"+str(i)+".jpg"))
+                atomic_json(folder/"packet.json",packet)
+                accepted.add(code)
+            except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):continue
+    if quota:return "QUOTA_DEFERRED"
+    if checkpoint.get("editionDate")!=day:
+        return "REUSED_ACCEPTED" if accepted else "NO_CURRENT_PHOTOS"
+    for code in targets:
+        if code in accepted:continue
+        old=canonical[code];folder=review_root/code
         try:
             images=image_inputs(directory/"photo-review",checkpoint,code)
             draft_inputs(old)
         except (OSError,ValueError,TypeError,KeyError,AttributeError):continue
-        # Reuse a complete same-day accepted review only if the three byte
-        # identities and canonical baseline are unchanged.
-        for previous in prior_dirs(prior):
-            previous=previous/"gemini-review";packet=read_json(previous/"packet.json")
-            try:
-                validate_packet(old,packet,code,day,previous)
-                if packet["evidence"]["images"]!=images:continue
-                folder.mkdir(parents=True,exist_ok=True)
-                for i in range(3):shutil.copyfile(previous/(code+"-"+str(i)+".jpg"),folder/(code+"-"+str(i)+".jpg"))
-                atomic_json(folder/"packet.json",packet)
-                return "REUSED_ACCEPTED"
-            except (OSError,ValueError,KeyError,TypeError,AttributeError,IndexError):continue
+        # A stable fingerprint excludes changing web page navigation/timestamps.
+        fingerprint=digest({"day":day,"baseDigest":digest(old),"images":images})
+        if attempts.get(code,{}).get("fingerprint")==fingerprint:
+            continue
         if not key:return "KEY_UNAVAILABLE"
         try:
             evidence=make_evidence(old,code,day,images)
-            # Do not re-bill identical rejected/attempted inputs within this day.
-            fingerprint=digest(evidence)
-            for previous in prior_dirs(prior):
-                attempt=read_json(previous/"gemini-review"/"attempt.json")
-                if attempt.get("editionDate")==day and attempt.get("fingerprint")==fingerprint:
-                    folder.mkdir(parents=True,exist_ok=True)
-                    atomic_json(folder/"attempt.json",attempt)
-                    return "UNCHANGED_REVIEW_DEFERRED"
-            folder.mkdir(parents=True,exist_ok=True)
-            atomic_json(folder/"attempt.json",{"editionDate":day,"countryCode":code,"fingerprint":fingerprint,"model":MODEL})
+        except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,ET.ParseError):
+            # Source unavailable: no API call. Allow another eligible country.
+            continue
+        folder.mkdir(parents=True,exist_ok=True)
+        attempt={"editionDate":day,"countryCode":code,"fingerprint":fingerprint,"model":MODEL,"status":"ATTEMPTED"}
+        atomic_json(folder/"attempt.json",attempt)
+        try:
             response=call(evidence,directory/"photo-review",key)
             packet=packet_for(old,evidence,response,code,day)
             for i in range(3):
                 shutil.copyfile(directory/"photo-review"/(code+"-"+str(i)+".jpg"),folder/(code+"-"+str(i)+".jpg"))
             validate_packet(old,packet,code,day,folder)
             atomic_json(folder/"packet.json",packet)
-            return "REVIEW_ACCEPTED_AWAITING_RELEASE_QA"
+            status="REVIEW_ACCEPTED_AWAITING_RELEASE_QA"
         except HTTPError as exc:
             # No retry, no different model, no raw provider error.
-            return "QUOTA_DEFERRED" if exc.code==429 else "API_DEFERRED"
+            status="QUOTA_DEFERRED" if exc.code==429 else "API_DEFERRED"
         except (OSError,ValueError,TypeError,KeyError,AttributeError,IndexError,ET.ParseError):
-            return "EVIDENCE_OR_REVIEW_DEFERRED"
-    return "NO_ELIGIBLE_COMPLETE_DRAFT"
+            status="EVIDENCE_OR_REVIEW_DEFERRED"
+        atomic_json(folder/"attempt.json",{**attempt,"status":status})
+        # Exactly one generation request in a research run.
+        return status
+    return "REUSED_ACCEPTED" if accepted else "NO_ELIGIBLE_NEW_DRAFT"
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
