@@ -111,6 +111,76 @@
         "outcomeIrony": 4,
         "safety": 5
       }
+    },
+    {
+      "country": "マラウイ",
+      "category": "sports",
+      "label": "誤った発表の撤回",
+      "title": "マラウィ・スコッチーズ、補佐コーチの発表を誤って公開後撤回",
+      "summary": "マラウィのフットボール協会（FAM）は、暫定的にイライッシュのケイル・クイグリーをスコッチーズの補佐コーチとして発表したが、その発表をすぐに削除し、誤解を招いた。最終的に、ロベモア・ファジリが補佐コーチとして正式に任命されたと明確にした。",
+      "detail": "マラウィのフットボール協会（FAM）は2026年11月28日に、スコッチーズの補佐コーチとしてイライッシュのケイル・クイグリーを発表したが、その発表を数時間後で削除した。FAMの発言担当者、コリンズ・ンスンザはインタビューで、クイグリーの任命を確認したが、その後、補佐コーチの役割をロベモア・ファジリに明確にした。クイグリーはUEFA A級指導資格を持つが、現在は中国で開催される4カ国トーナメントに参加中で、スコッチーズのトレーニングに参加している。FAMは、クイグリーがワルドーム率いるマラウィ女性代表チームのフィットネスおよび補佐コーチを務めた経験を強調しているが、スコッチーズの補佐コーチとしての役割はファジリに属するとしている。この誤った発表は、チームの運営に混乱をもたらしたが、最終的には正確な人事配置が確認された。",
+      "quip": "発表したのはケイル・クイグリー。でも、補佐コーチはロベモア・ファジリだった。",
+      "reported": "2026-11-28",
+      "humanActor": "Football Association of Malawi (FAM)",
+      "humanMistake": "FAMが暫定的にイライッシュのケイル・クイグリーをスコッチーズの補佐コーチとして発表した後、その発表をすぐに削除し、誤解を招いた",
+      "expectedPlan": "ケイル・クイグリーをスコッチーズの補佐コーチとして正式に発表すること",
+      "observedOutcome": "FAMが発表を撤回し、実際の補佐コーチとしてロベモア・ファジリが任命されたことを明確にした",
+      "eventKey": "FAM-SCORCHERS-QUIGLEY-REMOVAL-2026",
+      "id": "local-5a8aabf0745f182300f980bd",
+      "categoryLabel": "スポーツ",
+      "sourceName": "nyasatimes.com",
+      "sourceUrl": "https://www.nyasatimes.com/fa-malawis-scorchers-backroom-shuffle-fazili-clarified-as-first-assistant/?utm_source=rss&utm_medium=rss&utm_campaign=fa-malawis-scorchers-backroom-shuffle-fazili-clarified-as-first-assistant",
+      "verificationUrls": [
+        "https://www.nyasatimes.com/fa-malawis-scorchers-backroom-shuffle-fazili-clarified-as-first-assistant/?utm_source=rss&utm_medium=rss&utm_campaign=fa-malawis-scorchers-backroom-shuffle-fazili-clarified-as-first-assistant"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 4,
+        "mistakeClarity": 5,
+        "outcomeIrony": 4,
+        "safety": 5
+      }
+    },
+    {
+      "country": "イギリス",
+      "category": "sports",
+      "label": "スポーツの失敗",
+      "title": "アロンソが起用したフォファナ、チェルシーの敗北に直結",
+      "summary": "チェルシーの監督Xabi Alonsoが、前週のインタビューで退職を語ったウェスリー・フォファナを起用した結果、試合中に不適切なプレーが続発し、ファンから強い批判を受けることになった。",
+      "detail": "チェルシーは2026年11月27日にノッティンガム・フォレストに3対2で敗れ、プレミアリーグ3連敗を記録した。監督のXabi Alonsoは試合前にチームの基本を再確認するよう呼びかけたが、実際の試合ではチームが大きく劣勢に陥り、高スピード走行に欠けることから、相手に大きく追いつけなかった。特に、フォファナの出場は問題視された。彼は前週のインタビューで「リバプール戦のペナルティミスを笑い話にできる」と発言し、退職を検討したことが報じられ、ファンの信頼を損なっていた。試合開始直後からファンの喝采がなく、最初の触れ合いで誤った判断をしたことで、イーゴル・ジエスのゴールに加え、ペナルティエリアでリーガン・デラップと衝突し、ミスを犯した。その結果、モーガン・ギブズ・ホワイトがペナルティを決め、2対0に追いつくも、最終的に逆転は失敗。フォファナは警告を受け、交代され、ファンからさらに批判された。アランソは「彼の週間の状態が悪かった」と語り、起用を後悔したと明言した。",
+      "quip": "起用したのはフォファナ、期待は基本、結果はペナルティエリアでデラップと衝突した。",
+      "reported": "2026-11-27",
+      "humanActor": "Xabi Alonso",
+      "humanMistake": "Starting Wesley Fofana in a match despite his recent public apology and low confidence, which led to poor on-field performance and fan backlash",
+      "expectedPlan": "To rebuild team confidence by focusing on fundamentals and playing a disciplined, controlled game",
+      "observedOutcome": "Chelsea were outworked by Nottingham Forest, conceded two goals, and suffered a 3-2 defeat despite having more possession; Fofana's poor performance and controversial interview led to immediate fan criticism and a loss of confidence in his role",
+      "eventKey": "chelsea-vs-forest-fofana-mistake",
+      "id": "local-fe274b9798ef0d421543c7cd",
+      "categoryLabel": "スポーツ",
+      "sourceName": "skysports.com",
+      "sourceUrl": "https://www.skysports.com/football/news/12040/13617391/xabi-alonso-called-for-chelsea-to-get-back-to-fundamentals-before-slipping-to-new-low-at-nottingham-forest",
+      "verificationUrls": [
+        "https://www.skysports.com/football/news/12040/13617391/xabi-alonso-called-for-chelsea-to-get-back-to-fundamentals-before-slipping-to-new-low-at-nottingham-forest"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 4,
+        "mistakeClarity": 5,
+        "outcomeIrony": 4,
+        "safety": 5
+      }
     }
   ]
 }
