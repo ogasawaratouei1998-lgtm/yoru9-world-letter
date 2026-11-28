@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "countryCode": "FJ",
+  "reviewedOn": "2026-11-28",
+  "status": "source_and_web_rendering_review_complete_exact_release_jpeg_pending",
+  "publicationEligible": false,
+  "independentSources": [
+    "https://whc.unesco.org/en/list/1399/",
+    "https://nationaltrust.org.fj/levuka/",
+    "https://www.fiji.travel/places-to-go/outer-islandslomaiviti-lau/locations/levuka-fiji-s-first-capital"
+  ],
+  "photos": [
+    {
+      "slot": 0,
+      "place": "レブカのビーチ・ストリート",
+      "fileIdentity": "BeachStreetLevuka.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:BeachStreetLevuka.jpg",
+      "original": "https://upload.wikimedia.org/wikipedia/commons/5/52/BeachStreetLevuka.jpg",
+      "originalDimensions": [
+        3317,
+        2200
+      ],
+      "author": "Anton Leddin",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "taken": "2000年半ば",
+      "visualReview": "原典の表示画像を確認。緑の斜面を背に商店の低層建築と通りが続く横位置の実景。2000年の写真であり現在の営業状況を示すものではない。国紹介の候補。",
+      "sourceDescriptionVerified": true,
+      "webRenderingInspected": true,
+      "releaseJpegDownloaded": false,
+      "sha256": null,
+      "publicationEligible": false
+    },
+    {
+      "slot": 1,
+      "place": "レブカの聖心教会",
+      "fileIdentity": "ChurchLevuka.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:ChurchLevuka.jpg",
+      "original": "https://upload.wikimedia.org/wikipedia/commons/f/f1/ChurchLevuka.jpg",
+      "originalDimensions": [
+        2253,
+        3471
+      ],
+      "author": "Anton Leddin",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "taken": "2000年半ば",
+      "visualReview": "原典の表示画像を確認。赤い屋根の教会、石造の時計塔、背後に海が見える縦位置の実景。教会を主題とするクイズ・旅行紹介候補。",
+      "sourceDescriptionVerified": true,
+      "webRenderingInspected": true,
+      "releaseJpegDownloaded": false,
+      "sha256": null,
+      "publicationEligible": false
+    },
+    {
+      "slot": 2,
+      "place": "レブカの商店建築",
+      "fileIdentity": "General Store Levuka.jpg",
+      "commonsPage": "https://commons.wikimedia.org/wiki/File:General_Store_Levuka.jpg",
+      "original": "https://upload.wikimedia.org/wikipedia/commons/6/67/General_Store_Levuka.jpg",
+      "originalDimensions": [
+        1600,
+        1200
+      ],
+      "author": "Melbar",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "taken": "2002-09-19",
+      "visualReview": "原典の表示画像を確認。GENERAL STOREの表示がある赤い屋根の低層店舗と斜面。港町の商業建築を示す独立した写真候補。現在の店名・営業は断定しない。",
+      "sourceDescriptionVerified": true,
+      "webRenderingInspected": true,
+      "releaseJpegDownloaded": false,
+      "sha256": null,
+      "publicationEligible": false
+    }
+  ],
+  "topicDraft": {
+    "title": "スバでフィジーの大地と海をテーマにした文化催し",
+    "body": "フィジー芸術評議会の公式案内によると、「MANA – Expression of Fiji, Land, Ocean and Beauty 2026」が11月23日から12月23日までスバの中国文化センターで開催予定です。名称はフィジーの大地、海、美をテーマにしています。",
+    "validFrom": "2026-11-28",
+    "validThrough": "2026-12-23",
+    "checkedOn": "2026-11-28",
+    "sourceName": "フィジー芸術評議会",
+    "sourceUrl": "https://www.fijiartscouncil.com.fj/event/mana-expression-of-fiji-land-ocean-and-beauty-2026/",
+    "publicationEligible": false
+  },
+  "quizDrafts": [
+    {
+      "slot": 1,
+      "question": "写真の聖心教会がある世界遺産の港町はどこ？",
+      "options": [
+        "レブカ",
+        "スバ",
+        "ナンディ"
+      ],
+      "answer": 0,
+      "fact": "UNESCOとNational Trust of Fijiはレブカ歴史港町の構成要素に聖心教会を挙げています。"
+    },
+    {
+      "slot": 2,
+      "question": "レブカ歴史港町の建物が伝える歴史は？",
+      "options": [
+        "19世紀の海上交易と文化交流",
+        "20世紀の国際空港建設",
+        "現代の高層金融街の開発"
+      ],
+      "answer": 0,
+      "fact": "UNESCOは19世紀の海上交易と、先住民の社会・建築伝統との関係を評価しています。"
+    }
+  ],
+  "requiredBeforeApproval": [
+    "download_exact_release_jpegs_and_verify_sha256_dimensions_and_source_identity",
+    "align_travel_and_quiz_content_with_each_exact_photo",
+    "review_attribution_and_any_resize_or_crop_under_cc_by_sa",
+    "canonical_sync_and_full_build_mobile_preflight"
+  ],
+  "blocker": "Web source images were visually inspected. Local download failed with DNS resolution error; exact cached release JPEGs and checksums remain unavailable. Do not mark visualReviewed or promote pending country from this report."
+}
