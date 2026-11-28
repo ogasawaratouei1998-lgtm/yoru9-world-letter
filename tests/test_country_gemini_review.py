@@ -106,3 +106,46 @@ class GeminiCountryReviewTest(unittest.TestCase):
         self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org/licenses/by-nc-sa/3.0/"))
         self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org.evil.test/licenses/by-sa/3.0/"))
         self.assertIsNone(canonical_license_url("CC BY-SA 3.0","https://creativecommons.org/licenses/by-sa/3.0/igo/"))
+
+    def test_official_feed_fallback_is_property_bound_and_no_second_download(self):
+        from country_gemini_review import evidence_for,save_review_inventory,inventory_for_review,EvidenceDeferred
+        from xml.sax.saxutils import escape
+        old,e,_=fixture()
+        xml=("<rows><row><id_number>1399</id_number><site>Levuka</site><iso_code>fj</iso_code>"
+             "<latitude>-17.68</latitude><longitude>178.83</longitude><short_description>"
+             +escape(BODY)+"</short_description></row><row><id_number>476</id_number>"
+             "<site>Chongoni</site><iso_code>mw</iso_code><latitude>-14.2</latitude>"
+             "<longitude>34.2</longitude><short_description>wrong country</short_description></row></rows>").encode()
+        with tempfile.TemporaryDirectory() as td:
+            save_review_inventory(td,DAY,xml,["FJ"])
+            fetch=Mock(side_effect=AssertionError("No repeated download"))
+            data=inventory_for_review(td,DAY,fetch=fetch)
+            self.assertNotIn(b"wrong country",data)
+            fetch.assert_not_called()
+            unavailable=Mock(side_effect=OSError("page unavailable"))
+            ev=evidence_for(old,"FJ",DAY,e["images"],fetch=unavailable,inventory=lambda:data)
+            self.assertEqual(ev["sources"][URL.rstrip("/")]["sourceMode"],"official_feed_only")
+            self.assertIn(QUOTE,ev["sources"][URL.rstrip("/")]["text"])
+            self.assertEqual(ev["sources"][URL.rstrip("/")]["inventoryPropertyIds"],["1399"])
+            with self.assertRaises(EvidenceDeferred):
+                evidence_for(old,"MW",DAY,e["images"],fetch=unavailable,inventory=lambda:data)
+            (Path(td)/"heritage-feed-evidence.xml").write_bytes(b"tampered")
+            self.assertEqual(inventory_for_review(td,DAY,fetch=lambda:xml),xml)
+
+    def test_diagnostics_do_not_report_success_when_source_missing(self):
+        from country_article_recovery import atomic_json
+        from country_gemini_review import EvidenceDeferred
+        import json
+        old,e,_=fixture()
+        with tempfile.TemporaryDirectory() as td:
+            root=Path(td);work=root/"work"
+            atomic_json(root/"country-content.json",{"countries":{"FJ":old}})
+            atomic_json(work/"photo-review"/"article-preview-checkpoint.json",{"editionDate":DAY})
+            call=Mock()
+            with patch("country_gemini_review.image_inputs",return_value=e["images"]):
+                status=review_once(root,{"stories":[{"country":"FJ"}]},DAY,work,None,"key",
+                    call=call,make_evidence=Mock(side_effect=EvidenceDeferred("OFFICIAL_TEXT_UNAVAILABLE")))
+            self.assertEqual(status,"NO_ELIGIBLE_NEW_DRAFT")
+            call.assert_not_called()
+            diag=json.loads((work/"gemini-review-diagnostics.json").read_text())
+            self.assertEqual(diag["countries"]["FJ"],"OFFICIAL_TEXT_UNAVAILABLE")
