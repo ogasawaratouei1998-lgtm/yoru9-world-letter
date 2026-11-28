@@ -8,6 +8,76 @@
   "approvedBy": "automated-two-stage-review",
   "stories": [
     {
+      "country": "イギリス",
+      "category": "person",
+      "label": "誤診による精神科入院",
+      "title": "インフルエンサーが誤診で2か月間精神科に入院、脳炎の実態を発見",
+      "summary": "マレーシア出身のインフルエンサー・サブリナ・バホーンが、精神症状を理由に精神科に入院させられたが、実際は脳炎による炎症だった。医療機関が誤診を犯し、2か月間の治療を誤って実施した。",
+      "detail": "マレーシア出身のインフルエンサー・サブリナ・バホーンは2023年からTikTokで活動し、ロンドンの地下鉄で踊る動画で人気を博していた。2026年3月、急に恋人と別れ、異常な行動を示し、家族が医療機関に相談した。初期の診断ではストレスや睡眠不足が原因とされ、鎮静薬を処方して退院されたが、症状は悪化し、家を壊し、幻覚を経験した。最終的に精神科に入院され、2か月間の治療を受けた。家族は診断を拒否し、父の友人（神経科医）の協力で検査を強化した結果、脳炎（NMDA受容体に対する自己抗体による）が発見された。この病気は卵巣腫瘍が原因で、自体の免疫反応を引き起こすもので、治療として6月に手術が実施された。手術後、バホーンは完全に回復し、現在は自らの経験をもとに医療制度の見直しを呼びかけており、ロンドンのイマーパル・ヘルスケアセンターは誤診に対して公式に謝罪した。",
+      "quip": "鎮静薬を処方した医療機関が、猫背のサブリナを見失った",
+      "reported": "2026-11-28",
+      "humanActor": "Sabrina Bahsoon",
+      "humanMistake": "医療機関が、自発性のない精神症状を脳炎（encephalitis）と誤診し、精神科入院を誤って実施した",
+      "expectedPlan": "精神症状を原因として、一般的なストレスや睡眠不足によるものと判断し、鎮静薬を処方して退院させる",
+      "observedOutcome": "入院後2か月間、完全に猫背状態に陥り、食事や言語機能が失われ、意識が曖昧な状態を維持し、家族が診断を拒否したため、長期間の誤診が続いた",
+      "eventKey": "GB-2026-PSYCHIATRIC-MISTAKE-SABRINA",
+      "id": "local-1c2d52ccc5c3fca637cb8580",
+      "categoryLabel": "個人",
+      "sourceName": "20minutos.es",
+      "sourceUrl": "https://www.20minutos.es/gente/una-influencer-internada-un-psiquiatrico-durante-dos-meses-por-error-confundieron-psicosis-con-una-inflamacion-cerebral_7066797_0.html",
+      "verificationUrls": [
+        "https://www.20minutos.es/gente/una-influencer-internada-un-psiquiatrico-durante-dos-meses-por-error-confundieron-psicosis-con-una-inflamacion-cerebral_7066797_0.html"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 5,
+        "outcomeIrony": 5,
+        "safety": 5
+      }
+    },
+    {
+      "country": "フィジー",
+      "category": "person",
+      "label": "個人の失敗",
+      "title": "レガン・チャップマン、熱中症で倒れるもフィジア代表7人制ラグビーにデビュー",
+      "summary": "フィジア出身のレガン・チャップマンが、熱帯気候に適応する過程で最初のトレーニング中に熱中症で倒れ、その後も回復しながらフィジア代表7人制ラグビー選手としてデビューを果たした。",
+      "detail": "フィジアのラグビー選手・レガン・チャップマンは、レヴーカで生まれ育ち、14歳からハマilton Girlsの7人制ラグビーに参加し、2年後に15人制に転向。18歳でワイカトFBC女子チームに選ばれ、その後、マウントマウガンゥイでの予選トーナメントに参加。その経験をもとに、フィジアでの2週間のトレーニングに参加し、ダービーでのHSBC SVNSシリーズ出場に向けた選抜に応募した。しかし、最初のトレーニング中に熱中症で意識を失い、倒れた。その状況はチーム内でも大きな驚きとなったが、チームの受け入れの温かさや家族の支えにより、徐々に適応し、今週末にダービーでの初出場を果たす見通し。フィジア代表7人制ラグの初対戦相手はカナダで、6時44分に開催され、FBC2でライブ配信される。",
+      "quip": "熱中症で倒れたのは最初のトレーニングだけど、最終的にFijiana 7sに選ばれた",
+      "reported": "2026-11-28",
+      "humanActor": "Regan Chapman",
+      "humanMistake": "passed out during her first training session in Fiji due to the tropical heat",
+      "expectedPlan": "adjust to Fiji's tropical conditions and prepare for the Dubai leg of the HSBC SVNS Series",
+      "observedOutcome": "initially collapsed from heat exhaustion during training but eventually adapted and made her international debut with the Fijiana 7s team",
+      "eventKey": "FJ-RUGBY-CHAPMAN-HEAT-EXHAUSTION-2026",
+      "id": "local-c2a082b778771db70ba79240",
+      "categoryLabel": "個人",
+      "sourceName": "fbcnews.com.fj",
+      "sourceUrl": "https://www.fbcnews.com.fj/sports/rugby/chapman-set-for-fiji-7s-debut-after-rapid-rise-through-rugby-ranks/",
+      "verificationUrls": [
+        "https://www.fbcnews.com.fj/sports/rugby/chapman-set-for-fiji-7s-debut-after-rapid-rise-through-rugby-ranks/"
+      ],
+      "editorVerified": true,
+      "humorSafe": true,
+      "humanFailureVerified": true,
+      "majorPersonalFailureVerified": false,
+      "surpriseVerified": true,
+      "stageTsukkomiVerified": true,
+      "editorQualityVerified": true,
+      "editorialScores": {
+        "surprise": 5,
+        "mistakeClarity": 4,
+        "outcomeIrony": 5,
+        "safety": 5
+      }
+    },
+    {
       "country": "ベルギー",
       "category": "person",
       "label": "誤った通知による個人的ショック",
