@@ -108,6 +108,8 @@ def main():
             sites=collect_sites(feed)
             inventory=build_inventory(ROOT,feed)
             plan=article_plan(ROOT,payload,day,inventory)
+            from country_gemini_review import save_review_inventory
+            save_review_inventory(args.output,day,feed,[r["code"] for r in plan["countries"]])
         except (URLError,TimeoutError,ValueError,OSError,ET.ParseError) as exc:
             print("Official inventory unavailable:",type(exc).__name__)
     save(args.output/"plan.json",plan)
