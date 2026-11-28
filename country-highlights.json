@@ -45,6 +45,17 @@
         "sourceUrl": "https://www.esmadrid.com/en/whats-on/feriarte-ifema-madrid"
       }
     ],
+    "FI": [
+      {
+        "title": "ヘルシンキの元老院広場に冬の市場、今年はサウナも",
+        "body": "ヘルシンキ市の観光案内によると、元老院広場のクリスマス市場は2026年11月27日から12月22日まで開かれます。職人の手仕事や食を紹介する屋台に加え、今年はフィンランドのサウナ文化を体験できる新しい企画も用意されています。",
+        "validFrom": "2026-11-28",
+        "validThrough": "2026-12-22",
+        "checkedOn": "2026-11-28",
+        "sourceName": "ヘルシンキ市 MyHelsinki",
+        "sourceUrl": "https://www.myhelsinki.fi/events/helsinki-christmas-market-2026/"
+      }
+    ],
     "FR": [
       {
         "title": "ランスのクリスマス市場、シャンパーニュ地方の冬の楽しみ",
@@ -83,6 +94,17 @@
         "checkedOn": "2026-11-19",
         "sourceName": "英国政府観光局 VisitBritain",
         "sourceUrl": "https://www.visitbritain.com/en/things-to-do/events-and-things-do-november"
+      }
+    ],
+    "HR": [
+      {
+        "title": "ドゥブロヴニク旧市街を彩る冬の音楽と劇場",
+        "body": "ドゥブロヴニク観光局は、2026年11月28日から2027年1月3日までのアドベント行事を案内しています。旧市街のストラドゥン通りなどを舞台に、コンサートや演劇、家族向けの創作体験が予定されています。",
+        "validFrom": "2026-11-28",
+        "validThrough": "2026-12-28",
+        "checkedOn": "2026-11-28",
+        "sourceName": "ドゥブロヴニク観光局",
+        "sourceUrl": "https://visitdubrovnik.hr/fr/calendrier-des-evenements/advent-in-dubrovnik/"
       }
     ],
     "IT": [
@@ -134,6 +156,17 @@
         "checkedOn": "2026-11-19",
         "sourceName": "ダニーデン公式観光案内",
         "sourceUrl": "https://www.dunedinnz.com/visit/see-and-do/upcoming-events"
+      }
+    ],
+    "PT": [
+      {
+        "title": "リスボンのエドゥアルド7世公園に冬の祝祭",
+        "body": "リスボン観光局によると、Wonderland Lisboaは2026年11月27日から2027年1月3日までエドゥアルド7世公園で開催予定です。観覧車やスケートリンク、食や手工芸品の店が集まる冬の催しです。",
+        "validFrom": "2026-11-28",
+        "validThrough": "2026-12-28",
+        "checkedOn": "2026-11-28",
+        "sourceName": "リスボン観光局",
+        "sourceUrl": "https://www.visitlisboa.com/en/events/wonderland-lisboa_"
       }
     ],
     "US": [

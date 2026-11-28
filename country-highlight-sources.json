@@ -46,10 +46,22 @@
         "url": "https://www.visitbrasil.com/"
       }
     ],
+    "CA": [
+      {
+        "name": "オタワ観光局",
+        "url": "https://ottawatourism.ca/en/event-calendar"
+      }
+    ],
     "CH": [
       {
         "name": "スイス政府観光局",
         "url": "https://www.myswitzerland.com/en-ch/experiences/events/events-search/"
+      }
+    ],
+    "CY": [
+      {
+        "name": "キプロス観光副省 Visit Cyprus",
+        "url": "https://www.visitcyprus.com/events/month/"
       }
     ],
     "CZ": [
@@ -90,6 +102,12 @@
         "url": "https://www.spain.info/en/"
       }
     ],
+    "FI": [
+      {
+        "name": "ヘルシンキ市 MyHelsinki",
+        "url": "https://www.myhelsinki.fi/events/helsinki-christmas-market-2026/"
+      }
+    ],
     "FR": [
       {
         "name": "Explore France",
@@ -108,10 +126,32 @@
         "url": "https://www.visitgreece.gr/en/events"
       }
     ],
+    "HR": [
+      {
+        "name": "ドゥブロヴニク観光局",
+        "url": "https://visitdubrovnik.hr/fr/calendrier-des-evenements/advent-in-dubrovnik/"
+      },
+      {
+        "name": "ドゥブロヴニク観光局",
+        "url": "https://visitdubrovnik.hr/hr/kalendar-dogadanja/"
+      }
+    ],
+    "HU": [
+      {
+        "name": "ブダペスト観光案内 Budapest Info",
+        "url": "https://www.budapestinfo.hu/en/events-calendar"
+      }
+    ],
     "IE": [
       {
         "name": "アイルランド観光開発庁 Discover Ireland",
         "url": "https://www.discoverireland.ie/events"
+      }
+    ],
+    "IS": [
+      {
+        "name": "レイキャビク観光局",
+        "url": "https://visitreykjavik.is/see-do/events"
       }
     ],
     "IT": [
@@ -152,6 +192,28 @@
         "url": "https://www.latvia.travel/en/events-latvia-riga"
       }
     ],
+    "MA": [
+      {
+        "name": "モロッコ政府観光局",
+        "url": "https://www.visitmorocco.com/en/morocco/events?field_event_category_tid%5B1%5D=1"
+      }
+    ],
+    "MT": [
+      {
+        "name": "マルタ文化遺産庁 Heritage Malta",
+        "url": "https://heritagemalta.mt/whats-on/"
+      },
+      {
+        "name": "マルタ観光局",
+        "url": "https://mta.com.mt/events/"
+      }
+    ],
+    "NL": [
+      {
+        "name": "アムステルダム観光案内 I amsterdam",
+        "url": "https://www.iamsterdam.com/en/whats-on/annual-event-calendar"
+      }
+    ],
     "NO": [
       {
         "name": "ノルウェー政府観光局",
@@ -166,6 +228,22 @@
       {
         "name": "Tourism New Zealand",
         "url": "https://www.newzealand.com/int/"
+      }
+    ],
+    "PL": [
+      {
+        "name": "クラクフ市",
+        "url": "https://krakow.pl/dzielnica_i_stare_miasto/346609%2C2314%2Ckomunikat%2Ckrakow_w_swiatecznej_odslonie__jarmark_bozonarodzeniowy_na_rynku_glownym.html"
+      }
+    ],
+    "PT": [
+      {
+        "name": "リスボン観光局",
+        "url": "https://www.visitlisboa.com/en/p/whats-on"
+      },
+      {
+        "name": "リスボン観光局",
+        "url": "https://www.visitlisboa.com/en/events/wonderland-lisboa_"
       }
     ],
     "SE": [
@@ -184,6 +262,12 @@
       {
         "name": "スロベニア政府観光局",
         "url": "https://www.slovenia.info/en/things-to-do/events"
+      }
+    ],
+    "SK": [
+      {
+        "name": "スロバキア政府観光局",
+        "url": "https://slovakia.travel/en/event-calendar"
       }
     ],
     "TH": [
