@@ -25,7 +25,7 @@ jobs:
        github.event.workflow_run.head_branch == 'main')
     runs-on: ubuntu-latest
     # Keep headroom for checkpoint upload after bounded optional steps time out.
-    timeout-minutes: 24
+    timeout-minutes: 27
     steps:
       - uses: actions/checkout@v4
         with:
@@ -117,6 +117,14 @@ jobs:
         env:
           APPROVED_PATH: ${{ steps.issue.outputs.path }}
         run: python research_article_countries.py --skip-topics --approved "$APPROVED_PATH" --output reports/article-countries --prior-materials "$RUNNER_TEMP/prior-materials" --prefetched-photos "$RUNNER_TEMP/early-photos"
+      - name: Review exact country photos and copy with the existing opt-in Gemini key
+        if: vars.YORU9_ENABLE_GEMINI == 'true'
+        timeout-minutes: 3
+        continue-on-error: true
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          APPROVED_PATH: ${{ steps.issue.outputs.path }}
+        run: python country_gemini_review.py --approved "$APPROVED_PATH" --directory reports/article-countries --prior "$RUNNER_TEMP/prior-materials"
       - name: Report material completion separately from news readiness
         if: always()
         timeout-minutes: 1

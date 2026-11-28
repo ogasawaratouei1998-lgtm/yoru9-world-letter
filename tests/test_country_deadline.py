@@ -10,7 +10,7 @@ class CountryDeadlineTest(unittest.TestCase):
         w=(ROOT/".github/workflows/research-article-countries.yml").read_text()
         import re
         job_budget=int(re.search(r"^    timeout-minutes: (\d+)$",w,re.M).group(1))
-        self.assertLessEqual(job_budget,24)
+        self.assertLessEqual(job_budget,27)
         steps_budget=sum(int(v) for v in re.findall(r"^        timeout-minutes: (\d+)$",w,re.M))
         # Leave headroom for checkout/setup; bound both artifact uploads.
         self.assertLessEqual(steps_budget,job_budget-2)

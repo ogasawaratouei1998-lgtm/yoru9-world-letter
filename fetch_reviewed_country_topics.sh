@@ -11,4 +11,7 @@ for ID in $IDS; do
   [[ "$ID" =~ ^[0-9]+$ ]] || continue
   mkdir -p "$DEST/$ID"
   timeout 12s gh run download "$ID" --name reviewed-country-topics --dir "$DEST/$ID" >/dev/null 2>&1 || true
+  # Same trusted successful read-only main run, not a PR or arbitrary artifact.
+  # Contains hash-bound evidence and exact JPEGs; importer reconstructs the record.
+  timeout 12s gh run download "$ID" --name article-country-research --dir "$DEST/$ID/materials" >/dev/null 2>&1 || true
 done
