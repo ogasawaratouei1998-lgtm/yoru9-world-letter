@@ -26,8 +26,36 @@ BATCH_GLOB = "country-expansion-batch-*.json"
 API = "https://commons.wikimedia.org/w/api.php"
 LICENSES = {
     "CC BY-SA 4.0", "CC BY 4.0", "CC BY-SA 3.0", "CC BY 3.0",
-    "CC BY-SA 2.0", "CC BY 2.0", "CC0 1.0",
+    "CC BY-SA 2.5", "CC BY 2.5", "CC BY-SA 2.0", "CC BY 2.0", "CC0 1.0",
+    "CC BY-SA 3.0 IGO", "CC BY 3.0 IGO",
 }
+
+
+def canonical_license_url(name, url):
+    """Normalize only the exact CC license identified by Commons metadata.
+
+    Some older, valid Commons files advertise HTTP or a localized deed.
+    Never infer a grant from a generic CC hostname or replace NC/ND rights.
+    """
+    if not isinstance(name,str) or not isinstance(url,str):return None
+    if name not in LICENSES:return None
+    if name=="CC0 1.0":
+        path="/publicdomain/zero/1.0/"
+    else:
+        parts=name[3:].lower().split()
+        path="/licenses/"+parts[0]+"/"+parts[1]+"/"
+        if len(parts)==3 and parts[2]=="igo":path+="igo/"
+    try:
+        u=urlparse(url)
+        if u.scheme not in ("http","https") or u.netloc!="creativecommons.org" or u.query or u.fragment:
+            return None
+        actual=u.path.rstrip("/")+"/"
+        if actual!=path and not re.fullmatch(re.escape(path)+r"deed(?:\.[a-zA-Z-]+)?/?",u.path):
+            return None
+        return "https://creativecommons.org"+path
+    except ValueError:
+        return None
+
 # Manual *search vocabulary*, not assertions about any returned image.
 LEGACY_SEARCH = {
     "ID": ("Borobudur Indonesia landscape", "Borobudur temple Indonesia", "Prambanan temple Indonesia"),
@@ -76,13 +104,17 @@ def valid_candidate(page):
     if info.get("width", 0) < 800 or info.get("height", 0) < 500:
         return None
     license_name = plain(metadata_value(info, "LicenseShortName"))
+    if license_name.lower().endswith(" igo"):
+        license_name=license_name[:-4]+" IGO"
     license_url = metadata_value(info, "LicenseUrl")
     author = plain(metadata_value(info, "Artist"))
     if license_name not in LICENSES or not author or len(author) > 500:
         return None
-    parsed = urlparse(license_url)
-    if parsed.scheme != "https" or parsed.hostname != "creativecommons.org":
+    normalized_url=canonical_license_url(license_name,license_url)
+    if not normalized_url:
         return None
+    if not license_url.startswith("https://creativecommons.org/") or license_url.rstrip("/")!=normalized_url.rstrip("/"):
+        license_url=normalized_url
     photo_url = info.get("url", "")
     photo_page = info.get("descriptionurl", "")
     for address, required in ((photo_url, "upload.wikimedia.org"), (photo_page, "commons.wikimedia.org")):

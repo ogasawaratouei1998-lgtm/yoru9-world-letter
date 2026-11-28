@@ -250,7 +250,7 @@ def research_shard(plan, shard, fetch=fetch_commons, sleep_seconds=1.0, *,
                 # At most two requests per slot; no retry after errors or throttling.
                 queries = [query]
                 alternate = slot.get("alternateSearchQuery")
-                if (slot.get("origin") == "existing_draft" and isinstance(alternate, str)
+                if ((slot.get("origin") == "existing_draft" or retry_transient) and isinstance(alternate, str)
                         and alternate.strip() and alternate != query):
                     queries.append(alternate)
                 row["attemptedQueries"] = []
