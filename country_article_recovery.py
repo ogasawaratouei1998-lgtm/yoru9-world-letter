@@ -69,14 +69,23 @@ def read_prefetched_candidates(path):
 def candidate_resume(plan,day,prior=None,early=None):
     allowed={(r["code"],s["slot"]):slot_signature(s) for r in plan.get("countries",[]) for s in r["slots"]}
     result={}
-    reports=[read_json(p/"research-checkpoint.json") for p in prior_dirs(prior)]
-    reports.append(read_prefetched_candidates(early))
-    for report in reports:
+    reports=[(read_json(p/"research-checkpoint.json"),p) for p in prior_dirs(prior)]
+    reports.append((read_prefetched_candidates(early),None))
+    failed=set()
+    for report,directory in reports:
         if report.get("editionDate")!=day or report.get("publicationEligible") is not False:continue
         for row in report.get("rows",[])[:196*3]:
             if not isinstance(row,dict):continue
             key=(row.get("countryCode"),row.get("slot"))
-            if key not in allowed or row.get("slotSignature")!=allowed[key] or key in result:continue
+            if key not in allowed or row.get("slotSignature")!=allowed[key] or key in result or key in failed:continue
+            if directory:
+                index=read_json(directory/"photo-review"/"article-preview-checkpoint.json")
+                if index.get("editionDate")==day:
+                    slot=next((s for s in index.get("slots",[]) if isinstance(s,dict)
+                              and (s.get("countryCode"),s.get("slot"))==key),None)
+                    if slot and slot.get("status")!="downloaded_unreviewed":
+                        failed.add(key)
+                        continue
             try:
                 candidates=[x for x in row.get("candidates",[])[:3] if isinstance(x,dict)
                             and x.get("publicationEligible") is False and candidate_identity(x)]
@@ -85,11 +94,12 @@ def candidate_resume(plan,day,prior=None,early=None):
     return result
 
 def prefetch_photos(root,drafts,day,output):
-    codes=set(list(dict.fromkeys(code for row in drafts if isinstance(row,dict)
-               for code in country_codes(row.get("country",""))))[:MAX_COUNTRIES])
+    codes=list(dict.fromkeys(code for row in drafts if isinstance(row,dict)
+               for code in country_codes(row.get("country",""))))[:MAX_COUNTRIES]
     plan=make_plan(root)
-    # At most one country / three slots; speculation must never delay AI review.
-    plan["countries"]=[r for r in plan["countries"] if r["code"] in codes][:1]
+    # At most one country / three slots; preserve editorial priority.
+    by_code={r["code"]:r for r in plan["countries"]}
+    plan["countries"]=[by_code[code] for code in codes if code in by_code][:1]
     plan["shards"]=1
     for row in plan["countries"]:row["shard"]=0
     def persist(rows):
@@ -221,7 +231,7 @@ def authority_search(code):
     """Find national authority website *leads* via Wikidata P17/P297 and P856.
     No fetched or model-guessed URL is promoted to the trusted registry.
     """
-    query='SELECT DISTINCT ?agency ?agencyLabel ?website WHERE { ?country wdt:P297 "'+code+'" . ?agency wdt:P17 ?country ; wdt:P856 ?website ; wdt:P31/wdt:P279* ?kind . VALUES ?kind { wd:Q174550 wd:Q618779 wd:Q20857065 } SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 10'
+    query='SELECT DISTINCT ?agency ?agencyLabel ?website WHERE { ?country wdt:P297 "'+code+'" . ?agency wdt:P17 ?country ; wdt:P856 ?website ; wdt:P31/wdt:P279* ?kind . VALUES ?kind { wd:Q579167 wd:Q3689421 } SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } } LIMIT 10'
     req=Request("https://query.wikidata.org/sparql?"+urlencode({"query":query,"format":"json"}),
                 headers={"User-Agent":"Yoru9AuthorityLeads/1.0 (https://github.com/ogasawaratouei1998-lgtm/yoru9-world-letter)","Accept":"application/sparql-results+json"})
     with urlopen(req,timeout=10) as response:raw=response.read(100_001)

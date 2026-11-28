@@ -83,6 +83,8 @@ def main():
     report=combine(plan,[research_shard(plan,0,resume=resume,retry_transient=True,
                                       on_progress=checkpoint)])
     add_named_photo_leads(ROOT,report,plan)
+    if report.get("results"):
+        checkpoint_research(args.output,plan,day,report["results"])
     report["editionDate"]=day
     report["articleCountryNeeds"]=plan["articleCountryNeeds"]
     save(args.output/"research.json",report)

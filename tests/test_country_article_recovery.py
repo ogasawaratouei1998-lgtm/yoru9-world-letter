@@ -36,6 +36,20 @@ class ArticleRecoveryTest(unittest.TestCase):
             slot["searchQuery"]="not Fiji"
             self.assertEqual(candidate_resume(plan,DAY,Path(td)),{})
 
+    def test_failed_slot_is_searched_again_on_recovery(self):
+        slot={"slot":0,"role":"cover","searchQuery":"Fiji"}
+        plan={"countries":[{"code":"FJ","slots":[slot]}]}
+        c={**candidate("A.jpg"),"publicationEligible":False}
+        with tempfile.TemporaryDirectory() as td:
+            folder=Path(td)/"123"
+            checkpoint_research(folder,plan,DAY,[{"countryCode":"FJ","slot":0,"candidates":[c]}])
+            photo=folder/"photo-review"
+            photo.mkdir()
+            (photo/"article-preview-checkpoint.json").write_text(json.dumps({
+                "editionDate":DAY,"publicationEligible":False,
+                "slots":[{"countryCode":"FJ","slot":0,"status":"download_failed"}]}))
+            self.assertEqual(candidate_resume(plan,DAY,Path(td)),{})
+
     def test_partial_fetch_fallback_and_reuse_never_approves(self):
         report={"results":[row("FJ",0,["A.jpg"]),row("FJ",1,["B.jpg"])]}
         data={"FJ":{"name":"Fiji","status":"pending"}}
