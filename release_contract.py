@@ -17,19 +17,66 @@ def validate_release_input(root, payload, day, *, require_assets=False):
         require_release_assets(root)
     return public
 
-def recover_review(root, day, incoming, *, require_assets=True):
-    """Preserve committed/archived issues. Choose newest valid same-day artifact."""
+def is_automatic_extension(seed, candidate):
+    """Accept only a strictly additive, independently validated automatic issue.
+
+    Neither edition metadata nor a single approved story may be rewritten.
+    Curated and special editions are not eligible.
+    """
+    return (approval_origin(seed) == approval_origin(candidate) == "automated"
+            and seed.get("editionType") == candidate.get("editionType") == "regular"
+            and {k:v for k,v in seed.items() if k!="stories"} ==
+                {k:v for k,v in candidate.items() if k!="stories"}
+            and len(candidate["stories"])>len(seed["stories"])
+            and all(story in candidate["stories"] for story in seed["stories"]))
+
+
+def recover_review(root, day, incoming, *, require_assets=True, allow_extension=False):
+    """Preserve curated/archived issues; optionally accept additive automatic reviews."""
     root=Path(root)
     target=root/"data"/"approved"/(day+".json")
     if (root/"data"/"archive"/(day+".json")).exists():
         return "archived",0
+    existing=None
     if target.exists():
-        payload=json.loads(target.read_text(encoding="utf-8"))
-        validate_release_input(root,payload,day,require_assets=require_assets)
-        return "existing",len(payload["stories"])
+        existing=json.loads(target.read_text(encoding="utf-8"))
+        validate_release_input(root,existing,day,require_assets=require_assets)
+        if (not allow_extension or approval_origin(existing)!="automated"
+                or existing.get("editionType")!="regular"):
+            return "existing",len(existing["stories"])
     candidates=sorted((p for p in Path(incoming).glob("*/"+day+".json")
                        if p.parent.name.isdecimal()),
                       key=lambda p:int(p.parent.name),reverse=True)
+    if existing is not None:
+        # Follow the monotonic history oldest-first, not the largest count.
+        # A newer stale/forked artifact cannot discard an already accepted addition.
+        seed=existing
+        selected=None
+        for candidate in reversed(candidates):
+            try:
+                payload=json.loads(candidate.read_text(encoding="utf-8"))
+                validate_release_input(root,payload,day,require_assets=require_assets)
+                if not is_automatic_extension(seed,payload):
+                    continue
+            except (ValueError,KeyError,TypeError,OSError,IndexError):
+                print("Rejected invalid preview:",candidate.parent.name,flush=True)
+                continue
+            seed=payload
+            selected=candidate
+        if selected is None:
+            return "existing",len(existing["stories"])
+        # All four callers operate on isolated checkouts; only the publisher
+        # can commit, under its existing lock and non-forced rebase safeguards.
+        if (root/"data"/"archive"/(day+".json")).exists():
+            return "archived",0
+        if json.loads(target.read_text(encoding="utf-8"))!=existing:
+            raise ValueError("Committed approval changed during recovery")
+        tmp=target.with_suffix(".recover.tmp")
+        tmp.write_text(json.dumps(seed,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+        tmp.replace(target)
+        print("Recovered additive automatic review",selected.parent.name,
+              "stories",len(existing["stories"]),"->",len(seed["stories"]),flush=True)
+        return "extended",len(seed["stories"])
     for candidate in candidates:
         try:
             payload=json.loads(candidate.read_text(encoding="utf-8"))
@@ -52,13 +99,13 @@ def approval_origin(payload):
 
 
 def should_refill_recovered(root, day, state, count, now):
-    """Extend a recovered automatic preview regardless of its article count.
+    """Extend recovered or committed automatic previews regardless of count.
     
     This is a search trigger, not a minimum publication count. Preserve the
     last preparation window for the 21:00 release and never edit curated files.
     """
     from zoneinfo import ZoneInfo
-    if state != "recovered" or count < 1 or now.tzinfo is None:
+    if state not in ("recovered","existing","extended") or count < 1 or now.tzinfo is None:
         return False
     local = now.astimezone(ZoneInfo("Asia/Tokyo"))
     if local.date().isoformat() != day or local.hour >= 19:
@@ -94,8 +141,8 @@ def save_refilled_preview(root, day, seed, payload):
         raise ValueError("Recovered preview changed during refill")
     if len(payload["stories"]) <= len(seed["stories"]):
         return False
-    if not all(story in payload["stories"] for story in seed["stories"]):
-        raise ValueError("Refill cannot remove or rewrite approved stories")
+    if not is_automatic_extension(seed,payload):
+        raise ValueError("Refill cannot remove or rewrite approved stories or issue metadata")
     validate_release_input(root, payload, day, require_assets=True)
     tmp = target.with_suffix(".refill.tmp")
     tmp.write_text(json.dumps(payload, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")

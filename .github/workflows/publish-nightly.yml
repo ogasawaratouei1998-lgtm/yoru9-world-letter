@@ -96,7 +96,7 @@ jobs:
           # Only same-day runs can carry a current-day approval. Never download
           # dozens of unrelated historic artifacts while holding the Pages lock.
           mkdir -p /tmp/yoru9-reviewed
-          if [ ! -f "data/archive/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then
+          if [ ! -f "data/archive/$DAY.json" ]; then
             CUTOFF="$(date -u -d "$DAY - 1 day" +%F)T15:00:00Z"
             IDS=""
             if [ -n "$TRIGGER_RUN_ID" ]; then IDS="$TRIGGER_RUN_ID"; fi
@@ -115,7 +115,7 @@ jobs:
           from zoneinfo import ZoneInfo
           from release_contract import recover_review
           day=datetime.now(ZoneInfo("Asia/Tokyo")).date().isoformat()
-          state,count=recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"))
+          state,count=recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"),allow_extension=True)
           print("Review handoff:",state,count,"stories")
           PY
       - name: Check whether today's approved issue already exists

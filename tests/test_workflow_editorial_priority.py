@@ -5,10 +5,11 @@ import unittest
 WORKFLOW=(Path(__file__).resolve().parents[1]/".github/workflows/publish-nightly.yml").read_text(encoding="utf-8")
 
 class WorkflowEditorialPriorityTest(unittest.TestCase):
-    def test_committed_approved_issue_wins_even_with_fewer_stories(self):
+    def test_committed_approval_only_accepts_safe_additive_automatic_extensions(self):
         self.assertIn('if [ -f "data/approved/$DAY.json" ]; then',WORKFLOW)
-        self.assertIn('recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"))',WORKFLOW)
-        self.assertIn('if [ ! -f "data/archive/$DAY.json" ] && [ ! -f "data/approved/$DAY.json" ]; then',WORKFLOW)
+        self.assertIn('recover_review(Path.cwd(),day,Path("/tmp/yoru9-reviewed"),allow_extension=True)',WORKFLOW)
+        self.assertIn('if [ ! -f "data/archive/$DAY.json" ]; then',WORKFLOW)
+        self.assertNotIn('&& [ ! -f "data/approved/$DAY.json" ]; then',WORKFLOW)
         self.assertNotIn('max(valid,key=lambda item:item[0])',WORKFLOW)
 
     def test_preview_job_guard_is_yaml_safe_and_scheduled_in_utc(self):
@@ -101,7 +102,8 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertNotIn("github.event.workflow_run.event != 'push'",prepare)
         self.assertIn("paths: ['.github/workflows/prepare-nightly.yml']",prepare)
         self.assertIn("github.event_name == 'push' ||",prepare)
-        self.assertIn('if [ ! -f "data/approved/$DAY.json" ]; then',prepare)
+        self.assertIn('if [ ! -f "data/archive/$DAY.json" ]; then',prepare)
+        self.assertIn('allow_extension=True',prepare)
         self.assertIn('gh run list --workflow "Free-tier AI editorial double-check (safe preview)"',prepare)
         self.assertIn('recover_review(Path.cwd(),day',prepare)
         self.assertIn('contents: read',prepare)
@@ -122,6 +124,17 @@ class WorkflowEditorialPriorityTest(unittest.TestCase):
         self.assertNotIn("ONE_TIME_IMMEDIATE_RELEASE",WORKFLOW)
         self.assertNotIn("python publish_approved.py --publish-now",WORKFLOW)
         self.assertNotIn('data/approved/2026-11-20.json',WORKFLOW)
+
+    def test_committed_issue_is_not_an_editorial_start_gate(self):
+        root=Path(__file__).resolve().parents[1]
+        preview=(root/".github/workflows/ai-editorial-preview.yml").read_text()
+        self.assertNotIn("steps.edition.outputs.exists == 'false'",preview)
+        self.assertEqual(preview.count("steps.edition.outputs.archived == 'false' && steps.prior.outputs.ready == 'false'"),5)
+        self.assertIn("allow_extension=True",preview)
+        for name in ("publish-nightly.yml","prepare-nightly.yml","research-article-countries.yml"):
+            workflow=(root/".github/workflows"/name).read_text()
+            self.assertIn("allow_extension=True",workflow)
+            self.assertIn('if [ ! -f "data/archive/$DAY.json" ]; then',workflow)
 
     def test_prior_review_api_failure_does_not_stop_editorial(self):
         preview=(Path(__file__).resolve().parents[1]/
